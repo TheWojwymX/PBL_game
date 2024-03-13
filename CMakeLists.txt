@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
-project(OpenGLGP VERSION 2.0)
+project(SandBOX)
 
 IF (WIN32)
   message(NOTICE "\n")

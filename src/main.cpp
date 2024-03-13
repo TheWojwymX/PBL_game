@@ -112,7 +112,6 @@ int main(int, char**)
     Shader* lightObjectShader = new Shader("res/vecLightObjectShader.vs", "res/fragLightObjectShader.fs");
     Shader* instanceModelShader = new Shader("res/instanceVecShader.vs", "res/instanceFragShader.fs");
     Shader* skyboxShader = new Shader("res/skyboxVecShader.vs", "res/skyboxFragShader.fs");
-    Shader* animatedShader = new Shader("res/animatedTextureShader.vs", "res/animatedTextureShader.fs");
 
     float skyboxVertices[] = {
         // positions          
@@ -280,10 +279,6 @@ int main(int, char**)
         lightObjectShader->setVec3("lightColor", dirColor);
         lightObjectShader->setMat4("projection", projection);
         lightObjectShader->setMat4("view", view);
-
-        animatedShader->use();
-        animatedShader->setMat4("projection", projection);
-        animatedShader->setMat4("view", view);
 
         root->Render(Transform::Origin());
 
