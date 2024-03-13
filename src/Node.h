@@ -1,10 +1,7 @@
 #pragma once
-#ifndef NODE_H
-#define NODE_H
 
 #include <glm/glm.hpp>
 #include <model.h>
-#include <Transform.h>
 #include "Component.h"
 
 class Node {
@@ -95,4 +92,3 @@ private:
 
     std::vector<Component*> _components;
 };
-#endif

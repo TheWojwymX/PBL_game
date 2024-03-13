@@ -1,36 +1,15 @@
 #pragma once
 
-enum class BlockType {
-    EMPTY,
-    DIRT,
-    SAND
-};
+#include "BlockData.h"
+#include "Component.h"
+#include <memory>
 
-class Block {
-protected:
-    int _x;
-    int _y;
-    int _z;
-    BlockType _type;
-    bool _invincible;
-    int _hp;
-
+class Block : public Component {
 public:
-    Block();
-    Block(int x, int y, int z, BlockType type, int hp);
-    ~Block();
+    Block(std::shared_ptr<BlockData> blockData);
 
-    int GetX() const;
-    int GetY() const;
-    int GetZ() const;
-    BlockType GetType() const;
-    bool IsInvincible() const;
-    int GetHp() const;
+    std::shared_ptr<BlockData> GetBlockData() const;
 
-    void SetX(int x);
-    void SetY(int y);
-    void SetZ(int z);
-    void SetType(BlockType type);
-    void SetInvincible(bool invincible);
-    void SetHp(int hp);
+private:
+    std::shared_ptr<BlockData> _blockData;
 };

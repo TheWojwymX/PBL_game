@@ -1,8 +1,8 @@
 #pragma once
-#ifndef COMPONENT_H
-#define COMPONENT_H
 
 #include <glm/glm.hpp>
+#include "Transform.h" 
+#include "shader_s.h"
 
 class Component {
 public:
@@ -31,5 +31,3 @@ protected:
     Transform* _ownerTransform;
     bool _isEnabled;
 };
-
-#endif
