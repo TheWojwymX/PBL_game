@@ -286,3 +286,4 @@
 142560	143289	7320277992399441	src/CMakeFiles/OpenGLGP.dir/texture.cpp.obj	d060ba98de70916a
 142940	143741	7320277996920822	src/CMakeFiles/OpenGLGP.dir/imgui_impl/imgui_impl_opengl3.cpp.obj	729aeba54d67c5fa
 142059	145835	7320278017829446	src/CMakeFiles/OpenGLGP.dir/main.cpp.obj	ff12302bd6ab2b37
+143112	453247	7320281091743545	_deps/assimp-build/lib/libassimp_d.a	ad7230ae58f55ded
