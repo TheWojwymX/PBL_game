@@ -9,6 +9,7 @@
 
 #include <camera.h>
 #include <Node.h>
+#include <BlockManager.h>
 #include <StaticBlockController.h>
 #include <InstanceRenderer.h>
 #include <TimeController.h>
@@ -191,15 +192,17 @@ int main(int, char**)
     std::shared_ptr<Node> plane = std::make_shared<Node>(planeModel, modelShader);
 
     std::shared_ptr<Node> test = std::make_shared<Node>();
-    std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT,0,0,0,1,0,std::make_shared<BlockManager>());
-    StaticBlockController staticBlockController(blockData);
-    staticBlockController.Initialize();
+    std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>());
+    std::shared_ptr<StaticBlockController> staticBlockController = std::make_shared<StaticBlockController>(blockData);
+    test->AddComponent(staticBlockController);
+    test->GetComponent<StaticBlockController>()->Initialize();
 
 
     // root
     root->AddChild(plane);
     root->UpdateTransforms(Transform::Origin());
     plane->GetTransform()->SetScale(.5f);
+
 
     // Setup Dear ImGui binding
     IMGUI_CHECKVERSION();

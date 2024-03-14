@@ -6,6 +6,7 @@
 
 class Block : public Component {
 public:
+    Block();
     Block(std::shared_ptr<BlockData> blockData);
 
     std::shared_ptr<BlockData> GetBlockData() const;

@@ -59,14 +59,3 @@ void Node::UpdateTransforms(glm::mat4 parentWorld) {
     for (auto& child : _children)
         child->UpdateTransforms(world);
 }
-
-template <typename T>
-std::shared_ptr<T> Node::GetComponent() const {
-    for (auto& component : _components) {
-        std::shared_ptr<T> derivedComponent = std::dynamic_pointer_cast<T>(component);
-        if (derivedComponent != nullptr) {
-            return derivedComponent;
-        }
-    }
-    return nullptr; // Component of type T not found
-}
