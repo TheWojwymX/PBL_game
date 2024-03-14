@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <BlockManager.h>
 
 enum class BlockType {
     EMPTY,
@@ -8,11 +9,9 @@ enum class BlockType {
     SAND
 };
 
-class SandManager;
-
 class BlockData {
 public:
-    BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::shared_ptr<SandManager> sandManager);
+    BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::shared_ptr<BlockManager> blockManagere);
 
     BlockType GetBlockType() const;
     int GetXID() const;
@@ -21,7 +20,7 @@ public:
     float GetHP() const;
     float GetStartHP() const;
     bool IsInvincible() const;
-    std::shared_ptr<SandManager> GetSandManager() const;
+    std::shared_ptr<BlockManager> GetBlockManager() const;
     bool IsVisible() const;
 
     void SetBlockType(BlockType blockType);
@@ -31,7 +30,7 @@ public:
     void SetHP(float hp);
     void SetStartHP(float startHP);
     void SetInvincible(bool invincible);
-    void SetSandManager(std::shared_ptr<SandManager> sandManager);
+    void SetBlockManager(std::shared_ptr<BlockManager> blockManager);
     void SetVisible(bool visible);
 
 private:
@@ -42,6 +41,6 @@ private:
     float _HP;
     float _startHP;
     bool _invincible;
-    std::shared_ptr<SandManager> _sandManager;
+    std::shared_ptr<BlockManager> _blockManager;
     bool _visible;
 };

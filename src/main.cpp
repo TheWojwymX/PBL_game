@@ -9,6 +9,7 @@
 
 #include <camera.h>
 #include <Node.h>
+#include <StaticBlockController.h>
 #include <InstanceRenderer.h>
 #include <TimeController.h>
 
@@ -78,7 +79,7 @@ int main(int, char**)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Krystian Blaszczyk OPENGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "SandBOX", NULL, NULL);
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
@@ -186,8 +187,14 @@ int main(int, char**)
     Model* planeModel = new Model("res/Plane/Plane.obj");
 
     // Create graph
-    Node* root = new Node();
-    Node* plane = new Node(planeModel, modelShader);
+    std::shared_ptr<Node> root = std::make_shared<Node>();
+    std::shared_ptr<Node> plane = std::make_shared<Node>(planeModel, modelShader);
+
+    std::shared_ptr<Node> test = std::make_shared<Node>();
+    std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT,0,0,0,1,0,std::make_shared<BlockManager>());
+    StaticBlockController staticBlockController(blockData);
+    staticBlockController.Initialize();
+
 
     // root
     root->AddChild(plane);

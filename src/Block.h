@@ -10,6 +10,6 @@ public:
 
     std::shared_ptr<BlockData> GetBlockData() const;
 
-private:
+protected:
     std::shared_ptr<BlockData> _blockData;
 };

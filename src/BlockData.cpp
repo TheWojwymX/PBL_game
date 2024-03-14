@@ -1,7 +1,7 @@
 #include "BlockData.h"
 
-BlockData::BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::shared_ptr<SandManager> sandManager)
-    : _blockType(blockType), _xID(xID), _yID(yID), _zID(zID), _HP(startHP), _startHP(startHP), _invincible(invincible), _sandManager(sandManager), _visible(true) {}
+BlockData::BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::shared_ptr<BlockManager> blockManager)
+    : _blockType(blockType), _xID(xID), _yID(yID), _zID(zID), _HP(startHP), _startHP(startHP), _invincible(invincible), _blockManager(blockManager), _visible(true) {}
 
 BlockType BlockData::GetBlockType() const {
     return _blockType;
@@ -31,8 +31,8 @@ bool BlockData::IsInvincible() const {
     return _invincible;
 }
 
-std::shared_ptr<SandManager> BlockData::GetSandManager() const {
-    return _sandManager;
+std::shared_ptr<BlockManager> BlockData::GetBlockManager() const {
+    return _blockManager;
 }
 
 bool BlockData::IsVisible() const {
@@ -67,8 +67,8 @@ void BlockData::SetInvincible(bool invincible) {
     _invincible = invincible;
 }
 
-void BlockData::SetSandManager(std::shared_ptr<SandManager> sandManager) {
-    _sandManager = sandManager;
+void BlockData::SetBlockManager(std::shared_ptr<BlockManager> sandManager) {
+    _blockManager = sandManager;
 }
 
 void BlockData::SetVisible(bool visible) {
