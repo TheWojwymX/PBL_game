@@ -12,6 +12,15 @@ void Node::AddComponent(std::shared_ptr<Component> component) {
     _components.push_back(component);
 }
 
+void Node::Input() {
+    for (auto& component : _components)
+        if (component->IsEnabled())
+            component->Input();
+
+    for (auto& child : _children)
+        child->Input();
+}
+
 void Node::Update() {
     for (auto& component : _components)
         if (component->IsEnabled())

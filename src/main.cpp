@@ -14,6 +14,7 @@
 #include <Component/StaticBlockController.h>
 #include <InstanceRenderer.h>
 #include <Core/Time.h>
+#include <Core/InputManager.h>
 
 #include <iostream>
 #include <algorithm>
@@ -41,6 +42,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 unsigned int loadCubemap(vector<std::string> faces);
 Texture2D loadTextureFromFile(const char* file, bool alpha);
+void Init();
 
 // settings
 const unsigned int SCR_WIDTH = 1280;
@@ -204,6 +206,7 @@ int main(int, char**)
     root->AddChild(plane);
     root->UpdateTransforms(Transform::Origin());
     plane->GetTransform()->SetScale(.5f);
+    root->AddChild(test);
 
 
     // Setup Dear ImGui binding
@@ -222,6 +225,9 @@ int main(int, char**)
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
 
+    // Init
+    INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -229,6 +235,7 @@ int main(int, char**)
         TIME.Update();
 
         // Input
+        root->Input();
         processInput(window);
 
         // Update
@@ -297,6 +304,8 @@ int main(int, char**)
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+
+        INPUT.UpdateOldStates();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

@@ -11,6 +11,7 @@ public:
     virtual ~Component();
 
     virtual void Init();
+    virtual void Input();
     virtual void Update();
     virtual void Render(glm::mat4 parentWorld);
     virtual void RenderShadows(glm::mat4 parentWorld, Shader* shader);

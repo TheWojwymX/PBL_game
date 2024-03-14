@@ -6,6 +6,8 @@ Component::~Component() {}
 
 void Component::Init() {}
 
+void Component::Input() {}
+
 void Component::Update() {}
 
 void Component::Render(glm::mat4 parentWorld) {}

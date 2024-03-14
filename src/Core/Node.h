@@ -14,6 +14,7 @@ public:
 
     void AddChild(std::shared_ptr<Node> child);
     void AddComponent(std::shared_ptr<Component> component);
+    void Input();
     void Update();
     void Render(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
