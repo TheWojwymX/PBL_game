@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <memory>
-#include "Transform.h"
+#include "Component/Transform.h"
 #include "shader_s.h"
 
 class Component {
@@ -10,7 +10,7 @@ public:
     Component();
     virtual ~Component();
 
-    virtual void Initialize();
+    virtual void Init();
     virtual void Update();
     virtual void Render(glm::mat4 parentWorld);
     virtual void RenderShadows(glm::mat4 parentWorld, Shader* shader);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <BlockManager.h>
+#include <Component/BlockManager.h>
 
 enum class BlockType {
     EMPTY,

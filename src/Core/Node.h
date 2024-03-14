@@ -2,8 +2,8 @@
 
 #include <glm/glm.hpp>
 #include <model.h>
-#include "Component.h"
-#include "Transform.h"
+#include "Core/Component.h"
+#include "Component/Transform.h"
 #include <memory>
 
 class Node {

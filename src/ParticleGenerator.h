@@ -1,7 +1,7 @@
 #ifndef PARTICLE_GENERATOR_H
 #define PARTICLE_GENERATOR_H
 
-#include "Node.h"
+#include "Core/Node.h"
 #include "texture.h"
 
 // Represents a single particle and its state

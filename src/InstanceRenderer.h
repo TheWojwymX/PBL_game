@@ -1,8 +1,6 @@
 #pragma once
-#ifndef INSTANCERENDERER_H
-#define INSTANCERENDERER_H
 
-#include "Component.h"
+#include "Core/Component.h"
 #include <model.h>
 
 
@@ -63,5 +61,3 @@ private:
         glBufferData(GL_ARRAY_BUFFER, _amount * sizeof(glm::mat4), &_instanceMatrix[0], GL_STATIC_DRAW);
     }
 };
-
-#endif

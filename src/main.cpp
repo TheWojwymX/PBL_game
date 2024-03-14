@@ -8,18 +8,17 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <camera.h>
-#include <Node.h>
-#include <BlockManager.h>
-#include <MeshRenderer.h>
-#include <StaticBlockController.h>
+#include <Core/Node.h>
+#include <Component/BlockManager.h>
+#include <Component/MeshRenderer.h>
+#include <Component/StaticBlockController.h>
 #include <InstanceRenderer.h>
-#include <TimeController.h>
+#include <Core/Time.h>
 
 #include <iostream>
 #include <algorithm>
 
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
-#define TIME TimeController::Instance()
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>    // Initialize with gl3wInit()
@@ -198,7 +197,7 @@ int main(int, char**)
     std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>(1,1,1));
     std::shared_ptr<StaticBlockController> staticBlockController = std::make_shared<StaticBlockController>(blockData);
     test->AddComponent(staticBlockController);
-    test->GetComponent<StaticBlockController>()->Initialize();
+    test->GetComponent<StaticBlockController>()->Init();
 
 
     // root

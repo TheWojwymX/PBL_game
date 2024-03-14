@@ -1,10 +1,10 @@
 #pragma once
-#include "Block.h"
+#include "Component/Block.h"
 
 class StaticBlockController : public Block
 {
 public:
     StaticBlockController(std::shared_ptr<BlockData> blockData);
 
-    void Initialize() override;
+    void Init() override;
 };

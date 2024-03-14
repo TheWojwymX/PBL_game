@@ -4,7 +4,7 @@ Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
 
 Component::~Component() {}
 
-void Component::Initialize() {}
+void Component::Init() {}
 
 void Component::Update() {}
 

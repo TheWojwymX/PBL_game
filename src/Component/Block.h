@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BlockData.h"
-#include "Component.h"
+#include "Core/Component.h"
 #include <memory>
 
 class Block : public Component {

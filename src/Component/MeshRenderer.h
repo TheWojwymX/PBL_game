@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "Core/Component.h"
 #include <glm/glm.hpp>
 #include <model.h>
 
