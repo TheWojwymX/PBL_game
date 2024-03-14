@@ -10,6 +10,7 @@
 #include <camera.h>
 #include <Node.h>
 #include <BlockManager.h>
+#include <MeshRenderer.h>
 #include <StaticBlockController.h>
 #include <InstanceRenderer.h>
 #include <TimeController.h>
@@ -189,10 +190,12 @@ int main(int, char**)
 
     // Create graph
     std::shared_ptr<Node> root = std::make_shared<Node>();
-    std::shared_ptr<Node> plane = std::make_shared<Node>(planeModel, modelShader);
+    std::shared_ptr<Node> plane = std::make_shared<Node>();
+    std::shared_ptr<MeshRenderer> planeRenderer = std::make_shared<MeshRenderer>(planeModel, modelShader);
+    plane->AddComponent(planeRenderer);
 
     std::shared_ptr<Node> test = std::make_shared<Node>();
-    std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>());
+    std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>(1,1,1));
     std::shared_ptr<StaticBlockController> staticBlockController = std::make_shared<StaticBlockController>(blockData);
     test->AddComponent(staticBlockController);
     test->GetComponent<StaticBlockController>()->Initialize();
