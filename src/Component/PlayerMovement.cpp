@@ -37,6 +37,7 @@ void PlayerMovement::SetCameraRef(std::shared_ptr<Camera> cameraRef)
 
 void PlayerMovement::HandleMovement() {
     glm::vec3 move = _inputVector.x * _cameraRef->GetRightVector() + _inputVector.y * _cameraRef->GetFrontVector();
+    move.y = 0.0f;
 
     // Only normalize if move vector is not zero
     if (glm::length(move) > 0.0f) {
