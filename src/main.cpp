@@ -7,7 +7,7 @@
 #include <stb_image.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <camera.h>
+#include <Component/Camera.h>
 #include <Core/Node.h>
 #include <Core/Time.h>
 #include <Core/InputManager.h>
@@ -36,9 +36,6 @@ static void glfw_error_callback(int error, const char* description)
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow* window);
 unsigned int loadCubemap(vector<std::string> faces);
 Texture2D loadTextureFromFile(const char* file, bool alpha);
 
@@ -46,15 +43,6 @@ Texture2D loadTextureFromFile(const char* file, bool alpha);
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
-// camera
-Camera camera(glm::vec3(0.0f, 1.2f, 5.0f));
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
-
-//camera
-bool flyCamera = false;
-bool buttonPressed = false;
 int main(int, char**)
 {
     // Setup window
@@ -198,9 +186,10 @@ int main(int, char**)
     test->GetComponent<StaticBlockController>()->Init();
 
     std::shared_ptr<Node> testPlayer = std::make_shared<Node>();
-    std::shared_ptr<MeshRenderer> playerRenderer = std::make_shared<MeshRenderer>(ballModel, modelShader);
-    testPlayer->AddComponent(playerRenderer);
+    std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
+    testPlayer->AddComponent(camera);
     std::shared_ptr<PlayerMovement> playerMovement = std::make_shared<PlayerMovement>();
+    playerMovement->SetCameraRef(camera);
     testPlayer->AddComponent(playerMovement);
     testPlayer->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
@@ -239,7 +228,6 @@ int main(int, char**)
 
         // Input
         root->Input();
-        processInput(window);
 
         // Update
         root->Update();
@@ -265,10 +253,10 @@ int main(int, char**)
         glDepthMask(GL_FALSE);
         skyboxShader->use();
 
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-        glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 view = camera->GetViewMatrix();
 
-        glm::mat4 skyboxView = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        glm::mat4 skyboxView = glm::mat4(glm::mat3(camera->GetViewMatrix())); // remove translation from the view matrix
         skyboxShader->setMat4("view", skyboxView);
         skyboxShader->setMat4("projection", projection);
 
@@ -284,7 +272,7 @@ int main(int, char**)
         modelShader->setVec3("dirLight.color", dirColor);
         modelShader->setInt("dirLight.isActive", dirActive);
 
-        modelShader->setVec3("viewPos", camera.Position);
+        modelShader->setVec3("viewPos", camera->GetPosition());
         modelShader->setMat4("projection", projection);
         modelShader->setMat4("view", view);
 
@@ -293,7 +281,7 @@ int main(int, char**)
         instanceModelShader->setVec3("dirLight.color", dirColor);
         instanceModelShader->setInt("dirLight.isActive", dirActive);
 
-        instanceModelShader->setVec3("viewPos", camera.Position);
+        instanceModelShader->setVec3("viewPos", camera->GetPosition());
         instanceModelShader->setMat4("projection", projection);
         instanceModelShader->setMat4("view", view);
 
@@ -373,45 +361,6 @@ Texture2D loadTextureFromFile(const char* file, bool alpha)
     return texture;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS && !buttonPressed)
-    {
-        buttonPressed = true;
-        if (!flyCamera)
-        {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            flyCamera = true;
-        }
-        else
-        {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            flyCamera = false;
-        }
-    }
-    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
-        buttonPressed = false;
-
-    
-    if (flyCamera)
-    {
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            camera.ProcessKeyboard(FORWARD, TIME.GetDeltaTime());
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            camera.ProcessKeyboard(BACKWARD, TIME.GetDeltaTime());
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            camera.ProcessKeyboard(LEFT, TIME.GetDeltaTime());
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            camera.ProcessKeyboard(RIGHT, TIME.GetDeltaTime());
-    }
-    
-}
-
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -419,36 +368,4 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
-}
-
-
-// glfw: whenever the mouse moves, this callback is called
-// -------------------------------------------------------
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
-{
-    float xpos = static_cast<float>(xposIn);
-    float ypos = static_cast<float>(yposIn);
-
-    if (firstMouse)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-    lastX = xpos;
-    lastY = ypos;
-
-    if(flyCamera)
-        camera.ProcessMouseMovement(xoffset, yoffset);
-}
-
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }

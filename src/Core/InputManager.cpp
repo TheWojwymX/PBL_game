@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include <camera.h>
+#include "Component/Camera.h"
 
 InputManager::InputManager()
 {
@@ -157,7 +157,10 @@ int InputManager::ImGuiKeyCorrelation(int keyCode)
 		return 5;
 	case 5:
 		return GLFW_KEY_SPACE;
+	default:
+		return 0;
 	}
+	
 }
 
 

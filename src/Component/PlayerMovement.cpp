@@ -8,7 +8,7 @@ PlayerMovement::PlayerMovement(float speed, float gravity, float jumpHeight, flo
 void PlayerMovement::Input() {
     // Get input for movement along the X and Z axes
     float x = (INPUT.GetKeyDown(GLFW_KEY_D) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_A) ? 1.0f : 0.0f);
-    float z = (INPUT.GetKeyDown(GLFW_KEY_S) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_W) ? 1.0f : 0.0f);
+    float z = (INPUT.GetKeyDown(GLFW_KEY_W) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_S) ? 1.0f : 0.0f);
 
     _inputVector = glm::vec2(x, z);
     // Check if input vector is non-zero before normalization
@@ -30,9 +30,13 @@ void PlayerMovement::CheckGrounded() {
         _isGrounded = false;
     }
 }
+void PlayerMovement::SetCameraRef(std::shared_ptr<Camera> cameraRef)
+{
+    _cameraRef = cameraRef;
+}
 
 void PlayerMovement::HandleMovement() {
-    glm::vec3 move = glm::vec3(_inputVector.x, 0.0f, _inputVector.y);
+    glm::vec3 move = _inputVector.x * _cameraRef->GetRightVector() + _inputVector.y * _cameraRef->GetFrontVector();
 
     // Only normalize if move vector is not zero
     if (glm::length(move) > 0.0f) {
