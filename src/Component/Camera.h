@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Core/Component.h"
+#include "Core/InputManager.h"
 
 #include <vector>
 
@@ -58,7 +59,7 @@ private:
     float _movementSpeed;
     float _mouseSensitivity;
     float _zoom;
-    bool _playerCamera;
+    bool _editMode;
 
     // calculates the front vector from the Camera's (updated) Euler Angles
     void UpdateCameraVectors();

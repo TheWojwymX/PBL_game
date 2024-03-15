@@ -124,6 +124,11 @@ void InputManager::UpdateOldStates()
 	_mouseOffset = glm::vec2(0.0f);
 }
 
+void InputManager::SetCursorMode(bool editMode) {
+	int cursorMode = editMode ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED;
+	glfwSetInputMode(_window, GLFW_CURSOR, cursorMode);
+}
+
 int InputManager::ImGuiKeyCorrelation(int keyCode)
 {
 	switch (keyCode)

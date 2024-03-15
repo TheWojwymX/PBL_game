@@ -4,13 +4,20 @@
 Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
     : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),
     _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED),
-    _mouseSensitivity(SENSITIVITY), _zoom(ZOOM) {
+    _mouseSensitivity(SENSITIVITY), _zoom(ZOOM), _editMode(true) {
     UpdateCameraVectors();
 }
 
 
 void Camera::Input() {
-    ProcessMouseMovement(INPUT.GetMouseOffset().x, INPUT.GetMouseOffset().y);
+    if (INPUT.IsKeyPressed(GLFW_KEY_E)) {
+        _editMode = !_editMode;
+        INPUT.SetCursorMode(_editMode);
+    }
+
+    if (!_editMode) {
+        ProcessMouseMovement(INPUT.GetMouseOffset().x, INPUT.GetMouseOffset().y);
+    }
 }
 
 void Camera::Update() {

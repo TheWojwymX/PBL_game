@@ -7,14 +7,16 @@
 #include <stb_image.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Component/Camera.h>
-#include <Core/Node.h>
-#include <Core/Time.h>
-#include <Core/InputManager.h>
-#include <Component/BlockManager.h>
-#include <Component/MeshRenderer.h>
-#include <Component/StaticBlockController.h>
-#include <Component/PlayerMovement.h>
+
+#include "Core/Node.h"
+#include "Core/Time.h"
+#include "Core/InputManager.h"
+#include "Component/BlockManager.h"
+#include "Component/MeshRenderer.h"
+#include "Component/StaticBlockController.h"
+#include "Component/PlayerMovement.h"
+#include "Component/Camera.h"
+
 
 #include <iostream>
 
