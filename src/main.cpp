@@ -9,15 +9,14 @@
 
 #include <camera.h>
 #include <Core/Node.h>
+#include <Core/Time.h>
+#include <Core/InputManager.h>
 #include <Component/BlockManager.h>
 #include <Component/MeshRenderer.h>
 #include <Component/StaticBlockController.h>
-#include <InstanceRenderer.h>
-#include <Core/Time.h>
-#include <Core/InputManager.h>
+#include <Component/PlayerMovement.h>
 
 #include <iostream>
-#include <algorithm>
 
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 
@@ -42,14 +41,13 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 unsigned int loadCubemap(vector<std::string> faces);
 Texture2D loadTextureFromFile(const char* file, bool alpha);
-void Init();
 
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
 // camera
-Camera camera(glm::vec3(5.0f, 1.2f, 0.0f));
+Camera camera(glm::vec3(0.0f, 1.2f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -86,10 +84,7 @@ int main(int, char**)
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetScrollCallback(window, scroll_callback);
-    glfwSwapInterval(1); // Enable vsync
+    glfwSwapInterval(1); // Enable VSync
 
     // Initialize OpenGL loader
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
@@ -188,6 +183,7 @@ int main(int, char**)
 
     // Load models
     Model* planeModel = new Model("res/Plane/Plane.obj");
+    Model* ballModel = new Model("res/PointLight/PointLight.obj");
 
     // Create graph
     std::shared_ptr<Node> root = std::make_shared<Node>();
@@ -201,12 +197,19 @@ int main(int, char**)
     test->AddComponent(staticBlockController);
     test->GetComponent<StaticBlockController>()->Init();
 
+    std::shared_ptr<Node> testPlayer = std::make_shared<Node>();
+    std::shared_ptr<MeshRenderer> playerRenderer = std::make_shared<MeshRenderer>(ballModel, modelShader);
+    testPlayer->AddComponent(playerRenderer);
+    std::shared_ptr<PlayerMovement> playerMovement = std::make_shared<PlayerMovement>();
+    testPlayer->AddComponent(playerMovement);
+    testPlayer->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
     // root
     root->AddChild(plane);
     root->UpdateTransforms(Transform::Origin());
     plane->GetTransform()->SetScale(.5f);
     root->AddChild(test);
+    root->AddChild(testPlayer);
 
 
     // Setup Dear ImGui binding
@@ -377,7 +380,7 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed)
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS && !buttonPressed)
     {
         buttonPressed = true;
         if (!flyCamera)
@@ -394,6 +397,7 @@ void processInput(GLFWwindow* window)
     else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
         buttonPressed = false;
 
+    
     if (flyCamera)
     {
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -405,6 +409,7 @@ void processInput(GLFWwindow* window)
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
             camera.ProcessKeyboard(RIGHT, TIME.GetDeltaTime());
     }
+    
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

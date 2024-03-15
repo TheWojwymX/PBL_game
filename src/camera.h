@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CAMERA_H
-#define CAMERA_H
 
 #include <iostream>
 #include <glad/glad.h>
@@ -149,4 +147,3 @@ private:
         Up = glm::normalize(glm::cross(Right, Front));
     }
 };
-#endif

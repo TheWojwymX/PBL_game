@@ -19,6 +19,11 @@ void Transform::SetPosition(float* array) {
     _position = glm::vec3(array[0], array[1], array[2]);
 }
 
+void Transform::AddPosition(glm::vec3 offset) {
+    _position += offset;
+    _isDirty = true;
+}
+
 void Transform::SetPosition(float newPosition, int axis) {
     switch (axis) {
     case 0: // Set position along the X-axis
@@ -61,6 +66,7 @@ void Transform::AddRotation(glm::quat newRotation) {
 
 void Transform::SetParent(std::shared_ptr<Transform> parent) {
     _parent = parent;
+    _isDirty = true;
 }
 
 void Transform::LookAt(glm::vec3 direction) {

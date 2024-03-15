@@ -15,6 +15,7 @@ public:
     void SetPosition(glm::vec3 newPosition);
     void SetPosition(float* array);
     void SetPosition(float newPosition, int axis);
+    void AddPosition(glm::vec3 offset);
     void SetRotation(glm::quat newRotation);
     void SetScale(glm::vec3 newScale);
     void SetScale(float newScale);

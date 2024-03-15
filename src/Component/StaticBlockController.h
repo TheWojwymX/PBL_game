@@ -7,5 +7,4 @@ public:
     StaticBlockController(std::shared_ptr<BlockData> blockData);
 
     void Init() override;
-    void Input() override;
 };

@@ -6,8 +6,3 @@ StaticBlockController::StaticBlockController(std::shared_ptr<BlockData> blockDat
 void StaticBlockController::Init() {
     std::cout << "Hello world" << std::endl;
 }
-
-void StaticBlockController::Input() {
-    if(INPUT.IsKeyPressed(GLFW_KEY_SPACE))
-        std::cout << "Hello world" << std::endl;
-}
