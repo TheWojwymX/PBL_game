@@ -7,6 +7,8 @@
 #include <stb_image.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#define MINIAUDIO_IMPLEMENTATION
+#include <../thirdparty//miniaudio.h>
 
 #include "Core/Node.h"
 #include "Core/Time.h"
@@ -47,6 +49,7 @@ const unsigned int SCR_HEIGHT = 720;
 
 int main(int, char**)
 {
+
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -178,8 +181,11 @@ int main(int, char**)
     // Create graph
     std::shared_ptr<Node> root = std::make_shared<Node>();
     std::shared_ptr<Node> plane = std::make_shared<Node>();
+    std::shared_ptr<Node> model = std::make_shared<Node>();
     std::shared_ptr<MeshRenderer> planeRenderer = std::make_shared<MeshRenderer>(planeModel, modelShader);
+    std::shared_ptr<MeshRenderer> BallModel = std::make_shared<MeshRenderer>(ballModel, modelShader);
     plane->AddComponent(planeRenderer);
+    model->AddComponent(BallModel);
 
     std::shared_ptr<Node> test = std::make_shared<Node>();
     std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>(1,1,1));
@@ -197,8 +203,10 @@ int main(int, char**)
 
     // root
     root->AddChild(plane);
+    root->AddChild(model);
     root->UpdateTransforms(Transform::Origin());
     plane->GetTransform()->SetScale(.5f);
+    model->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
     root->AddChild(test);
     root->AddChild(testPlayer);
 
@@ -215,12 +223,23 @@ int main(int, char**)
     ImGui::StyleColorsDark();
 
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
-    float dirColor[3] = { 0.360f, 0.392f, 1.00f };
-    float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
+    float dirColor[3] = { 0.999f, 0.999f, 1.00f };
+    float dirDirection[3] = { -1.5f, -1.5f, -1.5f };
     bool dirActive = true;
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
+
+    // Setup miniaudio
+    ma_result result;
+    ma_engine engine;
+
+    result = ma_engine_init(NULL, &engine);
+    if (result != MA_SUCCESS) {
+        printf("Failed to initialize audio engine.");
+        return -1;
+    }
+
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -304,6 +323,8 @@ int main(int, char**)
     }
 
     // Cleanup
+    ma_engine_uninit(&engine);
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
