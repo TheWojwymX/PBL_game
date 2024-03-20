@@ -1,6 +1,6 @@
 #include "BlockData.h"
 
-BlockData::BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::shared_ptr<BlockManager> blockManager)
+BlockData::BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::weak_ptr<BlockManager> blockManager)
     : _blockType(blockType), _xID(xID), _yID(yID), _zID(zID), _HP(startHP), _startHP(startHP), _invincible(invincible), _blockManager(blockManager), _visible(true) {}
 
 BlockType BlockData::GetBlockType() const {
@@ -31,7 +31,7 @@ bool BlockData::IsInvincible() const {
     return _invincible;
 }
 
-std::shared_ptr<BlockManager> BlockData::GetBlockManager() const {
+std::weak_ptr<BlockManager> BlockData::GetBlockManager() const {
     return _blockManager;
 }
 
@@ -67,8 +67,8 @@ void BlockData::SetInvincible(bool invincible) {
     _invincible = invincible;
 }
 
-void BlockData::SetBlockManager(std::shared_ptr<BlockManager> sandManager) {
-    _blockManager = sandManager;
+void BlockData::SetBlockManager(std::weak_ptr<BlockManager> blockManager) {
+    _blockManager = blockManager;
 }
 
 void BlockData::SetVisible(bool visible) {

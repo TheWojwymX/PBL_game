@@ -182,57 +182,26 @@ int main(int, char**)
     std::shared_ptr<Node> root = std::make_shared<Node>();
 
     std::shared_ptr<Node> sand = std::make_shared<Node>();
-    std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 100000, instanceModelShader);
-    sand->AddComponent(sandRenderer);
-    // Create a vector to hold instance matrices
-    std::vector<glm::mat4> instanceMatrix;
-
-    // Define parameters
-    int numBlocksX = 100; // Number of blocks in the x-direction
-    int numBlocksZ = 100; // Number of blocks in the z-direction
-    float blockSize = 1.0f; // Size of each block
-
-    // Generate instance matrices for the plane of blocks
-    for (int z = 0; z < numBlocksZ; ++z) {
-        for (int x = 0; x < numBlocksX; ++x) {
-            // Calculate position for each block
-            float posX = x * blockSize;
-            float posY = 0.0f; // Y position of the blocks (on the ground)
-            float posZ = z * blockSize;
-
-            // Create transformation matrix for the block
-            glm::mat4 modelMatrix = Transform::CalculateTransformMatrix(glm::vec3(posX, posY, posZ), glm::quat(), glm::vec3(1.0f));
-
-            // Add the transformation matrix to the instance matrix vector
-            instanceMatrix.push_back(modelMatrix);
-        }
-    }
-
-    // Set the instance matrix for the InstanceRenderer
-    sandRenderer->SetInstanceMatrix(instanceMatrix);
+    std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
     sand->AddComponent(sandRenderer);
 
+    std::shared_ptr<Node> blockManager = std::make_shared<Node>();
+    std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
+    blockManagerComp->SetInstanceRenderer(sandRenderer);
+    blockManager->AddComponent(blockManagerComp);
 
-    std::shared_ptr<Node> test = std::make_shared<Node>();
-    std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>(1,1,1));
-    std::shared_ptr<StaticBlockController> staticBlockController = std::make_shared<StaticBlockController>(blockData);
-    test->AddComponent(staticBlockController);
-    test->GetComponent<StaticBlockController>()->Init();
-
-    std::shared_ptr<Node> testPlayer = std::make_shared<Node>();
+    std::shared_ptr<Node> player = std::make_shared<Node>();
     std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
-    testPlayer->AddComponent(camera);
+    player->AddComponent(camera);
     std::shared_ptr<PlayerMovement> playerMovement = std::make_shared<PlayerMovement>();
     playerMovement->SetCameraRef(camera);
-    testPlayer->AddComponent(playerMovement);
-    testPlayer->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
+    player->AddComponent(playerMovement);
+    player->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
     // root
     root->AddChild(sand);
-    root->UpdateTransforms(Transform::Origin());
-    sand->GetTransform()->SetPosition(glm::vec3(0.0f, 5.0f, 0.0f));
-    root->AddChild(test);
-    root->AddChild(testPlayer);
+    root->AddChild(blockManager);
+    root->AddChild(player);
 
 
     // Setup Dear ImGui binding
@@ -253,6 +222,7 @@ int main(int, char**)
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
+    root->Init();
 
     // Setup miniaudio
     ma_result result;

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <Component/BlockManager.h>
+
+class BlockManager;
 
 enum class BlockType {
     EMPTY,
@@ -11,7 +12,7 @@ enum class BlockType {
 
 class BlockData {
 public:
-    BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::shared_ptr<BlockManager> blockManagere);
+    BlockData(BlockType blockType, int xID, int yID, int zID, float startHP, bool invincible, std::weak_ptr<BlockManager> blockManager);
 
     BlockType GetBlockType() const;
     int GetXID() const;
@@ -20,7 +21,7 @@ public:
     float GetHP() const;
     float GetStartHP() const;
     bool IsInvincible() const;
-    std::shared_ptr<BlockManager> GetBlockManager() const;
+    std::weak_ptr<BlockManager> GetBlockManager() const;
     bool IsVisible() const;
 
     void SetBlockType(BlockType blockType);
@@ -30,7 +31,7 @@ public:
     void SetHP(float hp);
     void SetStartHP(float startHP);
     void SetInvincible(bool invincible);
-    void SetBlockManager(std::shared_ptr<BlockManager> blockManager);
+    void SetBlockManager(std::weak_ptr<BlockManager> blockManager);
     void SetVisible(bool visible);
 
 private:
@@ -41,6 +42,6 @@ private:
     float _HP;
     float _startHP;
     bool _invincible;
-    std::shared_ptr<BlockManager> _blockManager;
+    std::weak_ptr<BlockManager> _blockManager;
     bool _visible;
 };
