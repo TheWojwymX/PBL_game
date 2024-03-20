@@ -204,6 +204,20 @@ int main(int, char**)
     root->AddChild(player);
 
 
+    // Init
+    INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
+    root->Init();
+
+    // Setup miniaudio
+    ma_result result;
+    ma_engine engine;
+
+    result = ma_engine_init(NULL, &engine);
+    if (result != MA_SUCCESS) {
+        printf("Failed to initialize audio engine.");
+        return -1;
+    }
+
     // Setup Dear ImGui binding
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -219,20 +233,6 @@ int main(int, char**)
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
-
-    // Init
-    INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
-    root->Init();
-
-    // Setup miniaudio
-    ma_result result;
-    ma_engine engine;
-
-    result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        printf("Failed to initialize audio engine.");
-        return -1;
-    }
 
 
     // Main loop
