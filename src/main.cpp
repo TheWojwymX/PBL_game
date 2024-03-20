@@ -18,6 +18,7 @@
 #include "Component/StaticBlockController.h"
 #include "Component/PlayerMovement.h"
 #include "Component/Camera.h"
+#include "Component/InstanceRenderer.h"
 
 
 #include <iostream>
@@ -95,9 +96,9 @@ int main(int, char**)
     spdlog::info("Successfully initialized OpenGL loader!");
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Build and compile the shader program
     Shader* modelShader = new Shader("res/vecShader.vs", "res/fragShader.fs");
@@ -175,17 +176,42 @@ int main(int, char**)
     skyboxShader->setInt("skybox", 0);
 
     // Load models
-    Model* planeModel = new Model("res/Plane/Plane.obj");
-    Model* ballModel = new Model("res/PointLight/PointLight.obj");
+    Model* sandModel = new Model("res/Sand/Sand.obj");
 
     // Create graph
     std::shared_ptr<Node> root = std::make_shared<Node>();
-    std::shared_ptr<Node> plane = std::make_shared<Node>();
-    std::shared_ptr<Node> model = std::make_shared<Node>();
-    std::shared_ptr<MeshRenderer> planeRenderer = std::make_shared<MeshRenderer>(planeModel, modelShader);
-    std::shared_ptr<MeshRenderer> BallModel = std::make_shared<MeshRenderer>(ballModel, modelShader);
-    plane->AddComponent(planeRenderer);
-    model->AddComponent(BallModel);
+
+    std::shared_ptr<Node> sand = std::make_shared<Node>();
+    std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 100000, instanceModelShader);
+    sand->AddComponent(sandRenderer);
+    // Create a vector to hold instance matrices
+    std::vector<glm::mat4> instanceMatrix;
+
+    // Define parameters
+    int numBlocksX = 100; // Number of blocks in the x-direction
+    int numBlocksZ = 100; // Number of blocks in the z-direction
+    float blockSize = 1.0f; // Size of each block
+
+    // Generate instance matrices for the plane of blocks
+    for (int z = 0; z < numBlocksZ; ++z) {
+        for (int x = 0; x < numBlocksX; ++x) {
+            // Calculate position for each block
+            float posX = x * blockSize;
+            float posY = 0.0f; // Y position of the blocks (on the ground)
+            float posZ = z * blockSize;
+
+            // Create transformation matrix for the block
+            glm::mat4 modelMatrix = Transform::CalculateTransformMatrix(glm::vec3(posX, posY, posZ), glm::quat(), glm::vec3(1.0f));
+
+            // Add the transformation matrix to the instance matrix vector
+            instanceMatrix.push_back(modelMatrix);
+        }
+    }
+
+    // Set the instance matrix for the InstanceRenderer
+    sandRenderer->SetInstanceMatrix(instanceMatrix);
+    sand->AddComponent(sandRenderer);
+
 
     std::shared_ptr<Node> test = std::make_shared<Node>();
     std::shared_ptr<BlockData> blockData = std::make_shared<BlockData>(BlockType::DIRT, 0, 0, 0, 1, 0, std::make_shared<BlockManager>(1,1,1));
@@ -202,11 +228,9 @@ int main(int, char**)
     testPlayer->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
     // root
-    root->AddChild(plane);
-    root->AddChild(model);
+    root->AddChild(sand);
     root->UpdateTransforms(Transform::Origin());
-    plane->GetTransform()->SetScale(.5f);
-    model->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
+    sand->GetTransform()->SetPosition(glm::vec3(0.0f, 5.0f, 0.0f));
     root->AddChild(test);
     root->AddChild(testPlayer);
 
@@ -224,7 +248,7 @@ int main(int, char**)
 
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
-    float dirDirection[3] = { -1.5f, -1.5f, -1.5f };
+    float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
 
     // Init
