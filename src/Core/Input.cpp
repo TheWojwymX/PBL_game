@@ -1,16 +1,16 @@
-#include "InputManager.h"
+#include "Input.h"
 #include "Component/Camera.h"
 
-InputManager::InputManager()
+Input::Input()
 {
 }
 
-InputManager& InputManager::Instance() {
-	static InputManager instance;
+Input& Input::Instance() {
+	static Input instance;
 	return instance;
 }
 
-void InputManager::Init(GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT)
+void Input::Init(GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT)
 {
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
@@ -23,7 +23,7 @@ void InputManager::Init(GLFWwindow* window, const unsigned int SCR_WIDTH, const 
 	_window = window;
 }
 
-void InputManager::SetKeyFlagState(int keyCode, int action)
+void Input::SetKeyFlagState(int keyCode, int action)
 {
 	_lastKeys.push_back(keyCode);
 	switch (action)
@@ -42,75 +42,75 @@ void InputManager::SetKeyFlagState(int keyCode, int action)
 	}
 }
 
-void InputManager::SetMouseButtonFlagState(int mouseCode, int action)
+void Input::SetMouseButtonFlagState(int mouseCode, int action)
 {
 	_mouseButtonPreviousPressFlagArray[mouseCode] = _mouseButtonPressFlagArray[mouseCode];
 	_mouseButtonPressFlagArray[mouseCode] = action;
 }
 
-bool InputManager::GetKeyDown(int keyCode)
+bool Input::GetKeyDown(int keyCode)
 {
 	return _keyHoldFlagArray[keyCode] || _keyPressFlagArray[keyCode];
 }
 
-bool InputManager::IsKeyPressed(int keyCode)
+bool Input::IsKeyPressed(int keyCode)
 {
 	if (!_oldKeyPressFlagArray[keyCode] && _keyPressFlagArray[keyCode])
 		return true;
 	else return false;
 }
 
-bool InputManager::IsKeyReleased(int keyCode)
+bool Input::IsKeyReleased(int keyCode)
 {
 	return !_keyPressFlagArray[keyCode];
 }
 
-bool InputManager::GetMouseButtonState(int mouseCode)
+bool Input::GetMouseButtonState(int mouseCode)
 {
 	return _mouseButtonPressFlagArray[mouseCode];
 }
 
-bool InputManager::GetMouseButtonDown(int mouseCode)
+bool Input::GetMouseButtonDown(int mouseCode)
 {
 	return _mouseButtonPressFlagArray[mouseCode];
 }
 
-bool InputManager::IsMousePressed(int mouseCode)
+bool Input::IsMousePressed(int mouseCode)
 {
 	return !_mouseButtonPreviousPressFlagArray[mouseCode] && _mouseButtonPressFlagArray[mouseCode];
 }
 
-void InputManager::SetMousePos(float xpos, float ypos)
+void Input::SetMousePos(float xpos, float ypos)
 {
 	_mousePos = glm::vec2(xpos, ypos);
 }
 
-glm::vec2 InputManager::GetMousePos()
+glm::vec2 Input::GetMousePos()
 {
 	return _mousePos;
 }
 
-void InputManager::SetMouseOffset(float xOffset, float yOffset)
+void Input::SetMouseOffset(float xOffset, float yOffset)
 {
 	_mouseOffset = glm::vec2(xOffset, yOffset);
 }
 
-glm::vec2 InputManager::GetMouseOffset()
+glm::vec2 Input::GetMouseOffset()
 {
 	return _mouseOffset;
 }
 
-void InputManager::SetFirstMouse(bool firstMouse)
+void Input::SetFirstMouse(bool firstMouse)
 {
 	_firstMouse = firstMouse;
 }
 
-bool InputManager::GetFirstMouse()
+bool Input::GetFirstMouse()
 {
 	return _firstMouse;
 }
 
-void InputManager::UpdateOldStates()
+void Input::UpdateOldStates()
 {
 	while (_lastKeys.size())
 	{
@@ -124,12 +124,12 @@ void InputManager::UpdateOldStates()
 	_mouseOffset = glm::vec2(0.0f);
 }
 
-void InputManager::SetCursorMode(bool editMode) {
+void Input::SetCursorMode(bool editMode) {
 	int cursorMode = editMode ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED;
 	glfwSetInputMode(_window, GLFW_CURSOR, cursorMode);
 }
 
-int InputManager::ImGuiKeyCorrelation(int keyCode)
+int Input::ImGuiKeyCorrelation(int keyCode)
 {
 	switch (keyCode)
 	{
@@ -169,7 +169,7 @@ int InputManager::ImGuiKeyCorrelation(int keyCode)
 }
 
 
-void InputManager::FramebufferSizeCallbackIMP(int width, int height)
+void Input::FramebufferSizeCallbackIMP(int width, int height)
 {
 	// TODO
 	/*
@@ -179,17 +179,17 @@ void InputManager::FramebufferSizeCallbackIMP(int width, int height)
 
 }
 
-void InputManager::KeyCallbackIMP(int key, int scancode, int action, int mods)
+void Input::KeyCallbackIMP(int key, int scancode, int action, int mods)
 {
 	SetKeyFlagState(key, action);
 }
 
-void InputManager::MouseButtonCallbackIMP(int button, int action, int mods)
+void Input::MouseButtonCallbackIMP(int button, int action, int mods)
 {
 	SetMouseButtonFlagState(button, action);
 }
 
-void InputManager::MouseCallbackIMP(double xpos, double ypos)
+void Input::MouseCallbackIMP(double xpos, double ypos)
 {
 	if (_firstMouse)
 	{

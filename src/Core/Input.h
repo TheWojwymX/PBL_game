@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#define INPUT InputManager::Instance()
+#define INPUT Input::Instance()
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -9,12 +9,12 @@
 #include <iostream>
 #include <vector>
 
-class InputManager
+class Input
 {
 public:
 
 	//Daje instancje singletona
-	static InputManager& Instance();
+	static Input& Instance();
 
 	//Ustawia okno dla glfw oraz klawisze które nasłuchujemy
 	void Init(GLFWwindow* window, const unsigned int SCR_WIDTH, const unsigned int SCR_HEIGHT);
@@ -87,8 +87,8 @@ public:
 	void MouseCallbackIMP(double xpos, double ypos);
 
 private:
-	InputManager();
-	InputManager(InputManager const&);
+	Input();
+	Input(Input const&);
 
 	//Trzyma stare stany przycisku
 	bool _oldKeyPressFlagArray[349] = { 0 };

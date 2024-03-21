@@ -1,27 +1,37 @@
-#include "PlayerMovement.h"
+#include "PlayerController.h"
 #include "Core/Time.h"
-#include "Core/InputManager.h"
+#include "Core/Input.h"
 
-PlayerMovement::PlayerMovement(float speed, float gravity, float jumpHeight, float groundLevel)
+PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)) {}
 
-void PlayerMovement::Input() {
+void PlayerController::Input() {
+    MovementInput();
+}
+
+void PlayerController::Update() {
+    CheckGrounded();
+    HandleMovement();
+}
+
+void PlayerController::MovementInput() {
     // Get input for movement along the X and Z axes
     float x = (INPUT.GetKeyDown(GLFW_KEY_D) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_A) ? 1.0f : 0.0f);
     float z = (INPUT.GetKeyDown(GLFW_KEY_W) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_S) ? 1.0f : 0.0f);
 
     _inputVector = glm::vec2(x, z);
     // Check if input vector is non-zero before normalization
-    if (x != 0.0f || z != 0.0f) 
+    if (x != 0.0f || z != 0.0f)
         _inputVector = glm::normalize(_inputVector);
 }
 
-void PlayerMovement::Update() {
-    CheckGrounded();
-    HandleMovement();
+void PlayerController::InteractionInput() {
+    if (INPUT.IsMousePressed(GLFW_MOUSE_BUTTON_1)) {
+        std::cout << "JEJ i got pressed" << std::endl;
+    }
 }
 
-void PlayerMovement::CheckGrounded() {
+void PlayerController::CheckGrounded() {
     if (_ownerTransform->GetPosition()[1] <= _groundLevel ) {
         _isGrounded = true;
         _ownerTransform->SetPosition(_groundLevel,1);
@@ -30,12 +40,12 @@ void PlayerMovement::CheckGrounded() {
         _isGrounded = false;
     }
 }
-void PlayerMovement::SetCameraRef(std::shared_ptr<Camera> cameraRef)
+void PlayerController::SetCameraRef(std::shared_ptr<Camera> cameraRef)
 {
     _cameraRef = cameraRef;
 }
 
-void PlayerMovement::HandleMovement() {
+void PlayerController::HandleMovement() {
     glm::vec3 move = _inputVector.x * _cameraRef->GetRightVector() + _inputVector.y * _cameraRef->GetFrontVector();
     move.y = 0.0f;
 

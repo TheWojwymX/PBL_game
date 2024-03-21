@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Core/Component.h"
-#include "Core/InputManager.h"
+#include "Core/Input.h"
 
 #include <vector>
 

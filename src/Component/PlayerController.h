@@ -4,9 +4,9 @@
 #include <glm/glm.hpp>
 #include "Component/Camera.h"
 
-class PlayerMovement : public Component {
+class PlayerController : public Component {
 public:
-    PlayerMovement(float speed = 12.0f, float gravity = -9.81f, float jumpHeight = 3.0f, float groundLevel = 0.0f);
+    PlayerController(float speed = 12.0f, float gravity = -9.81f, float jumpHeight = 3.0f, float groundLevel = 0.0f);
 
     void Input() override;
     void Update() override;
@@ -25,4 +25,6 @@ private:
 
     void CheckGrounded();
     void HandleMovement();
+    void MovementInput();
+    void InteractionInput();
 };

@@ -19,9 +19,11 @@ private:
     int _width;
     int _depth;
     int _height;
-    std::vector<std::tuple<BlockData, glm::mat4>> _blockData;
+    std::vector<std::tuple<BlockData, glm::mat4>> _blocksData;
     std::shared_ptr<InstanceRenderer> _sandRendererRef;
 
     void GenerateMap();
     void UpdateInstanceRenderer();
+    void UpdateBlocksVisibility();
+    void UpdateBlockVisibility(BlockData& blockData);
 };

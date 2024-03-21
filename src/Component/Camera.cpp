@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "Core/InputManager.h"
 
 Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
     : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),

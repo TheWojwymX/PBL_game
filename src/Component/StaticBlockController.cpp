@@ -1,5 +1,4 @@
 #include "StaticBlockController.h"
-#include "Core/InputManager.h"
 
 StaticBlockController::StaticBlockController(std::shared_ptr<BlockData> blockData) : Block(blockData) {}
 

@@ -12,11 +12,11 @@
 
 #include "Core/Node.h"
 #include "Core/Time.h"
-#include "Core/InputManager.h"
+#include "Core/Input.h"
 #include "Component/BlockManager.h"
 #include "Component/MeshRenderer.h"
 #include "Component/StaticBlockController.h"
-#include "Component/PlayerMovement.h"
+#include "Component/PlayerController.h"
 #include "Component/Camera.h"
 #include "Component/InstanceRenderer.h"
 
@@ -193,9 +193,9 @@ int main(int, char**)
     std::shared_ptr<Node> player = std::make_shared<Node>();
     std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
     player->AddComponent(camera);
-    std::shared_ptr<PlayerMovement> playerMovement = std::make_shared<PlayerMovement>();
-    playerMovement->SetCameraRef(camera);
-    player->AddComponent(playerMovement);
+    std::shared_ptr<PlayerController> playerController = std::make_shared<PlayerController>();
+    playerController->SetCameraRef(camera);
+    player->AddComponent(playerController);
     player->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
     // root
