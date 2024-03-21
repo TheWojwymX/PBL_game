@@ -194,7 +194,8 @@ int main(int, char**)
     std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
     player->AddComponent(camera);
     std::shared_ptr<PlayerController> playerController = std::make_shared<PlayerController>();
-    playerController->SetCameraRef(camera);
+    playerController->SetCamera(camera);
+    playerController->SetBlockManager(blockManagerComp);
     player->AddComponent(playerController);
     player->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 

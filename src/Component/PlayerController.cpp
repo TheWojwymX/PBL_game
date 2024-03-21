@@ -5,8 +5,13 @@
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)) {}
 
+void PlayerController::Init() {
+    _blockManagerRef->SetCamera(_cameraRef);
+}
+
 void PlayerController::Input() {
     MovementInput();
+    InteractionInput();
 }
 
 void PlayerController::Update() {
@@ -27,7 +32,7 @@ void PlayerController::MovementInput() {
 
 void PlayerController::InteractionInput() {
     if (INPUT.IsMousePressed(GLFW_MOUSE_BUTTON_1)) {
-        std::cout << "JEJ i got pressed" << std::endl;
+        _blockManagerRef->HitBlock();
     }
 }
 
@@ -39,10 +44,6 @@ void PlayerController::CheckGrounded() {
     else {
         _isGrounded = false;
     }
-}
-void PlayerController::SetCameraRef(std::shared_ptr<Camera> cameraRef)
-{
-    _cameraRef = cameraRef;
 }
 
 void PlayerController::HandleMovement() {

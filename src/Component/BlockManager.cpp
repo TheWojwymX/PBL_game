@@ -29,26 +29,33 @@ void BlockManager::GenerateMap() {
 void BlockManager::UpdateInstanceRenderer() {
     std::vector<glm::mat4> instanceMatrix;
 
-    // Iterate through _blockData and add visible blocks to instanceMatrix
+    // Iterate through _blocksData and add visible non-empty blocks to instanceMatrix
     for (const auto& blockTuple : _blocksData) {
         const BlockData& blockData = std::get<0>(blockTuple);
-        if (blockData.IsVisible()) {
+        if (blockData.IsVisible() && blockData.GetBlockType() != BlockType::EMPTY) {
             glm::mat4 transformMatrix = std::get<1>(blockTuple);
             instanceMatrix.push_back(transformMatrix);
         }
     }
 
-    // Pass the instanceMatrix to _instanceRendererRef
+    // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
         _sandRendererRef->SetInstanceMatrix(instanceMatrix);
     }
 }
 
 void BlockManager::UpdateBlocksVisibility() {
+    _visibleBlocks.clear(); // Clear the list of visible blocks
+
     // Iterate through all blocks
     for (auto& blockTuple : _blocksData) {
         BlockData& blockData = std::get<0>(blockTuple);
         UpdateBlockVisibility(blockData);
+
+        // Add visible non-empty blocks to _visibleBlocks
+        if (blockData.IsVisible() && blockData.GetBlockType() != BlockType::EMPTY) {
+            _visibleBlocks.push_back(&blockData);
+        }
     }
 }
 
@@ -75,6 +82,57 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData) {
     }
 }
 
-void BlockManager::SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) {
-    _sandRendererRef = renderer;
+void BlockManager::HitBlock() {
+    // Get camera position and front vector
+    glm::vec3 cameraPos = _cameraRef->GetPosition();
+    glm::vec3 cameraFront = _cameraRef->GetFrontVector();
+    std::cout << cameraFront.x << " " << cameraFront.y << " " << cameraFront.z << std::endl;
+
+    // Calculate the ray direction (assuming normalized)
+    glm::vec3 rayDirection = glm::normalize(cameraFront);
+    std::cout << rayDirection.x << " " << rayDirection.y << " " << rayDirection.z << std::endl;
+    // Iterate through visible blocks to check for hits
+    for (auto& blockData : _visibleBlocks) {
+        glm::vec3 blockPos = glm::vec3(blockData->GetXID(), blockData->GetYID(), blockData->GetZID());
+
+        // Check if the block is hit by the ray
+        if (RayIntersectsBlock(cameraPos, rayDirection, blockPos)) {
+            // Destroy the block by changing its state to EMPTY
+            blockData->SetBlockType(BlockType::EMPTY);
+
+            // Update the instance renderer to reflect the changes
+            UpdateInstanceRenderer();
+            break; // Once a block is destroyed, stop checking for hits
+        }
+    }
+}
+
+
+
+bool BlockManager::RayIntersectsBlock(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& blockPos) {
+    // Box parameters
+    glm::vec3 boxMin = blockPos - glm::vec3(0.5f, 0.5f, 0.5f); // Assuming the block position is its center
+    glm::vec3 boxMax = blockPos + glm::vec3(0.5f, 0.5f, 0.5f);
+
+    // Adjust origin to ensure it's inside or very close to the block
+    glm::vec3 adjustedOrigin = origin;
+    if (direction.x < 0) adjustedOrigin.x += 0.5f;
+    if (direction.y < 0) adjustedOrigin.y += 0.5f;
+    if (direction.z < 0) adjustedOrigin.z += 0.5f;
+
+    // Calculate parameters for AABB intersection tests
+    glm::vec3 invDirection = 1.0f / direction;
+    glm::vec3 tMin = (boxMin - adjustedOrigin) * invDirection;
+    glm::vec3 tMax = (boxMax - adjustedOrigin) * invDirection;
+
+    // Ensure correct order of tMin and tMax
+    glm::vec3 t1 = glm::min(tMin, tMax);
+    glm::vec3 t2 = glm::max(tMin, tMax);
+
+    // Get the largest minimum value and smallest maximum value along each axis
+    float largestMin = std::max(std::max(t1.x, t1.y), t1.z);
+    float smallestMax = std::min(std::min(t2.x, t2.y), t2.z);
+
+    // Check if the ray intersects with the box
+    return smallestMax > largestMin && largestMin > 0.0f;
 }

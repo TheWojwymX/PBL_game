@@ -5,6 +5,7 @@
 #include <memory>
 #include "Core/Component.h"
 #include "Component/InstanceRenderer.h"
+#include "Component/Camera.h"
 #include "BlockData.h"
 
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
@@ -13,14 +14,20 @@ public:
 
     void Init() override;
 
-    void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer);
+    void HitBlock();
+    bool RayIntersectsBlock(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& blockPos);
+
+    void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
+    void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
 
 private:
     int _width;
     int _depth;
     int _height;
     std::vector<std::tuple<BlockData, glm::mat4>> _blocksData;
+    std::vector<BlockData*> _visibleBlocks;
     std::shared_ptr<InstanceRenderer> _sandRendererRef;
+    std::shared_ptr<Camera> _cameraRef;
 
     void GenerateMap();
     void UpdateInstanceRenderer();
