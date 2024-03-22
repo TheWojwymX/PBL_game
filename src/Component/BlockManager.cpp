@@ -19,8 +19,9 @@ void BlockManager::GenerateMap() {
                 // Calculate transform matrix for the current block
                 glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
 
-                // Create BlockData object with Sand type and add it to the vector along with the transform matrix
-                _blocksData.emplace_back(BlockData(BlockType::SAND, x, y, z, 1.0f, false, shared_from_this()), transformMatrix);
+                // Create BlockData object with Sand type and add it to the vector
+                BlockData blockData(BlockType::SAND, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
+                _blocksData.push_back(blockData);
             }
         }
     }
@@ -29,13 +30,12 @@ void BlockManager::GenerateMap() {
 void BlockManager::UpdateInstanceRenderer() {
     std::vector<glm::mat4> instanceMatrix;
 
-    // Iterate through _blocksData and add visible non-empty blocks to instanceMatrix
-    for (const auto& blockTuple : _blocksData) {
-        const BlockData& blockData = std::get<0>(blockTuple);
-        if (blockData.IsVisible() && blockData.GetBlockType() != BlockType::EMPTY) {
-            glm::mat4 transformMatrix = std::get<1>(blockTuple);
-            instanceMatrix.push_back(transformMatrix);
-        }
+    // Iterate through _visibleBlocks and add visible non-empty blocks to instanceMatrix
+    for (const auto& blockPtr : _visibleBlocks) {
+        const BlockData& blockData = *blockPtr;
+
+        glm::mat4 transformMatrix = blockData.GetMatrix();
+        instanceMatrix.push_back(transformMatrix);
     }
 
     // Pass the instanceMatrix to _sandRendererRef
@@ -44,26 +44,48 @@ void BlockManager::UpdateInstanceRenderer() {
     }
 }
 
+void BlockManager::RefreshVisibleBlocks() {
+    // Use erase-remove idiom to remove elements satisfying the condition
+    _visibleBlocks.erase(std::remove_if(_visibleBlocks.begin(), _visibleBlocks.end(),
+        [](BlockData* blockPtr) {
+            return blockPtr->GetBlockType() == BlockType::EMPTY;
+        }), _visibleBlocks.end());
+}
+
+
 void BlockManager::UpdateBlocksVisibility() {
     _visibleBlocks.clear(); // Clear the list of visible blocks
 
     // Iterate through all blocks
-    for (auto& blockTuple : _blocksData) {
-        BlockData& blockData = std::get<0>(blockTuple);
+    for (auto& blockData : _blocksData) {
         UpdateBlockVisibility(blockData);
-
-        // Add visible non-empty blocks to _visibleBlocks
-        if (blockData.IsVisible() && blockData.GetBlockType() != BlockType::EMPTY) {
-            _visibleBlocks.push_back(&blockData);
-        }
     }
 }
 
-void BlockManager::UpdateBlockVisibility(BlockData& blockData) {
+void BlockManager::UpdateNeighbourVisibility(BlockData& blockData)
+{
+    glm::ivec3 posID = blockData.GetPosID();
+    int x = posID.x;
+    int y = posID.y;
+    int z = posID.z;
+
+    // Update visibility for neighboring blocks
+
+    if (x - 1 >= 0 && x - 1 < _width) SetVisibility(_blocksData[GetIndex(x - 1, y, z)], true); // Left
+    if (x + 1 >= 0 && x + 1 < _width) SetVisibility(_blocksData[GetIndex(x + 1, y, z)], true); // Right
+    if (y + 1 >= 0 && y + 1 < _height) SetVisibility(_blocksData[GetIndex(x, y + 1, z)], true); // Top
+    if (y - 1 >= 0 && y - 1 < _height) SetVisibility(_blocksData[GetIndex(x, y - 1, z)], true); // Bottom
+    if (z + 1 >= 0 && z + 1 < _depth) SetVisibility(_blocksData[GetIndex(x, y, z + 1)], true); // Front
+    if (z - 1 >= 0 && z - 1 < _depth) SetVisibility(_blocksData[GetIndex(x, y, z - 1)], true); // Back
+}
+
+void BlockManager::UpdateBlockVisibility(BlockData& blockData)
+{
     // Get the position of the current block
-    int x = blockData.GetXID();
-    int y = blockData.GetYID();
-    int z = blockData.GetZID();
+    glm::ivec3 posID = blockData.GetPosID();
+    int x = posID.x;
+    int y = posID.y;
+    int z = posID.z;
 
     // Check adjacent blocks for emptiness
     bool leftBlockEmpty = x - 1 >= 0 && CheckAdjacency(x - 1, y, z);
@@ -73,12 +95,22 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData) {
     bool frontBlockEmpty = z + 1 < _depth && CheckAdjacency(x, y, z + 1);
     bool backBlockEmpty = z - 1 >= 0 && CheckAdjacency(x, y, z - 1);
 
-    // If any adjacent block is absent or not empty, set visibility to true
-    if (!leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty || !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty) {
-        blockData.SetVisible(true);
-    }
-    else {
-        blockData.SetVisible(false);
+    // Check if the block will be visible
+    bool isVisible = !leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty ||
+        !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty;
+
+    // Set the visibility of the block
+    SetVisibility(blockData, isVisible);
+}
+
+
+void BlockManager::SetVisibility(BlockData& blockData, bool state) {
+    // Set the visibility of the block
+    blockData.SetVisible(state);
+
+    // If the block is visible and not empty, add it to _visibleBlocks
+    if (state && blockData.GetBlockType() != BlockType::EMPTY) {
+        _visibleBlocks.push_back(&blockData);
     }
 }
 
@@ -102,8 +134,10 @@ bool BlockManager::RayIntersectsBlock(float rayLength) {
             // Check if the index is within bounds
             if (index >= 0 && index < _blocksData.size()) {
                 // Check if the blockData is visible and change it to empty if so
-                if (std::get<0>(_blocksData[index]).IsVisible() && std::get<0>(_blocksData[index]).GetBlockType() != BlockType::EMPTY) {
-                    std::get<0>(_blocksData[index]).SetBlockType(BlockType::EMPTY);
+                if (_blocksData[index].IsVisible() && _blocksData[index].GetBlockType() != BlockType::EMPTY) {
+                    _blocksData[index].SetBlockType(BlockType::EMPTY);
+                    UpdateNeighbourVisibility(_blocksData[index]);
+                    RefreshVisibleBlocks();
                     UpdateInstanceRenderer();
                     return true; // Block hit, no need to check further
                 }
@@ -118,11 +152,17 @@ int BlockManager::GetIndex(glm::ivec3 point) {
 }
 
 int BlockManager::GetIndex(int x, int y, int z) {
-    return x + (_width * _depth * y) + z * _width;
+    // Check if the provided coordinates are within bounds
+    if (x >= 0 && x < _width && y >= 0 && y < _height && z >= 0 && z < _depth) {
+        // Calculate the index using the provided coordinates
+        return x + (_width * _depth * y) + z * _width;
+    } else {
+        return 0; // Lol hardcoded out-of-range prevention
+    }
 }
+
 
 bool BlockManager::CheckAdjacency(int x, int y, int z)
 {
-    return std::get<0>(_blocksData[GetIndex(x, y, z)]).GetBlockType() != BlockType::EMPTY;
+    return _blocksData[GetIndex(x, y, z)].GetBlockType() != BlockType::EMPTY;
 }
-

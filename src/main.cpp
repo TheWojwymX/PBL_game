@@ -186,7 +186,7 @@ int main(int, char**)
     sand->AddComponent(sandRenderer);
 
     std::shared_ptr<Node> blockManager = std::make_shared<Node>();
-    std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(10,20,10);
+    std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
     blockManagerComp->SetInstanceRenderer(sandRenderer);
     blockManager->AddComponent(blockManagerComp);
 
