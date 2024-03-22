@@ -65,16 +65,16 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData) {
     int y = blockData.GetYID();
     int z = blockData.GetZID();
 
-    // Check visibility based on adjacent blocks
-    bool leftBlock = x - 1 >= 0 && std::get<0>(_blocksData[(x - 1) * _width + y * _height + z * _depth]).IsVisible();
-    bool rightBlock = x + 1 < _width && std::get<0>(_blocksData[(x + 1) * _width + y * _height + z * _depth]).IsVisible();
-    bool topBlock = y + 1 < _height && std::get<0>(_blocksData[x * _width + (y + 1) * _height + z * _depth]).IsVisible();
-    bool bottomBlock = y - 1 >= 0 && std::get<0>(_blocksData[x * _width + (y - 1) * _height + z * _depth]).IsVisible();
-    bool frontBlock = z + 1 < _depth && std::get<0>(_blocksData[x * _width + y * _height + (z + 1) * _depth]).IsVisible();
-    bool backBlock = z - 1 >= 0 && std::get<0>(_blocksData[x * _width + y * _height + (z - 1) * _depth]).IsVisible();
+    // Check adjacent blocks for emptiness
+    bool leftBlockEmpty = x - 1 >= 0 && CheckAdjacency(x - 1, y, z);
+    bool rightBlockEmpty = x + 1 < _width && CheckAdjacency(x + 1, y, z);
+    bool topBlockEmpty = y + 1 < _height && CheckAdjacency(x, y + 1, z);
+    bool bottomBlockEmpty = y - 1 >= 0 && CheckAdjacency(x, y - 1, z);
+    bool frontBlockEmpty = z + 1 < _depth && CheckAdjacency(x, y, z + 1);
+    bool backBlockEmpty = z - 1 >= 0 && CheckAdjacency(x, y, z - 1);
 
     // If any adjacent block is absent or not empty, set visibility to true
-    if (!leftBlock || !rightBlock || !topBlock || !bottomBlock || !frontBlock || !backBlock) {
+    if (!leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty || !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty) {
         blockData.SetVisible(true);
     }
     else {
@@ -82,57 +82,47 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData) {
     }
 }
 
-void BlockManager::HitBlock() {
+
+bool BlockManager::RayIntersectsBlock(float rayLength) {
     // Get camera position and front vector
     glm::vec3 cameraPos = _cameraRef->GetPosition();
     glm::vec3 cameraFront = _cameraRef->GetFrontVector();
-    std::cout << cameraFront.x << " " << cameraFront.y << " " << cameraFront.z << std::endl;
 
-    // Calculate the ray direction (assuming normalized)
-    glm::vec3 rayDirection = glm::normalize(cameraFront);
-    std::cout << rayDirection.x << " " << rayDirection.y << " " << rayDirection.z << std::endl;
-    // Iterate through visible blocks to check for hits
-    for (auto& blockData : _visibleBlocks) {
-        glm::vec3 blockPos = glm::vec3(blockData->GetXID(), blockData->GetYID(), blockData->GetZID());
+    // Iterate through points along the ray at 0.5 * direction steps
+    for (float t = 0.0f; t <= rayLength; t += 0.5f) {
+        // Calculate the point along the ray
+        glm::vec3 point = cameraPos + t * cameraFront;
 
-        // Check if the block is hit by the ray
-        if (RayIntersectsBlock(cameraPos, rayDirection, blockPos)) {
-            // Destroy the block by changing its state to EMPTY
-            blockData->SetBlockType(BlockType::EMPTY);
-
-            // Update the instance renderer to reflect the changes
-            UpdateInstanceRenderer();
-            break; // Once a block is destroyed, stop checking for hits
+        // Round the point to whole numbers
+        glm::ivec3 roundedPoint = glm::round(point);
+        // Check if all three elements of roundedPoint are positive
+        if (roundedPoint.x >= 0 && roundedPoint.y >= 0 && roundedPoint.z >= 0) {
+            // Calculate the index
+            int index = GetIndex(roundedPoint);
+            // Check if the index is within bounds
+            if (index >= 0 && index < _blocksData.size()) {
+                // Check if the blockData is visible and change it to empty if so
+                if (std::get<0>(_blocksData[index]).IsVisible() && std::get<0>(_blocksData[index]).GetBlockType() != BlockType::EMPTY) {
+                    std::get<0>(_blocksData[index]).SetBlockType(BlockType::EMPTY);
+                    UpdateInstanceRenderer();
+                    return true; // Block hit, no need to check further
+                }
+            }
         }
     }
+    return false; // No block hit along the ray
 }
 
-
-
-bool BlockManager::RayIntersectsBlock(const glm::vec3& origin, const glm::vec3& direction, const glm::vec3& blockPos) {
-    // Box parameters
-    glm::vec3 boxMin = blockPos - glm::vec3(0.5f, 0.5f, 0.5f); // Assuming the block position is its center
-    glm::vec3 boxMax = blockPos + glm::vec3(0.5f, 0.5f, 0.5f);
-
-    // Adjust origin to ensure it's inside or very close to the block
-    glm::vec3 adjustedOrigin = origin;
-    if (direction.x < 0) adjustedOrigin.x += 0.5f;
-    if (direction.y < 0) adjustedOrigin.y += 0.5f;
-    if (direction.z < 0) adjustedOrigin.z += 0.5f;
-
-    // Calculate parameters for AABB intersection tests
-    glm::vec3 invDirection = 1.0f / direction;
-    glm::vec3 tMin = (boxMin - adjustedOrigin) * invDirection;
-    glm::vec3 tMax = (boxMax - adjustedOrigin) * invDirection;
-
-    // Ensure correct order of tMin and tMax
-    glm::vec3 t1 = glm::min(tMin, tMax);
-    glm::vec3 t2 = glm::max(tMin, tMax);
-
-    // Get the largest minimum value and smallest maximum value along each axis
-    float largestMin = std::max(std::max(t1.x, t1.y), t1.z);
-    float smallestMax = std::min(std::min(t2.x, t2.y), t2.z);
-
-    // Check if the ray intersects with the box
-    return smallestMax > largestMin && largestMin > 0.0f;
+int BlockManager::GetIndex(glm::ivec3 point) {
+    return point.x + (_width * _depth * point.y) + point.z * _width;
 }
+
+int BlockManager::GetIndex(int x, int y, int z) {
+    return x + (_width * _depth * y) + z * _width;
+}
+
+bool BlockManager::CheckAdjacency(int x, int y, int z)
+{
+    return std::get<0>(_blocksData[GetIndex(x, y, z)]).GetBlockType() != BlockType::EMPTY;
+}
+

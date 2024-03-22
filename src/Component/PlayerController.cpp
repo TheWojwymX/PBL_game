@@ -32,7 +32,7 @@ void PlayerController::MovementInput() {
 
 void PlayerController::InteractionInput() {
     if (INPUT.IsMousePressed(GLFW_MOUSE_BUTTON_1)) {
-        _blockManagerRef->HitBlock();
+        _blockManagerRef->RayIntersectsBlock(10.0f);
     }
 }
 
