@@ -4,6 +4,7 @@
 #include <model.h>
 #include "Core/Component.h"
 #include "Component/Transform.h"
+#include "../../thirdparty/nlohmann/json.hpp"
 #include <memory>
 
 class Node {
@@ -36,4 +37,6 @@ private:
 
     std::vector<std::shared_ptr<Node>> _children;
     std::vector<std::shared_ptr<Component>> _components;
+
+    nlohmann::json_abi_v3_11_3::basic_json<> serialize();
 };

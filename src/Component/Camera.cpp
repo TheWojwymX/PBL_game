@@ -7,6 +7,23 @@ Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
     UpdateCameraVectors();
 }
 
+nlohmann::json Camera::Serialize() const {
+    return {
+            {"type", "Camera"},
+            {"offset", {_offset.x, _offset.y, _offset.z}},
+            {"position", {_position.x, _position.y, _position.z}},
+            {"front", {_front.x, _front.y, _front.z}},
+            {"up", {_up.x, _up.y, _up.z}},
+            {"right", {_right.x, _right.y, _right.z}},
+            {"worldUp", {_worldUp.x, _worldUp.y, _worldUp.z}},
+            {"yaw", _yaw},
+            {"pitch", _pitch},
+            {"movementSpeed", _movementSpeed},
+            {"mouseSensitivity", _mouseSensitivity},
+            {"zoom", _zoom},
+            {"editMode", _editMode}
+    };
+}
 
 void Camera::Input() {
     if (INPUT.IsKeyPressed(GLFW_KEY_E)) {

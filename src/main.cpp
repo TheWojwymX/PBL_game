@@ -10,6 +10,8 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include <../thirdparty//miniaudio.h>
 
+#include <../thirdparty/nlohmann/json.hpp>
+
 #include "Core/Node.h"
 #include "Core/Time.h"
 #include "Core/Input.h"
@@ -34,6 +36,8 @@
 #else
 #include IMGUI_IMPL_OPENGL_LOADER_CUSTOM
 #endif
+
+#include "Managers/ComponentsManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -178,22 +182,34 @@ int main(int, char**)
     // Load models
     Model* sandModel = new Model("res/Sand/Sand.obj");
 
+    // Create components manager
+    auto componentsManager = ComponentsManager();
+
     // Create graph
     std::shared_ptr<Node> root = std::make_shared<Node>();
 
     std::shared_ptr<Node> sand = std::make_shared<Node>();
-    std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
+    //std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
+    auto sandRenderer = componentsManager.createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
+
     sand->AddComponent(sandRenderer);
 
     std::shared_ptr<Node> blockManager = std::make_shared<Node>();
-    std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
+
+    //std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
+    auto blockManagerComp = componentsManager.createComponent<BlockManager>(100, 100, 100);
+    //auto blockManagerComp2 = componentsManager.createComponent<BlockManager>(666, 100, 100);
     blockManagerComp->SetInstanceRenderer(sandRenderer);
     blockManager->AddComponent(blockManagerComp);
 
     std::shared_ptr<Node> player = std::make_shared<Node>();
-    std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
+    //std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
+    auto camera = componentsManager.createComponent<Camera>(glm::vec3(0.0f,1.8f,0.0f));
+
     player->AddComponent(camera);
-    std::shared_ptr<PlayerController> playerController = std::make_shared<PlayerController>();
+    //std::shared_ptr<PlayerController> playerController = std::make_shared<PlayerController>();
+    auto playerController = componentsManager.createComponent<PlayerController>();
+
     playerController->SetCamera(camera);
     playerController->SetBlockManager(blockManagerComp);
     player->AddComponent(playerController);
@@ -203,6 +219,11 @@ int main(int, char**)
     root->AddChild(sand);
     root->AddChild(blockManager);
     root->AddChild(player);
+
+    //std::cout << componentsManager.getComponentByID<BlockManager>(1)->id << componentsManager.getComponentByID<BlockManager>(0)->id;
+
+    nlohmann::json data = camera->Serialize();
+    std::cout << data;
 
 
     // Init

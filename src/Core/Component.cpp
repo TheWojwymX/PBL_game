@@ -4,6 +4,10 @@ Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
 
 Component::~Component() {}
 
+nlohmann::json Component::Serialize() {
+    return nlohmann::json();
+}
+
 void Component::Init() {}
 
 void Component::Input() {}

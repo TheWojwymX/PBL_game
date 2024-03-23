@@ -4,12 +4,14 @@
 #include <memory>
 #include "Component/Transform.h"
 #include "shader_s.h"
+#include <../thirdparty/nlohmann/json.hpp>
 
 class Component {
 public:
     Component();
     virtual ~Component();
 
+    virtual nlohmann::json Serialize();
     virtual void Init();
     virtual void Input();
     virtual void Update();
@@ -19,6 +21,8 @@ public:
     void SetOwnerTransform(std::shared_ptr<Transform> transform);
     void SetEnabled(bool isEnabled);
     bool IsEnabled() const;
+
+    int id;
 
 protected:
     std::shared_ptr<Transform> _ownerTransform;

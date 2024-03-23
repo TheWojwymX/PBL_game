@@ -6,6 +6,8 @@
 
 class InstanceRenderer : public Component {
 public:
+    nlohmann::json Serialize() const;
+
     InstanceRenderer(Model* model, int maxSize, Shader* shader);
 
     void Render(glm::mat4 parentWorld) override;

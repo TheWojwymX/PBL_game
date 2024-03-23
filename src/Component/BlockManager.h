@@ -9,6 +9,8 @@
 
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
 public:
+    nlohmann::json Serialize() const;
+
     BlockManager(int width, int height, int depth);
 
     void Init() override;

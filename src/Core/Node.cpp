@@ -2,6 +2,37 @@
 
 Node::Node() : _local(std::make_shared<Transform>()) {}
 
+nlohmann::json Node::serialize() {
+    nlohmann::json nodeJson;
+
+
+    // Transform
+    auto transform = GetTransform();
+    if (transform != nullptr) {
+        nodeJson["transform"] = {
+                {"position", {transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z}},
+                {"rotation", {transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z}},
+                {"scale", {transform->GetScale().x, transform->GetScale().y, transform->GetScale().z}}
+        };
+    }
+
+    // Components
+    nlohmann::json componentsJson = nlohmann::json::array();
+    for (auto& component : _components) {
+        componentsJson.push_back(component->Serialize());
+    }
+    nodeJson["components"] = componentsJson;
+
+    // Child Nodes
+    nlohmann::json childrenJson = nlohmann::json::array();
+    for (auto& child : _children) {
+        childrenJson.push_back(child->serialize());
+    }
+    nodeJson["children"] = childrenJson;
+
+    return nodeJson;
+}
+
 void Node::AddChild(std::shared_ptr<Node> child) {
     child->GetTransform()->SetParent(_local);
     _children.push_back(child);

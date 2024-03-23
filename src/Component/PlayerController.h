@@ -7,6 +7,8 @@
 
 class PlayerController : public Component {
 public:
+    nlohmann::json Serialize() const;
+
     PlayerController(float speed = 12.0f, float gravity = -9.81f, float jumpHeight = 3.0f, float groundLevel = 0.5f);
 
     void Init() override;
