@@ -9,7 +9,7 @@ class PlayerController : public Component {
 public:
     nlohmann::json Serialize() const;
 
-    PlayerController(float speed = 12.0f, float gravity = -9.81f, float jumpHeight = 3.0f, float groundLevel = 0.5f);
+    PlayerController(float speed = 12.0f, float gravity = -9.81f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, float width = 0.7f, float height = 1.8f);
 
     void Init() override;
     void Input() override;
@@ -20,10 +20,13 @@ public:
 
 private:
     float _speed;
+    float _width;
+    float _height;
     float _gravity;
     float _jumpHeight;
     float _groundLevel;
     bool _isGrounded;
+    float _reach;
     glm::vec3 _velocity;
     glm::vec2 _inputVector;
     std::shared_ptr<Camera> _cameraRef;

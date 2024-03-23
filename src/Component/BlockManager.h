@@ -16,6 +16,7 @@ public:
     void Init() override;
 
     bool RayIntersectsBlock(float rayLength);
+    bool CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
@@ -36,6 +37,7 @@ private:
     void UpdateBlockVisibility(BlockData& blockData);
     void UpdateNeighbourVisibility(BlockData& blockData);
     void SetVisibility(BlockData& blockData, bool state);
+   
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);
     bool CheckAdjacency(int x, int y, int z);

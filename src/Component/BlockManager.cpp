@@ -8,7 +8,7 @@ void BlockManager::Init() {
     UpdateBlocksVisibility();
     UpdateInstanceRenderer();
 }
-
+ 
 void BlockManager::GenerateMap() {
     _blocksData.clear();
 
@@ -145,6 +145,26 @@ bool BlockManager::RayIntersectsBlock(float rayLength) {
         }
     }
     return false; // No block hit along the ray
+}
+
+bool BlockManager::CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight) {
+    // Round the entity position to integers
+    glm::ivec3 roundedEntityPos = glm::round(entityPos);
+
+    // Check if the rounded entity position is within bounds
+    if (roundedEntityPos.x < 0 || roundedEntityPos.y < 0 || roundedEntityPos.z < 0 ||
+        roundedEntityPos.x >= _width || roundedEntityPos.y >= _height || roundedEntityPos.z >= _depth) {
+        return false; // Out of bounds
+    }
+
+    // Calculate the index of the block below the entity
+    int indexBelowEntity = GetIndex(roundedEntityPos.x, roundedEntityPos.y - 1, roundedEntityPos.z);
+
+    // Check if the block below the entity is not empty
+    if (_blocksData[indexBelowEntity].GetBlockType() != BlockType::EMPTY) 
+        return true; // Collision detected
+
+    return false; // No collision
 }
 
 int BlockManager::GetIndex(glm::ivec3 point) {

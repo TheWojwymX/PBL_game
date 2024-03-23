@@ -2,8 +2,8 @@
 #include "Core/Time.h"
 #include "Core/Input.h"
 
-PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel)
-    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)) {}
+PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, float width, float height)
+    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _width(width), _height(height) {}
 
 nlohmann::json PlayerController::Serialize() const {
     nlohmann::json data;
@@ -54,7 +54,7 @@ void PlayerController::MovementInput() {
 
 void PlayerController::InteractionInput() {
     if (INPUT.IsMousePressed(GLFW_MOUSE_BUTTON_1)) {
-        _blockManagerRef->RayIntersectsBlock(10.0f);
+        _blockManagerRef->RayIntersectsBlock(_reach);
     }
 }
 
@@ -83,13 +83,13 @@ void PlayerController::HandleMovement() {
     else
         _velocity.y = 0.0f;
 
-    _ownerTransform->AddPosition(move * TIME.GetDeltaTime());
-
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {
         _velocity.y = sqrtf(_jumpHeight * -2.0f * _gravity);
     }
 
-    _ownerTransform->AddPosition(_velocity * TIME.GetDeltaTime());
+    glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
+
+    _ownerTransform->AddPosition(movementVector);
 }
 

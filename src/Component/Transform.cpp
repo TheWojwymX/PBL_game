@@ -24,6 +24,22 @@ void Transform::AddPosition(glm::vec3 offset) {
     _isDirty = true;
 }
 
+void Transform::AddPosition(float offset, int axis)
+{
+    switch (axis) {
+    case 0: // Set position along the X-axis
+        _position.x += offset;
+        break;
+    case 1: // Set position along the Y-axis
+        _position.y += offset;
+        break;
+    case 2: // Set position along the Z-axis
+        _position.z += offset;
+        break;
+    }
+    _isDirty = true;
+}
+
 void Transform::SetPosition(float newPosition, int axis) {
     switch (axis) {
     case 0: // Set position along the X-axis
