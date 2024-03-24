@@ -2,9 +2,10 @@
 
 Node::Node() : _local(std::make_shared<Transform>()) {}
 
-nlohmann::json Node::serialize() {
+nlohmann::json Node::Serialize() {
     nlohmann::json nodeJson;
 
+    nodeJson["NodeID"] = id;
 
     // Transform
     auto transform = GetTransform();
@@ -26,7 +27,7 @@ nlohmann::json Node::serialize() {
     // Child Nodes
     nlohmann::json childrenJson = nlohmann::json::array();
     for (auto& child : _children) {
-        childrenJson.push_back(child->serialize());
+        childrenJson.push_back(child->Serialize());
     }
     nodeJson["children"] = childrenJson;
 

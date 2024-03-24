@@ -5,24 +5,10 @@
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, float width, float height)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _width(width), _height(height) {}
 
-nlohmann::json PlayerController::Serialize() const {
+nlohmann::json PlayerController::Serialize() {
     nlohmann::json data;
 
     data["type"] = "PlayerController";
-    data["speed"] = _speed;
-    data["gravity"] = _gravity;
-    data["jumpHeight"] = _jumpHeight;
-    data["groundLevel"] = _groundLevel;
-    data["isGrounded"] = _isGrounded;
-    data["velocity"] = {_velocity.x, _velocity.y, _velocity.z};
-    data["id"] = id;
-
-    if (_cameraRef) {
-        data["cameraRef"] = _cameraRef->id;
-    }
-    if (_blockManagerRef) {
-        data["blockManagerRef"] = _blockManagerRef->id;
-    }
 
     return data;
 }

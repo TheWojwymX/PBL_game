@@ -11,6 +11,10 @@ class Node {
 public:
     Node();
 
+    int id;
+
+    nlohmann::json_abi_v3_11_3::basic_json<> Serialize();
+
     std::shared_ptr<Transform> GetTransform() { return _local; }
 
     void AddChild(std::shared_ptr<Node> child);
@@ -37,6 +41,4 @@ private:
 
     std::vector<std::shared_ptr<Node>> _children;
     std::vector<std::shared_ptr<Component>> _components;
-
-    nlohmann::json_abi_v3_11_3::basic_json<> serialize();
 };

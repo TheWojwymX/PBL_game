@@ -6,6 +6,17 @@ InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader)
     SetupInstanceModel();
 }
 
+nlohmann::json InstanceRenderer::Serialize() {
+    nlohmann::json data;
+
+    data["type"] = "InstanceRenderer";
+    data["model"] = ResourceMapsManager::GetInstance().FindModelName(_model);
+    data["maxSize"] = _maxSize;
+    data["shader"] = ResourceMapsManager::GetInstance().FindShaderName(_shader);
+
+    return data;
+}
+
 void InstanceRenderer::Render(glm::mat4 parentWorld) {
     _shader->use();
     _model->InstanceDraw(*_shader, _instanceMatrix.size());

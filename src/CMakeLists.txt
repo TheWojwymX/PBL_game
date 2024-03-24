@@ -28,7 +28,11 @@ file(GLOB MODEL_FILES
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} ${TEXTURE_FILES}
         ../thirdparty/miniaudio.h
         Managers/ComponentsManager.cpp
-        Managers/ComponentsManager.h)
+        Managers/ComponentsManager.h
+        Managers/SceneManager.cpp
+        Managers/SceneManager.h
+        Managers/ResourceMapsManager.cpp
+        Managers/ResourceMapsManager.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

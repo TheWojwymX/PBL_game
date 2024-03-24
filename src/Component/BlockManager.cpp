@@ -3,6 +3,17 @@
 BlockManager::BlockManager(int width, int height, int depth) :
     _width(width), _depth(depth), _height(height) {}
 
+nlohmann::json BlockManager::Serialize() {
+    nlohmann::json data;
+
+    data["type"] = "BlockManager";
+    data["width"] = _width;
+    data["depth"] = _depth;
+    data["height"] = _height;
+
+    return data;
+}
+
 void BlockManager::Init() {
     GenerateMap();
     UpdateBlocksVisibility();

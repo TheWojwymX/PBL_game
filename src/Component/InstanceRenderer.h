@@ -3,10 +3,11 @@
 #include "Core/Component.h"
 #include <model.h>
 #include <vector>
+#include "../Managers/ResourceMapsManager.h"
 
 class InstanceRenderer : public Component {
 public:
-    nlohmann::json Serialize() const;
+    nlohmann::json Serialize() override;
 
     InstanceRenderer(Model* model, int maxSize, Shader* shader);
 
