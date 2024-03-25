@@ -38,7 +38,7 @@ public:
 
     ~ComponentsManager() = default;
 
-private:
+//private:
     ComponentsManager() = default;
 
     template <typename ComponentType>

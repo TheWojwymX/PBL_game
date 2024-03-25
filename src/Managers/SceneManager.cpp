@@ -24,7 +24,8 @@ void SceneManager::SaveToJsonFile(const nlohmann::json& jsonData, const std::str
     }
 }
 
-Node SceneManager::LoadFromJsonFile(const string &filePath) {
+
+std::shared_ptr<Node> SceneManager::LoadFromJsonFile(const string &filePath) {
 
     std::ifstream inputFile(filePath);
     if (inputFile.is_open()) {
@@ -32,8 +33,9 @@ Node SceneManager::LoadFromJsonFile(const string &filePath) {
         inputFile >> jsonFile;
         inputFile.close();
 
-        Node rootNode;
-        rootNode.Deserialize(jsonFile);
+        auto rootNodeJson = jsonFile["root"];
+        auto rootNode = std::make_shared<Node>();
+        rootNode->Deserialize(rootNodeJson);
 
         return rootNode;
 
@@ -41,4 +43,18 @@ Node SceneManager::LoadFromJsonFile(const string &filePath) {
         std::cerr << "Can't open JSON " << filePath << std::endl;
     }
 
+}
+
+int SceneManager::getNextNodeID(const string &filePath) {
+    std::ifstream inputFile(filePath);
+    if (inputFile.is_open()) {
+        nlohmann::json jsonFile;
+
+        if (jsonFile.contains("nextNodeId")) {
+            return jsonFile["nextNodeId"].get<int>();
+        }
+
+    } else {
+        std::cerr << "Can't open JSON " << filePath << std::endl;
+    }
 }

@@ -40,6 +40,7 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/SceneManager.h"
 #include "Managers/ResourceMapsManager.h"
+#include "Managers/NodesManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -188,53 +189,72 @@ int main(int, char**)
     int nextNodeId = 0;
 
     // Create graph
-    std::shared_ptr<Node> root = std::make_shared<Node>();
+
+
+
+/*    std::shared_ptr<Node> root = std::make_shared<Node>();
     root->id = nextNodeId;
-    nextNodeId++;
-
-
-    std::shared_ptr<Node> sand = std::make_shared<Node>();
-    sand->id = nextNodeId;
-    nextNodeId++;
+    root->name = "root";
+    nextNodeId++;*/
 
     // maps
     ResourceMapsManager::GetInstance().RegisterModel("sandModel", sandModel);
     ResourceMapsManager::GetInstance().RegisterShader("instanceModelShader", instanceModelShader);
 
-    auto sandRenderer = ComponentsManager::getInstance().createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
-    sand->AddComponent(sandRenderer);
+    std::shared_ptr<Node> root = SceneManager::LoadFromJsonFile("../../scenes/test.json");
+/*    nlohmann::json jsonData2 = SceneManager::SerializeRoot(root, nextNodeId);
+    SceneManager::SaveToJsonFile(jsonData2, "../../scenes/test2.json");*/
 
-    std::shared_ptr<Node> blockManager = std::make_shared<Node>();
+/*    std::shared_ptr<Node> sand = std::make_shared<Node>();
+    sand->id = nextNodeId;
+    sand->name = "sand";
+    nextNodeId++;*/
+
+/*    auto sandRenderer = ComponentsManager::getInstance().createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
+    sand->AddComponent(sandRenderer);*/
+
+/*    std::shared_ptr<Node> blockManager = std::make_shared<Node>();
     blockManager->id = nextNodeId;
-    nextNodeId++;
+    blockManager->name = "blockManager";
+    nextNodeId++;*/
 
-    auto blockManagerComp = ComponentsManager::getInstance().createComponent<BlockManager>(100, 100, 100);
+/*    auto blockManagerComp = ComponentsManager::getInstance().createComponent<BlockManager>(100, 100, 100);
     blockManagerComp->SetInstanceRenderer(sandRenderer);
-    blockManager->AddComponent(blockManagerComp);
+    blockManager->AddComponent(blockManagerComp);*/
 
-    std::shared_ptr<Node> player = std::make_shared<Node>();
+    //TAK NIE MOZE BYC DO ZMIANY NIZEJ ANALOGICZNIE
+    ComponentsManager::getInstance().getComponentByID<BlockManager>(0)->SetInstanceRenderer(ComponentsManager::getInstance().getComponentByID<InstanceRenderer>(0));
+
+/*    std::shared_ptr<Node> player = std::make_shared<Node>();
     player->id = nextNodeId;
-    nextNodeId++;
+    player->name = "player";
+    nextNodeId++;*/
 
-    auto camera = ComponentsManager::getInstance().createComponent<Camera>(glm::vec3(0.0f,1.8f,0.0f));
+/*    auto camera = ComponentsManager::getInstance().createComponent<Camera>(glm::vec3(0.0f,1.8f,0.0f));*/
 
-    player->AddComponent(camera);
-    auto playerController = ComponentsManager::getInstance().createComponent<PlayerController>();
+/*    player->AddComponent(camera);
+    auto playerController = ComponentsManager::getInstance().createComponent<PlayerController>();*/
 
-    playerController->SetCamera(camera);
+
+
+/*    playerController->SetCamera(camera);
     playerController->SetBlockManager(blockManagerComp);
     player->AddComponent(playerController);
-    player->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
+    player->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));*/
+
+    ComponentsManager::getInstance().getComponentByID<PlayerController>(0)->SetCamera(ComponentsManager::getInstance().getComponentByID<Camera>(0));
+    ComponentsManager::getInstance().getComponentByID<PlayerController>(0)->SetBlockManager(ComponentsManager::getInstance().getComponentByID<BlockManager>(0));
+    NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
     // root
-    root->AddChild(sand);
+/*    root->AddChild(sand);
     root->AddChild(blockManager);
-    root->AddChild(player);
+    root->AddChild(player);*/
 
     // json
     nlohmann::json jsonData = SceneManager::SerializeRoot(root, nextNodeId);
-    std::cout << jsonData;
-    SceneManager::SaveToJsonFile(jsonData, "../../scenes/test.json");
+    //std::cout << jsonData;
+    SceneManager::SaveToJsonFile(jsonData, "../../scenes/test2.json");
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
@@ -265,7 +285,6 @@ int main(int, char**)
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
-
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -300,10 +319,9 @@ int main(int, char**)
         glDepthMask(GL_FALSE);
         skyboxShader->use();
 
-        glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-        glm::mat4 view = camera->GetViewMatrix();
-
-        glm::mat4 skyboxView = glm::mat4(glm::mat3(camera->GetViewMatrix())); // remove translation from the view matrix
+        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 view = ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetViewMatrix();
+        glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetViewMatrix())); // remove translation from the view matrix
         skyboxShader->setMat4("view", skyboxView);
         skyboxShader->setMat4("projection", projection);
 
@@ -319,7 +337,7 @@ int main(int, char**)
         modelShader->setVec3("dirLight.color", dirColor);
         modelShader->setInt("dirLight.isActive", dirActive);
 
-        modelShader->setVec3("viewPos", camera->GetPosition());
+        modelShader->setVec3("viewPos", ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetPosition());
         modelShader->setMat4("projection", projection);
         modelShader->setMat4("view", view);
 
@@ -328,7 +346,7 @@ int main(int, char**)
         instanceModelShader->setVec3("dirLight.color", dirColor);
         instanceModelShader->setInt("dirLight.isActive", dirActive);
 
-        instanceModelShader->setVec3("viewPos", camera->GetPosition());
+        instanceModelShader->setVec3("viewPos", ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetPosition());
         instanceModelShader->setMat4("projection", projection);
         instanceModelShader->setMat4("view", view);
 
@@ -342,10 +360,12 @@ int main(int, char**)
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-
         INPUT.UpdateOldStates();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+
     }
 
     // Cleanup

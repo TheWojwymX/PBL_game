@@ -11,10 +11,10 @@
 #include "Component/BlockManager.h"
 #include "Managers/ComponentsManager.h"
 
-class Node {
+class Node : public std::enable_shared_from_this<Node>{
 public:
     Node();
-
+    string name;
     int id;
 
     nlohmann::json Serialize();
@@ -43,6 +43,7 @@ public:
     }
 
 private:
+
     std::shared_ptr<Transform> _local;
 
     std::vector<std::shared_ptr<Node>> _children;

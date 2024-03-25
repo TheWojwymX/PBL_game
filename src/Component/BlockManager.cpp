@@ -21,15 +21,15 @@ nlohmann::json BlockManager::Serialize() {
 void BlockManager::Deserialize(const nlohmann::json &jsonData) {
 
     if (jsonData.contains("width")) {
-        _width = jsonData["width"];
+        _width = jsonData["width"].get<int>();
     }
 
     if (jsonData.contains("depth")) {
-        _depth = jsonData["depth"];
+        _depth = jsonData["depth"].get<int>();
     }
 
     if (jsonData.contains("height")) {
-        _height = jsonData["height"];
+        _height = jsonData["height"].get<int>();
     }
 
     Component::Deserialize(jsonData);

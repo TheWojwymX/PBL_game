@@ -1,10 +1,13 @@
 #include "Node.h"
+#include "../Managers/NodesManager.h"
+
 
 Node::Node() : _local(std::make_shared<Transform>()) {}
 
 nlohmann::json Node::Serialize() {
     nlohmann::json nodeJson;
 
+    nodeJson["NodeName"] = name;
     nodeJson["NodeID"] = id;
 
     // Transform
@@ -35,9 +38,16 @@ nlohmann::json Node::Serialize() {
 }
 
 void Node::Deserialize(const nlohmann::json& nodeJson) {
+    if (nodeJson.contains("NodeName")) {
+        name = nodeJson["NodeName"].get<string>();
+    }
+
     if (nodeJson.contains("NodeID")) {
         id = nodeJson["NodeID"].get<int>();
     }
+
+    // UWAGA PRAWDOPODOBNIE DO ZMIANY W PRZYSZLOSCI
+    NodesManager::getInstance().addNodeAt(this->shared_from_this(), id);
 
     // Transform
     if (nodeJson.contains("transform")) {
@@ -70,7 +80,7 @@ void Node::Deserialize(const nlohmann::json& nodeJson) {
                     AddComponent(ComponentsManager::getInstance().getComponentByID<InstanceRenderer>(componentJson["componentId"].get<size_t>()));
                 }
 
-                if (type == "PlayerController") {
+                if (type == "BlockManager") {
                     ComponentsManager::getInstance().deserializeComponent<BlockManager>(componentJson);
                     AddComponent(ComponentsManager::getInstance().getComponentByID<BlockManager>(componentJson["componentId"].get<size_t>()));
                 }
@@ -80,6 +90,7 @@ void Node::Deserialize(const nlohmann::json& nodeJson) {
 
     // Child Nodes
     if (nodeJson.contains("children")) {
+        //std::cout<<"sa dzieci " << name << std::endl;
         for (auto& childJson : nodeJson["children"]) {
             auto childNode = std::make_shared<Node>();
             childNode->Deserialize(childJson);

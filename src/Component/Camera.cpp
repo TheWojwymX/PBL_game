@@ -25,6 +25,8 @@ void Camera::Deserialize(const nlohmann::json &jsonData) {
                 jsonData["offset"][2].get<float>()
         );
     }
+
+    Component::Deserialize(jsonData);
 }
 
 

@@ -15,7 +15,9 @@ public:
 
     static void SaveToJsonFile(const nlohmann::json &jsonData, const string &filePath);
 
-    static Node LoadFromJsonFile(const string &filePath);
+    static std::shared_ptr<Node> LoadFromJsonFile(const string &filePath);
+
+    static int getNextNodeID(const string &filePath);
 };
 
 

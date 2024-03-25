@@ -1,7 +1,7 @@
 #include "InstanceRenderer.h"
 
 InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader)
-    : _model(model), _shader(shader) {
+    : _model(model),_maxSize(maxSize) , _shader(shader) {
     CreateMatrixBuffer(maxSize);
     SetupInstanceModel();
 }
@@ -24,15 +24,15 @@ nlohmann::json InstanceRenderer::Serialize() {
 void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
 
     if (jsonData.contains("model")) {
-        _model = ResourceMapsManager::GetInstance().GetModelByName(jsonData["model"]);
+        _model = ResourceMapsManager::GetInstance().GetModelByName(jsonData["model"].get<string>());
     }
 
     if (jsonData.contains("maxSize")) {
-        _maxSize = jsonData["maxSize"];
+        _maxSize = jsonData["maxSize"].get<int>();
     }
 
     if (jsonData.contains("shader")) {
-        _shader = ResourceMapsManager::GetInstance().GetShaderByName(jsonData["shader"]);
+        _shader = ResourceMapsManager::GetInstance().GetShaderByName(jsonData["shader"].get<string>());
     }
 
     CreateMatrixBuffer(_maxSize);
