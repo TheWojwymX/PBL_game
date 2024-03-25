@@ -9,13 +9,24 @@ Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
 
 nlohmann::json Camera::Serialize() {
 
-    nlohmann::json data;
+    nlohmann::json data = Component::Serialize();
 
     data["type"] = "Camera";
     data["offset"] = {_offset.x, _offset.y, _offset.z};
 
     return data;
 }
+
+void Camera::Deserialize(const nlohmann::json &jsonData) {
+    if (jsonData.contains("offset")) {
+        _offset = glm::vec3(
+                jsonData["offset"][0].get<float>(),
+                jsonData["offset"][1].get<float>(),
+                jsonData["offset"][2].get<float>()
+        );
+    }
+}
+
 
 void Camera::Input() {
     if (INPUT.IsKeyPressed(GLFW_KEY_E)) {

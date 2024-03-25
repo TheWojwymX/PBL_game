@@ -5,7 +5,18 @@ Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
 Component::~Component() {}
 
 nlohmann::json Component::Serialize() {
-    return nlohmann::json();
+
+    nlohmann::json data;
+
+    data["componentId"] = id;
+
+    return data;
+}
+
+void Component::Deserialize(const nlohmann::json &jsonData) {
+    if (jsonData.contains("componentId")) {
+        id = jsonData["componentId"].get<int>();
+    }
 }
 
 void Component::Init() {}

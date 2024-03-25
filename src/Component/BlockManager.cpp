@@ -3,8 +3,12 @@
 BlockManager::BlockManager(int width, int height, int depth) :
     _width(width), _depth(depth), _height(height) {}
 
+BlockManager::BlockManager() {
+
+}
+
 nlohmann::json BlockManager::Serialize() {
-    nlohmann::json data;
+    nlohmann::json data = Component::Serialize();
 
     data["type"] = "BlockManager";
     data["width"] = _width;
@@ -12,6 +16,23 @@ nlohmann::json BlockManager::Serialize() {
     data["height"] = _height;
 
     return data;
+}
+
+void BlockManager::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("width")) {
+        _width = jsonData["width"];
+    }
+
+    if (jsonData.contains("depth")) {
+        _depth = jsonData["depth"];
+    }
+
+    if (jsonData.contains("height")) {
+        _height = jsonData["height"];
+    }
+
+    Component::Deserialize(jsonData);
 }
 
 void BlockManager::Init() {

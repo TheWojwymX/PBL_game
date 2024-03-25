@@ -34,6 +34,60 @@ nlohmann::json Node::Serialize() {
     return nodeJson;
 }
 
+void Node::Deserialize(const nlohmann::json& nodeJson) {
+    if (nodeJson.contains("NodeID")) {
+        id = nodeJson["NodeID"].get<int>();
+    }
+
+    // Transform
+    if (nodeJson.contains("transform")) {
+        auto transformData = nodeJson["transform"];
+        auto position = transformData["position"];
+        auto rotation = transformData["rotation"];
+        auto scale = transformData["scale"];
+        _local->SetPosition(glm::vec3(position[0], position[1], position[2]));
+        _local->SetRotation(glm::vec3(rotation[0], rotation[1], rotation[2]));
+        _local->SetScale(glm::vec3(scale[0], scale[1], scale[2]));
+    }
+
+    // Components
+    if (nodeJson.contains("components")) {
+        for (auto& componentJson : nodeJson["components"]) {
+            if (componentJson.contains("type")) {
+                std::string type = componentJson["type"];
+                if (type == "Camera") {
+                    ComponentsManager::getInstance().deserializeComponent<Camera>(componentJson);
+                    AddComponent(ComponentsManager::getInstance().getComponentByID<Camera>(componentJson["componentId"].get<size_t>()));
+                }
+
+                if (type == "PlayerController") {
+                    ComponentsManager::getInstance().deserializeComponent<PlayerController>(componentJson);
+                    AddComponent(ComponentsManager::getInstance().getComponentByID<PlayerController>(componentJson["componentId"].get<size_t>()));
+                }
+
+                if (type == "InstanceRenderer") {
+                    ComponentsManager::getInstance().deserializeComponent<InstanceRenderer>(componentJson);
+                    AddComponent(ComponentsManager::getInstance().getComponentByID<InstanceRenderer>(componentJson["componentId"].get<size_t>()));
+                }
+
+                if (type == "PlayerController") {
+                    ComponentsManager::getInstance().deserializeComponent<BlockManager>(componentJson);
+                    AddComponent(ComponentsManager::getInstance().getComponentByID<BlockManager>(componentJson["componentId"].get<size_t>()));
+                }
+            }
+        }
+    }
+
+    // Child Nodes
+    if (nodeJson.contains("children")) {
+        for (auto& childJson : nodeJson["children"]) {
+            auto childNode = std::make_shared<Node>();
+            childNode->Deserialize(childJson);
+            AddChild(childNode);
+        }
+    }
+}
+
 void Node::AddChild(std::shared_ptr<Node> child) {
     child->GetTransform()->SetParent(_local);
     _children.push_back(child);

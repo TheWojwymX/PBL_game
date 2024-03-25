@@ -4,8 +4,12 @@
 #include <model.h>
 #include "Core/Component.h"
 #include "Component/Transform.h"
-#include "../../thirdparty/nlohmann/json.hpp"
 #include <memory>
+#include "Component/Camera.h"
+#include "Component/PlayerController.h"
+#include "Component/InstanceRenderer.h"
+#include "Component/BlockManager.h"
+#include "Managers/ComponentsManager.h"
 
 class Node {
 public:
@@ -13,7 +17,9 @@ public:
 
     int id;
 
-    nlohmann::json_abi_v3_11_3::basic_json<> Serialize();
+    nlohmann::json Serialize();
+
+    void Deserialize(const nlohmann::json &nodeJson);
 
     std::shared_ptr<Transform> GetTransform() { return _local; }
 

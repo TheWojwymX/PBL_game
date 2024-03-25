@@ -6,8 +6,12 @@ InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader)
     SetupInstanceModel();
 }
 
+InstanceRenderer::InstanceRenderer() {
+
+}
+
 nlohmann::json InstanceRenderer::Serialize() {
-    nlohmann::json data;
+    nlohmann::json data = Component::Serialize();
 
     data["type"] = "InstanceRenderer";
     data["model"] = ResourceMapsManager::GetInstance().FindModelName(_model);
@@ -15,6 +19,26 @@ nlohmann::json InstanceRenderer::Serialize() {
     data["shader"] = ResourceMapsManager::GetInstance().FindShaderName(_shader);
 
     return data;
+}
+
+void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("model")) {
+        _model = ResourceMapsManager::GetInstance().GetModelByName(jsonData["model"]);
+    }
+
+    if (jsonData.contains("maxSize")) {
+        _maxSize = jsonData["maxSize"];
+    }
+
+    if (jsonData.contains("shader")) {
+        _shader = ResourceMapsManager::GetInstance().GetShaderByName(jsonData["shader"]);
+    }
+
+    CreateMatrixBuffer(_maxSize);
+    SetupInstanceModel();
+
+    Component::Deserialize(jsonData);
 }
 
 void InstanceRenderer::Render(glm::mat4 parentWorld) {

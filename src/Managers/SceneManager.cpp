@@ -23,3 +23,22 @@ void SceneManager::SaveToJsonFile(const nlohmann::json& jsonData, const std::str
         std::cerr << "The file could not be opened for writing: " << filePath << std::endl;
     }
 }
+
+Node SceneManager::LoadFromJsonFile(const string &filePath) {
+
+    std::ifstream inputFile(filePath);
+    if (inputFile.is_open()) {
+        nlohmann::json jsonFile;
+        inputFile >> jsonFile;
+        inputFile.close();
+
+        Node rootNode;
+        rootNode.Deserialize(jsonFile);
+
+        return rootNode;
+
+    } else {
+        std::cerr << "Can't open JSON " << filePath << std::endl;
+    }
+
+}

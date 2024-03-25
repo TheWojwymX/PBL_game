@@ -14,6 +14,8 @@ public:
     static nlohmann::json SerializeRoot(std::shared_ptr<Node> root, int nextNodeId);
 
     static void SaveToJsonFile(const nlohmann::json &jsonData, const string &filePath);
+
+    static Node LoadFromJsonFile(const string &filePath);
 };
 
 

@@ -184,9 +184,6 @@ int main(int, char**)
     // Load models
     Model* sandModel = new Model("res/Sand/Sand.obj");
 
-    // Create components manager
-    auto componentsManager = ComponentsManager();
-
     // Nodes id
     int nextNodeId = 0;
 
@@ -204,14 +201,14 @@ int main(int, char**)
     ResourceMapsManager::GetInstance().RegisterModel("sandModel", sandModel);
     ResourceMapsManager::GetInstance().RegisterShader("instanceModelShader", instanceModelShader);
 
-    auto sandRenderer = componentsManager.createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
+    auto sandRenderer = ComponentsManager::getInstance().createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
     sand->AddComponent(sandRenderer);
 
     std::shared_ptr<Node> blockManager = std::make_shared<Node>();
     blockManager->id = nextNodeId;
     nextNodeId++;
 
-    auto blockManagerComp = componentsManager.createComponent<BlockManager>(100, 100, 100);
+    auto blockManagerComp = ComponentsManager::getInstance().createComponent<BlockManager>(100, 100, 100);
     blockManagerComp->SetInstanceRenderer(sandRenderer);
     blockManager->AddComponent(blockManagerComp);
 
@@ -219,10 +216,10 @@ int main(int, char**)
     player->id = nextNodeId;
     nextNodeId++;
 
-    auto camera = componentsManager.createComponent<Camera>(glm::vec3(0.0f,1.8f,0.0f));
+    auto camera = ComponentsManager::getInstance().createComponent<Camera>(glm::vec3(0.0f,1.8f,0.0f));
 
     player->AddComponent(camera);
-    auto playerController = componentsManager.createComponent<PlayerController>();
+    auto playerController = ComponentsManager::getInstance().createComponent<PlayerController>();
 
     playerController->SetCamera(camera);
     playerController->SetBlockManager(blockManagerComp);
@@ -236,7 +233,7 @@ int main(int, char**)
 
     // json
     nlohmann::json jsonData = SceneManager::SerializeRoot(root, nextNodeId);
-    //std::cout << jsonData;
+    std::cout << jsonData;
     SceneManager::SaveToJsonFile(jsonData, "../../scenes/test.json");
 
     // Init

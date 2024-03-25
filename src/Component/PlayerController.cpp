@@ -6,11 +6,15 @@ PlayerController::PlayerController(float speed, float gravity, float jumpHeight,
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _width(width), _height(height) {}
 
 nlohmann::json PlayerController::Serialize() {
-    nlohmann::json data;
+    nlohmann::json data = Component::Serialize();
 
     data["type"] = "PlayerController";
 
     return data;
+}
+
+void PlayerController::Deserialize(const nlohmann::json &jsonData) {
+    Component::Deserialize(jsonData);
 }
 
 void PlayerController::Init() {

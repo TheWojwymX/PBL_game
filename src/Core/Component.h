@@ -12,6 +12,7 @@ public:
     virtual ~Component();
 
     virtual nlohmann::json Serialize();
+    virtual void Deserialize(const nlohmann::json& jsonData);
     virtual void Init();
     virtual void Input();
     virtual void Update();
