@@ -152,3 +152,7 @@ void Node::UpdateTransforms(glm::mat4 parentWorld) {
     for (auto& child : _children)
         child->UpdateTransforms(world);
 }
+
+const vector<std::shared_ptr<Node>> &Node::getChildren() const {
+    return _children;
+}

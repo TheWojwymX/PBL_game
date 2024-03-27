@@ -238,6 +238,7 @@ int main(int, char**)
 
 
 
+
 /*    playerController->SetCamera(camera);
     playerController->SetBlockManager(blockManagerComp);
     player->AddComponent(playerController);

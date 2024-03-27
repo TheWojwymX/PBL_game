@@ -45,7 +45,10 @@ public:
 private:
 
     std::shared_ptr<Transform> _local;
+public:
+    const vector<std::shared_ptr<Node>> &getChildren() const;
 
+private:
     std::vector<std::shared_ptr<Node>> _children;
     std::vector<std::shared_ptr<Component>> _components;
 };

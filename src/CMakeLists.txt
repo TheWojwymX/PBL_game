@@ -34,7 +34,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/ResourceMapsManager.cpp
         Managers/ResourceMapsManager.h
         Managers/NodesManager.cpp
-        Managers/NodesManager.h Gui/ImguiMain.cpp Gui/ImguiMain.h Gui/ImguiHierarchy.cpp Gui/ImguiHierarchy.h)
+        Managers/NodesManager.h Gui/ImguiMain.cpp Gui/ImguiMain.h Gui/ImguiHierarchy.cpp Gui/ImguiHierarchy.h Gui/ImguiInspector.cpp Gui/ImguiInspector.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

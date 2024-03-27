@@ -15,7 +15,8 @@ ImguiMain::ImguiMain(GLFWwindow *window, const char *glsl_version)
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-    hierarchy = std::make_shared<ImguiHierarchy>();
+    _hierarchy = std::make_shared<ImguiHierarchy>();
+    _component = std::make_shared<ImguiInspector>();
 }
 
 void ImguiMain::draw(int nextNodeId)
@@ -31,7 +32,8 @@ void ImguiMain::draw(int nextNodeId)
     ImGui::Text("Other stuff 3");
     ImGui::End();
 
-    hierarchy->draw(rootObject, nextNodeId, selectedObject, this);
+    _hierarchy->draw(_rootObject, nextNodeId, _selectedObject, this);
+    _component->draw();
 
 }
 
@@ -44,17 +46,17 @@ void ImguiMain::destroy()
 
 void ImguiMain::SetSelectedObject(std::shared_ptr<Node> GameObject)
 {
-    selectedObject = GameObject;
+    _selectedObject = GameObject;
 }
 
 std::shared_ptr<Node> ImguiMain::GetSelectedObject()
 {
-    return selectedObject;
+    return _selectedObject;
 }
 
 void ImguiMain::SetRoot(std::shared_ptr<Node> GameObject)
 {
-    rootObject = GameObject;
+    _rootObject = GameObject;
 
 }
 
@@ -62,4 +64,9 @@ void ImguiMain::endDraw()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+std::shared_ptr<Node> ImguiMain::GetRoot()
+{
+    return _rootObject;
 }

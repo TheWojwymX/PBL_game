@@ -1,4 +1,7 @@
 #include "Component.h"
+#include "imgui.h"
+
+class ImguiSystem;
 
 Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
 
@@ -39,4 +42,9 @@ void Component::SetEnabled(bool isEnabled) {
 
 bool Component::IsEnabled() const {
     return _isEnabled;
+}
+
+void Component::addToGui(ImguiSystem* imguiSystem, int index)
+{
+    ImGui::Text(" Komponent test ");
 }
