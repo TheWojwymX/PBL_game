@@ -80,3 +80,8 @@ void InstanceRenderer::CreateMatrixBuffer(int maxSize) {
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
     glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
 }
+
+void InstanceRenderer::addToInspector(ImguiMain *imguiMain)
+{
+
+}

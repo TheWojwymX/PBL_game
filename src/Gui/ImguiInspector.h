@@ -11,13 +11,16 @@ enum component_type {
     PLAYER_CONTROLLER, STATIC_BLOCK_CONTROLLER
 };
 
+class Node;
+class ImguiMain;
+
 class ImguiInspector {
 public:
     ImguiInspector();
-    void draw();
+    void draw(std::shared_ptr<Node> selectedObject, ImguiMain* imguiMain);
 
 private:
-    void addComponent();
+    void addComponent(std::shared_ptr<Node> selectedObject, component_type componentType);
     int newComponent;
 
 

@@ -33,7 +33,7 @@ void ImguiMain::draw(int nextNodeId)
     ImGui::End();
 
     _hierarchy->draw(_rootObject, nextNodeId, _selectedObject, this);
-    _component->draw();
+    _component->draw(_selectedObject, this);
 
 }
 

@@ -218,3 +218,8 @@ bool BlockManager::CheckAdjacency(int x, int y, int z)
 {
     return _blocksData[GetIndex(x, y, z)].GetBlockType() != BlockType::EMPTY;
 }
+
+void BlockManager::addToInspector(ImguiMain *imguiMain)
+{
+    ImGui::Text(" Siema jestem blok manager ");
+}

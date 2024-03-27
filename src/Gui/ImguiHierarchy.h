@@ -15,7 +15,7 @@ public:
     ImguiHierarchy();
     void draw(std::shared_ptr<Node> root, int nextNodeId, std::shared_ptr<Node> selectedObject, ImguiMain* imguiMain);
     void addGameObject(ImguiMain* imguiMain);
-    void DrawGameObjectHierarchy(std::shared_ptr<Node> root);
+    void DrawGameObjectHierarchy(std::shared_ptr<Node> root, ImguiMain* imguiMain);
 private:
     char* _filePath;
     char* _newObjectName;

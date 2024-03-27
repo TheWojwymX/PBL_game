@@ -22,6 +22,8 @@ public:
     // Getters
     const std::vector<glm::mat4>& GetInstanceMatrix() const { return _instanceMatrix; }
 
+    void addToInspector(ImguiMain *imguiMain) override;
+
     // Setters
     void SetInstanceMatrix(const std::vector<glm::mat4>& instanceMatrix) { _instanceMatrix = instanceMatrix; RefreshMatrixBuffer(); }
 

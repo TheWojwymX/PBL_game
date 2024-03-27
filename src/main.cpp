@@ -279,6 +279,8 @@ int main(int, char**)
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(root);
+    imguiMain->SetSelectedObject(root);
+
 
     // Main loop
     while (!glfwWindowShouldClose(window))

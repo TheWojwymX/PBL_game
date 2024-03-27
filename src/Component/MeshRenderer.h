@@ -8,6 +8,8 @@ public:
     MeshRenderer(Model* model, Shader* shader);
     void Render(glm::mat4 parentWorld) override;
 
+    void addToInspector(ImguiMain *imguiMain) override;
+
 private:
     Model* _model; // Raw pointer to the model
     Shader* _shader; // Raw pointer to the shader

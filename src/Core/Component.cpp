@@ -1,8 +1,6 @@
 #include "Component.h"
 #include "imgui.h"
 
-class ImguiSystem;
-
 Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
 
 Component::~Component() {}
@@ -44,7 +42,13 @@ bool Component::IsEnabled() const {
     return _isEnabled;
 }
 
-void Component::addToGui(ImguiSystem* imguiSystem, int index)
+void Component::addToInspector(ImguiMain* imguiMain)
 {
-    ImGui::Text(" Komponent test ");
+
 }
+
+void Component::addToHierarchy()
+{
+    ImGui::Text("Komponent");
+}
+

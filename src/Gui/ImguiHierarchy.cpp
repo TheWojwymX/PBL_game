@@ -58,7 +58,7 @@ void ImguiHierarchy::draw(std::shared_ptr<Node> root, int nextNodeId, std::share
     ImGui::Text("=================");
     if (ImGui::TreeNode("Scene Graph"))
     {
-        DrawGameObjectHierarchy(root);
+        DrawGameObjectHierarchy(root, imguiMain);
         ImGui::TreePop();
     }
     ImGui::End();
@@ -86,19 +86,30 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
 
 }
 
-void ImguiHierarchy::DrawGameObjectHierarchy(std::shared_ptr<Node> root)
-{
-    bool isOpen = ImGui::TreeNode(root->name.c_str());
+void ImguiHierarchy::DrawGameObjectHierarchy(std::shared_ptr<Node> root, ImguiMain* imguiMain) {
+    bool isOpen = ImGui::TreeNodeEx(root->name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+
+    // Use the pointer to the node as the identifier
+    ImGui::PushID(root.get());
+    if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen()) {
+        // Handle the click event and set the selected object
+        imguiMain->SetSelectedObject(root);
+    }
+    ImGui::PopID();
 
     if (isOpen) {
+        // Render all components of the current node
+        for (auto& component : root->getComponents()) {
+            component->addToHierarchy();
+        }
+
         // Iterate through all children of the current node
         for (auto& child : root->getChildren()) {
             // Draw the current child node recursively
-            DrawGameObjectHierarchy(child);
+            DrawGameObjectHierarchy(child, imguiMain);
         }
 
         ImGui::TreePop(); // Close the parent node's tree node if it was opened
     }
 }
-
 

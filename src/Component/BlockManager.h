@@ -6,6 +6,8 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/Camera.h"
 #include "BlockData.h"
+#include "imgui.h"
+
 
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
 public:
@@ -24,6 +26,8 @@ public:
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
+
+    void addToInspector(ImguiMain *imguiMain) override;
 
 private:
     int _width;

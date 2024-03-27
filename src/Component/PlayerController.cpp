@@ -83,3 +83,8 @@ void PlayerController::HandleMovement() {
     _ownerTransform->AddPosition(movementVector);
 }
 
+void PlayerController::addToInspector(ImguiMain *imguiMain)
+{
+
+}
+

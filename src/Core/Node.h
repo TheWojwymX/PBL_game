@@ -30,6 +30,7 @@ public:
     void Update();
     void Render(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
+    void addToInspector(ImguiMain* imguiMain);
 
     template <typename T>
     std::shared_ptr<T> GetComponent() const {
@@ -42,13 +43,13 @@ public:
         return nullptr; // Component of type T not found
     }
 
-private:
-
-    std::shared_ptr<Transform> _local;
-public:
     const vector<std::shared_ptr<Node>> &getChildren() const;
 
+    const vector<std::shared_ptr<Component>> &getComponents() const;
+
+
 private:
+    std::shared_ptr<Transform> _local;
     std::vector<std::shared_ptr<Node>> _children;
     std::vector<std::shared_ptr<Component>> _components;
 };

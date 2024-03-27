@@ -156,3 +156,16 @@ void Node::UpdateTransforms(glm::mat4 parentWorld) {
 const vector<std::shared_ptr<Node>> &Node::getChildren() const {
     return _children;
 }
+
+const vector<std::shared_ptr<Component>> &Node::getComponents() const {
+    return _components;
+}
+
+void Node::addToInspector(ImguiMain* imguiMain)
+{
+    for (auto& component : _components)
+    {
+        component->addToInspector(imguiMain);
+    }
+}
+

@@ -6,7 +6,7 @@
 #include "shader_s.h"
 #include <../thirdparty/nlohmann/json.hpp>
 
-class ImguiSystem;
+class ImguiMain;
 
 class Component {
 public:
@@ -20,7 +20,9 @@ public:
     virtual void Update();
     virtual void Render(glm::mat4 parentWorld);
     virtual void RenderShadows(glm::mat4 parentWorld, Shader* shader);
-    void addToGui(ImguiSystem* imguiSystem, int index);
+    virtual void addToInspector(ImguiMain* imguiMain);
+    //virtual void SetUp();
+    void addToHierarchy();
 
     void SetOwnerTransform(std::shared_ptr<Transform> transform);
     void SetEnabled(bool isEnabled);

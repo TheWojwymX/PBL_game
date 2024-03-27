@@ -33,6 +33,7 @@ public:
     void SetVisible(bool visible) { _visible = visible; }
     void SetMatrix(const glm::mat4& matrix) { _matrix = matrix; }
 
+
 private:
     BlockType _blockType;
     glm::ivec3 _posID;

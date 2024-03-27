@@ -47,6 +47,8 @@ public:
     glm::vec3 GetRightVector() const { return _right; }
     glm::vec3 GetFrontVector() const { return _front; }
 
+    void addToInspector(ImguiMain *imguiMain) override;
+
 private:
     // camera attributes
     glm::vec3 _offset;

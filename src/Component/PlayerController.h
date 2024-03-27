@@ -19,6 +19,8 @@ public:
     void SetCamera(std::shared_ptr<Camera> cameraRef) { _cameraRef = cameraRef; }
     void SetBlockManager(std::shared_ptr<BlockManager> blockManagerRef) { _blockManagerRef = blockManagerRef; }
 
+    void addToInspector(ImguiMain *imguiMain) override;
+
 private:
     float _speed;
     float _width;

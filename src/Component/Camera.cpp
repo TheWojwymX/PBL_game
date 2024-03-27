@@ -75,3 +75,8 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
 
     UpdateCameraVectors();
 }
+
+void Camera::addToInspector(ImguiMain *imguiMain)
+{
+
+}
