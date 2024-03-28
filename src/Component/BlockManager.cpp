@@ -3,6 +3,38 @@
 BlockManager::BlockManager(int width, int height, int depth) :
     _width(width), _depth(depth), _height(height) {}
 
+BlockManager::BlockManager() {
+
+}
+
+nlohmann::json BlockManager::Serialize() {
+    nlohmann::json data = Component::Serialize();
+
+    data["type"] = "BlockManager";
+    data["width"] = _width;
+    data["depth"] = _depth;
+    data["height"] = _height;
+
+    return data;
+}
+
+void BlockManager::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("width")) {
+        _width = jsonData["width"].get<int>();
+    }
+
+    if (jsonData.contains("depth")) {
+        _depth = jsonData["depth"].get<int>();
+    }
+
+    if (jsonData.contains("height")) {
+        _height = jsonData["height"].get<int>();
+    }
+
+    Component::Deserialize(jsonData);
+}
+
 void BlockManager::Init() {
     GenerateMap();
     UpdateBlocksVisibility();
@@ -306,4 +338,9 @@ bool BlockManager::CheckAdjacency(int x, int y, int z)
 bool BlockManager::InBounds(glm::ivec3 position) {
     return position.x >= 0 && position.y >= 0 && position.z >= 0 &&
         position.x < _width && position.y < _height && position.z < _depth;
+}
+
+void BlockManager::addToInspector(ImguiMain *imguiMain)
+{
+    ImGui::Text(" Siema jestem blok manager ");
 }

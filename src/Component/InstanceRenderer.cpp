@@ -1,9 +1,44 @@
 #include "InstanceRenderer.h"
 
 InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader)
-    : _model(model), _shader(shader) {
+    : _model(model),_maxSize(maxSize) , _shader(shader) {
     CreateMatrixBuffer(maxSize);
     SetupInstanceModel();
+}
+
+InstanceRenderer::InstanceRenderer() {
+
+}
+
+nlohmann::json InstanceRenderer::Serialize() {
+    nlohmann::json data = Component::Serialize();
+
+    data["type"] = "InstanceRenderer";
+    data["model"] = ResourceMapsManager::GetInstance().FindModelName(_model);
+    data["maxSize"] = _maxSize;
+    data["shader"] = ResourceMapsManager::GetInstance().FindShaderName(_shader);
+
+    return data;
+}
+
+void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("model")) {
+        _model = ResourceMapsManager::GetInstance().GetModelByName(jsonData["model"].get<string>());
+    }
+
+    if (jsonData.contains("maxSize")) {
+        _maxSize = jsonData["maxSize"].get<int>();
+    }
+
+    if (jsonData.contains("shader")) {
+        _shader = ResourceMapsManager::GetInstance().GetShaderByName(jsonData["shader"].get<string>());
+    }
+
+    CreateMatrixBuffer(_maxSize);
+    SetupInstanceModel();
+
+    Component::Deserialize(jsonData);
 }
 
 void InstanceRenderer::Render(glm::mat4 parentWorld) {
@@ -44,4 +79,9 @@ void InstanceRenderer::CreateMatrixBuffer(int maxSize) {
     glGenBuffers(1, &_instanceBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
     glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
+}
+
+void InstanceRenderer::addToInspector(ImguiMain *imguiMain)
+{
+
 }

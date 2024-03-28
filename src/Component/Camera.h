@@ -27,10 +27,11 @@ enum CameraMovement {
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera : public Component {
 public:
-    nlohmann::json Serialize() const;
-
     // constructor with vectors
     Camera(glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+
+    nlohmann::json Serialize() override;
+    void Deserialize(const nlohmann::json& jsonData) override;
 
     void Input() override;
     void Update() override;
@@ -45,6 +46,8 @@ public:
     float GetZoom() const { return _zoom; }
     glm::vec3 GetRightVector() const { return _right; }
     glm::vec3 GetFrontVector() const { return _front; }
+
+    void addToInspector(ImguiMain *imguiMain) override;
 
 private:
     // camera attributes

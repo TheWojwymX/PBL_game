@@ -4,3 +4,7 @@ StaticBlockController::StaticBlockController(std::shared_ptr<BlockData> blockDat
 
 void StaticBlockController::Init() {
 }
+
+void StaticBlockController::addToInspector(ImguiMain *imguiMain) \
+{
+}

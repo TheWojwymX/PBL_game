@@ -7,7 +7,8 @@
 
 class PlayerController : public Component {
 public:
-    nlohmann::json Serialize() const;
+    nlohmann::json Serialize() override;
+    void Deserialize(const nlohmann::json& jsonData) override;
 
     PlayerController(float speed = 12.0f, float gravity = -9.81f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, float width = 0.7f, float height = 1.8f);
 
@@ -17,6 +18,8 @@ public:
 
     void SetCamera(std::shared_ptr<Camera> cameraRef) { _cameraRef = cameraRef; }
     void SetBlockManager(std::shared_ptr<BlockManager> blockManagerRef) { _blockManagerRef = blockManagerRef; }
+
+    void addToInspector(ImguiMain *imguiMain) override;
 
 private:
     float _speed;

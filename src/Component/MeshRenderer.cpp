@@ -12,3 +12,8 @@ void MeshRenderer::RenderModel(Model* model, glm::mat4 ctm) {
     _shader->setMat4("model", ctm);
     model->Draw(*_shader);
 }
+
+void MeshRenderer::addToInspector(ImguiMain *imguiMain)
+{
+
+}

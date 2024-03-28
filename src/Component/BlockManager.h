@@ -6,6 +6,8 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/Camera.h"
 #include "BlockData.h"
+#include "imgui.h"
+
 
 // Define a struct to hold collision information for each corner
 struct CollisionInfo {
@@ -17,9 +19,13 @@ struct CollisionInfo {
 
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
 public:
-    nlohmann::json Serialize() const;
-
     BlockManager(int width, int height, int depth);
+
+    BlockManager();
+
+    nlohmann::json Serialize() override;
+
+    void Deserialize(const nlohmann::json& jsonData) override;
 
     void Init() override;
 
@@ -28,6 +34,8 @@ public:
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
+
+    void addToInspector(ImguiMain *imguiMain) override;
 
 private:
     int _width;
