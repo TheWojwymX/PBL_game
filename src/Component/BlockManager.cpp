@@ -48,12 +48,21 @@ void BlockManager::GenerateMap() {
     for (int y = 0; y < _height; y++) {
         for (int z = 0; z < _depth; z++) {
             for (int x = 0; x < _width; x++) {
-                // Calculate transform matrix for the current block
-                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
+                // Check if y is greater than or equal to _height - 3
+                if (y >= _height - 3) {
+                    // Create BlockData object with Empty type and add it to the vector
+                    glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
+                    BlockData emptyBlock(BlockType::EMPTY, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
+                    _blocksData.push_back(emptyBlock);
+                }
+                else {
+                    // Calculate transform matrix for the current block
+                    glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
 
-                // Create BlockData object with Sand type and add it to the vector
-                BlockData blockData(BlockType::SAND, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
-                _blocksData.push_back(blockData);
+                    // Create BlockData object with Sand type and add it to the vector
+                    BlockData sandBlock(BlockType::SAND, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
+                    _blocksData.push_back(sandBlock);
+                }
             }
         }
     }
@@ -160,7 +169,7 @@ bool BlockManager::RayIntersectsBlock(float rayLength) {
         // Round the point to whole numbers
         glm::ivec3 roundedPoint = glm::round(point);
         // Check if all three elements of roundedPoint are positive
-        if (roundedPoint.x >= 0 && roundedPoint.y >= 0 && roundedPoint.z >= 0) {
+        if (InBounds(roundedPoint)) {
             // Calculate the index
             int index = GetIndex(roundedPoint);
             // Check if the index is within bounds
@@ -179,7 +188,6 @@ bool BlockManager::RayIntersectsBlock(float rayLength) {
     return false; // No block hit along the ray
 }
 
-// Function to calculate collision information for each corner of the entity's AABB
 std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(const glm::vec3& entityPos, float halfWidth, float entityHeight) {
     std::vector<CollisionInfo> collisionInfoList;
 
@@ -194,14 +202,66 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(const glm::vec3&
     corners[6] = entityPos + glm::vec3(-halfWidth, entityHeight, halfWidth);
     corners[7] = entityPos + glm::vec3(halfWidth, entityHeight, halfWidth);
 
-    // Iterate through the corners and check collision with the nearest blocks
-    for (int i = 0; i < 8; i++) {
+    // Iterate through the lower corners (0-3) and check collision with the nearest blocks below
+    for (int i = 0; i < 4; i++) {
+        // Round the position of the corner to get the ID of the nearest block below
+        glm::ivec3 roundedPos = glm::round(corners[i]);
+
+        // Initialize CollisionInfo for the current corner
+        CollisionInfo info;
+        info.separationVector = glm::vec3(0.0f);
+        info.isColliding = false;
+
+        // Check if the rounded position is within bounds
+        if (InBounds(roundedPos)) {
+            int index = GetIndex(roundedPos);
+
+            // Check if the block at the index is not empty
+            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+                // Calculate the AABB extents of the block
+                glm::vec3 blockMin = glm::vec3(roundedPos) - glm::vec3(0.5f);
+                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
+
+                if (entityPos.x + halfWidth > blockMin.x && entityPos.x - halfWidth < blockMax.x) {
+                    // Determine the separation vector in the x-axis
+                    float direction = glm::sign(entityPos.x - roundedPos.x);
+                    info.separationVector.x = (std::abs((std::abs(entityPos.x - roundedPos.x) - (halfWidth + 0.5f)) + 0.0001f)) * direction;
+                    info.isColliding = true;
+                }
+
+                if (entityPos.z + halfWidth > blockMin.z && entityPos.z - halfWidth < blockMax.z) {
+                    // Determine the separation vector in the x-axis
+                    float direction = glm::sign(entityPos.z - roundedPos.z);
+                    info.separationVector.z = (std::abs((std::abs(entityPos.z - roundedPos.z) - (halfWidth + 0.5f)) + 0.0001f)) * direction;
+                    info.isColliding = true;
+                }
+            }
+
+            // Calculate the index of the block below the corner
+            glm::vec3 blockBelowPos = glm::vec3(corners[i]) - glm::vec3(0, 0.00001f, 0);
+            blockBelowPos = glm::round(blockBelowPos);
+            std::cout << "blockBeloy y: " << blockBelowPos.y << std::endl;
+            if (InBounds(blockBelowPos)) {
+                int index = GetIndex(blockBelowPos);
+
+                // Check if the block below is not empty
+                if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+                    info.separationVector.y = 1.0f;
+                }
+            }
+        }
+
+        // Add collision info to the list
+        collisionInfoList.push_back(info);
+    }
+
+    // Iterate through the upper corners (4-7) and check collision with the nearest blocks
+    for (int i = 4; i < 8; i++) {
         // Round the position of the corner to get the ID of the nearest block
         glm::ivec3 roundedPos = glm::round(corners[i]);
 
         // Initialize CollisionInfo for the current corner
         CollisionInfo info;
-        info.cornerPosition = corners[i];
         info.isColliding = false;
 
         // Check if the rounded position is within bounds
@@ -240,7 +300,8 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(const glm::vec3&
 }
 
 
-glm::vec3 BlockManager::CheckEntityCollision(const glm::vec3& entityPos, const glm::vec3& entityDirection, float entityWidth, float entityHeight) {
+
+glm::vec3 BlockManager::CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight) {
     // Calculate the half extents of the entity's AABB
     float halfWidth = entityWidth / 2.0f;
 
@@ -303,23 +364,18 @@ glm::vec3 BlockManager::CheckEntityCollision(const glm::vec3& entityPos, const g
         }
     }
 
-    // Count the number of corners that have true in collision
-    int numCollidingCorners = 0;
-    std::cout << "Colliding corners indices: ";
-    for (size_t i = 0; i < collisionInfoList.size(); ++i) {
-        if (collisionInfoList[i].isColliding) {
-            std::cout << i << " ";
-            numCollidingCorners++;
+    // Check if corners 0, 1, 2, 3 have a non-zero value in the y-component of separation vector
+    for (int i = 0; i < 4; ++i) {
+        if (std::abs(collisionInfoList[i].separationVector.y) > 0.0f) {
+            separationVector.y = collisionInfoList[i].separationVector.y;
+            break; // Break after finding the first non-zero value
         }
     }
-    std::cout << std::endl;
-
-    // Print the number of colliding corners
-    std::cout << "Number of colliding corners: " << numCollidingCorners << std::endl;
 
     // Return the separation vector
     return separationVector;
 }
+
 
 int BlockManager::GetIndex(glm::ivec3 point) {
     return point.x + (_width * _depth * point.y) + point.z * _width;

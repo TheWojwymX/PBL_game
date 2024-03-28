@@ -152,7 +152,7 @@ int main(int, char**)
     playerController->SetCamera(camera);
     playerController->SetBlockManager(blockManagerComp);
     player->AddComponent(playerController);
-    player->GetTransform()->SetPosition(glm::vec3(-1.0f, 15.0f, -1.0f));
+    player->GetTransform()->SetPosition(glm::vec3(1.0f, 10.0f, 1.0f));
 
     // root
     root->AddChild(sand);

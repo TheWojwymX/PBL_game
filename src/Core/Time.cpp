@@ -9,6 +9,7 @@ void Time::Update() {
     float currentFrame = static_cast<float>(glfwGetTime());
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+    if (deltaTime > 0.06) deltaTime = 0.06f; // TYMCZASOWE PILNOWANIE KROKU UPDATU
 }
 
 float Time::GetDeltaTime() {

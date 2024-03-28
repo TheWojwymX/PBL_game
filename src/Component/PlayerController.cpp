@@ -27,8 +27,8 @@ void PlayerController::Input() {
 }
 
 void PlayerController::Update() {
-    CheckGrounded();
     HandleMovement();
+    HandleCollision();
 }
 
 void PlayerController::MovementInput() {
@@ -48,10 +48,11 @@ void PlayerController::InteractionInput() {
     }
 }
 
-void PlayerController::CheckGrounded() {
-    if (_ownerTransform->GetPosition()[1] <= _groundLevel ) {
+void PlayerController::CheckGrounded(glm::vec3 separationVector) {
+    if (separationVector.y==1) {
+        float roundedY = std::round(_ownerTransform->GetPosition().y + 0.5f) - 0.5f;
+        _ownerTransform->SetPosition(roundedY, 1);
         _isGrounded = true;
-        _ownerTransform->SetPosition(_groundLevel,1);
     }
     else {
         _isGrounded = false;
@@ -66,7 +67,7 @@ void PlayerController::HandleMovement() {
     if (glm::length(move) > 0.0f) {
         move = glm::normalize(move) * _speed;
     }
-
+    std::cout << "Grounded: " << _isGrounded << std::endl;
     // Apply gravity
     if (!_isGrounded)
         _velocity.y += _gravity * TIME.GetDeltaTime();
@@ -81,8 +82,15 @@ void PlayerController::HandleMovement() {
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
 
     _ownerTransform->AddPosition(movementVector);
+}
 
-    _ownerTransform->AddPosition(_blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, 0.5f, 1.8f));
+void PlayerController::HandleCollision()
+{
+    glm::vec3 separationVector = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), _width, _height);
+    std::cout << _ownerTransform->GetPosition().y <<" "<< separationVector.y << std::endl;
+    _ownerTransform->AddPosition(glm::vec3(separationVector.x, 0.0f, separationVector.z));
+    
+    CheckGrounded(separationVector);
 }
 
 void PlayerController::addToInspector(ImguiMain *imguiMain)

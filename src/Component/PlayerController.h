@@ -35,8 +35,9 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     std::shared_ptr<BlockManager> _blockManagerRef;
 
-    void CheckGrounded();
+    void CheckGrounded(glm::vec3 separationVector);
     void HandleMovement();
+    void HandleCollision();
     void MovementInput();
     void InteractionInput();
 };
