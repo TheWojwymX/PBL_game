@@ -91,5 +91,7 @@ void PlayerController::HandleMovement() {
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
 
     _ownerTransform->AddPosition(movementVector);
+
+    _ownerTransform->AddPosition(_blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, 0.5f, 1.8f));
 }
 

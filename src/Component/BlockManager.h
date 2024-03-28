@@ -7,6 +7,14 @@
 #include "Component/Camera.h"
 #include "BlockData.h"
 
+// Define a struct to hold collision information for each corner
+struct CollisionInfo {
+    glm::vec3 cornerPosition;
+    bool isColliding;
+    glm::vec3 separationVector;
+};
+
+
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
 public:
     nlohmann::json Serialize() const;
@@ -16,7 +24,7 @@ public:
     void Init() override;
 
     bool RayIntersectsBlock(float rayLength);
-    bool CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight);
+    glm::vec3 CheckEntityCollision(const glm::vec3& entityPos, const glm::vec3& entityDirection, float entityWidth, float entityHeight);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
@@ -37,8 +45,10 @@ private:
     void UpdateBlockVisibility(BlockData& blockData);
     void UpdateNeighbourVisibility(BlockData& blockData);
     void SetVisibility(BlockData& blockData, bool state);
+    std::vector<CollisionInfo> CalculateCollisionInfo(const glm::vec3& entityPos, float halfWidth, float entityHeight);
    
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);
     bool CheckAdjacency(int x, int y, int z);
+    bool InBounds(glm::ivec3 position);
 };
