@@ -21,7 +21,6 @@
 #include "Component/PlayerController.h"
 #include "Component/Camera.h"
 #include "Component/InstanceRenderer.h"
-#include "Component/Skybox.h"
 
 
 #include <iostream>
@@ -39,7 +38,10 @@
 #endif
 
 #include "Managers/ComponentsManager.h"
-
+#include "Managers/SceneManager.h"
+#include "Managers/ResourceManager.h"
+#include "Managers/NodesManager.h"
+#include "Gui/ImguiMain.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -107,13 +109,75 @@ int main(int, char**)
     glDepthMask(GL_TRUE);
 
     // Build and compile the shader program
-    Shader* modelShader = new Shader("res/vecShader.vs", "res/fragShader.fs");
-    Shader* lightObjectShader = new Shader("res/vecLightObjectShader.vs", "res/fragLightObjectShader.fs");
-    Shader* instanceModelShader = new Shader("res/instanceVecShader.vs", "res/instanceFragShader.fs");
-    Shader* skyboxShader = new Shader("res/skyboxVecShader.vs", "res/skyboxFragShader.fs");
+    shared_ptr<Shader> modelShader = RESOURCEMANAGER.createShader("res/vecShader.vs", "res/fragShader.fs", "modelShader");
+    shared_ptr<Shader> lightObjectShader = RESOURCEMANAGER.createShader("res/vecLightObjectShader.vs", "res/fragLightObjectShader.fs", "lightObjectShader");
+    shared_ptr<Shader> instanceModelShader = RESOURCEMANAGER.createShader("res/instanceVecShader.vs", "res/instanceFragShader.fs", "instanceModelShader");
+    shared_ptr<Shader> skyboxShader = RESOURCEMANAGER.createShader("res/skyboxVecShader.vs", "res/skyboxFragShader.fs", "skyboxShader");
+    float skyboxVertices[] = {
+            // positions
+            -1.0f,  1.0f, -1.0f,
+            -1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
 
-    Skybox skybox;
-    skybox.init();
+            -1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f,  1.0f,
+            -1.0f, -1.0f,  1.0f,
+
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+
+            -1.0f, -1.0f,  1.0f,
+            -1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f,  1.0f,
+
+            -1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            -1.0f,  1.0f,  1.0f,
+            -1.0f,  1.0f, -1.0f,
+
+            -1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f
+    };
+
+    // skybox VAO
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+    vector<std::string> faces
+            {
+                    "res/skybox/right.jpg",
+                    "res/skybox/left.jpg",
+                    "res/skybox/top.jpg",
+                    "res/skybox/bottom.jpg",
+                    "res/skybox/front.jpg",
+                    "res/skybox/back.jpg"
+            };
+    unsigned int cubemapTexture = loadCubemap(faces);
 
     skyboxShader->use();
     skyboxShader->setInt("skybox", 0);
@@ -121,49 +185,29 @@ int main(int, char**)
     // Load models
     Model* sandModel = new Model("res/Sand/Sand.obj");
 
-    // Create components manager
-    auto componentsManager = ComponentsManager();
+    // Nodes id
+    int nextNodeId = 0;
 
     // Create graph
-    std::shared_ptr<Node> root = std::make_shared<Node>();
 
-    std::shared_ptr<Node> sand = std::make_shared<Node>();
-    //std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
-    auto sandRenderer = componentsManager.createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
+    // maps
+    RESOURCEMANAGER.RegisterModel("sandModel", sandModel);
+    //RESOURCEMANAGER.RegisterShader("instanceModelShader", instanceModelShader);
 
-    sand->AddComponent(sandRenderer);
+    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test.json");
 
-    std::shared_ptr<Node> blockManager = std::make_shared<Node>();
+    //TAK NIE MOZE BYC DO ZMIANY NIZEJ ANALOGICZNIE
+    ComponentsManager::getInstance().getComponentByID<BlockManager>(0)->SetInstanceRenderer(ComponentsManager::getInstance().getComponentByID<InstanceRenderer>(0));
+    ComponentsManager::getInstance().getComponentByID<PlayerController>(0)->SetCamera(ComponentsManager::getInstance().getComponentByID<Camera>(0));
+    ComponentsManager::getInstance().getComponentByID<PlayerController>(0)->SetBlockManager(ComponentsManager::getInstance().getComponentByID<BlockManager>(0));
+    NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
-    //std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
-    auto blockManagerComp = componentsManager.createComponent<BlockManager>(5, 5, 5);
-    //auto blockManagerComp2 = componentsManager.createComponent<BlockManager>(666, 100, 100);
-    blockManagerComp->SetInstanceRenderer(sandRenderer);
-    blockManager->AddComponent(blockManagerComp);
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("blockManager"), "nowyNode1");
 
-    std::shared_ptr<Node> player = std::make_shared<Node>();
-    //std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
-    auto camera = componentsManager.createComponent<Camera>(glm::vec3(0.0f,1.8f,0.0f));
-
-    player->AddComponent(camera);
-    //std::shared_ptr<PlayerController> playerController = std::make_shared<PlayerController>();
-    auto playerController = componentsManager.createComponent<PlayerController>();
-
-    playerController->SetCamera(camera);
-    playerController->SetBlockManager(blockManagerComp);
-    player->AddComponent(playerController);
-    player->GetTransform()->SetPosition(glm::vec3(-1.0f, 15.0f, -1.0f));
-
-    // root
-    root->AddChild(sand);
-    root->AddChild(blockManager);
-    root->AddChild(player);
-
-    //std::cout << componentsManager.getComponentByID<BlockManager>(1)->id << componentsManager.getComponentByID<BlockManager>(0)->id;
-
-    nlohmann::json data = camera->Serialize();
-    std::cout << data;
-
+    // json
+    nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
+    //std::cout << jsonData;
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test2.json");
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
@@ -179,21 +223,14 @@ int main(int, char**)
         return -1;
     }
 
-    // Setup Dear ImGui binding
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
-
-    // Setup style
-    ImGui::StyleColorsDark();
-
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
-    float dirDirection[3] = { 1.0f, -0.5f, -0.5f };
+    float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
+
+    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
+    imguiMain->SetRoot(root);
+    imguiMain->SetSelectedObject(root);
 
 
     // Main loop
@@ -209,18 +246,9 @@ int main(int, char**)
         root->Update();
 
         // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        imguiMain->draw(nextNodeId);
 
-        ImGui::Begin("Tool window");
-
-        ImGui::ColorEdit3("Dir Color", dirColor);
-        ImGui::SliderFloat3("Dir direction", dirDirection, -1.0f, 1.0f);
-        ImGui::Checkbox("Dir Active", &dirActive);
-
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::End();
+        std::cout<<(modelShader->ID);
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -229,14 +257,17 @@ int main(int, char**)
         glDepthMask(GL_FALSE);
         skyboxShader->use();
 
-        glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-        glm::mat4 view = camera->GetViewMatrix();
-
-        glm::mat4 skyboxView = glm::mat4(glm::mat3(camera->GetViewMatrix())); // remove translation from the view matrix
+        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 view = ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetViewMatrix();
+        glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetViewMatrix())); // remove translation from the view matrix
         skyboxShader->setMat4("view", skyboxView);
         skyboxShader->setMat4("projection", projection);
 
-        skybox.draw();
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
         glDepthMask(GL_TRUE);
 
         modelShader->use();
@@ -244,7 +275,7 @@ int main(int, char**)
         modelShader->setVec3("dirLight.color", dirColor);
         modelShader->setInt("dirLight.isActive", dirActive);
 
-        modelShader->setVec3("viewPos", camera->GetPosition());
+        modelShader->setVec3("viewPos", ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetPosition());
         modelShader->setMat4("projection", projection);
         modelShader->setMat4("view", view);
 
@@ -253,7 +284,7 @@ int main(int, char**)
         instanceModelShader->setVec3("dirLight.color", dirColor);
         instanceModelShader->setInt("dirLight.isActive", dirActive);
 
-        instanceModelShader->setVec3("viewPos", camera->GetPosition());
+        instanceModelShader->setVec3("viewPos", ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetPosition());
         instanceModelShader->setMat4("projection", projection);
         instanceModelShader->setMat4("view", view);
 
@@ -264,11 +295,10 @@ int main(int, char**)
 
         root->Render(Transform::Origin());
 
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+        imguiMain->endDraw();
 
         INPUT.UpdateOldStates();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -279,11 +309,42 @@ int main(int, char**)
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+    imguiMain->destroy();
 
     glfwDestroyWindow(window);
     glfwTerminate();
 
     return 0;
+}
+
+unsigned int loadCubemap(vector<std::string> faces)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
 }
 
 Texture2D loadTextureFromFile(const char* file, bool alpha)

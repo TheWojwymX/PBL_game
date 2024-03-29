@@ -7,8 +7,8 @@ Node::Node() : _local(std::make_shared<Transform>()) {}
 nlohmann::json Node::Serialize() {
     nlohmann::json nodeJson;
 
-    nodeJson["NodeName"] = name;
-    nodeJson["NodeID"] = id;
+    nodeJson["NodeName"] = _name;
+    nodeJson["NodeID"] = _id;
 
     // Transform
     auto transform = GetTransform();
@@ -39,15 +39,15 @@ nlohmann::json Node::Serialize() {
 
 void Node::Deserialize(const nlohmann::json& nodeJson) {
     if (nodeJson.contains("NodeName")) {
-        name = nodeJson["NodeName"].get<string>();
+        _name = nodeJson["NodeName"].get<string>();
     }
 
     if (nodeJson.contains("NodeID")) {
-        id = nodeJson["NodeID"].get<int>();
+        _id = nodeJson["NodeID"].get<int>();
     }
 
     // UWAGA PRAWDOPODOBNIE DO ZMIANY W PRZYSZLOSCI
-    NodesManager::getInstance().addNodeAt(this->shared_from_this(), id);
+    NODESMANAGER.addNodeAt(this->shared_from_this(), _id);
 
     // Transform
     if (nodeJson.contains("transform")) {

@@ -14,9 +14,9 @@ nlohmann::json InstanceRenderer::Serialize() {
     nlohmann::json data = Component::Serialize();
 
     data["type"] = "InstanceRenderer";
-    data["model"] = ResourceMapsManager::GetInstance().FindModelName(_model);
+    data["model"] = ResourceManager::GetInstance().FindModelName(_model);
     data["maxSize"] = _maxSize;
-    data["shader"] = ResourceMapsManager::GetInstance().FindShaderName(_shader);
+    data["shader"] = _shader->_name;
 
     return data;
 }
@@ -24,7 +24,7 @@ nlohmann::json InstanceRenderer::Serialize() {
 void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
 
     if (jsonData.contains("model")) {
-        _model = ResourceMapsManager::GetInstance().GetModelByName(jsonData["model"].get<string>());
+        _model = ResourceManager::GetInstance().GetModelByName(jsonData["model"].get<string>());
     }
 
     if (jsonData.contains("maxSize")) {
@@ -32,7 +32,7 @@ void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
     }
 
     if (jsonData.contains("shader")) {
-        _shader = ResourceMapsManager::GetInstance().GetShaderByName(jsonData["shader"].get<string>());
+        _shader = RESOURCEMANAGER.getShaderByName(jsonData["shader"].get<string>());
     }
 
     CreateMatrixBuffer(_maxSize);

@@ -1,5 +1,29 @@
 {
-    "nextNodeId": 0,
+    "nextNodeId": 5,
+    "resources": {
+        "shaders": [
+            {
+                "ShaderName": "modelShader",
+                "fragmentPath": "res/fragShader.fs",
+                "vertexPath": "res/vecShader.vs"
+            },
+            {
+                "ShaderName": "lightObjectShader",
+                "fragmentPath": "res/fragLightObjectShader.fs",
+                "vertexPath": "res/vecLightObjectShader.vs"
+            },
+            {
+                "ShaderName": "instanceModelShader",
+                "fragmentPath": "res/instanceFragShader.fs",
+                "vertexPath": "res/instanceVecShader.vs"
+            },
+            {
+                "ShaderName": "skyboxShader",
+                "fragmentPath": "res/skyboxFragShader.fs",
+                "vertexPath": "res/skyboxVecShader.vs"
+            }
+        ]
+    },
     "root": {
         "NodeID": 0,
         "NodeName": "root",
@@ -38,7 +62,31 @@
             {
                 "NodeID": 2,
                 "NodeName": "blockManager",
-                "children": [],
+                "children": [
+                    {
+                        "NodeID": 4,
+                        "NodeName": "nowyNode1",
+                        "children": [],
+                        "components": [],
+                        "transform": {
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                ],
                 "components": [
                     {
                         "componentId": 0,

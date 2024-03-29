@@ -9,14 +9,14 @@ nlohmann::json Component::Serialize() {
 
     nlohmann::json data;
 
-    data["componentId"] = id;
+    data["componentId"] = _id;
 
     return data;
 }
 
 void Component::Deserialize(const nlohmann::json &jsonData) {
     if (jsonData.contains("componentId")) {
-        id = jsonData["componentId"].get<int>();
+        _id = jsonData["componentId"].get<int>();
     }
 }
 

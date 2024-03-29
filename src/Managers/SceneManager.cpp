@@ -4,12 +4,18 @@
 
 #include "SceneManager.h"
 
-nlohmann::json SceneManager::SerializeRoot(std::shared_ptr<Node> root, int nextNodeId){
+SceneManager &SceneManager::GetInstance() {
+    static SceneManager instance;
+    return instance;
+}
+
+nlohmann::json SceneManager::SerializeRoot(std::shared_ptr<Node> root){
 
     nlohmann::json data;
 
-    data["nextNodeId"] = nextNodeId;
+    data["nextNodeId"] = NODESMANAGER._nextNodeID;
     data["root"] = root->Serialize();
+    data["resources"]["shaders"] = RESOURCEMANAGER.Serialize();
 
     return data;
 }
@@ -37,24 +43,12 @@ std::shared_ptr<Node> SceneManager::LoadFromJsonFile(const string &filePath) {
         auto rootNode = std::make_shared<Node>();
         rootNode->Deserialize(rootNodeJson);
 
+        NODESMANAGER._nextNodeID = jsonFile["nextNodeId"].get<int>();
+
         return rootNode;
 
     } else {
         std::cerr << "Can't open JSON " << filePath << std::endl;
     }
 
-}
-
-int SceneManager::getNextNodeID(const string &filePath) {
-    std::ifstream inputFile(filePath);
-    if (inputFile.is_open()) {
-        nlohmann::json jsonFile;
-
-        if (jsonFile.contains("nextNodeId")) {
-            return jsonFile["nextNodeId"].get<int>();
-        }
-
-    } else {
-        std::cerr << "Can't open JSON " << filePath << std::endl;
-    }
 }

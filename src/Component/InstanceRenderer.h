@@ -3,7 +3,7 @@
 #include "Core/Component.h"
 #include <model.h>
 #include <vector>
-#include "../Managers/ResourceMapsManager.h"
+#include "../Managers/ResourceManager.h"
 
 class InstanceRenderer : public Component {
 public:
@@ -30,7 +30,7 @@ public:
 //private:
     Model* _model;
     std::vector<glm::mat4> _instanceMatrix;
-    Shader* _shader;
+    shared_ptr<Shader> _shader;
     unsigned int _maxSize;
     unsigned int _instanceBuffer;
 

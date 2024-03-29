@@ -21,13 +21,13 @@ void ImguiHierarchy::draw(std::shared_ptr<Node> root, int nextNodeId, std::share
     ImGui::InputText("scene Path", _filePath, 128);
     if (ImGui::Button("SAVE") == true)
     {
-        nlohmann::json jsonData = SceneManager::SerializeRoot(root, nextNodeId);
-        SceneManager::SaveToJsonFile(jsonData, _filePath);
+        nlohmann::json jsonData = SCENEMANAGER.SerializeRoot (root);
+        SCENEMANAGER.SaveToJsonFile(jsonData, _filePath);
     }
     ImGui::SameLine();
     if (ImGui::Button("LOAD") == true)
     {
-        SceneManager::LoadFromJsonFile(_filePath);
+        SCENEMANAGER.LoadFromJsonFile(_filePath);
     }
 
     ImGui::InputText("new Object Name", _newObjectName, 128);
@@ -70,7 +70,7 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
     std::shared_ptr<Node> root = imguiMain->GetRoot();
     std::shared_ptr<Node> selectedObject = imguiMain->GetSelectedObject();
     auto newGameObject = std::make_shared<Node>();
-    newGameObject->name = _newObjectName;
+    newGameObject->_name = _newObjectName;
 
     if (selectedObject)
     {
@@ -87,7 +87,7 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
 }
 
 void ImguiHierarchy::DrawGameObjectHierarchy(std::shared_ptr<Node> root, ImguiMain* imguiMain) {
-    bool isOpen = ImGui::TreeNodeEx(root->name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+    bool isOpen = ImGui::TreeNodeEx(root->_name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
     // Use the pointer to the node as the identifier
     ImGui::PushID(root.get());

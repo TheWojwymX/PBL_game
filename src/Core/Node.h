@@ -14,8 +14,8 @@
 class Node : public std::enable_shared_from_this<Node>{
 public:
     Node();
-    string name;
-    int id;
+    string _name;
+    int _id;
 
     nlohmann::json Serialize();
 

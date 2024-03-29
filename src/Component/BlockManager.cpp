@@ -305,17 +305,17 @@ glm::vec3 BlockManager::CheckEntityCollision(const glm::vec3& entityPos, const g
 
     // Count the number of corners that have true in collision
     int numCollidingCorners = 0;
-    std::cout << "Colliding corners indices: ";
+    //std::cout << "Colliding corners indices: ";
     for (size_t i = 0; i < collisionInfoList.size(); ++i) {
         if (collisionInfoList[i].isColliding) {
-            std::cout << i << " ";
+            //std::cout << i << " ";
             numCollidingCorners++;
         }
     }
-    std::cout << std::endl;
+    //std::cout << std::endl;
 
     // Print the number of colliding corners
-    std::cout << "Number of colliding corners: " << numCollidingCorners << std::endl;
+    //std::cout << "Number of colliding corners: " << numCollidingCorners << std::endl;
 
     // Return the separation vector
     return separationVector;

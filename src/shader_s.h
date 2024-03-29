@@ -9,15 +9,35 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <utility>
+#include "../thirdparty/nlohmann/json.hpp"
 
 class Shader
 {
 public:
     unsigned int ID;
+    std::string _name;
+    std::string _vertexPath;
+    std::string _fragmentPath;
+
+    nlohmann::json Serialize() {
+        nlohmann::json shaderJson;
+
+        shaderJson["ShaderName"] = _name;
+        shaderJson["vertexPath"] = _vertexPath;
+        shaderJson["fragmentPath"] = _fragmentPath;
+
+        return shaderJson;
+    }
+
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader(const char* vertexPath, const char* fragmentPath)
+    Shader(const char* vertexPath, const char* fragmentPath, std::string shaderName)
     {
+        _name = std::move(shaderName);
+        _vertexPath = vertexPath;
+        _fragmentPath = fragmentPath;
+
         // 1. retrieve the vertex/fragment source code from _filePath
         std::string vertexCode;
         std::string fragmentCode;

@@ -28,7 +28,7 @@ public:
     void SetEnabled(bool isEnabled);
     bool IsEnabled() const;
 
-    int id;
+    int _id;
 
 protected:
     std::shared_ptr<Transform> _ownerTransform;

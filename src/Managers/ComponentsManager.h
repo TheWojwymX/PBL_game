@@ -2,6 +2,8 @@
 // Created by Jacek on 23.03.2024.
 //
 
+#define COMPONENTSMANAGER ComponentsManager::getInstance()
+
 #ifndef OPENGLGP_COMPONENTSMANAGER_H
 #define OPENGLGP_COMPONENTSMANAGER_H
 
@@ -23,7 +25,7 @@ public:
     template<typename ComponentType, typename... Args>
     std::shared_ptr<ComponentType> createComponent(Args&&... args) {
         auto component = std::make_shared<ComponentType>(std::forward<Args>(args)...);
-        component->id = getComponentList<ComponentType>().size();
+        component->_id = getComponentList<ComponentType>().size();
         addComponent(component);
         return component;
     }
@@ -32,7 +34,7 @@ public:
     std::shared_ptr<ComponentType> deserializeComponent(const nlohmann::json& componentJson) {
         auto component = std::make_shared<ComponentType>();
         component->Deserialize(componentJson);
-        addComponentAt(component, component->id);
+        addComponentAt(component, component->_id);
         return component;
     }
 
