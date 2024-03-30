@@ -48,11 +48,14 @@ void PlayerController::InteractionInput() {
     }
 }
 
-void PlayerController::CheckGrounded(glm::vec3 separationVector) {
-    if (separationVector.y==1) {
+void PlayerController::CheckGrounded(bool isGrounded, float ySeparation) {
+    if (isGrounded) {
         float roundedY = std::round(_ownerTransform->GetPosition().y + 0.5f) - 0.5f;
         _ownerTransform->SetPosition(roundedY, 1);
         _isGrounded = true;
+    }
+    else if (ySeparation < 0) {
+        _velocity.y = 0.0f;
     }
     else {
         _isGrounded = false;
@@ -67,13 +70,13 @@ void PlayerController::HandleMovement() {
     if (glm::length(move) > 0.0f) {
         move = glm::normalize(move) * _speed;
     }
-    std::cout << "Grounded: " << _isGrounded << std::endl;
+
     // Apply gravity
     if (!_isGrounded)
         _velocity.y += _gravity * TIME.GetDeltaTime();
     else
         _velocity.y = 0.0f;
-
+    //std::cout << "Grounded: " << _isGrounded << std::endl;
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {
         _velocity.y = sqrtf(_jumpHeight * -2.0f * _gravity);
@@ -86,11 +89,12 @@ void PlayerController::HandleMovement() {
 
 void PlayerController::HandleCollision()
 {
-    glm::vec3 separationVector = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), _width, _height);
-    std::cout << _ownerTransform->GetPosition().y <<" "<< separationVector.y << std::endl;
-    _ownerTransform->AddPosition(glm::vec3(separationVector.x, 0.0f, separationVector.z));
-    
-    CheckGrounded(separationVector);
+    std::pair<glm::vec3,bool> separationResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), _width, _height);
+    //std::cout << _ownerTransform->GetPosition().y <<" "<< separationResult.first.y << std::endl;
+
+    _ownerTransform->AddPosition(glm::vec3(separationResult.first.x, separationResult.first.y, separationResult.first.z));
+
+    CheckGrounded(separationResult.second, separationResult.first.y);
 }
 
 void PlayerController::addToInspector(ImguiMain *imguiMain)

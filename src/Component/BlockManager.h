@@ -11,8 +11,9 @@
 
 // Define a struct to hold collision information for each corner
 struct CollisionInfo {
-    bool isColliding;
-    glm::vec3 separationVector;
+    bool isColliding = false;;
+    glm::vec3 separationVector = glm::vec3(0.0f);
+    bool isGrounded = false;
 };
 
 
@@ -29,7 +30,7 @@ public:
     void Init() override;
 
     bool RayIntersectsBlock(float rayLength);
-    glm::vec3 CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight);
+    std::pair<glm::vec3, bool> CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
