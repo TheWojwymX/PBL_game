@@ -10,12 +10,14 @@
 #include <../thirdparty/nlohmann/json.hpp>
 #include "Core/Node.h"
 #include "NodesManager.h"
+#include "ComponentsManager.h"
+#include "ResourceManager.h"
 
 
 class SceneManager {
 public:
 
-    static SceneManager& GetInstance();
+    static SceneManager &GetInstance();
 
     nlohmann::json SerializeRoot(std::shared_ptr<Node> root);
 
@@ -23,8 +25,9 @@ public:
 
     std::shared_ptr<Node> LoadFromJsonFile(const string &filePath);
 
-    SceneManager(const SceneManager&) = delete;
-    SceneManager& operator=(const SceneManager&) = delete;
+    SceneManager(const SceneManager &) = delete;
+
+    SceneManager &operator=(const SceneManager &) = delete;
 
     ~SceneManager() = default;
 

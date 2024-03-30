@@ -18,21 +18,37 @@
 #include <sstream>
 #include <iostream>
 #include <map>
+#include <utility>
 #include <vector>
 using namespace std;
 
 class Model
 {
 public:
+
+    string _name;
+    string _path;
+
     // model data 
     vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
     vector<Mesh>    meshes;
     string directory;
     bool gammaCorrection;
 
+    nlohmann::json Serialize() {
+        nlohmann::json modelJson;
+
+        modelJson["ModelName"] = _name;
+        modelJson["Path"] = _path;
+
+        return modelJson;
+    }
+
     // constructor, expects a filepath to a 3D model.
-    Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
+    Model(string const& path, string name, bool gamma = false) : gammaCorrection(gamma)
     {
+        _path = path;
+        _name = std::move(name);
         loadModel(path);
     }
 

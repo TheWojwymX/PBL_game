@@ -28,7 +28,7 @@ public:
     void SetInstanceMatrix(const std::vector<glm::mat4>& instanceMatrix) { _instanceMatrix = instanceMatrix; RefreshMatrixBuffer(); }
 
 //private:
-    Model* _model;
+    shared_ptr<Model> _model;
     std::vector<glm::mat4> _instanceMatrix;
     shared_ptr<Shader> _shader;
     unsigned int _maxSize;

@@ -108,11 +108,6 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
-    // Build and compile the shader program
-    shared_ptr<Shader> modelShader = RESOURCEMANAGER.createShader("res/vecShader.vs", "res/fragShader.fs", "modelShader");
-    shared_ptr<Shader> lightObjectShader = RESOURCEMANAGER.createShader("res/vecLightObjectShader.vs", "res/fragLightObjectShader.fs", "lightObjectShader");
-    shared_ptr<Shader> instanceModelShader = RESOURCEMANAGER.createShader("res/instanceVecShader.vs", "res/instanceFragShader.fs", "instanceModelShader");
-    shared_ptr<Shader> skyboxShader = RESOURCEMANAGER.createShader("res/skyboxVecShader.vs", "res/skyboxFragShader.fs", "skyboxShader");
     float skyboxVertices[] = {
             // positions
             -1.0f,  1.0f, -1.0f,
@@ -179,35 +174,26 @@ int main(int, char**)
             };
     unsigned int cubemapTexture = loadCubemap(faces);
 
-    skyboxShader->use();
-    skyboxShader->setInt("skybox", 0);
+    // Deserialization of resources and nodes
+    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test3.json"); //problem zidentyfikowany, polega na tym, ze kiedy chcemy deserializowac jeden z komponentow to potrzebuje sandmodel, ktorego w tamtym momencie jeszcze nie ma, rozwiazanie, zrobic serializacje i deserializacje modeli przed wczytaniem nodow
 
-    // Load models
-    Model* sandModel = new Model("res/Sand/Sand.obj");
-
-    // Nodes id
-    int nextNodeId = 0;
-
-    // Create graph
-
-    // maps
-    RESOURCEMANAGER.RegisterModel("sandModel", sandModel);
-    //RESOURCEMANAGER.RegisterShader("instanceModelShader", instanceModelShader);
-
-    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test.json");
+    RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
+    RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
 
     //TAK NIE MOZE BYC DO ZMIANY NIZEJ ANALOGICZNIE
-    ComponentsManager::getInstance().getComponentByID<BlockManager>(0)->SetInstanceRenderer(ComponentsManager::getInstance().getComponentByID<InstanceRenderer>(0));
-    ComponentsManager::getInstance().getComponentByID<PlayerController>(0)->SetCamera(ComponentsManager::getInstance().getComponentByID<Camera>(0));
-    ComponentsManager::getInstance().getComponentByID<PlayerController>(0)->SetBlockManager(ComponentsManager::getInstance().getComponentByID<BlockManager>(0));
+    ComponentsManager::getInstance().GetComponentByID<BlockManager>(1)->SetInstanceRenderer(ComponentsManager::getInstance().GetComponentByID<InstanceRenderer>(0));
+    ComponentsManager::getInstance().GetComponentByID<PlayerController>(3)->SetCamera(ComponentsManager::getInstance().GetComponentByID<Camera>(2));
+    ComponentsManager::getInstance().GetComponentByID<PlayerController>(3)->SetBlockManager(ComponentsManager::getInstance().GetComponentByID<BlockManager>(1));
     NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
-    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("blockManager"), "nowyNode1");
+/*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
+    COMPONENTSMANAGER.CreateComponent<Camera>();
+    NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
 
-    // json
+    // json save for testing
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
     //std::cout << jsonData;
-    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test2.json");
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
@@ -232,10 +218,10 @@ int main(int, char**)
     imguiMain->SetRoot(root);
     imguiMain->SetSelectedObject(root);
 
-
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+
         // Calculate deltaTime
         TIME.Update();
 
@@ -246,22 +232,20 @@ int main(int, char**)
         root->Update();
 
         // Start the Dear ImGui frame
-        imguiMain->draw(nextNodeId);
-
-        std::cout<<(modelShader->ID);
+        imguiMain->draw(NODESMANAGER._nextNodeID);
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glDepthMask(GL_FALSE);
-        skyboxShader->use();
+        RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
 
-        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-        glm::mat4 view = ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetViewMatrix();
-        glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetViewMatrix())); // remove translation from the view matrix
-        skyboxShader->setMat4("view", skyboxView);
-        skyboxShader->setMat4("projection", projection);
+        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 view = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
+        glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix())); // remove translation from the view matrix
+        RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("view", skyboxView);
+        RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("projection", projection);
 
         glBindVertexArray(skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
@@ -270,28 +254,28 @@ int main(int, char**)
         glBindVertexArray(0);
         glDepthMask(GL_TRUE);
 
-        modelShader->use();
-        modelShader->setVec3("dirLight.direction", dirDirection);
-        modelShader->setVec3("dirLight.color", dirColor);
-        modelShader->setInt("dirLight.isActive", dirActive);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->use();
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("dirLight.isActive", dirActive);
 
-        modelShader->setVec3("viewPos", ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetPosition());
-        modelShader->setMat4("projection", projection);
-        modelShader->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);
 
-        instanceModelShader->use();
-        instanceModelShader->setVec3("dirLight.direction", dirDirection);
-        instanceModelShader->setVec3("dirLight.color", dirColor);
-        instanceModelShader->setInt("dirLight.isActive", dirActive);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->use();
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("dirLight.isActive", dirActive);
 
-        instanceModelShader->setVec3("viewPos", ComponentsManager::getInstance().getComponentByID<Camera>(0)->GetPosition());
-        instanceModelShader->setMat4("projection", projection);
-        instanceModelShader->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("view", view);
 
-        lightObjectShader->use();
-        lightObjectShader->setVec3("lightColor", dirColor);
-        lightObjectShader->setMat4("projection", projection);
-        lightObjectShader->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->use();
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setVec3("lightColor", dirColor);
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
 
         root->Render(Transform::Origin());
 

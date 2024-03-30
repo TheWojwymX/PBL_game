@@ -15,31 +15,28 @@
 
 class ResourceManager {
 public:
-    static ResourceManager& GetInstance();
-
-    void RegisterModel(const std::string& name, Model* model);
-    void RegisterShader(const std::string& name, Shader* shader);
-
-    Model* GetModelByName(const std::string& name) const;
-
-    std::string FindModelName(Model* model) const;
-    std::string FindShaderName(Shader* shader) const;
+    static ResourceManager &GetInstance();
 
     nlohmann::json Serialize();
 
+    void Deserialize(nlohmann::json data);
+
     ~ResourceManager() = default;
 
-    shared_ptr<Shader> createShader(const char *vertexPath, const char *fragmentPath, string name);
+    shared_ptr<Shader> CreateShader(const char *vertexPath, const char *fragmentPath, string name);
 
-    shared_ptr<Shader> getShaderByName(const string &name);
+    shared_ptr<Shader> GetShaderByName(const string &name);
+
+    shared_ptr<Model> CreateModel(string path, string name);
+
+    shared_ptr<Model> GetModelByName(const string &name);
+
 private:
     ResourceManager() = default;
 
-    std::map<std::string, Model*> modelMap;
-    std::map<std::string, Shader*> shaderMap;
+    ResourceManager(const ResourceManager &) = delete;
 
-    ResourceManager(const ResourceManager&) = delete;
-    ResourceManager& operator=(const ResourceManager&) = delete;
+    ResourceManager &operator=(const ResourceManager &) = delete;
 
     std::vector<std::shared_ptr<Shader>> Shaders;
     std::vector<std::shared_ptr<Model>> Models;

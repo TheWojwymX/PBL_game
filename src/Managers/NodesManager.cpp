@@ -26,8 +26,8 @@ std::shared_ptr<Node> NodesManager::getNodeByName(const std::string& name) {
 std::shared_ptr<Node> NodesManager::createNode(const std::shared_ptr<Node>& parentNode, string nameOfNode) {
     auto node = std::make_shared<Node>();
     node->_id = _nextNodeID;
-    _nextNodeID++;
     addNodeAt(node, _nextNodeID);
+    _nextNodeID++;
     parentNode->AddChild(node);
     node->_name = nameOfNode;
     return node;
@@ -41,5 +41,5 @@ void NodesManager::addNodeAt(std::shared_ptr<Node> node, size_t position) {
     if (position >= nodes.size()) {
         nodes.resize(position + 1, nullptr);
     }
-    nodes[position] = std::move(node);
+    nodes[position] = node;
 }
