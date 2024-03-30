@@ -165,25 +165,21 @@ int main(int, char**)
 
     vector<std::string> faces
             {
-                    "res/skybox/right.jpg",
-                    "res/skybox/left.jpg",
-                    "res/skybox/top.jpg",
-                    "res/skybox/bottom.jpg",
-                    "res/skybox/front.jpg",
-                    "res/skybox/back.jpg"
+                    "res/Skybox/right.jpg",
+                    "res/Skybox/left.jpg",
+                    "res/Skybox/top.jpg",
+                    "res/Skybox/bottom.jpg",
+                    "res/Skybox/front.jpg",
+                    "res/Skybox/back.jpg"
             };
     unsigned int cubemapTexture = loadCubemap(faces);
 
     // Deserialization of resources and nodes
-    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test3.json"); //problem zidentyfikowany, polega na tym, ze kiedy chcemy deserializowac jeden z komponentow to potrzebuje sandmodel, ktorego w tamtym momencie jeszcze nie ma, rozwiazanie, zrobic serializacje i deserializacje modeli przed wczytaniem nodow
+    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test1.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
-
-    //TAK NIE MOZE BYC DO ZMIANY NIZEJ ANALOGICZNIE
-    ComponentsManager::getInstance().GetComponentByID<BlockManager>(1)->SetInstanceRenderer(ComponentsManager::getInstance().GetComponentByID<InstanceRenderer>(0));
-    ComponentsManager::getInstance().GetComponentByID<PlayerController>(3)->SetCamera(ComponentsManager::getInstance().GetComponentByID<Camera>(2));
-    ComponentsManager::getInstance().GetComponentByID<PlayerController>(3)->SetBlockManager(ComponentsManager::getInstance().GetComponentByID<BlockManager>(1));
+    
     NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
 
 /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
@@ -193,7 +189,7 @@ int main(int, char**)
     // json save for testing
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
     //std::cout << jsonData;
-    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test3.json");
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);

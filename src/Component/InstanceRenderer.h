@@ -15,6 +15,8 @@ public:
 
     void Deserialize(const nlohmann::json& jsonData) override;
 
+    void initiate() override;
+
     void Render(glm::mat4 parentWorld) override;
 
     void RefreshMatrixBuffer();

@@ -43,13 +43,14 @@ std::shared_ptr<Node> SceneManager::LoadFromJsonFile(const string &filePath) {
         auto rootNodeJson = jsonFile["root"];
         auto rootNode = std::make_shared<Node>();
 
-
         auto resourcesNodeJson = jsonFile["resources"];
         RESOURCEMANAGER.Deserialize(resourcesNodeJson);
         rootNode->Deserialize(rootNodeJson);
 
         COMPONENTSMANAGER._nextComponentID = jsonFile["nextComponentId"].get<int>();
         NODESMANAGER._nextNodeID = jsonFile["nextNodeId"].get<int>();
+
+        COMPONENTSMANAGER.Initiate();
 
         return rootNode;
 

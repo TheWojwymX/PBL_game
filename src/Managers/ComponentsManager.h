@@ -61,6 +61,12 @@ public:
         return component;
     }
 
+    void Initiate(){
+        const auto &components = GetComponents();
+        for (const auto &comp: components) {
+            comp->initiate();
+        }
+    }
 
     std::vector<std::shared_ptr<Component>> &GetComponents() {
         return Components;

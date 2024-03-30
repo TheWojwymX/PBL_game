@@ -20,6 +20,10 @@ void Component::Deserialize(const nlohmann::json &jsonData) {
     }
 }
 
+void Component::initiate() {
+
+}
+
 void Component::Init() {}
 
 void Component::Input() {}
@@ -28,7 +32,7 @@ void Component::Update() {}
 
 void Component::Render(glm::mat4 parentWorld) {}
 
-void Component::RenderShadows(glm::mat4 parentWorld, Shader* shader) {}
+void Component::RenderShadows(glm::mat4 parentWorld, Shader *shader) {}
 
 void Component::SetOwnerTransform(std::shared_ptr<Transform> transform) {
     _ownerTransform = transform;
@@ -42,13 +46,11 @@ bool Component::IsEnabled() const {
     return _isEnabled;
 }
 
-void Component::addToInspector(ImguiMain* imguiMain)
-{
+void Component::addToInspector(ImguiMain *imguiMain) {
 
 }
 
-void Component::addToHierarchy()
-{
+void Component::addToHierarchy() {
     ImGui::Text("Komponent");
 }
 

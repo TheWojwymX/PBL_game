@@ -29,6 +29,9 @@ void Camera::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
+void Camera::initiate() {
+    Component::initiate();
+}
 
 void Camera::Input() {
     if (INPUT.IsKeyPressed(GLFW_KEY_E)) {

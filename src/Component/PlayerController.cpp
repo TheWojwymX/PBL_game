@@ -10,11 +10,35 @@ nlohmann::json PlayerController::Serialize() {
 
     data["type"] = "PlayerController";
 
+    if(_blockManagerRef){
+        data["blockManagerRefID"] = _blockManagerRef->_id;
+    }
+
+    if(_cameraRef){
+        data["cameraRefID"] = _cameraRef->_id;
+    }
+
+
     return data;
 }
 
 void PlayerController::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("blockManagerRefID")) {
+        _blockManagerRefID = jsonData["blockManagerRefID"].get<int>();
+    }
+
+    if (jsonData.contains("cameraRefID")) {
+        _cameraRefID = jsonData["cameraRefID"].get<int>();
+    }
+
     Component::Deserialize(jsonData);
+}
+
+void PlayerController::initiate() {
+    _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(_blockManagerRefID);
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
+    Component::initiate();
 }
 
 void PlayerController::Init() {
@@ -89,4 +113,3 @@ void PlayerController::addToInspector(ImguiMain *imguiMain)
 {
 
 }
-

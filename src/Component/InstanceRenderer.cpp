@@ -41,6 +41,10 @@ void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
+void InstanceRenderer::initiate() {
+    Component::initiate();
+}
+
 void InstanceRenderer::Render(glm::mat4 parentWorld) {
     _shader->use();
     _model->InstanceDraw(*_shader, _instanceMatrix.size());
