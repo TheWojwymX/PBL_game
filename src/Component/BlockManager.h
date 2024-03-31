@@ -12,7 +12,7 @@
 // Define a struct to hold collision information for each corner
 struct CollisionInfo {
     bool isColliding = false;;
-    glm::vec3 separationVector = glm::vec3(0.0f);
+    glm::vec3 separationVector = glm::vec3(std::numeric_limits<float>::max());
     bool isGrounded = false;
 };
 
@@ -30,7 +30,7 @@ public:
     void Init() override;
 
     bool RayIntersectsBlock(float rayLength);
-    std::pair<glm::vec3, bool> CheckEntityCollision(const glm::vec3& entityPos, float entityWidth, float entityHeight);
+    std::pair<glm::vec3,glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
@@ -53,7 +53,7 @@ private:
     void UpdateBlockVisibility(BlockData& blockData);
     void UpdateNeighbourVisibility(BlockData& blockData);
     void SetVisibility(BlockData& blockData, bool state);
-    std::vector<CollisionInfo> CalculateCollisionInfo(const glm::vec3& entityPos, float halfWidth, float entityHeight);
+    std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
    
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);

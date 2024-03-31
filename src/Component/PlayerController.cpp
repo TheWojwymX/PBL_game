@@ -28,7 +28,6 @@ void PlayerController::Input() {
 
 void PlayerController::Update() {
     HandleMovement();
-    HandleCollision();
 }
 
 void PlayerController::MovementInput() {
@@ -48,13 +47,14 @@ void PlayerController::InteractionInput() {
     }
 }
 
-void PlayerController::CheckGrounded(bool isGrounded, float ySeparation) {
-    if (isGrounded) {
+void PlayerController::CheckGrounded(glm::vec3 separationVector) {
+    if (separationVector.y > 0) {
         float roundedY = std::round(_ownerTransform->GetPosition().y + 0.5f) - 0.5f;
         _ownerTransform->SetPosition(roundedY, 1);
         _isGrounded = true;
+        _velocity.y = 0.0f;
     }
-    else if (ySeparation < 0) {
+    else if (separationVector.y < 0) {
         _velocity.y = 0.0f;
     }
     else {
@@ -72,29 +72,21 @@ void PlayerController::HandleMovement() {
     }
 
     // Apply gravity
-    if (!_isGrounded)
-        _velocity.y += _gravity * TIME.GetDeltaTime();
-    else
-        _velocity.y = 0.0f;
-    //std::cout << "Grounded: " << _isGrounded << std::endl;
+    _velocity.y += _gravity * TIME.GetDeltaTime();
+
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {
         _velocity.y = sqrtf(_jumpHeight * -2.0f * _gravity);
+        _jump = true;
     }
 
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
 
-    _ownerTransform->AddPosition(movementVector);
-}
+    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
 
-void PlayerController::HandleCollision()
-{
-    std::pair<glm::vec3,bool> separationResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), _width, _height);
-    //std::cout << _ownerTransform->GetPosition().y <<" "<< separationResult.first.y << std::endl;
+    _ownerTransform->AddPosition(collisionResult.first);
 
-    _ownerTransform->AddPosition(glm::vec3(separationResult.first.x, separationResult.first.y, separationResult.first.z));
-
-    CheckGrounded(separationResult.second, separationResult.first.y);
+    CheckGrounded(collisionResult.second);
 }
 
 void PlayerController::addToInspector(ImguiMain *imguiMain)
