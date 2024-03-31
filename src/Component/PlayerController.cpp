@@ -3,18 +3,21 @@
 #include "Core/Input.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, float width, float height)
-    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _width(width), _height(height) {}
+        : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),
+          _inputVector(glm::vec2(0.0f)), _reach(reach), _width(width), _height(height) {
+
+    _type = ComponentType::PLAYERCNTROLLER;
+
+}
 
 nlohmann::json PlayerController::Serialize() {
     nlohmann::json data = Component::Serialize();
 
-    data["type"] = "PlayerController";
-
-    if(_blockManagerRef){
+    if (_blockManagerRef) {
         data["blockManagerRefID"] = _blockManagerRef->_id;
     }
 
-    if(_cameraRef){
+    if (_cameraRef) {
         data["cameraRefID"] = _cameraRef->_id;
     }
 
@@ -73,11 +76,10 @@ void PlayerController::InteractionInput() {
 }
 
 void PlayerController::CheckGrounded() {
-    if (_ownerTransform->GetPosition()[1] <= _groundLevel ) {
+    if (_ownerTransform->GetPosition()[1] <= _groundLevel) {
         _isGrounded = true;
-        _ownerTransform->SetPosition(_groundLevel,1);
-    }
-    else {
+        _ownerTransform->SetPosition(_groundLevel, 1);
+    } else {
         _isGrounded = false;
     }
 }
@@ -109,7 +111,6 @@ void PlayerController::HandleMovement() {
     _ownerTransform->AddPosition(_blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, 0.5f, 1.8f));
 }
 
-void PlayerController::addToInspector(ImguiMain *imguiMain)
-{
+void PlayerController::addToInspector(ImguiMain *imguiMain) {
 
 }

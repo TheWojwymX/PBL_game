@@ -5,6 +5,7 @@
 #include "Component/Transform.h"
 #include "shader_s.h"
 #include <../thirdparty/nlohmann/json.hpp>
+#include <Core/ComponentTypeEnum.h>
 
 class ImguiMain;
 
@@ -30,6 +31,7 @@ public:
     bool IsEnabled() const;
 
     int _id;
+    ComponentType _type;
 
 protected:
     std::shared_ptr<Transform> _ownerTransform;

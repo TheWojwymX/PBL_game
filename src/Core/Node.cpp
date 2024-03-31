@@ -63,22 +63,25 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
     // Components
     if (nodeJson.contains("components")) {
         for (auto &componentJson: nodeJson["components"]) {
-            if (componentJson.contains("type")) {
-                std::string type = componentJson["type"];
-                if (type == "Camera") {
-                    ComponentsManager::getInstance().DeserializeComponent<Camera>(componentJson);
-                }
+            if (componentJson.contains("componentType")) {
+                ComponentType type = componentJson["componentType"];
 
-                if (type == "PlayerController") {
-                    ComponentsManager::getInstance().DeserializeComponent<PlayerController>(componentJson);
-                }
-
-                if (type == "InstanceRenderer") {
-                    ComponentsManager::getInstance().DeserializeComponent<InstanceRenderer>(componentJson);
-                }
-
-                if (type == "BlockManager") {
-                    ComponentsManager::getInstance().DeserializeComponent<BlockManager>(componentJson);
+                switch (type) {
+                    case ComponentType::CAMERA:
+                        ComponentsManager::getInstance().DeserializeComponent<Camera>(componentJson);
+                        break;
+                    case ComponentType::PLAYERCNTROLLER:
+                        ComponentsManager::getInstance().DeserializeComponent<PlayerController>(componentJson);
+                        break;
+                    case ComponentType::INSTANCERENDERER:
+                        ComponentsManager::getInstance().DeserializeComponent<InstanceRenderer>(componentJson);
+                        break;
+                    case ComponentType::BLOCKMANAGER:
+                        ComponentsManager::getInstance().DeserializeComponent<BlockManager>(componentJson);
+                        break;
+                    default:
+                        std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
+                        break;
                 }
 
                 AddComponent(COMPONENTSMANAGER.GetComponentByID<Component>(componentJson["componentId"].get<int>()));

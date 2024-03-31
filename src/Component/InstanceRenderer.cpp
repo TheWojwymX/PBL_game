@@ -7,13 +7,12 @@ InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader)
 }
 
 InstanceRenderer::InstanceRenderer() {
-
+    _type = ComponentType::INSTANCERENDERER;
 }
 
 nlohmann::json InstanceRenderer::Serialize() {
     nlohmann::json data = Component::Serialize();
 
-    data["type"] = "InstanceRenderer";
     data["model"] = _model->_name;
     data["maxSize"] = _maxSize;
     data["shader"] = _shader->_name;

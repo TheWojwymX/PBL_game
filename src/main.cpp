@@ -175,7 +175,7 @@ int main(int, char**)
     unsigned int cubemapTexture = loadCubemap(faces);
 
     // Deserialization of resources and nodes
-    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test1.json");
+    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test2.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);

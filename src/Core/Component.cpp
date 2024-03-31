@@ -9,6 +9,7 @@ nlohmann::json Component::Serialize() {
 
     nlohmann::json data;
 
+    data["componentType"] = _type;
     data["componentId"] = _id;
 
     return data;
@@ -17,6 +18,10 @@ nlohmann::json Component::Serialize() {
 void Component::Deserialize(const nlohmann::json &jsonData) {
     if (jsonData.contains("componentId")) {
         _id = jsonData["componentId"].get<int>();
+    }
+
+    if (jsonData.contains("componentType")) {
+        _type = static_cast<ComponentType>(jsonData["componentType"].get<int>());
     }
 }
 
