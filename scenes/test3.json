@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 5,
-    "nextNodeId": 7,
+    "nextComponentId": 4,
+    "nextNodeId": 6,
     "resources": {
         "Models": [
             {
@@ -170,39 +170,6 @@
                     "position": [
                         0.0,
                         2.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 6,
-                "NodeName": "testowy",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 4,
-                        "componentType": 0,
-                        "offset": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ]
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
                         0.0
                     ],
                     "rotation": [

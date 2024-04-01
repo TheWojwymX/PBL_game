@@ -5,7 +5,6 @@
 #include <memory>
 #include "imgui.h"
 
-
 class Block : public Component {
 public:
     Block();

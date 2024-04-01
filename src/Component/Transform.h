@@ -1,10 +1,14 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include "glm/gtc/type_ptr.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <spdlog/spdlog.h>
 #include <memory> // Include necessary header for std::shared_ptr
+#include "imgui.h"
+
+class ImguiMain;
 
 class Transform {
 public:
@@ -44,6 +48,10 @@ public:
 
     static glm::mat4 CalculateTransformMatrix(glm::vec3 pos, glm::quat rotation, glm::vec3 scale);
     static glm::mat4 Origin();
+
+    void addToInspector(ImguiMain *imguiMain);
+
+
 
 private:
     std::shared_ptr<Transform> _parent = nullptr;

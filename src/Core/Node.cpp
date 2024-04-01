@@ -162,7 +162,10 @@ const vector<std::shared_ptr<Component>> &Node::getComponents() const {
 }
 
 void Node::addToInspector(ImguiMain *imguiMain) {
-    for (auto &component: _components) {
+    _local->addToInspector(imguiMain);
+
+    for (auto &component : _components)
+    {
         component->addToInspector(imguiMain);
     }
 }

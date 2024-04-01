@@ -71,7 +71,7 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
     std::shared_ptr<Node> selectedObject = imguiMain->GetSelectedObject();
     auto newGameObject = std::make_shared<Node>();
     newGameObject->_name = _newObjectName;
-
+    
     if (selectedObject)
     {
         // If there's a selected object, add the new GameObject as its child
