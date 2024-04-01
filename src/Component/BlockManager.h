@@ -29,7 +29,7 @@ public:
 
     void Init() override;
 
-    bool RayIntersectsBlock(float rayLength);
+    bool RayIntersectsBlock(float rayLength, int radius);
     std::pair<glm::vec3,glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
@@ -45,14 +45,18 @@ private:
     std::vector<BlockData*> _visibleBlocks;
     std::shared_ptr<InstanceRenderer> _sandRendererRef;
     std::shared_ptr<Camera> _cameraRef;
+    std::vector<std::vector<glm::ivec3>> _sphereVectors;
 
     void GenerateMap();
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();
     void UpdateBlocksVisibility();
+    void DamageBlocks(glm::ivec3 hitPos, int radius);
+    void HideEdges();
     void UpdateBlockVisibility(BlockData& blockData);
     void UpdateNeighbourVisibility(BlockData& blockData);
     void SetVisibility(BlockData& blockData, bool state);
+    void GenerateSphereVectors(int radius);
     std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
    
     int GetIndex(glm::ivec3 point);

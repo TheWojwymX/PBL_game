@@ -2,8 +2,8 @@
 #include "Core/Time.h"
 #include "Core/Input.h"
 
-PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, float width, float height)
-    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _width(width), _height(height) {}
+PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height)
+    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius) , _width(width), _height(height) {}
 
 nlohmann::json PlayerController::Serialize() {
     nlohmann::json data = Component::Serialize();
@@ -43,7 +43,7 @@ void PlayerController::MovementInput() {
 
 void PlayerController::InteractionInput() {
     if (INPUT.IsMousePressed(GLFW_MOUSE_BUTTON_1)) {
-        _blockManagerRef->RayIntersectsBlock(_reach);
+        _blockManagerRef->RayIntersectsBlock(_reach, _radius);
     }
 }
 

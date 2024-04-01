@@ -136,7 +136,7 @@ int main(int, char**)
     std::shared_ptr<Node> blockManager = std::make_shared<Node>();
 
     //std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
-    auto blockManagerComp = componentsManager.createComponent<BlockManager>(10, 10, 10);
+    auto blockManagerComp = componentsManager.createComponent<BlockManager>(100, 100, 100);
     //auto blockManagerComp2 = componentsManager.createComponent<BlockManager>(666, 100, 100);
     blockManagerComp->SetInstanceRenderer(sandRenderer);
     blockManager->AddComponent(blockManagerComp);
@@ -152,7 +152,7 @@ int main(int, char**)
     playerController->SetCamera(camera);
     playerController->SetBlockManager(blockManagerComp);
     player->AddComponent(playerController);
-    player->GetTransform()->SetPosition(glm::vec3(1.0f, 15.0f, 1.0f));
+    player->GetTransform()->SetPosition(glm::vec3(1.0f, 105.0f, 1.0f));
 
     // root
     root->AddChild(sand);

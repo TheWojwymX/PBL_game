@@ -10,7 +10,7 @@ public:
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    PlayerController(float speed = 8.0f, float gravity = -20.0f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, float width = 0.5f, float height = 1.8f);
+    PlayerController(float speed = 8.0f, float gravity = -20.0f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, int radius = 5, float width = 0.5f, float height = 1.8f);
 
     void Init() override;
     void Input() override;
@@ -31,6 +31,7 @@ private:
     bool _isGrounded;
     bool _jump;
     float _reach;
+    int _radius;
     glm::vec3 _velocity;
     glm::vec2 _inputVector;
     std::shared_ptr<Camera> _cameraRef;

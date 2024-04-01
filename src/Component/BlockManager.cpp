@@ -38,7 +38,9 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
 void BlockManager::Init() {
     GenerateMap();
     UpdateBlocksVisibility();
+    RefreshVisibleBlocks();
     UpdateInstanceRenderer();
+    GenerateSphereVectors(20);
 }
  
 void BlockManager::GenerateMap() {
@@ -80,10 +82,10 @@ void BlockManager::RefreshVisibleBlocks() {
     // Use erase-remove idiom to remove elements satisfying the condition
     _visibleBlocks.erase(std::remove_if(_visibleBlocks.begin(), _visibleBlocks.end(),
         [](BlockData* blockPtr) {
-            return blockPtr->GetBlockType() == BlockType::EMPTY;
+            // Remove the block if it's either empty or not visible
+            return blockPtr->GetBlockType() == BlockType::EMPTY || !blockPtr->IsVisible();
         }), _visibleBlocks.end());
 }
-
 
 void BlockManager::UpdateBlocksVisibility() {
     _visibleBlocks.clear(); // Clear the list of visible blocks
@@ -91,6 +93,21 @@ void BlockManager::UpdateBlocksVisibility() {
     // Iterate through all blocks
     for (auto& blockData : _blocksData) {
         UpdateBlockVisibility(blockData);
+    }
+
+    HideEdges();
+}
+
+void BlockManager::HideEdges()
+{
+    for (auto& blockData : _visibleBlocks) {
+        if (blockData->GetPosID().y == 0) {
+            blockData->SetVisible(false);
+        }
+        else if (blockData->GetPosID().y != _height - 1) {
+            if (blockData->GetPosID().x == 0 || blockData->GetPosID().x == _width - 1) blockData->SetVisible(false);
+            else if (blockData->GetPosID().z == 0 || blockData->GetPosID().z == _depth - 1) blockData->SetVisible(false);
+        }
     }
 }
 
@@ -140,14 +157,38 @@ void BlockManager::SetVisibility(BlockData& blockData, bool state) {
     // Set the visibility of the block
     blockData.SetVisible(state);
 
-    // If the block is visible and not empty, add it to _visibleBlocks
     if (state && blockData.GetBlockType() != BlockType::EMPTY) {
+        // Add the blockData to _visibleBlocks
         _visibleBlocks.push_back(&blockData);
     }
 }
 
+void BlockManager::GenerateSphereVectors(int radius) {
+    // Clear existing vectors
+    _sphereVectors.clear();
 
-bool BlockManager::RayIntersectsBlock(float rayLength) {
+    // Generate sphere vectors for each radius up to the specified radius
+    for (int r = 0; r <= radius; r++) {
+        std::vector<glm::ivec3> sphereVectors;
+
+        // Iterate through each point within the cube that contains the sphere
+        for (int x = -r; x <= r; x++) {
+            for (int y = -r; y <= r; y++) {
+                for (int z = -r; z <= r; z++) {
+                    // Check if the distance from the center is within the radius
+                    if (glm::length(glm::vec3(x, y, z)) <= r) {
+                        sphereVectors.push_back(glm::ivec3(x, y, z));
+                    }
+                }
+            }
+        }
+
+        // Add the generated vectors to _sphereVectors
+        _sphereVectors.push_back(sphereVectors);
+    }
+}
+
+bool BlockManager::RayIntersectsBlock(float rayLength, int radius) {
     // Get camera position and front vector
     glm::vec3 cameraPos = _cameraRef->GetPosition();
     glm::vec3 cameraFront = _cameraRef->GetFrontVector();
@@ -159,24 +200,38 @@ bool BlockManager::RayIntersectsBlock(float rayLength) {
 
         // Round the point to whole numbers
         glm::ivec3 roundedPoint = glm::round(point);
+
         // Check if all three elements of roundedPoint are positive
         if (InBounds(roundedPoint)) {
+
             // Calculate the index
             int index = GetIndex(roundedPoint);
-            // Check if the index is within bounds
-            if (index >= 0 && index < _blocksData.size()) {
-                // Check if the blockData is visible and change it to empty if so
-                if (_blocksData[index].IsVisible() && _blocksData[index].GetBlockType() != BlockType::EMPTY) {
-                    _blocksData[index].SetBlockType(BlockType::EMPTY);
-                    UpdateNeighbourVisibility(_blocksData[index]);
-                    RefreshVisibleBlocks();
-                    UpdateInstanceRenderer();
-                    return true; // Block hit, no need to check further
-                }
+
+            // Check if the blockData is visible and change it to empty if so
+            if (_blocksData[index].IsVisible() && _blocksData[index].GetBlockType() != BlockType::EMPTY) {
+                DamageBlocks(roundedPoint,radius);
+                return true; // Block hit, no need to check further
             }
         }
     }
     return false; // No block hit along the ray
+}
+
+void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius)
+{
+    for (const glm::ivec3& offset : _sphereVectors[radius]) {
+        glm::ivec3 pos = hitPos + offset;
+        if (InBounds(pos)) {
+            int index = GetIndex(pos);
+            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+                _blocksData[index].SetBlockType(BlockType::EMPTY);
+                UpdateNeighbourVisibility(_blocksData[index]);
+            }
+        }
+    }
+
+    RefreshVisibleBlocks();
+    UpdateInstanceRenderer();
 }
 
 std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight) {
@@ -237,18 +292,14 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
 
                 float entityPosY = entityPos.y + movementVector.y;
                 if (i < 4) {
-                    if (entityPosY < blockMax.y) {
-                        // Determine the separation vector in the y-axis
-                        float direction = glm::sign(entityPosY - roundedPosY.y);
-                        info.separationVector.y = (std::abs((std::abs(entityPosY - blockMax.y))) + 0.00001f) * direction;
+                    if (entityPosY < blockMax.y && entityPosY > roundedPosY.y) {
+                        info.separationVector.y = (std::abs((std::abs(entityPosY - blockMax.y))) + 0.00001f);
                         info.isColliding = true;
                     }
                 }
                 else if (i >= 8) {
-                    if (entityPosY + entityHeight > blockMin.y) {
-                        // Determine the separation vector in the y-axis
-                        float direction = glm::sign(entityPosY - roundedPosY.y);
-                        info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.00001f) * direction;
+                    if (entityPosY + entityHeight > blockMin.y && entityPosY < roundedPosY.y) {
+                        info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.00001f) * -1;
                         info.isColliding = true;
                     }
                 }
@@ -289,25 +340,31 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
     // Calculate collision information for each corner of the entity's AABB
     std::vector<CollisionInfo> collisionInfoList = CalculateCollisionInfo(entityPos, movementVector, halfWidth, entityHeight);
 
-    // Initialize the separation vector
-    glm::vec3 separationVector(std::numeric_limits<float>::max());
+    float smallestX = std::numeric_limits<float>::max();
+    float smallestY = std::numeric_limits<float>::max();
+    float smallestZ = std::numeric_limits<float>::max();
 
     for (const CollisionInfo& collisionInfo : collisionInfoList) {
         // Check if collision occurred
         if (collisionInfo.isColliding) {
             // Update separationVector based on the smallest non-zero component
             if (std::abs(collisionInfo.separationVector.x) < std::abs(collisionInfo.separationVector.z)) {
-                separationVector.x = collisionInfo.separationVector.x;
+                if(std::abs(collisionInfo.separationVector.x) < std::abs(smallestX))
+                    smallestX = collisionInfo.separationVector.x;
             }
             else if (collisionInfo.separationVector.z < std::numeric_limits<float>::max()) {
-                separationVector.z = collisionInfo.separationVector.z;
+                if (std::abs(collisionInfo.separationVector.z) < std::abs(smallestZ))
+                    smallestZ = collisionInfo.separationVector.z;
             }
 
             if (collisionInfo.separationVector.y < std::numeric_limits<float>::max()) {
-                separationVector.y = collisionInfo.separationVector.y;
+                if (std::abs(collisionInfo.separationVector.y) < std::abs(smallestY))
+                    smallestY = collisionInfo.separationVector.y;
             }
         }
     }
+
+    glm::vec3 separationVector = glm::vec3(smallestX, smallestY, smallestZ);
 
     // If any component of separationVector is still float max, set it to 0.0f
     if (separationVector.x == std::numeric_limits<float>::max()) {
