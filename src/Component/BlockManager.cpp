@@ -40,7 +40,7 @@ void BlockManager::Init() {
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateInstanceRenderer();
-    GenerateSphereVectors(20);
+    GenerateSphereVectors(31);
 }
  
 void BlockManager::GenerateMap() {
@@ -281,6 +281,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
                 }
             }
         }
+
         if (InBounds(roundedPosY)) {
             int index = GetIndex(roundedPosY);
 
@@ -298,7 +299,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
                     }
                 }
                 else if (i >= 8) {
-                    if (entityPosY + entityHeight > blockMin.y && entityPosY < roundedPosY.y) {
+                    if (entityPosY + entityHeight > blockMin.y && entityPosY + entityHeight < roundedPosY.y) {
                         info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.00001f) * -1;
                         info.isColliding = true;
                     }
