@@ -30,26 +30,26 @@ void ImguiHierarchy::draw(std::shared_ptr<Node> root, int nextNodeId, std::share
         SCENEMANAGER.LoadFromJsonFile(_filePath);
     }
 
-    ImGui::InputText("new Object Name", _newObjectName, 128);
+    ImGui::InputText("Name:", _newObjectName, 128);
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.8f, 0.1f, 1.0f });
-    if (ImGui::Button("add object") == true)
+    if (ImGui::Button("Add Node") == true)
     {
-        //Adding object implementation
+        addGameObject(imguiMain);
     }
     ImGui::PopStyleColor();
 
     ImGui::SameLine();
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.7f, 0.1f, 0.1f, 1.0f });
-    if (ImGui::Button("remove object") == true)
+    if (ImGui::Button("Remove Node") == true)
     {
-        // Deleting object goes here
+        root->removeChild(selectedObject);
         selectedObject = root;
     }
     ImGui::PopStyleColor();
 
     ImGui::SameLine();
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.9f, 0.5f, 0.0f, 1.0f });
-    if (ImGui::Button("move object  ") == true)
+    if (ImGui::Button("Move Node") == true)
     {
         // Moving object implementation goes here
     }
@@ -71,15 +71,13 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
     std::shared_ptr<Node> selectedObject = imguiMain->GetSelectedObject();
     auto newGameObject = std::make_shared<Node>();
     newGameObject->_name = _newObjectName;
-    
+
     if (selectedObject)
     {
-        // If there's a selected object, add the new GameObject as its child
         selectedObject->AddChild(newGameObject);
     }
     else
     {
-        // If no object is selected, add the new GameObject to the root
         root->AddChild(newGameObject);
     }
 

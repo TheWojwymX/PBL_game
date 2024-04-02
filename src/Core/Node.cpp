@@ -170,3 +170,20 @@ void Node::addToInspector(ImguiMain *imguiMain) {
     }
 }
 
+void Node::removeChild(std::shared_ptr<Node> child)
+{
+    auto it = std::find(_children.begin(), _children.end(), child);
+    if (it != _children.end())
+    {
+        _children.erase(it);
+    }
+    else
+    {
+        // If the child is not found at this level, recursively search in each child node
+        for (auto& node : _children)
+        {
+            node->removeChild(child);
+        }
+    }
+}
+
