@@ -3,6 +3,7 @@
 #define TEXTURE_H
 
 #include <glad/glad.h>
+#include <stb_image.h>
 
 // Texture2D is able to store and configure a texture in OpenGL.
 // It also hosts utility functions for easy management.
@@ -27,6 +28,8 @@ public:
     void Generate(unsigned int width, unsigned int height, unsigned char* data);
     // binds the texture as the current active GL_TEXTURE_2D texture object
     void Bind() const;
+
+    static Texture2D loadTextureFromFile(const char* file, bool alpha);
 };
 
 #endif

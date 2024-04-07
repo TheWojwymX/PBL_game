@@ -28,6 +28,16 @@
                 "ShaderName": "skyboxShader",
                 "fragmentPath": "res/skyboxFragShader.fs",
                 "vertexPath": "res/skyboxVecShader.vs"
+            },
+            {
+                "ShaderName": "textShader",
+                "fragmentPath": "../../res/textShader.fs",
+                "vertexPath": "../../res/textShader.vs"
+            },
+            {
+                "ShaderName": "textureShader",
+                "fragmentPath": "../../res/textureShader.fs",
+                "vertexPath": "../../res/textureShader.vs"
             }
         ]
     },
@@ -119,6 +129,7 @@
                 ],
                 "components": [
                     {
+                        "cameraRefID": 2,
                         "componentId": 1,
                         "componentType": 2,
                         "depth": 100,

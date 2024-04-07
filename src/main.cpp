@@ -22,6 +22,7 @@
 #include "Component/Camera.h"
 #include "Component/InstanceRenderer.h"
 
+#include "HUD/HUDMain.h"
 
 #include <iostream>
 
@@ -50,7 +51,6 @@ static void glfw_error_callback(int error, const char* description)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 unsigned int loadCubemap(vector<std::string> faces);
-Texture2D loadTextureFromFile(const char* file, bool alpha);
 
 // settings
 const unsigned int SCR_WIDTH = 1280;
@@ -175,21 +175,12 @@ int main(int, char**)
     unsigned int cubemapTexture = loadCubemap(faces);
 
     // Deserialization of resources and nodes
-    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test2.json");
+    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test3.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
-    
+
     NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
-
-/*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
-    COMPONENTSMANAGER.CreateComponent<Camera>();
-    NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
-
-    // json save for testing
-    nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
-    //std::cout << jsonData;
-    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test3.json");
 
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
@@ -198,7 +189,6 @@ int main(int, char**)
     // Setup miniaudio
     ma_result result;
     ma_engine engine;
-
     result = ma_engine_init(NULL, &engine);
     if (result != MA_SUCCESS) {
         printf("Failed to initialize audio engine.");
@@ -213,6 +203,16 @@ int main(int, char**)
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(root);
     imguiMain->SetSelectedObject(root);
+
+    /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
+    COMPONENTSMANAGER.CreateComponent<Camera>();
+    NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
+    // json save for testing
+    nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
+    //std::cout << jsonData;
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
+
+    HUD.Init();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -279,6 +279,8 @@ int main(int, char**)
 
         INPUT.UpdateOldStates();
 
+        HUD.Update();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -327,30 +329,11 @@ unsigned int loadCubemap(vector<std::string> faces)
     return textureID;
 }
 
-Texture2D loadTextureFromFile(const char* file, bool alpha)
-{
-    // create texture object
-    Texture2D texture;
-    if (alpha)
-    {
-        texture.Internal_Format = GL_RGBA;
-        texture.Image_Format = GL_RGBA;
-    }
-    // load image
-    int width, height, nrChannels;
-    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
-    // now generate texture
-    texture.Generate(width, height, data);
-    // and finally free image data
-    stbi_image_free(data);
-    return texture;
-}
-
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
+    // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
