@@ -17,6 +17,8 @@
 
 class TextRenderer {
 
+public:
+
     struct Character {
         unsigned int TextureID; // ID handle of the glyph texture
         glm::ivec2   Size;      // Size of glyph
@@ -26,12 +28,7 @@ class TextRenderer {
 
     std::map<GLchar, Character> Characters;
 
-    //init
-
-public:
     unsigned int VAO, VBO;
-
-    static TextRenderer &getInstance();
 
     ~TextRenderer() = default;
 
@@ -40,6 +37,8 @@ public:
     TextRenderer(const TextRenderer &) = delete;
 
     TextRenderer &operator=(const TextRenderer &) = delete;
+
+    static TextRenderer &getInstance();
 
     void init();
 

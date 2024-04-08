@@ -11,15 +11,17 @@
 class ImageHUD {
 
 public:
+
+    unsigned int _VBO, _VAO, _EBO;
+
+    int _textureID;
+
     ImageHUD();
+
+    void Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic);
 
     void UpdateImage(std::array<float, 32>* vertices = nullptr);
 
-    unsigned int VBO, VAO, EBO;
-
-    int textureID;
-
-    void Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic);
 };
 
 

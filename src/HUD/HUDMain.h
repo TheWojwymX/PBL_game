@@ -31,9 +31,10 @@ public:
 
     HUDMain &operator=(const HUDMain &) = delete;
 
-    ImageHUD hpEmptyImage;
-    ImageHUD hpFullImage;
-    ImageHUD crosshairImage;
+    ImageHUD _hpEmptyImage;
+    ImageHUD _hpFullImage;
+    ImageHUD _crosshairImage;
+    ImageHUD _animatedImage;
 };
 
 

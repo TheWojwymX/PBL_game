@@ -15,13 +15,13 @@ void ImageHUD::Init(const char *file, array<float, 32> vertices, bool isAlpha, b
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    glGenVertexArrays(1, &_VAO);
+    glGenBuffers(1, &_VBO);
+    glGenBuffers(1, &_EBO);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(_VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, _VBO);
     if(!isDynamic){
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
     }
@@ -29,7 +29,7 @@ void ImageHUD::Init(const char *file, array<float, 32> vertices, bool isAlpha, b
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_DYNAMIC_DRAW);
     }
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // position attribute
@@ -43,20 +43,20 @@ void ImageHUD::Init(const char *file, array<float, 32> vertices, bool isAlpha, b
     glEnableVertexAttribArray(2);
 
     Texture2D texture = Texture2D::loadTextureFromFile(file, isAlpha);
-    textureID = texture.ID;
+    _textureID = texture.ID;
 }
 
 void ImageHUD::UpdateImage(std::array<float, 32>* vertices) {
     // bind Texture
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTexture(GL_TEXTURE_2D, _textureID);
 
     if(vertices){
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, _VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, 32 * sizeof(float), vertices->data());
     }
 
     // render container
     RESOURCEMANAGER.GetShaderByName("textureShader")->use();
-    glBindVertexArray(VAO);
+    glBindVertexArray(_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
