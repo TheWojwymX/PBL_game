@@ -70,7 +70,7 @@ void HUDMain::Update() {
     if (currentTime - lastTime >= interval) {
 
         ///animation
-        if((int)test % 5 == 0 && test != 0){
+/*        if((int)test % 5 == 0 && test != 0){
             xx = 5;
             if(yy == 5){
                 yy = 271;
@@ -81,7 +81,7 @@ void HUDMain::Update() {
         }
         else{
             xx = xx + spriteWidth + 10;
-        }
+        }*/
         ///
 
         test++;
@@ -93,7 +93,7 @@ void HUDMain::Update() {
     glDisable(GL_CULL_FACE);
 
     ///animated image
-    float texCoordLeft = xx / static_cast<float>(spriteSheetWidth);
+/*    float texCoordLeft = xx / static_cast<float>(spriteSheetWidth);
     float texCoordRight = (xx + spriteWidth) / static_cast<float>(spriteSheetWidth);
     float texCoordTop = yy / static_cast<float>(spriteSheetHeight);
     float texCoordBottom = (yy + spriteHeight) / static_cast<float>(spriteSheetHeight);
@@ -106,7 +106,7 @@ void HUDMain::Update() {
             -1.0f,  1.0, 0.0f,   1.0f, 1.0f, 0.0f,   texCoordLeft, texCoordTop  // top left
     };
 
-    _animatedImage.UpdateImage(&vertices5);
+    _animatedImage.UpdateImage(&vertices5);*/
     ///
 
     _hpEmptyImage.UpdateImage();
