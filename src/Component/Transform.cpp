@@ -192,3 +192,30 @@ glm::mat4 Transform::Origin() {
     model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));    // it's a bit too big for our scene, so scale it down
     return model;
 }
+
+void Transform::addToInspector(ImguiMain *imguiMain)
+{
+    glm::vec3 position = _position;
+    glm::vec3 eulerRotation = glm::degrees(glm::eulerAngles(_rotation)); // Convert to degrees for editing
+    glm::vec3 scale = _scale;
+
+    ImGui::InputFloat3("position", glm::value_ptr(position), "%.3f");
+    ImGui::InputFloat3("rotation", glm::value_ptr(eulerRotation), "%.3f");
+    ImGui::InputFloat3("scale", glm::value_ptr(scale), "%.3f");
+
+// Convert back to quaternion after editing
+    glm::quat newRotation = glm::quat(glm::radians(eulerRotation));
+
+    if (position != _position) {
+        _position = position;
+    }
+
+    if (_rotation != newRotation) {
+        _rotation = newRotation;
+    }
+
+    if (scale != _scale) {
+        _scale = scale;
+    }
+}
+

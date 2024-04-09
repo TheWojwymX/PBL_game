@@ -3,18 +3,43 @@
 #include "Core/Input.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height)
-    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius) , _width(width), _height(height) {}
+    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius) , _width(width), _height(height) {
+    _type = ComponentType::PLAYERCNTROLLER;
+}
+
 
 nlohmann::json PlayerController::Serialize() {
     nlohmann::json data = Component::Serialize();
 
-    data["type"] = "PlayerController";
+    if (_blockManagerRef) {
+        data["blockManagerRefID"] = _blockManagerRef->_id;
+    }
+
+    if (_cameraRef) {
+        data["cameraRefID"] = _cameraRef->_id;
+    }
+
 
     return data;
 }
 
 void PlayerController::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("blockManagerRefID")) {
+        _blockManagerRefID = jsonData["blockManagerRefID"].get<int>();
+    }
+
+    if (jsonData.contains("cameraRefID")) {
+        _cameraRefID = jsonData["cameraRefID"].get<int>();
+    }
+
     Component::Deserialize(jsonData);
+}
+
+void PlayerController::initiate() {
+    _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(_blockManagerRefID);
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
+    Component::initiate();
 }
 
 void PlayerController::Init() {
@@ -89,8 +114,6 @@ void PlayerController::HandleMovement() {
     CheckGrounded(collisionResult.second);
 }
 
-void PlayerController::addToInspector(ImguiMain *imguiMain)
-{
+void PlayerController::addToInspector(ImguiMain *imguiMain) {
 
 }
-

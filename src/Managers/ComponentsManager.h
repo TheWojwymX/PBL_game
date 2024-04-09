@@ -2,6 +2,8 @@
 // Created by Jacek on 23.03.2024.
 //
 
+#define COMPONENTSMANAGER ComponentsManager::getInstance()
+
 #ifndef OPENGLGP_COMPONENTSMANAGER_H
 #define OPENGLGP_COMPONENTSMANAGER_H
 
@@ -11,60 +13,72 @@ class ComponentsManager {
 public:
     static ComponentsManager &getInstance();
 
-    template <typename ComponentType>
-    std::shared_ptr<ComponentType> getComponentByID(size_t id) {
-        const auto& components = getComponentList<ComponentType>();
-        if (id < components.size()) {
-            return components[id];
+    ~ComponentsManager() = default;
+
+    ComponentsManager() = default;
+
+    template<typename ComponentType>
+    std::shared_ptr<ComponentType> GetComponentByID(int id) {
+        const auto &components = GetComponents();
+        for (const auto &comp: components) {
+            if (comp->_id == id) {
+                std::shared_ptr<ComponentType> castedComponent = std::dynamic_pointer_cast<ComponentType>(components[id]);
+                return castedComponent;
+            }
         }
         return nullptr;
     }
 
-    template<typename ComponentType, typename... Args>
-    std::shared_ptr<ComponentType> createComponent(Args&&... args) {
-        auto component = std::make_shared<ComponentType>(std::forward<Args>(args)...);
-        component->id = getComponentList<ComponentType>().size();
-        addComponent(component);
+    template<typename ComponentType>
+    std::shared_ptr<ComponentType> DeserializeComponent(const nlohmann::json &componentJson) {
+        auto component = std::make_shared<ComponentType>();
+        component->Deserialize(componentJson);
+        AddComponentAt(component, component->_id);
         return component;
     }
 
     template<typename ComponentType>
-    std::shared_ptr<ComponentType> deserializeComponent(const nlohmann::json& componentJson) {
-        auto component = std::make_shared<ComponentType>();
-        component->Deserialize(componentJson);
-        addComponentAt(component, component->id);
-        return component;
-    }
-
-    ~ComponentsManager() = default;
-
-//private:
-    ComponentsManager() = default;
-
-    template <typename ComponentType>
-    void addComponent(std::shared_ptr<ComponentType> component) {
-        getComponentList<ComponentType>().push_back(component);
-    }
-
-    template <typename ComponentType>
-    void addComponentAt(std::shared_ptr<ComponentType> component, size_t position) {
-        auto& components = getComponentList<ComponentType>();
+    void AddComponentAt(std::shared_ptr<ComponentType> component, int position) {
+        auto &components = GetComponents();
 
         if (position >= components.size()) {
             components.resize(position + 1, nullptr);
         }
-
         components[position] = component;
     }
 
-    template <typename ComponentType>
-    std::vector<std::shared_ptr<ComponentType>>& getComponentList() {
-        static std::vector<std::shared_ptr<ComponentType>> components;
-        return components;
+    template<typename ComponentType>
+    void AddComponent(std::shared_ptr<ComponentType> component) {
+        GetComponents().push_back(component);
     }
 
-    ComponentsManager(const ComponentsManager&) = delete;
-    ComponentsManager& operator=(const ComponentsManager&) = delete;
+    template<typename ComponentType, typename... Args>
+    std::shared_ptr<ComponentType> CreateComponent(Args &&... args) {
+        auto component = std::make_shared<ComponentType>(std::forward<Args>(args)...);
+        component->_id = _nextComponentID;
+        _nextComponentID++;
+        AddComponent(component);
+        return component;
+    }
+
+    void Initiate(){
+        const auto &components = GetComponents();
+        for (const auto &comp: components) {
+            comp->initiate();
+        }
+    }
+
+    std::vector<std::shared_ptr<Component>> &GetComponents() {
+        return Components;
+    }
+
+    std::vector<std::shared_ptr<Component>> Components;
+
+    int _nextComponentID;
+
+    ComponentsManager(const ComponentsManager &) = delete;
+
+    ComponentsManager &operator=(const ComponentsManager &) = delete;
 };
 
 

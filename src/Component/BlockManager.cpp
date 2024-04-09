@@ -4,16 +4,23 @@ BlockManager::BlockManager(int width, int height, int depth) :
     _width(width), _depth(depth), _height(height) {}
 
 BlockManager::BlockManager() {
-
+    _type = ComponentType::BLOCKMANAGER;
 }
 
 nlohmann::json BlockManager::Serialize() {
     nlohmann::json data = Component::Serialize();
 
-    data["type"] = "BlockManager";
     data["width"] = _width;
     data["depth"] = _depth;
     data["height"] = _height;
+
+    if(_sandRendererRef){
+        data["sandRendererRefID"] = _sandRendererRef->_id;
+    }
+
+    if(_cameraRef){
+        data["cameraRefID"] = _cameraRef->_id;
+    }
 
     return data;
 }
@@ -32,7 +39,21 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
         _height = jsonData["height"].get<int>();
     }
 
+    if (jsonData.contains("sandRendererRefID")) {
+        _sandRendererRefID = jsonData["sandRendererRefID"].get<int>();
+    }
+
+    if (jsonData.contains("cameraRefID")) {
+        _cameraRefID = jsonData["cameraRefID"].get<int>();
+    }
+
     Component::Deserialize(jsonData);
+}
+
+void BlockManager::initiate() {
+    _sandRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_sandRendererRefID);
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
+    Component::initiate();
 }
 
 void BlockManager::Init() {

@@ -14,8 +14,8 @@
 class Node : public std::enable_shared_from_this<Node>{
 public:
     Node();
-    string name;
-    int id;
+    string _name;
+    int _id;
 
     nlohmann::json Serialize();
 
@@ -31,6 +31,7 @@ public:
     void Render(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
     void addToInspector(ImguiMain* imguiMain);
+    void removeChild(std::shared_ptr<Node> child);
 
     template <typename T>
     std::shared_ptr<T> GetComponent() const {
@@ -46,6 +47,8 @@ public:
     const vector<std::shared_ptr<Node>> &getChildren() const;
 
     const vector<std::shared_ptr<Component>> &getComponents() const;
+
+
 
 
 private:

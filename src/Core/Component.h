@@ -5,6 +5,7 @@
 #include "Component/Transform.h"
 #include "shader_s.h"
 #include <../thirdparty/nlohmann/json.hpp>
+#include <Core/ComponentTypeEnum.h>
 
 class ImguiMain;
 
@@ -15,6 +16,7 @@ public:
 
     virtual nlohmann::json Serialize();
     virtual void Deserialize(const nlohmann::json& jsonData);
+    virtual void initiate();
     virtual void Init();
     virtual void Input();
     virtual void Update();
@@ -28,7 +30,8 @@ public:
     void SetEnabled(bool isEnabled);
     bool IsEnabled() const;
 
-    int id;
+    int _id;
+    ComponentType _type;
 
 protected:
     std::shared_ptr<Transform> _ownerTransform;

@@ -4,17 +4,23 @@
 
 #include "SceneManager.h"
 
-nlohmann::json SceneManager::SerializeRoot(std::shared_ptr<Node> root, int nextNodeId){
+SceneManager &SceneManager::GetInstance() {
+    static SceneManager instance;
+    return instance;
+}
+
+nlohmann::json SceneManager::SerializeRoot(std::shared_ptr<Node> root) {
 
     nlohmann::json data;
 
-    data["nextNodeId"] = nextNodeId;
+    data["nextNodeId"] = NODESMANAGER._nextNodeID;
+    data["nextComponentId"] = COMPONENTSMANAGER._nextComponentID;
     data["root"] = root->Serialize();
-
+    data["resources"] = RESOURCEMANAGER.Serialize();
     return data;
 }
 
-void SceneManager::SaveToJsonFile(const nlohmann::json& jsonData, const std::string& filePath) {
+void SceneManager::SaveToJsonFile(const nlohmann::json &jsonData, const std::string &filePath) {
     std::ofstream outputFile(filePath);
     if (outputFile.is_open()) {
         outputFile << jsonData.dump(4);
@@ -29,13 +35,22 @@ std::shared_ptr<Node> SceneManager::LoadFromJsonFile(const string &filePath) {
 
     std::ifstream inputFile(filePath);
     if (inputFile.is_open()) {
+
         nlohmann::json jsonFile;
         inputFile >> jsonFile;
         inputFile.close();
 
         auto rootNodeJson = jsonFile["root"];
         auto rootNode = std::make_shared<Node>();
+
+        auto resourcesNodeJson = jsonFile["resources"];
+        RESOURCEMANAGER.Deserialize(resourcesNodeJson);
         rootNode->Deserialize(rootNodeJson);
+
+        COMPONENTSMANAGER._nextComponentID = jsonFile["nextComponentId"].get<int>();
+        NODESMANAGER._nextNodeID = jsonFile["nextNodeId"].get<int>();
+
+        COMPONENTSMANAGER.Initiate();
 
         return rootNode;
 
@@ -43,18 +58,4 @@ std::shared_ptr<Node> SceneManager::LoadFromJsonFile(const string &filePath) {
         std::cerr << "Can't open JSON " << filePath << std::endl;
     }
 
-}
-
-int SceneManager::getNextNodeID(const string &filePath) {
-    std::ifstream inputFile(filePath);
-    if (inputFile.is_open()) {
-        nlohmann::json jsonFile;
-
-        if (jsonFile.contains("nextNodeId")) {
-            return jsonFile["nextNodeId"].get<int>();
-        }
-
-    } else {
-        std::cerr << "Can't open JSON " << filePath << std::endl;
-    }
 }

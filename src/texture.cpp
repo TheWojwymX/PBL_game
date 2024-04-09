@@ -1,3 +1,4 @@
+#include <iostream>
 #include "texture.h"
 
 
@@ -13,7 +14,14 @@ void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char*
     this->Height = height;
     // create Texture
     glBindTexture(GL_TEXTURE_2D, this->ID);
-    glTexImage2D(GL_TEXTURE_2D, 0, this->Internal_Format, width, height, 0, this->Image_Format, GL_UNSIGNED_BYTE, data);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, this->Internal_Format, width, height, 0, this->Image_Format, GL_UNSIGNED_BYTE, data);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
     // set Texture wrap and filter modes
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->Wrap_S);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->Wrap_T);
@@ -26,4 +34,22 @@ void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char*
 void Texture2D::Bind() const
 {
     glBindTexture(GL_TEXTURE_2D, this->ID);
+}
+
+Texture2D Texture2D::loadTextureFromFile(const char *file, bool alpha) {
+    // create texture object
+    Texture2D texture;
+    if (alpha)
+    {
+        texture.Internal_Format = GL_RGBA;
+        texture.Image_Format = GL_RGBA;
+    }
+    // load image
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
+    // now generate texture
+    texture.Generate(width, height, data);
+    // and finally free image data
+    stbi_image_free(data);
+    return texture;
 }

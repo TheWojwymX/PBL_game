@@ -7,6 +7,7 @@
 #include "Component/Camera.h"
 #include "BlockData.h"
 #include "imgui.h"
+#include "Managers/ComponentsManager.h"
 
 
 // Define a struct to hold collision information for each corner
@@ -27,6 +28,8 @@ public:
 
     void Deserialize(const nlohmann::json& jsonData) override;
 
+    void initiate() override;
+
     void Init() override;
 
     bool RayIntersectsBlock(float rayLength, int radius);
@@ -37,15 +40,17 @@ public:
 
     void addToInspector(ImguiMain *imguiMain) override;
 
-private:
+//private:
     int _width;
     int _depth;
     int _height;
     std::vector<BlockData> _blocksData;
     std::vector<BlockData*> _visibleBlocks;
     std::shared_ptr<InstanceRenderer> _sandRendererRef;
+    int _sandRendererRefID;
     std::shared_ptr<Camera> _cameraRef;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
+    int _cameraRefID;
 
     void GenerateMap();
     void UpdateInstanceRenderer();

@@ -1,9 +1,11 @@
 #include "Camera.h"
 
 Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
-    : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),
-    _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED),
-    _mouseSensitivity(SENSITIVITY), _zoom(ZOOM), _editMode(true) {
+        : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),
+          _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED),
+          _mouseSensitivity(SENSITIVITY), _zoom(ZOOM), _editMode(true) {
+
+    _type = ComponentType::CAMERA;
     UpdateCameraVectors();
 }
 
@@ -11,7 +13,6 @@ nlohmann::json Camera::Serialize() {
 
     nlohmann::json data = Component::Serialize();
 
-    data["type"] = "Camera";
     data["offset"] = {_offset.x, _offset.y, _offset.z};
 
     return data;
@@ -29,6 +30,9 @@ void Camera::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
+void Camera::initiate() {
+    Component::initiate();
+}
 
 void Camera::Input() {
     if (INPUT.IsKeyPressed(GLFW_KEY_E)) {
@@ -76,7 +80,6 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     UpdateCameraVectors();
 }
 
-void Camera::addToInspector(ImguiMain *imguiMain)
-{
+void Camera::addToInspector(ImguiMain *imguiMain) {
 
 }

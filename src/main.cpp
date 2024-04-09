@@ -23,6 +23,13 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/Skybox.h"
 
+#include "Managers/ComponentsManager.h"
+#include "Managers/SceneManager.h"
+#include "Managers/ResourceManager.h"
+#include "Managers/NodesManager.h"
+#include "Gui/ImguiMain.h"
+
+#include "HUD/HUDMain.h"
 
 #include <iostream>
 
@@ -106,63 +113,18 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
-    // Build and compile the shader program
-    Shader* modelShader = new Shader("res/vecShader.vs", "res/fragShader.fs");
-    Shader* lightObjectShader = new Shader("res/vecLightObjectShader.vs", "res/fragLightObjectShader.fs");
-    Shader* instanceModelShader = new Shader("res/instanceVecShader.vs", "res/instanceFragShader.fs");
-    Shader* skyboxShader = new Shader("res/skyboxVecShader.vs", "res/skyboxFragShader.fs");
+
+    // Deserialization of resources and nodes
+    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test3.json");
+
+    RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
+    RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
+
+    NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
 
     Skybox skybox;
     skybox.init();
 
-    skyboxShader->use();
-    skyboxShader->setInt("skybox", 0);
-
-    // Load models
-    Model* sandModel = new Model("res/Sand/Sand.obj");
-
-    // Create components manager
-    auto componentsManager = ComponentsManager();
-
-    // Create graph
-    std::shared_ptr<Node> root = std::make_shared<Node>();
-
-    std::shared_ptr<Node> sand = std::make_shared<Node>();
-    //std::shared_ptr<InstanceRenderer> sandRenderer = std::make_shared<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
-    auto sandRenderer = componentsManager.createComponent<InstanceRenderer>(sandModel, 1000000, instanceModelShader);
-
-    sand->AddComponent(sandRenderer);
-
-    std::shared_ptr<Node> blockManager = std::make_shared<Node>();
-
-    //std::shared_ptr<BlockManager> blockManagerComp = std::make_shared<BlockManager>(100,100,100);
-    auto blockManagerComp = componentsManager.createComponent<BlockManager>(100, 100, 100);
-    //auto blockManagerComp2 = componentsManager.createComponent<BlockManager>(666, 100, 100);
-    blockManagerComp->SetInstanceRenderer(sandRenderer);
-    blockManager->AddComponent(blockManagerComp);
-
-    std::shared_ptr<Node> player = std::make_shared<Node>();
-    //std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f,1.8f,0.0f));
-    auto camera = componentsManager.createComponent<Camera>(glm::vec3(0.0f,1.7f,0.0f));
-
-    player->AddComponent(camera);
-    //std::shared_ptr<PlayerController> playerController = std::make_shared<PlayerController>();
-    auto playerController = componentsManager.createComponent<PlayerController>();
-
-    playerController->SetCamera(camera);
-    playerController->SetBlockManager(blockManagerComp);
-    player->AddComponent(playerController);
-    player->GetTransform()->SetPosition(glm::vec3(1.0f, 105.0f, 1.0f));
-
-    // root
-    root->AddChild(sand);
-    root->AddChild(blockManager);
-    root->AddChild(player);
-
-    //std::cout << componentsManager.getComponentByID<BlockManager>(1)->id << componentsManager.getComponentByID<BlockManager>(0)->id;
-
-    nlohmann::json data = camera->Serialize();
-    std::cout << data;
 
 
     // Init
@@ -172,33 +134,35 @@ int main(int, char**)
     // Setup miniaudio
     ma_result result;
     ma_engine engine;
-
     result = ma_engine_init(NULL, &engine);
     if (result != MA_SUCCESS) {
         printf("Failed to initialize audio engine.");
         return -1;
     }
 
-    // Setup Dear ImGui binding
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
-
-    // Setup style
-    ImGui::StyleColorsDark();
-
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
-    float dirDirection[3] = { 1.0f, -0.5f, -0.5f };
+    float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
 
+    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
+    imguiMain->SetRoot(root);
+    imguiMain->SetSelectedObject(root);
+
+    /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
+    COMPONENTSMANAGER.CreateComponent<Camera>();
+    NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
+    // json save for testing
+    nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
+    //std::cout << jsonData;
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
+
+    HUD.Init();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+
         // Calculate deltaTime
         TIME.Update();
 
@@ -227,46 +191,46 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glDepthMask(GL_FALSE);
-        skyboxShader->use();
+        RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
 
-        glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-        glm::mat4 view = camera->GetViewMatrix();
-
-        glm::mat4 skyboxView = glm::mat4(glm::mat3(camera->GetViewMatrix())); // remove translation from the view matrix
-        skyboxShader->setMat4("view", skyboxView);
-        skyboxShader->setMat4("projection", projection);
+        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 view = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
+        glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix())); // remove translation from the view matrix
+        RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("view", skyboxView);
+        RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("projection", projection);
 
         skybox.draw();
         glDepthMask(GL_TRUE);
 
-        modelShader->use();
-        modelShader->setVec3("dirLight.direction", dirDirection);
-        modelShader->setVec3("dirLight.color", dirColor);
-        modelShader->setInt("dirLight.isActive", dirActive);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->use();
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("dirLight.isActive", dirActive);
 
-        modelShader->setVec3("viewPos", camera->GetPosition());
-        modelShader->setMat4("projection", projection);
-        modelShader->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);
 
-        instanceModelShader->use();
-        instanceModelShader->setVec3("dirLight.direction", dirDirection);
-        instanceModelShader->setVec3("dirLight.color", dirColor);
-        instanceModelShader->setInt("dirLight.isActive", dirActive);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->use();
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("dirLight.isActive", dirActive);
 
-        instanceModelShader->setVec3("viewPos", camera->GetPosition());
-        instanceModelShader->setMat4("projection", projection);
-        instanceModelShader->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("view", view);
 
-        lightObjectShader->use();
-        lightObjectShader->setVec3("lightColor", dirColor);
-        lightObjectShader->setMat4("projection", projection);
-        lightObjectShader->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->use();
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setVec3("lightColor", dirColor);
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
 
         root->Render(Transform::Origin());
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+        HUD.Update();
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(window);
@@ -284,32 +248,4 @@ int main(int, char**)
     glfwTerminate();
 
     return 0;
-}
-
-Texture2D loadTextureFromFile(const char* file, bool alpha)
-{
-    // create texture object
-    Texture2D texture;
-    if (alpha)
-    {
-        texture.Internal_Format = GL_RGBA;
-        texture.Image_Format = GL_RGBA;
-    }
-    // load image
-    int width, height, nrChannels;
-    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
-    // now generate texture
-    texture.Generate(width, height, data);
-    // and finally free image data
-    stbi_image_free(data);
-    return texture;
-}
-
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, width, height);
 }
