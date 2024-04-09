@@ -51,7 +51,8 @@ bool Component::IsEnabled() const {
     return _isEnabled;
 }
 
-void Component::addToInspector(ImguiMain *imguiMain) {
+void Component::addToInspector(ImguiMain *imguiMain)
+{
 
 }
 

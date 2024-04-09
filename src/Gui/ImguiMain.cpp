@@ -19,7 +19,7 @@ ImguiMain::ImguiMain(GLFWwindow *window, const char *glsl_version)
     _component = std::make_shared<ImguiInspector>();
 }
 
-void ImguiMain::draw(int nextNodeId)
+void ImguiMain::draw()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -32,7 +32,7 @@ void ImguiMain::draw(int nextNodeId)
     ImGui::Text("Other stuff 3");
     ImGui::End();
 
-    _hierarchy->draw(_rootObject, nextNodeId, _selectedObject, this);
+    _hierarchy->draw(_rootObject, _selectedObject, this);
     _component->draw(_selectedObject, this);
 
 }

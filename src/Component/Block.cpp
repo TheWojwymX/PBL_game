@@ -10,7 +10,15 @@ std::shared_ptr<BlockData> Block::GetBlockData() const {
 
 void Block::addToInspector(ImguiMain *imguiMain)
 {
-    ImGui::Text(" Siema jestem blok ");
+    if (ImGui::TreeNode("Block"))
+    {
+        // Block Gui related things go there
+        ImGui::Text("Test1:");
+        ImGui::Text("Test2:");
+
+        ImGui::TreePop();
+
+    }
 }
 
 

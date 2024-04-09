@@ -426,7 +426,13 @@ bool BlockManager::InBounds(glm::ivec3 position) {
         position.x < _width && position.y < _height && position.z < _depth;
 }
 
-void BlockManager::addToInspector(ImguiMain *imguiMain)
-{
-    ImGui::Text(" Siema jestem blok manager ");
+void BlockManager::addToInspector(ImguiMain *imguiMain) {
+    if (ImGui::TreeNode("BlockManager")) {
+        // Gui related things go there
+        ImGui::Text("Test1:");
+        ImGui::Text("Test2:");
+
+        ImGui::TreePop();
+
+    }
 }

@@ -195,27 +195,31 @@ glm::mat4 Transform::Origin() {
 
 void Transform::addToInspector(ImguiMain *imguiMain)
 {
-    glm::vec3 position = _position;
-    glm::vec3 eulerRotation = glm::degrees(glm::eulerAngles(_rotation)); // Convert to degrees for editing
-    glm::vec3 scale = _scale;
+    if (ImGui::TreeNode("Transform"))
+    {
+        glm::vec3 position = _position;
+        glm::vec3 eulerRotation = glm::degrees(glm::eulerAngles(_rotation)); // Convert to degrees for editing
+        glm::vec3 scale = _scale;
 
-    ImGui::InputFloat3("position", glm::value_ptr(position), "%.3f");
-    ImGui::InputFloat3("rotation", glm::value_ptr(eulerRotation), "%.3f");
-    ImGui::InputFloat3("scale", glm::value_ptr(scale), "%.3f");
+        ImGui::InputFloat3("Position", glm::value_ptr(position), "%.3f");
+        ImGui::InputFloat3("Rotation", glm::value_ptr(eulerRotation), "%.3f");
+        ImGui::InputFloat3("Scale", glm::value_ptr(scale), "%.3f");
 
-// Convert back to quaternion after editing
-    glm::quat newRotation = glm::quat(glm::radians(eulerRotation));
+        glm::quat newRotation = glm::quat(glm::radians(eulerRotation));
 
-    if (position != _position) {
-        _position = position;
-    }
+        if (position != _position) {
+            _position = position;
+        }
 
-    if (_rotation != newRotation) {
-        _rotation = newRotation;
-    }
+        if (_rotation != newRotation) {
+            _rotation = newRotation;
+        }
 
-    if (scale != _scale) {
-        _scale = scale;
+        if (scale != _scale) {
+            _scale = scale;
+        }
+
+        ImGui::TreePop();
     }
 }
 

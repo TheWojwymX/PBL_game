@@ -35,5 +35,5 @@ public:
 
 protected:
     std::shared_ptr<Transform> _ownerTransform;
-    bool _isEnabled;
+    bool _isEnabled = true;
 };

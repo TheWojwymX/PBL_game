@@ -17,7 +17,7 @@
 class ImguiMain {
 public:
     ImguiMain(GLFWwindow* window, const char* glsl_version);
-    void draw(int nextNodeId);
+    void draw();
     void endDraw();
     void destroy();
     void SetSelectedObject(std::shared_ptr<Node> GameObject);

@@ -81,5 +81,12 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
 }
 
 void Camera::addToInspector(ImguiMain *imguiMain) {
+    if (ImGui::TreeNode("Camera"))
+    {
+        ImGui::Text("Test1:");
+        ImGui::Text("Test2:");
+
+        ImGui::TreePop();
+    }
 
 }

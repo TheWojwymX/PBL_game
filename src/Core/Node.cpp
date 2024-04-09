@@ -109,6 +109,10 @@ void Node::AddComponent(std::shared_ptr<Component> component) {
     _components.push_back(component);
 }
 
+void Node::AddComponent2(std::shared_ptr<Component> component) {
+    _components.push_back(component);
+}
+
 void Node::Init() {
     for (auto &component: _components)
         if (component->IsEnabled())

@@ -173,18 +173,7 @@ int main(int, char**)
         root->Update();
 
         // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        ImGui::Begin("Tool window");
-
-        ImGui::ColorEdit3("Dir Color", dirColor);
-        ImGui::SliderFloat3("Dir direction", dirDirection, -1.0f, 1.0f);
-        ImGui::Checkbox("Dir Active", &dirActive);
-
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::End();
+        imguiMain->draw();
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -227,10 +216,12 @@ int main(int, char**)
 
         root->Render(Transform::Origin());
 
+        HUD.Update();
+
+        imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        HUD.Update();
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(window);
@@ -246,6 +237,7 @@ int main(int, char**)
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
 
     return 0;
 }

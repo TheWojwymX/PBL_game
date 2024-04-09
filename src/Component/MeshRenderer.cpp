@@ -15,5 +15,13 @@ void MeshRenderer::RenderModel(Model* model, glm::mat4 ctm) {
 
 void MeshRenderer::addToInspector(ImguiMain *imguiMain)
 {
+    if (ImGui::TreeNode("Mesh Renderer"))
+    {
+        // Block Gui related things go there
+        ImGui::Text("Test1:");
+        ImGui::Text("Test2:");
 
+        ImGui::TreePop();
+
+    }
 }

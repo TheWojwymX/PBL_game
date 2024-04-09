@@ -115,5 +115,13 @@ void PlayerController::HandleMovement() {
 }
 
 void PlayerController::addToInspector(ImguiMain *imguiMain) {
+    if (ImGui::TreeNode("Player Controller"))
+    {
+        // Block Gui related things go there
+        ImGui::Text("Test1:");
+        ImGui::Text("Test2:");
+
+        ImGui::TreePop();
+    }
 
 }

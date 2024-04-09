@@ -15,10 +15,15 @@ ImguiHierarchy::ImguiHierarchy()
     _filePath = new char[100]{"..\\..\\scenes\\test3.json" };
 }
 
-void ImguiHierarchy::draw(std::shared_ptr<Node> root, int nextNodeId, std::shared_ptr<Node> selectedObject, ImguiMain *imguiMain)
+void ImguiHierarchy::draw(std::shared_ptr<Node> root, std::shared_ptr<Node> selectedObject, ImguiMain *imguiMain)
 {
     ImGui::Begin("Hierarchy");
-    ImGui::InputText("scene Path", _filePath, 128);
+    ImGui::Text("Scene Path:");
+    ImGui::PushItemWidth(-1);
+    ImGui::InputText("##Path", _filePath, 128);
+    ImGui::PopItemWidth();
+
+
     if (ImGui::Button("SAVE") == true)
     {
         nlohmann::json jsonData = SCENEMANAGER.SerializeRoot (root);
@@ -27,10 +32,15 @@ void ImguiHierarchy::draw(std::shared_ptr<Node> root, int nextNodeId, std::share
     ImGui::SameLine();
     if (ImGui::Button("LOAD") == true)
     {
-        SCENEMANAGER.LoadFromJsonFile(_filePath);
+        std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile(_filePath);
     }
 
-    ImGui::InputText("Name:", _newObjectName, 128);
+    ImGui::Spacing();
+
+    ImGui::Text("Name:");
+    ImGui::PushItemWidth(-1);
+    ImGui::InputText("##Name", _newObjectName, 128);
+    ImGui::PopItemWidth();
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.8f, 0.1f, 1.0f });
     if (ImGui::Button("Add Node") == true)
     {
@@ -47,20 +57,9 @@ void ImguiHierarchy::draw(std::shared_ptr<Node> root, int nextNodeId, std::share
     }
     ImGui::PopStyleColor();
 
-    ImGui::SameLine();
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.9f, 0.5f, 0.0f, 1.0f });
-    if (ImGui::Button("Move Node") == true)
-    {
-        // Moving object implementation goes here
-    }
-    ImGui::PopStyleColor();
+    ImGui::Spacing();
 
-    ImGui::Text("=================");
-    if (ImGui::TreeNode("Scene Graph"))
-    {
-        DrawGameObjectHierarchy(root, imguiMain);
-        ImGui::TreePop();
-    }
+    DrawGameObjectHierarchy(root, imguiMain);
     ImGui::End();
 
 }
@@ -85,29 +84,29 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
 }
 
 void ImguiHierarchy::DrawGameObjectHierarchy(std::shared_ptr<Node> root, ImguiMain* imguiMain) {
-    bool isOpen = ImGui::TreeNodeEx(root->_name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+    bool hasChildren = !root->getChildren().empty();
+
+    bool isSelected = (imguiMain->GetSelectedObject() == root);
+
+    ImVec4 textColor = isSelected ? ImVec4(1.0f, 1.0f, 0.0f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+    ImGui::PushStyleColor(ImGuiCol_Text, textColor);
+    bool isExpandable = ImGui::TreeNodeEx(root->_name.c_str(), ImGuiTreeNodeFlags_DefaultOpen | (hasChildren ? 0 : ImGuiTreeNodeFlags_Leaf));
+    ImGui::PopStyleColor();
 
     // Use the pointer to the node as the identifier
     ImGui::PushID(root.get());
     if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen()) {
-        // Handle the click event and set the selected object
         imguiMain->SetSelectedObject(root);
     }
     ImGui::PopID();
 
-    if (isOpen) {
-        // Render all components of the current node
-        for (auto& component : root->getComponents()) {
-            component->addToHierarchy();
+    if (isExpandable) {
+        if (hasChildren) {
+            for (auto& child : root->getChildren()) {
+                DrawGameObjectHierarchy(child, imguiMain);
+            }
         }
-
-        // Iterate through all children of the current node
-        for (auto& child : root->getChildren()) {
-            // Draw the current child node recursively
-            DrawGameObjectHierarchy(child, imguiMain);
-        }
-
-        ImGui::TreePop(); // Close the parent node's tree node if it was opened
+        ImGui::TreePop();
     }
 }
-

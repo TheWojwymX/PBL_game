@@ -1,12 +1,16 @@
 //
 // Created by TheWojwymX on 27.03.2024.
 //
+#pragma once
 
 #include <iostream>
 #include "ImguiInspector.h"
 #include "imgui.h"
 #include "Core/Component.h"
+
 #include "Component/Block.h"
+#include "Component/MeshRenderer.h"
+#include "Component/StaticBlockController.h"
 #include "Core/Node.h"
 
 ImguiInspector::ImguiInspector()
@@ -18,24 +22,21 @@ void ImguiInspector::draw(std::shared_ptr<Node> selectedObject, ImguiMain* imgui
 {
     ImGui::Begin("Inspector");
 
-    static const char* items[]{ " ","Block", "BlockData", "BlockManager",
+    static const char* items[]{ " ","Block", "BlockManager",
                                 "Camera", "InstanceRenderer", "MeshRenderer",
                                 "PlayerController", "StaticBlockController"};
 
-    // Selected Game object will go here:
-    ImGui::Text(" Selected Game object ");
     selectedObject->addToInspector(imguiMain);
-    //
 
-    ImGui::Text(" ");
-    ImGui::Text("--------------------");
-    ImGui::Text("New Component");
-    ImGui::ListBox(".", &newComponent, items, IM_ARRAYSIZE(items));
+    ImGui::Spacing(); ImGui::Spacing();
+    ImGui::Text("New Component:");
+    ImGui::PushItemWidth(-1);
+    ImGui::ListBox("##", &newComponent, items, IM_ARRAYSIZE(items));
+    ImGui::PopItemWidth();
 
     if (newComponent != 0)
     {
-        // skip one for transform
-        addComponent(selectedObject, (component_type)(newComponent + 1));
+        addComponent(selectedObject, (component_type)(newComponent - 1));
         newComponent = 0;
     }
     ImGui::End();
@@ -48,12 +49,34 @@ void ImguiInspector::addComponent(std::shared_ptr<Node> selectedObject, componen
     switch (componentType)
     {
         case BLOCK:
-            component = std::make_shared<Block>();
+            component = std::make_shared<Block>(Block());
+            selectedObject->AddComponent(component);
+            break;
+        case BLOCK_MANAGER:
+            component = std::make_shared<BlockManager>(BlockManager());
+            selectedObject->AddComponent(component);
+            break;
+        case CAMERA:
+            component = std::make_shared<Camera>(Camera());
+            selectedObject->AddComponent(component);
+            break;
+        case INSTANCE_RENDERER:
+//            component = std::make_shared<InstanceRenderer>(InstanceRenderer());
+//            selectedObject->AddComponent(component);
+            break;
+        case MESH_RENDERER:
+//            component = std::make_shared<MeshRenderer>(MeshRenderer());
+//            selectedObject->AddComponent(component);
+            break;
+        case PLAYER_CONTROLLER:
+//            component = std::make_shared<PlayerController>(PlayerController());
+//            selectedObject->AddComponent(component);
+            break;
+        case STATIC_BLOCK_CONTROLLER:
+//            component = std::make_shared<StaticBlockController>(StaticBlockController());
+//            selectedObject->AddComponent(component);
             break;
         default:
             break;
     }
-
-    selectedObject->AddComponent(component);
-    // then setup object
 }

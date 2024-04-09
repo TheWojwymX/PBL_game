@@ -25,6 +25,7 @@ public:
 
     void AddChild(std::shared_ptr<Node> child);
     void AddComponent(std::shared_ptr<Component> component);
+    void AddComponent2(std::shared_ptr<Component> component);
     void Init();
     void Input();
     void Update();

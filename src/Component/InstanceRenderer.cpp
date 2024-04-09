@@ -86,5 +86,13 @@ void InstanceRenderer::CreateMatrixBuffer(int maxSize) {
 
 void InstanceRenderer::addToInspector(ImguiMain *imguiMain)
 {
+    if (ImGui::TreeNode("Instance Renderer"))
+    {
+        // Block Gui related things go there
+        ImGui::Text("Test1:");
+        ImGui::Text("Test2:");
 
+        ImGui::TreePop();
+
+    }
 }
