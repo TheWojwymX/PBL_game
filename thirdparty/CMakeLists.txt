@@ -18,6 +18,18 @@ add_library(stb_image STATIC ${STB_IMAGE_DIR}/stb_image.cpp
 		miniaudio.h)
 target_include_directories(stb_image PRIVATE ${STB_IMAGE_DIR})
 
+# freetype via CPM
+CPMAddPackage(
+  NAME freetype
+  GIT_REPOSITORY https://github.com/aseprite/freetype2.git
+  GIT_TAG VER-2-10-0
+  VERSION 2.10.0
+)
+
+if (freetype_ADDED)
+  add_library(Freetype::Freetype ALIAS freetype)
+endif()
+
 # other
 CPMAddPackage("gh:assimp/assimp@5.2.5")
 CPMAddPackage("gh:glfw/glfw#3.3.8")
@@ -39,7 +51,8 @@ set_target_properties(glad
                       glfw 
                       glm 
                       imgui 
-                      spdlog PROPERTIES FOLDER "thirdparty")
+                      spdlog 
+	      freetype PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")
