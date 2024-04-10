@@ -13,6 +13,7 @@
 #include "../imgui_impl/imgui_impl_glfw.h"
 #include "../imgui_impl/imgui_impl_opengl3.h"
 #include "memory"
+#include "Managers/GameManager.h"
 
 class ImguiMain {
 public:
@@ -22,7 +23,7 @@ public:
     void destroy();
     void SetSelectedObject(std::shared_ptr<Node> GameObject);
     std::shared_ptr<Node> GetSelectedObject();
-    void SetRoot(std::shared_ptr<Node> GameObject);
+    void SetRoot(std::shared_ptr<Node>& GameObject);
     std::shared_ptr<Node> GetRoot();
 
 private:

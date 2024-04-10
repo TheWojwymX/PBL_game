@@ -54,7 +54,7 @@ std::shared_ptr<Node> ImguiMain::GetSelectedObject()
     return _selectedObject;
 }
 
-void ImguiMain::SetRoot(std::shared_ptr<Node> GameObject)
+void ImguiMain::SetRoot(std::shared_ptr<Node>& GameObject)
 {
     _rootObject = GameObject;
 

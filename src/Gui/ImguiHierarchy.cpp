@@ -15,7 +15,7 @@ ImguiHierarchy::ImguiHierarchy()
     _filePath = new char[100]{"..\\..\\scenes\\test3.json" };
 }
 
-void ImguiHierarchy::draw(std::shared_ptr<Node> root, std::shared_ptr<Node> selectedObject, ImguiMain *imguiMain)
+void ImguiHierarchy::draw(std::shared_ptr<Node>& root, std::shared_ptr<Node> selectedObject, ImguiMain *imguiMain)
 {
     ImGui::Begin("Hierarchy");
     ImGui::Text("Scene Path:");
@@ -32,7 +32,8 @@ void ImguiHierarchy::draw(std::shared_ptr<Node> root, std::shared_ptr<Node> sele
     ImGui::SameLine();
     if (ImGui::Button("LOAD") == true)
     {
-        std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile(_filePath);
+        GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile(_filePath);
+        GAMEMANAGER.root->Init();
     }
 
     ImGui::Spacing();

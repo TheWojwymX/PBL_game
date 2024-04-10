@@ -37,7 +37,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/NodesManager.h Gui/ImguiMain.cpp Gui/ImguiMain.h Gui/ImguiHierarchy.cpp Gui/ImguiHierarchy.h Gui/ImguiInspector.cpp Gui/ImguiInspector.h
         Core/ComponentTypeEnum.h
         HUD/Image/ImageHUD.cpp
-        HUD/Image/ImageHUD.h)
+        HUD/Image/ImageHUD.h
+        Managers/GameManager.cpp
+        Managers/GameManager.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

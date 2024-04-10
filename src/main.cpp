@@ -46,6 +46,7 @@
 #endif
 
 #include "Managers/ComponentsManager.h"
+#include "Managers/GameManager.h"
 
 
 static void glfw_error_callback(int error, const char* description)
@@ -115,7 +116,7 @@ int main(int, char**)
 
 
     // Deserialization of resources and nodes
-    std::shared_ptr<Node> root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test3.json");
+    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test21.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
@@ -125,11 +126,9 @@ int main(int, char**)
     Skybox skybox;
     skybox.init();
 
-
-
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
-    root->Init();
+    GAMEMANAGER.root->Init();
 
     // Setup miniaudio
     ma_result result;
@@ -146,14 +145,14 @@ int main(int, char**)
     bool dirActive = true;
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
-    imguiMain->SetRoot(root);
-    imguiMain->SetSelectedObject(root);
+    imguiMain->SetRoot(GAMEMANAGER.root);
+    imguiMain->SetSelectedObject(GAMEMANAGER.root);
 
     /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
     COMPONENTSMANAGER.CreateComponent<Camera>();
     NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
     // json save for testing
-    nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(root);
+    nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(GAMEMANAGER.root);
     //std::cout << jsonData;
     SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
 
@@ -162,15 +161,14 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-
         // Calculate deltaTime
         TIME.Update();
 
         // Input
-        root->Input();
+        GAMEMANAGER.root->Input();
 
         // Update
-        root->Update();
+        GAMEMANAGER.root->Update();
 
         // Start the Dear ImGui frame
         imguiMain->draw();
@@ -214,7 +212,7 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
 
-        root->Render(Transform::Origin());
+        GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
 
