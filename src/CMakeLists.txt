@@ -39,7 +39,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Image/ImageHUD.cpp
         HUD/Image/ImageHUD.h
         Managers/GameManager.cpp
-        Managers/GameManager.h)
+        Managers/GameManager.h
+        Managers/AudioManager.cpp
+        Managers/AudioManager.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

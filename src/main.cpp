@@ -7,9 +7,6 @@
 #include <stb_image.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#define MINIAUDIO_IMPLEMENTATION
-#include <../thirdparty//miniaudio.h>
-
 #include <../thirdparty/nlohmann/json.hpp>
 
 #include "Core/Node.h"
@@ -32,7 +29,7 @@
 #include "HUD/HUDMain.h"
 
 #include <iostream>
-
+#define MINIAUDIO_IMPLEMENTATION
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
@@ -47,6 +44,7 @@
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
+#include "Managers/AudioManager.h"
 
 
 static void glfw_error_callback(int error, const char* description)
@@ -130,15 +128,6 @@ int main(int, char**)
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
 
-    // Setup miniaudio
-    ma_result result;
-    ma_engine engine;
-    result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        printf("Failed to initialize audio engine.");
-        return -1;
-    }
-
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
@@ -157,12 +146,17 @@ int main(int, char**)
     SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
 
     HUD.Init();
+    AUDIOMANAGER.Init();
+
+    //AUDIOMANAGER.PlayBackgroundMusic();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
         // Calculate deltaTime
         TIME.Update();
+
+        AUDIOMANAGER.PlaySound();
 
         // Input
         GAMEMANAGER.root->Input();
@@ -215,6 +209,7 @@ int main(int, char**)
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
+        AUDIOMANAGER.Update();
 
         imguiMain->endDraw();
         ImGui::Render();
@@ -227,8 +222,7 @@ int main(int, char**)
     }
 
     // Cleanup
-    ma_engine_uninit(&engine);
-
+    AUDIOMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

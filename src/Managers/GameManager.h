@@ -10,6 +10,7 @@
 #include "Core/Node.h"
 
 class GameManager {
+
 public:
 
     static GameManager &getInstance();
@@ -23,6 +24,8 @@ public:
     GameManager &operator=(const GameManager &) = delete;
 
     std::shared_ptr<Node> root;
+
+
 };
 
 

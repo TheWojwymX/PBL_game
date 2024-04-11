@@ -46,7 +46,6 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
         _id = nodeJson["NodeID"].get<int>();
     }
 
-    // UWAGA PRAWDOPODOBNIE DO ZMIANY W PRZYSZLOSCI
     NODESMANAGER.addNodeAt(this->shared_from_this(), _id);
 
     // Transform
