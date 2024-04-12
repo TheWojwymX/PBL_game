@@ -156,7 +156,7 @@ int main(int, char**)
         // Calculate deltaTime
         TIME.Update();
 
-        AUDIOMANAGER.PlaySound();
+        //AUDIOMANAGER.PlaySound();
 
         // Input
         GAMEMANAGER.root->Input();

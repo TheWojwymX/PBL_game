@@ -18,7 +18,6 @@ void AudioManager::Init() {
         std::cout << ("Failed to initialize audio engine.") << std::endl;
     }
 
-
 }
 
 void AudioManager::Update() {

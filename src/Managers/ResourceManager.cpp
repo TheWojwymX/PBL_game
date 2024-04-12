@@ -9,6 +9,12 @@ ResourceManager &ResourceManager::GetInstance() {
     return instance;
 }
 
+shared_ptr<Shader> ResourceManager::CreateShader(const char *vertexPath, const char *fragmentPath, string name) {
+    auto shader = std::make_shared<Shader>(vertexPath, fragmentPath, name);
+    Shaders.push_back(shader);
+    return shader;
+}
+
 std::shared_ptr<Shader> ResourceManager::GetShaderByName(const string &name) {
     for (const auto &shader: Shaders) {
         if (shader->_name == name) {
@@ -33,11 +39,22 @@ std::shared_ptr<Model> ResourceManager::GetModelByName(const string &name) {
     return nullptr;
 }
 
-shared_ptr<Shader> ResourceManager::CreateShader(const char *vertexPath, const char *fragmentPath, string name) {
-    auto shader = std::make_shared<Shader>(vertexPath, fragmentPath, name);
-    Shaders.push_back(shader);
-    return shader;
+shared_ptr<Sound> ResourceManager::CreateSound(string path, string name) {
+    auto sound = std::make_shared<Sound>(path, name);
+    Sounds.push_back(sound);
+    return sound;
 }
+
+/*std::shared_ptr<Sound> ResourceManager::GetSoundByName(const string &name) {
+    for (const auto &sound: Models) {
+        if (model->_name == name) {
+            return model;
+        }
+    }
+    return nullptr;
+}*/
+
+
 
 nlohmann::json ResourceManager::Serialize() {
     nlohmann::json data;
@@ -73,4 +90,14 @@ void ResourceManager::Deserialize(nlohmann::json data) {
             CreateModel(path, name);
         }
     }
+
+    if (data.contains("Sounds")) {
+        for (auto &model: data["Sounds"]) {
+            string name = model["ModelName"].get<string>();
+            string path = model["Path"].get<string>();
+            CreateSound(path, name);
+        }
+    }
+
+
 }
