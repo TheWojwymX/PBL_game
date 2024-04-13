@@ -7,7 +7,7 @@
 #ifndef OPENGLGP_AUDIOMANAGER_H
 #define OPENGLGP_AUDIOMANAGER_H
 
-#include <../thirdparty//miniaudio.h>
+#include "../thirdparty/miniaudio.h"
 
 class AudioManager {
 

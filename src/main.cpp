@@ -29,7 +29,7 @@
 #include "HUD/HUDMain.h"
 
 #include <iostream>
-#define MINIAUDIO_IMPLEMENTATION
+
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
@@ -45,7 +45,6 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/AudioManager.h"
-
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -112,9 +111,10 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
+    AUDIOMANAGER.Init();
 
     // Deserialization of resources and nodes
-    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test21.json");
+    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test1.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
@@ -143,12 +143,13 @@ int main(int, char**)
     // json save for testing
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(GAMEMANAGER.root);
     //std::cout << jsonData;
-    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test2.json");
 
     HUD.Init();
-    AUDIOMANAGER.Init();
 
     //AUDIOMANAGER.PlayBackgroundMusic();
+
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();
 
     // Main loop
     while (!glfwWindowShouldClose(window))

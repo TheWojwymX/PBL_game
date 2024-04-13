@@ -28,6 +28,26 @@
                 "ShaderName": "skyboxShader",
                 "fragmentPath": "res/skyboxFragShader.fs",
                 "vertexPath": "res/skyboxVecShader.vs"
+            },
+            {
+                "ShaderName": "textShader",
+                "fragmentPath": "../../res/textShader.fs",
+                "vertexPath": "../../res/textShader.vs"
+            },
+            {
+                "ShaderName": "textureShader",
+                "fragmentPath": "../../res/textureShader.fs",
+                "vertexPath": "../../res/textureShader.vs"
+            }
+        ],
+        "Sounds": [
+            {
+                "Path": "res/Sounds/ksu.mp3",
+                "SoundName": "BackgroundMusic"
+            },
+            {
+                "Path": "res/Sounds/concrete-footsteps-6752.mp3",
+                "SoundName": "ConcreteSound"
             }
         ]
     },
@@ -119,6 +139,7 @@
                 ],
                 "components": [
                     {
+                        "cameraRefID": 2,
                         "componentId": 1,
                         "componentType": 2,
                         "depth": 100,
@@ -169,7 +190,7 @@
                 "transform": {
                     "position": [
                         0.0,
-                        2.0,
+                        115.0,
                         0.0
                     ],
                     "rotation": [

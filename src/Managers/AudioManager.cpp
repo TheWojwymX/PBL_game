@@ -29,7 +29,7 @@ void AudioManager::Cleanup() {
 }
 
 void AudioManager::PlayBackgroundMusic() {
-    ma_engine_play_sound(&_engine, "../../res/Music/ksu.mp3", NULL);
+    ma_engine_play_sound(&_engine, "../../res/Sounds/ksu.mp3", NULL);
 }
 
 void AudioManager::PlaySound() {

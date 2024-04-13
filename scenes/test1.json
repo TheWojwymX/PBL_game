@@ -39,6 +39,16 @@
                 "fragmentPath": "../../res/textureShader.fs",
                 "vertexPath": "../../res/textureShader.vs"
             }
+        ],
+        "Sounds": [
+            {
+                "Path": "res/Sounds/ksu.mp3",
+                "SoundName": "BackgroundMusic"
+            },
+            {
+                "Path": "res/Sounds/concrete-footsteps-6752.mp3",
+                "SoundName": "ConcreteSound"
+            }
         ]
     },
     "root": {

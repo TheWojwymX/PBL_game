@@ -39,20 +39,20 @@ std::shared_ptr<Model> ResourceManager::GetModelByName(const string &name) {
     return nullptr;
 }
 
-shared_ptr<Sound> ResourceManager::CreateSound(string path, string name) {
-    auto sound = std::make_shared<Sound>(path, name);
+shared_ptr<Sound> ResourceManager::CreateSound(string name, string path) {
+    auto sound = std::make_shared<Sound>(name, path);
     Sounds.push_back(sound);
     return sound;
 }
 
-/*std::shared_ptr<Sound> ResourceManager::GetSoundByName(const string &name) {
-    for (const auto &sound: Models) {
-        if (model->_name == name) {
-            return model;
+std::shared_ptr<Sound> ResourceManager::GetSoundByName(const string &name) {
+    for (const auto &sound: Sounds) {
+        if (sound->_name == name) {
+            return sound;
         }
     }
     return nullptr;
-}*/
+}
 
 
 
@@ -60,6 +60,7 @@ nlohmann::json ResourceManager::Serialize() {
     nlohmann::json data;
     nlohmann::json shadersJson = nlohmann::json::array();
     nlohmann::json modelsJson = nlohmann::json::array();
+    nlohmann::json soundsJson = nlohmann::json::array();
 
     for (auto &shader: Shaders) {
         shadersJson.push_back(shader->Serialize());
@@ -68,8 +69,14 @@ nlohmann::json ResourceManager::Serialize() {
     for (auto &model: Models) {
         modelsJson.push_back(model->Serialize());
     }
+
+    for (auto &sound: Sounds) {
+        soundsJson.push_back(sound->Serialize());
+    }
+
     data["Shaders"] = shadersJson;
     data["Models"] = modelsJson;
+    data["Sounds"] = soundsJson;
 
     return data;
 }
@@ -93,9 +100,9 @@ void ResourceManager::Deserialize(nlohmann::json data) {
 
     if (data.contains("Sounds")) {
         for (auto &model: data["Sounds"]) {
-            string name = model["ModelName"].get<string>();
+            string name = model["SoundName"].get<string>();
             string path = model["Path"].get<string>();
-            CreateSound(path, name);
+            CreateSound(name, path);
         }
     }
 
