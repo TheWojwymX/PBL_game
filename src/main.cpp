@@ -158,6 +158,8 @@ int main(int, char**)
 
     HUD.Init();
 
+    
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {

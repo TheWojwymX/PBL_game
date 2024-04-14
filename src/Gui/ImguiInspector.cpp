@@ -28,7 +28,8 @@ void ImguiInspector::draw(std::shared_ptr<Node> selectedObject, ImguiMain* imgui
 
     selectedObject->addToInspector(imguiMain);
 
-    ImGui::Spacing(); ImGui::Spacing();
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
     ImGui::Text("New Component:");
     ImGui::PushItemWidth(-1);
     ImGui::ListBox("##", &newComponent, items, IM_ARRAYSIZE(items));

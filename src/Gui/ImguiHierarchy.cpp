@@ -8,6 +8,7 @@
 #include "../Managers/SceneManager.h"
 #include "../imgui_impl/imgui_impl_glfw.h"
 #include "../imgui_impl/imgui_impl_opengl3.h"
+#include <algorithm>
 
 ImguiHierarchy::ImguiHierarchy()
 {
@@ -36,7 +37,7 @@ void ImguiHierarchy::draw(std::shared_ptr<Node>& root, std::shared_ptr<Node> sel
         GAMEMANAGER.root->Init();
     }
 
-    ImGui::Spacing();
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
     ImGui::Text("Name:");
     ImGui::PushItemWidth(-1);
@@ -58,8 +59,8 @@ void ImguiHierarchy::draw(std::shared_ptr<Node>& root, std::shared_ptr<Node> sel
     }
     ImGui::PopStyleColor();
 
-    ImGui::Spacing();
-
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    
     DrawGameObjectHierarchy(root, imguiMain);
     ImGui::End();
 
@@ -80,8 +81,6 @@ void ImguiHierarchy::addGameObject(ImguiMain *imguiMain)
     {
         root->AddChild(newGameObject);
     }
-
-
 }
 
 void ImguiHierarchy::DrawGameObjectHierarchy(std::shared_ptr<Node> root, ImguiMain* imguiMain) {
