@@ -11,19 +11,31 @@
 #include <iostream>
 #include "../thirdparty/nlohmann/json.hpp"
 
+enum class SoundType {
+    MUSIC,
+    SFX
+};
+
 class Sound {
 public:
     std::string _name;
     std::string _path;
+    int _id;
 
     ma_result _result;
     ma_sound _sound;
 
-    Sound(const std::string &soundName, const std::string &path);
+    SoundType _soundType;
+
+    Sound(const std::string &name, const std::string &path, int id, SoundType soundType);
 
     nlohmann::json Serialize();
 
     void PlaySound();
+
+    void ChangeVolume(float volume);
+
+    void SetLooping(bool looping);
 
 };
 

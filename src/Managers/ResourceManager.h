@@ -32,7 +32,7 @@ public:
 
     shared_ptr<Model> GetModelByName(const string &name);
 
-    shared_ptr<Sound> CreateSound(string name, string path);
+    shared_ptr<Sound> CreateSound(string name, string path, int id, int soundType);
 
     shared_ptr<Sound> GetSoundByName(const string &name);
 

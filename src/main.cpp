@@ -149,7 +149,10 @@ int main(int, char**)
 
     //AUDIOMANAGER.PlayBackgroundMusic();
 
-    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();
+    //RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();
+
+    RESOURCEMANAGER.GetSoundByName("ConcreteSound")->SetLooping(true);
+    RESOURCEMANAGER.GetSoundByName("ConcreteSound")->PlaySound();
 
     // Main loop
     while (!glfwWindowShouldClose(window))

@@ -43,11 +43,15 @@
         "Sounds": [
             {
                 "Path": "res/Sounds/ksu.mp3",
-                "SoundName": "BackgroundMusic"
+                "SoundName": "BackgroundMusic",
+                "SoundID": 0,
+                "Type": 0
             },
             {
-                "Path": "res/Sounds/concrete-footsteps-6752.mp3",
-                "SoundName": "ConcreteSound"
+                "Path": "res/Sounds/footstep_concrete_001.mp3",
+                "SoundName": "ConcreteSound",
+                "SoundID": 1,
+                "Type": 1
             }
         ]
     },

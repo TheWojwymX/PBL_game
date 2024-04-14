@@ -35,6 +35,9 @@ public:
 
     ma_result _result;
     ma_engine _engine;
+
+    float _musicVolume = 1;
+    float _sfxVolume = 1;
 };
 
 
