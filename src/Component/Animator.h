@@ -21,7 +21,7 @@ public:
     void Update(float deltaTime);
     void Reset();
     bool IsFinished();
-    void addToInspector(ImguiMain *imguiMain) override;
+    //void addToInspector(ImguiMain *imguiMain) override;
 
 
 

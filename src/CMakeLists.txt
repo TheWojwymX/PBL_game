@@ -38,7 +38,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Core/ComponentTypeEnum.h
         HUD/Image/ImageHUD.cpp
         HUD/Image/ImageHUD.h
-<<<<<<< Updated upstream
         Managers/GameManager.cpp
         Managers/GameManager.h
         Component/Animator.cpp
