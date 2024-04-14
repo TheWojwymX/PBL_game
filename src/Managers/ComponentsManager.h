@@ -21,7 +21,7 @@ public:
     std::shared_ptr<ComponentType> GetComponentByID(int id) {
         const auto &components = GetComponents();
         for (const auto &comp: components) {
-            if (comp->_id == id) {
+            if (comp != nullptr && comp->_id == id) {
                 std::shared_ptr<ComponentType> castedComponent = std::dynamic_pointer_cast<ComponentType>(components[id]);
                 return castedComponent;
             }
@@ -64,7 +64,9 @@ public:
     void Initiate(){
         const auto &components = GetComponents();
         for (const auto &comp: components) {
-            comp->initiate();
+            if(comp != nullptr){
+                comp->initiate();
+            }
         }
     }
 

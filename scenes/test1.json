@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 4,
+    "nextComponentId": 5,
     "nextNodeId": 6,
     "resources": {
         "Models": [
@@ -175,6 +175,10 @@
                 "NodeName": "player",
                 "children": [],
                 "components": [
+                    {
+                        "componentId": 4,
+                        "componentType": 4
+                    },
                     {
                         "componentId": 2,
                         "componentType": 0,
