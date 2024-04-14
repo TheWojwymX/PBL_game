@@ -40,11 +40,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Image/ImageHUD.h
 <<<<<<< Updated upstream
         Managers/GameManager.cpp
-        Managers/GameManager.h)
-=======
+        Managers/GameManager.h
         Component/Animator.cpp
         Component/Animator.h)
->>>>>>> Stashed changes
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
