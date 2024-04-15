@@ -26,7 +26,6 @@ public:
 
     void AddChild(std::shared_ptr<Node> child);
     void AddComponent(std::shared_ptr<Component> component);
-    void AddComponent2(std::shared_ptr<Component> component);
     void Init();
     void Input();
     void Update();
@@ -50,6 +49,16 @@ public:
 
     const vector<std::shared_ptr<Component>> &getComponents() const;
 
+    template <typename ComponentType>
+    std::shared_ptr<ComponentType> getComponent() const {
+        for (const auto& comp : _components) {
+            auto castedComp = std::dynamic_pointer_cast<ComponentType>(comp);
+            if (castedComp) {
+                return castedComp;
+            }
+        }
+        return nullptr;
+    }
 
 
 

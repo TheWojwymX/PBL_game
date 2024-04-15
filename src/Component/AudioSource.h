@@ -6,6 +6,9 @@
 #define OPENGLGP_AUDIOSOURCE_H
 
 #include "Core/Component.h"
+#include "Managers/ResourceManager.h"
+#include <random>
+#include "Core/Time.h"
 
 class AudioSource : public Component {
 public:
@@ -19,6 +22,10 @@ public:
     void initiate() override;
 
     void Update() override;
+
+    void PlayRandomStepSound();
+
+    std::vector<int> _stepSoundIDs = {1,2,3};
 };
 
 

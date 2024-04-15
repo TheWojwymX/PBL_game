@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 5,
+    "nextComponentId": 6,
     "nextNodeId": 6,
     "resources": {
         "Models": [
@@ -49,8 +49,20 @@
             },
             {
                 "Path": "res/Sounds/footstep_concrete_001.mp3",
-                "SoundName": "ConcreteSound",
+                "SoundName": "ConcreteSound1",
                 "SoundID": 1,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/footstep_concrete_002.mp3",
+                "SoundName": "ConcreteSound2",
+                "SoundID": 2,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/footstep_concrete_003.mp3",
+                "SoundName": "ConcreteSound3",
+                "SoundID": 3,
                 "Type": 1
             }
         ]
@@ -176,7 +188,7 @@
                 "children": [],
                 "components": [
                     {
-                        "componentId": 4,
+                        "componentId": 5,
                         "componentType": 4
                     },
                     {

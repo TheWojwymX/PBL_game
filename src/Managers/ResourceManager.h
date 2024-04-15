@@ -36,6 +36,7 @@ public:
 
     shared_ptr<Sound> GetSoundByName(const string &name);
 
+    shared_ptr<Sound> GetSoundByID(int id);
 
 
 private:

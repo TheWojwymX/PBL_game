@@ -21,6 +21,7 @@ std::shared_ptr<Shader> ResourceManager::GetShaderByName(const string &name) {
             return shader;
         }
     }
+    std::cout << "No such shader!" << std::endl;
     return nullptr;
 }
 
@@ -36,6 +37,7 @@ std::shared_ptr<Model> ResourceManager::GetModelByName(const string &name) {
             return model;
         }
     }
+    std::cout << "No such model!" << std::endl;
     return nullptr;
 }
 
@@ -51,6 +53,17 @@ std::shared_ptr<Sound> ResourceManager::GetSoundByName(const string &name) {
             return sound;
         }
     }
+    std::cout << "No such sound!" << std::endl;
+    return nullptr;
+}
+
+std::shared_ptr<Sound> ResourceManager::GetSoundByID(int id) {
+    for (const auto &sound: Sounds) {
+        if (sound->_id == id) {
+            return sound;
+        }
+    }
+    std::cout << "No such sound!" << std::endl;
     return nullptr;
 }
 

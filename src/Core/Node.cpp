@@ -108,10 +108,8 @@ void Node::AddChild(std::shared_ptr<Node> child) {
 
 void Node::AddComponent(std::shared_ptr<Component> component) {
     component->SetOwnerTransform(_local);
-    _components.push_back(component);
-}
-
-void Node::AddComponent2(std::shared_ptr<Component> component) {
+    std::shared_ptr<Node> self = shared_from_this();
+    component->SetOwnerNode(self);
     _components.push_back(component);
 }
 
