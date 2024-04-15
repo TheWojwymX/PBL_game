@@ -151,13 +151,13 @@ int main(int, char**)
 
     //RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();
 
-    RESOURCEMANAGER.GetSoundByName("ConcreteSound1")->SetLooping(true);
-    RESOURCEMANAGER.GetSoundByName("ConcreteSound1")->PlaySound();
+    //RESOURCEMANAGER.GetSoundByName("ConcreteSound1")->SetLooping(true);
+    //RESOURCEMANAGER.GetSoundByName("ConcreteSound1")->PlaySound();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        NODESMANAGER.getNodeByName("player")->GetComponent<AudioSource>()->PlayRandomStepSound();
+        //NODESMANAGER.getNodeByName("player")->GetComponent<AudioSource>()->PlayRandomStepSound();
 
         // Calculate deltaTime
         TIME.Update();

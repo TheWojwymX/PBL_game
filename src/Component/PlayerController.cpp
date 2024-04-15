@@ -1,6 +1,7 @@
 #include "PlayerController.h"
 #include "Core/Time.h"
 #include "Core/Input.h"
+#include "Core/Node.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius) , _width(width), _height(height) {
@@ -93,7 +94,18 @@ void PlayerController::HandleMovement() {
 
     // Only normalize if move vector is not zero
     if (glm::length(move) > 0.0f) {
+        if(!_ownerNode->GetComponent<AudioSource>()->_isWalking && _isGrounded){ //is PlayerStepsController not working at the moment and walking and on ground
+            _ownerNode->GetComponent<AudioSource>()->StartSteps();
+        }
+        else if(!_isGrounded){ //is walking and not grounded
+            _ownerNode->GetComponent<AudioSource>()->StopSteps();
+        }
         move = glm::normalize(move) * _speed;
+    }
+    else{
+        if(_ownerNode->GetComponent<AudioSource>()->_isWalking){ //is PlayerStepsController working at the moment and there isn't any movement
+            _ownerNode->GetComponent<AudioSource>()->StopSteps();
+        }
     }
 
     // Apply gravity

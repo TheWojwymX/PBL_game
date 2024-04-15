@@ -23,7 +23,28 @@ void AudioSource::initiate() {
 }
 
 void AudioSource::Update() {
-    Component::Update();
+
+    if(_isWalking){
+        _stepTimer += TIME.GetDeltaTime();
+        if(_stepTimer >= _stepDelay){
+            ResetStepTime();
+        }
+        Component::Update();
+    }
+}
+
+void AudioSource::StartSteps(){
+    ResetStepTime();
+    _isWalking = true;
+}
+
+void AudioSource::StopSteps(){
+    _isWalking = false;
+}
+
+void AudioSource::ResetStepTime(){
+    PlayRandomStepSound();
+    _stepTimer = 0;
 }
 
 void AudioSource::PlayRandomStepSound() {
@@ -34,7 +55,5 @@ void AudioSource::PlayRandomStepSound() {
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, _stepSoundIDs.size() - 1);
 
-    //RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[dis(gen)])->PlaySound();
-
-    std::cout << this->_ownerNode->GetComponent<AudioSource>()->_id << std::endl;
+    RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[dis(gen)])->PlaySound();
 }

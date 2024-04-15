@@ -25,7 +25,19 @@ public:
 
     void PlayRandomStepSound();
 
+    void ResetStepTime();
+
+    float _stepTimer = 0;
+
     std::vector<int> _stepSoundIDs = {1,2,3};
+
+    bool _isWalking = false;
+
+    float _stepDelay = 0.5;
+
+    void StartSteps();
+
+    void StopSteps();
 };
 
 

@@ -49,19 +49,6 @@ public:
 
     const vector<std::shared_ptr<Component>> &getComponents() const;
 
-    template <typename ComponentType>
-    std::shared_ptr<ComponentType> getComponent() const {
-        for (const auto& comp : _components) {
-            auto castedComp = std::dynamic_pointer_cast<ComponentType>(comp);
-            if (castedComp) {
-                return castedComp;
-            }
-        }
-        return nullptr;
-    }
-
-
-
 private:
     std::shared_ptr<Transform> _local;
     std::vector<std::shared_ptr<Node>> _children;
