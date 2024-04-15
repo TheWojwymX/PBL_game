@@ -94,17 +94,17 @@ void PlayerController::HandleMovement() {
 
     // Only normalize if move vector is not zero
     if (glm::length(move) > 0.0f) {
-        if(!_ownerNode->GetComponent<AudioSource>()->_isWalking && _isGrounded){ //is PlayerStepsController not working at the moment and walking and on ground
-            _ownerNode->GetComponent<AudioSource>()->StartSteps();
+        if(!_ownerNode->GetComponent<PlayerAudioController>()->_isWalking && _isGrounded){ //are PlayerAudioController steps not working at the moment and walking and on ground
+            _ownerNode->GetComponent<PlayerAudioController>()->StartSteps();
         }
         else if(!_isGrounded){ //is walking and not grounded
-            _ownerNode->GetComponent<AudioSource>()->StopSteps();
+            _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
         }
         move = glm::normalize(move) * _speed;
     }
     else{
-        if(_ownerNode->GetComponent<AudioSource>()->_isWalking){ //is PlayerStepsController working at the moment and there isn't any movement
-            _ownerNode->GetComponent<AudioSource>()->StopSteps();
+        if(_ownerNode->GetComponent<PlayerAudioController>()->_isWalking){ //are PlayerAudioController steps working at the moment and there isn't any movement
+            _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
         }
     }
 
@@ -113,6 +113,7 @@ void PlayerController::HandleMovement() {
 
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {
+        _ownerNode->GetComponent<PlayerAudioController>()->PlayJumpSound();
         _velocity.y = sqrtf(_jumpHeight * -2.0f * _gravity);
         _jump = true;
     }

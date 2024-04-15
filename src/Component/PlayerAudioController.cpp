@@ -2,27 +2,27 @@
 // Created by Jacek on 14.04.2024.
 //
 
-#include "AudioSource.h"
+#include "PlayerAudioController.h"
 #include "Managers/NodesManager.h"
 
-AudioSource::AudioSource() {
+PlayerAudioController::PlayerAudioController() {
     _type = ComponentType::AUDIOSOURCE;
 }
 
-nlohmann::json AudioSource::Serialize() {
+nlohmann::json PlayerAudioController::Serialize() {
     nlohmann::json data = Component::Serialize();
     return data;
 }
 
-void AudioSource::Deserialize(const nlohmann::json &jsonData) {
+void PlayerAudioController::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void AudioSource::initiate() {
+void PlayerAudioController::initiate() {
     Component::initiate();
 }
 
-void AudioSource::Update() {
+void PlayerAudioController::Update() {
 
     if(_isWalking){
         _stepTimer += TIME.GetDeltaTime();
@@ -33,21 +33,25 @@ void AudioSource::Update() {
     }
 }
 
-void AudioSource::StartSteps(){
+void PlayerAudioController::StartSteps(){
     ResetStepTime();
     _isWalking = true;
 }
 
-void AudioSource::StopSteps(){
+void PlayerAudioController::StopSteps(){
     _isWalking = false;
 }
 
-void AudioSource::ResetStepTime(){
+void PlayerAudioController::ResetStepTime(){
     PlayRandomStepSound();
     _stepTimer = 0;
 }
 
-void AudioSource::PlayRandomStepSound() {
+void PlayerAudioController::PlayJumpSound(){
+    RESOURCEMANAGER.GetSoundByName("JumpSound")->PlaySound();
+}
+
+void PlayerAudioController::PlayRandomStepSound() {
     if (_stepSoundIDs.empty()) {
         throw std::runtime_error("The sound ID list is empty");
     }

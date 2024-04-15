@@ -6,16 +6,16 @@
 
 Sound::Sound(const std::string &name, const std::string &path, int id, SoundType soundType) : _name(name), _path(path), _id(id), _soundType(soundType) {
 
-    _result = ma_sound_init_from_file(&AUDIOMANAGER._engine, _path.c_str(), 0, NULL, NULL, &_sound);
+    _result = ma_sound_init_from_file(&AUDIOENGINEMANAGER._engine, _path.c_str(), 0, NULL, NULL, &_sound);
     if (_result != MA_SUCCESS) {
         std::cout << "Can't load sound file: " << _name << " at path: " << _path << std::endl;
     }
     else{
         if(_soundType == SoundType::MUSIC){
-            ChangeVolume(AUDIOMANAGER._musicVolume);
+            ChangeVolume(AUDIOENGINEMANAGER._musicVolume);
         }
         else if(_soundType == SoundType::SFX){
-            ChangeVolume(AUDIOMANAGER._sfxVolume);
+            ChangeVolume(AUDIOENGINEMANAGER._sfxVolume);
         }
     }
 

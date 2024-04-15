@@ -48,21 +48,69 @@
                 "Type": 0
             },
             {
-                "Path": "res/Sounds/footstep_concrete_001.mp3",
+                "Path": "res/Sounds/step1.mp3",
                 "SoundID": 1,
                 "SoundName": "ConcreteSound1",
                 "Type": 1
             },
             {
-                "Path": "res/Sounds/footstep_concrete_002.mp3",
+                "Path": "res/Sounds/step2.mp3",
                 "SoundID": 2,
                 "SoundName": "ConcreteSound2",
                 "Type": 1
             },
             {
-                "Path": "res/Sounds/footstep_concrete_003.mp3",
+                "Path": "res/Sounds/step3.mp3",
                 "SoundID": 3,
                 "SoundName": "ConcreteSound3",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/jump.mp3",
+                "SoundID": 4,
+                "SoundName": "JumpSound",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step4.mp3",
+                "SoundID": 5,
+                "SoundName": "ConcreteSound4",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step5.mp3",
+                "SoundID": 6,
+                "SoundName": "ConcreteSound5",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step6.mp3",
+                "SoundID": 7,
+                "SoundName": "ConcreteSound6",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step7.mp3",
+                "SoundID": 8,
+                "SoundName": "ConcreteSound7",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step8.mp3",
+                "SoundID": 9,
+                "SoundName": "ConcreteSound8",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step9.mp3",
+                "SoundID": 10,
+                "SoundName": "ConcreteSound9",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step10.mp3",
+                "SoundID": 11,
+                "SoundName": "ConcreteSound10",
                 "Type": 1
             }
         ]

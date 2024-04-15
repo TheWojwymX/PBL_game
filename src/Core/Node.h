@@ -10,7 +10,7 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/BlockManager.h"
 #include "Managers/ComponentsManager.h"
-#include "Component/AudioSource.h"
+#include "Component/PlayerAudioController.h"
 
 class Node : public std::enable_shared_from_this<Node>{
 public:

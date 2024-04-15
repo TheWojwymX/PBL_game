@@ -79,7 +79,7 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                         ComponentsManager::getInstance().DeserializeComponent<BlockManager>(componentJson);
                         break;
                     case ComponentType::AUDIOSOURCE:
-                        ComponentsManager::getInstance().DeserializeComponent<AudioSource>(componentJson);
+                        ComponentsManager::getInstance().DeserializeComponent<PlayerAudioController>(componentJson);
                         break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;

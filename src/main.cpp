@@ -44,7 +44,7 @@
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
-#include "Managers/AudioManager.h"
+#include "Managers/AudioEngineManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -111,7 +111,7 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
-    AUDIOMANAGER.Init();
+    AUDIOENGINEMANAGER.Init();
 
     // Deserialization of resources and nodes
     GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test1.json");
@@ -147,18 +147,13 @@ int main(int, char**)
 
     HUD.Init();
 
-    //AUDIOMANAGER.PlayBackgroundMusic();
+/*    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();*/
 
-    //RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();
-
-    //RESOURCEMANAGER.GetSoundByName("ConcreteSound1")->SetLooping(true);
-    //RESOURCEMANAGER.GetSoundByName("ConcreteSound1")->PlaySound();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        //NODESMANAGER.getNodeByName("player")->GetComponent<AudioSource>()->PlayRandomStepSound();
-
         // Calculate deltaTime
         TIME.Update();
 
@@ -215,7 +210,7 @@ int main(int, char**)
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
-        AUDIOMANAGER.Update();
+        AUDIOENGINEMANAGER.Update();
 
         imguiMain->endDraw();
         ImGui::Render();
@@ -228,7 +223,7 @@ int main(int, char**)
     }
 
     // Cleanup
-    AUDIOMANAGER.Cleanup();
+    AUDIOENGINEMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

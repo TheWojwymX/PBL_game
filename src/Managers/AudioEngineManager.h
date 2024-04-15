@@ -2,36 +2,32 @@
 // Created by Jacek on 11.04.2024.
 //
 
-#define AUDIOMANAGER AudioManager::getInstance()
+#define AUDIOENGINEMANAGER AudioEngineManager::getInstance()
 
 #ifndef OPENGLGP_AUDIOMANAGER_H
 #define OPENGLGP_AUDIOMANAGER_H
 
 #include "../thirdparty/miniaudio.h"
 
-class AudioManager {
+class AudioEngineManager {
 
 public:
 
-    static AudioManager &getInstance();
+    static AudioEngineManager &getInstance();
 
-    ~AudioManager() = default;
+    ~AudioEngineManager() = default;
 
-    AudioManager() = default;
+    AudioEngineManager() = default;
 
-    AudioManager(const AudioManager &) = delete;
+    AudioEngineManager(const AudioEngineManager &) = delete;
 
-    AudioManager &operator=(const AudioManager &) = delete;
+    AudioEngineManager &operator=(const AudioEngineManager &) = delete;
 
     void Init();
 
     void Update();
 
     void Cleanup();
-
-    void PlayBackgroundMusic();
-
-    void PlaySound();
 
     ma_result _result;
     ma_engine _engine;

@@ -2,18 +2,18 @@
 // Created by Jacek on 14.04.2024.
 //
 
-#ifndef OPENGLGP_AUDIOSOURCE_H
-#define OPENGLGP_AUDIOSOURCE_H
+#ifndef OPENGLGP_PLAYERAUDIOCONTROLLER_H
+#define OPENGLGP_PLAYERAUDIOCONTROLLER_H
 
 #include "Core/Component.h"
 #include "Managers/ResourceManager.h"
 #include <random>
 #include "Core/Time.h"
 
-class AudioSource : public Component {
+class PlayerAudioController : public Component {
 public:
 
-    AudioSource();
+    PlayerAudioController();
 
     nlohmann::json Serialize() override;
 
@@ -29,7 +29,7 @@ public:
 
     float _stepTimer = 0;
 
-    std::vector<int> _stepSoundIDs = {1,2,3};
+    std::vector<int> _stepSoundIDs = {1,2,3, 5, 6, 7, 8, 9, 10, 11};
 
     bool _isWalking = false;
 
@@ -38,7 +38,9 @@ public:
     void StartSteps();
 
     void StopSteps();
+
+    void PlayJumpSound();
 };
 
 
-#endif //OPENGLGP_AUDIOSOURCE_H
+#endif //OPENGLGP_PLAYERAUDIOCONTROLLER_H

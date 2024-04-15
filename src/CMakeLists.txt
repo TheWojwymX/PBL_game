@@ -40,13 +40,13 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Image/ImageHUD.h
         Managers/GameManager.cpp
         Managers/GameManager.h
-        Managers/AudioManager.cpp
-        Managers/AudioManager.h
+        Managers/AudioEngineManager.cpp
+        Managers/AudioEngineManager.h
         Sound.cpp
         Sound.h
         AudioContext.cpp
-        Component/AudioSource.cpp
-        Component/AudioSource.h)
+        Component/PlayerAudioController.cpp
+        Component/PlayerAudioController.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
