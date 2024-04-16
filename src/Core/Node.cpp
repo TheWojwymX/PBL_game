@@ -46,7 +46,6 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
         _id = nodeJson["NodeID"].get<int>();
     }
 
-    // UWAGA PRAWDOPODOBNIE DO ZMIANY W PRZYSZLOSCI
     NODESMANAGER.addNodeAt(this->shared_from_this(), _id);
 
     // Transform
@@ -79,6 +78,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::BLOCKMANAGER:
                         ComponentsManager::getInstance().DeserializeComponent<BlockManager>(componentJson);
                         break;
+                    case ComponentType::AUDIOSOURCE:
+                        ComponentsManager::getInstance().DeserializeComponent<PlayerAudioController>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;
@@ -106,10 +108,8 @@ void Node::AddChild(std::shared_ptr<Node> child) {
 
 void Node::AddComponent(std::shared_ptr<Component> component) {
     component->SetOwnerTransform(_local);
-    _components.push_back(component);
-}
-
-void Node::AddComponent2(std::shared_ptr<Component> component) {
+    std::shared_ptr<Node> self = shared_from_this();
+    component->SetOwnerNode(self);
     _components.push_back(component);
 }
 

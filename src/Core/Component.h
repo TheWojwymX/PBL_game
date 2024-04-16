@@ -8,6 +8,7 @@
 #include <Core/ComponentTypeEnum.h>
 
 class ImguiMain;
+class Node;
 
 class Component {
 public:
@@ -32,8 +33,12 @@ public:
 
     int _id;
     ComponentType _type;
+    void SetOwnerNode(std::shared_ptr<Node> node);
 
 protected:
+    std::shared_ptr<Node> _ownerNode;
     std::shared_ptr<Transform> _ownerTransform;
     bool _isEnabled = true;
+
+
 };

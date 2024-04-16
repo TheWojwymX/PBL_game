@@ -43,6 +43,10 @@ void Component::SetOwnerTransform(std::shared_ptr<Transform> transform) {
     _ownerTransform = transform;
 }
 
+void Component::SetOwnerNode(std::shared_ptr<Node> node) {
+    _ownerNode = node;
+}
+
 void Component::SetEnabled(bool isEnabled) {
     _isEnabled = isEnabled;
 }

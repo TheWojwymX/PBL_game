@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 4,
+    "nextComponentId": 6,
     "nextNodeId": 6,
     "resources": {
         "Models": [
@@ -38,6 +38,80 @@
                 "ShaderName": "textureShader",
                 "fragmentPath": "../../res/textureShader.fs",
                 "vertexPath": "../../res/textureShader.vs"
+            }
+        ],
+        "Sounds": [
+            {
+                "Path": "res/Sounds/ksu.mp3",
+                "SoundName": "BackgroundMusic",
+                "SoundID": 0,
+                "Type": 0
+            },
+            {
+                "Path": "res/Sounds/step1.mp3",
+                "SoundName": "ConcreteSound1",
+                "SoundID": 1,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step2.mp3",
+                "SoundName": "ConcreteSound2",
+                "SoundID": 2,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step3.mp3",
+                "SoundName": "ConcreteSound3",
+                "SoundID": 3,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/jump.mp3",
+                "SoundName": "JumpSound",
+                "SoundID": 4,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step4.mp3",
+                "SoundName": "ConcreteSound4",
+                "SoundID": 5,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step5.mp3",
+                "SoundName": "ConcreteSound5",
+                "SoundID": 6,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step6.mp3",
+                "SoundName": "ConcreteSound6",
+                "SoundID": 7,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step7.mp3",
+                "SoundName": "ConcreteSound7",
+                "SoundID": 8,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step8.mp3",
+                "SoundName": "ConcreteSound8",
+                "SoundID": 9,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step9.mp3",
+                "SoundName": "ConcreteSound9",
+                "SoundID": 10,
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step10.mp3",
+                "SoundName": "ConcreteSound10",
+                "SoundID": 11,
+                "Type": 1
             }
         ]
     },
@@ -161,6 +235,10 @@
                 "NodeName": "player",
                 "children": [],
                 "components": [
+                    {
+                        "componentId": 5,
+                        "componentType": 4
+                    },
                     {
                         "componentId": 2,
                         "componentType": 0,

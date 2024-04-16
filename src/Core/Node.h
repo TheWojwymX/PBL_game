@@ -10,6 +10,7 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/BlockManager.h"
 #include "Managers/ComponentsManager.h"
+#include "Component/PlayerAudioController.h"
 
 class Node : public std::enable_shared_from_this<Node>{
 public:
@@ -25,7 +26,6 @@ public:
 
     void AddChild(std::shared_ptr<Node> child);
     void AddComponent(std::shared_ptr<Component> component);
-    void AddComponent2(std::shared_ptr<Component> component);
     void Init();
     void Input();
     void Update();
@@ -48,9 +48,6 @@ public:
     const vector<std::shared_ptr<Node>> &getChildren() const;
 
     const vector<std::shared_ptr<Component>> &getComponents() const;
-
-
-
 
 private:
     std::shared_ptr<Transform> _local;

@@ -7,9 +7,6 @@
 #include <stb_image.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#define MINIAUDIO_IMPLEMENTATION
-#include <../thirdparty//miniaudio.h>
-
 #include <../thirdparty/nlohmann/json.hpp>
 
 #include "Core/Node.h"
@@ -47,7 +44,7 @@
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
-
+#include "Managers/AudioEngineManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -114,9 +111,10 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
+    AUDIOENGINEMANAGER.Init();
 
     // Deserialization of resources and nodes
-    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test21.json");
+    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test1.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
@@ -129,15 +127,6 @@ int main(int, char**)
     // Init
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
-
-    // Setup miniaudio
-    ma_result result;
-    ma_engine engine;
-    result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        printf("Failed to initialize audio engine.");
-        return -1;
-    }
 
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
@@ -154,11 +143,12 @@ int main(int, char**)
     // json save for testing
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(GAMEMANAGER.root);
     //std::cout << jsonData;
-    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test1.json");
+    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test2.json");
 
     HUD.Init();
 
-    
+/*    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();*/
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -217,6 +207,7 @@ int main(int, char**)
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
+        AUDIOENGINEMANAGER.Update();
 
         imguiMain->endDraw();
         ImGui::Render();
@@ -229,8 +220,7 @@ int main(int, char**)
     }
 
     // Cleanup
-    ma_engine_uninit(&engine);
-
+    AUDIOENGINEMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

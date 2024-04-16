@@ -11,6 +11,7 @@
 #include <string>
 #include "shader_s.h"
 #include "Model.h"
+#include "Sound.h"
 #include "../../thirdparty/nlohmann/json.hpp"
 
 class ResourceManager {
@@ -31,6 +32,13 @@ public:
 
     shared_ptr<Model> GetModelByName(const string &name);
 
+    shared_ptr<Sound> CreateSound(string name, string path, int id, int soundType);
+
+    shared_ptr<Sound> GetSoundByName(const string &name);
+
+    shared_ptr<Sound> GetSoundByID(int id);
+
+
 private:
     ResourceManager() = default;
 
@@ -40,6 +48,8 @@ private:
 
     std::vector<std::shared_ptr<Shader>> Shaders;
     std::vector<std::shared_ptr<Model>> Models;
+    std::vector<std::shared_ptr<Sound>> Sounds;
+
 };
 
 

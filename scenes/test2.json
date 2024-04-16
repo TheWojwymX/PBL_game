@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 4,
+    "nextComponentId": 6,
     "nextNodeId": 6,
     "resources": {
         "Models": [
@@ -28,6 +28,90 @@
                 "ShaderName": "skyboxShader",
                 "fragmentPath": "res/skyboxFragShader.fs",
                 "vertexPath": "res/skyboxVecShader.vs"
+            },
+            {
+                "ShaderName": "textShader",
+                "fragmentPath": "../../res/textShader.fs",
+                "vertexPath": "../../res/textShader.vs"
+            },
+            {
+                "ShaderName": "textureShader",
+                "fragmentPath": "../../res/textureShader.fs",
+                "vertexPath": "../../res/textureShader.vs"
+            }
+        ],
+        "Sounds": [
+            {
+                "Path": "res/Sounds/ksu.mp3",
+                "SoundID": 0,
+                "SoundName": "BackgroundMusic",
+                "Type": 0
+            },
+            {
+                "Path": "res/Sounds/step1.mp3",
+                "SoundID": 1,
+                "SoundName": "ConcreteSound1",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step2.mp3",
+                "SoundID": 2,
+                "SoundName": "ConcreteSound2",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step3.mp3",
+                "SoundID": 3,
+                "SoundName": "ConcreteSound3",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/jump.mp3",
+                "SoundID": 4,
+                "SoundName": "JumpSound",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step4.mp3",
+                "SoundID": 5,
+                "SoundName": "ConcreteSound4",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step5.mp3",
+                "SoundID": 6,
+                "SoundName": "ConcreteSound5",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step6.mp3",
+                "SoundID": 7,
+                "SoundName": "ConcreteSound6",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step7.mp3",
+                "SoundID": 8,
+                "SoundName": "ConcreteSound7",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step8.mp3",
+                "SoundID": 9,
+                "SoundName": "ConcreteSound8",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step9.mp3",
+                "SoundID": 10,
+                "SoundName": "ConcreteSound9",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/step10.mp3",
+                "SoundID": 11,
+                "SoundName": "ConcreteSound10",
+                "Type": 1
             }
         ]
     },
@@ -119,6 +203,7 @@
                 ],
                 "components": [
                     {
+                        "cameraRefID": 2,
                         "componentId": 1,
                         "componentType": 2,
                         "depth": 100,
@@ -151,6 +236,10 @@
                 "children": [],
                 "components": [
                     {
+                        "componentId": 5,
+                        "componentType": 4
+                    },
+                    {
                         "componentId": 2,
                         "componentType": 0,
                         "offset": [
@@ -169,7 +258,7 @@
                 "transform": {
                     "position": [
                         0.0,
-                        2.0,
+                        115.0,
                         0.0
                     ],
                     "rotation": [
