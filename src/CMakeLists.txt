@@ -40,8 +40,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Image/ImageHUD.h
         Managers/GameManager.cpp
         Managers/GameManager.h
-        Component/Animator.cpp
-        Component/Animator.h)
+        Component/Animation.cpp
+        Component/Animation.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

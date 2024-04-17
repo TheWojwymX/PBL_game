@@ -2,9 +2,11 @@
 
 MeshRenderer::MeshRenderer(Model* model, Shader* shader) : _model(model), _shader(shader) {}
 
+MeshRenderer::MeshRenderer(Shader *shader): _shader(shader) {}
+
 void MeshRenderer::Render(glm::mat4 parentWorld) {
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
-    RenderModel(_model, world);
+    RenderModel(_model, parentWorld);
 }
 
 void MeshRenderer::RenderModel(Model* model, glm::mat4 ctm) {
@@ -24,4 +26,20 @@ void MeshRenderer::addToInspector(ImguiMain *imguiMain)
         ImGui::TreePop();
 
     }
+}
+
+Model *MeshRenderer::getModel() const {
+    return _model;
+}
+
+void MeshRenderer::setModel(Model *model) {
+    _model = model;
+}
+
+Shader *MeshRenderer::getShader() const {
+    return _shader;
+}
+
+void MeshRenderer::setShader(Shader *shader) {
+    _shader = shader;
 }

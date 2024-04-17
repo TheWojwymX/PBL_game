@@ -47,6 +47,7 @@
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
+#include "Component/Animation.h"
 
 
 static void glfw_error_callback(int error, const char* description)
@@ -158,7 +159,19 @@ int main(int, char**)
 
     HUD.Init();
 
-    
+    shared_ptr<Node> animationNode = make_shared<Node>();
+    animationNode->GetTransform()->SetPosition(glm::vec3(10,110,10));
+    shared_ptr<Model> sm1 = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
+    shared_ptr<Model> sm2 = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-1.obj", "Ant2");
+    shared_ptr<Model> sm3 = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-2.obj", "Ant3");
+    Shader* modelShader = RESOURCEMANAGER.GetShaderByName("modelShader").get();
+    MeshRenderer meshRenderer(modelShader);
+    shared_ptr<Animation> animation = make_shared<Animation>(meshRenderer, 1.0f, true);
+    animation->SetOwnerTransform(animationNode->GetTransform());
+    animation->AddFrame(sm1);
+    animation->AddFrame(sm2);
+    animation->AddFrame(sm3);
+    animationNode->AddComponent(animation);
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -215,12 +228,14 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
 
         GAMEMANAGER.root->Render(Transform::Origin());
+        animation->Draw(TIME.GetDeltaTime());
 
         HUD.Update();
 
         imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 
 
         INPUT.UpdateOldStates();

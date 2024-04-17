@@ -1,4 +1,6 @@
 #include "Component.h"
+
+#include <utility>
 #include "imgui.h"
 
 Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
@@ -40,7 +42,7 @@ void Component::Render(glm::mat4 parentWorld) {}
 void Component::RenderShadows(glm::mat4 parentWorld, Shader *shader) {}
 
 void Component::SetOwnerTransform(std::shared_ptr<Transform> transform) {
-    _ownerTransform = transform;
+    _ownerTransform = std::move(transform);
 }
 
 void Component::SetEnabled(bool isEnabled) {

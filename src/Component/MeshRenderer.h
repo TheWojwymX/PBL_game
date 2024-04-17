@@ -6,13 +6,18 @@
 class MeshRenderer : public Component {
 public:
     MeshRenderer(Model* model, Shader* shader);
+    MeshRenderer(Shader* shader);
+    Model *getModel() const;
+    void setModel(Model *model);
+    Shader *getShader() const;
+    void setShader(Shader *shader);
     void Render(glm::mat4 parentWorld) override;
-
     void addToInspector(ImguiMain *imguiMain) override;
 
 private:
-    Model* _model; // Raw pointer to the model
-    Shader* _shader; // Raw pointer to the shader
+    Model* _model;
+    Shader* _shader;
 
     void RenderModel(Model* model, glm::mat4 ctm);
+
 };
