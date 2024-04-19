@@ -9,7 +9,7 @@
             },
             {
                 "ModelName": "antModel",
-                "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
+                "Path": "res/Models/Ant/ant-fixed.obj"
             }
         ],
         "Shaders": [
@@ -42,6 +42,16 @@
                 "ShaderName": "textureShader",
                 "fragmentPath": "../../res/textureShader.fs",
                 "vertexPath": "../../res/textureShader.vs"
+            },
+            {
+                "ShaderName": "toonShader",
+                "fragmentPath": "../../res/toonShader.fs",
+                "vertexPath": "../../res/toonShader.vs"
+            },
+            {
+                "ShaderName": "outlineShader",
+                "fragmentPath": "../../res/outlineShader.fs",
+                "vertexPath": "../../res/outlineShader.vs"
             }
         ],
         "Sounds": [
@@ -286,14 +296,15 @@
                         "componentId": 6,
                         "componentType": 5,
                         "model": "antModel",
-                        "shader": "modelShader"
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
                     }
                 ],
                 "transform": {
                     "position": [
-                        0.0,
-                        100.0,
-                        0.0
+                        5.0,
+                        99.5,
+                        5.0
                     ],
                     "rotation": [
                         0.0,
