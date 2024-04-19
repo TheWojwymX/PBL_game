@@ -1,11 +1,15 @@
 {
-    "nextComponentId": 6,
-    "nextNodeId": 6,
+    "nextComponentId": 7,
+    "nextNodeId": 7,
     "resources": {
         "Models": [
             {
                 "ModelName": "sandModel",
                 "Path": "res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "antModel",
+                "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
             }
         ],
         "Shaders": [
@@ -259,6 +263,36 @@
                     "position": [
                         0.0,
                         115.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 6,
+                "NodeName": "AntModel",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 6,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "shader": "modelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        100.0,
                         0.0
                     ],
                     "rotation": [

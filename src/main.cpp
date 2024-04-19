@@ -150,6 +150,8 @@ int main(int, char**)
 /*    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();*/
 
+    shared_ptr<Model> antModel = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -161,6 +163,11 @@ int main(int, char**)
 
         // Update
         GAMEMANAGER.root->Update();
+
+        if(TIME.GetTime() > 10 && TIME.GetTime() < 11){
+            std::cout << "minal czas";
+            NODESMANAGER.getNodeByName("AntModel")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
+        }
 
         // Start the Dear ImGui frame
         imguiMain->draw();

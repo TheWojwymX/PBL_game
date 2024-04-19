@@ -8,6 +8,7 @@
 #include "Component/Camera.h"
 #include "Component/PlayerController.h"
 #include "Component/InstanceRenderer.h"
+#include "Component/MeshRenderer.h"
 #include "Component/BlockManager.h"
 #include "Managers/ComponentsManager.h"
 #include "Component/PlayerAudioController.h"

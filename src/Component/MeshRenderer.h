@@ -2,17 +2,27 @@
 #include "Core/Component.h"
 #include <glm/glm.hpp>
 #include <model.h>
+#include "Managers/ResourceManager.h"
 
 class MeshRenderer : public Component {
 public:
+    MeshRenderer();
+
     MeshRenderer(Model* model, Shader* shader);
+
     void Render(glm::mat4 parentWorld) override;
 
     void addToInspector(ImguiMain *imguiMain) override;
 
-private:
-    Model* _model; // Raw pointer to the model
-    Shader* _shader; // Raw pointer to the shader
+    nlohmann::json Serialize() override;
 
-    void RenderModel(Model* model, glm::mat4 ctm);
+    void Deserialize(const nlohmann::json &jsonData) override;
+
+    void initiate() override;
+
+private:
+    shared_ptr<Model> _model; // Raw pointer to the model
+    shared_ptr<Shader> _shader; // Raw pointer to the shader
+
+    void RenderModel(shared_ptr<Model> model, glm::mat4 ctm);
 };
