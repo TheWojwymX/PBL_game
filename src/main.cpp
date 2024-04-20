@@ -209,6 +209,12 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("outlineShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("outlineShader")->setMat4("view", view);
 
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->use();
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setInt("skybox", 0);
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setMat4("view", view);
+
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->use();
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.direction", dirDirection);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.color", dirColor);

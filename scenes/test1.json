@@ -52,6 +52,11 @@
                 "ShaderName": "outlineShader",
                 "fragmentPath": "../../res/outlineShader.fs",
                 "vertexPath": "../../res/outlineShader.vs"
+            },
+            {
+                "ShaderName": "skyboxReflectionShader",
+                "fragmentPath": "../../res/skyboxReflectionShader.fs",
+                "vertexPath": "../../res/skyboxReflectionShader.vs"
             }
         ],
         "Sounds": [

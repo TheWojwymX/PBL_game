@@ -1,5 +1,4 @@
 #include "MeshRenderer.h"
-#include "../Managers/ResourceManager.h"
 
 MeshRenderer::MeshRenderer(Model* model, Shader* shader) : _model(model), _shader(shader) {}
 
