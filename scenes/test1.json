@@ -21,8 +21,8 @@
             },
             {
                 "ShaderName": "instanceModelShader",
-                "fragmentPath": "res/instanceFragShader.fs",
-                "vertexPath": "res/instanceVecShader.vs"
+                "fragmentPath": "../../res/instancedFragShader.fs",
+                "vertexPath": "../../res/instancedVecShader.vs"
             },
             {
                 "ShaderName": "skyboxShader",
@@ -38,6 +38,11 @@
                 "ShaderName": "textureShader",
                 "fragmentPath": "../../res/textureShader.fs",
                 "vertexPath": "../../res/textureShader.vs"
+            },
+            {
+                "ShaderName": "cloudShader",
+                "fragmentPath": "../../res/cloudFragShader.fs",
+                "vertexPath": "../../res/cloudVecShader.vs"
             }
         ],
         "Sounds": [

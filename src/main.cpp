@@ -128,10 +128,20 @@ int main(int, char**)
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
 
+    //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
+
+    //SpotLight Properties
+    bool isSpotActive = true;
+    glm::vec3 spotLightColor(1.0f);
+    float spotLightConstant = 1.0f;
+    float spotLightLinear = 0.1f;
+    float spotLightQuadratic = 0.01f;
+    float spotLightCutOff = 12.5f;
+    float spotLightOuterCutOff = 17.5f;
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
@@ -165,6 +175,11 @@ int main(int, char**)
         // Start the Dear ImGui frame
         imguiMain->draw();
 
+        //Flashlight Debug
+        ImGui::Checkbox("Flashlight", &isSpotActive);
+        ImGui::ColorEdit3("Spot light Color", glm::value_ptr(spotLightColor));
+        ImGui::InputFloat("Spot light Strength", &spotLightQuadratic);
+
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -194,6 +209,16 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.direction", dirDirection);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.color", dirColor);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("dirLight.isActive", dirActive);
+
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setBool("spotLights[0].isActive", isSpotActive);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].position", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].direction", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector());
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].constant", spotLightConstant);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].linear", spotLightLinear);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].color", spotLightColor);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
 
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("projection", projection);
