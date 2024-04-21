@@ -3,7 +3,7 @@
 #include <utility>
 #include "imgui.h"
 
-Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
+Component::Component() : _isEnabled(true), _ownerTransform(std::make_shared<Transform>()) {}
 
 Component::~Component() {}
 

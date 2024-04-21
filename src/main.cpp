@@ -159,19 +159,15 @@ int main(int, char**)
 
     HUD.Init();
 
-    shared_ptr<Node> animationNode = make_shared<Node>();
-    animationNode->GetTransform()->SetPosition(glm::vec3(10,110,10));
     shared_ptr<Model> sm1 = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
     shared_ptr<Model> sm2 = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-1.obj", "Ant2");
     shared_ptr<Model> sm3 = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-2.obj", "Ant3");
     Shader* modelShader = RESOURCEMANAGER.GetShaderByName("modelShader").get();
-    MeshRenderer meshRenderer(modelShader);
+    std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(modelShader);
     shared_ptr<Animation> animation = make_shared<Animation>(meshRenderer, 1.0f, true);
-    animation->SetOwnerTransform(animationNode->GetTransform());
     animation->AddFrame(sm1);
     animation->AddFrame(sm2);
     animation->AddFrame(sm3);
-    animationNode->AddComponent(animation);
 
     // Main loop
     while (!glfwWindowShouldClose(window))

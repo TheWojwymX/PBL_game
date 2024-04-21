@@ -32,8 +32,9 @@ public:
 
     int _id;
     ComponentType _type;
+    std::shared_ptr<Transform> _ownerTransform;
+
 
 protected:
-    std::shared_ptr<Transform> _ownerTransform;
     bool _isEnabled = true;
 };

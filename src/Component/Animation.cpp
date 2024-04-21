@@ -4,7 +4,7 @@
 
 #include "Animation.h"
 
-Animation::Animation(MeshRenderer meshRenderer, float frameDuration, bool loop)
+Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop)
         : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop) {}
 
 void Animation::AddFrame(std::shared_ptr<Model> model)
@@ -46,7 +46,9 @@ void Animation::Reset()
 void Animation::Draw(float dt)
 {
     Update(dt);
-    _meshRenderer.setModel(GetCurrentFrame().get());
-    _meshRenderer.Render(Transform::Origin());
+    _meshRenderer->setModel(GetCurrentFrame().get());
+    _ownerTransform->SetPosition(glm::vec3(10,110,10));
+    _meshRenderer->_ownerTransform->SetPosition(glm::vec3(10, 110, 10));
+    _meshRenderer->Render(Transform::Origin());
 }
 

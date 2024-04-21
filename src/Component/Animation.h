@@ -12,10 +12,10 @@ private:
     float _frameDuration; // Duration of each frame in seconds
     float _currentTime;   // Current time in the animation
     bool _loop;           // Whether the animation should loop
-    MeshRenderer _meshRenderer;
+    std::shared_ptr<MeshRenderer> _meshRenderer;
 
 public:
-    Animation(MeshRenderer meshRenderer, float frameDuration, bool loop);
+    Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop);
     void AddFrame(std::shared_ptr<Model> model);
     std::shared_ptr<Model> GetCurrentFrame();
     void Update(float deltaTime);
