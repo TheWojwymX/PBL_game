@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 7,
+    "nextComponentId": 8,
     "nextNodeId": 7,
     "resources": {
         "Models": [
@@ -303,12 +303,16 @@
                         "model": "antModel",
                         "shader": "modelShader",
                         "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 7,
+                        "componentType": 6
                     }
                 ],
                 "transform": {
                     "position": [
                         5.0,
-                        99.5,
+                        100.2,
                         5.0
                     ],
                     "rotation": [

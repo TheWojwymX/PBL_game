@@ -26,6 +26,8 @@
 #include "Managers/NodesManager.h"
 #include "Gui/ImguiMain.h"
 
+#include "Enemies/EnemiesAIManager.h"
+
 #include "HUD/HUDMain.h"
 
 #include <iostream>
@@ -153,11 +155,15 @@ int main(int, char**)
 
     shared_ptr<Model> antModel = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
 
-    NODESMANAGER.getNodeByName("AntModel")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+    //NODESMANAGER.getNodeByName("AntModel")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+
+    ENEMIESAIMANAGER.Init();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+        ENEMIESAIMANAGER.Update();
+
         // Calculate deltaTime
         TIME.Update();
 

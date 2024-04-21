@@ -88,20 +88,74 @@ void Transform::SetParent(std::shared_ptr<Transform> parent) {
 void Transform::LookAt(glm::vec3 direction) {
     glm::vec3 localForward(0.0f, 0.0f, 1.0f);
 
+    if (glm::length(direction) < FLT_EPSILON) {
+        // direction is too small to provide meaningful direction
+        return;
+    }
+
+    // Normalize direction
+    direction = glm::normalize(direction);
+
+    if (glm::all(glm::epsilonEqual(localForward, -direction, FLT_EPSILON))) {
+        // The direction is exactly opposite to localForward
+        _rotation = glm::quat(glm::vec3(0.0f, glm::radians(180.0f), 0.0f));
+        return;
+    } else if (glm::all(glm::epsilonEqual(localForward, direction, FLT_EPSILON))) {
+        // The direction is already where we want to look
+        _rotation = glm::quat(); // No rotation needed
+        return;
+    }
+
     // Calculate the rotation axis using cross product
-    glm::vec3 rotationAxis = glm::cross(localForward, -direction);
+    glm::vec3 rotationAxis = glm::cross(localForward, direction);
 
     // Calculate the rotation angle using dot product
-    float dotProduct = glm::dot(localForward, -direction);
-    float rotationAngle = acos(dotProduct);
+    float dotProduct = glm::dot(localForward, direction);
+    float rotationAngle = acos(glm::clamp(dotProduct, -1.0f, 1.0f));
 
     // Create a quaternion representing the rotation
-    glm::quat rotationQuaternion = glm::angleAxis(rotationAngle, glm::normalize(rotationAxis));
-
-    _rotation = rotationQuaternion;
+    _rotation = glm::angleAxis(rotationAngle, glm::normalize(rotationAxis));
 
     _isDirty = true;
 }
+
+void Transform::LookAtPosition(glm::vec3 position) {
+
+    glm::vec3 direction = position - GetPosition();
+
+    glm::vec3 localForward(0.0f, 0.0f, 1.0f);
+
+    if (glm::length(direction) < FLT_EPSILON) {
+        // direction is too small to provide meaningful direction
+        return;
+    }
+
+    // Normalize direction
+    direction = glm::normalize(direction);
+
+    if (glm::all(glm::epsilonEqual(localForward, -direction, FLT_EPSILON))) {
+        // The direction is exactly opposite to localForward
+        _rotation = glm::quat(glm::vec3(0.0f, glm::radians(180.0f), 0.0f));
+        return;
+    } else if (glm::all(glm::epsilonEqual(localForward, direction, FLT_EPSILON))) {
+        // The direction is already where we want to look
+        _rotation = glm::quat(); // No rotation needed
+        return;
+    }
+
+    // Calculate the rotation axis using cross product
+    glm::vec3 rotationAxis = glm::cross(localForward, direction);
+
+    // Calculate the rotation angle using dot product
+    float dotProduct = glm::dot(localForward, direction);
+    float rotationAngle = acos(glm::clamp(dotProduct, -1.0f, 1.0f));
+
+    // Create a quaternion representing the rotation
+    _rotation = glm::angleAxis(rotationAngle, glm::normalize(rotationAxis));
+
+    _isDirty = true;
+}
+
 
 glm::vec3 Transform::GetPosition() {
     return _position;
@@ -223,3 +277,13 @@ void Transform::addToInspector(ImguiMain *imguiMain)
     }
 }
 
+glm::vec3 Transform::MoveTowards(glm::vec3 current, glm::vec3 target, float maxDistanceDelta)
+{
+    glm::vec3 a = target - current;
+    float magnitude = glm::length(a);
+    if (magnitude <= maxDistanceDelta || magnitude == 0.0f)
+    {
+        return target;
+    }
+    return current + a / magnitude * maxDistanceDelta;
+}

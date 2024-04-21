@@ -48,7 +48,11 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Sound.h
         AudioContext.cpp
         Component/PlayerAudioController.cpp
-        Component/PlayerAudioController.h)
+        Component/PlayerAudioController.h
+        Enemies/EnemiesAIManager.cpp
+        Enemies/EnemiesAIManager.h
+        Enemies/EnemyAI.cpp
+        Enemies/EnemyAI.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
