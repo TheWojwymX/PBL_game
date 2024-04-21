@@ -213,6 +213,16 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.color", dirColor);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("dirLight.isActive", dirActive);
 
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setBool("spotLights[0].isActive", isSpotActive);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].position", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].direction", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector());
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].constant", spotLightConstant);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].linear", spotLightLinear);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].color", spotLightColor);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
+
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);

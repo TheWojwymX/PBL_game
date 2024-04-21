@@ -19,8 +19,8 @@
         "Shaders": [
             {
                 "ShaderName": "modelShader",
-                "fragmentPath": "res/fragShader.fs",
-                "vertexPath": "res/vecShader.vs"
+                "fragmentPath": "../../res/fragShader.fs",
+                "vertexPath": "../../res/vecShader.vs"
             },
             {
                 "ShaderName": "lightObjectShader",
