@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 9,
+    "nextComponentId": 10,
     "nextNodeId": 8,
     "resources": {
         "Models": [
@@ -316,6 +316,13 @@
                     {
                         "componentId": 7,
                         "componentType": 6
+                    },
+                    {
+                        "componentId": 9,
+                        "componentType": 7,
+                        "meshRendererRefID": 6,
+                        "frameDuration": 1,
+                        "isLoop": true
                     }
                 ],
                 "transform": {

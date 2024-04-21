@@ -8,7 +8,8 @@ enum class ComponentType {
     INSTANCERENDERER,
     AUDIOSOURCE,
     MESHRENDERER,
-    ENEMYAI
+    ENEMYAI,
+    ANIMATION
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H
