@@ -23,6 +23,7 @@ public:
     std::weak_ptr<BlockManager> GetBlockManager() const { return _blockManager; }
     bool IsVisible() const { return _visible; }
     glm::mat4 GetMatrix() const { return _matrix; }
+    bool GetSideCollision(int index) const { return _sideCollisions[index]; }
 
     void SetBlockType(BlockType blockType) { _blockType = blockType; }
     void SetPosID(glm::ivec3 posID) { _posID = posID; }
@@ -32,7 +33,14 @@ public:
     void SetBlockManager(std::weak_ptr<BlockManager> blockManager) { _blockManager = blockManager; }
     void SetVisible(bool visible) { _visible = visible; }
     void SetMatrix(const glm::mat4& matrix) { _matrix = matrix; }
-
+    void SetSideCollisions(bool right, bool left, bool top, bool bottom, bool front, bool back) {
+        _sideCollisions[0] = right;
+        _sideCollisions[1] = left;
+        _sideCollisions[2] = top;
+        _sideCollisions[3] = bottom;
+        _sideCollisions[4] = front;
+        _sideCollisions[5] = back;
+    }
 
 private:
     BlockType _blockType;
@@ -43,4 +51,5 @@ private:
     std::weak_ptr<BlockManager> _blockManager;
     bool _visible;
     glm::mat4 _matrix;
+    bool _sideCollisions[6];
 };

@@ -57,29 +57,11 @@ void BlockManager::initiate() {
 }
 
 void BlockManager::Init() {
-    GenerateMap();
+    GenerateCaves(0.5f,7);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateInstanceRenderer();
     GenerateSphereVectors(31);
-}
- 
-void BlockManager::GenerateMap() {
-    _blocksData.clear();
-
-    // Iterate over the grid dimensions
-    for (int y = 0; y < _height; y++) {
-        for (int z = 0; z < _depth; z++) {
-            for (int x = 0; x < _width; x++) {
-                // Calculate transform matrix for the current block
-                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
-
-                // Create BlockData object with Sand type and add it to the vector
-                BlockData sandBlock(BlockType::SAND, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
-                _blocksData.push_back(sandBlock);
-            }
-        }
-    }
 }
 
 void BlockManager::UpdateInstanceRenderer() {
@@ -168,6 +150,8 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData)
     // Check if the block will be visible
     bool isVisible = !leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty ||
         !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty;
+
+    blockData.SetSideCollisions(rightBlockEmpty, leftBlockEmpty, topBlockEmpty, bottomBlockEmpty, frontBlockEmpty, backBlockEmpty);
 
     // Set the visibility of the block
     SetVisibility(blockData, isVisible);
@@ -354,6 +338,86 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
     // Return the list of collision information for each corner
     return collisionInfoList;
 }
+
+void BlockManager::GenerateCaves(float initialFillRatio, int numIterations) {
+    // Initialize the map with a given initial fill ratio (percentage of cells initially filled)
+    InitializeMap(initialFillRatio);
+
+    // Iterate through the cellular automaton for a given number of iterations
+    for (int i = 0; i < numIterations; ++i) {
+        IterateCaveGeneration();
+    }
+}
+
+void BlockManager::InitializeMap(float initialFillRatio) {
+    // Initialize the random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+    // Clear existing block data
+    _blocksData.clear();
+
+    // Iterate over the grid dimensions
+    for (int y = 0; y < _height; y++) {
+        for (int z = 0; z < _depth; z++) {
+            for (int x = 0; x < _width; x++) {
+                // Determine if the cell should initially be filled based on the fill ratio
+                bool filled = dis(gen) < initialFillRatio;
+                
+                // Calculate transform matrix for the current block
+                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
+
+                // Create BlockData object with Sand type if filled, otherwise Empty type
+                BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
+                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
+
+                // Add the block to the vector
+                _blocksData.push_back(block);
+            }
+        }
+    }
+}
+
+void BlockManager::IterateCaveGeneration() {
+    // Create a temporary vector to hold the new block data after iteration
+    for (auto& blockData : _blocksData) {
+        int filledNeighbors = 0;
+
+        // Get the position of the current block
+        glm::ivec3 posID = blockData.GetPosID();
+        int x = posID.x;
+        int y = posID.y;
+        int z = posID.z;
+
+        // Check adjacency for each direction and count filled neighbors
+        filledNeighbors += (x - 1 < 0 || CheckAdjacency(x - 1, y, z));
+        filledNeighbors += (x + 1 >= _width || CheckAdjacency(x + 1, y, z));
+        filledNeighbors += (y + 1 >= _height || CheckAdjacency(x, y + 1, z));
+        filledNeighbors += (y - 1 < 0 || CheckAdjacency(x, y - 1, z));
+        filledNeighbors += (z + 1 >= _depth || CheckAdjacency(x, y, z + 1));
+        filledNeighbors += (z - 1 < 0 || CheckAdjacency(x, y, z - 1));
+
+        // Apply rules of cellular automaton to update the block state
+        if (filledNeighbors >= 4) {
+            blockData.SetBlockType(BlockType::SAND); 
+        }
+        else if (filledNeighbors <= 2) {
+            blockData.SetBlockType(BlockType::EMPTY); 
+        }
+        else {
+            float probability = 0.55f; 
+            if (static_cast<float>(rand()) / RAND_MAX < probability) {
+                blockData.SetBlockType(BlockType::SAND); 
+            }
+            else {
+                blockData.SetBlockType(BlockType::EMPTY); 
+            }
+        }
+    }
+}
+
+
 
 std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight) {
     // Calculate the half extents of the entity's AABB

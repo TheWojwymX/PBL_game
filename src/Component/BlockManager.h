@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <random>
 #include "Core/Component.h"
 #include "Component/InstanceRenderer.h"
 #include "Component/Camera.h"
@@ -40,7 +41,7 @@ public:
 
     void addToInspector(ImguiMain *imguiMain) override;
 
-//private:
+private:
     int _width;
     int _depth;
     int _height;
@@ -52,7 +53,6 @@ public:
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _cameraRefID;
 
-    void GenerateMap();
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();
     void UpdateBlocksVisibility();
@@ -63,7 +63,10 @@ public:
     void SetVisibility(BlockData& blockData, bool state);
     void GenerateSphereVectors(int radius);
     std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
-   
+    void GenerateCaves(float initialFillRatio, int numIterations);
+    void InitializeMap(float initialFillRatio);
+    void IterateCaveGeneration();
+
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);
     bool CheckAdjacency(int x, int y, int z);

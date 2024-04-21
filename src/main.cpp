@@ -51,10 +51,6 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-unsigned int loadCubemap(vector<std::string> faces);
-Texture2D loadTextureFromFile(const char* file, bool alpha);
-
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -231,8 +227,10 @@ int main(int, char**)
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
-        HUD.Update();
+
+        //HUD.Update();
         AUDIOENGINEMANAGER.Update();
+
 
         imguiMain->endDraw();
         ImGui::Render();
