@@ -79,3 +79,12 @@ void MeshRenderer::Deserialize(const nlohmann::json &jsonData) {
 void MeshRenderer::initiate() {
     Component::initiate();
 }
+
+void MeshRenderer::Update() {
+
+    _ownerTransform->SetPosition(_ownerTransform->GetPosition());
+    _ownerTransform->SetScale(_ownerTransform->GetScale());
+    _ownerTransform->SetRotation(_ownerTransform->GetRotation());
+
+    Component::Update();
+}

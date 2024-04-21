@@ -29,7 +29,7 @@ public:
 
     int _mapSizeZ = 100;
 
-    int _domeRadius = 10;
+    int _domeRadius = 15;
 
     float _groundPosition = 100.2;
 

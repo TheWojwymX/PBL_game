@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 8,
-    "nextNodeId": 7,
+    "nextComponentId": 9,
+    "nextNodeId": 8,
     "resources": {
         "Models": [
             {
@@ -10,6 +10,10 @@
             {
                 "ModelName": "antModel",
                 "Path": "res/Models/Ant/ant-fixed.obj"
+            },
+            {
+                "ModelName": "baseModel",
+                "Path": "res/Models/Base/base_concept_2.0.obj"
             }
         ],
         "Shaders": [
@@ -324,6 +328,37 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 7,
+                "NodeName": "BaseModel",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 8,
+                        "componentType": 5,
+                        "model": "baseModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        50.0,
+                        99.5,
+                        50.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.5,
+                        1.5,
+                        1.5
                     ]
                 }
             }

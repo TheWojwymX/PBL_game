@@ -20,6 +20,8 @@ public:
 
     void initiate() override;
 
+    void Update() override;
+
     bool _shouldRenderOutline = false;
 
 private:
