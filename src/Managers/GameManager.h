@@ -25,6 +25,13 @@ public:
 
     std::shared_ptr<Node> root;
 
+    int _mapSizeX = 100;
+
+    int _mapSizeZ = 100;
+
+    int _domeRadius = 15;
+
+    float _groundPosition = 100.2;
 
 };
 

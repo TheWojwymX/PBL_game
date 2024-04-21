@@ -28,6 +28,7 @@ public:
     void AddRotation(glm::quat newRotation);
     void SetParent(std::shared_ptr<Transform> parent);
     void LookAt(glm::vec3 direction);
+    void LookAtPosition(glm::vec3 position);
 
     // Getters for position, rotation, and scale
     glm::vec3 GetPosition();
@@ -51,7 +52,7 @@ public:
 
     void addToInspector(ImguiMain *imguiMain);
 
-
+    static glm::vec3 MoveTowards(glm::vec3 current, glm::vec3 target, float maxDistanceDelta);
 
 private:
     std::shared_ptr<Transform> _parent = nullptr;

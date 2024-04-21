@@ -1,11 +1,19 @@
 {
-    "nextComponentId": 6,
-    "nextNodeId": 6,
+    "nextComponentId": 9,
+    "nextNodeId": 8,
     "resources": {
         "Models": [
             {
                 "ModelName": "sandModel",
                 "Path": "res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "antModel",
+                "Path": "res/Models/Ant/ant-fixed.obj"
+            },
+            {
+                "ModelName": "baseModel",
+                "Path": "res/Models/Base/base_concept_2.0.obj"
             }
         ],
         "Shaders": [
@@ -43,6 +51,21 @@
                 "ShaderName": "cloudShader",
                 "fragmentPath": "../../res/cloudFragShader.fs",
                 "vertexPath": "../../res/cloudVecShader.vs"
+            },
+            {
+                "ShaderName": "toonShader",
+                "fragmentPath": "../../res/toonShader.fs",
+                "vertexPath": "../../res/toonShader.vs"
+            },
+            {
+                "ShaderName": "outlineShader",
+                "fragmentPath": "../../res/outlineShader.fs",
+                "vertexPath": "../../res/outlineShader.vs"
+            },
+            {
+                "ShaderName": "skyboxReflectionShader",
+                "fragmentPath": "../../res/skyboxReflectionShader.fs",
+                "vertexPath": "../../res/skyboxReflectionShader.vs"
             }
         ],
         "Sounds": [
@@ -275,6 +298,72 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 6,
+                "NodeName": "AntModel",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 6,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 7,
+                        "componentType": 6
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        5.0,
+                        100.2,
+                        5.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 7,
+                "NodeName": "BaseModel",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 8,
+                        "componentType": 5,
+                        "model": "baseModel",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        50.0,
+                        99.5,
+                        50.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.5,
+                        1.5,
+                        1.5
                     ]
                 }
             }

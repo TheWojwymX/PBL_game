@@ -81,6 +81,12 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::AUDIOSOURCE:
                         ComponentsManager::getInstance().DeserializeComponent<PlayerAudioController>(componentJson);
                         break;
+                    case ComponentType::MESHRENDERER:
+                        ComponentsManager::getInstance().DeserializeComponent<MeshRenderer>(componentJson);
+                        break;
+                    case ComponentType::ENEMYAI:
+                        ComponentsManager::getInstance().DeserializeComponent<EnemyAI>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;

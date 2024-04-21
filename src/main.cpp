@@ -26,6 +26,8 @@
 #include "Managers/NodesManager.h"
 #include "Gui/ImguiMain.h"
 
+#include "Enemies/EnemiesAIManager.h"
+
 #include "HUD/HUDMain.h"
 
 #include <iostream>
@@ -104,6 +106,7 @@ int main(int, char**)
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_STENCIL_TEST);
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
@@ -156,9 +159,17 @@ int main(int, char**)
 /*    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();*/
 
+    shared_ptr<Model> antModel = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
+
+    //NODESMANAGER.getNodeByName("AntModel")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+
+    ENEMIESAIMANAGER.Init();
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+        ENEMIESAIMANAGER.Update();
+
         // Calculate deltaTime
         TIME.Update();
 
@@ -167,6 +178,11 @@ int main(int, char**)
 
         // Update
         GAMEMANAGER.root->Update();
+
+/*        if(TIME.GetTime() > 10 && TIME.GetTime() < 11){
+            std::cout << "minal czas";
+            NODESMANAGER.getNodeByName("AntModel")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
+        }*/
 
         // Start the Dear ImGui frame
         imguiMain->draw();
@@ -178,7 +194,7 @@ int main(int, char**)
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glDepthMask(GL_FALSE);
         RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
@@ -200,6 +216,21 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);
+
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->use();
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->setInt("dirLight.isActive", dirActive);
+
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("outlineShader")->setMat4("view", view);
+
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->use();
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setInt("skybox", 0);
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setMat4("view", view);
 
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->use();
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.direction", dirDirection);
