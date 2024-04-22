@@ -66,6 +66,11 @@
                 "ShaderName": "skyboxReflectionShader",
                 "fragmentPath": "../../res/skyboxReflectionShader.fs",
                 "vertexPath": "../../res/skyboxReflectionShader.vs"
+            },
+            {
+                "ShaderName": "shadowShader",
+                "fragmentPath": "../../res/shadowShader.fs",
+                "vertexPath": "../../res/shadowShader.vs"
             }
         ],
         "Sounds": [

@@ -127,11 +127,50 @@ int main(int, char**)
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
 
+    //-----------------------------------------------------------
+    GLuint depthMapFBO;
+    glGenFramebuffers(1, &depthMapFBO);
+
+// Create a depth texture
+    GLuint depthMap;
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+
+// Texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float borderColor[] = {1.0, 1.0, 1.0, 1.0};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+// Bind the texture to the framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+        std::cout << "shadow framebuffer is complete. yay!\n";
+    else
+        std::cout << "shadow framebuffer is NOT complete!\n";
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    RESOURCEMANAGER.GetShaderByName("modelShader")->use();
+    RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("shadowMap", 1);
+
+    //-----------------------------------------------------------
+
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
+
+    glm::vec3 lightPos(11.0f, 110.0f, 11.0f);
+    glm::vec3 lightCenter(1.0f, 0.0f,1.0f);
 
     //SpotLight Properties
     bool isSpotActive = true;
@@ -187,10 +226,19 @@ int main(int, char**)
         // Start the Dear ImGui frame
         imguiMain->draw();
 
-        //Flashlight Debug
+        ImGui::Begin("Depth Map");
+        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
+        ImGui::Image((void*)(intptr_t)depthMap, ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::End();
+
+
+            //Flashlight Debug
         ImGui::Checkbox("Flashlight", &isSpotActive);
         ImGui::ColorEdit3("Spot light Color", glm::value_ptr(spotLightColor));
         ImGui::InputFloat("Spot light Strength", &spotLightQuadratic);
+
+        ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
+        ImGui::InputFloat3("Center", &lightCenter[0]);
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -206,8 +254,31 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("projection", projection);
 
         skybox.draw();
+
+        glm::mat4 lightProjection, lightView;
+        glm::mat4 lightSpaceMatrix;
+        float near_plane = 1.0f, far_plane = 7.5f;
+        lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
+        lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
+        lightSpaceMatrix = lightProjection * lightView;
+
+        RESOURCEMANAGER.GetShaderByName("shadowShader")->use();
+        RESOURCEMANAGER.GetShaderByName("shadowShader")->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
         glDepthMask(GL_TRUE);
 
+        glViewport(0, 0, 1024, 1024);
+        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+        glClear(GL_DEPTH_BUFFER_BIT);
+        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
+        GAMEMANAGER.root->Render(Transform::Origin());
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+
+        glDepthMask(GL_TRUE);
+
+        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->SetShader(RESOURCEMANAGER.GetShaderByName("modelShader"));
         RESOURCEMANAGER.GetShaderByName("modelShader")->use();
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.direction", dirDirection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.color", dirColor);
@@ -226,6 +297,11 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("lightPos", glm::vec3(0.0f, 115.0f, 0.0f));
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, depthMap);
 
         RESOURCEMANAGER.GetShaderByName("outlineShader")->use();
         RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("dirLight.direction", dirDirection);

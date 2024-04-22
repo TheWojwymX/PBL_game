@@ -20,6 +20,10 @@ public:
 
     void initiate() override;
 
+    void SetShader(shared_ptr<Shader> newShader) {
+        _shader = newShader;
+    }
+
     void Update() override;
 
     bool _shouldRenderOutline = false;
