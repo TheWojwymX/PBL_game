@@ -3,6 +3,7 @@
 //
 
 #include "EnemyAI.h"
+#include "Core/Time.h"
 
 EnemyAI::EnemyAI() {
     _type = ComponentType::ENEMYAI;
@@ -16,6 +17,10 @@ void EnemyAI::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
+float slalomAmplitude = 0.02f; // amplituda ruchu bocznego
+float slalomFrequency = 2.0f; // częstość ruchu bocznego (ile razy na jednostkę odległości)
+float slalomTime = 0.0f; // zmienna śledząca upływ czasu lub odległość
+
 void EnemyAI::WalkToDome(){
 
     float ourX = _ownerTransform->GetPosition().x;
@@ -27,8 +32,14 @@ void EnemyAI::WalkToDome(){
     float domeZ = _destinationVector.z;
 
     if(hypot(hypot(ourX-domeX,ourY-domeY),ourZ-domeZ) > _distanceToStop){
-        _ownerTransform->SetPosition(Transform::MoveTowards(_ownerTransform->GetPosition(), _destinationVector, 0.01));
-        _ownerTransform->LookAtPosition(_destinationVector);
+
+        slalomTime += TIME.GetDeltaTime();
+        float sideMovement = sin(slalomTime * slalomFrequency) * slalomAmplitude;
+        glm::vec3 sideVector = glm::normalize(glm::cross(_ownerTransform->GetRotation() * glm::vec3(0, 1, 0), _ownerTransform->GetRotation() * glm::vec3(0, 0, -1))) * sideMovement;
+        glm::vec3 forwardMovement = Transform::MoveTowards(_ownerTransform->GetPosition(), _destinationVector, 0.01);
+        //std::cout << sideVector.x << ", " << sideVector.y << ", " << sideVector.z  << std::endl;
+        _ownerTransform->LookAtPosition(forwardMovement + sideVector);
+        _ownerTransform->SetPosition(forwardMovement + sideVector);
     }
 }
 
