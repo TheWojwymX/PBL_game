@@ -71,6 +71,11 @@
                 "ShaderName": "shadowShader",
                 "fragmentPath": "../../res/shadowShader.fs",
                 "vertexPath": "../../res/shadowShader.vs"
+            },
+            {
+                "ShaderName": "shadowInstanceShader",
+                "fragmentPath": "../../res/shadowInstanceShader.fs",
+                "vertexPath": "../../res/shadowInstanceShader.vs"
             }
         ],
         "Sounds": [

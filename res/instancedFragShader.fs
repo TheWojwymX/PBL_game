@@ -54,7 +54,8 @@ uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-float ShadowCalculation(vec4 fragPosLightSpace);
+float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity);
+float CalcSpotLightIntensity(SpotLight spotLight, vec3 fragPos);
 
 void main()
 {
@@ -62,6 +63,8 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 spotLightColor = vec3(0.0);
+    float totalSpotlightIntensity = 0.0f;
+
 
     // Calculate color variation based on the variation factor
     vec3 colorVariation = vec3(sin(VariationFactor), cos(VariationFactor), tan(VariationFactor));
@@ -74,10 +77,11 @@ void main()
         if(spotLights[i].isActive)
         {
             spotLightColor += CalcSpotLight(spotLights[i], norm, FragPos, viewDir);
+            totalSpotlightIntensity += CalcSpotLightIntensity(spotLights[i], FragPos);
         }
     }
 
-    float shadow = ShadowCalculation(FragPosLightSpace);
+    float shadow = ShadowCalculation(FragPosLightSpace, totalSpotlightIntensity);
 
     // Modify the final color with a scaled color variation
     vec3 finalColor = (dirLightColor + spotLightColor) * shadow * (1.0 + 0.1 * colorVariation); // Adjust the scale factor (0.1) as needed
@@ -92,7 +96,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
         return vec3(0.0);
     vec3 lightDir = normalize(-light.direction);
     // diffuse shading
-    float diff = max(dot(normal, lightDir), 0.0);
+    float diff = max(dot(normal, lightDir), 0.8);
     // specular shading
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(normal, halfwayDir), 0.0), SHININESS);
@@ -150,10 +154,10 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
-    return (ambient + diffuse + specular);
+    return (ambient + diffuse);
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace)
+float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
 {
       // perform perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -164,8 +168,49 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-     float bias =  0.005; //max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
-     float shadow = (currentDepth - bias) > closestDepth  ? 0.5 : 1.0;
+     float bias =  0.005;
+     //vec3 normal = normalize(Normal);
+    //vec3 lightDir = normalize(lightPos - FragPos);
+     //float bias = max(0.02 * (1.0 - dot(normal, lightDir)), 0.005);
+     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
-    return shadow;
+     float shadow = 0.0;
+         vec2 texelSize = 0.3 / textureSize(shadowMap, 0);
+         for(int x = -1; x <= 1; ++x)
+         {
+             for(int y = -1; y <= 1; ++y)
+             {
+                 float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+                 shadow += currentDepth - bias > pcfDepth  ? 0.0 : 1.0;
+             }
+         }
+         shadow /= 9.0;
+
+     shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.4,0.0,1.0)); // Blend shadow with spotlight intensity
+
+    // keep the shadow at 0.0 when outside the far_plane region of the light's frustum.
+        if(projCoords.z > 1.0)
+            shadow = 0.0;
+
+    return shadow - 0.2;
+}
+
+float CalcSpotLightIntensity(SpotLight spotLight, vec3 fragPos)
+{
+    // Determine the direction of the spotlight
+    vec3 lightDir = normalize(spotLight.position - fragPos);
+
+    // Calculate the distance between the spotlight and the fragment
+    float distance = length(spotLight.position - fragPos);
+
+    // Calculate attenuation based on distance
+    float attenuation = 1.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));
+
+    // Calculate the spotlight intensity based on the angle within the cone
+    float theta = dot(lightDir, normalize(-spotLight.direction));
+    float epsilon = spotLight.cutOff - spotLight.outerCutOff;
+    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.0, 1.0);
+
+    // Final intensity considering attenuation and angle
+    return attenuation * intensity;
 }

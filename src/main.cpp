@@ -132,10 +132,12 @@ int main(int, char**)
     glGenFramebuffers(1, &depthMapFBO);
 
 // Create a depth texture
+    const unsigned int SHADOW_WIDTH = 4096, SHADOW_HEIGHT = 4096;
+
     GLuint depthMap;
     glGenTextures(1, &depthMap);
     glBindTexture(GL_TEXTURE_2D, depthMap);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 // Texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -172,17 +174,23 @@ int main(int, char**)
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
 
-    glm::vec3 lightPos(11.0f, 110.0f, 11.0f);
-    glm::vec3 lightCenter(1.0f, 0.0f,1.0f);
+    glm::vec3 lightPos(50.0f, 120.0f, 40.0f);
+    glm::vec3 lightCenter(50.0f, 100.0f,50.0f);
+
+    glm::vec3 shadowDir = glm::normalize(lightCenter - lightPos);
+
+    dirDirection[0] = shadowDir.x;
+    dirDirection[1] = shadowDir.y;
+    dirDirection[2] = shadowDir.z;
 
     //SpotLight Properties
     bool isSpotActive = true;
     glm::vec3 spotLightColor(1.0f);
     float spotLightConstant = 1.0f;
     float spotLightLinear = 0.1f;
-    float spotLightQuadratic = 0.01f;
-    float spotLightCutOff = 12.5f;
-    float spotLightOuterCutOff = 17.5f;
+    float spotLightQuadratic = 0.03f;
+    float spotLightCutOff = 16.5f;
+    float spotLightOuterCutOff = 20.5f;
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
@@ -243,6 +251,19 @@ int main(int, char**)
         ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
         ImGui::InputFloat3("Center", &lightCenter[0]);
 
+        ImGui::ColorEdit3("Directional Light Color", dirColor);
+
+
+
+        glm::vec3 shadowDir = glm::normalize(lightCenter - lightPos);
+        dirDirection[0] = shadowDir.x;
+        dirDirection[1] = shadowDir.y;
+        dirDirection[2] = shadowDir.z;
+
+        //if(lightPos.z == 90.0f) lightPos.z = 30;
+
+        //lightPos.z += 0.01f;
+
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -260,7 +281,7 @@ int main(int, char**)
 
         glm::mat4 lightProjection, lightView;
         glm::mat4 lightSpaceMatrix;
-        float near_plane = 1.0f, far_plane = 100.5f;
+        float near_plane = 1.0f, far_plane = 120.0f;
         lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
         lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
         lightSpaceMatrix = lightProjection * lightView;
@@ -268,15 +289,20 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("shadowShader")->use();
         RESOURCEMANAGER.GetShaderByName("shadowShader")->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
+        RESOURCEMANAGER.GetShaderByName("shadowInstanceShader")->use();
+        RESOURCEMANAGER.GetShaderByName("shadowInstanceShader")->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
         glDepthMask(GL_TRUE);
 
-        glViewport(0, 0, 1024, 1024);
+        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
         glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
         glClear(GL_DEPTH_BUFFER_BIT);
         ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
-        ComponentsManager::getInstance().GetComponentByID<InstanceRenderer>(0)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
+        ComponentsManager::getInstance().GetComponentByID<InstanceRenderer>(0)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowInstanceShader"));
         ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
+        //glCullFace(GL_FRONT);
         GAMEMANAGER.root->Render(Transform::Origin());
+        //glCullFace(GL_BACK);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
