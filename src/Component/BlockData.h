@@ -22,8 +22,17 @@ public:
     bool IsInvincible() const { return _invincible; }
     std::weak_ptr<BlockManager> GetBlockManager() const { return _blockManager; }
     bool IsVisible() const { return _visible; }
+    bool IsRendered() const { return _render; }
     glm::mat4 GetMatrix() const { return _matrix; }
     bool GetSideCollision(int index) const { return _sideCollisions[index]; }
+    glm::vec3 GetMin() const {
+        glm::vec3 min = glm::vec3(_posID) - glm::vec3(0.5f);
+        return min;
+    }
+    glm::vec3 GetMax() const {
+        glm::vec3 max = glm::vec3(_posID) + glm::vec3(0.5f);
+        return max;
+    }
 
     void SetBlockType(BlockType blockType) { _blockType = blockType; }
     void SetPosID(glm::ivec3 posID) { _posID = posID; }
@@ -32,6 +41,7 @@ public:
     void SetInvincible(bool invincible) { _invincible = invincible; }
     void SetBlockManager(std::weak_ptr<BlockManager> blockManager) { _blockManager = blockManager; }
     void SetVisible(bool visible) { _visible = visible; }
+    void SetRender(bool render) { _render = render; }
     void SetMatrix(const glm::mat4& matrix) { _matrix = matrix; }
     void SetSideCollisions(bool right, bool left, bool top, bool bottom, bool front, bool back) {
         _sideCollisions[0] = right;
@@ -50,6 +60,7 @@ private:
     bool _invincible;
     std::weak_ptr<BlockManager> _blockManager;
     bool _visible;
+    bool _render;
     glm::mat4 _matrix;
     bool _sideCollisions[6];
 };

@@ -64,6 +64,12 @@ void BlockManager::Init() {
     GenerateSphereVectors(31);
 }
 
+void BlockManager::Update()
+{
+    UpdateRenderBlocks();
+    std::cout << "Renderin: " << _renderBlocks.size() << std::endl;
+}
+
 void BlockManager::UpdateInstanceRenderer() {
     std::vector<glm::mat4> instanceMatrix;
 
@@ -470,6 +476,49 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
     return std::make_pair(movementVector,separationVector);
 }
 
+void BlockManager::UpdateRenderBlocks() {
+    _renderBlocks.clear(); // Clear the list of blocks inside the view frustum
+
+    // Get the view-projection matrix from the camera
+    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(1280,720) * _cameraRef->GetViewMatrix();
+
+    // Iterate through all blocks in _visibleBlocks
+    for (auto& blockData : _visibleBlocks) {
+        // Check if the block is inside the view frustum
+        if (IsBlockInFrustum(*blockData, viewProjectionMatrix)) {
+            // If the block is inside the view frustum, add it to _renderBlocks
+            _renderBlocks.push_back(blockData);
+        }
+    }
+}
+
+bool BlockManager::IsBlockInFrustum(const BlockData& blockData, const glm::mat4& viewProjectionMatrix) {
+    // Calculate the corners of the block's bounding box in world space
+    glm::vec4 corners[8];
+    glm::vec3 min = blockData.GetMin();
+    glm::vec3 max = blockData.GetMax();
+    corners[0] = viewProjectionMatrix * glm::vec4(min.x, min.y, min.z, 1.0f);
+    corners[1] = viewProjectionMatrix * glm::vec4(max.x, min.y, min.z, 1.0f);
+    corners[2] = viewProjectionMatrix * glm::vec4(min.x, max.y, min.z, 1.0f);
+    corners[3] = viewProjectionMatrix * glm::vec4(max.x, max.y, min.z, 1.0f);
+    corners[4] = viewProjectionMatrix * glm::vec4(min.x, min.y, max.z, 1.0f);
+    corners[5] = viewProjectionMatrix * glm::vec4(max.x, min.y, max.z, 1.0f);
+    corners[6] = viewProjectionMatrix * glm::vec4(min.x, max.y, max.z, 1.0f);
+    corners[7] = viewProjectionMatrix * glm::vec4(max.x, max.y, max.z, 1.0f);
+
+    // Check if any of the corners are inside the view frustum
+    for (int i = 0; i < 8; ++i) {
+        // If any corner is inside the frustum, return true
+        if (corners[i].x >= -corners[i].w && corners[i].x <= corners[i].w &&
+            corners[i].y >= -corners[i].w && corners[i].y <= corners[i].w &&
+            corners[i].z >= -corners[i].w && corners[i].z <= corners[i].w) {
+            return true;
+        }
+    }
+
+    // If no corner is inside the frustum, return false
+    return false;
+}
 
 int BlockManager::GetIndex(glm::ivec3 point) {
     return point.x + (_width * _depth * point.y) + point.z * _width;
