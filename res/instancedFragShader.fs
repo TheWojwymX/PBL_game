@@ -65,7 +65,6 @@ void main()
     vec3 spotLightColor = vec3(0.0);
     float totalSpotlightIntensity = 0.0f;
 
-
     // Calculate color variation based on the variation factor
     vec3 colorVariation = vec3(sin(VariationFactor), cos(VariationFactor), tan(VariationFactor));
 
@@ -154,7 +153,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
-    return (ambient + diffuse);
+    return (ambient + diffuse); //+specular
 }
 
 float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
@@ -170,7 +169,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
     // check whether current frag pos is in shadow
      float bias =  0.005;
      //vec3 normal = normalize(Normal);
-    //vec3 lightDir = normalize(lightPos - FragPos);
+     //vec3 lightDir = normalize(lightPos - FragPos);
      //float bias = max(0.02 * (1.0 - dot(normal, lightDir)), 0.005);
      //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
@@ -186,7 +185,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
          }
          shadow /= 9.0;
 
-     shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.4,0.0,1.0)); // Blend shadow with spotlight intensity
+     shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.3,0.0,1.0)); // Blend shadow with spotlight intensity
 
     // keep the shadow at 0.0 when outside the far_plane region of the light's frustum.
         if(projCoords.z > 1.0)

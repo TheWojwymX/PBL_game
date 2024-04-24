@@ -32,6 +32,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Component/ShadowMap.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Component/ShadowMap.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/RepoPBL.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RepoPBL.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
@@ -74,6 +76,8 @@
       <change beforePath="$PROJECT_DIR$/res/outlineShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/outlineShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/particleShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/particleShader.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/particleShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/particleShader.vs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/shadowInstanceShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowInstanceShader.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/shadowInstanceShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowInstanceShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/shadowShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowShader.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/shadowShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/skyboxFragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/skyboxFragShader.fs" afterDir="false" />
@@ -241,6 +245,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -330,7 +339,7 @@
       <workItem from="1713713921180" duration="2419000" />
       <workItem from="1713728066841" duration="1512000" />
       <workItem from="1713864725418" duration="7485000" />
-      <workItem from="1713952206838" duration="14328000" />
+      <workItem from="1713952206838" duration="18436000" />
     </task>
     <servers />
   </component>
