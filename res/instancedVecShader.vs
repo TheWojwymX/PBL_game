@@ -8,9 +8,11 @@ out vec2 TexCoords;
 out vec3 Normal;
 out vec3 FragPos;
 out float VariationFactor; // Add a varying variable for the variation factor
+out vec4 FragPosLightSpace;
 
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 lightSpaceMatrix;
 
 float random(vec3 position) {
     return fract(sin(dot(position, vec3(12.9898, 78.233, 45.543))) * 43758.5453);
@@ -25,6 +27,8 @@ void main()
     // Calculate the variation factor
     vec3 position = aInstanceMatrix[3].xyz; // Extract position vector from the instance matrix
     VariationFactor = random(position); // Use the position vector to generate variation
+
+    FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
 
     gl_Position = projection * view * aInstanceMatrix * vec4(aPos, 1.0);
 }

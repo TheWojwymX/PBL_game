@@ -77,9 +77,8 @@ void main()
             }
         }
 
-    float shadow = ShadowCalculation(FragPosLightSpace);
 
-    vec3 finalColor = (dirLightColor + spotLightColor) * (1-shadow);
+    vec3 finalColor = (dirLightColor + spotLightColor);
 
     FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
 }

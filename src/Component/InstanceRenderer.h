@@ -19,6 +19,10 @@ public:
 
     void Render(glm::mat4 parentWorld) override;
 
+    void SetShader(shared_ptr<Shader> newShader) {
+        _shader = newShader;
+    }
+
     void RefreshMatrixBuffer();
 
     // Getters
