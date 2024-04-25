@@ -64,3 +64,11 @@ void Component::addToHierarchy() {
     ImGui::Text("Komponent");
 }
 
+glm::vec3 Component::GetOwnerPosition() {
+    return _ownerTransform->GetPosition();
+}
+
+glm::quat Component::GetOwnerRotation() {
+    return _ownerTransform->GetRotation();
+}
+

@@ -32,6 +32,14 @@ public:
 
     std::vector<std::shared_ptr<EnemyAI>> _enemiesAI;
 
+    int _enemiesSize = 4;
+
+    glm::vec3 destinationVectorWalking;
+    glm::vec3 destinationVectorFlying;
+
+    void CheckDistance();
+
+    void CheckNormalDestination();
 };
 
 

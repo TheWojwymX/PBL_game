@@ -35,10 +35,13 @@ public:
     ComponentType _type;
     void SetOwnerNode(std::shared_ptr<Node> node);
 
+    glm::vec3 GetOwnerPosition();
+
+    glm::quat GetOwnerRotation();
+
 protected:
     std::shared_ptr<Node> _ownerNode;
     std::shared_ptr<Transform> _ownerTransform;
     bool _isEnabled = true;
-
 
 };

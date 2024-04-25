@@ -26,7 +26,13 @@ public:
 
     bool _isFlying = false;
 
-    void WalkToDome();
+    void WalkToDestination(glm::vec3 *destination = nullptr);
+
+    int _walkingSpeed = 5;
+
+    int _enemySize;
+
+    bool _isAvoiding = false;
 };
 
 

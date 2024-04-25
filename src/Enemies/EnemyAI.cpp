@@ -17,33 +17,39 @@ void EnemyAI::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-float slalomAmplitude = 0.02f; // amplituda ruchu bocznego
-float slalomFrequency = 2.0f; // częstość ruchu bocznego (ile razy na jednostkę odległości)
 float slalomTime = 0.0f; // zmienna śledząca upływ czasu lub odległość
 
-void EnemyAI::WalkToDome(){
 
-    float ourX = _ownerTransform->GetPosition().x;
-    float ourY = _ownerTransform->GetPosition().y;
-    float ourZ = _ownerTransform->GetPosition().z;
+void EnemyAI::WalkToDestination(glm::vec3 *destination) {
 
-    float domeX = _destinationVector.x;
-    float domeY = _destinationVector.y;
-    float domeZ = _destinationVector.z;
+    if(destination != nullptr){
+        _destinationVector = *destination;
+    }
 
-    if(hypot(hypot(ourX-domeX,ourY-domeY),ourZ-domeZ) > _distanceToStop){
+    float slalomAmplitude = 0.01; // amplituda ruchu bocznego
+    float slalomFrequency = 1.0f; // częstość ruchu bocznego (ile razy na jednostkę odległości)
+
+    if(glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop){
 
         slalomTime += TIME.GetDeltaTime();
         float sideMovement = sin(slalomTime * slalomFrequency) * slalomAmplitude;
         glm::vec3 sideVector = glm::normalize(glm::cross(_ownerTransform->GetRotation() * glm::vec3(0, 1, 0), _ownerTransform->GetRotation() * glm::vec3(0, 0, -1))) * sideMovement;
-        glm::vec3 forwardMovement = Transform::MoveTowards(_ownerTransform->GetPosition(), _destinationVector, 0.01);
-        //std::cout << sideVector.x << ", " << sideVector.y << ", " << sideVector.z  << std::endl;
-        _ownerTransform->LookAtPosition(forwardMovement + sideVector);
-        _ownerTransform->SetPosition(forwardMovement + sideVector);
+
+        glm::vec3 currentPos = _ownerTransform->GetPosition();
+        glm::vec3 forwardMovement = Transform::MoveTowards(currentPos, _destinationVector, 0.01f * _walkingSpeed) - currentPos;
+
+        glm::vec3 effectiveMovement = forwardMovement + sideVector;
+        glm::vec3 movementDirection = glm::normalize(effectiveMovement);
+        movementDirection.y = 0.0f;
+
+        _ownerTransform->LookAt(movementDirection);
+        _ownerTransform->SetPosition(currentPos + effectiveMovement);
+
     }
 }
 
 void EnemyAI::Update() {
-    WalkToDome();
+
+    WalkToDestination();
     Component::Update();
 }

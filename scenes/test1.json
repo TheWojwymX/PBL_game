@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 10,
-    "nextNodeId": 8,
+    "nextComponentId": 19,
+    "nextNodeId": 11,
     "resources": {
         "Models": [
             {
@@ -285,9 +285,9 @@
                 ],
                 "transform": {
                     "position": [
-                        0.0,
+                        49.0,
                         115.0,
-                        0.0
+                        99.0
                     ],
                     "rotation": [
                         0.0,
@@ -303,7 +303,7 @@
             },
             {
                 "NodeID": 6,
-                "NodeName": "AntModel",
+                "NodeName": "Enemy1",
                 "children": [],
                 "components": [
                     {
@@ -327,9 +327,135 @@
                 ],
                 "transform": {
                     "position": [
-                        5.0,
+                        53.0,
                         100.2,
-                        5.0
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 8,
+                "NodeName": "Enemy2",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 10,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 11,
+                        "componentType": 6
+                    },
+                    {
+                        "componentId": 12,
+                        "componentType": 7,
+                        "meshRendererRefID": 6,
+                        "frameDuration": 1,
+                        "isLoop": true
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        58.0,
+                        100.2,
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 9,
+                "NodeName": "Enemy3",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 13,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 14,
+                        "componentType": 6
+                    },
+                    {
+                        "componentId": 15,
+                        "componentType": 7,
+                        "meshRendererRefID": 6,
+                        "frameDuration": 1,
+                        "isLoop": true
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        62.0,
+                        100.2,
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 10,
+                "NodeName": "Enemy4",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 16,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 17,
+                        "componentType": 6
+                    },
+                    {
+                        "componentId": 18,
+                        "componentType": 7,
+                        "meshRendererRefID": 6,
+                        "frameDuration": 1,
+                        "isLoop": true
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        62.0,
+                        100.2,
+                        105.0
                     ],
                     "rotation": [
                         0.0,
