@@ -34,6 +34,7 @@ public:
     void Input();
     void Update();
     void Render(glm::mat4 parentWorld);
+    void RenderShadows(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
     void addToInspector(ImguiMain* imguiMain);
     void removeChild(std::shared_ptr<Node> child);

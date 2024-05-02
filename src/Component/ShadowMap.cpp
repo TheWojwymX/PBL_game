@@ -60,15 +60,9 @@ void ShadowMap::BeginRender() {
 
 void ShadowMap::RenderMap()
 {
-    ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
-    ComponentsManager::getInstance().GetComponentByID<InstanceRenderer>(0)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowInstanceShader"));
-    ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
     //glCullFace(GL_FRONT);
-    GAMEMANAGER.root->Render(Transform::Origin());
+    GAMEMANAGER.root->RenderShadows(Transform::Origin());
     //glCullFace(GL_BACK);
-    ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->SetShader(RESOURCEMANAGER.GetShaderByName("modelShader"));
-    ComponentsManager::getInstance().GetComponentByID<InstanceRenderer>(0)->SetShader(RESOURCEMANAGER.GetShaderByName("instanceModelShader"));
-    ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->SetShader(RESOURCEMANAGER.GetShaderByName("modelShader"));
 }
 
 void ShadowMap::AssignLightSpaceMatrixToShader() {

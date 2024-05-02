@@ -153,6 +153,7 @@ int main(int, char**)
     float spotLightQuadratic = 0.03f;
     float spotLightCutOff = 16.5f;
     float spotLightOuterCutOff = 20.5f;
+    bool _renderWireframeBB = false;
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
@@ -213,6 +214,11 @@ int main(int, char**)
         ImGui::InputFloat3("Center", &lightCenter[0]);
 
         ImGui::ColorEdit3("Directional Light Color", dirColor);
+
+        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
+
+        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->_renderWireframeBB = _renderWireframeBB;
+        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->_renderWireframeBB = _renderWireframeBB;
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);

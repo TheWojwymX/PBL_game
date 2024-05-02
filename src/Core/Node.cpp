@@ -163,6 +163,17 @@ void Node::Render(glm::mat4 parentWorld) {
         child->Render(world);
 }
 
+void Node::RenderShadows(glm::mat4 parentWorld) {
+    glm::mat4 world = _local->Combine(parentWorld);
+
+    for (auto &component: _components)
+        if (component->IsEnabled())
+            component->RenderShadows(parentWorld);
+
+    for (auto &child: _children)
+        child->RenderShadows(world);
+}
+
 void Node::UpdateTransforms(glm::mat4 parentWorld) {
     glm::mat4 world = _local->Combine(parentWorld);
     for (auto &child: _children)

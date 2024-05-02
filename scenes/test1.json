@@ -80,6 +80,11 @@
                 "ShaderName": "shadowInstanceShader",
                 "fragmentPath": "../../res/shadowInstanceShader.fs",
                 "vertexPath": "../../res/shadowInstanceShader.vs"
+            },
+            {
+                "ShaderName": "wireframeShader",
+                "fragmentPath": "../../res/wireframeShader.fs",
+                "vertexPath": "../../res/wireframeShader.vs"
             }
         ],
         "Sounds": [
