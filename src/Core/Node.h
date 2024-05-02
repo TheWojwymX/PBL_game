@@ -12,6 +12,7 @@
 #include "Component/BlockManager.h"
 #include "Managers/ComponentsManager.h"
 #include "Component/PlayerAudioController.h"
+#include "Component/CloudManager.h"
 #include "Enemies/EnemyAI.h"
 #include "Component/Animation.h"
 

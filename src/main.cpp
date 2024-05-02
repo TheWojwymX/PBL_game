@@ -133,6 +133,8 @@ int main(int, char**)
     shadowMap.Init();
     shadowMap.AssignShadowMapToShader();
 
+    glm::vec3 cloudPosition(0.0f, 0.0f, 0.0f);
+
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
@@ -309,6 +311,20 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setVec3("lightColor", dirColor);
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
+
+        cloudPosition.x += 1.1f;
+
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->use();
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setInt("dirLight.isActive", dirActive);
+
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("cloudPosition", cloudPosition);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("xBoundary", 500.0f);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
+
 
         GAMEMANAGER.root->Render(Transform::Origin());
 

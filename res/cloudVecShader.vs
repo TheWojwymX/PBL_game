@@ -21,16 +21,27 @@ void main()
 {
     TexCoords = aTexCoords;
 
-    // Apply cloud position to the translation component of the instance matrix
-        vec4 translatedPos = aInstanceMatrix * vec4(aPos, 1.0);
-        translatedPos += vec4(cloudPosition, 0.0);
+    // Transform the position from model space to world space
+    vec4 worldPosition = aInstanceMatrix * vec4(aPos, 1.0);
+    worldPosition.xyz += cloudPosition;
 
-    FragPos = vec3(translatedPos);
-    Normal = mat3(transpose(inverse(aInstanceMatrix))) * aNormal; 
-    
+    // Check if the cloud position is beyond the x boundary (200.0 units here)
+    float boundary = 500.0f;
+    float offset = 1000.0f; // Total distance from -boundary to +boundary
+
+    // Calculate the wrapped x position
+    if (worldPosition.x > boundary) {
+        worldPosition.x = -boundary + mod(worldPosition.x - boundary, offset);
+    } else if (worldPosition.x < -boundary) {
+        worldPosition.x = boundary - mod(-boundary - worldPosition.x, offset);
+    }
+
+    FragPos = vec3(worldPosition);
+    Normal = mat3(transpose(inverse(aInstanceMatrix))) * aNormal;
+
     // Calculate the variation factor
-    vec3 position = aInstanceMatrix[3].xyz; // Extract position vector from the instance matrix
+    vec3 position = aInstanceMatrix[3].xyz + cloudPosition; // Updated to include cloudPosition
     VariationFactor = random(position); // Use the position vector to generate variation
 
-    gl_Position = projection * view * translatedPos;
+    gl_Position = projection * view * worldPosition;
 }

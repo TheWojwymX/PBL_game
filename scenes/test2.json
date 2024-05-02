@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 10,
-    "nextNodeId": 8,
+    "nextComponentId": 12,
+    "nextNodeId": 10,
     "resources": {
         "Models": [
             {
@@ -14,6 +14,10 @@
             {
                 "ModelName": "baseModel",
                 "Path": "res/Models/Base/base_concept_2.0.obj"
+            },
+            {
+                "ModelName": "cloudModel",
+                "Path": "res/Sand/Sand.obj"
             }
         ],
         "Shaders": [
@@ -381,6 +385,70 @@
                         1.5,
                         1.5,
                         1.5
+                    ]
+                }
+            },
+            {
+                "NodeID": 8,
+                "NodeName": "cloud",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 10,
+                        "componentType": 3,
+                        "maxSize": 40000,
+                        "model": "cloudModel",
+                        "shader": "cloudShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 9,
+                "NodeName": "cloudManager",
+                "children": [],
+                "components": [
+                    {
+                        "cameraRefID": 2,
+                        "componentId": 11,
+                        "componentType": 8,
+                        "depth": 200,
+                        "height": 1,
+                        "sandRendererRefID": 10,
+                        "width": 200
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }

@@ -2,10 +2,9 @@
 out vec4 FragColor;
 
 // Define constants for lighting calculations
-#define AMBIENT_STRENGTH 0.1
+#define AMBIENT_STRENGTH 0.9
 #define SPECULAR_STRENGTH 0.5
 #define SHININESS 32
-#define NR_SPOT_LIGHTS 1
 
 // Define structures for different types of lights
 struct DirLight {
@@ -32,7 +31,7 @@ struct SpotLight {
     float linear;
     float quadratic;
     vec3 color;
-    bool isActive;
+    int isActive;
 };
 
 // Input from vertex shader
@@ -40,12 +39,12 @@ in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
 in float VariationFactor; // Variation factor from the vertex shader
+in float ClipDistance;
 
 // Uniforms for view and lighting properties
 uniform sampler2D texture_diffuse1;
 uniform vec3 viewPos;
 uniform DirLight dirLight;
-uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 
 // Function prototypes for lighting calculations
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
@@ -54,10 +53,11 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
+
+    if (ClipDistance < 0) discard;
     // Normalize normal and view direction vectors
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 spotLightColor = vec3(0.0);
 
     // Calculate color variation based on the variation factor
     vec3 colorVariation = vec3(sin(VariationFactor), cos(VariationFactor), tan(VariationFactor));
@@ -65,19 +65,14 @@ void main()
     // Calculate the directional light contribution (as before)
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
 
-    for(int i = 0; i < NR_SPOT_LIGHTS; i++)
-    {
-        if(spotLights[i].isActive)
-        {
-            spotLightColor += CalcSpotLight(spotLights[i], norm, FragPos, viewDir);
-        }
-    }
+    // Convert colorVariation to grayscale by averaging its components
+    float grayscale = (colorVariation.r + colorVariation.g + colorVariation.b) / 3.0;
 
     // Modify the final color with a scaled color variation
-    vec3 finalColor = (dirLightColor + spotLightColor) * (1.0 + 0.1 * colorVariation); // Adjust the scale factor (0.1) as needed
+    vec3 finalColor = dirLightColor * (1.0 + 0.04 * grayscale) * 8.7; // Adjust the scale factor (0.1) as needed
 
     // Combine the final color with the texture color
-    FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
+    FragColor = vec4(finalColor, 0.85);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
@@ -94,7 +89,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 ambient = light.color * AMBIENT_STRENGTH;
     vec3 diffuse = light.color * diff;
     vec3 specular = light.color * spec * SPECULAR_STRENGTH;
-    return (ambient + diffuse + specular);
+    return (ambient);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -122,7 +117,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    if (light.isActive == false)
+    if (light.isActive == 0)
         return vec3(0.0);
     vec3 lightDir = normalize(light.position - fragPos);
     // diffuse shading

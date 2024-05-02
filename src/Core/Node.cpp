@@ -90,6 +90,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::ANIMATION:
                         ComponentsManager::getInstance().DeserializeComponent<Animation>(componentJson);
                         break;
+                    case ComponentType::CLOUDMANAGER:
+                        ComponentsManager::getInstance().DeserializeComponent<CloudManager>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;
