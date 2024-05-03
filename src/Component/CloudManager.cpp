@@ -75,10 +75,10 @@ void CloudManager::GenerateMap() {
                 float normalized = (density - (-3000.0)) / (3000.0 - (-3000.0));
 
                 bool filled;
-                if(normalized < 0.36f) filled = true;
+                if(normalized < 0.4f) filled = true;
                 else filled = false;
 
-                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(-2500 + (17 * x), 250, -2500 + (17 * z)), glm::quat(), glm::vec3(17.0f,3.5f,17.0f));
+                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(-2500 + (70 * x), 230, -2500 + (70 * z)), glm::quat(), glm::vec3(70.0f,8.5f,70.0f));
 
                 BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
                 // Create BlockData object with Sand type and add it to the vector
@@ -140,7 +140,7 @@ void CloudManager::addToInspector(ImguiMain *imguiMain)
 }
 
 float CloudManager::Perlin(float x, float y, float z) {
-    int seed = 123;
+    int seed = RandomInRange(100, 999);
     float scale = 20.0f; // Determines noise granularity
 
     float total = 0.0f;

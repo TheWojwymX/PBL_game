@@ -56,7 +56,7 @@ private:
 class PerlinNoise {
 public:
     // Constructor with a given seed
-    PerlinNoise(int seed = 123) {
+    PerlinNoise(int seed) {
         // Generate a permutation table for noise generation
         p.resize(256);
         std::iota(p.begin(), p.end(), 0);

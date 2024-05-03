@@ -5,7 +5,7 @@
         "Models": [
             {
                 "ModelName": "sandModel",
-                "Path": "res/Sand/Sand.obj"
+                "Path": "../../res/Sand/Sand.obj"
             },
             {
                 "ModelName": "antModel",
@@ -401,7 +401,7 @@
                     {
                         "componentId": 10,
                         "componentType": 3,
-                        "maxSize": 80000,
+                        "maxSize": 5000,
                         "model": "cloudModel",
                         "shader": "cloudShader"
                     }
@@ -433,10 +433,10 @@
                         "cameraRefID": 2,
                         "componentId": 11,
                         "componentType": 8,
-                        "depth": 200,
+                        "depth": 50,
                         "height": 2,
                         "sandRendererRefID": 10,
-                        "width": 200
+                        "width": 50
                     }
                 ],
                 "transform": {
