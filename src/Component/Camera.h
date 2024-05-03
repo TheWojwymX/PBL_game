@@ -54,6 +54,11 @@ public:
 
     void addToInspector(ImguiMain *imguiMain) override;
 
+    void setScreenWidth(unsigned int screenWidth) {_screenWidth = screenWidth;}
+    void setScreenHeight(unsigned int screenHeight) {_screenHeight = screenHeight;}
+    unsigned int getScreenWidth() {return _screenWidth;}
+    unsigned int getScreenHeight() {return _screenHeight;}
+
 private:
     // camera attributes
     glm::vec3 _offset;
@@ -70,6 +75,9 @@ private:
     float _mouseSensitivity;
     float _zoom;
     bool _editMode;
+
+    unsigned int _screenWidth;
+    unsigned int _screenHeight;
 
     // calculates the front vector from the Camera's (updated) Euler Angles
     void UpdateCameraVectors();

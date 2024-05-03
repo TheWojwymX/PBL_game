@@ -8,7 +8,7 @@ MeshRenderer::MeshRenderer(){
 
 void MeshRenderer::Render(glm::mat4 parentWorld) {
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
-    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(1280,720) * _cameraRef->GetViewMatrix();
+    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(_cameraRef->getScreenWidth(),_cameraRef->getScreenHeight()) * _cameraRef->GetViewMatrix();
     if(IsInFrustum(viewProjectionMatrix)) {
         RenderModel(_model, world);
         //framesRendered++;
@@ -21,7 +21,7 @@ void MeshRenderer::RenderShadows(glm::mat4 parentWorld) {
     shared_ptr<Shader> currentShader = _shader;
     SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
-    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(1280,720) * _cameraRef->GetViewMatrix();
+    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(_cameraRef->getScreenWidth(),_cameraRef->getScreenHeight()) * _cameraRef->GetViewMatrix();
     RenderModel(_model, world);
     SetShader(currentShader);
 }
@@ -94,7 +94,7 @@ void MeshRenderer::Deserialize(const nlohmann::json &jsonData) {
 void MeshRenderer::initiate() {
     Component::initiate();
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
-    i = 0;
+    framesRendered = 0;
 }
 
 void MeshRenderer::Update() {

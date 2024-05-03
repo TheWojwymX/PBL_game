@@ -62,35 +62,27 @@ void CloudManager::Init() {
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateInstanceRenderer();
-    //MoveAllBlocks(glm::vec3(-200, 160, -240));
-}
-
-void CloudManager::Refresh() {
-    UpdateBlocksVisibility();
-    RefreshVisibleBlocks();
-    UpdateInstanceRenderer();
 }
 
 void CloudManager::GenerateMap() {
     _blocksData.clear();
-    float lowestValue = 1;
     // Iterate over the grid dimensions
     for (int y = 0; y < _height; y++) {
         for (int z = 0; z < _depth; z++) {
             for (int x = 0; x < _width; x++) {
-                //float densityCutoff = RandomInRange(-2.8f, 1.5f);
                 float density = Perlin(x,y,z);
-                //density = std::clamp(density, 0.0f, 1.0f);
-                if(density == 1.0f)
-                {
-                    density = density - 0.1;
-                }
-                //std::cout << density << " " << densityCutoff << std::endl;
-                // Calculate transform matrix for the current block
-                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(-2500 + (14 * x), 180, -2500 + (14 * z)), glm::quat(), glm::vec3(14.0f,1.5f,14.0f));
 
+                float normalized = (density - (-3000.0)) / (3000.0 - (-3000.0));
+
+                bool filled;
+                if(normalized < 0.36f) filled = true;
+                else filled = false;
+
+                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(-2500 + (17 * x), 250, -2500 + (17 * z)), glm::quat(), glm::vec3(17.0f,3.5f,17.0f));
+
+                BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
                 // Create BlockData object with Sand type and add it to the vector
-                BlockData cloudBlock(BlockType::SAND, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, density, shared_from_this());
+                BlockData cloudBlock(type, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, density, shared_from_this());
                 _blocksData.push_back(cloudBlock);
             }
         }
@@ -128,38 +120,9 @@ void CloudManager::UpdateBlocksVisibility() {
 
     // Iterate through all blocks
     for (auto& blockData : _blocksData) {
-
-        float densityCutoff = RandomInRange(-2.0f, 1.1f);
-        if(blockData.GetDensity() < densityCutoff) {
-            UpdateBlockVisibility(blockData);
-        }
+        SetVisibility(blockData, true);
     }
 }
-
-void CloudManager::UpdateBlockVisibility(BlockData& blockData)
-{
-    // Get the position of the current block
-    glm::ivec3 posID = blockData.GetPosID();
-    int x = posID.x;
-    int y = posID.y;
-    int z = posID.z;
-
-    // Check adjacent blocks for emptiness
-    bool leftBlockEmpty = x - 1 >= 0 && CheckAdjacency(x - 1, y, z);
-    bool rightBlockEmpty = x + 1 < _width && CheckAdjacency(x + 1, y, z);
-    bool topBlockEmpty = y + 1 < _height && CheckAdjacency(x, y + 1, z);
-    bool bottomBlockEmpty = y - 1 >= 0 && CheckAdjacency(x, y - 1, z);
-    bool frontBlockEmpty = z + 1 < _depth && CheckAdjacency(x, y, z + 1);
-    bool backBlockEmpty = z - 1 >= 0 && CheckAdjacency(x, y, z - 1);
-
-    // Check if the block will be visible
-    bool isVisible = !leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty ||
-                     !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty;
-
-    // Set the visibility of the block
-    SetVisibility(blockData, isVisible);
-}
-
 
 void CloudManager::SetVisibility(BlockData& blockData, bool state) {
     // Set the visibility of the block
@@ -171,83 +134,38 @@ void CloudManager::SetVisibility(BlockData& blockData, bool state) {
     }
 }
 
-int CloudManager::GetIndex(glm::ivec3 point) {
-    return point.x + (_width * _depth * point.y) + point.z * _width;
-}
-
-int CloudManager::GetIndex(int x, int y, int z) {
-    return x + (_width * _depth * y) + z * _width;
-}
-
-
-bool CloudManager::CheckAdjacency(int x, int y, int z)
-{
-    return _blocksData[GetIndex(x, y, z)].GetBlockType() != BlockType::EMPTY;
-}
-
-bool CloudManager::InBounds(glm::ivec3 position) {
-    return position.x >= 0 && position.y >= 0 && position.z >= 0 &&
-           position.x < _width && position.y < _height && position.z < _depth;
-}
-
 void CloudManager::addToInspector(ImguiMain *imguiMain)
 {
     ImGui::Text(" Siema jestem blok manager ");
 }
 
-void CloudManager::MoveAllBlocks(const glm::vec3& offset) {
-    // Iterate through all blocks and update their positions
-    for (auto& blockData : _blocksData) {
-        // Get the current position of the block
-        glm::ivec3 currentPosition = blockData.GetPosID();
-
-        // Update the position of the block by adding the offset
-        glm::ivec3 newPosition = currentPosition + glm::ivec3(offset);
-
-        // Update the position of the block in BlockData
-        blockData.SetPosID(newPosition);
-
-        // Update the transform matrix of the block
-        glm::mat4 newTransform = Transform::CalculateTransformMatrix(glm::vec3(newPosition), glm::quat(), glm::vec3(1.0f));
-        blockData.SetMatrix(newTransform);
-    }
-
-    // After moving all blocks, update any visual representation/rendering
-    UpdateInstanceRenderer();
-}
-
-void CloudManager::Update()
-{
-
-    //MoveAllBlocks(glm::vec3(1, 0, 0));
-    //std::cout << _blocksData[GetIndex(0,0,0)].GetDensity() << " " << _blocksData[GetIndex(1,0,0)].GetDensity() << " " << _blocksData[GetIndex(2,0,0)].GetDensity() << std::endl;
-}
-
 float CloudManager::Perlin(float x, float y, float z) {
     int seed = 123;
-    float scale = 0.11f;
+    float scale = 20.0f; // Determines noise granularity
 
     float total = 0.0f;
-    float persistence = 0.2f;
+    float persistence = 0.5f; // Amplitude decrease
     int octaves = 8;
-    float frequency = scale;
-    float amplitude = 1.0f;
+    float frequency = scale; // Initial frequency
+    float amplitude = 1.0f; // Initial amplitude
+
+    PerlinNoise noiseGenerator(seed);
 
     for (int i = 0; i < octaves; ++i) {
-        // Offset the coordinates for each octave
-        float offsetX = x * frequency;
-        float offsetY = y * frequency;
-        float offsetZ = z * frequency;
+        float nx = x * frequency;
+        float ny = y * frequency;
+        float nz = z * frequency;
 
-        total += std::sin((offsetX + seed) * frequency) * amplitude;
-        total += std::sin((offsetY + seed) * frequency) * amplitude;
-        total += std::sin((offsetZ + seed) * frequency) * amplitude;
+        total += noiseGenerator.Noise(nx, ny, nz) * amplitude;
 
-        frequency *= 2.0f;
-        amplitude *= persistence;
+        frequency *= 2.0f; // Increase frequency each octave
+        amplitude *= persistence; // Decrease amplitude each octave
     }
 
-    return total;
+    // Normalize to the range [0, 1] after accumulation
+    total = (total + 1) / 2;
+
+    return total; // Resulting value between [0, 1]
 }
 
 float CloudManager::RandomInRange(float min, float max) {

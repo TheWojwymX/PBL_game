@@ -401,7 +401,7 @@
                     {
                         "componentId": 10,
                         "componentType": 3,
-                        "maxSize": 40000,
+                        "maxSize": 80000,
                         "model": "cloudModel",
                         "shader": "cloudShader"
                     }
@@ -434,7 +434,7 @@
                         "componentId": 11,
                         "componentType": 8,
                         "depth": 200,
-                        "height": 1,
+                        "height": 2,
                         "sandRendererRefID": 10,
                         "width": 200
                     }

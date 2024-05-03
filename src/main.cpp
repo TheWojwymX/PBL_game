@@ -133,7 +133,8 @@ int main(int, char**)
     shadowMap.Init();
     shadowMap.AssignShadowMapToShader();
 
-    glm::vec3 cloudPosition(0.0f, 0.0f, 0.0f);
+    glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
+    float cloudSpeed = 8.0f;
 
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
@@ -154,6 +155,9 @@ int main(int, char**)
     float spotLightCutOff = 16.5f;
     float spotLightOuterCutOff = 20.5f;
     bool _renderWireframeBB = false;
+
+    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
+    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(SCR_HEIGHT);
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
@@ -217,6 +221,7 @@ int main(int, char**)
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 
+        //Przypisz _renderWireframeBB do MeshRenderera modelu, aby widzieć jego bounding box
         ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->_renderWireframeBB = _renderWireframeBB;
         ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->_renderWireframeBB = _renderWireframeBB;
 
@@ -241,7 +246,7 @@ int main(int, char**)
         dirDirection[1] = shadowDir.y;
         dirDirection[2] = shadowDir.z;
 
-        float near_plane = 0.2f, far_plane = 120.0f;
+        float near_plane = 0.2f, far_plane = 130.0f;
         glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
         glm::mat4 lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
         shadowMap.SetLightProjection(lightProjection);
@@ -318,16 +323,15 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
 
-        cloudPosition.x += 1.1f;
-
         RESOURCEMANAGER.GetShaderByName("cloudShader")->use();
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.direction", dirDirection);
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.color", dirColor);
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setInt("dirLight.isActive", dirActive);
 
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("cloudPosition", cloudPosition);
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("xBoundary", 500.0f);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("initialCloudPosition", initialCloudPosition);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("cloudSpeed", cloudSpeed);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("time", TIME.GetTime());
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
 

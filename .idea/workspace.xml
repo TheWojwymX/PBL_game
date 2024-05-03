@@ -92,6 +92,8 @@
       <change beforePath="$PROJECT_DIR$/res/toonShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/toonShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/vecLightObjectShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/vecLightObjectShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/vecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/vecShader.vs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/wireframeShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/wireframeShader.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/wireframeShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/wireframeShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AnimatedTexture.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/AnimatedTexture.h" afterDir="false" />
@@ -342,7 +344,7 @@
       <workItem from="1714046833352" duration="7955000" />
       <workItem from="1714124316079" duration="1279000" />
       <workItem from="1714418441389" duration="3195000" />
-      <workItem from="1714647246790" duration="14136000" />
+      <workItem from="1714647246790" duration="33396000" />
     </task>
     <servers />
   </component>

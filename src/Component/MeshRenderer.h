@@ -1,7 +1,4 @@
 #pragma once
-#include "Core/Component.h"
-#include <glm/glm.hpp>
-#include <model.h>
 #include "Managers/ResourceManager.h"
 #include "Component/Camera.h"
 #include "Managers/ComponentsManager.h"
