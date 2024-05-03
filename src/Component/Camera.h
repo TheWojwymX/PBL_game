@@ -52,6 +52,13 @@ public:
         return glm::perspective(glm::radians(_zoom), screenWidth / screenHeight, 0.1f, 1000.0f);
     }
 
+    glm::vec3 LerpPosition(glm::vec3 currentPosition);
+    glm::vec3 LerpDirection(glm::vec3 currentPosition);
+
+    glm::vec3 lerp(const glm::vec3 &start, const glm::vec3 &end, float t) {
+        return start + t * (end - start);
+    }
+
     void addToInspector(ImguiMain *imguiMain) override;
 
     void setScreenWidth(unsigned int screenWidth) {_screenWidth = screenWidth;}

@@ -1,5 +1,4 @@
-#ifndef SHADOW_MAP_H
-#define SHADOW_MAP_H
+#pragma once
 
 #include "Managers/GameManager.h"
 
@@ -41,5 +40,3 @@ private:
     glm::mat4 lightProjection;
     glm::mat4 lightView;
 };
-
-#endif  // SHADOW_MAP_H

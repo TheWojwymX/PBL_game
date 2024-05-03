@@ -148,6 +148,8 @@ int main(int, char**)
 
     //SpotLight Properties
     bool isSpotActive = true;
+    glm::vec3 spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
+    glm::vec3 spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
     glm::vec3 spotLightColor(1.0f);
     float spotLightConstant = 1.0f;
     float spotLightLinear = 0.1f;
@@ -240,6 +242,9 @@ int main(int, char**)
 
         skybox.draw();
 
+        spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpPosition(spotLightCurrentPosition);
+        spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpDirection(spotLightCurrentDirection);
+
         //ShadowMap Creation
         glm::vec3 shadowDir = glm::normalize(lightCenter - lightPos);
         dirDirection[0] = shadowDir.x;
@@ -267,8 +272,8 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("dirLight.isActive", dirActive);
 
         RESOURCEMANAGER.GetShaderByName("modelShader")->setBool("spotLights[0].isActive", isSpotActive);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].position", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].direction", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector());
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].direction", spotLightCurrentDirection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].constant", spotLightConstant);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].linear", spotLightLinear);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
@@ -303,8 +308,8 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("dirLight.isActive", dirActive);
 
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setBool("spotLights[0].isActive", isSpotActive);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].position", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].direction", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector());
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].direction", spotLightCurrentDirection);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].constant", spotLightConstant);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].linear", spotLightLinear);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
@@ -337,7 +342,6 @@ int main(int, char**)
 
 
         GAMEMANAGER.root->Render(Transform::Origin());
-
 
         //HUD.Update();
         AUDIOENGINEMANAGER.Update();

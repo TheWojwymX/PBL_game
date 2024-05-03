@@ -251,6 +251,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -344,7 +349,7 @@
       <workItem from="1714046833352" duration="7955000" />
       <workItem from="1714124316079" duration="1279000" />
       <workItem from="1714418441389" duration="3195000" />
-      <workItem from="1714647246790" duration="33396000" />
+      <workItem from="1714647246790" duration="40630000" />
     </task>
     <servers />
   </component>
