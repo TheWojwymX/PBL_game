@@ -61,7 +61,7 @@
       <change beforePath="$PROJECT_DIR$/res/PointLight/PointLight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/PointLight/PointLight.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/Sand/Sand.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/Sand.mtl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/Sand/Sand.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/Sand.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Sand/SandText2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Sand/SandText.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/SandText.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/SpotLight/SpotLight.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/SpotLight/SpotLight.mtl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/SpotLight/SpotLight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/SpotLight/SpotLight.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/animatedTextureShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/animatedTextureShader.fs" afterDir="false" />
@@ -258,6 +258,11 @@
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
