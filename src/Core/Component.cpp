@@ -37,7 +37,7 @@ void Component::Update() {}
 
 void Component::Render(glm::mat4 parentWorld) {}
 
-void Component::RenderShadows(glm::mat4 parentWorld, Shader *shader) {}
+void Component::RenderShadows(glm::mat4 parentWorld) {}
 
 void Component::SetOwnerTransform(std::shared_ptr<Transform> transform) {
     _ownerTransform = transform;

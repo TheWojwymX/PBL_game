@@ -11,7 +11,9 @@ out float VariationFactor; // Add a varying variable for the variation factor
 
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 cloudPosition; // Add a uniform for cloud position
+uniform vec3 initialCloudPosition; // Add a uniform for cloud position
+uniform float time;
+uniform float cloudSpeed;
 
 float random(vec3 position) {
     return fract(sin(dot(position, vec3(12.9898, 78.233, 45.543))) * 43758.5453);
@@ -21,16 +23,33 @@ void main()
 {
     TexCoords = aTexCoords;
 
-    // Apply cloud position to the translation component of the instance matrix
-        vec4 translatedPos = aInstanceMatrix * vec4(aPos, 1.0);
-        translatedPos += vec4(cloudPosition, 0.0);
+    // Adjust the entire instance matrix to prevent stretching due to boundary wrapping
+    mat4 wrappedInstanceMatrix = aInstanceMatrix;
 
-    FragPos = vec3(translatedPos);
-    Normal = mat3(transpose(inverse(aInstanceMatrix))) * aNormal; 
-    
+    // Boundary setup
+    float boundary = 1400.0f;
+    float offset = 2800.0f; // Total distance from -boundary to +boundary
+
+    float moveX = mod(time * cloudSpeed, offset);
+    vec3 cloudPosition = initialCloudPosition + vec3(moveX - boundary, 0.0, 0.0);
+
+    // Wrap the cloud position at instance level
+    wrappedInstanceMatrix[3].x += cloudPosition.x;
+
+    if (wrappedInstanceMatrix[3].x > boundary) {
+        wrappedInstanceMatrix[3].x -= offset;
+    } else if (wrappedInstanceMatrix[3].x < -boundary) {
+        wrappedInstanceMatrix[3].x += offset;
+    }
+
+    // Transform the position from model space to world space with wrapped instance matrix
+    vec4 worldPosition = wrappedInstanceMatrix * vec4(aPos, 1.0);
+
+    FragPos = vec3(worldPosition);
+    Normal = mat3(transpose(inverse(wrappedInstanceMatrix))) * aNormal;
+
     // Calculate the variation factor
-    vec3 position = aInstanceMatrix[3].xyz; // Extract position vector from the instance matrix
-    VariationFactor = random(position); // Use the position vector to generate variation
+    VariationFactor = random(wrappedInstanceMatrix[3].xyz);
 
-    gl_Position = projection * view * translatedPos;
+    gl_Position = projection * view * worldPosition;
 }

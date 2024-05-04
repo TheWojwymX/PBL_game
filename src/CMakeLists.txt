@@ -53,7 +53,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Enemies/EnemiesAIManager.h
         Enemies/EnemyAI.cpp
         Enemies/EnemyAI.h
-        Component/Animation.h)
+        Component/Animation.h Component/ShadowMap.h Component/ShadowMap.cpp Component/CloudManager.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

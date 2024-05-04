@@ -8,7 +8,22 @@ MeshRenderer::MeshRenderer(){
 
 void MeshRenderer::Render(glm::mat4 parentWorld) {
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
+    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(_cameraRef->getScreenWidth(),_cameraRef->getScreenHeight()) * _cameraRef->GetViewMatrix();
+    if(IsInFrustum(viewProjectionMatrix, world)) {
+        RenderModel(_model, world);
+        //framesRendered++;                                 //Uncomment both lines to see Frustum Culling work
+        //cout << "Rendering: " << framesRendered << endl;  //Frustum Culling working
+    }
+}
+
+void MeshRenderer::RenderShadows(glm::mat4 parentWorld) {
+
+    shared_ptr<Shader> currentShader = _shader;
+    SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
+    glm::mat4 world = _ownerTransform->Combine(parentWorld);
+    glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(_cameraRef->getScreenWidth(),_cameraRef->getScreenHeight()) * _cameraRef->GetViewMatrix();
     RenderModel(_model, world);
+    SetShader(currentShader);
 }
 
 void MeshRenderer::RenderModel(shared_ptr<Model> model, glm::mat4 ctm) {
@@ -78,6 +93,8 @@ void MeshRenderer::Deserialize(const nlohmann::json &jsonData) {
 
 void MeshRenderer::initiate() {
     Component::initiate();
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
+    framesRendered = 0;
 }
 
 void MeshRenderer::Update() {
@@ -87,4 +104,202 @@ void MeshRenderer::Update() {
     _ownerTransform->SetRotation(_ownerTransform->GetRotation());
 
     Component::Update();
+}
+
+
+bool MeshRenderer::IsInFrustum(const glm::mat4& viewProjectionMatrix, glm::mat4 ctm)
+{
+    glm::vec3 min = GetWorldMinBoundingBox(_model, ctm);
+    glm::vec3 max = GetWorldMaxBoundingBox(_model, ctm);
+
+    if(_renderWireframeBB) {RenderBoundingBox(viewProjectionMatrix, min, max);} //Wireframe bounding boxes
+
+    // Extract the frustum planes from the view-projection matrix
+    auto frustumPlanes = extractFrustumPlanes(viewProjectionMatrix);
+
+    // Check if the bounding box intersects the frustum
+    return isBoxInFrustum(frustumPlanes, min, max);
+}
+
+void MeshRenderer::RenderBoundingBox(const glm::mat4& viewProjectionMatrix, glm::vec3 min, glm::vec3 max) {
+    glm::vec4 corners[8];
+
+    corners[0] = glm::vec4(min.x, min.y, min.z, 1.0f);
+    corners[1] = glm::vec4(max.x, min.y, min.z, 1.0f);
+    corners[2] = glm::vec4(min.x, max.y, min.z, 1.0f);
+    corners[3] = glm::vec4(max.x, max.y, min.z, 1.0f);
+    corners[4] = glm::vec4(min.x, min.y, max.z, 1.0f);
+    corners[5] = glm::vec4(max.x, min.y, max.z, 1.0f);
+    corners[6] = glm::vec4(min.x, max.y, max.z, 1.0f);
+    corners[7] = glm::vec4(max.x, max.y, max.z, 1.0f);
+
+    // Indices for lines connecting the corners to form the bounding box
+    std::vector<int> indices = {
+            0, 1, 1, 3, 3, 2, 2, 0,  // bottom rectangle
+            4, 5, 5, 7, 7, 6, 6, 4,  // top rectangle
+            0, 4, 1, 5, 2, 6, 3, 7   // vertical lines
+    };
+
+    std::vector<glm::vec3> vertices;
+    for (auto index : indices) {
+        vertices.push_back(corners[index]);
+    }
+
+    GLuint vao, vbo;
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+
+    glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // Set up your wireframe shader and render the lines
+    RESOURCEMANAGER.GetShaderByName("wireframeShader")->use();
+    RESOURCEMANAGER.GetShaderByName("wireframeShader")->setMat4("viewProjection", viewProjectionMatrix);
+
+    glDrawArrays(GL_LINES, 0, vertices.size());
+
+    glBindVertexArray(0);
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+}
+
+std::vector<FrustumPlane> MeshRenderer::extractFrustumPlanes(const glm::mat4& viewProjectionMatrix) {
+    std::vector<FrustumPlane> planes(6);
+
+    // Extract the left plane
+    planes[0].normal = glm::vec3(viewProjectionMatrix[0][3] + viewProjectionMatrix[0][0],
+                                 viewProjectionMatrix[1][3] + viewProjectionMatrix[1][0],
+                                 viewProjectionMatrix[2][3] + viewProjectionMatrix[2][0]);
+    planes[0].distance = viewProjectionMatrix[3][3] + viewProjectionMatrix[3][0];
+
+    // Extract the right plane
+    planes[1].normal = glm::vec3(viewProjectionMatrix[0][3] - viewProjectionMatrix[0][0],
+                                 viewProjectionMatrix[1][3] - viewProjectionMatrix[1][0],
+                                 viewProjectionMatrix[2][3] - viewProjectionMatrix[2][0]);
+    planes[1].distance = viewProjectionMatrix[3][3] - viewProjectionMatrix[3][0];
+
+    // Extract the bottom plane
+    planes[2].normal = glm::vec3(viewProjectionMatrix[0][3] + viewProjectionMatrix[0][1],
+                                 viewProjectionMatrix[1][3] + viewProjectionMatrix[1][1],
+                                 viewProjectionMatrix[2][3] + viewProjectionMatrix[2][1]);
+    planes[2].distance = viewProjectionMatrix[3][3] + viewProjectionMatrix[3][1];
+
+    // Extract the top plane
+    planes[3].normal = glm::vec3(viewProjectionMatrix[0][3] - viewProjectionMatrix[0][1],
+                                 viewProjectionMatrix[1][3] - viewProjectionMatrix[1][1],
+                                 viewProjectionMatrix[2][3] - viewProjectionMatrix[2][1]);
+    planes[3].distance = viewProjectionMatrix[3][3] - viewProjectionMatrix[3][1];
+
+    // Extract the near plane
+    planes[4].normal = glm::vec3(viewProjectionMatrix[0][3] + viewProjectionMatrix[0][2],
+                                 viewProjectionMatrix[1][3] + viewProjectionMatrix[1][2],
+                                 viewProjectionMatrix[2][3] + viewProjectionMatrix[2][2]);
+    planes[4].distance = viewProjectionMatrix[3][3] + viewProjectionMatrix[3][2];
+
+    // Extract the far plane
+    planes[5].normal = glm::vec3(viewProjectionMatrix[0][3] - viewProjectionMatrix[0][2],
+                                 viewProjectionMatrix[1][3] - viewProjectionMatrix[1][2],
+                                 viewProjectionMatrix[2][3] - viewProjectionMatrix[2][2]);
+    planes[5].distance = viewProjectionMatrix[3][3] - viewProjectionMatrix[3][2];
+
+    // Normalize the plane normals
+    for (auto& plane : planes) {
+        float length = glm::length(plane.normal);
+        plane.normal /= length;
+        plane.distance /= length;
+    }
+
+    return planes;
+}
+
+bool MeshRenderer::isBoxInFrustum(const std::vector<FrustumPlane>& planes, const glm::vec3& min, const glm::vec3& max) {
+    // Check each frustum plane
+    for (const auto& plane : planes) {
+        // Calculate the box's farthest point along the plane's normal
+        glm::vec3 positiveVertex = {
+                plane.normal.x >= 0 ? max.x : min.x,
+                plane.normal.y >= 0 ? max.y : min.y,
+                plane.normal.z >= 0 ? max.z : min.z,
+        };
+
+        // If the farthest point is outside the plane, the box is outside the frustum
+        if (plane.distanceToPoint(positiveVertex) < 0) {
+            return false;
+        }
+    }
+
+    // If the box is not outside any plane, it's in the frustum
+    return true;
+}
+
+glm::vec3 MeshRenderer::GetWorldMinBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm) {
+    glm::vec3 localMin = model->GetMinBoundingBox(); // Local min bounding box
+    glm::vec3 localMax = model->GetMaxBoundingBox(); // Local max bounding box
+
+    // Define all eight corners of the bounding box in local space
+    std::vector<glm::vec3> localCorners = {
+            localMin,
+            glm::vec3(localMax.x, localMin.y, localMin.z),
+            glm::vec3(localMin.x, localMax.y, localMin.z),
+            glm::vec3(localMin.x, localMin.y, localMax.z),
+            glm::vec3(localMax.x, localMax.y, localMin.z),
+            glm::vec3(localMax.x, localMin.y, localMax.z),
+            glm::vec3(localMin.x, localMax.y, localMax.z),
+            localMax
+    };
+
+    // Transform all corners to world space
+    std::vector<glm::vec3> worldCorners;
+    for (const glm::vec3& corner : localCorners) {
+        glm::vec4 transformedCorner = ctm * glm::vec4(corner, 1.0f); // Transform to world space
+        worldCorners.push_back(glm::vec3(transformedCorner)); // Convert back to vec3
+    }
+
+    // Find the minimum point among transformed corners
+    glm::vec3 worldMin = worldCorners[0];
+    for (const glm::vec3& point : worldCorners) {
+        worldMin.x = std::min(worldMin.x, point.x);
+        worldMin.y = std::min(worldMin.y, point.y);
+        worldMin.z = std::min(worldMin.z, point.z);
+    }
+
+    return worldMin;
+}
+
+glm::vec3 MeshRenderer::GetWorldMaxBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm) {
+    glm::vec3 localMin = model->GetMinBoundingBox(); // Local min bounding box
+    glm::vec3 localMax = model->GetMaxBoundingBox(); // Local max bounding box
+
+    // Define all eight corners in local space
+    std::vector<glm::vec3> localCorners = {
+            localMin,
+            glm::vec3(localMax.x, localMin.y, localMin.z),
+            glm::vec3(localMin.x, localMax.y, localMin.z),
+            glm::vec3(localMin.x, localMin.y, localMax.z),
+            glm::vec3(localMax.x, localMax.y, localMin.z),
+            glm::vec3(localMax.x, localMin.y, localMax.z),
+            glm::vec3(localMin.x, localMax.y, localMax.z),
+            localMax
+    };
+
+    // Transform all corners to world space
+    std::vector<glm::vec3> worldCorners;
+    for (const glm::vec3& corner : localCorners) {
+        glm::vec4 transformedCorner = ctm * glm::vec4(corner, 1.0f); // Transform to world space
+        worldCorners.push_back(glm::vec3(transformedCorner)); // Convert back to vec3
+    }
+
+    // Find the maximum point among transformed corners
+    glm::vec3 worldMax = worldCorners[0];
+    for (const glm::vec3& point : worldCorners) {
+        worldMax.x = std::max(worldMax.x, point.x);
+        worldMax.y = std::max(worldMax.y, point.y);
+        worldMax.z = std::max(worldMax.z, point.z);
+    }
+
+    return worldMax;
 }

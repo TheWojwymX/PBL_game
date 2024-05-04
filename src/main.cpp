@@ -19,6 +19,7 @@
 #include "Component/Camera.h"
 #include "Component/InstanceRenderer.h"
 #include "Component/Skybox.h"
+#include "Component/ShadowMap.h"
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/SceneManager.h"
@@ -127,20 +128,38 @@ int main(int, char**)
     INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
 
+    //ShadowMap init
+    ShadowMap shadowMap;
+    shadowMap.Init();
+    shadowMap.AssignShadowMapToShader();
+
+    glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
+    float cloudSpeed = 8.0f;
+
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
 
+    //Shadowmap Creation POV
+    glm::vec3 lightPos(50.0f, 120.0f, 40.0f);
+    glm::vec3 lightCenter(50.0f, 100.0f,50.0f);
+
     //SpotLight Properties
     bool isSpotActive = true;
+    glm::vec3 spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
+    glm::vec3 spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
     glm::vec3 spotLightColor(1.0f);
     float spotLightConstant = 1.0f;
     float spotLightLinear = 0.1f;
-    float spotLightQuadratic = 0.01f;
-    float spotLightCutOff = 12.5f;
-    float spotLightOuterCutOff = 17.5f;
+    float spotLightQuadratic = 0.03f;
+    float spotLightCutOff = 16.5f;
+    float spotLightOuterCutOff = 20.5f;
+    bool _renderWireframeBB = false;
+
+    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
+    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(SCR_HEIGHT);
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
@@ -187,10 +206,26 @@ int main(int, char**)
         // Start the Dear ImGui frame
         imguiMain->draw();
 
-        //Flashlight Debug
+        ImGui::Begin("Depth Map");
+        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
+        ImGui::Image((void*)(intptr_t)shadowMap.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::End();
+
+        // Quick Debug
         ImGui::Checkbox("Flashlight", &isSpotActive);
         ImGui::ColorEdit3("Spot light Color", glm::value_ptr(spotLightColor));
         ImGui::InputFloat("Spot light Strength", &spotLightQuadratic);
+
+        ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
+        ImGui::InputFloat3("Center", &lightCenter[0]);
+
+        ImGui::ColorEdit3("Directional Light Color", dirColor);
+
+        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
+
+        //Przypisz _renderWireframeBB do MeshRenderera modelu, aby widzieć jego bounding box
+        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->_renderWireframeBB = _renderWireframeBB;
+        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->_renderWireframeBB = _renderWireframeBB;
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -206,7 +241,30 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("projection", projection);
 
         skybox.draw();
+
+        spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpPosition(spotLightCurrentPosition);
+        spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpDirection(spotLightCurrentDirection);
+
+        //ShadowMap Creation
+        glm::vec3 shadowDir = glm::normalize(lightCenter - lightPos);
+        dirDirection[0] = shadowDir.x;
+        dirDirection[1] = shadowDir.y;
+        dirDirection[2] = shadowDir.z;
+
+        float near_plane = 0.2f, far_plane = 130.0f;
+        glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
+        glm::mat4 lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
+        shadowMap.SetLightProjection(lightProjection);
+        shadowMap.SetLightView(lightView);
+        shadowMap.AssignLightSpaceMatrixToShader();
+
         glDepthMask(GL_TRUE);
+
+        shadowMap.BeginRender();
+        shadowMap.RenderMap();
+        shadowMap.EndRender();
+
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT); //Reset Viewport After Rendering to Shadow Map
 
         RESOURCEMANAGER.GetShaderByName("modelShader")->use();
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.direction", dirDirection);
@@ -214,8 +272,8 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("dirLight.isActive", dirActive);
 
         RESOURCEMANAGER.GetShaderByName("modelShader")->setBool("spotLights[0].isActive", isSpotActive);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].position", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].direction", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector());
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].direction", spotLightCurrentDirection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].constant", spotLightConstant);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].linear", spotLightLinear);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
@@ -226,6 +284,8 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("lightPos", lightPos);
+        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
         RESOURCEMANAGER.GetShaderByName("outlineShader")->use();
         RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("dirLight.direction", dirDirection);
@@ -248,8 +308,8 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("dirLight.isActive", dirActive);
 
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setBool("spotLights[0].isActive", isSpotActive);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].position", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].direction", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector());
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].direction", spotLightCurrentDirection);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].constant", spotLightConstant);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].linear", spotLightLinear);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
@@ -260,14 +320,28 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("lightPos", lightPos);
+        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->use();
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setVec3("lightColor", dirColor);
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
 
-        GAMEMANAGER.root->Render(Transform::Origin());
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->use();
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.direction", dirDirection);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.color", dirColor);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setInt("dirLight.isActive", dirActive);
 
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("initialCloudPosition", initialCloudPosition);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("cloudSpeed", cloudSpeed);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("time", TIME.GetTime());
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
+
+
+        GAMEMANAGER.root->Render(Transform::Origin());
 
         //HUD.Update();
         AUDIOENGINEMANAGER.Update();

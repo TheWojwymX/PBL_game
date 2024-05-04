@@ -1,11 +1,11 @@
 {
-    "nextComponentId": 10,
-    "nextNodeId": 8,
+    "nextComponentId": 12,
+    "nextNodeId": 10,
     "resources": {
         "Models": [
             {
                 "ModelName": "sandModel",
-                "Path": "res/Sand/Sand.obj"
+                "Path": "../../res/Sand/Sand.obj"
             },
             {
                 "ModelName": "antModel",
@@ -14,6 +14,10 @@
             {
                 "ModelName": "baseModel",
                 "Path": "res/Models/Base/base_concept_2.0.obj"
+            },
+            {
+                "ModelName": "cloudModel",
+                "Path": "res/Sand/Sand.obj"
             }
         ],
         "Shaders": [
@@ -66,6 +70,21 @@
                 "ShaderName": "skyboxReflectionShader",
                 "fragmentPath": "../../res/skyboxReflectionShader.fs",
                 "vertexPath": "../../res/skyboxReflectionShader.vs"
+            },
+            {
+                "ShaderName": "shadowShader",
+                "fragmentPath": "../../res/shadowShader.fs",
+                "vertexPath": "../../res/shadowShader.vs"
+            },
+            {
+                "ShaderName": "shadowInstanceShader",
+                "fragmentPath": "../../res/shadowInstanceShader.fs",
+                "vertexPath": "../../res/shadowInstanceShader.vs"
+            },
+            {
+                "ShaderName": "wireframeShader",
+                "fragmentPath": "../../res/wireframeShader.fs",
+                "vertexPath": "../../res/wireframeShader.vs"
             }
         ],
         "Sounds": [
@@ -371,6 +390,70 @@
                         1.5,
                         1.5,
                         1.5
+                    ]
+                }
+            },
+            {
+                "NodeID": 8,
+                "NodeName": "cloud",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 10,
+                        "componentType": 3,
+                        "maxSize": 5000,
+                        "model": "cloudModel",
+                        "shader": "cloudShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 9,
+                "NodeName": "cloudManager",
+                "children": [],
+                "components": [
+                    {
+                        "cameraRefID": 2,
+                        "componentId": 11,
+                        "componentType": 8,
+                        "depth": 50,
+                        "height": 2,
+                        "sandRendererRefID": 10,
+                        "width": 50
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }

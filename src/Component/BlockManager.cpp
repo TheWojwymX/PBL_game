@@ -370,7 +370,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
 
                 // Create BlockData object with Sand type if filled, otherwise Empty type
                 BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
-                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, shared_from_this());
+                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, 1.0f, shared_from_this());
 
                 // Add the block to the vector
                 _blocksData.push_back(block);

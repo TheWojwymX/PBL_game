@@ -14,7 +14,7 @@ const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 30.0f;
 const float SENSITIVITY = 0.1f;
-const float ZOOM = 45.0f;
+const float ZOOM = 60.0f;
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum CameraMovement {
@@ -48,8 +48,23 @@ public:
     float GetZoom() const { return _zoom; }
     glm::vec3 GetRightVector() const { return _right; }
     glm::vec3 GetFrontVector() const { return _front; }
+    glm::mat4 GetProjectionMatrix(float screenWidth, float screenHeight) {
+        return glm::perspective(glm::radians(_zoom), screenWidth / screenHeight, 0.1f, 1000.0f);
+    }
+
+    glm::vec3 LerpPosition(glm::vec3 currentPosition);
+    glm::vec3 LerpDirection(glm::vec3 currentPosition);
+
+    glm::vec3 lerp(const glm::vec3 &start, const glm::vec3 &end, float t) {
+        return start + t * (end - start);
+    }
 
     void addToInspector(ImguiMain *imguiMain) override;
+
+    void setScreenWidth(unsigned int screenWidth) {_screenWidth = screenWidth;}
+    void setScreenHeight(unsigned int screenHeight) {_screenHeight = screenHeight;}
+    unsigned int getScreenWidth() {return _screenWidth;}
+    unsigned int getScreenHeight() {return _screenHeight;}
 
 private:
     // camera attributes
@@ -67,6 +82,9 @@ private:
     float _mouseSensitivity;
     float _zoom;
     bool _editMode;
+
+    unsigned int _screenWidth;
+    unsigned int _screenHeight;
 
     // calculates the front vector from the Camera's (updated) Euler Angles
     void UpdateCameraVectors();

@@ -64,6 +64,48 @@ public:
             meshes[i].InstanceDraw(shader, amount);
     }
 
+    glm::vec3 GetMinBoundingBox() const {
+        glm::vec3 min(FLT_MAX, FLT_MAX, FLT_MAX);
+
+        for (const auto& mesh : meshes) {
+            for (const auto& vertex : mesh.vertices) {
+                min.x = std::min(min.x, vertex.Position.x);
+                min.y = std::min(min.y, vertex.Position.y);
+                min.z = std::min(min.z, vertex.Position.z);
+            }
+        }
+
+        return min;
+    }
+
+    glm::vec3 GetMaxBoundingBox() const {
+        glm::vec3 max(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+        for (const auto& mesh : meshes) {
+            for (const auto& vertex : mesh.vertices) {
+                max.x = std::max(max.x, vertex.Position.x);
+                max.y = std::max(max.y, vertex.Position.y);
+                max.z = std::max(max.z, vertex.Position.z);
+            }
+        }
+
+        return max;
+    }
+
+    glm::vec3 GetModelBoundingBox() const {
+        glm::vec3 min(FLT_MAX, FLT_MAX, FLT_MAX);
+        glm::vec3 max(FLT_MIN, FLT_MIN, FLT_MIN);
+
+        for (const auto& mesh : meshes) {
+            for (const auto& vertex : mesh.vertices) {
+                max = glm::max(max, vertex.Position);
+                min = glm::min(min, vertex.Position);
+            }
+        }
+
+        return glm::abs(max - min); // Returns the size of the bounding box
+    }
+
 private:
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
     void loadModel(string const& path)
@@ -259,6 +301,7 @@ private:
 
         return textureID;
     }
+
 };
 
 

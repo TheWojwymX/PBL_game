@@ -90,6 +90,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::ANIMATION:
                         ComponentsManager::getInstance().DeserializeComponent<Animation>(componentJson);
                         break;
+                    case ComponentType::CLOUDMANAGER:
+                        ComponentsManager::getInstance().DeserializeComponent<CloudManager>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;
@@ -158,6 +161,17 @@ void Node::Render(glm::mat4 parentWorld) {
 
     for (auto &child: _children)
         child->Render(world);
+}
+
+void Node::RenderShadows(glm::mat4 parentWorld) {
+    glm::mat4 world = _local->Combine(parentWorld);
+
+    for (auto &component: _components)
+        if (component->IsEnabled())
+            component->RenderShadows(parentWorld);
+
+    for (auto &child: _children)
+        child->RenderShadows(world);
 }
 
 void Node::UpdateTransforms(glm::mat4 parentWorld) {

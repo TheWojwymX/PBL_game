@@ -22,7 +22,7 @@ public:
     virtual void Input();
     virtual void Update();
     virtual void Render(glm::mat4 parentWorld);
-    virtual void RenderShadows(glm::mat4 parentWorld, Shader* shader);
+    virtual void RenderShadows(glm::mat4 parentWorld);
     virtual void addToInspector(ImguiMain* imguiMain);
     //virtual void SetUp();
     void addToHierarchy();

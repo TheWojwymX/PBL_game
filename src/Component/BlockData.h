@@ -2,25 +2,29 @@
 
 #include <memory>
 #include <glm/glm.hpp>
+#include <variant>
 
 class BlockManager;
+class CloudManager;
 
 enum class BlockType {
     EMPTY,
     DIRT,
-    SAND
+    SAND,
+    CLOUD
 };
 
 class BlockData {
 public:
-    BlockData(BlockType blockType, glm::ivec3 posID, glm::mat4 matrix, float startHP, bool invincible, std::weak_ptr<BlockManager> blockManager);
+    BlockData(BlockType blockType, glm::ivec3 posID, glm::mat4 matrix, float startHP, bool invincible, float density, std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> blockManager);
 
     BlockType GetBlockType() const { return _blockType; }
     glm::ivec3 GetPosID() const { return _posID; }
     float GetHP() const { return _HP; }
     float GetStartHP() const { return _startHP; }
     bool IsInvincible() const { return _invincible; }
-    std::weak_ptr<BlockManager> GetBlockManager() const { return _blockManager; }
+    float GetDensity() const { return _density; }
+    std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> GetBlockManager() const { return _blockManager; }
     bool IsVisible() const { return _visible; }
     glm::mat4 GetMatrix() const { return _matrix; }
     bool GetSideCollision(int index) const { return _sideCollisions[index]; }
@@ -48,7 +52,8 @@ private:
     float _HP;
     float _startHP;
     bool _invincible;
-    std::weak_ptr<BlockManager> _blockManager;
+    float _density;
+    std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> _blockManager;
     bool _visible;
     glm::mat4 _matrix;
     bool _sideCollisions[6];

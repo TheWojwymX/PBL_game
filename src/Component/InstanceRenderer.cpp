@@ -49,6 +49,14 @@ void InstanceRenderer::Render(glm::mat4 parentWorld) {
     _model->InstanceDraw(*_shader, _instanceMatrix.size());
 }
 
+void InstanceRenderer::RenderShadows(glm::mat4 parentWorld) {
+    shared_ptr<Shader> currentShader = _shader;
+    SetShader(RESOURCEMANAGER.GetShaderByName("shadowInstanceShader"));
+    _shader->use();
+    _model->InstanceDraw(*_shader, _instanceMatrix.size());
+    SetShader(currentShader);
+}
+
 void InstanceRenderer::RefreshMatrixBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
     glBufferSubData(GL_ARRAY_BUFFER, 0, _instanceMatrix.size() * sizeof(glm::mat4), _instanceMatrix.data());

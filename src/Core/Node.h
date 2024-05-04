@@ -12,6 +12,7 @@
 #include "Component/BlockManager.h"
 #include "Managers/ComponentsManager.h"
 #include "Component/PlayerAudioController.h"
+#include "Component/CloudManager.h"
 #include "Enemies/EnemyAI.h"
 #include "Component/Animation.h"
 
@@ -33,6 +34,7 @@ public:
     void Input();
     void Update();
     void Render(glm::mat4 parentWorld);
+    void RenderShadows(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
     void addToInspector(ImguiMain* imguiMain);
     void removeChild(std::shared_ptr<Node> child);

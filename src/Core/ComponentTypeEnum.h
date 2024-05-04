@@ -9,7 +9,8 @@ enum class ComponentType {
     AUDIOSOURCE,
     MESHRENDERER,
     ENEMYAI,
-    ANIMATION
+    ANIMATION,
+    CLOUDMANAGER
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H
