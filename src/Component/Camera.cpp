@@ -98,7 +98,7 @@ glm::vec3 Camera::LerpPosition(glm::vec3 currentPosition) {
 }
 
 glm::vec3 Camera::LerpDirection(glm::vec3 currentDirection) {
-    float lerpValue = 0.13f;
+    float lerpValue = 0.14f;
     currentDirection = lerp(currentDirection, _front, lerpValue);
     return currentDirection;
 }

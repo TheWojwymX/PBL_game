@@ -2,6 +2,9 @@
 #include "Managers/ResourceManager.h"
 #include "Component/Camera.h"
 #include "Managers/ComponentsManager.h"
+#include <algorithm>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/constants.hpp>
 
 struct FrustumPlane {
     glm::vec3 normal;
@@ -37,12 +40,12 @@ public:
 
     void Update() override;
 
-    bool IsInFrustum(const glm::mat4& viewProjectionMatrix);
+    bool IsInFrustum(const glm::mat4& viewProjectionMatrix, glm::mat4 ctm);
     void RenderBoundingBox(const glm::mat4& viewProjectionMatrix, glm::vec3 min, glm::vec3 max);
     std::vector<FrustumPlane> extractFrustumPlanes(const glm::mat4& viewProjectionMatrix);
     bool isBoxInFrustum(const std::vector<FrustumPlane>& planes, const glm::vec3& min, const glm::vec3& max);
-    glm::vec3 GetWorldMinBoundingBox(const std::shared_ptr<Model>& model, const std::shared_ptr<Transform>& transform);
-    glm::vec3 GetWorldMaxBoundingBox(const std::shared_ptr<Model>& model, const std::shared_ptr<Transform>& transform);
+    glm::vec3 GetWorldMinBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm);
+    glm::vec3 GetWorldMaxBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm);
 
     bool _shouldRenderOutline = false;
     bool _renderWireframeBB = false;

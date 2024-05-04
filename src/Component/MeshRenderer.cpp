@@ -9,9 +9,9 @@ MeshRenderer::MeshRenderer(){
 void MeshRenderer::Render(glm::mat4 parentWorld) {
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
     glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(_cameraRef->getScreenWidth(),_cameraRef->getScreenHeight()) * _cameraRef->GetViewMatrix();
-    if(IsInFrustum(viewProjectionMatrix)) {
+    if(IsInFrustum(viewProjectionMatrix, world)) {
         RenderModel(_model, world);
-        //framesRendered++;
+        //framesRendered++;                                 //Uncomment both lines to see Frustum Culling work
         //cout << "Rendering: " << framesRendered << endl;  //Frustum Culling working
     }
 }
@@ -107,10 +107,10 @@ void MeshRenderer::Update() {
 }
 
 
-bool MeshRenderer::IsInFrustum(const glm::mat4& viewProjectionMatrix)
+bool MeshRenderer::IsInFrustum(const glm::mat4& viewProjectionMatrix, glm::mat4 ctm)
 {
-    glm::vec3 min = GetWorldMinBoundingBox(_model, _ownerTransform);
-    glm::vec3 max = GetWorldMaxBoundingBox(_model, _ownerTransform);
+    glm::vec3 min = GetWorldMinBoundingBox(_model, ctm);
+    glm::vec3 max = GetWorldMaxBoundingBox(_model, ctm);
 
     if(_renderWireframeBB) {RenderBoundingBox(viewProjectionMatrix, min, max);} //Wireframe bounding boxes
 
@@ -236,28 +236,70 @@ bool MeshRenderer::isBoxInFrustum(const std::vector<FrustumPlane>& planes, const
     return true;
 }
 
-glm::vec3 MeshRenderer::GetWorldMinBoundingBox(const std::shared_ptr<Model>& model, const std::shared_ptr<Transform>& transform) {
-    glm::vec3 localMin = model->GetMinBoundingBox(); // Calculate local bounding box
-    glm::vec3 scale = transform->GetScale(); // Get the scale of the transform
+glm::vec3 MeshRenderer::GetWorldMinBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm) {
+    glm::vec3 localMin = model->GetMinBoundingBox(); // Local min bounding box
+    glm::vec3 localMax = model->GetMaxBoundingBox(); // Local max bounding box
 
-    // Apply scale to localMin
-    glm::vec3 scaledMin = glm::vec3(localMin.x * scale.x, localMin.y * scale.y, localMin.z * scale.z);
+    // Define all eight corners of the bounding box in local space
+    std::vector<glm::vec3> localCorners = {
+            localMin,
+            glm::vec3(localMax.x, localMin.y, localMin.z),
+            glm::vec3(localMin.x, localMax.y, localMin.z),
+            glm::vec3(localMin.x, localMin.y, localMax.z),
+            glm::vec3(localMax.x, localMax.y, localMin.z),
+            glm::vec3(localMax.x, localMin.y, localMax.z),
+            glm::vec3(localMin.x, localMax.y, localMax.z),
+            localMax
+    };
 
-    // Apply the object's position to get the world bounding box
-    glm::vec3 worldMin = transform->GetPosition() + scaledMin;
+    // Transform all corners to world space
+    std::vector<glm::vec3> worldCorners;
+    for (const glm::vec3& corner : localCorners) {
+        glm::vec4 transformedCorner = ctm * glm::vec4(corner, 1.0f); // Transform to world space
+        worldCorners.push_back(glm::vec3(transformedCorner)); // Convert back to vec3
+    }
+
+    // Find the minimum point among transformed corners
+    glm::vec3 worldMin = worldCorners[0];
+    for (const glm::vec3& point : worldCorners) {
+        worldMin.x = std::min(worldMin.x, point.x);
+        worldMin.y = std::min(worldMin.y, point.y);
+        worldMin.z = std::min(worldMin.z, point.z);
+    }
 
     return worldMin;
 }
 
-glm::vec3 MeshRenderer::GetWorldMaxBoundingBox(const std::shared_ptr<Model>& model, const std::shared_ptr<Transform>& transform) {
-    glm::vec3 localMax = model->GetMaxBoundingBox(); // Calculate local bounding box
-    glm::vec3 scale = transform->GetScale(); // Get the scale of the transform
+glm::vec3 MeshRenderer::GetWorldMaxBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm) {
+    glm::vec3 localMin = model->GetMinBoundingBox(); // Local min bounding box
+    glm::vec3 localMax = model->GetMaxBoundingBox(); // Local max bounding box
 
-    // Apply scale to localMax
-    glm::vec3 scaledMax = glm::vec3(localMax.x * scale.x, localMax.y * scale.y, localMax.z * scale.z);
+    // Define all eight corners in local space
+    std::vector<glm::vec3> localCorners = {
+            localMin,
+            glm::vec3(localMax.x, localMin.y, localMin.z),
+            glm::vec3(localMin.x, localMax.y, localMin.z),
+            glm::vec3(localMin.x, localMin.y, localMax.z),
+            glm::vec3(localMax.x, localMax.y, localMin.z),
+            glm::vec3(localMax.x, localMin.y, localMax.z),
+            glm::vec3(localMin.x, localMax.y, localMax.z),
+            localMax
+    };
 
-    // Apply the object's position to get the world bounding box
-    glm::vec3 worldMax = transform->GetPosition() + scaledMax;
+    // Transform all corners to world space
+    std::vector<glm::vec3> worldCorners;
+    for (const glm::vec3& corner : localCorners) {
+        glm::vec4 transformedCorner = ctm * glm::vec4(corner, 1.0f); // Transform to world space
+        worldCorners.push_back(glm::vec3(transformedCorner)); // Convert back to vec3
+    }
+
+    // Find the maximum point among transformed corners
+    glm::vec3 worldMax = worldCorners[0];
+    for (const glm::vec3& point : worldCorners) {
+        worldMax.x = std::max(worldMax.x, point.x);
+        worldMax.y = std::max(worldMax.y, point.y);
+        worldMax.z = std::max(worldMax.z, point.z);
+    }
 
     return worldMax;
 }
