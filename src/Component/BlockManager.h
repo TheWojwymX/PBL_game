@@ -32,8 +32,6 @@ public:
     void initiate() override;
 
     void Init() override;
-    void Update() override;
-
 
     bool RayIntersectsBlock(float rayLength, int radius);
     std::pair<glm::vec3,glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
@@ -54,7 +52,6 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _cameraRefID;
-    std::vector<BlockData*> _renderBlocks; 
 
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();
@@ -69,9 +66,6 @@ private:
     void GenerateCaves(float initialFillRatio, int numIterations);
     void InitializeMap(float initialFillRatio);
     void IterateCaveGeneration();
-    bool IsBlockInFrustum(const BlockData& blockData, const glm::mat4& viewProjectionMatrix);
-    void UpdateRenderBlocks();
-
 
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);
