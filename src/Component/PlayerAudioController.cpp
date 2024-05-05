@@ -18,8 +18,8 @@ void PlayerAudioController::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void PlayerAudioController::initiate() {
-    Component::initiate();
+void PlayerAudioController::Initiate() {
+    Component::Initiate();
 }
 
 void PlayerAudioController::Update() {

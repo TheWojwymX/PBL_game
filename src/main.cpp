@@ -26,7 +26,7 @@
 #include "Managers/NodesManager.h"
 #include "Gui/ImguiMain.h"
 
-#include "Enemies/EnemiesAIManager.h"
+#include "Enemies/EnemiesManager.h"
 
 #include "HUD/HUDMain.h"
 

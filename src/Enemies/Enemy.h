@@ -2,17 +2,18 @@
 // Created by Jacek on 20.04.2024.
 //
 
-#ifndef SANDBOX_ENEMYAI_H
-#define SANDBOX_ENEMYAI_H
+#ifndef SANDBOX_ENEMY_H
+#define SANDBOX_ENEMY_H
 
 #include "Core/Component.h"
 #include "Core/ComponentTypeEnum.h"
+#include "Managers/GameManager.h"
 
-class EnemyAI : public Component {
+class Enemy : public Component {
 
 public:
 
-    EnemyAI();
+    Enemy();
 
     nlohmann::json Serialize() override;
 
@@ -22,7 +23,7 @@ public:
 
     glm::vec3 _destinationVector;
 
-    float _distanceToStop;
+    float _distanceToStop = 0.1;
 
     bool _isFlying = false;
 
@@ -33,7 +34,14 @@ public:
     int _enemySize;
 
     bool _isAvoiding = false;
+
+    float slalomTime = 0.0f;
+
+    bool _isAtWalls = false;
+
+    bool _shouldStay = false;
+
+    int _hp = 100;
 };
 
-
-#endif //SANDBOX_ENEMYAI_H
+#endif //SANDBOX_ENEMY_H

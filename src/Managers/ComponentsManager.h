@@ -65,7 +65,7 @@ public:
         const auto &components = GetComponents();
         for (const auto &comp: components) {
             if(comp != nullptr){
-                comp->initiate();
+                comp->Initiate();
             }
         }
     }

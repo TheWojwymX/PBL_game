@@ -50,10 +50,10 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void BlockManager::initiate() {
+void BlockManager::Initiate() {
     _sandRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_sandRendererRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
-    Component::initiate();
+    Component::Initiate();
 }
 
 void BlockManager::Init() {

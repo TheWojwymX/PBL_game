@@ -17,7 +17,7 @@ public:
 
     virtual nlohmann::json Serialize();
     virtual void Deserialize(const nlohmann::json& jsonData);
-    virtual void initiate();
+    virtual void Initiate();
     virtual void Init();
     virtual void Input();
     virtual void Update();
@@ -39,8 +39,9 @@ public:
 
     glm::quat GetOwnerRotation();
 
-protected:
     std::shared_ptr<Node> _ownerNode;
+
+protected:
     std::shared_ptr<Transform> _ownerTransform;
     bool _isEnabled = true;
 

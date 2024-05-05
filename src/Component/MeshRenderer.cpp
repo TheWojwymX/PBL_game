@@ -76,8 +76,8 @@ void MeshRenderer::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void MeshRenderer::initiate() {
-    Component::initiate();
+void MeshRenderer::Initiate() {
+    Component::Initiate();
 }
 
 void MeshRenderer::Update() {

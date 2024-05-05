@@ -30,8 +30,8 @@ void Camera::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void Camera::initiate() {
-    Component::initiate();
+void Camera::Initiate() {
+    Component::Initiate();
 }
 
 void Camera::Input() {

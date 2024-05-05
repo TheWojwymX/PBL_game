@@ -18,7 +18,7 @@ public:
 
     void Deserialize(const nlohmann::json &jsonData) override;
 
-    void initiate() override;
+    void Initiate() override;
 
     void Update() override;
 
@@ -26,8 +26,6 @@ public:
 
     shared_ptr<Model> _model; // Raw pointer to the model
     shared_ptr<Shader> _shader; // Raw pointer to the shader
-
-private:
 
     shared_ptr<Shader> _outlineShader; // Raw pointer to the outline shader
 

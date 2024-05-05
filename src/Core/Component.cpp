@@ -25,7 +25,7 @@ void Component::Deserialize(const nlohmann::json &jsonData) {
     }
 }
 
-void Component::initiate() {
+void Component::Initiate() {
 
 }
 

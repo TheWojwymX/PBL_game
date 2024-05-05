@@ -33,7 +33,7 @@ public:
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    void initiate() override;
+    void Initiate() override;
 
     void Input() override;
     void Update() override;

@@ -2,25 +2,22 @@
 // Created by Jacek on 20.04.2024.
 //
 
-#include "EnemyAI.h"
+#include "Enemy.h"
 #include "Core/Time.h"
 
-EnemyAI::EnemyAI() {
+Enemy::Enemy() {
     _type = ComponentType::ENEMYAI;
 }
 
-nlohmann::json EnemyAI::Serialize() {
+nlohmann::json Enemy::Serialize() {
     return Component::Serialize();
 }
 
-void EnemyAI::Deserialize(const nlohmann::json &jsonData) {
+void Enemy::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-float slalomTime = 0.0f; // zmienna śledząca upływ czasu lub odległość
-
-
-void EnemyAI::WalkToDestination(glm::vec3 *destination) {
+void Enemy::WalkToDestination(glm::vec3 *destination) {
 
     if(destination != nullptr){
         _destinationVector = *destination;
@@ -29,7 +26,7 @@ void EnemyAI::WalkToDestination(glm::vec3 *destination) {
     float slalomAmplitude = 0.01; // amplituda ruchu bocznego
     float slalomFrequency = 1.0f; // częstość ruchu bocznego (ile razy na jednostkę odległości)
 
-    if(glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop){
+    if(glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop && !_shouldStay){
 
         slalomTime += TIME.GetDeltaTime();
         float sideMovement = sin(slalomTime * slalomFrequency) * slalomAmplitude;
@@ -48,7 +45,7 @@ void EnemyAI::WalkToDestination(glm::vec3 *destination) {
     }
 }
 
-void EnemyAI::Update() {
+void Enemy::Update() {
 
     WalkToDestination();
     Component::Update();
