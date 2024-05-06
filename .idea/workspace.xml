@@ -33,31 +33,15 @@
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animation.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/BlockManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/BlockManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/InstanceRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/InstanceRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/InstanceRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/InstanceRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerAudioController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerAudioController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerAudioController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerAudioController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/Component.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Component.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/Component.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Component.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesAIManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesAIManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemyAI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemyAI.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/ComponentsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/ComponentsManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +73,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.SandBOX.executor": "Debug",
+    "CMake Application.SandBOX.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -218,6 +202,8 @@
       <workItem from="1714688283052" duration="4037000" />
       <workItem from="1714731379165" duration="2711000" />
       <workItem from="1714899711581" duration="6615000" />
+      <workItem from="1714930939773" duration="3414000" />
+      <workItem from="1714994989762" duration="6092000" />
     </task>
     <servers />
   </component>

@@ -2,7 +2,7 @@
 // Created by Jacek on 20.04.2024.
 //
 
-#define ENEMIESAIMANAGER EnemiesManager::getInstance()
+#define ENEMIESMANAGER EnemiesManager::getInstance()
 
 #ifndef SANDBOX_ENEMIESAIMANAGER_H
 #define SANDBOX_ENEMIESAIMANAGER_H
@@ -45,7 +45,7 @@ public:
 
     void ReturnToComingForNormalDestination();
 
-    void SpawnEnemy();
+    void SpawnEnemy(int size);
 
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
@@ -58,6 +58,8 @@ public:
     void CheckIfAtWalls();
 
     void DealDamageToEnemy(int amount, const shared_ptr<Enemy> &enemy);
+
+    int _testowaPrzeciwnicy = 3;
 };
 
 

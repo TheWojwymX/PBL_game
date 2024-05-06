@@ -39,10 +39,10 @@ public:
 
     glm::quat GetOwnerRotation();
 
-    std::shared_ptr<Node> _ownerNode;
+    glm::quat GetOwnerScale();
 
+    std::shared_ptr<Node> _ownerNode;
 protected:
     std::shared_ptr<Transform> _ownerTransform;
     bool _isEnabled = true;
-
 };

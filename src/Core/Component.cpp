@@ -72,3 +72,7 @@ glm::quat Component::GetOwnerRotation() {
     return _ownerTransform->GetRotation();
 }
 
+glm::quat Component::GetOwnerScale() {
+    return _ownerTransform->GetScale();
+}
+

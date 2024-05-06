@@ -4,16 +4,26 @@
 
 #include "Enemy.h"
 #include "Core/Time.h"
+#include "EnemiesManager.h"
 
 Enemy::Enemy() {
     _type = ComponentType::ENEMYAI;
 }
 
 nlohmann::json Enemy::Serialize() {
-    return Component::Serialize();
+    nlohmann::json data;
+
+    data["enemySize"] = _size;
+
+    return data;
 }
 
 void Enemy::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("enemySize")) {
+        _size = jsonData["enemySize"].get<float>();
+    }
+
     Component::Deserialize(jsonData);
 }
 
@@ -23,8 +33,8 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
         _destinationVector = *destination;
     }
 
-    float slalomAmplitude = 0.01; // amplituda ruchu bocznego
-    float slalomFrequency = 1.0f; // częstość ruchu bocznego (ile razy na jednostkę odległości)
+    float slalomAmplitude = 0.01;
+    float slalomFrequency = 1.0f;
 
     if(glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop && !_shouldStay){
 
@@ -45,8 +55,37 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
     }
 }
 
-void Enemy::Update() {
+void Enemy::Die(){
+    ENEMIESMANAGER._testowaPrzeciwnicy++;
+    GAMEMANAGER.root->removeChild(_ownerNode);
+    auto it = std::find(ENEMIESMANAGER._enemies.begin(), ENEMIESMANAGER._enemies.end(), shared_from_this());
+    if (it != ENEMIESMANAGER._enemies.end()) {
+        *it = nullptr;
+    }
+}
 
+void Enemy::TakeDamage(int amount){
+    _hp -= amount;
+    if(_hp <= 0){
+        Die();
+    }
+}
+
+void Enemy::AttackDome(){
+
+    if(!_isAtWalls) return;
+
+    if(_attackTimer >= _attackFrequency){
+        std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
+        _attackTimer = 0;
+    }
+    else{
+        _attackTimer += TIME.GetDeltaTime();
+    }
+}
+
+void Enemy::Update() {
+    AttackDome();
     WalkToDestination();
     Component::Update();
 }

@@ -9,7 +9,7 @@
 #include "Core/ComponentTypeEnum.h"
 #include "Managers/GameManager.h"
 
-class Enemy : public Component {
+class Enemy : public Component, public std::enable_shared_from_this<Enemy> {
 
 public:
 
@@ -25,13 +25,9 @@ public:
 
     float _distanceToStop = 0.1;
 
-    bool _isFlying = false;
-
     void WalkToDestination(glm::vec3 *destination = nullptr);
 
     int _walkingSpeed = 5;
-
-    int _enemySize;
 
     bool _isAvoiding = false;
 
@@ -42,6 +38,20 @@ public:
     bool _shouldStay = false;
 
     int _hp = 100;
+
+    int _damage = 50;
+
+    float _attackFrequency = 3;
+
+    float _attackTimer = _attackFrequency;
+
+    float _size = 2;
+
+    void TakeDamage(int amount);
+
+    void Die();
+
+    void AttackDome();
 };
 
 #endif //SANDBOX_ENEMY_H

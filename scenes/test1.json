@@ -315,7 +315,8 @@
                     },
                     {
                         "componentId": 7,
-                        "componentType": 6
+                        "componentType": 6,
+                        "enemySize": 4
                     },
                     {
                         "componentId": 9,
@@ -357,7 +358,8 @@
                     },
                     {
                         "componentId": 11,
-                        "componentType": 6
+                        "componentType": 6,
+                        "enemySize": 4
                     },
                     {
                         "componentId": 12,
@@ -399,7 +401,8 @@
                     },
                     {
                         "componentId": 14,
-                        "componentType": 6
+                        "componentType": 6,
+                        "enemySize": 4
                     },
                     {
                         "componentId": 15,
@@ -441,7 +444,8 @@
                     },
                     {
                         "componentId": 17,
-                        "componentType": 6
+                        "componentType": 6,
+                        "enemySize": 4
                     },
                     {
                         "componentId": 18,

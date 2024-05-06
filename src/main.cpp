@@ -163,12 +163,12 @@ int main(int, char**)
 
     //NODESMANAGER.getNodeByName("Enemy1")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
 
-    ENEMIESAIMANAGER.Init();
+    ENEMIESMANAGER.Init();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        ENEMIESAIMANAGER.Update();
+        ENEMIESMANAGER.Update();
 
         // Calculate deltaTime
         TIME.Update();

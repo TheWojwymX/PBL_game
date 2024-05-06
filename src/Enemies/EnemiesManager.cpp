@@ -19,11 +19,6 @@ void EnemiesManager::Init() {
     for(int i = 0; i < _enemies.size(); i++){
         _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
     }
-
-    //set enemy size
-    for(int i = 0; i < _enemies.size(); i++){
-        _enemies[i]->_enemySize = _enemiesSize;
-    }
 }
 
 
@@ -67,7 +62,7 @@ void EnemiesManager::AvoidEnemy(){
             glm::vec3 toOther = _enemies[j]->GetOwnerPosition() - _enemies[i]->GetOwnerPosition();
             float distanceToOther = glm::length(toOther);
 
-            if (distanceToOther < _enemiesSize) {
+            if (distanceToOther < (_enemies[j]->_size + _enemies[i]->_size)/2) {
                 needsToAvoid = true;
                 toOther = glm::normalize(toOther);
                 avoidanceVector -= toOther / distanceToOther;
@@ -86,22 +81,19 @@ void EnemiesManager::AvoidEnemy(){
     }
 }
 
-int testowa = 3;
-
 void EnemiesManager::Update() {
 
 /*    for(int i = 0; i <= COMPONENTSMANAGER.Components.size() - 1; i++){
         std::cout << COMPONENTSMANAGER.Components[i]->_id << ", ";
     }*/
-    std::cout << COMPONENTSMANAGER.Components.size() << std::endl;
 
     ReturnToComingForNormalDestination();
     CheckIfAtWalls();
     AvoidEnemy();
-    SpawnEnemy();
+    SpawnEnemy(2);
     if(Input::Instance().IsKeyPressed(79)){
 
-        DealDamageToEnemy(50, _enemies[testowa]);
+        DealDamageToEnemy(50, _enemies[_testowaPrzeciwnicy]);
 
     }
 
@@ -127,20 +119,11 @@ void EnemiesManager::DealDamageToEnemy(int amount, const shared_ptr<Enemy>& enem
 
     if(enemy == nullptr) return;
 
-    enemy->_hp -= amount;
-    if(enemy->_hp <= 0){
+    enemy->TakeDamage(amount);
 
-        GAMEMANAGER.root->removeChild(enemy->_ownerNode);
-
-        auto it = std::find(_enemies.begin(), _enemies.end(), enemy);
-        if (it != _enemies.end()) {
-            *it = nullptr;
-        }
-        testowa++;
-    }
 }
 
-void EnemiesManager::SpawnEnemy(){
+void EnemiesManager::SpawnEnemy(int size) {
 
     if(Input::Instance().IsKeyPressed(80)){
         std::string nameOfEnemy = "Enemy" + to_string(_enemies.size() + 1);
@@ -148,6 +131,7 @@ void EnemiesManager::SpawnEnemy(){
 
         glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[0]);
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
+        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(glm::vec3(0.5,0.5,0.5));
 
         auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
         newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
@@ -158,13 +142,14 @@ void EnemiesManager::SpawnEnemy(){
         auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+        newEnemyComponent->_size = size;
         _enemies.push_back(newEnemyComponent);
 
-        std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
+        //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
 
         auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
 
-        std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
+        //std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
     }
 }
 
