@@ -78,6 +78,8 @@ void CloudManager::GenerateMap() {
                 if(normalized < 0.4f) filled = true;
                 else filled = false;
 
+                //cout << normalized << endl;
+
                 glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(-2500 + (70 * x), 230, -2500 + (70 * z)), glm::quat(), glm::vec3(70.0f,8.5f,70.0f));
 
                 BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;

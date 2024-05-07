@@ -17,7 +17,7 @@
             },
             {
                 "ModelName": "cloudModel",
-                "Path": "res/Sand/Sand.obj"
+                "Path": "../../res/Sand/Sand.obj"
             }
         ],
         "Shaders": [
@@ -565,7 +565,7 @@
                         "componentType": 8,
                         "depth": 50,
                         "height": 2,
-                        "sandRendererRefID": 10,
+                        "sandRendererRefID": 20,
                         "width": 50
                     }
                 ],
