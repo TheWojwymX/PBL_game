@@ -18,6 +18,18 @@
             {
                 "ModelName": "cloudModel",
                 "Path": "../../res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "AntWalk1",
+                "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
+            },
+            {
+                "ModelName": "AntWalk2",
+                "Path": "res/Models/Ant/ant_walk_0.1-1.obj"
+            },
+            {
+                "ModelName": "AntWalk3",
+                "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
             }
         ],
         "Shaders": [
@@ -340,6 +352,7 @@
                     {
                         "componentId": 9,
                         "componentType": 7,
+                        "entityType": 1,
                         "meshRendererRefID": 6,
                         "frameDuration": 1,
                         "isLoop": true
@@ -383,7 +396,8 @@
                     {
                         "componentId": 12,
                         "componentType": 7,
-                        "meshRendererRefID": 6,
+                        "entityType": 1,
+                        "meshRendererRefID": 10,
                         "frameDuration": 1,
                         "isLoop": true
                     }
@@ -426,7 +440,8 @@
                     {
                         "componentId": 15,
                         "componentType": 7,
-                        "meshRendererRefID": 6,
+                        "entityType": 1,
+                        "meshRendererRefID": 13,
                         "frameDuration": 1,
                         "isLoop": true
                     }
@@ -469,7 +484,8 @@
                     {
                         "componentId": 18,
                         "componentType": 7,
-                        "meshRendererRefID": 6,
+                        "entityType": 1,
+                        "meshRendererRefID": 16,
                         "frameDuration": 1,
                         "isLoop": true
                     }

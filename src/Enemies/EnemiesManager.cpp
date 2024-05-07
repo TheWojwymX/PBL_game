@@ -133,6 +133,7 @@ void EnemiesManager::SpawnEnemy(int size) {
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(glm::vec3(0.5,0.5,0.5));
 
+        // Tutaj podepniemy potem animacje przy spawnie
         auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
         newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
         newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");

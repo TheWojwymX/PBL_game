@@ -1,8 +1,7 @@
-//
-// Created by TheWojwymX on 14.04.2024.
-//
+#pragma once
 
 #include "Animation.h"
+#include "Core/Time.h"
 
 Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop)
         : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop) {}
@@ -26,7 +25,8 @@ std::shared_ptr<Model> Animation::GetCurrentFrame()
     return _frames[frameIndex];
 }
 
-void Animation::Update(float deltaTime) {
+void Animation::Update() {
+    float deltaTime = TIME.GetDeltaTime();
     _currentTime += deltaTime;
 
     if (_loop)
@@ -40,6 +40,9 @@ void Animation::Update(float deltaTime) {
     {
         _currentTime = std::min(_currentTime, _frameDuration * _frames.size() - 0.01f);
     }
+
+    _meshRenderer->_model = GetCurrentFrame();
+    _meshRenderer->Render(Transform::Origin());
 }
 
 void Animation::Reset()
@@ -47,16 +50,9 @@ void Animation::Reset()
     _currentTime = 0.0f;
 }
 
-void Animation::Draw(float dt)
-{
-    Update(dt);
-    _meshRenderer->_model = GetCurrentFrame();
-    _meshRenderer->Render(Transform::Origin());
-}
-
 nlohmann::json Animation::Serialize() {
     nlohmann::json data = Component::Serialize();
-
+    data["entityType"] = _entityType;
     data["meshRendererRefID"] = _meshRenderer->_id;
     data["frameDuration"] = _frameDuration;
     data["isLoop"] = _loop;
@@ -65,6 +61,11 @@ nlohmann::json Animation::Serialize() {
 }
 
 void Animation::Deserialize(const nlohmann::json &jsonData) {
+    _frames.clear();
+
+    if (jsonData.contains("entityType")) {
+        _entityType = jsonData["entityType"].get<int>();
+    }
 
     if (jsonData.contains("meshRendererRefID")) {
         _meshRendererID = jsonData["meshRendererRefID"].get<int>();
@@ -78,6 +79,8 @@ void Animation::Deserialize(const nlohmann::json &jsonData) {
         _loop = jsonData["isLoop"].get<bool>();
     }
 
+    InitFrames();
+
     Component::Deserialize(jsonData);
 }
 
@@ -86,3 +89,14 @@ void Animation::Initiate() {
     Component::Initiate();
 }
 
+void Animation::InitFrames()
+{
+    if (_entityType == 1)
+    {
+        AddFrame(RESOURCEMANAGER.GetModelByName("antModel"));
+//        AddFrame(RESOURCEMANAGER.GetModelByName("AntWalk1"));
+//        AddFrame(RESOURCEMANAGER.GetModelByName("AntWalk2"));
+//        AddFrame(RESOURCEMANAGER.GetModelByName("AntWalk3"));
+    }
+
+}

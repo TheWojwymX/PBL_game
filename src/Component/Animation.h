@@ -15,24 +15,22 @@ private:
     bool _loop;           // Whether the animation should loop
     std::shared_ptr<MeshRenderer> _meshRenderer;
     int _meshRendererID;
+    int _entityType;
 
 public:
     Animation();
     Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop);
 
     nlohmann::json Serialize() override;
-
     void Deserialize(const nlohmann::json &jsonData) override;
-
     void Initiate() override;
 
     void AddFrame(std::shared_ptr<Model> model);
     std::shared_ptr<Model> GetCurrentFrame();
-    void Update(float deltaTime);
+    void Update();
     void Reset();
-    void Draw(float dt);
+    void InitFrames();
+
     //void addToInspector(ImguiMain *imguiMain) override;
 
 };
-
-

@@ -18,6 +18,18 @@
             {
                 "ModelName": "cloudModel",
                 "Path": "../../res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "AntWalk1",
+                "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
+            },
+            {
+                "ModelName": "AntWalk2",
+                "Path": "res/Models/Ant/ant_walk_0.1-1.obj"
+            },
+            {
+                "ModelName": "AntWalk3",
+                "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
             }
         ],
         "Shaders": [
@@ -338,6 +350,7 @@
                     {
                         "componentId": 9,
                         "componentType": 7,
+                        "entityType": 1,
                         "frameDuration": 1.0,
                         "isLoop": true,
                         "meshRendererRefID": 6
@@ -379,9 +392,10 @@
                     {
                         "componentId": 12,
                         "componentType": 7,
+                        "entityType": 1,
                         "frameDuration": 1.0,
                         "isLoop": true,
-                        "meshRendererRefID": 6
+                        "meshRendererRefID": 10
                     }
                 ],
                 "transform": {
@@ -420,9 +434,10 @@
                     {
                         "componentId": 15,
                         "componentType": 7,
+                        "entityType": 1,
                         "frameDuration": 1.0,
                         "isLoop": true,
-                        "meshRendererRefID": 6
+                        "meshRendererRefID": 13
                     }
                 ],
                 "transform": {
@@ -461,9 +476,10 @@
                     {
                         "componentId": 18,
                         "componentType": 7,
+                        "entityType": 1,
                         "frameDuration": 1.0,
                         "isLoop": true,
-                        "meshRendererRefID": 6
+                        "meshRendererRefID": 16
                     }
                 ],
                 "transform": {
