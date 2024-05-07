@@ -25,7 +25,7 @@ void Component::Deserialize(const nlohmann::json &jsonData) {
     }
 }
 
-void Component::initiate() {
+void Component::Initiate() {
 
 }
 
@@ -62,5 +62,17 @@ void Component::addToInspector(ImguiMain *imguiMain)
 
 void Component::addToHierarchy() {
     ImGui::Text("Komponent");
+}
+
+glm::vec3 Component::GetOwnerPosition() {
+    return _ownerTransform->GetPosition();
+}
+
+glm::quat Component::GetOwnerRotation() {
+    return _ownerTransform->GetRotation();
+}
+
+glm::quat Component::GetOwnerScale() {
+    return _ownerTransform->GetScale();
 }
 

@@ -27,7 +27,7 @@
 #include "Managers/NodesManager.h"
 #include "Gui/ImguiMain.h"
 
-#include "Enemies/EnemiesAIManager.h"
+#include "Enemies/EnemiesManager.h"
 
 #include "HUD/HUDMain.h"
 
@@ -119,7 +119,7 @@ int main(int, char**)
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
 
-    NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
+    //NodesManager::getInstance().getNodeByName("player")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
 
     Skybox skybox;
     skybox.init();
@@ -180,14 +180,14 @@ int main(int, char**)
 
     shared_ptr<Model> antModel = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
 
-    //NODESMANAGER.getNodeByName("AntModel")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+    //NODESMANAGER.getNodeByName("Enemy1")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
 
-    ENEMIESAIMANAGER.Init();
+    ENEMIESMANAGER.Init();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        ENEMIESAIMANAGER.Update();
+        ENEMIESMANAGER.Update();
 
         // Calculate deltaTime
         TIME.Update();

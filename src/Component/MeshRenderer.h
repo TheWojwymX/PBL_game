@@ -32,7 +32,7 @@ public:
 
     void Deserialize(const nlohmann::json &jsonData) override;
 
-    void initiate() override;
+    void Initiate() override;
 
     void SetShader(shared_ptr<Shader> newShader) {
         _shader = newShader;
@@ -52,10 +52,6 @@ public:
 
     shared_ptr<Model> _model; // Raw pointer to the model
     shared_ptr<Shader> _shader; // Raw pointer to the shader
-
-
-private:
-
     shared_ptr<Shader> _outlineShader; // Raw pointer to the outline shader
     std::shared_ptr<Camera> _cameraRef;
     int framesRendered;

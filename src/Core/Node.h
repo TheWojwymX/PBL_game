@@ -13,7 +13,7 @@
 #include "Managers/ComponentsManager.h"
 #include "Component/PlayerAudioController.h"
 #include "Component/CloudManager.h"
-#include "Enemies/EnemyAI.h"
+#include "Enemies/Enemy.h"
 #include "Component/Animation.h"
 
 class Node : public std::enable_shared_from_this<Node>{

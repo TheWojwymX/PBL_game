@@ -40,8 +40,8 @@ void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void InstanceRenderer::initiate() {
-    Component::initiate();
+void InstanceRenderer::Initiate() {
+    Component::Initiate();
 }
 
 void InstanceRenderer::Render(glm::mat4 parentWorld) {

@@ -16,7 +16,7 @@ public:
 
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    void initiate() override;
+    void Initiate() override;
 
     void Init() override;
 

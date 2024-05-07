@@ -91,10 +91,10 @@ void MeshRenderer::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void MeshRenderer::initiate() {
-    Component::initiate();
+void MeshRenderer::Initiate() {
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
     framesRendered = 0;
+    Component::Initiate();
 }
 
 void MeshRenderer::Update() {

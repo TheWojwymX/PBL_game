@@ -31,7 +31,9 @@ public:
 
     int _domeRadius = 15;
 
-    float _groundPosition = 100.2;
+    glm::vec2 _domePosition = glm::vec2(50, 50);
+
+    float _groundLevel = 100.2;
 
 };
 

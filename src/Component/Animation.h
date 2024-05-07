@@ -24,7 +24,7 @@ public:
 
     void Deserialize(const nlohmann::json &jsonData) override;
 
-    void initiate() override;
+    void Initiate() override;
 
     void AddFrame(std::shared_ptr<Model> model);
     std::shared_ptr<Model> GetCurrentFrame();

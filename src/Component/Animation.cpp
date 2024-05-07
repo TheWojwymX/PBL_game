@@ -81,8 +81,8 @@ void Animation::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void Animation::initiate() {
+void Animation::Initiate() {
     _meshRenderer = COMPONENTSMANAGER.GetComponentByID<MeshRenderer>(_meshRendererID);
-    Component::initiate();
+    Component::Initiate();
 }
 

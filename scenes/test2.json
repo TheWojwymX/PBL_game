@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 12,
-    "nextNodeId": 10,
+    "nextComponentId": 21,
+    "nextNodeId": 13,
     "resources": {
         "Models": [
             {
@@ -304,9 +304,9 @@
                 ],
                 "transform": {
                     "position": [
-                        0.0,
+                        49.0,
                         115.0,
-                        0.0
+                        99.0
                     ],
                     "rotation": [
                         0.0,
@@ -322,7 +322,7 @@
             },
             {
                 "NodeID": 6,
-                "NodeName": "AntModel",
+                "NodeName": "Enemy1",
                 "children": [],
                 "components": [
                     {
@@ -333,8 +333,7 @@
                         "shader": "modelShader"
                     },
                     {
-                        "componentId": 7,
-                        "componentType": 6
+                        "enemySize": 4.0
                     },
                     {
                         "componentId": 9,
@@ -346,9 +345,132 @@
                 ],
                 "transform": {
                     "position": [
-                        5.0,
+                        53.0,
                         100.19999694824219,
-                        5.0
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 8,
+                "NodeName": "Enemy2",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 10,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "enemySize": 4.0
+                    },
+                    {
+                        "componentId": 12,
+                        "componentType": 7,
+                        "frameDuration": 1.0,
+                        "isLoop": true,
+                        "meshRendererRefID": 6
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        58.0,
+                        100.19999694824219,
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 9,
+                "NodeName": "Enemy3",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 13,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "enemySize": 4.0
+                    },
+                    {
+                        "componentId": 15,
+                        "componentType": 7,
+                        "frameDuration": 1.0,
+                        "isLoop": true,
+                        "meshRendererRefID": 6
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        62.0,
+                        100.19999694824219,
+                        100.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 10,
+                "NodeName": "Enemy4",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 16,
+                        "componentType": 5,
+                        "model": "antModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "enemySize": 4.0
+                    },
+                    {
+                        "componentId": 18,
+                        "componentType": 7,
+                        "frameDuration": 1.0,
+                        "isLoop": true,
+                        "meshRendererRefID": 6
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        62.0,
+                        100.19999694824219,
+                        105.0
                     ],
                     "rotation": [
                         0.0,
@@ -394,12 +516,12 @@
                 }
             },
             {
-                "NodeID": 8,
+                "NodeID": 12,
                 "NodeName": "cloud",
                 "children": [],
                 "components": [
                     {
-                        "componentId": 10,
+                        "componentId": 20,
                         "componentType": 3,
                         "maxSize": 5000,
                         "model": "cloudModel",
@@ -425,17 +547,16 @@
                 }
             },
             {
-                "NodeID": 9,
+                "NodeID": 11,
                 "NodeName": "cloudManager",
                 "children": [],
                 "components": [
                     {
                         "cameraRefID": 2,
-                        "componentId": 11,
+                        "componentId": 19,
                         "componentType": 8,
                         "depth": 50,
                         "height": 2,
-                        "sandRendererRefID": 10,
                         "width": 50
                     }
                 ],

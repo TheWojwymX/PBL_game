@@ -50,11 +50,11 @@ void CloudManager::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void CloudManager::initiate()
+void CloudManager::Initiate()
 {
     _sandRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_sandRendererRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
-    Component::initiate();
+    Component::Initiate();
 }
 
 void CloudManager::Init() {

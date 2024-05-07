@@ -85,7 +85,7 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                         ComponentsManager::getInstance().DeserializeComponent<MeshRenderer>(componentJson);
                         break;
                     case ComponentType::ENEMYAI:
-                        ComponentsManager::getInstance().DeserializeComponent<EnemyAI>(componentJson);
+                        ComponentsManager::getInstance().DeserializeComponent<Enemy>(componentJson);
                         break;
                     case ComponentType::ANIMATION:
                         ComponentsManager::getInstance().DeserializeComponent<Animation>(componentJson);

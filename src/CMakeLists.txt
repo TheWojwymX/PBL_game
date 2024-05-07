@@ -49,10 +49,10 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         AudioContext.cpp
         Component/PlayerAudioController.cpp
         Component/PlayerAudioController.h
-        Enemies/EnemiesAIManager.cpp
-        Enemies/EnemiesAIManager.h
-        Enemies/EnemyAI.cpp
-        Enemies/EnemyAI.h
+        Enemies/EnemiesManager.cpp
+        Enemies/EnemiesManager.h
+        Enemies/Enemy.cpp
+        Enemies/Enemy.h
         Component/Animation.h Component/ShadowMap.h Component/ShadowMap.cpp Component/CloudManager.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)

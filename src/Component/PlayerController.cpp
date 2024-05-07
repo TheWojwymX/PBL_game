@@ -37,10 +37,10 @@ void PlayerController::Deserialize(const nlohmann::json &jsonData) {
     Component::Deserialize(jsonData);
 }
 
-void PlayerController::initiate() {
+void PlayerController::Initiate() {
     _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(_blockManagerRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
-    Component::initiate();
+    Component::Initiate();
 }
 
 void PlayerController::Init() {
