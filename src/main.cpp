@@ -223,9 +223,7 @@ int main(int, char**)
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 
-        //Przypisz _renderWireframeBB do MeshRenderera modelu, aby widzieć jego bounding box
-        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->_renderWireframeBB = _renderWireframeBB;
-        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->_renderWireframeBB = _renderWireframeBB;
+        FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -339,7 +337,6 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("time", TIME.GetTime());
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
-
 
         GAMEMANAGER.root->Render(Transform::Origin());
 

@@ -60,6 +60,8 @@ public:
     int _testowaPrzeciwnicy = 3;
 
     void SpawnEnemy(int distanceToAvoid, glm::vec3 scale);
+
+    void ChooseModelBasedOnDistance();
 };
 
 
