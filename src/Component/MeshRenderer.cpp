@@ -9,11 +9,11 @@ MeshRenderer::MeshRenderer(){
 void MeshRenderer::Render(glm::mat4 parentWorld) {
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
     glm::mat4 viewProjectionMatrix = _cameraRef->GetProjectionMatrix(_cameraRef->getScreenWidth(),_cameraRef->getScreenHeight()) * _cameraRef->GetViewMatrix();
-    if(IsInFrustum(viewProjectionMatrix, world)) {
+    //if(IsInFrustum(viewProjectionMatrix, world)) {
         RenderModel(_model, world);
         //framesRendered++;                                 //Uncomment both lines to see Frustum Culling work
         //cout << "Rendering: " << framesRendered << endl;  //Frustum Culling working
-    }
+    //}
 }
 
 void MeshRenderer::RenderShadows(glm::mat4 parentWorld) {

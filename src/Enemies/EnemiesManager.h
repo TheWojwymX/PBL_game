@@ -45,8 +45,6 @@ public:
 
     void ReturnToComingForNormalDestination();
 
-    void SpawnEnemy(int size);
-
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
     std::vector<glm::vec2> _spawnersPositions{
@@ -60,6 +58,8 @@ public:
     void DealDamageToEnemy(int amount, const shared_ptr<Enemy> &enemy);
 
     int _testowaPrzeciwnicy = 3;
+
+    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale);
 };
 
 

@@ -343,7 +343,7 @@ int main(int, char**)
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
-        //HUD.Update();
+        HUD.Update();
         AUDIOENGINEMANAGER.Update();
 
 

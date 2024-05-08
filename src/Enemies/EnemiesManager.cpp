@@ -72,6 +72,7 @@ void EnemiesManager::AvoidEnemy(){
         if (needsToAvoid) {
             avoidanceVector = glm::normalize(avoidanceVector);
             _enemies[i]->_isAvoiding = true;
+            avoidanceVector.y = 0;
             _enemies[i]->_destinationVector = _enemies[i]->GetOwnerPosition() + avoidanceVector * 3.0f;
             _enemies[i]->_distanceToStop = 1;
         } else {
@@ -90,11 +91,11 @@ void EnemiesManager::Update() {
     ReturnToComingForNormalDestination();
     CheckIfAtWalls();
     AvoidEnemy();
-    SpawnEnemy(2);
+    if(Input::Instance().IsKeyPressed(80)) {
+        SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
+    }
     if(Input::Instance().IsKeyPressed(79)){
-
         DealDamageToEnemy(50, _enemies[_testowaPrzeciwnicy]);
-
     }
 
 }
@@ -123,36 +124,34 @@ void EnemiesManager::DealDamageToEnemy(int amount, const shared_ptr<Enemy>& enem
 
 }
 
-void EnemiesManager::SpawnEnemy(int size) {
+void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
+    std::string nameOfEnemy = "Enemy" + to_string(_enemies.size() + 1);
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
 
-    if(Input::Instance().IsKeyPressed(80)){
-        std::string nameOfEnemy = "Enemy" + to_string(_enemies.size() + 1);
-        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
+    glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[0]);
+    enemyPosition.y = 0.62 * scale.y + 99.49;
+    NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
+    NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
 
-        glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[0]);
-        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
-        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(glm::vec3(0.5,0.5,0.5));
+    // Tutaj podepniemy potem animacje przy spawnie
+    auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
+    newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newMeshRenderer->Initiate();
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
 
-        // Tutaj podepniemy potem animacje przy spawnie
-        auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-        newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
-        newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
-        newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
-        newMeshRenderer->Initiate();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
+    auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
+    newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+    newEnemyComponent->_size = distanceToAvoid;
+    _enemies.push_back(newEnemyComponent);
 
-        auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
-        newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
-        newEnemyComponent->_size = size;
-        _enemies.push_back(newEnemyComponent);
+    //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
 
-        //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
+    auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
 
-        auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
-
-        //std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
-    }
+    //std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
 }
 
 glm::vec3 EnemiesManager::CalcRandomSpawnPosition(glm::vec2 spawnerPos){
@@ -163,7 +162,7 @@ glm::vec3 EnemiesManager::CalcRandomSpawnPosition(glm::vec2 spawnerPos){
     randomRadius *= spawnerRadius;
     float x = spawnerPos.x + randomRadius * std::cos(angle);
     float z = spawnerPos.y + randomRadius * std::sin(angle);
-    return glm::vec3(x, 100.2f, z);
+    return glm::vec3(x, 99.8f, z);
 }
 
 glm::vec3 EnemiesManager::CalcClosestDomePosition(shared_ptr<Enemy> enemy){
