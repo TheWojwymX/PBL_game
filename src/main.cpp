@@ -48,6 +48,7 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/AudioEngineManager.h"
+#include "HUD/PageManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -184,9 +185,15 @@ int main(int, char**)
 
     ENEMIESMANAGER.Init();
 
+    PAGEMANAGER.Init();
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+        //std::cout << xpos << "    " << ypos << std::endl;
+
         ENEMIESMANAGER.Update();
 
         // Calculate deltaTime
@@ -344,6 +351,7 @@ int main(int, char**)
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
+        PAGEMANAGER.Update();
         AUDIOENGINEMANAGER.Update();
 
 

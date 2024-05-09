@@ -6,7 +6,18 @@
 #define SANDBOX_PAUSEMENUPAGE_H
 
 
-class PauseMenuPage {
+#include "Page.h"
+#include "../Buttons/ResumeButton.h"
+
+class PauseMenuPage : public Page {
+
+public:
+
+    ResumeButton _resumeButton;
+
+    void Init() override;
+
+    void Update() override;
 
 };
 

@@ -6,7 +6,9 @@
 #define SANDBOX_PLAYERUPGRADEMENU_H
 
 
-class PlayerUpgradeMenu {
+#include "Page.h"
+
+class PlayerUpgradeMenu : public Page  {
 
 };
 

@@ -12,7 +12,7 @@ HUDMain& HUDMain::getInstance() {
 void HUDMain::Init() {
 
     //text
-    TEXTRENDERER.init();
+    TEXTRENDERER.Init();
 
     //images
     std::array<float, 32> verticesHpEmpty{

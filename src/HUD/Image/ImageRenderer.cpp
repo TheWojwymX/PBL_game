@@ -2,11 +2,13 @@
 // Created by Jacek on 06.04.2024.
 //
 
-#include "ImageHUD.h"
+#include "ImageRenderer.h"
 
-ImageHUD::ImageHUD() {}
+ImageRenderer::ImageRenderer() {}
 
-void ImageHUD::Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic) {
+void ImageRenderer::Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic) {
+
+    _vertices = vertices;
 
     unsigned int indices[] = {
             0, 1, 3, // first triangle
@@ -23,10 +25,10 @@ void ImageHUD::Init(const char *file, array<float, 32> vertices, bool isAlpha, b
 
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
     if(!isDynamic){
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_vertices), _vertices.data(), GL_STATIC_DRAW);
     }
     else{
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_vertices), _vertices.data(), GL_DYNAMIC_DRAW);
     }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
@@ -46,13 +48,17 @@ void ImageHUD::Init(const char *file, array<float, 32> vertices, bool isAlpha, b
     _textureID = texture.ID;
 }
 
-void ImageHUD::UpdateImage(std::array<float, 32>* vertices) {
+void ImageRenderer::UpdateImage(std::array<float, 32>* vertices) {
+
+    if(!_shouldRender) return;
+
     // bind Texture
     glBindTexture(GL_TEXTURE_2D, _textureID);
 
     if(vertices){
+        _vertices = *vertices;
         glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, 32 * sizeof(float), vertices->data());
+        glBufferSubData(GL_ARRAY_BUFFER, 0, 32 * sizeof(float), _vertices.data());
     }
 
     // render container

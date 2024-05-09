@@ -6,8 +6,19 @@
 #define SANDBOX_RESUMEBUTTON_H
 
 
-class ResumeButton {
+#include "Button.h"
 
+class ResumeButton : public Button {
+public:
+    void Init() override;
+
+    void Update() override;
+
+    void OnClick() override;
+
+    void OnHoover() override;
+
+    void OnReleaseClick() override;
 };
 
 

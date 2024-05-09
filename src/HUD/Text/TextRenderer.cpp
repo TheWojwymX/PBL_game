@@ -9,7 +9,7 @@ TextRenderer &TextRenderer::getInstance() {
     return instance;
 }
 
-void TextRenderer::init() {
+void TextRenderer::Init() {
     {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -31,7 +31,7 @@ void TextRenderer::init() {
         // All functions return a value different than 0 whenever an error occurred
         if (FT_Init_FreeType(&ft))
         {
-            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+            std::cout << "ERROR::FREETYPE: Could not Init FreeType Library" << std::endl;
         }
 
         // find path to font

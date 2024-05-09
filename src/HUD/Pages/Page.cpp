@@ -3,3 +3,11 @@
 //
 
 #include "Page.h"
+
+void Page::Init() {
+
+}
+
+void Page::Update() {
+
+}

@@ -8,7 +8,7 @@
 #define OPENGLGP_HUD_H
 
 #include "Text/TextRenderer.h"
-#include "Image/ImageHUD.h"
+#include "Image/ImageRenderer.h"
 
 //te,p
 #include <GLFW/glfw3.h>
@@ -31,10 +31,10 @@ public:
 
     HUDMain &operator=(const HUDMain &) = delete;
 
-    ImageHUD _hpEmptyImage;
-    ImageHUD _hpFullImage;
-    ImageHUD _crosshairImage;
-    ImageHUD _animatedImage;
+    ImageRenderer _hpEmptyImage;
+    ImageRenderer _hpFullImage;
+    ImageRenderer _crosshairImage;
+    ImageRenderer _animatedImage;
 };
 
 

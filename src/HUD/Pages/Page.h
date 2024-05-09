@@ -5,11 +5,10 @@
 #ifndef SANDBOX_PAGE_H
 #define SANDBOX_PAGE_H
 
-
 class Page {
 public:
-    void Init();
-    void Update();
+    virtual void Init();
+    virtual void Update();
 
 };
 
