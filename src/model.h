@@ -29,6 +29,9 @@ public:
     string _name;
     string _path;
 
+    glm::vec3 min;
+    glm::vec3 max;
+
     // model data 
     vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
     vector<Mesh>    meshes;
@@ -45,11 +48,13 @@ public:
     }
 
     // constructor, expects a filepath to a 3D model.
-    Model(string const& path, string name, bool gamma = false) : gammaCorrection(gamma)
+    Model(string const& path, string name, bool gamma = false) : gammaCorrection(gamma), min(std::numeric_limits<float>::max()), max(std::numeric_limits<float>::lowest())
     {
         _path = path;
         _name = std::move(name);
         loadModel(path);
+
+        SetMinMaxBoundingBox();
     }
 
     // draws the model, and thus all its meshes
@@ -64,47 +69,8 @@ public:
             meshes[i].InstanceDraw(shader, amount);
     }
 
-    glm::vec3 GetMinBoundingBox() const {
-        glm::vec3 min(FLT_MAX, FLT_MAX, FLT_MAX);
-
-        for (const auto& mesh : meshes) {
-            for (const auto& vertex : mesh.vertices) {
-                min.x = std::min(min.x, vertex.Position.x);
-                min.y = std::min(min.y, vertex.Position.y);
-                min.z = std::min(min.z, vertex.Position.z);
-            }
-        }
-
-        return min;
-    }
-
-    glm::vec3 GetMaxBoundingBox() const {
-        glm::vec3 max(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-
-        for (const auto& mesh : meshes) {
-            for (const auto& vertex : mesh.vertices) {
-                max.x = std::max(max.x, vertex.Position.x);
-                max.y = std::max(max.y, vertex.Position.y);
-                max.z = std::max(max.z, vertex.Position.z);
-            }
-        }
-
-        return max;
-    }
-
-    glm::vec3 GetModelBoundingBox() const {
-        glm::vec3 min(FLT_MAX, FLT_MAX, FLT_MAX);
-        glm::vec3 max(FLT_MIN, FLT_MIN, FLT_MIN);
-
-        for (const auto& mesh : meshes) {
-            for (const auto& vertex : mesh.vertices) {
-                max = glm::max(max, vertex.Position);
-                min = glm::min(min, vertex.Position);
-            }
-        }
-
-        return glm::abs(max - min); // Returns the size of the bounding box
-    }
+    glm::vec3 GetMinBoundingBox() const {return min;}
+    glm::vec3 GetMaxBoundingBox() const {return max;}
 
 private:
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
@@ -300,6 +266,20 @@ private:
         }
 
         return textureID;
+    }
+
+    void SetMinMaxBoundingBox() {
+        for (const auto& mesh : meshes) {
+            for (const auto& vertex : mesh.vertices) {
+                min.x = std::min(min.x, vertex.Position.x);
+                min.y = std::min(min.y, vertex.Position.y);
+                min.z = std::min(min.z, vertex.Position.z);
+
+                max.x = std::max(max.x, vertex.Position.x);
+                max.y = std::max(max.y, vertex.Position.y);
+                max.z = std::max(max.z, vertex.Position.z);
+            }
+        }
     }
 
 };
