@@ -1,5 +1,6 @@
 #include "Input.h"
 #include "Component/Camera.h"
+#include "Managers/GameManager.h"
 
 Input::Input()
 {
@@ -201,4 +202,18 @@ void Input::MouseCallbackIMP(double xpos, double ypos)
 
 	_mouseOffset = glm::vec2(xoffset, yoffset);
 	_mousePos = glm::vec2(xpos, ypos);
+}
+
+void Input::SetMouseFixedPos(float xpos, float ypos) {
+
+}
+
+glm::vec2 Input::GetMouseFixedPos() {
+
+    glm::vec2 fixedPos;
+    fixedPos.x = (_mousePos.x / GAMEMANAGER._screenWidth) * 2.0f - 1.0f;
+    fixedPos.y = (_mousePos.y / GAMEMANAGER._screenHeight) * 2.0f - 1.0f;
+    fixedPos.y = -fixedPos.y;
+
+    return fixedPos;
 }

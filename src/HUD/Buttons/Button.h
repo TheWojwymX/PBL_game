@@ -7,9 +7,37 @@
 
 #include "../Image/ImageRenderer.h"
 #include "../Text/TextRenderer.h"
+#include "Core/Input.h"
 
 class Button {
 public:
+
+    const char *_backgroundImagePath = "../../res/Images/ButtonRed.png";
+    const char *_hooverBackgroundImagePath = "../../res/Images/ButtonBlue.png";
+    const char *_clickedBackgroundImagePath = "../../res/Images/ButtonGreen.png";
+
+    ImageRenderer _backgroundImage;
+    ImageRenderer _hooverBackgroundImage;
+    ImageRenderer _clickedBackgroundImage;
+
+    std::string _text = "default";
+    TextRenderer _textRenderer;
+
+    virtual void Init();
+    virtual void Update();
+    void CheckClick();
+    bool CheckHover();
+
+    virtual void Onclick();
+
+    virtual void SetVertices(const array<float, 32> &vertices) {
+        _buttonVertices = vertices;
+    }
+
+protected:
+
+    float _clickedTimer = 0.0f;
+    bool _timerOn = false;
 
     array<float, 32> _buttonVertices{
             // positions          // colors           // texture coords
@@ -19,25 +47,9 @@ public:
             -0.03f,  0.05f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
-    const char *_backgroundImagePath = "../../../res/Images/ButtonRed.png";
-    const char *_hooverBackgroundImagePath = "../../res/Images/ButtonBlue.png";
-    const char *_clickedBackgroundImagePath = "../../res/Images/ButtonGreen.png";
+    void AppareanceManager();
 
-    ImageRenderer _backgroundImage;
-    ImageRenderer _hooverBackgroundImage;
-    ImageRenderer _clickedBackgroundImage;
-
-    std::string _text;
-    TextRenderer _textRenderer;
-
-    virtual void Init();
-    virtual void Update();
-    virtual void OnClick();
-    virtual void OnHoover();
-    virtual void OnReleaseClick();
-
-
-
+    void TimerCount();
 };
 
 

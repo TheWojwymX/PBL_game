@@ -15,5 +15,14 @@ void PageManager::Init() {
 }
 
 void PageManager::Update() {
+
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+
     _pauseMenuPage.Update();
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+
 }

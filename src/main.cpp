@@ -192,7 +192,6 @@ int main(int, char**)
     {
         double xpos, ypos;
         glfwGetCursorPos(window, &xpos, &ypos);
-        //std::cout << xpos << "    " << ypos << std::endl;
 
         ENEMIESMANAGER.Update();
 
@@ -350,7 +349,7 @@ int main(int, char**)
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
-        HUD.Update();
+        //HUD.Update();
         PAGEMANAGER.Update();
         AUDIOENGINEMANAGER.Update();
 

@@ -123,7 +123,7 @@ void HUDMain::Update() {
     _crosshairImage.UpdateImage();
 
     //text
-    TEXTRENDERER.RenderText(*RESOURCEMANAGER.GetShaderByName("textShader"), to_string(test), 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+    TEXTRENDERER.RenderText(to_string(test), -0.95f, -0.95f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

@@ -35,6 +35,9 @@ public:
 
     float _groundLevel = 100.2;
 
+    int _screenWidth = 1280;
+    int _screenHeight = 720;
+
 };
 
 

@@ -76,7 +76,7 @@ void Enemy::AttackDome(){
     if(!_isAtWalls) return;
 
     if(_attackTimer >= _attackFrequency){
-        std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
+        //std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
         _attackTimer = 0;
     }
     else{

@@ -10,6 +10,6 @@ void PauseMenuPage::Init() {
 }
 
 void PauseMenuPage::Update() {
-    _resumeButton.Update();
     Page::Update();
+    _resumeButton.Update();
 }

@@ -65,7 +65,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Buttons/Button.cpp
         HUD/Buttons/Button.h
         HUD/Buttons/ResumeButton.cpp
-        HUD/Buttons/ResumeButton.h)
+        HUD/Buttons/ResumeButton.h
+        Core/Settings.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

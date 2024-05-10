@@ -3,6 +3,8 @@
 //
 
 #include "TextRenderer.h"
+#include "Managers/ResourceManager.h"
+#include "Managers/GameManager.h"
 
 TextRenderer &TextRenderer::getInstance() {
     static TextRenderer instance;
@@ -99,8 +101,10 @@ void TextRenderer::Init() {
     }
 }
 
-void TextRenderer::RenderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color) {
+void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 color) {
     {
+
+        Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
 
         PrepareShader();
 
@@ -109,6 +113,9 @@ void TextRenderer::RenderText(Shader &shader, std::string text, float x, float y
         glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
+
+        x = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
+        y = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
 
         // iterate through all characters
         std::string::const_iterator c;
@@ -148,10 +155,69 @@ void TextRenderer::RenderText(Shader &shader, std::string text, float x, float y
     }
 }
 
+void TextRenderer::RenderTextCentered(std::string text, float x, float y, float scale, glm::vec3 color) {
+    Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
+
+    PrepareShader();
+
+    shader.use();
+    glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(VAO);
+
+    // Przeliczanie pozycji x, y do środka ekranu
+    float screenX = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
+    float screenY = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
+
+    // Oblicz całkowitą szerokość tekstu
+    float textWidth = 0.0f;
+    for (char c : text) {
+        Character ch = Characters[c];
+        textWidth += (ch.Advance >> 6) * scale; // Dodaj szerokość każdego znaku
+    }
+
+    // Dostosuj x, aby tekst był wyśrodkowany
+    float startX = screenX - textWidth / 2.0f;
+    float xCursor = startX;
+
+    // iterate through all characters
+    for (char c : text) {
+        Character ch = Characters[c];
+
+        float xpos = xCursor + ch.Bearing.x * scale;
+        float ypos = screenY - (ch.Size.y - ch.Bearing.y) * scale;
+
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
+        // update VBO for each character
+        float vertices[6][4] = {
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos,     ypos,       0.0f, 1.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos + w, ypos + h,   1.0f, 0.0f }
+        };
+        // render glyph texture over quad
+        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+        // update content of VBO memory
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        // render quad
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        // now advance cursors for next glyph
+        xCursor += (ch.Advance >> 6) * scale; // Advance cursor
+    }
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 void TextRenderer::PrepareShader() {
-    //NA RAZIE NA SZTYWNO, POTEM PODPIAC POD MANAGER PRZECHOWUJACY ROZMAIRY
-    const unsigned int SCR_WIDTH = 1280;
-    const unsigned int SCR_HEIGHT = 720;
+    const unsigned int SCR_WIDTH = GAMEMANAGER._screenWidth;
+    const unsigned int SCR_HEIGHT = GAMEMANAGER._screenHeight;
 
     RESOURCEMANAGER.GetShaderByName("textShader")->use();
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), 0.0f, static_cast<float>(SCR_HEIGHT));
