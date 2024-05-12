@@ -3,6 +3,7 @@
 //
 
 #include "QuitButton.h"
+#include "Managers/GameManager.h"
 
 void QuitButton::Init() {
     SetVertices(_buttonVertices);
@@ -20,6 +21,7 @@ void QuitButton::SetVertices(const array<float, 32> &vertices) {
 
 void QuitButton::Onclick() {
     std::cout << "Kliknieto wyjscie.";
+    glfwSetWindowShouldClose(GAMEMANAGER._window, 1);
     Button::Onclick();
 }
 

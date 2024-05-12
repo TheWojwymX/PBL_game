@@ -85,10 +85,10 @@ int main(int, char**)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "SandBOX", NULL, NULL);
-    if (window == NULL)
+    GAMEMANAGER.Init();
+    if (GAMEMANAGER._window == NULL)
         return 1;
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(GAMEMANAGER._window);
     glfwSwapInterval(1); // Enable VSync
 
     // Initialize OpenGL loader
@@ -126,7 +126,7 @@ int main(int, char**)
     skybox.init();
 
     // Init
-    INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
+    INPUT.Init(GAMEMANAGER._window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
 
     //ShadowMap init
@@ -162,7 +162,7 @@ int main(int, char**)
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(SCR_HEIGHT);
 
-    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
+    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
     imguiMain->SetSelectedObject(GAMEMANAGER.root);
 
@@ -188,7 +188,7 @@ int main(int, char**)
     PAGEMANAGER.Init();
 
     // Main loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
         if(!GAMEMANAGER._paused){
             ENEMIESMANAGER.Update();
@@ -359,19 +359,16 @@ int main(int, char**)
 
 
         INPUT.UpdateOldStates();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(GAMEMANAGER._window);
         glfwPollEvents();
-        //glfwSetWindowShouldClose(window, 1);
-        std::cout << glfwWindowShouldClose(window) << std::endl;
     }
-    std::cout << glfwWindowShouldClose(window) << std::endl;
     // Cleanup
     AUDIOENGINEMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();
 
 

@@ -13,6 +13,13 @@ class GameManager {
 
 public:
 
+
+    int _screenWidth = 1280;
+    int _screenHeight = 720;
+    GLFWwindow* _window;
+
+    void Init();
+
     static GameManager &getInstance();
 
     ~GameManager() = default;
@@ -34,9 +41,6 @@ public:
     glm::vec2 _domePosition = glm::vec2(50, 50);
 
     float _groundLevel = 100.2;
-
-    int _screenWidth = 1280;
-    int _screenHeight = 720;
 
     bool _editMode = true;
 

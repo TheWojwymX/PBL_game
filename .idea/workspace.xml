@@ -33,15 +33,8 @@
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Input.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Input.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/ResumeButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/ResumeButton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/QuitButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/QuitButton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
@@ -105,17 +98,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -213,7 +206,8 @@
       <workItem from="1715510231371" duration="2545000" />
       <workItem from="1715515579049" duration="7183000" />
       <workItem from="1715535747354" duration="55000" />
-      <workItem from="1715535882107" duration="622000" />
+      <workItem from="1715535882107" duration="1243000" />
+      <workItem from="1715537176361" duration="119000" />
     </task>
     <servers />
   </component>
