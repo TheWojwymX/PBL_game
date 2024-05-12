@@ -3,6 +3,8 @@
 //
 
 #include "ResumeButton.h"
+#include "HUD/PageManager.h"
+#include "Managers/GameManager.h"
 
 void ResumeButton::Init() {
     SetVertices(_buttonVertices);
@@ -20,6 +22,11 @@ void ResumeButton::SetVertices(const array<float, 32> &vertices) {
 
 void ResumeButton::Onclick() {
     std::cout << "Kliknieto wznowienie.";
+
+    PAGEMANAGER._pauseMenuPage->_shouldRender = false;
+    PAGEMANAGER.DisableMouse();
+    GAMEMANAGER._paused = false;
+
     Button::Onclick();
 }
 

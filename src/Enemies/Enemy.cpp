@@ -84,7 +84,8 @@ void Enemy::AttackDome(){
     }
 }
 
-void Enemy::Update() {
+//Just like update but connected to EnemiesManager
+void Enemy::EnemyAI() {
     AttackDome();
     WalkToDestination();
     Component::Update();

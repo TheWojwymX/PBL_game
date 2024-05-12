@@ -98,6 +98,11 @@ void EnemiesManager::Update() {
         DealDamageToEnemy(50, _enemies[_testowaPrzeciwnicy]);
     }
 
+    for(int i = 0; i < _enemies.size(); i++) {
+        if(_enemies[i] == nullptr) continue;
+        _enemies[i]->EnemyAI();
+    }
+
 }
 
 void EnemiesManager::CheckIfAtWalls(){

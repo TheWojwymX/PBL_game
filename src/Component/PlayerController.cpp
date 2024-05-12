@@ -2,6 +2,7 @@
 #include "Core/Time.h"
 #include "Core/Input.h"
 #include "Core/Node.h"
+#include "Managers/GameManager.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius) , _width(width), _height(height) {
@@ -53,7 +54,9 @@ void PlayerController::Input() {
 }
 
 void PlayerController::Update() {
-    HandleMovement();
+    if(!GAMEMANAGER._paused){
+        HandleMovement();
+    }
 }
 
 void PlayerController::MovementInput() {

@@ -40,6 +40,8 @@ public:
 
     bool _editMode = true;
 
+    bool _paused = false;
+
 };
 
 

@@ -205,7 +205,9 @@ void Input::MouseCallbackIMP(double xpos, double ypos)
 }
 
 void Input::SetMouseFixedPos(float xpos, float ypos) {
-
+    xpos = (GAMEMANAGER._screenWidth * xpos)/2 + GAMEMANAGER._screenWidth/2;
+    ypos = (GAMEMANAGER._screenHeight * ypos)/2 + GAMEMANAGER._screenHeight/2;
+    SetMousePos(xpos, ypos);
 }
 
 glm::vec2 Input::GetMouseFixedPos() {

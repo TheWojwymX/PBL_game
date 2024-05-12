@@ -190,10 +190,9 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-
-        ENEMIESMANAGER.Update();
+        if(!GAMEMANAGER._paused){
+            ENEMIESMANAGER.Update();
+        }
 
         // Calculate deltaTime
         TIME.Update();
@@ -349,7 +348,7 @@ int main(int, char**)
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
-        //HUD.Update();
+        HUD.Update();
         PAGEMANAGER.Update();
         AUDIOENGINEMANAGER.Update();
 
@@ -362,8 +361,10 @@ int main(int, char**)
         INPUT.UpdateOldStates();
         glfwSwapBuffers(window);
         glfwPollEvents();
+        //glfwSetWindowShouldClose(window, 1);
+        std::cout << glfwWindowShouldClose(window) << std::endl;
     }
-
+    std::cout << glfwWindowShouldClose(window) << std::endl;
     // Cleanup
     AUDIOENGINEMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();

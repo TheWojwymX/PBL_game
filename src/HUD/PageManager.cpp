@@ -37,9 +37,12 @@ void PageManager::CheckInputs(){
         if(_pauseMenuPage->_shouldRender){
             EnableMouse();
             CloseAllOtherPages(_pauseMenuPage);
+            INPUT.SetMouseFixedPos(0,0);
+            GAMEMANAGER._paused = true;
         }
         else{
             DisableMouse();
+            GAMEMANAGER._paused = false;
         }
     }
 }
