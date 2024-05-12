@@ -30,9 +30,9 @@ public:
 
     virtual void Onclick();
 
-    virtual void SetVertices(const array<float, 32> &vertices) {
-        _buttonVertices = vertices;
-    }
+    virtual void SetVertices(const array<float, 32> &vertices);
+
+    virtual void SetText(std::string text);
 
 protected:
 

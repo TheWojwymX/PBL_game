@@ -9,6 +9,7 @@
 
 class Page {
 public:
+
     virtual void Init();
     virtual void Update();
 
@@ -24,6 +25,9 @@ public:
 
     ImageRenderer _backgroundImage;
 
+    bool _shouldRender = false;
+
+    virtual void SetVertices(const array<float, 32> &vertices);
 };
 
 

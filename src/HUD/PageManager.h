@@ -30,8 +30,15 @@ public:
     void Update();
 
     std::vector<std::shared_ptr<Page>> _pages;
-    PauseMenuPage _pauseMenuPage;
+    std::shared_ptr<PauseMenuPage> _pauseMenuPage = std::make_shared<PauseMenuPage>();
 
+    void CheckInputs();
+
+    void CloseAllOtherPages(const shared_ptr<Page>& pageException);
+
+    void EnableMouse();
+
+    void DisableMouse();
 };
 
 

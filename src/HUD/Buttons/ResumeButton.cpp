@@ -6,6 +6,7 @@
 
 void ResumeButton::Init() {
     SetVertices(_buttonVertices);
+    SetText(_text);
     Button::Init();
 }
 
@@ -18,6 +19,10 @@ void ResumeButton::SetVertices(const array<float, 32> &vertices) {
 }
 
 void ResumeButton::Onclick() {
-    std::cout << "no kliknieto xD";
+    std::cout << "Kliknieto wznowienie.";
     Button::Onclick();
+}
+
+void ResumeButton::SetText(std::string text) {
+    Button::SetText(text);
 }

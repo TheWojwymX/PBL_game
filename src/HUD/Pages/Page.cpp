@@ -11,3 +11,7 @@ void Page::Init() {
 void Page::Update() {
     _backgroundImage.UpdateImage();
 }
+
+void Page::SetVertices(const array<float, 32> &vertices) {
+    _backgroundVertices = vertices;
+}

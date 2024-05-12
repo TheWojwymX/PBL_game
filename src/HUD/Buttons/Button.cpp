@@ -85,4 +85,10 @@ void Button::Onclick() {
 
 }
 
+void Button::SetVertices(const array<float, 32> &vertices) {
+        _buttonVertices = vertices;
+}
 
+void Button::SetText(std::string text) {
+    _text = text;
+}

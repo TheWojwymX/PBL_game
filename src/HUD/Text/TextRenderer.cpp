@@ -165,55 +165,56 @@ void TextRenderer::RenderTextCentered(std::string text, float x, float y, float 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
-    // Przeliczanie pozycji x, y do środka ekranu
     float screenX = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
     float screenY = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
 
-    // Oblicz całkowitą szerokość tekstu
+    // Calculate total width of the text
     float textWidth = 0.0f;
+    float totalHeight = 0.0f;
     for (char c : text) {
         Character ch = Characters[c];
-        textWidth += (ch.Advance >> 6) * scale; // Dodaj szerokość każdego znaku
+        textWidth += (ch.Advance >> 6) * scale;  // total width to center horizontally
+        totalHeight = std::max(totalHeight, ch.Size.y * scale);  // the tallest character determines the height
     }
 
-    // Dostosuj x, aby tekst był wyśrodkowany
+    // Calculate starting positions
     float startX = screenX - textWidth / 2.0f;
+    float startY = screenY - totalHeight / 2.0f;  // center vertically by using total height
+
     float xCursor = startX;
 
-    // iterate through all characters
     for (char c : text) {
         Character ch = Characters[c];
 
         float xpos = xCursor + ch.Bearing.x * scale;
-        float ypos = screenY - (ch.Size.y - ch.Bearing.y) * scale;
+        float ypos = startY;  // consistent Y position for all characters
 
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
-        // update VBO for each character
         float vertices[6][4] = {
-                { xpos,     ypos + h,   0.0f, 0.0f },
-                { xpos,     ypos,       0.0f, 1.0f },
-                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos, ypos + h, 0.0f, 0.0f },
+                { xpos, ypos,     0.0f, 1.0f },
+                { xpos + w, ypos, 1.0f, 1.0f },
 
-                { xpos,     ypos + h,   0.0f, 0.0f },
-                { xpos + w, ypos,       1.0f, 1.0f },
-                { xpos + w, ypos + h,   1.0f, 0.0f }
+                { xpos, ypos + h, 0.0f, 0.0f },
+                { xpos + w, ypos, 1.0f, 1.0f },
+                { xpos + w, ypos + h, 1.0f, 0.0f }
         };
-        // render glyph texture over quad
+
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-        // update content of VBO memory
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        // render quad
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        // now advance cursors for next glyph
-        xCursor += (ch.Advance >> 6) * scale; // Advance cursor
+        xCursor += (ch.Advance >> 6) * scale; // advance cursor
     }
+
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+
 
 void TextRenderer::PrepareShader() {
     const unsigned int SCR_WIDTH = GAMEMANAGER._screenWidth;

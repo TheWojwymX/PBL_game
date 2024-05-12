@@ -81,7 +81,6 @@ private:
     float _movementSpeed;
     float _mouseSensitivity;
     float _zoom;
-    bool _editMode;
 
     unsigned int _screenWidth;
     unsigned int _screenHeight;

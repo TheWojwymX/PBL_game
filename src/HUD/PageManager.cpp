@@ -3,6 +3,8 @@
 //
 
 #include "PageManager.h"
+#include "Managers/ComponentsManager.h"
+#include "Managers/GameManager.h"
 
 
 PageManager &PageManager::getInstance() {
@@ -11,18 +13,55 @@ PageManager &PageManager::getInstance() {
 }
 
 void PageManager::Init() {
-    _pauseMenuPage.Init();
+    _pauseMenuPage->Init();
+    _pages.push_back(_pauseMenuPage);
 }
 
 void PageManager::Update() {
 
+    CheckInputs();
+
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-    _pauseMenuPage.Update();
+    _pauseMenuPage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+}
 
+void PageManager::CheckInputs(){
+    if(INPUT.IsKeyPressed(GLFW_KEY_ESCAPE)){
+        _pauseMenuPage->_shouldRender = !_pauseMenuPage->_shouldRender;
+        if(_pauseMenuPage->_shouldRender){
+            EnableMouse();
+            CloseAllOtherPages(_pauseMenuPage);
+        }
+        else{
+            DisableMouse();
+        }
+    }
+}
+
+void PageManager::CloseAllOtherPages(const shared_ptr<Page>& pageException){
+    for(const std::shared_ptr<Page>& page : _pages)
+    {
+        if(pageException == page){
+            continue;
+        }
+        else{
+            page->_shouldRender = false;
+        }
+    }
+}
+
+void PageManager::EnableMouse(){
+    INPUT.SetCursorMode(true);
+    GAMEMANAGER._editMode = true;
+}
+
+void PageManager::DisableMouse(){
+    INPUT.SetCursorMode(false);
+    GAMEMANAGER._editMode = false;
 }
