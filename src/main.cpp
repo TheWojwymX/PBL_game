@@ -48,6 +48,8 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/AudioEngineManager.h"
+#include "Managers/DomeManager.h"
+#include "Managers/UpgradeManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -187,6 +189,8 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+        UPGRADEMANAGER.checkActivation();
+        DOMEMANAGER.Update();
         ENEMIESMANAGER.Update();
 
         // Calculate deltaTime

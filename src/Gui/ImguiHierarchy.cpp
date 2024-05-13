@@ -6,8 +6,6 @@
 #include "ImguiHierarchy.h"
 #include "imgui.h"
 #include "../Managers/SceneManager.h"
-#include "../imgui_impl/imgui_impl_glfw.h"
-#include "../imgui_impl/imgui_impl_opengl3.h"
 #include <algorithm>
 
 ImguiHierarchy::ImguiHierarchy()
