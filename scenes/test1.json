@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 22,
-    "nextNodeId": 14,
+    "nextComponentId": 24,
+    "nextNodeId": 16,
     "resources": {
         "Models": [
             {
@@ -34,6 +34,14 @@
             {
                 "ModelName": "Button",
                 "Path": "../../res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "Turret_Standard_Level1",
+                "Path": "../../res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Gunner_Level1",
+                "Path": "../../res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
             }
         ],
         "Shaders": [
@@ -635,6 +643,68 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 14,
+                "NodeName": "Turret1",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 22,
+                        "componentType": 5,
+                        "model": "Turret_Standard_Level1",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        45.0,
+                        100.2,
+                        65.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        0.3,
+                        0.3,
+                        0.3
+                    ]
+                }
+            },
+            {
+                "NodeID": 15,
+                "NodeName": "Turret2",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 23,
+                        "componentType": 5,
+                        "model": "Turret_Gunner_Level1",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        47.0,
+                        100.2,
+                        65.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        0.3,
+                        0.3,
+                        0.3
                     ]
                 }
             }

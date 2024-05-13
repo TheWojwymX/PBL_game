@@ -10,7 +10,8 @@ enum class ComponentType {
     MESHRENDERER,
     ENEMYAI,
     ANIMATION,
-    CLOUDMANAGER
+    CLOUDMANAGER,
+    TURRET
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H

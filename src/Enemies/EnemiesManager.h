@@ -32,8 +32,6 @@ public:
 
     void Update();
 
-    void EnemyAI();
-
     std::vector<std::shared_ptr<Enemy>> _enemies;
 
     int _enemiesSize = 4;

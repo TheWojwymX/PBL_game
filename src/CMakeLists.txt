@@ -74,7 +74,11 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/DomeManager.cpp
         Managers/DomeManager.h
         Managers/UpgradeManager.cpp
-        Managers/UpgradeManager.h)
+        Managers/UpgradeManager.h
+        Turrets/TurretsManager.cpp
+        Turrets/TurretsManager.h
+        Turrets/Turret.cpp
+        Turrets/Turret.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
