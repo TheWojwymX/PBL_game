@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 21,
-    "nextNodeId": 13,
+    "nextComponentId": 22,
+    "nextNodeId": 14,
     "resources": {
         "Models": [
             {
@@ -30,6 +30,10 @@
             {
                 "ModelName": "AntWalk3",
                 "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
+            },
+            {
+                "ModelName": "Button",
+                "Path": "../../res/Sand/Sand.obj"
             }
         ],
         "Shaders": [
@@ -524,7 +528,7 @@
                 "transform": {
                     "position": [
                         50.0,
-                        99.5,
+                        101.5,
                         50.0
                     ],
                     "rotation": [
@@ -536,6 +540,37 @@
                         1.5,
                         1.5,
                         1.5
+                    ]
+                }
+            },
+            {
+                "NodeID": 13,
+                "NodeName": "ButtonTemp",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 21,
+                        "componentType": 5,
+                        "model": "Button",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        40.0,
+                        100.0,
+                        90.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             },

@@ -6,9 +6,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Core/Component.h"
 #include "Core/Input.h"
+#include "Component/FrustumCulling.h"
 
 #include <vector>
 
+class FrustumPlane;
 // Default camera values
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
@@ -59,6 +61,14 @@ public:
         return start + t * (end - start);
     }
 
+    vector<FrustumPlane> getFrustumPlanes(){
+        return _frustumPlanes;
+    }
+
+    glm::mat4 getViewProjectionMatrix(){
+        return _viewProjectionMatrix;
+    }
+
     void addToInspector(ImguiMain *imguiMain) override;
 
     void setScreenWidth(unsigned int screenWidth) {_screenWidth = screenWidth;}
@@ -81,6 +91,9 @@ private:
     float _movementSpeed;
     float _mouseSensitivity;
     float _zoom;
+
+    vector<FrustumPlane> _frustumPlanes;
+    glm::mat4 _viewProjectionMatrix;
 
     unsigned int _screenWidth;
     unsigned int _screenHeight;

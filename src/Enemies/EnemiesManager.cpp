@@ -91,6 +91,7 @@ void EnemiesManager::Update() {
     ReturnToComingForNormalDestination();
     CheckIfAtWalls();
     AvoidEnemy();
+    ChooseModelBasedOnDistance(); //LOD (safe to comment out)
     if(Input::Instance().IsKeyPressed(80)) {
         SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
     }
@@ -176,4 +177,26 @@ glm::vec3 EnemiesManager::CalcClosestDomePosition(shared_ptr<Enemy> enemy){
     vector = glm::vec2(GAMEMANAGER._domePosition.x + GAMEMANAGER._domeRadius * vector.x, GAMEMANAGER._domePosition.y + GAMEMANAGER._domeRadius * vector.y);
 
     return glm::vec3(vector.x, enemy->GetOwnerPosition().y, vector.y);
+}
+
+void EnemiesManager::ChooseModelBasedOnDistance() {
+    glm::vec3 playerCamera = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
+    shared_ptr<Model> normalModel = RESOURCEMANAGER.GetModelByName("antModel");
+    shared_ptr<Model> farModel = RESOURCEMANAGER.GetModelByName("sandModel");     //Change Model
+    float lodDistance = 40.0f;                                                          //Change Distance
+
+    for(int i = 0; i < _enemies.size(); i++){
+        if(_enemies[i] == nullptr) continue;
+        float distance = glm::length(_enemies[i]->GetOwnerPosition() - playerCamera);
+        if(distance > lodDistance){
+            if(_enemies[i]->_ownerNode->GetComponent<MeshRenderer>()->_model != farModel){
+                _enemies[i]->_ownerNode->GetComponent<MeshRenderer>()->_model = farModel;
+            }
+        }
+        else{
+            if(_enemies[i]->_ownerNode->GetComponent<MeshRenderer>()->_model != normalModel){
+                _enemies[i]->_ownerNode->GetComponent<MeshRenderer>()->_model = normalModel;
+            }
+        }
+    }
 }

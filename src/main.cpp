@@ -49,6 +49,8 @@
 #include "Managers/GameManager.h"
 #include "Managers/AudioEngineManager.h"
 #include "HUD/PageManager.h"
+#include "Managers/DomeManager.h"
+#include "Managers/UpgradeManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -193,6 +195,8 @@ int main(int, char**)
         if(!GAMEMANAGER._paused){
             ENEMIESMANAGER.Update();
         }
+        UPGRADEMANAGER.checkActivation();
+        DOMEMANAGER.Update();
 
         // Calculate deltaTime
         TIME.Update();
@@ -228,9 +232,7 @@ int main(int, char**)
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 
-        //Przypisz _renderWireframeBB do MeshRenderera modelu, aby widzieć jego bounding box
-        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(6)->_renderWireframeBB = _renderWireframeBB;
-        ComponentsManager::getInstance().GetComponentByID<MeshRenderer>(8)->_renderWireframeBB = _renderWireframeBB;
+        FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
         // Applying clear color
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -344,7 +346,6 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("time", TIME.GetTime());
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
-
 
         GAMEMANAGER.root->Render(Transform::Origin());
 

@@ -46,8 +46,13 @@ void Camera::Input() {
     }
 }
 
+
 void Camera::Update() {
     _position = _ownerTransform->GetPosition() + _offset;
+
+    _viewProjectionMatrix = GetProjectionMatrix(_screenWidth,_screenHeight) * GetViewMatrix();
+    _frustumPlanes = FrustumCulling::extractFrustumPlanes(_viewProjectionMatrix);
+
 }
 
 glm::mat4 Camera::GetViewMatrix() {
