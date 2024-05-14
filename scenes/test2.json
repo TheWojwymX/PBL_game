@@ -85,6 +85,11 @@
                 "ShaderName": "wireframeShader",
                 "fragmentPath": "../../res/wireframeShader.fs",
                 "vertexPath": "../../res/wireframeShader.vs"
+            },
+            {
+                "ShaderName": "particleShader",
+                "fragmentPath": "../../res/particleShader.fs",
+                "vertexPath": "../../res/particleShader.vs"
             }
         ],
         "Sounds": [
@@ -342,6 +347,17 @@
                         "frameDuration": 1.0,
                         "isLoop": true,
                         "meshRendererRefID": 6
+                    },
+                    {
+                        "componentId": 12,
+                        "componentType": 9,
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "particleType": "secondType",
+                        "shader": "particleShader"
                     }
                 ],
                 "transform": {

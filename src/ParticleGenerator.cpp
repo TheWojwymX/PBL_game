@@ -1,13 +1,51 @@
 #include "ParticleGenerator.h"
 
-ParticleGenerator::ParticleGenerator(Shader* shader, Texture2D texture, unsigned int amount)
-    : shader(shader), texture(texture), amount(amount)
-{
-    this->init();
+ParticleGenerator::ParticleGenerator(std::shared_ptr<Shader> shader, string particleType)
+        : shader(shader), particleType(particleType){}
+
+ParticleGenerator::ParticleGenerator() {
+    _type = ComponentType::PARTICLEGENERATOR;
 }
 
-void ParticleGenerator::Update(float dt, Node* object, unsigned int newParticles, glm::vec3 offset)
+nlohmann::json ParticleGenerator::Serialize() {
+    nlohmann::json data = Component::Serialize();
+
+    data["offset"] = {
+            {"x", offset.x},
+            {"y", offset.y},
+            {"z", offset.z}
+    };
+    data["particleType"] = particleType;
+    data["shader"] = shader->_name;
+
+    return data;
+}
+
+void ParticleGenerator::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("offset")) {
+        offset.x = jsonData["offset"]["x"].get<float>();
+        offset.y = jsonData["offset"]["y"].get<float>();
+        offset.z = jsonData["offset"]["z"].get<float>();
+    }
+
+    if (jsonData.contains("particleType")) {
+        particleType = jsonData["particleType"].get<string>();
+    }
+
+    if (jsonData.contains("shader")) {
+        shader = RESOURCEMANAGER.GetShaderByName(jsonData["shader"].get<string>());
+    }
+
+    Component::Deserialize(jsonData);
+}
+
+void ParticleGenerator::initiate() {
+}
+
+void ParticleGenerator::Update()
 {
+    float dt = TIME.GetDeltaTime();
     // Increment elapsed time
     this->elapsedTime += dt;
 
@@ -17,7 +55,7 @@ void ParticleGenerator::Update(float dt, Node* object, unsigned int newParticles
         for (unsigned int i = 0; i < newParticles; ++i)
         {
             int unusedParticle = this->firstUnusedParticle();
-            this->respawnParticle(this->particles[unusedParticle], object, offset);
+            this->respawnParticle(this->particles[unusedParticle]);
         }
         // Reset elapsed time
         this->elapsedTime = 0.0f;
@@ -34,17 +72,24 @@ void ParticleGenerator::Update(float dt, Node* object, unsigned int newParticles
             p.Color.a -= dt * 0.25f;
         }
     }
+
 }
 
-void ParticleGenerator::Draw(glm::mat4 viewMatrix)
+void ParticleGenerator::Render(glm::mat4 parentWorld)
 {
+    glm::mat4 viewMatrix = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
+
     // Use additive blending to give it a 'glow' effect
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+    // Use shader
     this->shader->use();
 
     // Determine the camera's position and forward vector in world space
     glm::vec3 cameraPosition = glm::vec3(viewMatrix[3]);
-    glm::vec3 cameraForward = -glm::normalize(glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]));
+    glm::vec3 cameraForward = -glm::normalize(
+            glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2])
+    );
 
     // Calculate distances from the camera along the view direction for each particle
     std::vector<std::pair<float, Particle>> distanceParticlePairs;
@@ -54,15 +99,17 @@ void ParticleGenerator::Draw(glm::mat4 viewMatrix)
         {
             glm::vec3 particleToCamera = cameraPosition - particle.Position;
             float distanceAlongView = glm::dot(particleToCamera, cameraForward);
-            distanceParticlePairs.push_back(std::make_pair(distanceAlongView, particle));
+            distanceParticlePairs.push_back({ distanceAlongView, particle });
         }
     }
 
     // Sort particles based on distance in ascending order (back to front)
-    std::sort(distanceParticlePairs.begin(), distanceParticlePairs.end(),
-        [](const std::pair<float, Particle>& a, const std::pair<float, Particle>& b) {
-            return a.first < b.first;
-        });
+    std::sort(
+            distanceParticlePairs.begin(), distanceParticlePairs.end(),
+            [](const std::pair<float, Particle>& a, const std::pair<float, Particle>& b) {
+                return a.first < b.first;
+            }
+    );
 
     // Draw particles in the sorted order
     for (const auto& pair : distanceParticlePairs)
@@ -80,36 +127,43 @@ void ParticleGenerator::Draw(glm::mat4 viewMatrix)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void ParticleGenerator::init()
+void ParticleGenerator::Init()
 {
-    this->spawnDelay = 1.0f;
+    object = this->GetOwnerNode();
+    initiateParticleType();
+    Component::initiate();
+
     this->elapsedTime = 0.0f;
 
-    // set up mesh and attribute properties
+    // Set up mesh and attribute properties
     unsigned int VBO;
     float particle_quad[] = {
-        -0.5f, 0.5f, 0.0f, 1.0f,
-        0.5f, -0.5f, 1.0f, 0.0f,
-        -0.5f, -0.5f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.0f, 1.0f,
+            0.5f, -0.5f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f, 0.0f,
 
-        -0.5f, 0.5f, 0.0f, 1.0f,
-        0.5f, 0.5f, 1.0f, 1.0f,
-        0.5f, -0.5f, 1.0f, 0.0f
+            -0.5f, 0.5f, 0.0f, 1.0f,
+            0.5f, 0.5f, 1.0f, 1.0f,
+            0.5f, -0.5f, 1.0f, 0.0f
     };
     glGenVertexArrays(1, &this->VAO);
     glGenBuffers(1, &VBO);
     glBindVertexArray(this->VAO);
-    // fill mesh buffer
+
+    // Fill mesh buffer
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(particle_quad), particle_quad, GL_STATIC_DRAW);
-    // set mesh attributes
+
+    // Set mesh attributes
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
     glBindVertexArray(0);
 
-    // create this->amount default particle instances
+    // Create this->amount default particle instances
     for (unsigned int i = 0; i < this->amount; ++i)
+    {
         this->particles.push_back(Particle());
+    }
 }
 
 // stores the index of the last particle used (for quick access to next dead particle)
@@ -135,17 +189,38 @@ unsigned int ParticleGenerator::firstUnusedParticle()
     return 0;
 }
 
-void ParticleGenerator::respawnParticle(Particle& particle, Node* object, glm::vec3 offset)
+void ParticleGenerator::respawnParticle(Particle& particle)
 {
-    float rColor = 0.5f;
-    particle.Position = offset;
-    particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
-    particle.Life = 4.0f;
+    glm::vec3 nodePosition = object->GetTransform()->GetPosition();
 
-    // Add randomness to velocity (within +- 20%)
-    float speedVariation = 0.2f;
+    float rColor = 0.5f;
+    particle.Position = nodePosition + offset;
+    particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
+    particle.Life = particleLife;
+
     float speedMultiplier = 1.0f + (2.0f * speedVariation * (std::rand() / (float)RAND_MAX) - speedVariation);
     float randomX = (2.0f * (std::rand() / (float)RAND_MAX) - 1.0f) * 0.1f;
     float randomZ = (2.0f * (std::rand() / (float)RAND_MAX) - 1.0f) * 0.1f;
     particle.Velocity = glm::vec3(randomX, 0.75f * speedMultiplier, randomZ);
+}
+
+void ParticleGenerator::initiateParticleType() {
+    if(particleType == "antWalk")
+    {
+        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        amount = 10;
+        newParticles = 2;
+        this->spawnDelay = 1.0f;
+        speedVariation = 0.2f; // Add randomness to velocity (within +- 20%)
+        particleLife = 4.0f;
+    }
+    if(particleType == "secondType")
+    {
+        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        amount = 500;
+        newParticles = 10;
+        this->spawnDelay = 1.0f;
+        speedVariation = 0.2f; // Add randomness to velocity (within +- 20%)
+        particleLife = 1.0f;
+    }
 }

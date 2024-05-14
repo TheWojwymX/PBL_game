@@ -54,6 +54,7 @@ void PlayerController::Input() {
 
 void PlayerController::Update() {
     HandleMovement();
+    HandleUpgrades();
 }
 
 void PlayerController::MovementInput() {
@@ -137,4 +138,28 @@ void PlayerController::addToInspector(ImguiMain *imguiMain) {
         ImGui::TreePop();
     }
 
+}
+
+void PlayerController::HandleUpgrades() {
+    if(Input::Instance().IsKeyPressed(74)) {
+        if (_radius < 10){
+            increaseRadiusLevel();
+            cout << "Radius upgraded" << endl;
+        }
+        else cout << "MAX Radius Level" << endl;
+    }
+    if(Input::Instance().IsKeyPressed(75)) {
+        if (_reach < 30) {
+            increaseReachLevel();
+            cout << "Reach upgraded" << endl;
+        }
+        else cout << "MAX Radius Level" << endl;
+    }
+    if(Input::Instance().IsKeyPressed(76)) {
+        if (_speed < 15) {
+            increaseSpeedLevel();
+            cout << "Speed upgraded" << endl;
+        }
+        else cout << "MAX Speed Level" << endl;
+    }
 }

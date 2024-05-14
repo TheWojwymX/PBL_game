@@ -23,6 +23,8 @@ public:
 
     void addToInspector(ImguiMain *imguiMain) override;
 
+    void HandleUpgrades();
+
 private:
     float _speed;
     float _width;
@@ -45,4 +47,8 @@ private:
     void HandleMovement();
     void MovementInput();
     void InteractionInput();
+
+    void increaseRadiusLevel(){_radius = _radius + 1;}
+    void increaseReachLevel(){_reach = _reach + 1;}
+    void increaseSpeedLevel(){_speed = _speed + 1;}
 };
