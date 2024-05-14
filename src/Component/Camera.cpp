@@ -108,3 +108,7 @@ glm::vec3 Camera::LerpDirection(glm::vec3 currentDirection) {
     currentDirection = lerp(currentDirection, _front, lerpValue);
     return currentDirection;
 }
+
+glm::vec2 Camera::GetRotation() const {
+    return glm::vec2(_yaw, _pitch);
+}

@@ -5,11 +5,14 @@
 #ifndef SANDBOX_TURRETSMANAGER_H
 #define SANDBOX_TURRETSMANAGER_H
 
+#define TURRETSMANAGER TurretsManager::getInstance()
+
 #include "Managers/ComponentsManager.h"
 #include "Turret.h"
 #include "Managers/NodesManager.h"
 
 class TurretsManager {
+public:
     static TurretsManager &getInstance();
 
     ~TurretsManager() = default;
@@ -25,6 +28,12 @@ class TurretsManager {
     void Update();
 
     std::vector<std::shared_ptr<Turret>> _turrets;
+
+    void PrepareBlueprintTurret();
+
+    void UpdateBlueprintTurret();
+
+    bool _shouldEnableBlueprintTurret = false;
 };
 
 

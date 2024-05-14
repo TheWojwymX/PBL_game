@@ -51,6 +51,7 @@
 #include "HUD/PageManager.h"
 #include "Managers/DomeManager.h"
 #include "Managers/UpgradeManager.h"
+#include "Turrets/TurretsManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -189,11 +190,14 @@ int main(int, char**)
 
     PAGEMANAGER.Init();
 
+    TURRETSMANAGER.Init();
+
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
         if(!GAMEMANAGER._paused){
             ENEMIESMANAGER.Update();
+            TURRETSMANAGER.Update();
         }
         UPGRADEMANAGER.checkActivation();
         DOMEMANAGER.Update();
