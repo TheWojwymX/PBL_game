@@ -93,6 +93,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::CLOUDMANAGER:
                         ComponentsManager::getInstance().DeserializeComponent<CloudManager>(componentJson);
                         break;
+                    case ComponentType::TURRET:
+                        ComponentsManager::getInstance().DeserializeComponent<Turret>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;

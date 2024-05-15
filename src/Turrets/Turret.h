@@ -13,12 +13,22 @@ class Turret : public Component, public std::enable_shared_from_this<Turret> {
 public:
     Turret();
 
-private:
-
     nlohmann::json Serialize() override;
 
     void Deserialize(const nlohmann::json &jsonData) override;
 
+    void Update() override;
+
+    bool _isFlying = false;
+    float _flyingSpeed = 2;
+
+    float _swingTimer = 0.0f;
+    int _swingDirection = 1;
+    float _rightMax = 1;
+    float _leftMax = -1;
+
+    glm::quat _finalRotation;
+    glm::vec3 _finalPosition;
 };
 
 

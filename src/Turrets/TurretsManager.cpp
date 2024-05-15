@@ -11,7 +11,7 @@ TurretsManager &TurretsManager::getInstance() {
 
 void TurretsManager::Init() {
     for(int i = 0; i < COMPONENTSMANAGER.GetComponents().size(); i++){
-        if(COMPONENTSMANAGER.GetComponents()[i] != nullptr && COMPONENTSMANAGER.GetComponents()[i]->_type == ComponentType::ENEMYAI){
+        if(COMPONENTSMANAGER.GetComponents()[i] != nullptr && COMPONENTSMANAGER.GetComponents()[i]->_type == ComponentType::TURRET){
             _turrets.push_back(std::dynamic_pointer_cast<Turret>(COMPONENTSMANAGER.GetComponents()[i]));
         }
     }
@@ -22,8 +22,54 @@ void TurretsManager::Update() {
     if(Input::Instance().IsKeyPressed(76)) {
         _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
         NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->IsEnabled());
+        _isInBlueprintMode = !_isInBlueprintMode;
     }
+
+    if(INPUT.IsMousePressed(0) && _isInBlueprintMode && !IsTooCloseToTurret(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition())){
+        SpawnTurret();
+    }
+
     UpdateBlueprintTurret();
+}
+
+bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos){
+    for(int i = 0; i < _turrets.size(); i++){
+
+        if(_turrets[i] == nullptr) continue;
+
+        if(glm::distance(pos, _turrets[i]->_finalPosition) < _distanceToAnotherTurret){
+            return true;
+        }
+    }
+    return false;
+}
+
+void TurretsManager::SpawnTurret(){
+    std::cout << "zespawniono" << std::endl;
+    std::string nameOfTurret = "Turret" + to_string(_turrets.size() + 1);
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfTurret);
+
+    auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Parachute");
+    newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newMeshRenderer->Initiate();
+    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newMeshRenderer);
+
+    auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
+    newTurret->Initiate();
+    newTurret->_isFlying = true;
+    newTurret->_finalRotation = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation();
+    newTurret->_finalPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
+    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
+
+    NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetPosition(glm::vec3(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().x,
+                                                                                    NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().y + 10,
+                                                                                    NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().z));
+    NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetScale(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetScale());
+    NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetRotation(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation());
+
+    _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
 }
 
 void TurretsManager::PrepareBlueprintTurret() {

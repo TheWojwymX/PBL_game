@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 24,
+    "nextComponentId": 26,
     "nextNodeId": 16,
     "resources": {
         "Models": [
@@ -42,6 +42,10 @@
             {
                 "ModelName": "Turret_Gunner_Level1",
                 "Path": "../../res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Parachute",
+                "Path": "../../res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
             }
         ],
         "Shaders": [
@@ -536,7 +540,7 @@
                 "transform": {
                     "position": [
                         50.0,
-                        101.5,
+                        99.5,
                         50.0
                     ],
                     "rotation": [
@@ -657,12 +661,16 @@
                         "model": "Turret_Standard_Level1",
                         "shader": "modelShader",
                         "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 24,
+                        "componentType": 9
                     }
                 ],
                 "transform": {
                     "position": [
                         45.0,
-                        100.2,
+                        99.5,
                         65.0
                     ],
                     "rotation": [
@@ -688,12 +696,16 @@
                         "model": "Turret_Gunner_Level1",
                         "shader": "modelShader",
                         "outlineShader": "outlineShader"
+                    },
+                    {
+                        "componentId": 25,
+                        "componentType": 9
                     }
                 ],
                 "transform": {
                     "position": [
                         47.0,
-                        100.2,
+                        99.5,
                         65.0
                     ],
                     "rotation": [

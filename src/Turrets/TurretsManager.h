@@ -34,6 +34,14 @@ public:
     void UpdateBlueprintTurret();
 
     bool _shouldEnableBlueprintTurret = false;
+
+    void SpawnTurret();
+
+    bool IsTooCloseToTurret(glm::vec3 pos);
+
+    bool _isInBlueprintMode = false;
+
+    float _distanceToAnotherTurret = 1.5f;
 };
 
 
