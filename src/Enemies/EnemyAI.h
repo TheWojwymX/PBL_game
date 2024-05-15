@@ -7,6 +7,8 @@
 
 #include "Core/Component.h"
 #include "Core/ComponentTypeEnum.h"
+#include "Managers/ComponentsManager.h"
+#include "ParticleGenerator.h"
 
 class EnemyAI : public Component {
 

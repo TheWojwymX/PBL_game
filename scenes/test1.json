@@ -92,6 +92,12 @@
                 "vertexPath": "../../res/particleShader.vs"
             }
         ],
+        "cShaders": [
+            {
+                "ShaderName" : "particleComputeShader",
+                "path" : "../../res/particleCompute.glsl"
+            }
+        ],
         "Sounds": [
             {
                 "Path": "res/Sounds/ksu.mp3",
@@ -352,11 +358,11 @@
                         "componentId": 12,
                         "componentType": 9,
                         "offset": {
-                            "x": 0.0,
+                            "x": 2.0,
                             "y": 0.0,
-                            "z": 0.0
-                            },
-                        "particleType": "secondType",
+                            "z": 2.0
+                        },
+                        "particleType": "antWalk",
                         "shader": "particleShader"
                     }
                 ],

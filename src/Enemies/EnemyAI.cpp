@@ -34,5 +34,6 @@ void EnemyAI::WalkToDome(){
 
 void EnemyAI::Update() {
     WalkToDome();
+    ComponentsManager::getInstance().GetComponentByID<ParticleGenerator>(12)->generateParticle=true;
     Component::Update();
 }

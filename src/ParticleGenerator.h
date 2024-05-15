@@ -3,60 +3,66 @@
 
 #include "Core/Node.h"
 #include "texture.h"
+#include "ComputeShader.h"
+#include <memory>
+#include <vector>
+#include "glm/glm.hpp"
 
-// Represents a single particle and its state
+
 struct Particle {
-    glm::vec3 Position, Velocity;
+    glm::vec4 Position;
+    glm::vec4 Velocity;
     glm::vec4 Color;
-    float     Life;
+    float Life;
+    float Scale;
+    float pad[2];
 
-    Particle() : Position(0.0f), Velocity(0.0f), Color(1.0f), Life(0.0f) { }
+    Particle()
+            : Position(0.0f), Velocity(0.0f), Color(1.0f), Life(0.0f), Scale(0.5f), pad{0.0f,0.0f} {}
 };
 
-// ParticleGenerator acts as a container for rendering a large number of
-// particles by repeatedly spawning and updating particles and killing
-// them after a given amount of time.
-class ParticleGenerator : public Component
-{
+class ParticleGenerator : public Component {
 public:
+    ParticleGenerator(std::shared_ptr<Shader> shader, std::string particleType);
     ParticleGenerator();
-    // constructor
-    ParticleGenerator(shared_ptr<Shader> shader, string particleType);
-    // update all particles
-    void Update() override;
-    // render all particles
-    void Render(glm::mat4 parentWorld) override;
 
     nlohmann::json Serialize() override;
-
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    void initiate() override;
+    void UpdateParticles();
+    void RenderParticles();
+    void Update() override;
+    void Render(glm::mat4 parentWorld) override;
     void Init() override;
+
+    bool generateParticle = false;
+
 private:
-    // state
-    std::vector<Particle> particles;
-    unsigned int amount;
-    // render state
-    shared_ptr<Shader> shader;
-    shared_ptr<Node> object;
-    int newParticles;
-    float speedVariation;
-    float particleLife;
+    std::shared_ptr<Shader> shader;
+    std::shared_ptr<ComputeShader> computeShader;
+    std::string particleType;
     Texture2D texture;
-    string particleType;
-    glm::vec3 offset;
-    unsigned int VAO;
-    float elapsedTime;
-    float spawnDelay;
-    // initializes buffer and vertex attributes
 
-    // returns the first Particle index that's currently unused e.g. Life <= 0.0f or 0 if no particle is currently inactive
-    unsigned int firstUnusedParticle();
-    // respawns particle
-    void respawnParticle(Particle& particle);
+    unsigned int VAO, particleBuffer;
+    glm::vec3 offset{0.0f};
+    std::shared_ptr<Node> object;
+    std::vector<Particle> particles;
+
+    float elapsedTime = 0.0f;
+    float spawnDelay = 1.0f;
+    float speedVariation = 0.2f;
+    float particleLife = 1.0f;
+    unsigned int amount = 500;
+    unsigned int newParticles = 10;
+    float XZvariation = 0.1f;
+    glm::vec4 particleColor;
+    float initialUpwardBoost;
+    float particleScale;
+
+    glm::vec3 camPosition;
+    glm::vec3 camForward;
+
     void initiateParticleType();
-
 };
 
 #endif

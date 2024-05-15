@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include "shader_s.h"
+#include "ComputeShader.h"
 #include "Model.h"
 #include "Sound.h"
 #include "../../thirdparty/nlohmann/json.hpp"
@@ -27,6 +28,10 @@ public:
     shared_ptr<Shader> CreateShader(const char *vertexPath, const char *fragmentPath, string name);
 
     shared_ptr<Shader> GetShaderByName(const string &name);
+
+    shared_ptr<ComputeShader> CreateComputeShader(const char *path, string name);
+
+    shared_ptr<ComputeShader> GetComputeShaderByName(const string &name);
 
     shared_ptr<Model> CreateModel(string path, string name);
 
@@ -47,6 +52,7 @@ private:
     ResourceManager &operator=(const ResourceManager &) = delete;
 
     std::vector<std::shared_ptr<Shader>> Shaders;
+    std::vector<std::shared_ptr<ComputeShader>> cShaders;
     std::vector<std::shared_ptr<Model>> Models;
     std::vector<std::shared_ptr<Sound>> Sounds;
 

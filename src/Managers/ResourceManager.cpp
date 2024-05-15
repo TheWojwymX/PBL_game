@@ -25,6 +25,22 @@ std::shared_ptr<Shader> ResourceManager::GetShaderByName(const string &name) {
     return nullptr;
 }
 
+shared_ptr<ComputeShader> ResourceManager::CreateComputeShader(const char *path, string name) {
+    auto shader = std::make_shared<ComputeShader>(path, name);
+    cShaders.push_back(shader);
+    return shader;
+}
+
+std::shared_ptr<ComputeShader> ResourceManager::GetComputeShaderByName(const string &name) {
+    for (const auto &shader: cShaders) {
+        if (shader->_name == name) {
+            return shader;
+        }
+    }
+    std::cout << "No such compute shader!" << std::endl;
+    return nullptr;
+}
+
 shared_ptr<Model> ResourceManager::CreateModel(string path, string name) {
     auto model = std::make_shared<Model>(path, name);
     Models.push_back(model);
@@ -70,11 +86,16 @@ std::shared_ptr<Sound> ResourceManager::GetSoundByID(int id) {
 nlohmann::json ResourceManager::Serialize() {
     nlohmann::json data;
     nlohmann::json shadersJson = nlohmann::json::array();
+    nlohmann::json cShadersJson = nlohmann::json::array();
     nlohmann::json modelsJson = nlohmann::json::array();
     nlohmann::json soundsJson = nlohmann::json::array();
 
     for (auto &shader: Shaders) {
         shadersJson.push_back(shader->Serialize());
+    }
+
+    for (auto &shader: cShaders) {
+        cShadersJson.push_back(shader->Serialize());
     }
 
     for (auto &model: Models) {
@@ -86,6 +107,7 @@ nlohmann::json ResourceManager::Serialize() {
     }
 
     data["Shaders"] = shadersJson;
+    data["cShaders"] = cShadersJson;
     data["Models"] = modelsJson;
     data["Sounds"] = soundsJson;
 
@@ -98,6 +120,13 @@ void ResourceManager::Deserialize(nlohmann::json data) {
             string vertexPath = shader["vertexPath"].get<string>();
             string fragmentPath = shader["fragmentPath"].get<string>();
             CreateShader(vertexPath.c_str(), fragmentPath.c_str(), shader["ShaderName"].get<string>());
+        }
+    }
+
+    if (data.contains("cShaders")) {
+        for (auto &shader: data["cShaders"]) {
+            string path = shader["path"].get<string>();
+            CreateComputeShader(path.c_str(), shader["ShaderName"].get<string>());
         }
     }
 
