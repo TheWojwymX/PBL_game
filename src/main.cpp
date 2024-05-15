@@ -184,6 +184,15 @@ int main(int, char**)
 
     ENEMIESMANAGER.Init();
 
+    //Prepare shader pointers
+    auto skyboxShader = RESOURCEMANAGER.GetShaderByName("skyboxShader");
+    auto modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    auto outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    auto skyboxReflectionShader = RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader");
+    auto instanceModelShader = RESOURCEMANAGER.GetShaderByName("instanceModelShader");
+    auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
+    auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -235,8 +244,8 @@ int main(int, char**)
         glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
         glm::mat4 view = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
         glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix())); // remove translation from the view matrix
-        RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("view", skyboxView);
-        RESOURCEMANAGER.GetShaderByName("skyboxShader")->setMat4("projection", projection);
+        skyboxShader->setMat4("view", skyboxView);
+        skyboxShader->setMat4("projection", projection);
 
         skybox.draw();
 
@@ -264,79 +273,79 @@ int main(int, char**)
 
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT); //Reset Viewport After Rendering to Shadow Map
 
-        RESOURCEMANAGER.GetShaderByName("modelShader")->use();
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.direction", dirDirection);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("dirLight.color", dirColor);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("dirLight.isActive", dirActive);
+        modelShader->use();
+        modelShader->setVec3("dirLight.direction", dirDirection);
+        modelShader->setVec3("dirLight.color", dirColor);
+        modelShader->setInt("dirLight.isActive", dirActive);
 
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setBool("spotLights[0].isActive", isSpotActive);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].position", spotLightCurrentPosition);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].direction", spotLightCurrentDirection);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].constant", spotLightConstant);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].linear", spotLightLinear);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("spotLights[0].color", spotLightColor);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
+        modelShader->setBool("spotLights[0].isActive", isSpotActive);
+        modelShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        modelShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
+        modelShader->setFloat("spotLights[0].constant", spotLightConstant);
+        modelShader->setFloat("spotLights[0].linear", spotLightLinear);
+        modelShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
+        modelShader->setVec3("spotLights[0].color", spotLightColor);
+        modelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
+        modelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
 
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("view", view);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setVec3("lightPos", lightPos);
-        RESOURCEMANAGER.GetShaderByName("modelShader")->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+        modelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        modelShader->setMat4("projection", projection);
+        modelShader->setMat4("view", view);
+        modelShader->setVec3("lightPos", lightPos);
+        modelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->use();
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("dirLight.direction", dirDirection);
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("dirLight.color", dirColor);
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->setInt("dirLight.isActive", dirActive);
+        outlineShader->use();
+        outlineShader->setVec3("dirLight.direction", dirDirection);
+        outlineShader->setVec3("dirLight.color", dirColor);
+        outlineShader->setInt("dirLight.isActive", dirActive);
 
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("outlineShader")->setMat4("view", view);
+        outlineShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        outlineShader->setMat4("projection", projection);
+        outlineShader->setMat4("view", view);
 
-        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->use();
-        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setInt("skybox", 0);
-        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader")->setMat4("view", view);
+        skyboxReflectionShader->use();
+        skyboxReflectionShader->setInt("skybox", 0);
+        skyboxReflectionShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        skyboxReflectionShader->setMat4("projection", projection);
+        skyboxReflectionShader->setMat4("view", view);
 
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->use();
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.direction", dirDirection);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("dirLight.color", dirColor);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("dirLight.isActive", dirActive);
+        instanceModelShader->use();
+        instanceModelShader->setVec3("dirLight.direction", dirDirection);
+        instanceModelShader->setVec3("dirLight.color", dirColor);
+        instanceModelShader->setInt("dirLight.isActive", dirActive);
 
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setBool("spotLights[0].isActive", isSpotActive);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].position", spotLightCurrentPosition);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].direction", spotLightCurrentDirection);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].constant", spotLightConstant);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].linear", spotLightLinear);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].quadratic", spotLightQuadratic);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("spotLights[0].color", spotLightColor);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
+        instanceModelShader->setBool("spotLights[0].isActive", isSpotActive);
+        instanceModelShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        instanceModelShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
+        instanceModelShader->setFloat("spotLights[0].constant", spotLightConstant);
+        instanceModelShader->setFloat("spotLights[0].linear", spotLightLinear);
+        instanceModelShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
+        instanceModelShader->setVec3("spotLights[0].color", spotLightColor);
+        instanceModelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
+        instanceModelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
 
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("view", view);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setVec3("lightPos", lightPos);
-        RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+        instanceModelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        instanceModelShader->setMat4("projection", projection);
+        instanceModelShader->setMat4("view", view);
+        instanceModelShader->setVec3("lightPos", lightPos);
+        instanceModelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
-        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->use();
-        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setVec3("lightColor", dirColor);
-        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("lightObjectShader")->setMat4("view", view);
+        lightObjectShader->use();
+        lightObjectShader->setVec3("lightColor", dirColor);
+        lightObjectShader->setMat4("projection", projection);
+        lightObjectShader->setMat4("view", view);
 
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->use();
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.direction", dirDirection);
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("dirLight.color", dirColor);
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setInt("dirLight.isActive", dirActive);
+        cloudShader->use();
+        cloudShader->setVec3("dirLight.direction", dirDirection);
+        cloudShader->setVec3("dirLight.color", dirColor);
+        cloudShader->setInt("dirLight.isActive", dirActive);
 
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setVec3("initialCloudPosition", initialCloudPosition);
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("cloudSpeed", cloudSpeed);
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setFloat("time", TIME.GetTime());
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
+        cloudShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        cloudShader->setVec3("initialCloudPosition", initialCloudPosition);
+        cloudShader->setFloat("cloudSpeed", cloudSpeed);
+        cloudShader->setFloat("time", TIME.GetTime());
+        cloudShader->setMat4("projection", projection);
+        cloudShader->setMat4("view", view);
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
