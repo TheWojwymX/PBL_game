@@ -29,6 +29,8 @@ public:
 
     glm::quat _finalRotation;
     glm::vec3 _finalPosition;
+
+    std::vector<glm::vec3> _turretRangePositions;
 };
 
 

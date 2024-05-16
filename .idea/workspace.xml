@@ -32,20 +32,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/turretRange.fs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/turretRange.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/ComponentTypeEnum.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/ComponentTypeEnum.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +102,7 @@
       <recent name="C:\RepoPBL\res\Models\Base" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res" />
       <recent name="C:\RepoPBL\res\Models\Turrets\Standard\Level1" />
       <recent name="C:\RepoPBL\res\Models\Turrets" />
       <recent name="C:\RepoPBL\res\Models\Turrets\Level1\Standard" />
@@ -211,6 +208,7 @@
       <workItem from="1714813004054" duration="2482000" />
       <workItem from="1715705589375" duration="7017000" />
       <workItem from="1715770885117" duration="15449000" />
+      <workItem from="1715845907858" duration="7411000" />
     </task>
     <servers />
   </component>

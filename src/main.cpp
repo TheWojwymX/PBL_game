@@ -351,6 +351,14 @@ int main(int, char**)
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("projection", projection);
         RESOURCEMANAGER.GetShaderByName("cloudShader")->setMat4("view", view);
 
+
+/*        RESOURCEMANAGER.GetShaderByName("turretRangeShader")->use();
+        RESOURCEMANAGER.GetShaderByName("turretRangeShader")->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("turretRangeShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("turretRangeShader")->setFloat("uGlowWidth", 50.0f);
+        RESOURCEMANAGER.GetShaderByName("turretRangeShader")->setFloat("maxHeight", 5.0f);
+        RESOURCEMANAGER.GetShaderByName("turretRangeShader")->setFloat("uGlowWidth", 50.0f);*/
+
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();

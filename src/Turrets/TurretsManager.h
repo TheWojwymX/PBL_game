@@ -42,6 +42,10 @@ public:
     bool _isInBlueprintMode = false;
 
     float _distanceToAnotherTurret = 1.5f;
+
+    float _sideRange = 5.0f;
+    float _forwardRange = 7.0f;
+    float _backRange = 2.0f;
 };
 
 

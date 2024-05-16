@@ -113,6 +113,11 @@
                 "ShaderName": "wireframeShader",
                 "fragmentPath": "../../res/wireframeShader.fs",
                 "vertexPath": "../../res/wireframeShader.vs"
+            },
+            {
+                "ShaderName": "turretRangeShader",
+                "fragmentPath": "../../res/turretRange.fs",
+                "vertexPath": "../../res/turretRange.vs"
             }
         ],
         "Sounds": [

@@ -61,6 +61,43 @@ void TurretsManager::SpawnTurret(){
     newTurret->_isFlying = true;
     newTurret->_finalRotation = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation();
     newTurret->_finalPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
+
+    glm::vec3 BPPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
+    glm::vec3 upVec = glm::vec3(0, 1, 0);
+    glm::vec3 forwardVec = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation() * glm::vec3(0, 0, 1);
+    glm::vec3 backwardVec = -forwardVec;
+    glm::vec3 leftVec = glm::normalize(glm::cross(upVec, forwardVec));
+    glm::vec3 rightVec = -leftVec;
+
+    glm::vec3 pos0 = BPPosition + leftVec * _sideRange + backwardVec * _backRange;
+    newTurret->_turretRangePositions.push_back(pos0);
+
+    glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
+    newTurret->_turretRangePositions.push_back(pos1);
+
+    glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
+    newTurret->_turretRangePositions.push_back(pos2);
+
+    glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
+    newTurret->_turretRangePositions.push_back(pos3);
+
+/*    std::cout << "_turretRangePositions[0]: x=" << newTurret->_turretRangePositions[0].x
+              << ", y=" << newTurret->_turretRangePositions[0].y
+              << ", z=" << newTurret->_turretRangePositions[0].z << std::endl;
+
+    std::cout << "_turretRangePositions[1]: x=" << newTurret->_turretRangePositions[1].x
+              << ", y=" << newTurret->_turretRangePositions[1].y
+              << ", z=" << newTurret->_turretRangePositions[1].z << std::endl;
+
+    std::cout << "_turretRangePositions[2]: x=" << newTurret->_turretRangePositions[2].x
+              << ", y=" << newTurret->_turretRangePositions[2].y
+              << ", z=" << newTurret->_turretRangePositions[2].z << std::endl;
+
+    std::cout << "_turretRangePositions[3]: x=" << newTurret->_turretRangePositions[3].x
+              << ", y=" << newTurret->_turretRangePositions[3].y
+              << ", z=" << newTurret->_turretRangePositions[3].z << std::endl;*/
+
+
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetPosition(glm::vec3(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().x,
@@ -113,4 +150,17 @@ void TurretsManager::UpdateBlueprintTurret(){
     lookAtPoint.y = turretPosition.y;
     glm::vec3 lookDirection = glm::normalize(lookAtPoint - turretPosition);
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetTransform()->LookAt(lookDirection);
+
+    //positions counting
+    glm::vec3 BPPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
+    glm::vec3 upVec = glm::vec3(0, 1, 0);
+    glm::vec3 forwardVec = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation() * glm::vec3(0, 0, 1);
+    glm::vec3 backwardVec = -forwardVec;
+    glm::vec3 leftVec = glm::normalize(glm::cross(upVec, forwardVec));
+    glm::vec3 rightVec = -leftVec;
+
+    glm::vec3 pos0 = BPPosition + leftVec * _sideRange + backwardVec * _backRange;
+    glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
+    glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
+    glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
 }
