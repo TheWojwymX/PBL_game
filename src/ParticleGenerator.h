@@ -43,7 +43,7 @@ private:
     std::string particleType;
     Texture2D texture;
 
-    unsigned int VAO, particleBuffer;
+    unsigned int VAO, particleBuffer, instanceVBO;
     glm::vec3 offset{0.0f};
     std::shared_ptr<Node> object;
     std::vector<Particle> particles;
