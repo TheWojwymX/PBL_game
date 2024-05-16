@@ -193,7 +193,7 @@ void BlockManager::GenerateSphereVectors(int radius) {
     }
 }
 
-bool BlockManager::RayIntersectsBlock(float rayLength, int radius) {
+bool BlockManager::RayIntersectsBlock(float rayLength, int radius, float digPower) {
     // Get camera position and front vector
     glm::vec3 cameraPos = _cameraRef->GetPosition();
     glm::vec3 cameraFront = _cameraRef->GetFrontVector();
@@ -214,7 +214,7 @@ bool BlockManager::RayIntersectsBlock(float rayLength, int radius) {
 
             // Check if the blockData is visible and change it to empty if so
             if (_blocksData[index].IsVisible() && _blocksData[index].GetBlockType() != BlockType::EMPTY) {
-                DamageBlocks(roundedPoint,radius);
+                DamageBlocks(roundedPoint,radius,digPower);
                 return true; // Block hit, no need to check further
             }
         }
@@ -222,15 +222,17 @@ bool BlockManager::RayIntersectsBlock(float rayLength, int radius) {
     return false; // No block hit along the ray
 }
 
-void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius)
+void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
 {
     for (const glm::ivec3& offset : _sphereVectors[radius]) {
         glm::ivec3 pos = hitPos + offset;
         if (InBounds(pos)) {
             int index = GetIndex(pos);
             if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
-                _blocksData[index].SetBlockType(BlockType::EMPTY);
-                UpdateNeighbourVisibility(_blocksData[index]);
+                if (_blocksData[index].DamageBlock(digPower)) {
+                    _blocksData[index].SetBlockType(BlockType::EMPTY);
+                    UpdateNeighbourVisibility(_blocksData[index]);
+                }
             }
         }
     }

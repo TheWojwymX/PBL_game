@@ -3,10 +3,12 @@
 #include "Core/Input.h"
 #include "Core/Node.h"
 
-PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height)
-    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),_inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius) , _width(width), _height(height) {
+PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height, float digPower)
+    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)), _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
+    _interactionCooldown(0.25f), _timeSinceLastInteraction(0.0f) {
     _type = ComponentType::PLAYERCNTROLLER;
 }
+
 
 
 nlohmann::json PlayerController::Serialize() {
@@ -68,10 +70,14 @@ void PlayerController::MovementInput() {
 }
 
 void PlayerController::InteractionInput() {
-    if (INPUT.IsMousePressed(GLFW_MOUSE_BUTTON_1)) {
-        _blockManagerRef->RayIntersectsBlock(_reach, _radius);
+    _timeSinceLastInteraction += TIME.GetDeltaTime();
+
+    if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)) {
+        _blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower);
+        _timeSinceLastInteraction = 0.0f;
     }
 }
+
 
 void PlayerController::CheckGrounded(glm::vec3 separationVector) {
     if (separationVector.y > 0) {

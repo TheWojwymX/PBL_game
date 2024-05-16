@@ -16,7 +16,10 @@ enum class BlockType {
 
 class BlockData {
 public:
-    BlockData(BlockType blockType, glm::ivec3 posID, glm::mat4 matrix, float startHP, bool invincible, float density, std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> blockManager);
+    BlockData(BlockType blockType, glm::ivec3 posID, glm::mat4 matrix, float startHP, bool invincible, float density, std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> blockManager)
+        : _blockType(blockType), _posID(posID), _matrix(matrix), _startHP(startHP), _HP(startHP), _invincible(invincible), _density(density), _blockManager(blockManager), _visible(true) {
+        std::fill(std::begin(_sideCollisions), std::end(_sideCollisions), false);
+    }
 
     BlockType GetBlockType() const { return _blockType; }
     glm::ivec3 GetPosID() const { return _posID; }
@@ -44,6 +47,15 @@ public:
         _sideCollisions[3] = bottom;
         _sideCollisions[4] = front;
         _sideCollisions[5] = back;
+    }
+
+    bool DamageBlock(float amount) {
+        if (_invincible) {
+            return false; // Block is invincible, no damage taken
+        }
+
+        _HP -= amount;
+        return _HP <= 0;
     }
 
 private:

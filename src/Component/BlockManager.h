@@ -33,7 +33,7 @@ public:
 
     void Init() override;
 
-    bool RayIntersectsBlock(float rayLength, int radius);
+    bool RayIntersectsBlock(float rayLength, int radius, float digPower);
     std::pair<glm::vec3,glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
@@ -56,7 +56,7 @@ private:
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();
     void UpdateBlocksVisibility();
-    void DamageBlocks(glm::ivec3 hitPos, int radius);
+    void DamageBlocks(glm::ivec3 hitPos, int radius, float digPower);
     void HideEdges();
     void UpdateBlockVisibility(BlockData& blockData);
     void UpdateNeighbourVisibility(BlockData& blockData);
