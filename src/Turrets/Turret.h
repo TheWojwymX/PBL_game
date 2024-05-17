@@ -31,6 +31,11 @@ public:
     glm::vec3 _finalPosition;
 
     std::vector<glm::vec3> _turretRangePositions;
+
+    float _fireRate = 0.5;
+    float _damage = 35;
+
+    float _timer = 0.0f;
 };
 
 

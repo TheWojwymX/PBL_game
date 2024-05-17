@@ -51,6 +51,10 @@ public:
     void CheckEnemiesInRange();
 
     bool isPointInRectangle(const glm::vec3 &M, const vector<glm::vec3> &rect);
+
+    void AttackEnemy(const shared_ptr<Turret>& turret, const shared_ptr<Enemy>& enemy);
+
+    void Reload(const shared_ptr<Turret> &turret);
 };
 
 

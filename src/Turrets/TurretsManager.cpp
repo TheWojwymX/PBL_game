@@ -185,6 +185,10 @@ void TurretsManager::CheckEnemiesInRange(){
 
         if(_turrets[i] == nullptr) continue;
 
+        if(_turrets[i]->_isFlying) continue;
+
+        std::vector<shared_ptr<Enemy>> enemiesInRange;
+
         for(int j = 0; j < ENEMIESMANAGER._enemies.size(); j++){
 
             if(ENEMIESMANAGER._enemies[j] == nullptr) continue;
@@ -192,9 +196,53 @@ void TurretsManager::CheckEnemiesInRange(){
             glm::vec3 enemyPos = ENEMIESMANAGER._enemies[j]->GetOwnerPosition();
 
             if(isPointInRectangle(enemyPos, _turrets[i]->_turretRangePositions)){
-                std::cout << "jest " << j << std::endl;
+                enemiesInRange.push_back(ENEMIESMANAGER._enemies[j]);
             }
         }
+
+        std::shared_ptr<Enemy> closestEnemy;
+
+        if(!enemiesInRange.empty()) {
+            closestEnemy = enemiesInRange[0];
+
+            for (int j = 0; j < enemiesInRange.size(); j++) {
+                if (glm::distance(_turrets[i]->GetOwnerPosition(),
+                                  closestEnemy->GetOwnerPosition()) >
+                    glm::distance(_turrets[i]->GetOwnerPosition(),
+                                  enemiesInRange[j]->GetOwnerPosition())) {
+                    closestEnemy = enemiesInRange[j];
+                }
+            }
+
+            glm::vec3 turretPosition = _turrets[i]->_ownerNode->GetTransform()->GetPosition();
+            glm::vec3 enemyPosition = closestEnemy->GetOwnerPosition();
+            enemyPosition.y = turretPosition.y;
+            glm::vec3 lookDirection = glm::normalize(enemyPosition - turretPosition);
+            _turrets[i]->_ownerNode->GetTransform()->LookAt(lookDirection);
+
+            AttackEnemy(_turrets[i], closestEnemy);
+
+            //std::cout << "najblizej jest " << closestEnemy->_ownerNode->_name << endl;
+        }
+        else{
+            Reload(_turrets[i]);
+        }
+    }
+}
+
+void TurretsManager::Reload(const shared_ptr<Turret>& turret){
+    if(turret->_timer < turret->_fireRate){
+        turret->_timer += TIME.GetDeltaTime();
+    }
+}
+
+void TurretsManager::AttackEnemy(const shared_ptr<Turret>& turret, const shared_ptr<Enemy>& enemy){
+    if(turret->_timer < turret->_fireRate){
+        turret->_timer += TIME.GetDeltaTime();
+    }
+    else{
+        turret->_timer = 0.0f;
+        enemy->TakeDamage(turret->_damage);
     }
 }
 
