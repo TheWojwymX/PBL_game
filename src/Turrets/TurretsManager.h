@@ -10,6 +10,7 @@
 #include "Managers/ComponentsManager.h"
 #include "Turret.h"
 #include "Managers/NodesManager.h"
+#include "Enemies/EnemiesManager.h"
 
 class TurretsManager {
 public:
@@ -46,6 +47,10 @@ public:
     float _sideRange = 5.0f;
     float _forwardRange = 7.0f;
     float _backRange = 2.0f;
+
+    void CheckEnemiesInRange();
+
+    bool isPointInRectangle(const glm::vec3 &M, const vector<glm::vec3> &rect);
 };
 
 

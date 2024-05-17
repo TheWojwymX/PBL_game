@@ -22,6 +22,7 @@ void TurretsManager::Update() {
     if(Input::Instance().IsKeyPressed(76)) {
         _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
         NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->IsEnabled());
+        //NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
         _isInBlueprintMode = !_isInBlueprintMode;
     }
 
@@ -30,6 +31,7 @@ void TurretsManager::Update() {
     }
 
     UpdateBlueprintTurret();
+    CheckEnemiesInRange();
 }
 
 bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos){
@@ -45,7 +47,7 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos){
 }
 
 void TurretsManager::SpawnTurret(){
-    std::cout << "zespawniono" << std::endl;
+    //std::cout << "zespawniono" << std::endl;
     std::string nameOfTurret = "Turret" + to_string(_turrets.size() + 1);
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfTurret);
 
@@ -121,6 +123,19 @@ void TurretsManager::PrepareBlueprintTurret() {
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->AddComponent(newMeshRenderer);
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->SetEnabled(false);
 
+
+/*    std::string nameOfBlueprintRange = "BlueprintRange";
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfBlueprintTurret), nameOfBlueprintRange);
+
+    auto newMeshRenderer2 = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    newMeshRenderer2->_model = RESOURCEMANAGER.GetModelByName("cloudModel");
+    newMeshRenderer2->_shader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
+    newMeshRenderer2->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newMeshRenderer2->Initiate();
+    NODESMANAGER.getNodeByName(nameOfBlueprintRange)->AddComponent(newMeshRenderer2);
+    NODESMANAGER.getNodeByName(nameOfBlueprintRange)->GetComponent<MeshRenderer>()->SetEnabled(false);*/
+
+
     //std::cout <<  NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetRotation().x << "   " << NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetRotation().y << "  " << NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetRotation().z << std::endl;
 }
 
@@ -163,4 +178,47 @@ void TurretsManager::UpdateBlueprintTurret(){
     glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
     glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
     glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
+}
+
+void TurretsManager::CheckEnemiesInRange(){
+    for(int i = 0; i < _turrets.size(); i++){
+
+        if(_turrets[i] == nullptr) continue;
+
+        for(int j = 0; j < ENEMIESMANAGER._enemies.size(); j++){
+
+            if(ENEMIESMANAGER._enemies[j] == nullptr) continue;
+
+            glm::vec3 enemyPos = ENEMIESMANAGER._enemies[j]->GetOwnerPosition();
+
+            if(isPointInRectangle(enemyPos, _turrets[i]->_turretRangePositions)){
+                std::cout << "jest " << j << std::endl;
+            }
+        }
+    }
+}
+
+bool TurretsManager::isPointInRectangle(const glm::vec3& M, const std::vector<glm::vec3>& rect) {
+    if (rect.size() != 4) {
+        std::cerr << "Prostokąt musi mieć dokładnie 4 wierzchołki." << std::endl;
+        return false;
+    }
+
+    glm::vec3 A = rect[0];
+    glm::vec3 B = rect[1];
+    glm::vec3 D = rect[3];
+
+    // Wektory
+    glm::vec3 AB = B - A;
+    glm::vec3 AD = D - A;
+    glm::vec3 AM = M - A;
+
+    // Iloczyny skalarne
+    float AB_AB = glm::dot(AB, AB);
+    float AM_AB = glm::dot(AM, AB);
+    float AD_AD = glm::dot(AD, AD);
+    float AM_AD = glm::dot(AM, AD);
+
+    // Warunki
+    return (0 < AM_AB && AM_AB < AB_AB) && (0 < AM_AD && AM_AD < AD_AD);
 }

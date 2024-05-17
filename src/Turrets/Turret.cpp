@@ -13,10 +13,33 @@ Turret::Turret() {
 
 nlohmann::json Turret::Serialize() {
     nlohmann::json data;
+
+    data["turretRangePositions"] = {
+            {"position0", {_turretRangePositions[0].x, _turretRangePositions[0].y, _turretRangePositions[0].z}},
+            {"position1", {_turretRangePositions[1].x, _turretRangePositions[1].y, _turretRangePositions[1].z}},
+            {"position2", {_turretRangePositions[2].x, _turretRangePositions[2].y, _turretRangePositions[2].z}},
+            {"position3", {_turretRangePositions[3].x, _turretRangePositions[3].y, _turretRangePositions[3].z}},
+    };
+
     return data;
 }
 
 void Turret::Deserialize(const nlohmann::json &jsonData) {
+
+    if (jsonData.contains("turretRangePositions")) {
+        auto turretRangePositions = jsonData["turretRangePositions"];
+
+        auto position0 = turretRangePositions["position0"];
+        auto position1 = turretRangePositions["position1"];
+        auto position2 = turretRangePositions["position2"];
+        auto position3 = turretRangePositions["position3"];
+
+        _turretRangePositions.push_back(glm::vec3(position0[0], position0[1], position0[2]));
+        _turretRangePositions.push_back(glm::vec3(position1[0], position1[1], position1[2]));
+        _turretRangePositions.push_back(glm::vec3(position2[0], position2[1], position2[2]));
+        _turretRangePositions.push_back(glm::vec3(position3[0], position3[1], position3[2]));
+    }
+
     Component::Deserialize(jsonData);
 }
 

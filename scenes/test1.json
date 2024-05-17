@@ -669,47 +669,34 @@
                     },
                     {
                         "componentId": 24,
-                        "componentType": 9
+                        "componentType": 9,
+                        "turretRangePositions": {
+                            "position0": [
+                                40.0,
+                                99.5,
+                                63.0
+                            ],
+                            "position1": [
+                                40.0,
+                                99.5,
+                                72.0
+                            ],
+                            "position2": [
+                                50.0,
+                                99.5,
+                                72.0
+                            ],
+                            "position3": [
+                                50.0,
+                                99.5,
+                                63.0
+                            ]
+                        }
                     }
                 ],
                 "transform": {
                     "position": [
                         45.0,
-                        99.5,
-                        65.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        0.3,
-                        0.3,
-                        0.3
-                    ]
-                }
-            },
-            {
-                "NodeID": 15,
-                "NodeName": "Turret2",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 23,
-                        "componentType": 5,
-                        "model": "Turret_Gunner_Level1",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 25,
-                        "componentType": 9
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        47.0,
                         99.5,
                         65.0
                     ],
