@@ -48,7 +48,8 @@ public:
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
     std::vector<glm::vec2> _spawnersPositions{
-        glm::vec2(62.0, 100.0)
+        glm::vec2(62.0, 100.0),
+        glm::vec2(-62.0, 100.0),
     };
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);

@@ -1,10 +1,42 @@
-//
-// Created by Jacek on 10.04.2024.
-//
+#pragma once
 
 #include "GameManager.h"
+#include "../Enemies/EnemiesManager.h"
 
 GameManager &GameManager::getInstance() {
     static GameManager instance;
     return instance;
+}
+
+void GameManager::Update()
+{
+    currentTime += TIME.GetDeltaTime();
+
+    if (currentTime >= phaseTime)
+    {
+        currentTime = 0.0f;
+        currentPhase = (currentPhase + 1) % 3;
+        InitPhase();
+    }
+}
+
+void GameManager::InitPhase()
+{
+    if(currentPhase == 0) // kopanie
+    {
+        std::cout << "kopiemy";
+    }
+    else if (currentPhase == 1) // stawianie
+    {
+        std::cout << "stawiamy";
+    }
+    else if (currentPhase == 2) // obrona
+    {
+        std::cout << "bronimy";
+
+        // Placeholder
+        ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
+        ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
+        ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
+    }
 }
