@@ -9,6 +9,7 @@
 
 #include "Text/TextRenderer.h"
 #include "Image/ImageRenderer.h"
+#include "core/Time.h"
 
 //te,p
 #include <GLFW/glfw3.h>
@@ -35,6 +36,11 @@ public:
     ImageRenderer _hpFullImage;
     ImageRenderer _crosshairImage;
     ImageRenderer _animatedImage;
+
+    glm::vec2 hpTopRight = glm::vec2(0.952f, 0.952f);
+    glm::vec2 hpBottomRight = glm::vec2(0.952f, 0.5f);
+    glm::vec2 hpBottomLeft = glm::vec2(0.62f, 0.5f);
+    glm::vec2 hpTopLeft = glm::vec2(0.62f, 0.952f);
 };
 
 

@@ -41,72 +41,78 @@ void HUDMain::Init() {
 
     std::array<float, 32> vertices5{
             // positions          // colors           // texture coords
-            1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -1.0f,  1.0, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+            hpTopRight.x,  hpTopRight.y, 0.0f,        1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            hpBottomRight.x, hpBottomRight.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            hpBottomLeft.x, hpBottomLeft.y, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            hpTopLeft.x, hpTopLeft.y, 0.0f,           1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
     _hpEmptyImage.Init("../../res/Images/hp_empty.png", verticesHpEmpty, true, false);
     _hpFullImage.Init("../../res/Images/hp_full.png", verticesHpFull, true, true);
     _crosshairImage.Init("../../res/Images/crosshair041.png", verticesCrosshair, true, false);
-    _animatedImage.Init("../../res/Images/5margin.png", vertices5, true, true);
+    _animatedImage.Init("../../res/BaseHP/100hp.png", vertices5, true, true);
+    //_animatedImage.Init("../../res/Images/5margin.png", vertices5, true, true);
 }
 
-int xx = 5;
-int yy = 5;
-int spriteSheetWidth = 1330;
-int spriteSheetHeight = 532;
-int spriteWidth = 256;
-int spriteHeight = 256;
+int xx = 0;
+int yy = 0;
+int spriteSheetWidth = 256;
+int spriteSheetHeight = 64;
+int spriteWidth = 64;
+int spriteHeight = 64;
 float test = 0;
+float testTimer = 0.0;
+float interval = 0.3f;
+int currentFrame = 0;
 
 void HUDMain::Update() {
-
-    static float lastTime = 0.0f;
-    float currentTime = glfwGetTime();
-    float interval = 0.05f;
-
-    if (currentTime - lastTime >= interval) {
-
-        ///animation
-/*        if((int)test % 5 == 0 && test != 0){
-            xx = 5;
-            if(yy == 5){
-                yy = 271;
-            }
-            else{
-                yy = 5;
-            }
-        }
-        else{
-            xx = xx + spriteWidth + 10;
-        }*/
-        ///
-
-        test++;
-        lastTime = currentTime;
-    }
 
     //images
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
+    test++;
+
+    if(testTimer < interval){
+        testTimer += TIME.GetDeltaTime();
+    }else{
+        ///animation
+        switch (currentFrame) {
+            case 0:
+                xx = 0;
+                currentFrame++;
+                break;
+            case 1:
+                xx += spriteWidth;
+                currentFrame++;
+                break;
+            case 2:
+                xx += spriteWidth;
+                currentFrame++;
+                break;
+            case 3:
+                xx += spriteWidth;
+                currentFrame = 0;
+                break;
+        }
+        testTimer = 0;
+    }
+
     ///animated image
-/*    float texCoordLeft = xx / static_cast<float>(spriteSheetWidth);
+    float texCoordLeft = xx / static_cast<float>(spriteSheetWidth);
     float texCoordRight = (xx + spriteWidth) / static_cast<float>(spriteSheetWidth);
     float texCoordTop = yy / static_cast<float>(spriteSheetHeight);
     float texCoordBottom = (yy + spriteHeight) / static_cast<float>(spriteSheetHeight);
 
     std::array<float, 32> vertices5{
-            // positions          // colors           // texture coords
-            1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   texCoordRight, texCoordTop, // top right
-            1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   texCoordRight, texCoordBottom, // bottom right
-            -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   texCoordLeft, texCoordBottom, // bottom left
-            -1.0f,  1.0, 0.0f,   1.0f, 1.0f, 0.0f,   texCoordLeft, texCoordTop  // top left
+            // positions          // colors         // texture coords
+            hpTopRight.x,  hpTopRight.y, 0.0f,      1.0f, 0.0f, 0.0f,   texCoordRight, texCoordTop, // top right
+            hpBottomRight.x, hpBottomRight.y, 0.0f, 0.0f, 1.0f, 0.0f,   texCoordRight, texCoordBottom, // bottom right
+            hpBottomLeft.x, hpBottomLeft.y, 0.0f,   0.0f, 0.0f, 1.0f,   texCoordLeft, texCoordBottom, // bottom left
+            hpTopLeft.x, hpTopLeft.y, 0.0f,         1.0f, 1.0f, 0.0f,   texCoordLeft, texCoordTop  // top left
     };
 
-    _animatedImage.UpdateImage(&vertices5);*/
+    _animatedImage.UpdateImage(&vertices5);
     ///
 
     _hpEmptyImage.UpdateImage();

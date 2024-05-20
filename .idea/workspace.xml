@@ -32,11 +32,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/100hp.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,11 +98,11 @@
       <recent name="C:\RepoPBL\res\Models\Base" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res\BaseHP" />
       <recent name="C:\RepoPBL\res" />
       <recent name="C:\RepoPBL\res\Models\Turrets\Standard\Level1" />
       <recent name="C:\RepoPBL\res\Models\Turrets" />
       <recent name="C:\RepoPBL\res\Models\Turrets\Level1\Standard" />
-      <recent name="C:\RepoPBL\src\Component" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
@@ -166,18 +167,18 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.uninstall" />
+      <item itemvalue="CMake Application.SandBOX" />
       <item itemvalue="CMake Application.UpdateAssimpLibsDebugSymbolsAndDLLs" />
       <item itemvalue="CMake Application.assimp" />
-      <item itemvalue="CMake Application.zlibstatic" />
       <item itemvalue="CMake Application.freetype" />
-      <item itemvalue="CMake Application.glfw" />
-      <item itemvalue="CMake Application.update_mappings" />
-      <item itemvalue="CMake Application.spdlog" />
-      <item itemvalue="CMake Application.SandBOX" />
       <item itemvalue="CMake Application.glad" />
+      <item itemvalue="CMake Application.glfw" />
       <item itemvalue="CMake Application.imgui" />
+      <item itemvalue="CMake Application.spdlog" />
       <item itemvalue="CMake Application.stb_image" />
+      <item itemvalue="CMake Application.uninstall" />
+      <item itemvalue="CMake Application.update_mappings" />
+      <item itemvalue="CMake Application.zlibstatic" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -205,6 +206,9 @@
       <workItem from="1715770885117" duration="15449000" />
       <workItem from="1715845907858" duration="7411000" />
       <workItem from="1715962526252" duration="5932000" />
+      <workItem from="1716200478182" duration="654000" />
+      <workItem from="1716205826869" duration="16000" />
+      <workItem from="1716210140480" duration="3949000" />
     </task>
     <servers />
   </component>

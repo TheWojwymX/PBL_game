@@ -54,6 +54,8 @@ void ImageRenderer::UpdateImage(std::array<float, 32>* vertices) {
 
     // bind Texture
     glBindTexture(GL_TEXTURE_2D, _textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     if(vertices){
         _vertices = *vertices;
