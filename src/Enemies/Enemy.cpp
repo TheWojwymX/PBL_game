@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Core/Time.h"
 #include "EnemiesManager.h"
+#include "Managers/DomeManager.h"
 
 Enemy::Enemy() {
     _type = ComponentType::ENEMYAI;
@@ -76,7 +77,8 @@ void Enemy::AttackDome(){
     if(!_isAtWalls) return;
 
     if(_attackTimer >= _attackFrequency){
-        std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
+        DOMEMANAGER.takeDamage(_damage);
+        std::cout << "DOME HP: " << DOMEMANAGER.hp << std::endl;
         _attackTimer = 0;
     }
     else{
