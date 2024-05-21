@@ -194,7 +194,7 @@ void ParticleGenerator::Init() {
     computeShader = RESOURCEMANAGER.GetComputeShaderByName("particleComputeShader");
     object = this->GetOwnerNode();
     initiateParticleType();
-    Component::initiate();
+    Component::Initiate();
 
     elapsedTime = 0.0f;
 

@@ -118,6 +118,11 @@
                 "ShaderName": "turretRangeShader",
                 "fragmentPath": "../../res/turretRange.fs",
                 "vertexPath": "../../res/turretRange.vs"
+            },
+            {
+                "ShaderName": "particleShader",
+                "fragmentPath": "../../res/particleShader.fs",
+                "vertexPath": "../../res/particleShader.vs"
             }
         ],
         "Sounds": [
@@ -192,6 +197,12 @@
                 "SoundID": 11,
                 "SoundName": "ConcreteSound10",
                 "Type": 1
+            }
+        ],
+        "cShaders": [
+            {
+                "ShaderName": "particleComputeShader",
+                "vertexPath": "../../res/particleCompute.glsl"
             }
         ]
     },
@@ -375,6 +386,17 @@
                         "frameDuration": 1.0,
                         "isLoop": true,
                         "meshRendererRefID": 6
+                    },
+                    {
+                        "componentId": 12,
+                        "componentType": 10,
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 2.0
+                        },
+                        "particleType": "antWalk",
+                        "shader": "particleShader"
                     }
                 ],
                 "transform": {

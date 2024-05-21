@@ -47,5 +47,35 @@ bool UpgradeManager::isTurretInRange()
     return false;
 }
 
+void UpgradeManager::upgradeDomeHp()
+{
+    DOMEMANAGER.maxHP += 20;
+    cout << "Current Dome HP: " + DOMEMANAGER.maxHP << endl;
+}
+
+void UpgradeManager::upgradeTurretDamage()
+{
+    if (TURRETSMANAGER.selectedIndex == -1)
+    {
+        cout << "You are not looking at turret" << endl;
+    }
+    else
+    {
+        TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_damage += 5;
+        cout << "Current turret damage: " + to_string(TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_damage) << endl;
+    }
+}
+
+void UpgradeManager::upgradeTurretFireRate() {
+    if (TURRETSMANAGER.selectedIndex == -1)
+    {
+        cout << "You are not looking at turret" << endl;
+    }
+    else
+    {
+        TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_fireRate -= 0.1;
+        cout << "Current fire rate: " + to_string(TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_fireRate) << endl;
+    }
+}
 
 

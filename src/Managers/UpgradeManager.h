@@ -3,6 +3,7 @@
 #include "glm/vec3.hpp"
 #include "NodesManager.h"
 #include "../Turrets/TurretsManager.h"
+#include "DomeManager.h"
 #include "Core/Node.h"
 #include "Core/Input.h"
 
@@ -18,7 +19,11 @@ public:
     ~UpgradeManager() = default;
     UpgradeManager(const UpgradeManager &) = delete;
     UpgradeManager &operator=(const UpgradeManager &) = delete;
+
     bool checkActivation();
+    void upgradeDomeHp();
+    void upgradeTurretDamage();
+    void upgradeTurretFireRate();
 
 private:
     bool isDomeStationInRange();
