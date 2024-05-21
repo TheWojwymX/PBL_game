@@ -50,7 +50,7 @@ bool UpgradeManager::isTurretInRange()
 void UpgradeManager::upgradeDomeHp()
 {
     DOMEMANAGER.maxHP += 20;
-    cout << "Current Dome HP: " + DOMEMANAGER.maxHP << endl;
+    cout << "Current dome max HP: " << DOMEMANAGER.maxHP << endl;
 }
 
 void UpgradeManager::upgradeTurretDamage()

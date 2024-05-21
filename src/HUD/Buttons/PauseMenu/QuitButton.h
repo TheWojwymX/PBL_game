@@ -5,7 +5,7 @@
 #ifndef SANDBOX_QUITBUTTON_H
 #define SANDBOX_QUITBUTTON_H
 
-#include "Button.h"
+#include "HUD/Buttons/Button.h"
 
 class QuitButton : public Button {
 public:

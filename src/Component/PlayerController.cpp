@@ -149,28 +149,39 @@ void PlayerController::addToInspector(ImguiMain *imguiMain) {
 
 }
 
+void PlayerController::UpgradeRadius(){
+    if (_radius < 10){
+        increaseRadiusLevel();
+        cout << "Radius upgraded" << endl;
+    }
+    else cout << "MAX radius Level" << endl;
+}
+
+void PlayerController::UpgradeReach(){
+    if (_reach < 30) {
+        increaseReachLevel();
+        cout << "Reach upgraded" << endl;
+    }
+    else cout << "MAX reach Level" << endl;
+}
+
+void PlayerController::UpgradeSpeed(){
+    if (_speed < 15) {
+        increaseSpeedLevel();
+        cout << "Speed upgraded" << endl;
+    }
+    else cout << "MAX speed Level" << endl;
+}
+
 void PlayerController::HandleUpgrades() {
     if(Input::Instance().IsKeyPressed(72)) {
-        if (_radius < 10){
-            increaseRadiusLevel();
-            cout << "Radius upgraded" << endl;
-        }
-        else cout << "MAX Radius Level" << endl;
-
+        UpgradeRadius();
         //ComponentsManager::getInstance().GetComponentByID<ParticleGenerator>(12)->SpawnParticles();
     }
     if(Input::Instance().IsKeyPressed(74)) {
-        if (_reach < 30) {
-            increaseReachLevel();
-            cout << "Reach upgraded" << endl;
-        }
-        else cout << "MAX Radius Level" << endl;
+        UpgradeReach();
     }
     if(Input::Instance().IsKeyPressed(75)) {
-        if (_speed < 15) {
-            increaseSpeedLevel();
-            cout << "Speed upgraded" << endl;
-        }
-        else cout << "MAX Speed Level" << endl;
+        UpgradeSpeed();
     }
 }

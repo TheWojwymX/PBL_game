@@ -25,15 +25,15 @@ void GameManager::InitPhase()
     if(currentPhase == 0) // kopanie
     {
         roundNumber++;
-        std::cout << "kopiemy";
+        //std::cout << "kopiemy";
     }
     else if (currentPhase == 1) // stawianie
     {
-        std::cout << "stawiamy";
+        //std::cout << "stawiamy";
     }
     else if (currentPhase == 2) // obrona
     {
-        std::cout << "bronimy";
+        //std::cout << "bronimy";
 
         // For now only 3 rounds are added
         if (roundNumber > 3)

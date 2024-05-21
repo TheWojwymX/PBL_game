@@ -10,8 +10,10 @@
 #include <vector>
 #include <memory>
 #include "HUD/Pages/Page.h"
-#include "HUD/Pages/PauseMenuPage.h"
-
+#include "HUD/Pages/PauseMenu/PauseMenuPage.h"
+#include "HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h"
+#include "HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h"
+#include "HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h"
 
 class PageManager {
 public:
@@ -31,6 +33,10 @@ public:
 
     std::vector<std::shared_ptr<Page>> _pages;
     std::shared_ptr<PauseMenuPage> _pauseMenuPage = std::make_shared<PauseMenuPage>();
+    bool _isInPage = false;
+    std::shared_ptr<PlayerUpgradeMenu> _playerUpgradeMenu = std::make_shared<PlayerUpgradeMenu>();
+    std::shared_ptr<TurretUpgradeMenu> _turretUpgradeMenu = std::make_shared<TurretUpgradeMenu>();
+    std::shared_ptr<DomeUpgradeMenu> _domeUpgradeMenu = std::make_shared<DomeUpgradeMenu>();
 
     void CheckInputs();
 
@@ -39,6 +45,8 @@ public:
     void EnableMouse();
 
     void DisableMouse();
+
+    void CloseAllPages();
 };
 
 

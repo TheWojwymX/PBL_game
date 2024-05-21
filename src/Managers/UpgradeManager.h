@@ -24,8 +24,6 @@ public:
     void upgradeDomeHp();
     void upgradeTurretDamage();
     void upgradeTurretFireRate();
-
-private:
     bool isDomeStationInRange();
     bool isTurretInRange();
 

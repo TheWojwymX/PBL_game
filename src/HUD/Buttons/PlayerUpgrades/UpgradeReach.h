@@ -1,23 +1,20 @@
 //
-// Created by Jacek on 09.05.2024.
+// Created by Jacek on 21.05.2024.
 //
 
-#ifndef SANDBOX_RESUMEBUTTON_H
-#define SANDBOX_RESUMEBUTTON_H
+#ifndef SANDBOX_UPGRADEREACH_H
+#define SANDBOX_UPGRADEREACH_H
 
 
-#include "Button.h"
+#include "HUD/Buttons/Button.h"
 
-class ResumeButton : public Button {
+class UpgradeReach : public Button {
 public:
-
     void Init() override;
 
     void Update() override;
 
     void Onclick() override;
-
-    std::string _text = "RESUME";
 
     array<float, 32> _buttonVertices{
             // positions          // colors           // texture coords
@@ -27,10 +24,13 @@ public:
             -0.3f,  0.4f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
+    std::string _text = "UPGRADE REACH";
+
     void SetVertices(const array<float, 32> &vertices) override;
 
     void SetText(std::string text) override;
+
 };
 
 
-#endif //SANDBOX_RESUMEBUTTON_H
+#endif //SANDBOX_UPGRADEREACH_H

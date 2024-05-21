@@ -32,13 +32,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/DomeUpgrades/UpgradeDomeHP.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeRadius.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeRadius.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeReach.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeReach.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeSpeed.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeSpeed.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeDamage.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeDamage.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeFireRate.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeFireRate.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/QuitButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/QuitButton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/QuitButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/QuitButton.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/ResumeButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/ResumeButton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/ResumeButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/ResumeButton.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/SettingsButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/SettingsButton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/SettingsButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/SettingsButton.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PauseMenuPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PauseMenuPage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParticleGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleGenerator.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,55 +101,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;CMake Application.SandBOX.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/RepoPBL/res/Images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "CMake Application.SandBOX.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging main",
+    "last_opened_file_path": "C:/RepoPBL/src/HUD/Pages",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\src\HUD\Pages" />
       <recent name="C:\RepoPBL\res\Images" />
       <recent name="C:\RepoPBL\res\Models\Turrets\Level1" />
       <recent name="C:\RepoPBL\res\Models\Ant" />
       <recent name="C:\RepoPBL\cmake-build-debug\src\res\Models" />
-      <recent name="C:\RepoPBL\res\Models\Base" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\RepoPBL\res\BaseHP" />
-      <recent name="C:\RepoPBL\res" />
-      <recent name="C:\RepoPBL\res\Models\Turrets\Standard\Level1" />
-      <recent name="C:\RepoPBL\res\Models\Turrets" />
-      <recent name="C:\RepoPBL\res\Models\Turrets\Level1\Standard" />
+      <recent name="C:\RepoPBL\src\HUD\Pages\TurretUpgradeMenu" />
+      <recent name="C:\RepoPBL\src\HUD\Pages\PauseMenu" />
+      <recent name="C:\RepoPBL\src\HUD\Pages\PlayerUpgradeMenu" />
+      <recent name="C:\RepoPBL\src\HUD\Pages\DomeUpgradeMenu" />
+      <recent name="C:\RepoPBL\src\HUD\Buttons\PauseMenu" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>

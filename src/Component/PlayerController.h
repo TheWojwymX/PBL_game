@@ -25,6 +25,12 @@ public:
 
     void HandleUpgrades();
 
+    void UpgradeRadius();
+
+    void UpgradeReach();
+
+    void UpgradeSpeed();
+
 private:
     float _speed;
     float _width;

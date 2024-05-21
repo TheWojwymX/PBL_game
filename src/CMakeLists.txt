@@ -58,19 +58,19 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Pages/Page.h
         HUD/PageManager.cpp
         HUD/PageManager.h
-        HUD/Pages/PauseMenuPage.cpp
-        HUD/Pages/PauseMenuPage.h
-        HUD/Pages/PlayerUpgradeMenu.cpp
-        HUD/Pages/PlayerUpgradeMenu.h
+        HUD/Pages/PauseMenu/PauseMenuPage.cpp
+        HUD/Pages/PauseMenu/PauseMenuPage.h
+        HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.cpp
+        HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h
         HUD/Buttons/Button.cpp
         HUD/Buttons/Button.h
-        HUD/Buttons/ResumeButton.cpp
-        HUD/Buttons/ResumeButton.h
-        HUD/Buttons/QuitButton.cpp
-        HUD/Buttons/QuitButton.h
-        HUD/Buttons/QuitButton.cpp
-        HUD/Buttons/SettingsButton.cpp
-        HUD/Buttons/SettingsButton.h
+        HUD/Buttons/PauseMenu/ResumeButton.cpp
+        HUD/Buttons/PauseMenu/ResumeButton.h
+        HUD/Buttons/PauseMenu/QuitButton.cpp
+        HUD/Buttons/PauseMenu/QuitButton.h
+        HUD/Buttons/PauseMenu/QuitButton.cpp
+        HUD/Buttons/PauseMenu/SettingsButton.cpp
+        HUD/Buttons/PauseMenu/SettingsButton.h
         Managers/DomeManager.cpp
         Managers/DomeManager.h
         Managers/UpgradeManager.cpp
@@ -79,7 +79,23 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Turrets/TurretsManager.h
         Turrets/Turret.cpp
         Turrets/Turret.h
-	  ComputeShader.h)
+	  ComputeShader.h
+        HUD/Buttons/PlayerUpgrades/UpgradeReach.cpp
+        HUD/Buttons/PlayerUpgrades/UpgradeReach.h
+        HUD/Buttons/PlayerUpgrades/UpgradeRadius.cpp
+        HUD/Buttons/PlayerUpgrades/UpgradeRadius.h
+        HUD/Buttons/PlayerUpgrades/UpgradeSpeed.cpp
+        HUD/Buttons/PlayerUpgrades/UpgradeSpeed.h
+        HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.cpp
+        HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h
+        HUD/Buttons/TurretUpgrades/UpgradeFireRate.cpp
+        HUD/Buttons/TurretUpgrades/UpgradeFireRate.h
+        HUD/Buttons/TurretUpgrades/UpgradeDamage.cpp
+        HUD/Buttons/TurretUpgrades/UpgradeDamage.h
+        HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.cpp
+        HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h
+        HUD/Buttons/DomeUpgrades/UpgradeDomeHP.cpp
+        HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

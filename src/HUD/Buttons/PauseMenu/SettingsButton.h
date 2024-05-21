@@ -5,7 +5,7 @@
 #ifndef SANDBOX_SETTINGSBUTTON_H
 #define SANDBOX_SETTINGSBUTTON_H
 
-#include "Button.h"
+#include "HUD/Buttons/Button.h"
 
 class SettingsButton : public Button {
 public:
