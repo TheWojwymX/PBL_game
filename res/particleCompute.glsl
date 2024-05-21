@@ -30,6 +30,7 @@ uniform vec3 cameraPosition;
 uniform vec3 cameraForward;
 uniform bool hasSpawned;
 uniform bool onlyForward;
+uniform bool casing;
 
 layout (local_size_x = 1) in;
 
@@ -73,6 +74,10 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     {
         initialVelocity = vec3(0.0, speedMultiplier, XZvariation);
     }
+    else if(casing)
+    {
+        initialVelocity = vec3(0.7f, speedMultiplier + initialUpwardBoost, 0);
+    }
     else
     {
     float randomX = (2.0f * random(changeSeed + 2.0f) - 1.0f) * XZvariation;
@@ -101,11 +106,12 @@ void main() {
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
             // Decrease alpha to fade out particle
-            if(p.Scale > 0.0) {
-            p.Scale -= dt * 0.07f;
-            }
+
             // Reduce life time
             p.Life -= dt;
+
+            float lifeRatio = p.Life / particleLife;
+            p.Scale = mix(0.0f, particleScale, lifeRatio);
 
             // Check for bounce when particle hits y = 105
             if (p.Position.y <= 100.0) {

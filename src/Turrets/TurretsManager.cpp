@@ -58,6 +58,18 @@ void TurretsManager::SpawnTurret(){
     newMeshRenderer->Initiate();
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newMeshRenderer);
 
+    auto bulletParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"turretShot");
+    bulletParticles->SetOffset(glm::vec3(0.0f,1.0f,0.0f));
+    bulletParticles->object = NODESMANAGER.getNodeByName(nameOfTurret);
+    bulletParticles->Init();
+    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(bulletParticles);
+
+    auto casingParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"turretCasing");
+    casingParticles->SetOffset(glm::vec3(0.0f,1.0f,0.0f));
+    casingParticles->object = NODESMANAGER.getNodeByName(nameOfTurret);
+    casingParticles->Init();
+    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(casingParticles);
+
     auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
     newTurret->Initiate();
     newTurret->_isFlying = true;
@@ -122,7 +134,6 @@ void TurretsManager::PrepareBlueprintTurret() {
     newMeshRenderer->Initiate();
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->AddComponent(newMeshRenderer);
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->SetEnabled(false);
-
 
 /*    std::string nameOfBlueprintRange = "BlueprintRange";
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfBlueprintTurret), nameOfBlueprintRange);
@@ -243,6 +254,11 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret>& turret, const shared_
     else{
         turret->_timer = 0.0f;
         enemy->TakeDamage(turret->_damage);
+
+        auto particleGenerators = turret->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
+        for (const auto& generator : particleGenerators) {
+            generator->SpawnParticles();
+        }
     }
 }
 

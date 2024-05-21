@@ -171,6 +171,13 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
     newEnemyComponent->_size = distanceToAvoid;
     _enemies.push_back(newEnemyComponent);
 
+    auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
+    antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
+    antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
+    antShot->enemyScale = scale;
+    antShot->Init();
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(antShot);
+
     //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
 
     auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
@@ -194,6 +201,14 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
         newMeshRenderer->Initiate();
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
+
+        auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
+        antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
+        antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
+        antShot->enemyScale = scale;
+        antShot->Init();
+        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(antShot);
+
 
         auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);

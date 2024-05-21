@@ -67,8 +67,16 @@ void Enemy::Die(){
 
 void Enemy::TakeDamage(int amount){
     _hp -= amount;
+
+    shared_ptr<ParticleGenerator> particleDead;
+    auto particleGenerators = this->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
+    for (const auto& generator : particleGenerators) {
+        if(generator->particleType == "antShot") generator->SpawnParticles();
+    }
+
     if(_hp <= 0){
         Die();
+
     }
 }
 

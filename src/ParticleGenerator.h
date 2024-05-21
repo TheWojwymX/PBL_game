@@ -36,23 +36,23 @@ public:
     void Render(glm::mat4 parentWorld) override;
     void Init() override;
 
-    void SetHasSpawned() { hasSpawned = false; }
     void SetOffset(glm::vec3 newOffset) { offset = newOffset; }
-
     void SpawnParticles();
-    void StopParticles();
 
     bool generateParticle = false;
-
-private:
+    std::shared_ptr<Node> object;
     std::shared_ptr<Shader> shader;
+    std::string particleType = "noName";
+
+    glm::vec3 enemyScale;
+private:
+
     std::shared_ptr<ComputeShader> computeShader;
-    std::string particleType;
+
     Texture2D texture;
 
     unsigned int VAO, particleBuffer, instanceVBO;
     glm::vec3 offset{0.0f};
-    std::shared_ptr<Node> object;
     std::vector<Particle> particles;
 
     float elapsedTime = 0.0f;
@@ -60,12 +60,11 @@ private:
     float speedVariation = 0.2f;
     float particleLife = 1.0f;
     unsigned int amount = 500;
-    unsigned int newParticles = 10;
+
     float XZvariation = 0.1f;
     glm::vec4 particleColor;
     float initialUpwardBoost;
     float particleScale;
-    bool onlyForward;
     glm::vec3 gravity;
 
     bool hasSpawned = false;
@@ -74,7 +73,14 @@ private:
     glm::vec3 camForward;
     glm::vec3 rotatedOffset;
 
+    bool onlyForward;
+    bool casing;
+    unsigned int newParticles = 10;
+
     void initiateParticleType();
+
+    void SetInitialUpwardBoost(const glm::vec3& scale);
+    void SetPartScale(const glm::vec3& scale);
 };
 
 #endif

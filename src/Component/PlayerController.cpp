@@ -156,8 +156,6 @@ void PlayerController::HandleUpgrades() {
             cout << "Radius upgraded" << endl;
         }
         else cout << "MAX Radius Level" << endl;
-
-        //ComponentsManager::getInstance().GetComponentByID<ParticleGenerator>(12)->SpawnParticles();
     }
     if(Input::Instance().IsKeyPressed(74)) {
         if (_reach < 30) {
