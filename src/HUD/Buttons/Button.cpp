@@ -6,18 +6,18 @@
 
 void Button::Init() {
     _backgroundImage.Init(_backgroundImagePath, _buttonVertices, true, false);
-    _hooverBackgroundImage.Init(_hooverBackgroundImagePath, _buttonVertices, true, false);
+    _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _buttonVertices, true, false);
     _clickedBackgroundImage.Init(_clickedBackgroundImagePath, _buttonVertices, true, false);
 
     _textRenderer.Init();
 
-    _hooverBackgroundImage._shouldRender = false;
+    _hoverBackgroundImage._shouldRender = false;
     _clickedBackgroundImage._shouldRender = false;
 }
 
 void Button::Update() {
     _backgroundImage.UpdateImage();
-    _hooverBackgroundImage.UpdateImage();
+    _hoverBackgroundImage.UpdateImage();
     _clickedBackgroundImage.UpdateImage();
 
     _textRenderer.RenderTextCentered(_text, (_buttonVertices[0] + _buttonVertices[16]) / 2.0f, (_buttonVertices[1] + _buttonVertices[17]) / 2.0f, 1, glm::vec3(0.5, 0.8f, 0.2f));
@@ -54,19 +54,19 @@ void Button::AppareanceManager(){
     if(_timerOn){
         _backgroundImage._shouldRender = false;
         _clickedBackgroundImage._shouldRender = true;
-        _hooverBackgroundImage._shouldRender = false;
+        _hoverBackgroundImage._shouldRender = false;
         return;
     }
     else if(CheckHover()){
         _backgroundImage._shouldRender = false;
         _clickedBackgroundImage._shouldRender = false;
-        _hooverBackgroundImage._shouldRender = true;
+        _hoverBackgroundImage._shouldRender = true;
         return;
     }
     else{
         _backgroundImage._shouldRender = true;
         _clickedBackgroundImage._shouldRender = false;
-        _hooverBackgroundImage._shouldRender = false;
+        _hoverBackgroundImage._shouldRender = false;
         return;
     }
 }

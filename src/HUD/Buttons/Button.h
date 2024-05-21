@@ -12,12 +12,12 @@
 class Button {
 public:
 
-    const char *_backgroundImagePath = "../../res/Images/ButtonRed.png";
-    const char *_hooverBackgroundImagePath = "../../res/Images/ButtonBlue.png";
-    const char *_clickedBackgroundImagePath = "../../res/Images/ButtonGreen.png";
+    const char *_backgroundImagePath = "../../res/Images/Button/idle.png";
+    const char *_hoverBackgroundImagePath = "../../res/Images/Button/hover.png";
+    const char *_clickedBackgroundImagePath = "../../res/Images/Button/clicked.png";
 
     ImageRenderer _backgroundImage;
-    ImageRenderer _hooverBackgroundImage;
+    ImageRenderer _hoverBackgroundImage;
     ImageRenderer _clickedBackgroundImage;
 
     std::string _text = "default";
