@@ -12,6 +12,14 @@
 class GameManager {
 
 public:
+
+
+    int _screenWidth = 1280;
+    int _screenHeight = 720;
+    GLFWwindow* _window;
+
+    void Init();
+
     static GameManager &getInstance();
     ~GameManager() = default;
     GameManager() = default;
@@ -30,6 +38,10 @@ public:
     int currentPhase = 0; // 0 - kopanie, 1 - ustawianie, 2 - obrona
     float currentTime = 11.0f;
     float phaseTime = 10.0f;
+
+    bool _editMode = true;
+
+    bool _paused = false;
 
 };
 

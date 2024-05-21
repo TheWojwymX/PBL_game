@@ -8,7 +8,7 @@
 #include "../../texture.h"
 #include "Managers/ResourceManager.h"
 
-class ImageHUD {
+class ImageRenderer {
 
 public:
 
@@ -16,11 +16,15 @@ public:
 
     int _textureID;
 
-    ImageHUD();
+    array<float, 32> _vertices;
+
+    ImageRenderer();
 
     void Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic);
 
     void UpdateImage(std::array<float, 32>* vertices = nullptr);
+
+    bool _shouldRender = true;
 
 };
 

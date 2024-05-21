@@ -40,11 +40,13 @@ public:
 
     static TextRenderer &getInstance();
 
-    void init();
-
-    void RenderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color);
+    void Init();
 
     void PrepareShader();
+
+    void RenderText(string text, float x, float y, float scale, glm::vec3 color);
+
+    void RenderTextCentered(string text, float x, float y, float scale, glm::vec3 color);
 };
 
 

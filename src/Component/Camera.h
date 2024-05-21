@@ -76,6 +76,7 @@ public:
     unsigned int getScreenWidth() {return _screenWidth;}
     unsigned int getScreenHeight() {return _screenHeight;}
 
+    glm::vec2 GetRotation() const;
 private:
     // camera attributes
     glm::vec3 _offset;
@@ -91,7 +92,6 @@ private:
     float _movementSpeed;
     float _mouseSensitivity;
     float _zoom;
-    bool _editMode;
 
     vector<FrustumPlane> _frustumPlanes;
     glm::mat4 _viewProjectionMatrix;
@@ -104,4 +104,5 @@ private:
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
+
 };

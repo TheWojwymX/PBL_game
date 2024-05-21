@@ -16,6 +16,9 @@ std::shared_ptr<Node> NodesManager::getNodeByID(size_t id) {
 
 std::shared_ptr<Node> NodesManager::getNodeByName(const std::string& name) {
     for (const auto& node : nodes) {
+
+        if(node == nullptr) continue;
+
         if (node->_name == name) {
             return node;
         }

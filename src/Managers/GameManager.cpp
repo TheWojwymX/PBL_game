@@ -44,3 +44,6 @@ void GameManager::InitPhase()
         ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
     }
 }
+void GameManager::Init() {
+    _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", NULL, NULL);
+}

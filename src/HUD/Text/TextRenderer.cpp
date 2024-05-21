@@ -3,13 +3,15 @@
 //
 
 #include "TextRenderer.h"
+#include "Managers/ResourceManager.h"
+#include "Managers/GameManager.h"
 
 TextRenderer &TextRenderer::getInstance() {
     static TextRenderer instance;
     return instance;
 }
 
-void TextRenderer::init() {
+void TextRenderer::Init() {
     {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -31,7 +33,7 @@ void TextRenderer::init() {
         // All functions return a value different than 0 whenever an error occurred
         if (FT_Init_FreeType(&ft))
         {
-            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+            std::cout << "ERROR::FREETYPE: Could not Init FreeType Library" << std::endl;
         }
 
         // find path to font
@@ -99,8 +101,10 @@ void TextRenderer::init() {
     }
 }
 
-void TextRenderer::RenderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color) {
+void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 color) {
     {
+
+        Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
 
         PrepareShader();
 
@@ -109,6 +113,9 @@ void TextRenderer::RenderText(Shader &shader, std::string text, float x, float y
         glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
+
+        x = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
+        y = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
 
         // iterate through all characters
         std::string::const_iterator c;
@@ -148,10 +155,70 @@ void TextRenderer::RenderText(Shader &shader, std::string text, float x, float y
     }
 }
 
+void TextRenderer::RenderTextCentered(std::string text, float x, float y, float scale, glm::vec3 color) {
+    Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
+
+    PrepareShader();
+
+    shader.use();
+    glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(VAO);
+
+    float screenX = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
+    float screenY = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
+
+    // Calculate total width of the text
+    float textWidth = 0.0f;
+    float totalHeight = 0.0f;
+    for (char c : text) {
+        Character ch = Characters[c];
+        textWidth += (ch.Advance >> 6) * scale;  // total width to center horizontally
+        totalHeight = std::max(totalHeight, ch.Size.y * scale);  // the tallest character determines the height
+    }
+
+    // Calculate starting positions
+    float startX = screenX - textWidth / 2.0f;
+    float startY = screenY - totalHeight / 2.0f;  // center vertically by using total height
+
+    float xCursor = startX;
+
+    for (char c : text) {
+        Character ch = Characters[c];
+
+        float xpos = xCursor + ch.Bearing.x * scale;
+        float ypos = startY;  // consistent Y position for all characters
+
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
+        float vertices[6][4] = {
+                { xpos, ypos + h, 0.0f, 0.0f },
+                { xpos, ypos,     0.0f, 1.0f },
+                { xpos + w, ypos, 1.0f, 1.0f },
+
+                { xpos, ypos + h, 0.0f, 0.0f },
+                { xpos + w, ypos, 1.0f, 1.0f },
+                { xpos + w, ypos + h, 1.0f, 0.0f }
+        };
+
+        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        xCursor += (ch.Advance >> 6) * scale; // advance cursor
+    }
+
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+
+
 void TextRenderer::PrepareShader() {
-    //NA RAZIE NA SZTYWNO, POTEM PODPIAC POD MANAGER PRZECHOWUJACY ROZMAIRY
-    const unsigned int SCR_WIDTH = 1280;
-    const unsigned int SCR_HEIGHT = 720;
+    const unsigned int SCR_WIDTH = GAMEMANAGER._screenWidth;
+    const unsigned int SCR_HEIGHT = GAMEMANAGER._screenHeight;
 
     RESOURCEMANAGER.GetShaderByName("textShader")->use();
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), 0.0f, static_cast<float>(SCR_HEIGHT));

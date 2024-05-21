@@ -12,6 +12,7 @@ public:
     void Update();
 
     int hp;
+    int maxHP = 200;
     float iTime;
     bool isInvincible;
 

@@ -19,8 +19,6 @@ public:
 
     void Deserialize(const nlohmann::json &jsonData) override;
 
-    void Update() override;
-
     glm::vec3 _destinationVector;
 
     float _distanceToStop = 0.1;
@@ -39,7 +37,7 @@ public:
 
     int _hp = 100;
 
-    int _damage = 50;
+    int _damage = 5;
 
     float _attackFrequency = 3;
 
@@ -52,6 +50,8 @@ public:
     void Die();
 
     void AttackDome();
+
+    void EnemyAI();
 };
 
 #endif //SANDBOX_ENEMY_H

@@ -48,8 +48,10 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/AudioEngineManager.h"
+#include "HUD/PageManager.h"
 #include "Managers/DomeManager.h"
 #include "Managers/UpgradeManager.h"
+#include "Turrets/TurretsManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -86,10 +88,10 @@ int main(int, char**)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "SandBOX", NULL, NULL);
-    if (window == NULL)
+    GAMEMANAGER.Init();
+    if (GAMEMANAGER._window == NULL)
         return 1;
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(GAMEMANAGER._window);
     glfwSwapInterval(1); // Enable VSync
 
     // Initialize OpenGL loader
@@ -127,7 +129,7 @@ int main(int, char**)
     skybox.init();
 
     // Init
-    INPUT.Init(window, SCR_WIDTH, SCR_HEIGHT);
+    INPUT.Init(GAMEMANAGER._window, SCR_WIDTH, SCR_HEIGHT);
     GAMEMANAGER.root->Init();
 
     //ShadowMap init
@@ -163,7 +165,7 @@ int main(int, char**)
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(SCR_HEIGHT);
 
-    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(window, glsl_version);
+    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
     imguiMain->SetSelectedObject(GAMEMANAGER.root);
 
@@ -195,12 +197,19 @@ int main(int, char**)
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
 
+    PAGEMANAGER.Init();
+
+    TURRETSMANAGER.Init();
+
     // Main loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
+        if(!GAMEMANAGER._paused){
+            ENEMIESMANAGER.Update();
+            TURRETSMANAGER.Update();
+        }
         UPGRADEMANAGER.checkActivation();
         DOMEMANAGER.Update();
-        ENEMIESMANAGER.Update();
 
         // Calculate deltaTime
         TIME.Update();
@@ -355,6 +364,7 @@ int main(int, char**)
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
+        PAGEMANAGER.Update();
         AUDIOENGINEMANAGER.Update();
 
 
@@ -364,17 +374,16 @@ int main(int, char**)
 
 
         INPUT.UpdateOldStates();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(GAMEMANAGER._window);
         glfwPollEvents();
     }
-
     // Cleanup
     AUDIOENGINEMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();
 
 

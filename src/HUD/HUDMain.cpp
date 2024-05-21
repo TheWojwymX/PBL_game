@@ -12,7 +12,7 @@ HUDMain& HUDMain::getInstance() {
 void HUDMain::Init() {
 
     //text
-    TEXTRENDERER.init();
+    TEXTRENDERER.Init();
 
     //images
     std::array<float, 32> verticesHpEmpty{
@@ -39,91 +39,135 @@ void HUDMain::Init() {
             -0.03f,  0.05f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
-    std::array<float, 32> vertices5{
+    std::array<float, 32> hpVertices{
             // positions          // colors           // texture coords
-            1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -1.0f,  1.0, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+            hpTopRight.x,  hpTopRight.y, 0.0f,        1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            hpBottomRight.x, hpBottomRight.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            hpBottomLeft.x, hpBottomLeft.y, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            hpTopLeft.x, hpTopLeft.y, 0.0f,           1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
-    _hpEmptyImage.Init("../../res/Images/hp_empty.png", verticesHpEmpty, true, false);
-    _hpFullImage.Init("../../res/Images/hp_full.png", verticesHpFull, true, true);
+    //_hpEmptyImage.Init("../../res/Images/hp_empty.png", verticesHpEmpty, true, false);
+    //_hpFullImage.Init("../../res/Images/hp_full.png", verticesHpFull, true, true);
     _crosshairImage.Init("../../res/Images/crosshair041.png", verticesCrosshair, true, false);
-    _animatedImage.Init("../../res/Images/5margin.png", vertices5, true, true);
+    //_animatedImage.Init("../../res/Images/5margin.png", vertices5, true, true);
+
+    for(int i = 0; i < 17; i++){
+        shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
+        std::string path = "../../res/BaseHP/base_hp_" + std::to_string(i) + "_spritesheet.png";
+        hp->Init(path.c_str(), hpVertices, true, true);
+        _baseHPImages.push_back(hp);
+    }
 }
 
-int xx = 5;
-int yy = 5;
-int spriteSheetWidth = 1330;
-int spriteSheetHeight = 532;
-int spriteWidth = 256;
-int spriteHeight = 256;
-float test = 0;
-
 void HUDMain::Update() {
-
-    static float lastTime = 0.0f;
-    float currentTime = glfwGetTime();
-    float interval = 0.05f;
-
-    if (currentTime - lastTime >= interval) {
-
-        ///animation
-/*        if((int)test % 5 == 0 && test != 0){
-            xx = 5;
-            if(yy == 5){
-                yy = 271;
-            }
-            else{
-                yy = 5;
-            }
-        }
-        else{
-            xx = xx + spriteWidth + 10;
-        }*/
-        ///
-
-        test++;
-        lastTime = currentTime;
-    }
 
     //images
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
+
+    if(_hpSpriteTimer < _hpSpriteInterval){
+        _hpSpriteTimer += TIME.GetDeltaTime();
+    }else{
+        ///animation
+        switch (_hpSpriteCurrentFrame) {
+            case 0:
+                _hpTextureX = 0;
+                _hpSpriteCurrentFrame++;
+                break;
+            case 1:
+                _hpTextureX += _hpSpriteWidth;
+                _hpSpriteCurrentFrame++;
+                break;
+            case 2:
+                _hpTextureX += _hpSpriteWidth;
+                _hpSpriteCurrentFrame++;
+                break;
+            case 3:
+                _hpTextureX += _hpSpriteWidth;
+                _hpSpriteCurrentFrame = 0;
+                break;
+        }
+        _hpSpriteTimer = 0;
+    }
+
     ///animated image
-/*    float texCoordLeft = xx / static_cast<float>(spriteSheetWidth);
-    float texCoordRight = (xx + spriteWidth) / static_cast<float>(spriteSheetWidth);
-    float texCoordTop = yy / static_cast<float>(spriteSheetHeight);
-    float texCoordBottom = (yy + spriteHeight) / static_cast<float>(spriteSheetHeight);
+    float texCoordLeft = _hpTextureX / static_cast<float>(_hpSpriteSheetWidth);
+    float texCoordRight = (_hpTextureX + _hpSpriteWidth) / static_cast<float>(_hpSpriteSheetWidth);
+    float texCoordTop = _hpTextureY / static_cast<float>(_hpSpriteSheetHeight);
+    float texCoordBottom = (_hpTextureY + _hpSpriteHeight) / static_cast<float>(_hpSpriteSheetHeight);
 
-    std::array<float, 32> vertices5{
-            // positions          // colors           // texture coords
-            1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   texCoordRight, texCoordTop, // top right
-            1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   texCoordRight, texCoordBottom, // bottom right
-            -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   texCoordLeft, texCoordBottom, // bottom left
-            -1.0f,  1.0, 0.0f,   1.0f, 1.0f, 0.0f,   texCoordLeft, texCoordTop  // top left
+    std::array<float, 32> hpVertices{
+            // positions          // colors         // texture coords
+            hpTopRight.x,  hpTopRight.y, 0.0f,      1.0f, 0.0f, 0.0f,   texCoordRight, texCoordTop, // top right
+            hpBottomRight.x, hpBottomRight.y, 0.0f, 0.0f, 1.0f, 0.0f,   texCoordRight, texCoordBottom, // bottom right
+            hpBottomLeft.x, hpBottomLeft.y, 0.0f,   0.0f, 0.0f, 1.0f,   texCoordLeft, texCoordBottom, // bottom left
+            hpTopLeft.x, hpTopLeft.y, 0.0f,         1.0f, 1.0f, 0.0f,   texCoordLeft, texCoordTop  // top left
     };
 
-    _animatedImage.UpdateImage(&vertices5);*/
+    int actualDomeHP = DOMEMANAGER.hp;
+    int maxHP = DOMEMANAGER.maxHP;
+    float percentHP = (static_cast<float>(actualDomeHP) / static_cast<float>(maxHP)) * 100;
+
+    //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
+
+    if(percentHP > 0 && percentHP <= 6){
+        _baseHPImages[0]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 6 && percentHP <= 12){
+        _baseHPImages[1]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 12 && percentHP <= 19){
+        _baseHPImages[2]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 19 && percentHP <= 25){
+        _baseHPImages[3]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 25 && percentHP <= 31){
+        _baseHPImages[4]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 31 && percentHP <= 37){
+        _baseHPImages[5]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 37 && percentHP <= 44){
+        _baseHPImages[6]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 44 && percentHP <= 50){
+        _baseHPImages[7]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 50 && percentHP <= 56){
+        _baseHPImages[8]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 56 && percentHP <= 62){
+        _baseHPImages[9]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 62 && percentHP <= 69){
+        _baseHPImages[10]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 69 && percentHP <= 75){
+        _baseHPImages[11]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 75 && percentHP <= 81){
+        _baseHPImages[12]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 81 && percentHP <= 87){
+        _baseHPImages[13]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 87 && percentHP <= 93){
+        _baseHPImages[14]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP > 93 && percentHP < 100){
+        _baseHPImages[15]->UpdateImage(&hpVertices);
+    }
+    else if(percentHP == 100){
+        _baseHPImages[16]->UpdateImage(&hpVertices);
+    }
     ///
-
-    _hpEmptyImage.UpdateImage();
-
-    std::array<float, 32> verticesHpFull{
-            // positions          // colors           // texture coords
-            test/100 - 0.8f,  0.93f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            test/100 - 0.8f, 0.88f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -0.8f, 0.88f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.8f,  0.93f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    _hpFullImage.UpdateImage(&verticesHpFull);
     _crosshairImage.UpdateImage();
 
     //text
-    TEXTRENDERER.RenderText(*RESOURCEMANAGER.GetShaderByName("textShader"), to_string(test), 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+    TEXTRENDERER.RenderText(to_string(actualDomeHP), -0.95f, -0.95f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

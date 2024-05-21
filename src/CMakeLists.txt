@@ -36,8 +36,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/NodesManager.cpp
         Managers/NodesManager.h Gui/ImguiMain.cpp Gui/ImguiMain.h Gui/ImguiHierarchy.cpp Gui/ImguiHierarchy.h Gui/ImguiInspector.cpp Gui/ImguiInspector.h
         Core/ComponentTypeEnum.h
-        HUD/Image/ImageHUD.cpp
-        HUD/Image/ImageHUD.h
+        HUD/Image/ImageRenderer.cpp
+        HUD/Image/ImageRenderer.h
         Managers/GameManager.cpp
         Managers/GameManager.h
         Component/Animator.cpp
@@ -53,11 +53,32 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Enemies/EnemiesManager.h
         Enemies/Enemy.cpp
         Enemies/Enemy.h
-        Component/Animation.h Component/ShadowMap.h Component/ShadowMap.cpp Component/CloudManager.cpp Component/FrustumCulling.h Component/FrustumCulling.cpp
+        Component/Animation.h Component/ShadowMap.h Component/ShadowMap.cpp Component/CloudManager.cpp
+        HUD/Pages/Page.cpp
+        HUD/Pages/Page.h
+        HUD/PageManager.cpp
+        HUD/PageManager.h
+        HUD/Pages/PauseMenuPage.cpp
+        HUD/Pages/PauseMenuPage.h
+        HUD/Pages/PlayerUpgradeMenu.cpp
+        HUD/Pages/PlayerUpgradeMenu.h
+        HUD/Buttons/Button.cpp
+        HUD/Buttons/Button.h
+        HUD/Buttons/ResumeButton.cpp
+        HUD/Buttons/ResumeButton.h
+        HUD/Buttons/QuitButton.cpp
+        HUD/Buttons/QuitButton.h
+        HUD/Buttons/QuitButton.cpp
+        HUD/Buttons/SettingsButton.cpp
+        HUD/Buttons/SettingsButton.h
         Managers/DomeManager.cpp
         Managers/DomeManager.h
         Managers/UpgradeManager.cpp
-        Managers/UpgradeManager.h)
+        Managers/UpgradeManager.h
+        Turrets/TurretsManager.cpp
+        Turrets/TurretsManager.h
+        Turrets/Turret.cpp
+        Turrets/Turret.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

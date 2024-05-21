@@ -1,9 +1,10 @@
 #include "Camera.h"
+#include "Managers/GameManager.h"
 
 Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
         : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),
           _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED),
-          _mouseSensitivity(SENSITIVITY), _zoom(ZOOM), _editMode(true) {
+          _mouseSensitivity(SENSITIVITY), _zoom(ZOOM) {
 
     _type = ComponentType::CAMERA;
     UpdateCameraVectors();
@@ -36,11 +37,11 @@ void Camera::Initiate() {
 
 void Camera::Input() {
     if (INPUT.IsKeyPressed(GLFW_KEY_E)) {
-        _editMode = !_editMode;
-        INPUT.SetCursorMode(_editMode);
+        GAMEMANAGER._editMode = !GAMEMANAGER._editMode;
+        INPUT.SetCursorMode(GAMEMANAGER._editMode);
     }
 
-    if (!_editMode) {
+    if (!GAMEMANAGER._editMode) {
         ProcessMouseMovement(INPUT.GetMouseOffset().x, INPUT.GetMouseOffset().y);
     }
 }
@@ -106,4 +107,8 @@ glm::vec3 Camera::LerpDirection(glm::vec3 currentDirection) {
     float lerpValue = 0.14f;
     currentDirection = lerp(currentDirection, _front, lerpValue);
     return currentDirection;
+}
+
+glm::vec2 Camera::GetRotation() const {
+    return glm::vec2(_yaw, _pitch);
 }

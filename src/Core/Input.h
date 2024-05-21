@@ -39,6 +39,10 @@ public:
 	void SetMousePos(float xpos, float ypos);
 	glm::vec2 GetMousePos();
 
+    //Setter i getter do pozycji myszki zmienionej na 0, 0 w środku okna
+    void SetMouseFixedPos(float xpos, float ypos);
+    glm::vec2 GetMouseFixedPos();
+
 	//Seter i geter do offsetu myszki
 	void SetMouseOffset(float xOffset, float yOffset);
 	glm::vec2 GetMouseOffset();
@@ -85,6 +89,8 @@ public:
 	}
 	//Implementacja callbacka od ruszania myszki
 	void MouseCallbackIMP(double xpos, double ypos);
+
+
 
 private:
 	Input();
