@@ -16,6 +16,7 @@
 #include "Enemies/Enemy.h"
 #include "Component/Animation.h"
 #include "Turrets/Turret.h"
+#include "ParticleGenerator.h"
 
 class Node : public std::enable_shared_from_this<Node>{
 public:

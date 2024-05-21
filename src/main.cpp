@@ -26,6 +26,7 @@
 #include "Managers/ResourceManager.h"
 #include "Managers/NodesManager.h"
 #include "Gui/ImguiMain.h"
+#include "ParticleGenerator.h"
 
 #include "Enemies/EnemiesManager.h"
 
@@ -139,6 +140,8 @@ int main(int, char**)
 
     glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
     float cloudSpeed = 8.0f;
+
+    //ParticleGenerator* particleGenerator = new ParticleGenerator(RESOURCEMANAGER.GetShaderByName("particleShader"), Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true), 500);
 
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
@@ -365,6 +368,12 @@ int main(int, char**)
 
         HUD.Update();
         PAGEMANAGER.Update();
+
+        RESOURCEMANAGER.GetShaderByName("particleShader")->use();
+        RESOURCEMANAGER.GetShaderByName("particleShader")->setMat4("projection", projection);
+        RESOURCEMANAGER.GetShaderByName("particleShader")->setMat4("view", view);
+        RESOURCEMANAGER.GetShaderByName("particleShader")->setVec3("dirColor", dirColor);
+
         AUDIOENGINEMANAGER.Update();
 
 

@@ -78,7 +78,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Turrets/TurretsManager.cpp
         Turrets/TurretsManager.h
         Turrets/Turret.cpp
-        Turrets/Turret.h)
+        Turrets/Turret.h
+	  ComputeShader.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

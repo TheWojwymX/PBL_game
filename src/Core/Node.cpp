@@ -95,6 +95,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                         break;
                     case ComponentType::TURRET:
                         ComponentsManager::getInstance().DeserializeComponent<Turret>(componentJson);
+						break;
+                    case ComponentType::PARTICLEGENERATOR:
+                        ComponentsManager::getInstance().DeserializeComponent<ParticleGenerator>(componentJson);
                         break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;

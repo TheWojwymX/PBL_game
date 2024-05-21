@@ -11,7 +11,8 @@ enum class ComponentType {
     ENEMYAI, //6
     ANIMATION, //7
     CLOUDMANAGER, //8
-    TURRET //9
+    TURRET, //9
+	PARTICLEGENERATOR //10
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H

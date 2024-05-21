@@ -34,6 +34,7 @@ public:
     int _id;
     ComponentType _type;
     void SetOwnerNode(std::shared_ptr<Node> node);
+    std::shared_ptr<Node> GetOwnerNode() {return _ownerNode;}
 
     glm::vec3 GetOwnerPosition();
 
