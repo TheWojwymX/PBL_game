@@ -37,7 +37,7 @@ public:
 
     int _hp = 100;
 
-    int _damage = 50;
+    int _damage = 5;
 
     float _attackFrequency = 3;
 

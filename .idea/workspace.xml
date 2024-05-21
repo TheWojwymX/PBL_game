@@ -32,12 +32,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/BaseHP/100hp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_0_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_10_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_11_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_12_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_13_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_14_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_15_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_16_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_1_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_2_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_3_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_4_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_5_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_6_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_7_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_8_spritesheet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/BaseHP/base_hp_9_spritesheet.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/BaseHP/100hp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/DomeManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/DomeManager.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,6 +227,7 @@
       <workItem from="1716200478182" duration="654000" />
       <workItem from="1716205826869" duration="16000" />
       <workItem from="1716210140480" duration="3949000" />
+      <workItem from="1716284333295" duration="6315000" />
     </task>
     <servers />
   </component>
