@@ -7,6 +7,7 @@
 #include <memory>
 #include <vector>
 #include "glm/glm.hpp"
+#include <glm/gtx/quaternion.hpp>
 
 
 struct Particle {
@@ -35,6 +36,12 @@ public:
     void Render(glm::mat4 parentWorld) override;
     void Init() override;
 
+    void SetHasSpawned() { hasSpawned = false; }
+    void SetOffset(glm::vec3 newOffset) { offset = newOffset; }
+
+    void SpawnParticles();
+    void StopParticles();
+
     bool generateParticle = false;
 
 private:
@@ -58,9 +65,14 @@ private:
     glm::vec4 particleColor;
     float initialUpwardBoost;
     float particleScale;
+    bool onlyForward;
+    glm::vec3 gravity;
+
+    bool hasSpawned = false;
 
     glm::vec3 camPosition;
     glm::vec3 camForward;
+    glm::vec3 rotatedOffset;
 
     void initiateParticleType();
 };

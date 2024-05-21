@@ -13,6 +13,7 @@ layout (std430, binding = 0) buffer Particles {
 };
 
 uniform vec3 nodePosition;
+uniform mat4 objectRotation;
 uniform float particleLife;
 uniform float speedVariation;
 uniform float dt;
@@ -22,11 +23,13 @@ uniform int newParticles;
 uniform float XZvariation;
 uniform vec4 particleColor;
 uniform bool shouldSpawn;
-uniform vec3 gravity = vec3(0.0, -9.81, 0.0); // Gravity vector, feel free to adjust
+uniform vec3 gravity;
 uniform float initialUpwardBoost;
 uniform float particleScale;
 uniform vec3 cameraPosition;
 uniform vec3 cameraForward;
+uniform bool hasSpawned;
+uniform bool onlyForward;
 
 layout (local_size_x = 1) in;
 
@@ -63,10 +66,24 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     particle.Life = particleLife;
     particle.Scale = particleScale;
 
+    vec3 initialVelocity;
     float speedMultiplier = 1.0f + (speedVariation * random(changeSeed + 1.0f));
+
+    if(onlyForward)
+    {
+        initialVelocity = vec3(0.0, speedMultiplier, XZvariation);
+    }
+    else
+    {
     float randomX = (2.0f * random(changeSeed + 2.0f) - 1.0f) * XZvariation;
     float randomZ = (2.0f * random(changeSeed + 3.0f) - 1.0f) * XZvariation;
-    particle.Velocity.xyz = vec3(randomX, speedMultiplier + initialUpwardBoost, randomZ);
+
+    initialVelocity = vec3(randomX, speedMultiplier + initialUpwardBoost, randomZ);
+    }
+
+    initialVelocity = (objectRotation * vec4(initialVelocity, 0.0f)).xyz;
+
+    particle.Velocity.xyz = initialVelocity;
     particle.Velocity.w = 0.0f;
 }
 
@@ -77,8 +94,8 @@ void main() {
         Particle p = particles[id];
 
         if (p.Life > 0.0f) {
-            if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
-            {
+            //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
+            //{
             // Update velocity with gravity
             p.Velocity.xyz += gravity * dt;
             // Update position with velocity
@@ -97,17 +114,17 @@ void main() {
                 // Set position exactly at 100 to prevent particles from going below it
                 p.Position.y = 100.0 + (100.0 - p.Position.y);
             }
-            }
-            else{
-            p.Life = 0.0;
-            }
+            //}
+            //else{
+            //p.Life = 0.0;
+            //}
         }
 
         particles[id] = p;
     }
 
     // Handle adding new particles
-    if (id == 0 && shouldSpawn) {
+    if (id == 0 && shouldSpawn && !hasSpawned) {
         for (int i = 0; i < newParticles; ++i) {
             uint unusedParticle = firstUnusedParticle();
             if (unusedParticle != uint(-1)) {
