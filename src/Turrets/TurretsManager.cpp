@@ -270,3 +270,57 @@ bool TurretsManager::isPointInRectangle(const glm::vec3& M, const std::vector<gl
     // Warunki
     return (0 < AM_AB && AM_AB < AB_AB) && (0 < AM_AD && AM_AD < AD_AD);
 }
+
+int TurretsManager::RaycastTurrets()
+{
+    selectedIndex = -1; // Initialize with invalid index
+
+    auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
+    glm::vec3 cameraPosition = camera->GetPosition();
+    glm::vec3 rayDirection = camera->GetDirection();
+
+    for (size_t i = 0; i < _turrets.size(); ++i) {
+        std::string nameOfTurret = "Turret" + std::to_string(i + 1);
+
+        auto meshRenderer = NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<MeshRenderer>();
+        if (meshRenderer) {
+            auto model = meshRenderer->_model;
+
+            // Transform bounding box to world space
+            glm::vec3 minBoundingBox = model->GetMinBoundingBox();
+            glm::vec3 maxBoundingBox = model->GetMaxBoundingBox();
+            auto transform = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform();
+            glm::mat4 globalCTM = transform->GetGlobalCTM();
+
+            glm::vec3 transformedMin = glm::vec3(globalCTM * glm::vec4(minBoundingBox, 1.0f));
+            glm::vec3 transformedMax = glm::vec3(globalCTM * glm::vec4(maxBoundingBox, 1.0f));
+
+            if (RayIntersectsBoundingBox(cameraPosition, rayDirection, transformedMin, transformedMax)) {
+                selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    return selectedIndex; // Return the index of the selected turret (-1 if none selected)
+}
+
+bool TurretsManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
+                                              const glm::vec3& minBoundingBox, const glm::vec3& maxBoundingBox) {
+    glm::vec3 invDir = 1.0f / rayDirection;
+    glm::vec3 tMin = (minBoundingBox - rayOrigin) * invDir;
+    glm::vec3 tMax = (maxBoundingBox - rayOrigin) * invDir;
+
+    glm::vec3 tMinSorted = glm::min(tMin, tMax);
+    glm::vec3 tMaxSorted = glm::max(tMin, tMax);
+
+    float tEnter = glm::max(glm::max(tMinSorted.x, tMinSorted.y), tMinSorted.z);
+    float tExit = glm::min(glm::min(tMaxSorted.x, tMaxSorted.y), tMaxSorted.z);
+
+    // Check for non-intersection or intersection behind ray origin
+    if (tExit < 0 || tEnter > tExit)
+        return false;
+
+    // Check for intersection
+    return true;
+}

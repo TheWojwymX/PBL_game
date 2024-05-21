@@ -2,6 +2,7 @@
 
 #include "glm/vec3.hpp"
 #include "NodesManager.h"
+#include "../Turrets/TurretsManager.h"
 #include "Core/Node.h"
 #include "Core/Input.h"
 
@@ -21,6 +22,7 @@ public:
 
 private:
     bool isDomeStationInRange();
+    bool isTurretInRange();
 
 };
 

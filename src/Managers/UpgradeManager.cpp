@@ -15,7 +15,12 @@ bool UpgradeManager::checkActivation()
     {
         if (isDomeStationInRange())
         {
-            cout << "pressed";
+            cout << "pressed upgrade station" << endl;
+            return true;
+        }
+        else if(isTurretInRange())
+        {
+            cout << "pressed turret" << endl;
             return true;
         }
     }
@@ -32,3 +37,15 @@ bool UpgradeManager::isDomeStationInRange()
 
     return distance + 0.01 <= _radiusSquared;
 }
+
+bool UpgradeManager::isTurretInRange()
+{
+    if(TURRETSMANAGER.RaycastTurrets() != -1)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+

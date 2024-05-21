@@ -47,6 +47,12 @@ public:
     float _sideRange = 5.0f;
     float _forwardRange = 7.0f;
     float _backRange = 2.0f;
+    int selectedIndex = -1;
+
+    int RaycastTurrets();
+
+    bool RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
+                                  const glm::vec3& minBoundingBox, const glm::vec3& maxBoundingBox);
 
     void CheckEnemiesInRange();
 

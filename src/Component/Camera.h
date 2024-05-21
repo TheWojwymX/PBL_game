@@ -45,6 +45,7 @@ public:
 
     // Getter for position attribute
     glm::vec3 GetPosition() const { return _position; }
+    glm::vec3 GetDirection() const { return _front; }
 
     // Getter for zoom attribute
     float GetZoom() const { return _zoom; }
