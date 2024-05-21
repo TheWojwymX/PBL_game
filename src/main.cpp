@@ -141,8 +141,6 @@ int main(int, char**)
     glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
     float cloudSpeed = 8.0f;
 
-    //ParticleGenerator* particleGenerator = new ParticleGenerator(RESOURCEMANAGER.GetShaderByName("particleShader"), Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true), 500);
-
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
     float dirColor[3] = { 0.999f, 0.999f, 1.00f };
@@ -199,6 +197,7 @@ int main(int, char**)
     auto instanceModelShader = RESOURCEMANAGER.GetShaderByName("instanceModelShader");
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
+    auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
 
     PAGEMANAGER.Init();
 
@@ -364,18 +363,17 @@ int main(int, char**)
         cloudShader->setMat4("projection", projection);
         cloudShader->setMat4("view", view);
 
+        particleShader->use();
+        particleShader->setMat4("projection", projection);
+        particleShader->setMat4("view", view);
+        particleShader->setVec3("dirColor", dirColor);
+
         GAMEMANAGER.root->Render(Transform::Origin());
 
         HUD.Update();
         PAGEMANAGER.Update();
 
-        RESOURCEMANAGER.GetShaderByName("particleShader")->use();
-        RESOURCEMANAGER.GetShaderByName("particleShader")->setMat4("projection", projection);
-        RESOURCEMANAGER.GetShaderByName("particleShader")->setMat4("view", view);
-        RESOURCEMANAGER.GetShaderByName("particleShader")->setVec3("dirColor", dirColor);
-
         AUDIOENGINEMANAGER.Update();
-
 
         imguiMain->endDraw();
         ImGui::Render();

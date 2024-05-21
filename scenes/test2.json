@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 26,
+    "nextComponentId": 27,
     "nextNodeId": 16,
     "resources": {
         "Models": [
@@ -704,6 +704,17 @@
                                 63.0
                             ]
                         }
+                    },
+                    {
+                        "componentId": 26,
+                        "componentType": 10,
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 2.0
+                        },
+                        "particleType": "turretShot",
+                        "shader": "particleShader"
                     }
                 ],
                 "transform": {

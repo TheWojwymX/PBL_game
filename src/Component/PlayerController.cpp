@@ -176,7 +176,6 @@ void PlayerController::UpgradeSpeed(){
 void PlayerController::HandleUpgrades() {
     if(Input::Instance().IsKeyPressed(72)) {
         UpgradeRadius();
-        //ComponentsManager::getInstance().GetComponentByID<ParticleGenerator>(12)->SpawnParticles();
     }
     if(Input::Instance().IsKeyPressed(74)) {
         UpgradeReach();
