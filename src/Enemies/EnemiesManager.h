@@ -48,9 +48,15 @@ public:
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
     std::vector<glm::vec2> _spawnersPositions{
-        glm::vec2(62.0, 100.0),
-        glm::vec2(-62.0, 100.0),
+        glm::vec2(50.0, 90.0),
+        glm::vec2(90.0, 50.0),
+        glm::vec2(50.0, 2.0),
+        glm::vec2(2.0, 50.0)
     };
+
+    std::unordered_map<int, std::vector<std::pair<int, int>>> _roundsInfo;
+
+    void SpawnEnemiesForRound(int roundNumber);
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
 
@@ -61,6 +67,8 @@ public:
     int _testowaPrzeciwnicy = 3;
 
     void SpawnEnemy(int distanceToAvoid, glm::vec3 scale);
+
+    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex);
 
     void ChooseModelBasedOnDistance();
 };

@@ -19,6 +19,24 @@ void EnemiesManager::Init() {
     for(int i = 0; i < _enemies.size(); i++){
         _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
     }
+
+    //Here you can modify rounds
+    _roundsInfo[0] = {{0, 3}}; // Spawner 0 - spawn 3 enemies
+    _roundsInfo[1] = {{1, 3}}; // Spawner 1 - spawn 3 enemies
+    _roundsInfo[2] = {{1, 2}, {2, 2}}; //Spawner 1 - spawn 2 enemies, Spawner 2 - spawn 2 enemies
+    _roundsInfo[3] = {{0, 3}, {2, 2}}; //Spawner 0 - spawn 3 enemies, Spawner 2 - spawn 2 enemies
+
+}
+
+void EnemiesManager::SpawnEnemiesForRound(int roundNumber) {
+    if (_roundsInfo.find(roundNumber) != _roundsInfo.end()) {
+        const auto &spawns = _roundsInfo[roundNumber];
+        for (const auto &spawn : spawns) {
+            for (int i = 0; i < spawn.second; ++i) {
+                SpawnEnemy(2, glm::vec3(1.0f), spawn.first); // Example: spawn.first is spawnerIndex, spawn.second is enemyCount
+            }
+        }
+    }
 }
 
 
@@ -154,6 +172,32 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
 
     //std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
 }
+
+void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex) {
+    if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size()) {
+        std::string nameOfEnemy = "Enemy" + std::to_string(_enemies.size() + 1);
+        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
+
+        glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[spawnerIndex]);
+        enemyPosition.y = 0.62 * scale.y + 99.49;
+        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
+        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
+
+        auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+        newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
+        newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+        newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+        newMeshRenderer->Initiate();
+        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
+
+        auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
+        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
+        newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+        newEnemyComponent->_size = distanceToAvoid;
+        _enemies.push_back(newEnemyComponent);
+    }
+}
+
 
 glm::vec3 EnemiesManager::CalcRandomSpawnPosition(glm::vec2 spawnerPos){
     float spawnerRadius = 15.0f;

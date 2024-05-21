@@ -26,6 +26,7 @@ public:
     int _domeRadius = 15;
     glm::vec2 _domePosition = glm::vec2(50, 50);
     float _groundLevel = 100.2;
+    int roundNumber = -1;
     int currentPhase = 0; // 0 - kopanie, 1 - ustawianie, 2 - obrona
     float currentTime = 11.0f;
     float phaseTime = 10.0f;

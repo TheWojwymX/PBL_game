@@ -24,6 +24,7 @@ void GameManager::InitPhase()
 {
     if(currentPhase == 0) // kopanie
     {
+        roundNumber++;
         std::cout << "kopiemy";
     }
     else if (currentPhase == 1) // stawianie
@@ -34,9 +35,12 @@ void GameManager::InitPhase()
     {
         std::cout << "bronimy";
 
-        // Placeholder
-        ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
-        ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
-        ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
+        // For now only 3 rounds are added
+        if (roundNumber > 3)
+        {
+            roundNumber = 3;
+        }
+
+        ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
     }
 }
