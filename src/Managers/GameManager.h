@@ -12,8 +12,6 @@
 class GameManager {
 
 public:
-
-
     int _screenWidth = 1280;
     int _screenHeight = 720;
     GLFWwindow* _window;
@@ -27,6 +25,7 @@ public:
     GameManager &operator=(const GameManager &) = delete;
     void Update();
     void InitPhase();
+    void pressToSkipPhase();
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 100;
@@ -36,8 +35,8 @@ public:
     float _groundLevel = 100.2;
     int roundNumber = 0;
     int currentPhase = 0; // 0 - kopanie, 1 - ustawianie, 2 - obrona
-    float currentTime = 11.0f;
-    float phaseTime = 10.0f;
+    float currentTime = 0.0f;
+    float phaseTime = 30.0f;
 
     bool _editMode = true;
 

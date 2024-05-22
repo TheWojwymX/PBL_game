@@ -214,9 +214,9 @@ int main(int, char**)
         if(!GAMEMANAGER._paused){
             ENEMIESMANAGER.Update();
             TURRETSMANAGER.Update();
+            DOMEMANAGER.Update();
+            GAMEMANAGER.Update();
         }
-        UPGRADEMANAGER.checkActivation();
-        DOMEMANAGER.Update();
 
         // Calculate deltaTime
         TIME.Update();

@@ -38,6 +38,8 @@ public:
 
     void SpawnTurret();
 
+    bool isSelectedTurretInRange();
+
     bool IsTooCloseToTurret(glm::vec3 pos);
 
     bool _isInBlueprintMode = false;

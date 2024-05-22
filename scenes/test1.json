@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 27,
-    "nextNodeId": 16,
+    "nextComponentId": 28,
+    "nextNodeId": 17,
     "resources": {
         "Models": [
             {
@@ -32,7 +32,11 @@
                 "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
             },
             {
-                "ModelName": "Button",
+                "ModelName": "DomeStation",
+                "Path": "../../res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "PlayerStation",
                 "Path": "../../res/Sand/Sand.obj"
             },
             {
@@ -573,13 +577,13 @@
             },
             {
                 "NodeID": 13,
-                "NodeName": "ButtonTemp",
+                "NodeName": "DomeStation",
                 "children": [],
                 "components": [
                     {
                         "componentId": 21,
                         "componentType": 5,
-                        "model": "Button",
+                        "model": "DomeStation",
                         "shader": "modelShader",
                         "outlineShader": "outlineShader"
                     }
@@ -587,6 +591,37 @@
                 "transform": {
                     "position": [
                         40.0,
+                        100.0,
+                        90.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 17,
+                "NodeName": "PlayerStation",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 28,
+                        "componentType": 5,
+                        "model": "PlayerStation",
+                        "shader": "modelShader",
+                        "outlineShader": "outlineShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        60.0,
                         100.0,
                         90.0
                     ],

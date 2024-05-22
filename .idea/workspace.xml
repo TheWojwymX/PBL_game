@@ -32,30 +32,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/JetpackRefuel.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/JetpackRefuel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/freetype-src/include/freetype/freetype.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeRadius.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeRadius.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeRadius.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeRadius.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeReach.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeReach.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeReach.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeReach.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeSpeed.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeSpeed.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PlayerUpgrades/UpgradeSpeed.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeSpeed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
@@ -128,17 +112,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -238,6 +222,7 @@
       <workItem from="1716210140480" duration="3949000" />
       <workItem from="1716284333295" duration="8752000" />
       <workItem from="1716368932122" duration="12484000" />
+      <workItem from="1716384403148" duration="959000" />
     </task>
     <servers />
   </component>

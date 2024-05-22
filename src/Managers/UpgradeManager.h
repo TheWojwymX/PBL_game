@@ -20,12 +20,21 @@ public:
     UpgradeManager(const UpgradeManager &) = delete;
     UpgradeManager &operator=(const UpgradeManager &) = delete;
 
-    bool checkActivation();
     void upgradeDomeHp();
     void upgradeTurretDamage();
     void upgradeTurretFireRate();
+
+    bool RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
+                                  const glm::vec3& minBoundingBox, const glm::vec3& maxBoundingBox);
+
+    bool isDomeStationInRaycast();
     bool isDomeStationInRange();
+
+    bool isTurretInRaycast();
     bool isTurretInRange();
+
+    bool isPlayerStationInRaycast();
+    bool isPlayerStationInRange();
 
     int _turretFireRateUpgradeCost = 10;
     int _turretDamageUpgradeCost = 10;

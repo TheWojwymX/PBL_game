@@ -379,3 +379,22 @@ bool TurretsManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const 
     // Check for intersection
     return true;
 }
+
+bool TurretsManager::isSelectedTurretInRange()
+{
+    if (selectedIndex != -1)
+    {
+        std::string nameOfTurret = "Turret" + std::to_string(selectedIndex + 1);
+
+        auto turretPosition = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetPosition();
+        auto playerPosition = NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition();
+
+        float distanceX = (turretPosition.x - playerPosition.x) * (turretPosition.x - playerPosition.x);
+        float distanceY = (turretPosition.y - playerPosition.y) * (turretPosition.y - playerPosition.y);
+        float distanceZ = (turretPosition.z - playerPosition.z) * (turretPosition.z - playerPosition.z);
+        float distance = distanceX + distanceY + distanceZ;
+
+        return distance + 0.01 <= 25;
+    }
+    return false;
+}

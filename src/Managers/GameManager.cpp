@@ -8,9 +8,18 @@ GameManager &GameManager::getInstance() {
     return instance;
 }
 
+void GameManager::pressToSkipPhase()
+{
+    if(INPUT.IsKeyPressed(77))
+    {
+        currentTime = 31;
+    }
+}
+
 void GameManager::Update()
 {
     currentTime += TIME.GetDeltaTime();
+    pressToSkipPhase();
 
     if (currentTime >= phaseTime)
     {
