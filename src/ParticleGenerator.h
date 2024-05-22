@@ -8,6 +8,7 @@
 #include <vector>
 #include "glm/glm.hpp"
 #include <glm/gtx/quaternion.hpp>
+#include "Managers/NodesManager.h"
 
 
 struct Particle {
@@ -45,6 +46,10 @@ public:
     std::string particleType = "noName";
 
     glm::vec3 enemyScale;
+    glm::vec3 enemyPosition;
+    glm::vec3 generatorPosition;
+    bool toDelete = false;
+    glm::vec3 jumpOffPoint{0.0f};
 private:
 
     std::shared_ptr<ComputeShader> computeShader;
@@ -76,11 +81,13 @@ private:
     bool onlyForward;
     bool casing;
     unsigned int newParticles = 10;
+    bool isJetpack = false;
+
 
     void initiateParticleType();
 
-    void SetInitialUpwardBoost(const glm::vec3& scale);
-    void SetPartScale(const glm::vec3& scale);
+    void SetInitialUpwardBoost(const glm::vec3& scale, float bonus);
+    void SetPartScale(const glm::vec3& scale, float bonus);
 };
 
 #endif

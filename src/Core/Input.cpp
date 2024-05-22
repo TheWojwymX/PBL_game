@@ -54,6 +54,11 @@ bool Input::GetKeyDown(int keyCode)
 	return _keyHoldFlagArray[keyCode] || _keyPressFlagArray[keyCode];
 }
 
+bool Input::IsKeyHeldDown(int keyCode)
+{
+    return _keyHoldFlagArray[keyCode];
+}
+
 bool Input::IsKeyPressed(int keyCode)
 {
 	if (!_oldKeyPressFlagArray[keyCode] && _keyPressFlagArray[keyCode])

@@ -80,6 +80,10 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setVec3("cameraForward", camForward);
     computeShader->setBool("hasSpawned", hasSpawned);
     computeShader->setMat4("objectRotation", glm::toMat4(object->GetTransform()->GetRotation()));
+    computeShader->setVec3("enemyPosition", enemyPosition);
+    computeShader->setVec3("jumpOff", jumpOffPoint);
+
+    generatorPosition = object->GetTransform()->GetPosition() + rotatedOffset;
 
     hasSpawned = true;
 
@@ -186,6 +190,11 @@ void ParticleGenerator::RenderParticles() {
         glBindVertexArray(0);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //}
+    if (deadParticles == amount) {
+        if (toDelete) {
+            GAMEMANAGER.root->removeChild(_ownerNode);
+        }
+    }
 }
 
 void ParticleGenerator::Init() {
@@ -210,6 +219,7 @@ void ParticleGenerator::Init() {
     computeShader->setBool("onlyForward", onlyForward);
     computeShader->setVec3("gravity", gravity);
     computeShader->setBool("casing", casing);
+    computeShader->setBool("isJetpack", isJetpack);
 
     // Particle quad (single instance)
     unsigned int VBO;
@@ -281,6 +291,7 @@ void ParticleGenerator::initiateParticleType() {
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = true;
+        isJetpack = false;
 
     }
     else if (particleType == "turretShot"){
@@ -294,24 +305,58 @@ void ParticleGenerator::initiateParticleType() {
         particleColor = glm::vec4(0.8f,0.8f,0.0f,1.0f);
         initialUpwardBoost = 0.0f;
         particleScale = 0.25f;
-        gravity = glm::vec3(0.0f, -0.2f, 0.0f);
+        gravity = glm::vec3(0.0f, 0.0f, 0.0f);
         onlyForward = true;
         casing = false;
+        isJetpack = false;
     }
     else if (particleType == "antShot"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
-        amount = 100;
-        newParticles = 10;
+        amount = 50;
+        newParticles = 5;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 1.0f;
         particleLife = 3.0f;
         particleColor = glm::vec4(0.3f,0.0f,0.0f,1.0f);
-        SetInitialUpwardBoost(enemyScale);
-        SetPartScale(enemyScale);
+        SetInitialUpwardBoost(enemyScale, 0.0f);
+        SetPartScale(enemyScale, 0.0f);
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;
+        isJetpack = false;
+    }
+    else if (particleType == "antDie"){
+        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        amount = 30;
+        newParticles = 30;
+        spawnDelay = 0.0f;
+        speedVariation = 1.0f;
+        XZvariation = 2.0f;
+        particleLife = 6.0f;
+        particleColor = glm::vec4(0.15f,0.1f,0.0f,1.0f);
+        initialUpwardBoost = 1.0f;
+        SetPartScale(enemyScale, 0.0f);
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+    }
+    else if (particleType == "jetpackUse"){
+        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        amount = 1000;
+        newParticles = 3;
+        spawnDelay = 0.1f;
+        speedVariation = 1.0f;
+        XZvariation = 1.0f;
+        particleLife = 4.0f;
+        particleColor = glm::vec4(0.8f,0.8f,0.8f,1.0f);
+        initialUpwardBoost = 0.0f;
+        particleScale = 0.3f;
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = true;
     }
 }
 
@@ -320,7 +365,7 @@ void ParticleGenerator::SpawnParticles() {
     hasSpawned = false;
 }
 
-void ParticleGenerator::SetInitialUpwardBoost(const glm::vec3& scale) {
+void ParticleGenerator::SetInitialUpwardBoost(const glm::vec3& scale, float bonus) {
     // Assuming scale is in the range [0.5f, 2.0f]
     // Map the scale range to the initialUpwardBoost range [0.0f, 4.0f]
     float minScale = 0.5f;
@@ -335,12 +380,12 @@ void ParticleGenerator::SetInitialUpwardBoost(const glm::vec3& scale) {
     initialUpwardBoost = minBoost + scaleRatio * (maxBoost - minBoost);
 
     // Set the initialUpwardBoost value
-    initialUpwardBoost = glm::clamp(initialUpwardBoost, minBoost, maxBoost);
+    initialUpwardBoost = glm::clamp(initialUpwardBoost, minBoost, maxBoost) + bonus;
 
     // Now, initialUpwardBoost ranges from 0.0f to 4.0f based on the scale
 }
 
-void ParticleGenerator::SetPartScale(const glm::vec3& scale) {
+void ParticleGenerator::SetPartScale(const glm::vec3& scale, float bonus) {
     // Assuming scale is in the range [0.5f, 2.0f]
     // Map the scale range to the initialUpwardBoost range [0.0f, 4.0f]
     float minScale = 0.5f;
@@ -355,7 +400,7 @@ void ParticleGenerator::SetPartScale(const glm::vec3& scale) {
     particleScale = minBoost + scaleRatio * (maxBoost - minBoost);
 
     // Set the initialUpwardBoost value
-    particleScale = glm::clamp(particleScale, minBoost, maxBoost);
+    particleScale = glm::clamp(particleScale, minBoost, maxBoost) + bonus;
 
     // Now, initialUpwardBoost ranges from 0.0f to 4.0f based on the scale
 }

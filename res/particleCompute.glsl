@@ -31,10 +31,14 @@ uniform vec3 cameraForward;
 uniform bool hasSpawned;
 uniform bool onlyForward;
 uniform bool casing;
+uniform vec3 enemyPosition;
+uniform bool isJetpack;
+uniform vec3 jumpOff;
 
 layout (local_size_x = 1) in;
 
 uint lastUsedParticle = 0;
+vec3 initialVel;
 
 float random(float seed) {
     return fract(sin(seed) * 43758.5453);
@@ -68,11 +72,14 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     particle.Scale = particleScale;
 
     vec3 initialVelocity;
+
+    vec3 directionToEnemy = normalize(enemyPosition - nodePosition);
+
     float speedMultiplier = 1.0f + (speedVariation * random(changeSeed + 1.0f));
 
     if(onlyForward)
     {
-        initialVelocity = vec3(0.0, speedMultiplier, XZvariation);
+        initialVelocity = vec3(0.0, directionToEnemy.y * 40, XZvariation);
     }
     else if(casing)
     {
@@ -88,13 +95,14 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
 
     initialVelocity = (objectRotation * vec4(initialVelocity, 0.0f)).xyz;
 
+    initialVel = initialVelocity;
     particle.Velocity.xyz = initialVelocity;
     particle.Velocity.w = 0.0f;
 }
 
 void main() {
     uint id = gl_GlobalInvocationID.x;
-
+    vec3 initGravity = gravity;
     if (id < amount) {
         Particle p = particles[id];
 
@@ -102,7 +110,7 @@ void main() {
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
             // Update velocity with gravity
-            p.Velocity.xyz += gravity * dt;
+            p.Velocity.xyz += initGravity * dt;
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
             // Decrease alpha to fade out particle
@@ -111,14 +119,30 @@ void main() {
             p.Life -= dt;
 
             float lifeRatio = p.Life / particleLife;
-            p.Scale = mix(0.0f, particleScale, lifeRatio);
+            p.Scale = mix(0.1f, particleScale, lifeRatio);
 
             // Check for bounce when particle hits y = 105
-            if (p.Position.y <= 100.0) {
+            if (p.Position.y <= 100.0 && !isJetpack) {
+                if(onlyForward)
+                {
+                p.Life -= 4 * dt;
+                }
+                else{
                 // Reflect the y velocity for a bounce and dampen it to lose energy
                 p.Velocity.y = -p.Velocity.y * 0.8; // Adjust 0.8 damping factor as needed
+                p.Velocity.x = p.Velocity.x * 0.8;
+                p.Velocity.z = p.Velocity.z * 0.8;
+
                 // Set position exactly at 100 to prevent particles from going below it
                 p.Position.y = 100.0 + (100.0 - p.Position.y);
+                }
+            }
+            else if(p.Position.y <= jumpOff.y + 0.2 && isJetpack){
+                initGravity.y = 0.0;
+                p.Velocity.y = 0.0;
+                p.Position.y = jumpOff.y + 0.2;
+                p.Velocity.x = p.Velocity.x * 0.8;
+                p.Velocity.z = p.Velocity.z * 0.8;
             }
             //}
             //else{
