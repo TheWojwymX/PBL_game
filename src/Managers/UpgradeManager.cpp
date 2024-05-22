@@ -180,4 +180,28 @@ void UpgradeManager::upgradeTurretFireRate() {
     }
 }
 
+void UpgradeManager::Update() {
+    if(isPlayerStationInRaycast() && isPlayerStationInRange()){
+        NODESMANAGER.getNodeByName("PlayerStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+    }
+    else if(NODESMANAGER.getNodeByName("PlayerStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline == true){
+        NODESMANAGER.getNodeByName("PlayerStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
+    }
+
+    if(isDomeStationInRaycast() && isDomeStationInRange()){
+        NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+    }
+    else if(NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline == true){
+        NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
+    }
+
+    if(isTurretInRaycast() && isTurretInRange()){
+        TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+    }else{
+        for(int i = 0; i < TURRETSMANAGER._turrets.size(); i++){
+            TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
+        }
+    }
+}
+
 

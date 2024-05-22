@@ -40,6 +40,8 @@ public:
     int _turretDamageUpgradeCost = 10;
     int _domeHPUpgradeCost = 10;
 
+    void Update();
+
 };
 
 
