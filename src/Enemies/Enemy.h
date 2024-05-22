@@ -8,6 +8,7 @@
 #include "Core/Component.h"
 #include "Core/ComponentTypeEnum.h"
 #include "Managers/GameManager.h"
+#include <regex>
 
 class Enemy : public Component, public std::enable_shared_from_this<Enemy> {
 

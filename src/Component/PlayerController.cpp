@@ -53,12 +53,14 @@ void PlayerController::Init() {
 void PlayerController::Input() {
     MovementInput();
     InteractionInput();
+    JetpackInput();
 }
 
 void PlayerController::Update() {
     if(!GAMEMANAGER._paused){
         HandleMovement();
         HandleUpgrades();
+        //cout << _jetpackFuel << endl;
     }
 }
 
@@ -124,8 +126,20 @@ void PlayerController::HandleMovement() {
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {
         _ownerNode->GetComponent<PlayerAudioController>()->PlayJumpSound();
+        _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = _ownerTransform->GetPosition();
         _velocity.y = sqrtf(_jumpHeight * -2.0f * _gravity);
         _jump = true;
+    }
+
+    // Handle jetpack
+    if (_isUsingJetpack && _jetpackFuel > 0) {
+        _velocity.y += _jetpackStrength * TIME.GetDeltaTime();
+        _jetpackFuel -= _jetpackFuelConsumption * TIME.GetDeltaTime();
+        _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
+        if (_jetpackFuel < 0) _jetpackFuel = 0;
+    } else if (!_isUsingJetpack && _jetpackFuel < _maxJetpackFuel) {
+        _jetpackFuel += _jetpackFuelRecovery * TIME.GetDeltaTime();
+        if (_jetpackFuel > _maxJetpackFuel) _jetpackFuel = _maxJetpackFuel;
     }
 
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
@@ -146,7 +160,6 @@ void PlayerController::addToInspector(ImguiMain *imguiMain) {
 
         ImGui::TreePop();
     }
-
 }
 
 void PlayerController::UpgradeRadius(){
@@ -206,5 +219,33 @@ void PlayerController::HandleUpgrades() {
     }
     if(Input::Instance().IsKeyPressed(75)) {
         UpgradeSpeed();
+    }
+}
+
+void PlayerController::JetpackInput() {
+    // Get the current time
+    auto now = std::chrono::steady_clock::now();
+
+    // Check if the space key is currently held down
+    if (INPUT.GetKeyDown(GLFW_KEY_SPACE)) {
+        if (!_spaceKeyWasPressed) {
+            // If the space key was not pressed before, update the last press time
+            _lastSpacePressTime = now;
+            _spaceKeyWasPressed = true;
+        }
+
+        // Calculate the elapsed time since the space key was last pressed
+        auto elapsed = std::chrono::duration_cast<std::chrono::duration<float>>(now - _lastSpacePressTime).count();
+
+        // Check if the elapsed time is greater than the activation delay and if there's enough fuel
+        if (elapsed >= _jetpackActivationDelay && _jetpackFuel > 0) {
+            _isUsingJetpack = true;
+        } else {
+            _isUsingJetpack = false;
+        }
+    } else {
+        // If the space key is not held down, reset the state
+        _spaceKeyWasPressed = false;
+        _isUsingJetpack = false;
     }
 }

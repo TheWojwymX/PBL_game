@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 28,
+    "nextComponentId": 29,
     "nextNodeId": 17,
     "resources": {
         "Models": [
@@ -348,6 +348,17 @@
                         "cameraRefID": 2,
                         "componentId": 3,
                         "componentType": 1
+                    },
+                    {
+                        "componentId": 27,
+                        "componentType": 10,
+                        "offset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "particleType": "jetpackUse",
+                        "shader": "particleShader"
                     }
                 ],
                 "transform": {
@@ -744,7 +755,7 @@
                         "componentType": 10,
                         "offset": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 1.5,
                             "z": 2.0
                         },
                         "particleType": "turretShot",

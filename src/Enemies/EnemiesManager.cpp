@@ -164,7 +164,10 @@ void EnemiesManager::DealDamageToEnemy(int amount, const shared_ptr<Enemy>& enem
 
 void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
     std::string nameOfEnemy = "Enemy" + to_string(_enemies.size() + 1);
+    std::string particleGeneratorNode = "Particle" +  to_string(_enemies.size() + 1);
+
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
 
     glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[0]);
     enemyPosition.y = 0.62 * scale.y + 99.49;
@@ -189,8 +192,17 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
     antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
     antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
     antShot->enemyScale = scale;
+    antShot->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
     antShot->Init();
-    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(antShot);
+    NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
+
+    auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antDie");
+    antDie->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
+    antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
+    antDie->enemyScale = scale;
+    antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
+    antDie->Init();
+    NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antDie);
 
     //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
 
@@ -202,7 +214,10 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
 void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex) {
     if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size()) {
         std::string nameOfEnemy = "Enemy" + std::to_string(_enemies.size() + 1);
+        std::string particleGeneratorNode = "Particle" +  to_string(_enemies.size() + 1);
+
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
+        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
 
         glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[spawnerIndex]);
         enemyPosition.y = 0.62 * scale.y + 99.49;
@@ -220,8 +235,17 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
         antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
         antShot->enemyScale = scale;
+        antShot->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
         antShot->Init();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(antShot);
+        NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
+
+        auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antDie");
+        antDie->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
+        antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
+        antDie->enemyScale = scale;
+        antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
+        antDie->Init();
+        NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antDie);
 
 
         auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();

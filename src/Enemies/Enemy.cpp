@@ -68,15 +68,26 @@ void Enemy::Die(){
 void Enemy::TakeDamage(int amount){
     _hp -= amount;
 
+    std::regex pattern("^Particle\\d+$");
     shared_ptr<ParticleGenerator> particleDead;
-    auto particleGenerators = this->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
-    for (const auto& generator : particleGenerators) {
-        if(generator->particleType == "antShot") generator->SpawnParticles();
+    auto rootChildren = NODESMANAGER.getNodeByName("root")->getChildren();
+    for (const auto& child : rootChildren) {
+        if(std::regex_match(child->_name, pattern))
+        {
+            auto particleGenerators = child->GetAllComponents<ParticleGenerator>();
+            for (const auto& generator : particleGenerators) {
+                if (generator->particleType == "antShot" && generator->object == this->GetOwnerNode()) generator->SpawnParticles();
+                if (generator->particleType == "antDie" && generator->object == this->GetOwnerNode()) particleDead = generator;
+            }
+        }
     }
 
     if(_hp <= 0){
+        if(particleDead != nullptr) {
+            particleDead->SpawnParticles();
+            particleDead->toDelete = true;
+        }
         Die();
-
     }
 }
 

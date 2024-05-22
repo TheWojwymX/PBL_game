@@ -166,7 +166,7 @@ void Node::Render(glm::mat4 parentWorld) {
             component->Render(parentWorld);
 
     for (auto &child: _children)
-        child->Render(world);
+        if(child != nullptr) child->Render(world);
 }
 
 void Node::RenderShadows(glm::mat4 parentWorld) {

@@ -27,6 +27,7 @@ public:
 
 	//Zwraca flage danego klawisza
 	bool GetKeyDown(int keyCode);
+    bool IsKeyHeldDown(int keyCode);
 	bool IsKeyPressed(int keyCode);
 	bool IsKeyReleased(int keyCode);
 

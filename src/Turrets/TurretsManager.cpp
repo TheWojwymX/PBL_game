@@ -281,6 +281,7 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret>& turret, const shared_
 
         auto particleGenerators = turret->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
         for (const auto& generator : particleGenerators) {
+            generator->enemyPosition = enemy->GetOwnerPosition();
             generator->SpawnParticles();
         }
     }
