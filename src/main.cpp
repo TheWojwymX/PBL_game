@@ -189,10 +189,18 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
+<<<<<<< Updated upstream
         UPGRADEMANAGER.checkActivation();
         DOMEMANAGER.Update();
         ENEMIESMANAGER.Update();
 
+=======
+        if(!GAMEMANAGER._paused){
+            ENEMIESMANAGER.Update();
+            TURRETSMANAGER.Update();
+            DOMEMANAGER.Update();
+        }
+>>>>>>> Stashed changes
         // Calculate deltaTime
         TIME.Update();
 

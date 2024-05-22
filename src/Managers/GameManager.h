@@ -12,6 +12,14 @@
 class GameManager {
 
 public:
+<<<<<<< Updated upstream
+=======
+    int _screenWidth = 1280;
+    int _screenHeight = 720;
+    GLFWwindow* _window;
+
+    void Init();
+>>>>>>> Stashed changes
 
     static GameManager &getInstance();
 
@@ -22,6 +30,12 @@ public:
     GameManager(const GameManager &) = delete;
 
     GameManager &operator=(const GameManager &) = delete;
+<<<<<<< Updated upstream
+=======
+    void Update();
+    void InitPhase();
+    void pressToSkipPhase();
+>>>>>>> Stashed changes
 
     std::shared_ptr<Node> root;
 
@@ -34,6 +48,17 @@ public:
     glm::vec2 _domePosition = glm::vec2(50, 50);
 
     float _groundLevel = 100.2;
+<<<<<<< Updated upstream
+=======
+    int roundNumber = 0;
+    int currentPhase = 0; // 0 - kopanie, 1 - ustawianie, 2 - obrona
+    float currentTime = 0.0f;
+    float phaseTime = 30.0f;
+
+    bool _editMode = true;
+
+    bool _paused = false;
+>>>>>>> Stashed changes
 
 };
 
