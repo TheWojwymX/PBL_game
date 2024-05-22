@@ -60,7 +60,7 @@ void PageManager::CheckInputs() {
         GAMEMANAGER._paused = false;
     }
 
-    if (INPUT.IsKeyPressed(70) && !_pauseMenuPage->_shouldRender) {
+    if (INPUT.IsKeyPressed(70) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.isPlayerStationInRange() && UPGRADEMANAGER.isPlayerStationInRaycast()) {
         if (!_isInPage) {
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
@@ -73,7 +73,8 @@ void PageManager::CheckInputs() {
             DisableMouse();
             GAMEMANAGER._paused = false;
         }
-    } else if (INPUT.IsKeyPressed(90) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.isTurretInRange()) {
+        //it has to be this order because isTurretInRange won't work with index -1
+    } else if (INPUT.IsKeyPressed(70) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.isTurretInRaycast() && UPGRADEMANAGER.isTurretInRange()) {
         if (!_isInPage) {
             _isInPage = true;
             _turretUpgradeMenu->_shouldRender = true;
@@ -86,7 +87,7 @@ void PageManager::CheckInputs() {
             DisableMouse();
             GAMEMANAGER._paused = false;
         }
-    } else if (INPUT.IsKeyPressed(90) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.isDomeStationInRange()) {
+    } else if (INPUT.IsKeyPressed(70) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.isDomeStationInRange() && UPGRADEMANAGER.isDomeStationInRaycast()) {
         if (!_isInPage) {
             _isInPage = true;
             _domeUpgradeMenu->_shouldRender = true;

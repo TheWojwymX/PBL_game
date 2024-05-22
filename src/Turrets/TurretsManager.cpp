@@ -19,6 +19,7 @@ void TurretsManager::Init() {
 }
 
 void TurretsManager::Update() {
+
     UpdateBlueprintTurret();
 
     if(Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode) {
@@ -33,8 +34,8 @@ void TurretsManager::Update() {
     }
 
     if(INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying){
-        _isPlayerInMovingMode = true;
         _indexOfMovingTurret = RaycastTurrets();
+        _isPlayerInMovingMode = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
     }else if(INPUT.IsMousePressed(1) && !_isInBlueprintMode && _isPlayerInMovingMode){
         PlaceMovingTurret();
@@ -315,19 +316,25 @@ void TurretsManager::MoveTurret(){
     if(_isPlayerInMovingMode){
         //std::cout << "ruszymy dzialko o indeksie" << _indexOfMovingTurret << std::endl;
         //std::cout << NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().x << "  " << NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().y << "  " << NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().z << "  " << std::endl;
+        _turrets[_indexOfMovingTurret]->_finalPosition = glm::vec3(2137, 2137, 2137);
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetPosition(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetRotation(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation());
     }
 }
 
 void TurretsManager::PlaceMovingTurret(){
+    if(IsTooCloseToTurret(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition())) return;
+
     _isPlayerInMovingMode = false;
     _turrets[_indexOfMovingTurret]->_isMoving = false;
     CalculateRangePositions(_turrets[_indexOfMovingTurret]);
+    _turrets[_indexOfMovingTurret]->_finalPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
 }
 
 int TurretsManager::RaycastTurrets()
 {
+    if(_isPlayerInMovingMode) return -1;
+
     selectedIndex = -1; // Initialize with invalid index
 
     auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);

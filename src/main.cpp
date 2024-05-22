@@ -218,6 +218,8 @@ int main(int, char**)
             GAMEMANAGER.Update();
         }
 
+        UPGRADEMANAGER.Update();
+
         // Calculate deltaTime
         TIME.Update();
 
