@@ -49,12 +49,29 @@ bool UpgradeManager::isTurretInRange()
 
 void UpgradeManager::upgradeDomeHp()
 {
+
+    if(GAMEMANAGER._money < _domeHPUpgradeCost) {
+        std::cout << "Brak pieniedzy na ulepszenie HP doma" << std::endl;
+        return;
+    }
+    else{
+        GAMEMANAGER._money -= _domeHPUpgradeCost;
+    }
+
     DOMEMANAGER.maxHP += 20;
     cout << "Current dome max HP: " << DOMEMANAGER.maxHP << endl;
 }
 
 void UpgradeManager::upgradeTurretDamage()
 {
+    if(GAMEMANAGER._money < _turretDamageUpgradeCost){
+        std::cout << "Brak pieniedzy na ulepszenie obrazen dzialka" << std::endl;
+        return;
+    }
+    else{
+        GAMEMANAGER._money -= _turretDamageUpgradeCost;
+    }
+
     if (TURRETSMANAGER.selectedIndex == -1)
     {
         cout << "You are not looking at turret" << endl;
@@ -67,6 +84,15 @@ void UpgradeManager::upgradeTurretDamage()
 }
 
 void UpgradeManager::upgradeTurretFireRate() {
+
+    if(GAMEMANAGER._money < _turretFireRateUpgradeCost){
+        std::cout << "Brak pieniedzy na ulepszenie szybkostrzelnosci dzialka" << std::endl;
+        return;
+    }
+    else{
+        GAMEMANAGER._money -= _turretFireRateUpgradeCost;
+    }
+
     if (TURRETSMANAGER.selectedIndex == -1)
     {
         cout << "You are not looking at turret" << endl;

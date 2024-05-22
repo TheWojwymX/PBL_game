@@ -11,8 +11,7 @@
 #include "Image/ImageRenderer.h"
 #include "core/Time.h"
 #include "Managers/DomeManager.h"
-
-//te,p
+#include "Managers/GameManager.h"
 #include <GLFW/glfw3.h>
 
 class HUDMain {

@@ -386,17 +386,6 @@
                         "frameDuration": 1.0,
                         "isLoop": true,
                         "meshRendererRefID": 6
-                    },
-                    {
-                        "componentId": 12,
-                        "componentType": 10,
-                        "offset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 2.0
-                        },
-                        "particleType": "antWalk",
-                        "shader": "particleShader"
                     }
                 ],
                 "transform": {

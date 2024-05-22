@@ -43,6 +43,7 @@ public:
 
     bool _paused = false;
 
+    int _money = 50;
 };
 
 

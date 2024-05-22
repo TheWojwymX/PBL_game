@@ -34,10 +34,10 @@ void Turret::Deserialize(const nlohmann::json &jsonData) {
         auto position2 = turretRangePositions["position2"];
         auto position3 = turretRangePositions["position3"];
 
-        _turretRangePositions.push_back(glm::vec3(position0[0], position0[1], position0[2]));
-        _turretRangePositions.push_back(glm::vec3(position1[0], position1[1], position1[2]));
-        _turretRangePositions.push_back(glm::vec3(position2[0], position2[1], position2[2]));
-        _turretRangePositions.push_back(glm::vec3(position3[0], position3[1], position3[2]));
+        _turretRangePositions[0] = glm::vec3(position0[0], position0[1], position0[2]);
+        _turretRangePositions[1] = glm::vec3(position1[0], position1[1], position1[2]);
+        _turretRangePositions[2] = glm::vec3(position2[0], position2[1], position2[2]);
+        _turretRangePositions[3] = glm::vec3(position3[0], position3[1], position3[2]);
     }
 
     Component::Deserialize(jsonData);

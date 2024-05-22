@@ -33,7 +33,15 @@ void EnemiesManager::SpawnEnemiesForRound(int roundNumber) {
         const auto &spawns = _roundsInfo[roundNumber];
         for (const auto &spawn : spawns) {
             for (int i = 0; i < spawn.second; ++i) {
-                SpawnEnemy(2, glm::vec3(1.0f), spawn.first); // Example: spawn.first is spawnerIndex, spawn.second is enemyCount
+
+                const auto &spawns = _roundsInfo[roundNumber];
+
+                std::random_device rd;
+                std::mt19937 gen(rd());
+                std::uniform_real_distribution<float> dis(0.5f, 1.0f);
+                float scale = dis(gen);
+
+                SpawnEnemy(2, glm::vec3(scale), spawn.first); // Example: spawn.first is spawnerIndex, spawn.second is enemyCount
             }
         }
     }
@@ -111,7 +119,13 @@ void EnemiesManager::Update() {
     AvoidEnemy();
     ChooseModelBasedOnDistance(); //LOD (safe to comment out)
     if(Input::Instance().IsKeyPressed(80)) {
-        SpawnEnemy(2, glm::vec3(0.5, 0.5, 0.5));
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> dis(0.5f, 1.0f);
+        float scale = dis(gen);
+
+        SpawnEnemy(2, glm::vec3(scale));
     }
     if(Input::Instance().IsKeyPressed(79)){
         DealDamageToEnemy(50, _enemies[_testowaPrzeciwnicy]);

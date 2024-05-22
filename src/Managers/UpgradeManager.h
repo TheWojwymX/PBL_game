@@ -27,6 +27,10 @@ public:
     bool isDomeStationInRange();
     bool isTurretInRange();
 
+    int _turretFireRateUpgradeCost = 10;
+    int _turretDamageUpgradeCost = 10;
+    int _domeHPUpgradeCost = 10;
+
 };
 
 

@@ -60,4 +60,8 @@ private:
     void increaseRadiusLevel(){_radius = _radius + 1;}
     void increaseReachLevel(){_reach = _reach + 1;}
     void increaseSpeedLevel(){_speed = _speed + 1;}
+
+    int _radiusUpgradeCost = 10;
+    int _reachUpgradeCost = 10;
+    int _speedUpgradeCost = 10;
 };

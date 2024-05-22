@@ -44,8 +44,8 @@ public:
 
     float _distanceToAnotherTurret = 1.5f;
 
-    float _sideRange = 5.0f;
-    float _forwardRange = 7.0f;
+    float _sideRange = 7.0f;
+    float _forwardRange = 20.0f;
     float _backRange = 2.0f;
     int selectedIndex = -1;
 
@@ -61,6 +61,17 @@ public:
     void AttackEnemy(const shared_ptr<Turret>& turret, const shared_ptr<Enemy>& enemy);
 
     void Reload(const shared_ptr<Turret> &turret);
+
+    int _turretCost = 10;
+
+    void MoveTurret();
+
+    bool _isPlayerInMovingMode = false;
+    int _indexOfMovingTurret;
+
+    void PlaceMovingTurret();
+
+    void CalculateRangePositions(shared_ptr<Turret> turret);
 };
 
 

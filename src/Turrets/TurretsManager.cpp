@@ -19,18 +19,28 @@ void TurretsManager::Init() {
 }
 
 void TurretsManager::Update() {
-    if(Input::Instance().IsKeyPressed(76)) {
+    UpdateBlueprintTurret();
+
+    if(Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode) {
         _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
         NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->IsEnabled());
         //NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
         _isInBlueprintMode = !_isInBlueprintMode;
     }
 
-    if(INPUT.IsMousePressed(0) && _isInBlueprintMode && !IsTooCloseToTurret(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition())){
+    if(INPUT.IsMousePressed(0) && _isInBlueprintMode && !IsTooCloseToTurret(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition()) && _isPlayerInMovingMode == false){
         SpawnTurret();
     }
 
-    UpdateBlueprintTurret();
+    if(INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying){
+        _isPlayerInMovingMode = true;
+        _indexOfMovingTurret = RaycastTurrets();
+        _turrets[_indexOfMovingTurret]->_isMoving = true;
+    }else if(INPUT.IsMousePressed(1) && !_isInBlueprintMode && _isPlayerInMovingMode){
+        PlaceMovingTurret();
+    }
+
+    MoveTurret();
     CheckEnemiesInRange();
 }
 
@@ -47,6 +57,15 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos){
 }
 
 void TurretsManager::SpawnTurret(){
+
+    if(GAMEMANAGER._money < _turretCost){
+        std::cout << "Brak pieniedzy na dzialko" << std::endl;
+        return;
+    }
+    else{
+        GAMEMANAGER._money -= _turretCost;
+    }
+
     //std::cout << "zespawniono" << std::endl;
     std::string nameOfTurret = "Turret" + to_string(_turrets.size() + 1);
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfTurret);
@@ -76,41 +95,7 @@ void TurretsManager::SpawnTurret(){
     newTurret->_finalRotation = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation();
     newTurret->_finalPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
 
-    glm::vec3 BPPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
-    glm::vec3 upVec = glm::vec3(0, 1, 0);
-    glm::vec3 forwardVec = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation() * glm::vec3(0, 0, 1);
-    glm::vec3 backwardVec = -forwardVec;
-    glm::vec3 leftVec = glm::normalize(glm::cross(upVec, forwardVec));
-    glm::vec3 rightVec = -leftVec;
-
-    glm::vec3 pos0 = BPPosition + leftVec * _sideRange + backwardVec * _backRange;
-    newTurret->_turretRangePositions.push_back(pos0);
-
-    glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
-    newTurret->_turretRangePositions.push_back(pos1);
-
-    glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
-    newTurret->_turretRangePositions.push_back(pos2);
-
-    glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
-    newTurret->_turretRangePositions.push_back(pos3);
-
-/*    std::cout << "_turretRangePositions[0]: x=" << newTurret->_turretRangePositions[0].x
-              << ", y=" << newTurret->_turretRangePositions[0].y
-              << ", z=" << newTurret->_turretRangePositions[0].z << std::endl;
-
-    std::cout << "_turretRangePositions[1]: x=" << newTurret->_turretRangePositions[1].x
-              << ", y=" << newTurret->_turretRangePositions[1].y
-              << ", z=" << newTurret->_turretRangePositions[1].z << std::endl;
-
-    std::cout << "_turretRangePositions[2]: x=" << newTurret->_turretRangePositions[2].x
-              << ", y=" << newTurret->_turretRangePositions[2].y
-              << ", z=" << newTurret->_turretRangePositions[2].z << std::endl;
-
-    std::cout << "_turretRangePositions[3]: x=" << newTurret->_turretRangePositions[3].x
-              << ", y=" << newTurret->_turretRangePositions[3].y
-              << ", z=" << newTurret->_turretRangePositions[3].z << std::endl;*/
-
+    CalculateRangePositions(newTurret);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
 
@@ -121,6 +106,43 @@ void TurretsManager::SpawnTurret(){
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetRotation(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation());
 
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
+}
+
+void TurretsManager::CalculateRangePositions(shared_ptr<Turret> turret){
+    glm::vec3 BPPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
+    glm::vec3 upVec = glm::vec3(0, 1, 0);
+    glm::vec3 forwardVec = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation() * glm::vec3(0, 0, 1);
+    glm::vec3 backwardVec = -forwardVec;
+    glm::vec3 leftVec = glm::normalize(glm::cross(upVec, forwardVec));
+    glm::vec3 rightVec = -leftVec;
+
+    glm::vec3 pos0 = BPPosition + leftVec * _sideRange + backwardVec * _backRange;
+    turret->_turretRangePositions[0] = pos0;
+
+    glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
+    turret->_turretRangePositions[1] = pos1;
+
+    glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
+    turret->_turretRangePositions[2] = pos2;
+
+    glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
+    turret->_turretRangePositions[3] = pos3;
+
+/*    std::cout << "_turretRangePositions[0]: x=" << turret->_turretRangePositions[0].x
+              << ", y=" << turret->_turretRangePositions[0].y
+              << ", z=" << turret->_turretRangePositions[0].z << std::endl;
+
+    std::cout << "_turretRangePositions[1]: x=" << turret->_turretRangePositions[1].x
+              << ", y=" << turret->_turretRangePositions[1].y
+              << ", z=" << turret->_turretRangePositions[1].z << std::endl;
+
+    std::cout << "_turretRangePositions[2]: x=" << turret->_turretRangePositions[2].x
+              << ", y=" << turret->_turretRangePositions[2].y
+              << ", z=" << turret->_turretRangePositions[2].z << std::endl;
+
+    std::cout << "_turretRangePositions[3]: x=" << turret->_turretRangePositions[3].x
+              << ", y=" << turret->_turretRangePositions[3].y
+              << ", z=" << turret->_turretRangePositions[3].z << std::endl;*/
 }
 
 void TurretsManager::PrepareBlueprintTurret() {
@@ -152,7 +174,7 @@ void TurretsManager::PrepareBlueprintTurret() {
 
 void TurretsManager::UpdateBlueprintTurret(){
 
-    if(!_shouldEnableBlueprintTurret) return;
+    //if(!_shouldEnableBlueprintTurret) return;
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
 
@@ -197,6 +219,8 @@ void TurretsManager::CheckEnemiesInRange(){
         if(_turrets[i] == nullptr) continue;
 
         if(_turrets[i]->_isFlying) continue;
+
+        if(_turrets[i]->_isMoving) continue;
 
         std::vector<shared_ptr<Enemy>> enemiesInRange;
 
@@ -264,7 +288,7 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret>& turret, const shared_
 
 bool TurretsManager::isPointInRectangle(const glm::vec3& M, const std::vector<glm::vec3>& rect) {
     if (rect.size() != 4) {
-        std::cerr << "Prostokąt musi mieć dokładnie 4 wierzchołki." << std::endl;
+        std::cerr << "Prostokat musi miec dokladnie 4 wierzcholki, a ten ma: " << rect.size() << std::endl;
         return false;
     }
 
@@ -285,6 +309,21 @@ bool TurretsManager::isPointInRectangle(const glm::vec3& M, const std::vector<gl
 
     // Warunki
     return (0 < AM_AB && AM_AB < AB_AB) && (0 < AM_AD && AM_AD < AD_AD);
+}
+
+void TurretsManager::MoveTurret(){
+    if(_isPlayerInMovingMode){
+        //std::cout << "ruszymy dzialko o indeksie" << _indexOfMovingTurret << std::endl;
+        //std::cout << NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().x << "  " << NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().y << "  " << NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().z << "  " << std::endl;
+        _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetPosition(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition());
+        _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetRotation(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation());
+    }
+}
+
+void TurretsManager::PlaceMovingTurret(){
+    _isPlayerInMovingMode = false;
+    _turrets[_indexOfMovingTurret]->_isMoving = false;
+    CalculateRangePositions(_turrets[_indexOfMovingTurret]);
 }
 
 int TurretsManager::RaycastTurrets()

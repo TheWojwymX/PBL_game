@@ -151,6 +151,14 @@ void PlayerController::addToInspector(ImguiMain *imguiMain) {
 
 void PlayerController::UpgradeRadius(){
     if (_radius < 10){
+
+        if(GAMEMANAGER._money < _radiusUpgradeCost){
+            std::cout << "Nie ma dosc pieniedzy na ulepsznie radiusa" << std::endl;
+            return;
+        }else{
+            GAMEMANAGER._money -= _radiusUpgradeCost;
+        }
+
         increaseRadiusLevel();
         cout << "Radius upgraded" << endl;
     }
@@ -159,6 +167,14 @@ void PlayerController::UpgradeRadius(){
 
 void PlayerController::UpgradeReach(){
     if (_reach < 30) {
+
+        if(GAMEMANAGER._money < _reachUpgradeCost){
+            std::cout << "Nie ma dosc pieniedzy na ulepsznie reacha" << std::endl;
+            return;
+        }else{
+            GAMEMANAGER._money -= _reachUpgradeCost;
+        }
+
         increaseReachLevel();
         cout << "Reach upgraded" << endl;
     }
@@ -167,6 +183,14 @@ void PlayerController::UpgradeReach(){
 
 void PlayerController::UpgradeSpeed(){
     if (_speed < 15) {
+
+        if(GAMEMANAGER._money < _speedUpgradeCost){
+            std::cout << "Nie ma dosc pieniedzy na ulepsznie speeda" << std::endl;
+            return;
+        }else{
+            GAMEMANAGER._money -= _speedUpgradeCost;
+        }
+
         increaseSpeedLevel();
         cout << "Speed upgraded" << endl;
     }

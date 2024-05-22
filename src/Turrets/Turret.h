@@ -21,6 +21,7 @@ public:
 
     bool _isFlying = false;
     float _flyingSpeed = 2;
+    bool _isMoving = false;
 
     float _swingTimer = 0.0f;
     int _swingDirection = 1;
@@ -30,7 +31,7 @@ public:
     glm::quat _finalRotation;
     glm::vec3 _finalPosition;
 
-    std::vector<glm::vec3> _turretRangePositions;
+    std::vector<glm::vec3> _turretRangePositions = {glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0)};
 
     float _fireRate = 0.5;
     float _damage = 35;

@@ -80,12 +80,12 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Turrets/Turret.cpp
         Turrets/Turret.h
 	  ComputeShader.h
-        HUD/Buttons/PlayerUpgrades/UpgradeReach.cpp
-        HUD/Buttons/PlayerUpgrades/UpgradeReach.h
-        HUD/Buttons/PlayerUpgrades/UpgradeRadius.cpp
-        HUD/Buttons/PlayerUpgrades/UpgradeRadius.h
-        HUD/Buttons/PlayerUpgrades/UpgradeSpeed.cpp
-        HUD/Buttons/PlayerUpgrades/UpgradeSpeed.h
+        HUD/Buttons/Player/UpgradeReach.cpp
+        HUD/Buttons/Player/UpgradeReach.h
+        HUD/Buttons/Player/UpgradeRadius.cpp
+        HUD/Buttons/Player/UpgradeRadius.h
+        HUD/Buttons/Player/UpgradeSpeed.cpp
+        HUD/Buttons/Player/UpgradeSpeed.h
         HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.cpp
         HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h
         HUD/Buttons/TurretUpgrades/UpgradeFireRate.cpp
@@ -95,7 +95,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.cpp
         HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h
         HUD/Buttons/DomeUpgrades/UpgradeDomeHP.cpp
-        HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h)
+        HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h
+        HUD/Buttons/Player/JetpackRefuel.cpp
+        HUD/Buttons/Player/JetpackRefuel.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

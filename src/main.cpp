@@ -65,7 +65,6 @@ const unsigned int SCR_HEIGHT = 720;
 
 int main(int, char**)
 {
-
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -206,6 +205,12 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
+        //debugging adding money
+        if(INPUT.IsKeyPressed(77)){
+            GAMEMANAGER._money += 10;
+            //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
+        }
+
         if(!GAMEMANAGER._paused){
             ENEMIESMANAGER.Update();
             TURRETSMANAGER.Update();
