@@ -12,16 +12,16 @@
   <component name="CMakeRunConfigurationManager">
     <generated>
       <config projectName="SandBOX" targetName="glad" />
-      <config projectName="SandBOX" targetName="uninstall" />
       <config projectName="SandBOX" targetName="stb_image" />
       <config projectName="SandBOX" targetName="assimp" />
-      <config projectName="SandBOX" targetName="UpdateAssimpLibsDebugSymbolsAndDLLs" />
-      <config projectName="SandBOX" targetName="SandBOX" />
       <config projectName="SandBOX" targetName="zlibstatic" />
       <config projectName="SandBOX" targetName="glfw" />
       <config projectName="SandBOX" targetName="update_mappings" />
-      <config projectName="SandBOX" targetName="spdlog" />
       <config projectName="SandBOX" targetName="freetype" />
+      <config projectName="SandBOX" targetName="uninstall" />
+      <config projectName="SandBOX" targetName="UpdateAssimpLibsDebugSymbolsAndDLLs" />
+      <config projectName="SandBOX" targetName="SandBOX" />
+      <config projectName="SandBOX" targetName="spdlog" />
       <config projectName="SandBOX" targetName="imgui" />
     </generated>
   </component>
@@ -32,15 +32,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/outlineShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/outlineShader.fs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/player_upgrade_station_v0.8.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/player_upgrade_station_v0.8.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/player_upgrade_station_v0.8.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,17 +107,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -221,6 +218,7 @@
       <workItem from="1716284333295" duration="8752000" />
       <workItem from="1716368932122" duration="12484000" />
       <workItem from="1716384403148" duration="959000" />
+      <workItem from="1716457784700" duration="2617000" />
     </task>
     <servers />
   </component>

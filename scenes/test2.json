@@ -33,11 +33,11 @@
             },
             {
                 "ModelName": "DomeStation",
-                "Path": "../../res/Sand/Sand.obj"
+                "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
             },
             {
                 "ModelName": "PlayerStation",
-                "Path": "../../res/Sand/Sand.obj"
+                "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
             },
             {
                 "ModelName": "Turret_Standard_Level1",
@@ -594,7 +594,7 @@
                 "transform": {
                     "position": [
                         40.0,
-                        100.0,
+                        99.5,
                         90.0
                     ],
                     "rotation": [
@@ -603,9 +603,9 @@
                         0.0
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
                     ]
                 }
             },
@@ -625,7 +625,7 @@
                 "transform": {
                     "position": [
                         60.0,
-                        100.0,
+                        99.5,
                         90.0
                     ],
                     "rotation": [
@@ -634,9 +634,9 @@
                         0.0
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
                     ]
                 }
             },
