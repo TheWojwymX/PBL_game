@@ -1,11 +1,13 @@
 #include "BlockManager.h"
 
 BlockManager::BlockManager(int width, int height, int depth) :
-    _width(width), _depth(depth), _height(height) {}
+    _width(width), _depth(depth), _height(height), _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3) {
+}
 
-BlockManager::BlockManager() {
+BlockManager::BlockManager() : _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3) {
     _type = ComponentType::BLOCKMANAGER;
 }
+
 
 nlohmann::json BlockManager::Serialize() {
     nlohmann::json data = Component::Serialize();
@@ -58,21 +60,30 @@ void BlockManager::Initiate() {
 
 void BlockManager::Init() {
     GenerateCaves(0.5f,7);
+    GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
-    UpdateInstanceRenderer();
-    GenerateSphereVectors(31);
+    UpdateRenderedChunks();
 }
 
 void BlockManager::UpdateInstanceRenderer() {
     std::vector<glm::mat4> instanceMatrix;
 
-    // Iterate through _visibleBlocks and add visible non-empty blocks to instanceMatrix
-    for (const auto& blockPtr : _visibleBlocks) {
-        const BlockData& blockData = *blockPtr;
+    // Iterate through _renderedChunks and add visible non-empty blocks to instanceMatrix
+    for (int chunkIndex : _renderedChunks) {
+        // Ensure chunkIndex is within bounds
+        if (chunkIndex < 0 || chunkIndex >= _visibleBlocks.size()) {
+            // Handle out-of-bounds error
+            continue;
+        }
 
-        glm::mat4 transformMatrix = blockData.GetMatrix();
-        instanceMatrix.push_back(transformMatrix);
+        // Iterate through the blocks in the chunk
+        for (BlockData* blockPtr : _visibleBlocks[chunkIndex]) {
+            if (blockPtr->GetBlockType() != BlockType::EMPTY && blockPtr->IsVisible()) {
+                // Add the block's transform matrix to instanceMatrix
+                instanceMatrix.push_back(blockPtr->GetMatrix());
+            }
+        }
     }
 
     // Pass the instanceMatrix to _sandRendererRef
@@ -81,17 +92,39 @@ void BlockManager::UpdateInstanceRenderer() {
     }
 }
 
-void BlockManager::RefreshVisibleBlocks() {
-    // Use erase-remove idiom to remove elements satisfying the condition
-    _visibleBlocks.erase(std::remove_if(_visibleBlocks.begin(), _visibleBlocks.end(),
+
+void BlockManager::RefreshVisibleBlocks(int chunkIndex) {
+    // Iterate over the block vector of the specified chunkIndex
+    auto& blockVector = _visibleBlocks[chunkIndex];
+    blockVector.erase(std::remove_if(blockVector.begin(), blockVector.end(),
         [](BlockData* blockPtr) {
-            // Remove the block if it's either empty or not visible
             return blockPtr->GetBlockType() == BlockType::EMPTY || !blockPtr->IsVisible();
-        }), _visibleBlocks.end());
+        }), blockVector.end());
 }
 
+
+void BlockManager::RefreshVisibleBlocks() {
+    for (auto& blockVector : _visibleBlocks) {
+        // Use erase-remove idiom to remove empty or non-visible blocks
+        blockVector.erase(std::remove_if(blockVector.begin(), blockVector.end(),
+            [](BlockData* blockPtr) {
+                return blockPtr->GetBlockType() == BlockType::EMPTY || !blockPtr->IsVisible();
+            }), blockVector.end());
+    }
+}
+
+
 void BlockManager::UpdateBlocksVisibility() {
-    _visibleBlocks.clear(); // Clear the list of visible blocks
+    // Clear existing visible blocks
+    _visibleBlocks.clear();
+
+    // Calculate the number of chunks in each dimension
+    int chunkCountX = (_width + _chunkSize - 1) / _chunkSize;
+    int chunkCountY = (_height + _chunkSize - 1) / _chunkSize;
+    int chunkCountZ = (_depth + _chunkSize - 1) / _chunkSize;
+
+    // Initialize _visibleBlocks with empty vectors for each chunk
+    _visibleBlocks.resize(chunkCountX * chunkCountY * chunkCountZ);
 
     // Iterate through all blocks
     for (auto& blockData : _blocksData) {
@@ -103,13 +136,15 @@ void BlockManager::UpdateBlocksVisibility() {
 
 void BlockManager::HideEdges()
 {
-    for (auto& blockData : _visibleBlocks) {
-        if (blockData->GetPosID().y == 0) {
-            blockData->SetVisible(false);
-        }
-        else if (blockData->GetPosID().y != _height - 1) {
-            if (blockData->GetPosID().x == 0 || blockData->GetPosID().x == _width - 1) blockData->SetVisible(false);
-            else if (blockData->GetPosID().z == 0 || blockData->GetPosID().z == _depth - 1) blockData->SetVisible(false);
+    for (auto& blocks : _visibleBlocks) {
+        for (BlockData* blockData : blocks) {
+            if (blockData->GetPosID().y == 0) {
+                blockData->SetVisible(false);
+            }
+            else if (blockData->GetPosID().y != _height - 1) {
+                if (blockData->GetPosID().x == 0 || blockData->GetPosID().x == _width - 1) blockData->SetVisible(false);
+                else if (blockData->GetPosID().z == 0 || blockData->GetPosID().z == _depth - 1) blockData->SetVisible(false);
+            }
         }
     }
 }
@@ -157,6 +192,17 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData)
     SetVisibility(blockData, isVisible);
 }
 
+void BlockManager::UpdateRenderedChunks() {
+    _renderedChunks.clear(); // Clear the list of rendered blocks
+
+
+    for (const glm::ivec3& offset : _sphereVectors[_renderDistance]) {
+        glm::ivec3 chunkPos = _playerChunk + offset;
+        if(ChunkInBounds(chunkPos))
+            _renderedChunks.push_back(GetChunkIndex(chunkPos));
+    }
+    UpdateInstanceRenderer();
+}
 
 void BlockManager::SetVisibility(BlockData& blockData, bool state) {
     // Set the visibility of the block
@@ -164,7 +210,7 @@ void BlockManager::SetVisibility(BlockData& blockData, bool state) {
 
     if (state && blockData.GetBlockType() != BlockType::EMPTY) {
         // Add the blockData to _visibleBlocks
-        _visibleBlocks.push_back(&blockData);
+        _visibleBlocks[GetChunkIndex(blockData.GetChunkID(_chunkSize))].push_back(&blockData);
     }
 }
 
@@ -224,6 +270,9 @@ bool BlockManager::RayIntersectsBlock(float rayLength, int radius, float digPowe
 
 void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
 {
+    bool updateFlag = false;
+    std::unordered_set<int> chunksToUpdate;
+
     for (const glm::ivec3& offset : _sphereVectors[radius]) {
         glm::ivec3 pos = hitPos + offset;
         if (InBounds(pos)) {
@@ -232,14 +281,21 @@ void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
                 if (_blocksData[index].DamageBlock(digPower)) {
                     _blocksData[index].SetBlockType(BlockType::EMPTY);
                     UpdateNeighbourVisibility(_blocksData[index]);
+                    chunksToUpdate.insert(GetChunkIndex(_blocksData[index].GetChunkID(_chunkSize)));
+                    updateFlag = true;
                 }
             }
         }
     }
 
-    RefreshVisibleBlocks();
-    UpdateInstanceRenderer();
+    if (updateFlag) {
+        for (int chunkIndex : chunksToUpdate) {
+            RefreshVisibleBlocks(chunkIndex);
+        }
+        UpdateRenderedChunks();
+    }
 }
+
 
 std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight) {
     std::vector<CollisionInfo> collisionInfoList;
@@ -366,7 +422,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
             for (int x = 0; x < _width; x++) {
                 // Determine if the cell should initially be filled based on the fill ratio
                 bool filled = dis(gen) < initialFillRatio;
-                
+
                 // Calculate transform matrix for the current block
                 glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
 
@@ -380,6 +436,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
         }
     }
 }
+
 
 void BlockManager::IterateCaveGeneration() {
     // Create a temporary vector to hold the new block data after iteration
@@ -422,6 +479,8 @@ void BlockManager::IterateCaveGeneration() {
 
 
 std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight) {
+    CheckEntityChunk(entityPos);
+
     // Calculate the half extents of the entity's AABB
     float halfWidth = entityWidth / 2.0f;
 
@@ -472,6 +531,18 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
     return std::make_pair(movementVector,separationVector);
 }
 
+void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
+    glm::ivec3 gridPosition = glm::round(entityPos);
+
+    // Initialize newEntityChunk
+    glm::ivec3 newEntityChunk(gridPosition.x / _chunkSize, gridPosition.y / _chunkSize, gridPosition.z / _chunkSize);
+
+    if (newEntityChunk != _playerChunk) {
+        _playerChunk = newEntityChunk;
+        UpdateRenderedChunks();
+    }
+}
+
 
 int BlockManager::GetIndex(glm::ivec3 point) {
     return point.x + (_width * _depth * point.y) + point.z * _width;
@@ -481,15 +552,31 @@ int BlockManager::GetIndex(int x, int y, int z) {
     return x + (_width * _depth * y) + z * _width;
 }
 
+int BlockManager::GetChunkIndex(glm::ivec3 chunk) {
+    return chunk.x + ((_width / _chunkSize) * (_depth / _chunkSize) * chunk.y) + chunk.z * (_width / _chunkSize);
+}
 
-bool BlockManager::CheckAdjacency(int x, int y, int z)
-{
+int BlockManager::GetChunkIndex(int x, int y, int z) {
+    return x + ((_width / _chunkSize) * (_depth / _chunkSize) * y) + z * (_width / _chunkSize);
+}
+
+
+bool BlockManager::CheckAdjacency(int x, int y, int z){
     return _blocksData[GetIndex(x, y, z)].GetBlockType() != BlockType::EMPTY;
 }
 
 bool BlockManager::InBounds(glm::ivec3 position) {
     return position.x >= 0 && position.y >= 0 && position.z >= 0 &&
         position.x < _width && position.y < _height && position.z < _depth;
+}
+
+bool BlockManager::ChunkInBounds(glm::ivec3 position) {
+    int numChunksX = (_width + _chunkSize - 1) / _chunkSize;
+    int numChunksY = (_height + _chunkSize - 1) / _chunkSize;
+    int numChunksZ = (_depth + _chunkSize - 1) / _chunkSize;
+
+    return position.x >= 0 && position.y >= 0 && position.z >= 0 &&
+        position.x < numChunksX && position.y < numChunksY && position.z < numChunksZ;
 }
 
 void BlockManager::addToInspector(ImguiMain *imguiMain) {
@@ -499,6 +586,5 @@ void BlockManager::addToInspector(ImguiMain *imguiMain) {
         ImGui::Text("Test2:");
 
         ImGui::TreePop();
-
     }
 }

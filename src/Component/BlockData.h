@@ -16,10 +16,7 @@ enum class BlockType {
 
 class BlockData {
 public:
-    BlockData(BlockType blockType, glm::ivec3 posID, glm::mat4 matrix, float startHP, bool invincible, float density, std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> blockManager)
-        : _blockType(blockType), _posID(posID), _matrix(matrix), _startHP(startHP), _HP(startHP), _invincible(invincible), _density(density), _blockManager(blockManager), _visible(true) {
-        std::fill(std::begin(_sideCollisions), std::end(_sideCollisions), false);
-    }
+    BlockData(BlockType blockType, glm::ivec3 posID, glm::mat4 matrix, float startHP, bool invincible, float density, std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> blockManager);
 
     BlockType GetBlockType() const { return _blockType; }
     glm::ivec3 GetPosID() const { return _posID; }
@@ -29,6 +26,7 @@ public:
     float GetDensity() const { return _density; }
     std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> GetBlockManager() const { return _blockManager; }
     bool IsVisible() const { return _visible; }
+    bool IsRendered() const { return _rendered; }
     glm::mat4 GetMatrix() const { return _matrix; }
     bool GetSideCollision(int index) const { return _sideCollisions[index]; }
 
@@ -39,6 +37,7 @@ public:
     void SetInvincible(bool invincible) { _invincible = invincible; }
     void SetBlockManager(std::weak_ptr<BlockManager> blockManager) { _blockManager = blockManager; }
     void SetVisible(bool visible) { _visible = visible; }
+    void SetRendered(bool rendered) { _visible = rendered; }
     void SetMatrix(const glm::mat4& matrix) { _matrix = matrix; }
     void SetSideCollisions(bool right, bool left, bool top, bool bottom, bool front, bool back) {
         _sideCollisions[0] = right;
@@ -48,15 +47,9 @@ public:
         _sideCollisions[4] = front;
         _sideCollisions[5] = back;
     }
+    glm::ivec3 GetChunkID(int chunkSize) const {return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize);}
 
-    bool DamageBlock(float amount) {
-        if (_invincible) {
-            return false; // Block is invincible, no damage taken
-        }
-
-        _HP -= amount;
-        return _HP <= 0;
-    }
+    bool DamageBlock(float amount);
 
 private:
     BlockType _blockType;
@@ -67,6 +60,7 @@ private:
     float _density;
     std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> _blockManager;
     bool _visible;
+    bool _rendered;
     glm::mat4 _matrix;
     bool _sideCollisions[6];
 };

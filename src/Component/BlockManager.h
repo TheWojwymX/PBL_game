@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <random>
+#include <unordered_set>
 #include "Core/Component.h"
 #include "Component/InstanceRenderer.h"
 #include "Component/Camera.h"
@@ -45,8 +46,12 @@ private:
     int _width;
     int _depth;
     int _height;
+    int _chunkSize;
+    int _renderDistance;
+    glm::ivec3 _playerChunk;
     std::vector<BlockData> _blocksData;
-    std::vector<BlockData*> _visibleBlocks;
+    std::vector<std::vector<BlockData*>> _visibleBlocks;
+    std::vector<int> _renderedChunks;
     std::shared_ptr<InstanceRenderer> _sandRendererRef;
     int _sandRendererRefID;
     std::shared_ptr<Camera> _cameraRef;
@@ -55,7 +60,9 @@ private:
 
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();
+    void RefreshVisibleBlocks(int chunkIndex);
     void UpdateBlocksVisibility();
+    void UpdateRenderedChunks();
     void DamageBlocks(glm::ivec3 hitPos, int radius, float digPower);
     void HideEdges();
     void UpdateBlockVisibility(BlockData& blockData);
@@ -66,9 +73,14 @@ private:
     void GenerateCaves(float initialFillRatio, int numIterations);
     void InitializeMap(float initialFillRatio);
     void IterateCaveGeneration();
+    void CheckEntityChunk(glm::vec3 entityPos);
+
 
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);
+    int GetChunkIndex(glm::ivec3 point);
+    int GetChunkIndex(int x, int y, int z);
     bool CheckAdjacency(int x, int y, int z);
     bool InBounds(glm::ivec3 position);
+    bool ChunkInBounds(glm::ivec3 position);
 };
