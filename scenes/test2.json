@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 29,
-    "nextNodeId": 18,
+    "nextComponentId": 30,
+    "nextNodeId": 19,
     "resources": {
         "Models": [
             {
@@ -37,6 +37,10 @@
             },
             {
                 "ModelName": "PlayerStation",
+                "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+            },
+            {
+                "ModelName": "RefuelStation",
                 "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
             },
             {
@@ -596,6 +600,41 @@
                         40.0,
                         99.5,
                         90.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 18,
+                "NodeName": "RefuelStation",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 29,
+                        "componentType": 5,
+                        "model": "DomeStation",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "componentId": 30,
+                        "componentType": 11
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        40.0,
+                        99.5,
+                        60.0
                     ],
                     "rotation": [
                         0.0,

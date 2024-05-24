@@ -33,6 +33,9 @@ public:
 
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
 
+    float _jetpackFuel = 100.0f;
+    float _maxJetpackFuel = 100.0f;
+
 private:
     float _speed;
     float _width;
@@ -68,10 +71,8 @@ private:
     int _speedUpgradeCost = 10;
 
     float _jetpackStrength = 25.0f;
-    float _jetpackFuel = 100.0f;
-    float _maxJetpackFuel = 100.0f;
     float _jetpackFuelConsumption = 10.0f; // Fuel consumed per second when using the jetpack
-    float _jetpackFuelRecovery = 5.0f;     // Fuel recovered per second when not using the jetpack
+    float _jetpackFuelRecovery = 0.0f;     // Fuel recovered per second when not using the jetpack
     bool _isUsingJetpack = false;
 
     bool _spaceKeyWasPressed = false;
