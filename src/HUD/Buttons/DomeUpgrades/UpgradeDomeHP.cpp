@@ -6,7 +6,7 @@
 
 void UpgradeDomeHP::Init() {
     SetVertices(_buttonVertices);
-    SetText(_text);
+    SetText(_text, 1);
     Button::Init();
 }
 
@@ -22,6 +22,6 @@ void UpgradeDomeHP::Onclick() {
     UPGRADEMANAGER.upgradeDomeHp();
 }
 
-void UpgradeDomeHP::SetText(std::string text) {
-    Button::SetText(text);
+void UpgradeDomeHP::SetText(std::string text, float textSize) {
+    Button::SetText(text, 1);
 }

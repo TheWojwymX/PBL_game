@@ -99,7 +99,13 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Buttons/Player/JetpackRefuel.cpp
         HUD/Buttons/Player/JetpackRefuel.h
         Component/RefuelStation.cpp
-        Component/RefuelStation.h)
+        Component/RefuelStation.h
+        HUD/Pages/MessagePage/MessagePage.cpp
+        HUD/Pages/MessagePage/MessagePage.h
+        Managers/TutorialManager.cpp
+        Managers/TutorialManager.h
+        HUD/Buttons/MessagePage/ContinueMessageButton.cpp
+        HUD/Buttons/MessagePage/ContinueMessageButton.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
