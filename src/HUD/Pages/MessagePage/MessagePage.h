@@ -2,13 +2,14 @@
 // Created by Jacek on 25.05.2024.
 //
 
-#ifndef SANDBOX_DIALOGPAGE_H
-#define SANDBOX_DIALOGPAGE_H
+#ifndef SANDBOX_MESSAGEPAGE_H
+#define SANDBOX_MESSAGEPAGE_H
 
 #include "HUD/Pages/Page.h"
 #include "HUD/Text/TextRenderer.h"
+#include "HUD/Buttons/MessagePage/ContinueMessageButton.h"
 
-class DialogPage : public Page  {
+class MessagePage : public Page  {
 public:
 
     std::array<float, 32> _backgroundVertices{
@@ -29,8 +30,7 @@ public:
     const char *_generalImagePath = "../../res/Images/placeholderGeneral.png";
     ImageRenderer _generalImage;
 
-
-/*    UpgradeDomeHP _upgradeDomeHP;*/
+    ContinueMessageButton _continueDialogButton;
 
     void Init() override;
 
@@ -43,4 +43,4 @@ public:
 };
 
 
-#endif //SANDBOX_DIALOGPAGE_H
+#endif //SANDBOX_MESSAGEPAGE_H

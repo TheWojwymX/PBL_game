@@ -21,6 +21,7 @@ public:
     ImageRenderer _clickedBackgroundImage;
 
     std::string _text = "default";
+    float _textSize = 1;
 
     virtual void Init();
     virtual void Update();
@@ -31,7 +32,7 @@ public:
 
     virtual void SetVertices(const array<float, 32> &vertices);
 
-    virtual void SetText(std::string text);
+    virtual void SetText(std::string text, float textSize);
 
 protected:
 

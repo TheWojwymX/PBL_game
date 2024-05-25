@@ -20,7 +20,7 @@ void Button::Update() {
     _hoverBackgroundImage.UpdateImage();
     _clickedBackgroundImage.UpdateImage();
 
-    TEXTRENDERER.RenderTextCentered(_text, (_buttonVertices[0] + _buttonVertices[16]) / 2.0f, (_buttonVertices[1] + _buttonVertices[17]) / 2.0f, 1, glm::vec3(1.0f, 1.0f, 1.0f));
+    TEXTRENDERER.RenderTextCentered(_text, (_buttonVertices[0] + _buttonVertices[16]) / 2.0f, (_buttonVertices[1] + _buttonVertices[17]) / 2.0f, _textSize, glm::vec3(1.0f, 1.0f, 1.0f));
 
     TimerCount();
     AppareanceManager();
@@ -89,6 +89,7 @@ void Button::SetVertices(const array<float, 32> &vertices) {
         _buttonVertices = vertices;
 }
 
-void Button::SetText(std::string text) {
+void Button::SetText(std::string text, float textSize) {
     _text = text;
+    _textSize = textSize;
 }

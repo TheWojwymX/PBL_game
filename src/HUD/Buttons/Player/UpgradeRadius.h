@@ -28,7 +28,7 @@ public:
 
     void SetVertices(const array<float, 32> &vertices) override;
 
-    void SetText(std::string text) override;
+    void SetText(std::string text, float textSize) override;
 
 };
 

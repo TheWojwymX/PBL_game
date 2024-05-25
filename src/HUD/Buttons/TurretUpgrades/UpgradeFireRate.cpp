@@ -6,7 +6,7 @@
 
 void UpgradeFireRate::Init() {
     SetVertices(_buttonVertices);
-    SetText(_text);
+    SetText(_text, 1);
     Button::Init();
 }
 
@@ -22,6 +22,6 @@ void UpgradeFireRate::Onclick() {
     UPGRADEMANAGER.upgradeTurretFireRate();
 }
 
-void UpgradeFireRate::SetText(std::string text) {
-    Button::SetText(text);
+void UpgradeFireRate::SetText(std::string text, float textSize) {
+    Button::SetText(text, 1);
 }

@@ -7,7 +7,7 @@
 
 void UpgradeReach::Init() {
     SetVertices(_buttonVertices);
-    SetText(_text);
+    SetText(_text, 1);
     Button::Init();
 }
 
@@ -23,6 +23,6 @@ void UpgradeReach::Onclick() {
     NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->UpgradeReach();
 }
 
-void UpgradeReach::SetText(std::string text) {
-    Button::SetText(text);
+void UpgradeReach::SetText(std::string text, float textSize) {
+    Button::SetText(text, 1);
 }

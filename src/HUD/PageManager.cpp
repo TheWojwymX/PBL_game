@@ -22,8 +22,8 @@ void PageManager::Init() {
     _pages.push_back(_turretUpgradeMenu);
     _domeUpgradeMenu->Init();
     _pages.push_back(_domeUpgradeMenu);
-    _dialogPage->Init();
-    _pages.push_back(_dialogPage);
+    _messagePage->Init();
+    _pages.push_back(_messagePage);
 }
 
 void PageManager::Update() {
@@ -36,7 +36,7 @@ void PageManager::Update() {
     _playerUpgradeMenu->Update();
     _turretUpgradeMenu->Update();
     _domeUpgradeMenu->Update();
-    _dialogPage->Update();
+    _messagePage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -107,4 +107,16 @@ void PageManager::CloseAllOtherPages(const shared_ptr<Page> &pageException) {
             page->_shouldRender = false;
         }
     }
+}
+
+void PageManager::HideMessagePage(){
+    _isInPage = false;
+    _messagePage->_shouldRender = false;
+    GAMEMANAGER.Unpause();
+}
+
+void PageManager::DisplayMessagePage(){
+    _isInPage = true;
+    _messagePage->_shouldRender = true;
+    GAMEMANAGER.Pause();
 }

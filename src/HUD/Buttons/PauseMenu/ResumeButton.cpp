@@ -8,7 +8,7 @@
 
 void ResumeButton::Init() {
     SetVertices(_buttonVertices);
-    SetText(_text);
+    SetText(_text, 1);
     Button::Init();
 }
 
@@ -29,6 +29,6 @@ void ResumeButton::Onclick() {
     Button::Onclick();
 }
 
-void ResumeButton::SetText(std::string text) {
-    Button::SetText(text);
+void ResumeButton::SetText(std::string text, float textSize) {
+    Button::SetText(text, 1);
 }

@@ -14,7 +14,7 @@
 #include "HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h"
 #include "HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h"
 #include "HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h"
-#include "HUD/Pages/DialogPage/DialogPage.h"
+#include "HUD/Pages/MessagePage/MessagePage.h"
 
 class PageManager {
 public:
@@ -39,13 +39,17 @@ public:
     std::shared_ptr<TurretUpgradeMenu> _turretUpgradeMenu = std::make_shared<TurretUpgradeMenu>();
     std::shared_ptr<DomeUpgradeMenu> _domeUpgradeMenu = std::make_shared<DomeUpgradeMenu>();
 
-    std::shared_ptr<DialogPage> _dialogPage = std::make_shared<DialogPage>();
+    std::shared_ptr<MessagePage> _messagePage = std::make_shared<MessagePage>();
 
     void CheckInputs();
 
     void CloseAllOtherPages(const shared_ptr<Page>& pageException);
 
     void CloseAllPages();
+
+    void DisplayMessagePage();
+
+    void HideMessagePage();
 };
 
 

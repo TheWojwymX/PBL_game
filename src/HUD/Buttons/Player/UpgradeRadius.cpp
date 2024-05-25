@@ -8,7 +8,7 @@
 
 void UpgradeRadius::Init() {
     SetVertices(_buttonVertices);
-    SetText(_text);
+    SetText(_text, 1);
     Button::Init();
 }
 
@@ -24,6 +24,6 @@ void UpgradeRadius::Onclick() {
     NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->UpgradeRadius();
 }
 
-void UpgradeRadius::SetText(std::string text) {
-    Button::SetText(text);
+void UpgradeRadius::SetText(std::string text, float textSize) {
+    Button::SetText(text, 1);
 }
