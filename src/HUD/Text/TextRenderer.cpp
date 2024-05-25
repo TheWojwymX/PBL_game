@@ -37,7 +37,7 @@ void TextRenderer::Init() {
         }
 
         // find path to font
-        std::string font_name = "../../res/fonts/Antonio-Bold.ttf";
+        std::string font_name = "../../res/fonts/Pixeloid/PixeloidMono.ttf";
         if (font_name.empty())
         {
             std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;
@@ -102,58 +102,62 @@ void TextRenderer::Init() {
 }
 
 void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 color) {
-    {
+    Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
 
-        Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
+    PrepareShader();
 
-        PrepareShader();
+    // activate corresponding render state
+    shader.use();
+    glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(VAO);
 
-        // activate corresponding render state
-        shader.use();
-        glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
-        glActiveTexture(GL_TEXTURE0);
-        glBindVertexArray(VAO);
+    float initialX = x;
+    x = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
+    y = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
 
-        x = (x + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
-        y = (y + 1.0f) * 0.5f * GAMEMANAGER._screenHeight;
-
-        // iterate through all characters
-        std::string::const_iterator c;
-        for (c = text.begin(); c != text.end(); c++)
-        {
-            Character ch = Characters[*c];
-
-            float xpos = x + ch.Bearing.x * scale;
-            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
-
-            float w = ch.Size.x * scale;
-            float h = ch.Size.y * scale;
-            // update VBO for each character
-            float vertices[6][4] = {
-                    { xpos,     ypos + h,   0.0f, 0.0f },
-                    { xpos,     ypos,       0.0f, 1.0f },
-                    { xpos + w, ypos,       1.0f, 1.0f },
-
-                    { xpos,     ypos + h,   0.0f, 0.0f },
-                    { xpos + w, ypos,       1.0f, 1.0f },
-                    { xpos + w, ypos + h,   1.0f, 0.0f }
-            };
-            // render glyph texture over quad
-            glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-            // update content of VBO memory
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // be sure to use glBufferSubData and not glBufferData
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            // render quad
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-            // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-            x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+    // iterate through all characters
+    std::string::const_iterator c;
+    for (c = text.begin(); c != text.end(); c++) {
+        if (*c == '\n') {
+            y -= (Characters['H'].Size.y * scale * 1.1); // adjust the line height as necessary
+            x = (initialX + 1.0f) * 0.5f * GAMEMANAGER._screenWidth;
+            continue;
         }
-        glBindVertexArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
+
+        Character ch = Characters[*c];
+
+        float xpos = x + ch.Bearing.x * scale;
+        float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
+        // update VBO for each character
+        float vertices[6][4] = {
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos,     ypos,       0.0f, 1.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos + w, ypos + h,   1.0f, 0.0f }
+        };
+        // render glyph texture over quad
+        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+        // update content of VBO memory
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // be sure to use glBufferSubData and not glBufferData
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        // render quad
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+        x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 
 void TextRenderer::RenderTextCentered(std::string text, float x, float y, float scale, glm::vec3 color) {
     Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");

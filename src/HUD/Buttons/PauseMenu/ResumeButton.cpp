@@ -24,8 +24,7 @@ void ResumeButton::Onclick() {
     std::cout << "Kliknieto wznowienie.";
 
     PAGEMANAGER._pauseMenuPage->_shouldRender = false;
-    PAGEMANAGER.DisableMouse();
-    GAMEMANAGER._paused = false;
+    GAMEMANAGER.Unpause();
 
     Button::Onclick();
 }

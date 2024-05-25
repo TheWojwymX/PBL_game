@@ -53,6 +53,7 @@
 #include "Managers/DomeManager.h"
 #include "Managers/UpgradeManager.h"
 #include "Turrets/TurretsManager.h"
+#include "Managers/TutorialManager.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -202,6 +203,8 @@ int main(int, char**)
 
     TURRETSMANAGER.Init();
 
+    TUTORIALMANAGER.Init();
+
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
@@ -219,6 +222,8 @@ int main(int, char**)
         }
 
         UPGRADEMANAGER.Update();
+
+        TUTORIALMANAGER.Update();
 
         // Calculate deltaTime
         TIME.Update();

@@ -21,7 +21,6 @@ public:
     ImageRenderer _clickedBackgroundImage;
 
     std::string _text = "default";
-    TextRenderer _textRenderer;
 
     virtual void Init();
     virtual void Update();

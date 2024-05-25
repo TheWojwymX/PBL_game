@@ -58,3 +58,23 @@ void GameManager::InitPhase()
 void GameManager::Init() {
     _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", NULL, NULL);
 }
+
+void GameManager::EnableMouse() {
+    INPUT.SetCursorMode(true);
+    _editMode = true;
+}
+
+void GameManager::DisableMouse() {
+    INPUT.SetCursorMode(false);
+    _editMode = false;
+}
+
+void GameManager::Pause() {
+    _paused = true;
+    EnableMouse();
+}
+
+void GameManager::Unpause() {
+    _paused = false;
+    DisableMouse();
+}
