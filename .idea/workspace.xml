@@ -32,38 +32,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/MessagePage/ContinueMessageButton.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HUD/Buttons/MessagePage/ContinueMessageButton.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Button.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Button.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Button.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Button.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/DomeUpgrades/UpgradeDomeHP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/DomeUpgrades/UpgradeDomeHP.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/QuitButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/QuitButton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/QuitButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/QuitButton.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/ResumeButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/ResumeButton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/ResumeButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/ResumeButton.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/SettingsButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/SettingsButton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/SettingsButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/PauseMenu/SettingsButton.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/JetpackRefuel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/JetpackRefuel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/JetpackRefuel.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/JetpackRefuel.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeRadius.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeRadius.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeRadius.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeRadius.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeReach.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeReach.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeReach.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeReach.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeSpeed.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeSpeed.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeSpeed.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Player/UpgradeSpeed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeDamage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeDamage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeDamage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeDamage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeFireRate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeFireRate.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeFireRate.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/TurretUpgrades/UpgradeFireRate.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/DialogPage/DialogPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/MessagePage/MessagePage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/DialogPage/DialogPage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/MessagePage/MessagePage.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

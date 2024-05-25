@@ -18,13 +18,13 @@ void TutorialManager::Init() {
 void TutorialManager::Update() {
 
     //for testing purposes display message every 10 seconds
-    if(_tutorialTimer <= 10){
+/*    if(_tutorialTimer <= 10){
         _tutorialTimer += TIME.GetDeltaTime();
     }
     else{
         _tutorialTimer = 0.0f;
         DisplayMessage();
-    }
+    }*/
 }
 
 void TutorialManager::DisplayMessage() {
