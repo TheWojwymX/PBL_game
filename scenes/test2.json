@@ -226,7 +226,7 @@
                     {
                         "componentId": 0,
                         "componentType": 3,
-                        "maxSize": 1000000,
+                        "maxSize": 128000,
                         "model": "sandModel",
                         "shader": "instanceModelShader"
                     }
@@ -305,10 +305,10 @@
                         "cameraRefID": 2,
                         "componentId": 1,
                         "componentType": 2,
-                        "depth": 100,
-                        "height": 100,
+                        "depth": 200,
+                        "height": 300,
                         "sandRendererRefID": 0,
-                        "width": 100
+                        "width": 200
                     }
                 ],
                 "transform": {
@@ -368,7 +368,7 @@
                 "transform": {
                     "position": [
                         49.0,
-                        115.0,
+                        315.0,
                         99.0
                     ],
                     "rotation": [

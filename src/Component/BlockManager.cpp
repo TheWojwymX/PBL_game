@@ -1,10 +1,10 @@
 #include "BlockManager.h"
 
 BlockManager::BlockManager(int width, int height, int depth) :
-    _width(width), _depth(depth), _height(height), _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3) {
+    _width(width), _depth(depth), _height(height), _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(2) {
 }
 
-BlockManager::BlockManager() : _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3) {
+BlockManager::BlockManager() : _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(2) {
     _type = ComponentType::BLOCKMANAGER;
 }
 
@@ -201,6 +201,7 @@ void BlockManager::UpdateRenderedChunks() {
         if(ChunkInBounds(chunkPos))
             _renderedChunks.push_back(GetChunkIndex(chunkPos));
     }
+
     UpdateInstanceRenderer();
 }
 

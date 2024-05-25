@@ -35,7 +35,7 @@ public:
     // Setters
     void SetInstanceMatrix(const std::vector<glm::mat4>& instanceMatrix) { _instanceMatrix = instanceMatrix; RefreshMatrixBuffer(); }
 
-//private:
+private:
     shared_ptr<Model> _model;
     std::vector<glm::mat4> _instanceMatrix;
     shared_ptr<Shader> _shader;
