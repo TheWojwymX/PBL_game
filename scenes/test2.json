@@ -305,10 +305,10 @@
                         "cameraRefID": 2,
                         "componentId": 1,
                         "componentType": 2,
-                        "depth": 200,
+                        "depth": 100,
                         "height": 300,
                         "sandRendererRefID": 0,
-                        "width": 200
+                        "width": 100
                     }
                 ],
                 "transform": {

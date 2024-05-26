@@ -7,8 +7,9 @@ layout (location = 3) in mat4 aInstanceMatrix;
 out vec2 TexCoords;
 out vec3 Normal;
 out vec3 FragPos;
-out float VariationFactor; // Add a varying variable for the variation factor
+out float VariationFactor; 
 out vec4 FragPosLightSpace;
+out vec3 HeightTint; // Add a varying variable for the height tint color
 
 uniform mat4 view;
 uniform mat4 projection;
@@ -24,11 +25,20 @@ void main()
     FragPos = vec3(aInstanceMatrix * vec4(aPos, 1.0));
     Normal = mat3(transpose(inverse(aInstanceMatrix))) * aNormal; 
     
-    // Calculate the variation factor
     vec3 position = aInstanceMatrix[3].xyz; // Extract position vector from the instance matrix
     VariationFactor = random(position); // Use the position vector to generate variation
 
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
+
+    // Calculate the height tint color using VariationFactor
+    float height = position.y;
+    if (height < 100.0) {
+        HeightTint = vec3(0.286, 0.062, 0.062); // Dark red tint
+    } else if (height < 200.0) {
+        HeightTint = vec3(0.824, 0.412, 0.118); // Brown tint
+    } else {
+        HeightTint = vec3(1, 0.863, 0.471); // Light yellow tint 
+    }
 
     gl_Position = projection * view * aInstanceMatrix * vec4(aPos, 1.0);
 }

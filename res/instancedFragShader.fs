@@ -2,7 +2,7 @@
 out vec4 FragColor;
 
 // Define constants for lighting calculations
-#define AMBIENT_STRENGTH 0.1
+#define AMBIENT_STRENGTH 0.25
 #define SPECULAR_STRENGTH 0.5
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
@@ -41,6 +41,7 @@ in vec3 Normal;
 in vec2 TexCoords;
 in float VariationFactor; // Variation factor from the vertex shader
 in vec4 FragPosLightSpace;
+in vec3 HeightTint; // Add height tint color input
 
 // Uniforms for view and lighting properties
 uniform sampler2D texture_diffuse1;
@@ -65,9 +66,6 @@ void main()
     vec3 spotLightColor = vec3(0.0);
     float totalSpotlightIntensity = 0.0f;
 
-    // Calculate color variation based on the variation factor
-    vec3 colorVariation = vec3(sin(VariationFactor), cos(VariationFactor), tan(VariationFactor));
-
     // Calculate the directional light contribution (as before)
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
 
@@ -82,8 +80,12 @@ void main()
 
     float shadow = ShadowCalculation(FragPosLightSpace, totalSpotlightIntensity);
 
-    // Modify the final color with a scaled color variation
-    vec3 finalColor = (dirLightColor + spotLightColor) * shadow * (1.0 + 0.1 * colorVariation); // Adjust the scale factor (0.1) as needed
+    // Apply height-based tint directly
+    vec3 heightTint = HeightTint;
+
+    // Modify the final color with a smaller scaled variation factor for brightness adjustment
+    float brightnessFactor = 1.0 + (VariationFactor - 0.5) * 0.05; // Reduce the effect of brightness variation
+    vec3 finalColor = (dirLightColor + spotLightColor) * shadow * heightTint * brightnessFactor;
 
     // Combine the final color with the texture color
     FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
@@ -149,7 +151,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     // combine results
     vec3 ambient = light.color * AMBIENT_STRENGTH;
     vec3 diffuse = light.color * diff;
-    vec3 specular = light.color * spec * SPECULAR_STRENGTH;
+    vec3 specular = light.color * SPECULAR_STRENGTH;
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
@@ -158,7 +160,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
 {
-      // perform perspective divide
+    // perform perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     // transform to [0,1] range
     projCoords = projCoords * 0.5 + 0.5;
@@ -167,29 +169,29 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-     //float bias =  0.005;
-     vec3 normal = normalize(Normal);
-     vec3 lightDir = normalize(lightPos - FragPos);
-     float bias = max(0.008 * dot(normal, lightDir), 0.005);
-     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
+    //float bias =  0.005;
+    vec3 normal = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float bias = max(0.008 * dot(normal, lightDir), 0.005);
+    //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
-     float shadow = 0.0;
-         vec2 texelSize = 0.3 / textureSize(shadowMap, 0);
-         for(int x = -1; x <= 1; ++x)
-         {
-             for(int y = -1; y <= 1; ++y)
-             {
-                 float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-                 shadow += currentDepth - bias > pcfDepth  ? 0.0 : 1.0;
-             }
-         }
-         shadow /= 9.0;
+    float shadow = 0.0;
+    vec2 texelSize = 0.3 / textureSize(shadowMap, 0);
+    for(int x = -1; x <= 1; ++x)
+    {
+        for(int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 0.0 : 1.0;
+        }
+    }
+    shadow /= 9.0;
 
-     shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.3,0.0,1.0)); // Blend shadow with spotlight intensity
+    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.3, 0.0, 1.0)); // Blend shadow with spotlight intensity
 
     // keep the shadow at 0.0 when outside the far_plane region of the light's frustum.
-        if(projCoords.z > 1.0)
-            shadow = 0.0;
+    if(projCoords.z > 1.0)
+        shadow = 0.0;
 
     return shadow - 0.2;
 }
