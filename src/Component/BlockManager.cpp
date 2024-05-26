@@ -59,7 +59,7 @@ void BlockManager::Initiate() {
 }
 
 void BlockManager::Init() {
-    GenerateCaves(0.5f,7);
+    GenerateMap(0.5f,7);
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
@@ -398,7 +398,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
     return collisionInfoList;
 }
 
-void BlockManager::GenerateCaves(float initialFillRatio, int numIterations) {
+void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     // Initialize the map with a given initial fill ratio (percentage of cells initially filled)
     InitializeMap(initialFillRatio);
 
@@ -406,6 +406,17 @@ void BlockManager::GenerateCaves(float initialFillRatio, int numIterations) {
     for (int i = 0; i < numIterations; ++i) {
         IterateCaveGeneration();
     }
+
+    // Calculate the center of the top layer
+    int centerX = _width / 2;
+    int centerY = _height - 1; // assuming the top layer is the highest y value
+    int centerZ = _depth / 2;
+
+    // Define the mask dimensions
+    glm::ivec3 maskDimensions(4, 6, 4);
+
+    // Apply the mask using _entranceMask
+    ApplyMask(glm::ivec3(centerX-2, centerY, centerZ-2), _entranceMask, maskDimensions);
 }
 
 void BlockManager::InitializeMap(float initialFillRatio) {
@@ -423,6 +434,10 @@ void BlockManager::InitializeMap(float initialFillRatio) {
             for (int x = 0; x < _width; x++) {
                 // Determine if the cell should initially be filled based on the fill ratio
                 bool filled = dis(gen) < initialFillRatio;
+                bool isEdgeBlock = IsEdgeBlock(x, y, z);
+
+                if (isEdgeBlock)
+                    filled = true;
 
                 // Calculate transform matrix for the current block
                 glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
@@ -442,11 +457,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                     }
                 }
 
-                // Check if the block is on the edge and set its invincibility flag accordingly
-                bool isEdgeBlock = (x == 0 || x == _width - 1 || y == 0 || y == _height - 1 || z == 0 || z == _depth - 1);
-                bool invincible = isEdgeBlock;
-
-                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, hp, invincible, 1.0f, shared_from_this());
+                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, hp, isEdgeBlock, 1.0f, shared_from_this());
 
                 // Add the block to the vector
                 _blocksData.push_back(block);
@@ -454,9 +465,6 @@ void BlockManager::InitializeMap(float initialFillRatio) {
         }
     }
 }
-
-
-
 
 void BlockManager::IterateCaveGeneration() {
     // Create a temporary vector to hold the new block data after iteration
@@ -469,28 +477,31 @@ void BlockManager::IterateCaveGeneration() {
         int y = posID.y;
         int z = posID.z;
 
-        // Check adjacency for each direction and count filled neighbors
-        filledNeighbors += (x - 1 < 0 || CheckAdjacency(x - 1, y, z));
-        filledNeighbors += (x + 1 >= _width || CheckAdjacency(x + 1, y, z));
-        filledNeighbors += (y + 1 >= _height || CheckAdjacency(x, y + 1, z));
-        filledNeighbors += (y - 1 < 0 || CheckAdjacency(x, y - 1, z));
-        filledNeighbors += (z + 1 >= _depth || CheckAdjacency(x, y, z + 1));
-        filledNeighbors += (z - 1 < 0 || CheckAdjacency(x, y, z - 1));
+        if (!IsEdgeBlock(x, y, z))
+        {
+            // Check adjacency for each direction and count filled neighbors
+            filledNeighbors += (x - 1 < 0 || CheckAdjacency(x - 1, y, z));
+            filledNeighbors += (x + 1 >= _width || CheckAdjacency(x + 1, y, z));
+            filledNeighbors += (y + 1 >= _height || CheckAdjacency(x, y + 1, z));
+            filledNeighbors += (y - 1 < 0 || CheckAdjacency(x, y - 1, z));
+            filledNeighbors += (z + 1 >= _depth || CheckAdjacency(x, y, z + 1));
+            filledNeighbors += (z - 1 < 0 || CheckAdjacency(x, y, z - 1));
 
-        // Apply rules of cellular automaton to update the block state
-        if (filledNeighbors >= 4) {
-            ChangeType(blockData, BlockType::SAND);
-        }
-        else if (filledNeighbors <= 2) {
-            ChangeType(blockData, BlockType::EMPTY);
-        }
-        else {
-            float probability = 0.55f; 
-            if (static_cast<float>(rand()) / RAND_MAX < probability) {
+            // Apply rules of cellular automaton to update the block state
+            if (filledNeighbors >= 4) {
                 ChangeType(blockData, BlockType::SAND);
             }
-            else {
+            else if (filledNeighbors <= 2) {
                 ChangeType(blockData, BlockType::EMPTY);
+            }
+            else {
+                float probability = 0.55f;
+                if (static_cast<float>(rand()) / RAND_MAX < probability) {
+                    ChangeType(blockData, BlockType::SAND);
+                }
+                else {
+                    ChangeType(blockData, BlockType::EMPTY);
+                }
             }
         }
     }
@@ -584,6 +595,36 @@ void BlockManager::ChangeType(BlockData& blockData, BlockType type)
     }
 }
 
+void BlockManager::ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 maskDimensions) {
+    int maskSizeX = maskDimensions.x;
+    int maskSizeY = maskDimensions.y;
+    int maskSizeZ = maskDimensions.z;
+
+    // Iterate through y
+    for (int y = 0; y < maskSizeY; ++y) {
+        // Iterate through x
+        for (int x = 0; x < maskSizeX; ++x) {
+            // Iterate through z
+            for (int z = 0; z < maskSizeZ; ++z) {
+                // Calculate the actual position in the mask array
+                int posX = startPos.x + x;
+                int posY = startPos.y - y;
+                int posZ = startPos.z + z;
+
+                // Access maskArray element using linear index calculation
+                int index = z + maskSizeZ * (x + maskSizeX * y);
+                int maskValue = maskArray[index];
+
+                if (InBounds(posX, posY, posZ)) {
+                    int blockIndex = GetIndex(posX, posY, posZ);
+
+                    // Cast maskValue to BlockType and pass to ChangeType
+                    ChangeType(_blocksData[blockIndex], static_cast<BlockType>(maskValue));
+                }
+            }
+        }
+    }
+}
 
 int BlockManager::GetIndex(glm::ivec3 point) {
     return point.x + (_width * _depth * point.y) + point.z * _width;
@@ -611,6 +652,11 @@ bool BlockManager::InBounds(glm::ivec3 position) {
         position.x < _width && position.y < _height && position.z < _depth;
 }
 
+bool BlockManager::InBounds(int x, int y, int z) {
+    return x >= 0 && y >= 0 && z >= 0 &&
+        x < _width && y < _height && z < _depth;
+}
+
 bool BlockManager::ChunkInBounds(glm::ivec3 position) {
     int numChunksX = (_width + _chunkSize - 1) / _chunkSize;
     int numChunksY = (_height + _chunkSize - 1) / _chunkSize;
@@ -618,6 +664,11 @@ bool BlockManager::ChunkInBounds(glm::ivec3 position) {
 
     return position.x >= 0 && position.y >= 0 && position.z >= 0 &&
         position.x < numChunksX && position.y < numChunksY && position.z < numChunksZ;
+}
+
+bool BlockManager::IsEdgeBlock(int x, int y, int z)
+{
+    return (x == 0 || x == _width - 1 || y == 0 || y == _height - 1 || z == 0 || z == _depth - 1);
 }
 
 void BlockManager::addToInspector(ImguiMain *imguiMain) {

@@ -57,6 +57,7 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _cameraRefID;
+    int _entranceMask[96] = { 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1 };
 
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();
@@ -70,11 +71,12 @@ private:
     void SetVisibility(BlockData& blockData, bool state);
     void GenerateSphereVectors(int radius);
     std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
-    void GenerateCaves(float initialFillRatio, int numIterations);
+    void GenerateMap(float initialFillRatio, int numIterations);
     void InitializeMap(float initialFillRatio);
     void IterateCaveGeneration();
     void CheckEntityChunk(glm::vec3 entityPos);
     void ChangeType(BlockData& blockData, BlockType type);
+    void ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 maskDimensions);
 
 
     int GetIndex(glm::ivec3 point);
@@ -83,5 +85,7 @@ private:
     int GetChunkIndex(int x, int y, int z);
     bool CheckAdjacency(int x, int y, int z);
     bool InBounds(glm::ivec3 position);
+    bool InBounds(int x, int y, int z);
     bool ChunkInBounds(glm::ivec3 position);
+    bool IsEdgeBlock(int x, int y, int z);
 };
