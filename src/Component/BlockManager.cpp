@@ -20,6 +20,10 @@ nlohmann::json BlockManager::Serialize() {
         data["sandRendererRefID"] = _sandRendererRef->_id;
     }
 
+    if (_topLayerRendererRef) {
+        data["topLayerRendererRef"] = _topLayerRendererRef->_id;
+    }
+
     if(_cameraRef){
         data["cameraRefID"] = _cameraRef->_id;
     }
@@ -45,6 +49,10 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
         _sandRendererRefID = jsonData["sandRendererRefID"].get<int>();
     }
 
+    if (jsonData.contains("topLayerRendererRefID")) {
+        _sandRendererRefID = jsonData["topLayerRendererRefID"].get<int>();
+    }
+
     if (jsonData.contains("cameraRefID")) {
         _cameraRefID = jsonData["cameraRefID"].get<int>();
     }
@@ -60,6 +68,7 @@ void BlockManager::Initiate() {
 
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
+    GenerateTopLayer(300,300);
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
@@ -419,6 +428,23 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     ApplyMask(glm::ivec3(centerX-2, centerY, centerZ-2), _entranceMask, maskDimensions);
 }
 
+void BlockManager::GenerateTopLayer(int sizeX, int sizeZ)
+{
+    std::vector<glm::mat4> instanceMatrix;
+    // Iterate over the grid dimensions
+    for (int x = 0; x < sizeX; x++) {
+        for (int z = 0; z < sizeZ; z++) {
+
+            // Calculate transform matrix for the current block
+            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, _height, z), glm::quat(), glm::vec3(1.0f));
+
+            // Add the block to the vector
+            instanceMatrix.push_back(transformMatrix);
+        }
+    }
+    _topLayerRendererRef->SetInstanceMatrix(instanceMatrix);
+}
+
 void BlockManager::InitializeMap(float initialFillRatio) {
     // Initialize the random number generator
     std::random_device rd;
@@ -641,7 +667,6 @@ int BlockManager::GetChunkIndex(glm::ivec3 chunk) {
 int BlockManager::GetChunkIndex(int x, int y, int z) {
     return x + ((_width / _chunkSize) * (_depth / _chunkSize) * y) + z * (_width / _chunkSize);
 }
-
 
 bool BlockManager::CheckAdjacency(int x, int y, int z){
     return _blocksData[GetIndex(x, y, z)].GetBlockType() != BlockType::EMPTY;

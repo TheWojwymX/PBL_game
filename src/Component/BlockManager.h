@@ -54,6 +54,8 @@ private:
     std::vector<int> _renderedChunks;
     std::shared_ptr<InstanceRenderer> _sandRendererRef;
     int _sandRendererRefID;
+    std::shared_ptr<InstanceRenderer> _topLayerRendererRef;
+    int _topLayerRendererRefID;
     std::shared_ptr<Camera> _cameraRef;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _cameraRefID;
@@ -72,6 +74,7 @@ private:
     void GenerateSphereVectors(int radius);
     std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
     void GenerateMap(float initialFillRatio, int numIterations);
+    void GenerateTopLayer(int sizeX, int sizeZ);
     void InitializeMap(float initialFillRatio);
     void IterateCaveGeneration();
     void CheckEntityChunk(glm::vec3 entityPos);

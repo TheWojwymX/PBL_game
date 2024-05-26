@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 30,
-    "nextNodeId": 19,
+    "nextComponentId": 32,
+    "nextNodeId": 20,
     "resources": {
       "Models": [
         {
@@ -249,641 +249,595 @@
     "root": {
         "NodeID": 0,
         "NodeName": "root",
-        "children": [
+      "children": [
+        {
+          "NodeID": 1,
+          "NodeName": "sand",
+          "children": [],
+          "components": [
             {
-                "NodeID": 1,
-                "NodeName": "sand",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 0,
-                        "componentType": 3,
-                        "maxSize": 128000,
-                        "model": "sandModel",
-                        "shader": "instanceModelShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 2,
-                "NodeName": "blockManager",
-                "children": [
-                    {
-                        "NodeID": 4,
-                        "NodeName": "nowyNode1",
-                        "children": [],
-                        "components": [],
-                        "transform": {
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        }
-                    },
-                    {
-                        "NodeID": 5,
-                        "NodeName": "nowyNode1",
-                        "children": [],
-                        "components": [],
-                        "transform": {
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        }
-                    }
-                ],
-                "components": [
-                    {
-                        "cameraRefID": 2,
-                        "componentId": 1,
-                        "componentType": 2,
-                        "depth": 100,
-                        "height": 300,
-                        "sandRendererRefID": 0,
-                        "width": 100
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 3,
-                "NodeName": "player",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 5,
-                        "componentType": 4
-                    },
-                    {
-                        "componentId": 2,
-                        "componentType": 0,
-                        "offset": [
-                            0.0,
-                            1.7999999523162842,
-                            0.0
-                        ]
-                    },
-                    {
-                        "blockManagerRefID": 1,
-                        "cameraRefID": 2,
-                        "componentId": 3,
-                        "componentType": 1
-                    },
-                    {
-                        "componentId": 27,
-                        "componentType": 10,
-                        "offset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "particleType": "jetpackUse",
-                        "shader": "particleShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        49.0,
-                        315.0,
-                        99.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 6,
-                "NodeName": "Enemy1",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 6,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 7,
-                        "componentType": 6,
-                        "enemySize": 4
-                    },
-                    {
-                        "componentId": 9,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "meshRendererRefID": 6,
-                        "frameDuration": 0.2,
-                        "isLoop": true
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        53.0,
-                        300.2,
-                        100.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 8,
-                "NodeName": "Enemy2",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 10,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 11,
-                        "componentType": 6,
-                        "enemySize": 4
-                    },
-                    {
-                        "componentId": 12,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "meshRendererRefID": 10,
-                        "frameDuration": 0.2,
-                        "isLoop": true
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        58.0,
-                        300.2,
-                        100.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 9,
-                "NodeName": "Enemy3",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 13,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 14,
-                        "componentType": 6,
-                        "enemySize": 4
-                    },
-                    {
-                        "componentId": 15,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "meshRendererRefID": 13,
-                        "frameDuration": 0.2,
-                        "isLoop": true
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        62.0,
-                        300.2,
-                        100.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 10,
-                "NodeName": "Enemy4",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 16,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 17,
-                        "componentType": 6,
-                        "enemySize": 4
-                    },
-                    {
-                        "componentId": 18,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "meshRendererRefID": 16,
-                        "frameDuration": 0.2,
-                        "isLoop": true
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        62.0,
-                        300.2,
-                        105.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 7,
-                "NodeName": "BaseModel",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 8,
-                        "componentType": 5,
-                        "model": "baseModel",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        50.0,
-                        299.5,
-                        50.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.5,
-                        1.5,
-                        1.5
-                    ]
-                }
-            },
-            {
-                "NodeID": 13,
-                "NodeName": "DomeStation",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 21,
-                        "componentType": 5,
-                        "model": "DomeStation",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        40.0,
-                        299.5,
-                        90.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        0.3,
-                        0.3,
-                        0.3
-                    ]
-                }
-            },
-            {
-                "NodeID": 18,
-                "NodeName": "RefuelStation",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 29,
-                        "componentType": 5,
-                        "model": "DomeStation",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 30,
-                        "componentType": 11
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        40.0,
-                        299.5,
-                        60.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        0.3,
-                        0.3,
-                        0.3
-                    ]
-                }
-            },
-            {
-                "NodeID": 17,
-                "NodeName": "PlayerStation",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 28,
-                        "componentType": 5,
-                        "model": "PlayerStation",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        60.0,
-                        299.5,
-                        90.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        0.3,
-                        0.3,
-                        0.3
-                    ]
-                }
-            },
-            {
-                "NodeID": 12,
-                "NodeName": "cloud",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 20,
-                        "componentType": 3,
-                        "maxSize": 5000,
-                        "model": "cloudModel",
-                        "shader": "cloudShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 11,
-                "NodeName": "cloudManager",
-                "children": [],
-                "components": [
-                    {
-                        "cameraRefID": 2,
-                        "componentId": 19,
-                        "componentType": 8,
-                        "depth": 50,
-                        "height": 2,
-                        "sandRendererRefID": 20,
-                        "width": 50
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-          {
-            "NodeID": 14,
-            "NodeName": "Turret1",
-            "children": [],
-            "components": [
-              {
-                "componentId": 22,
-                "componentType": 5,
-                "model": "Turret_Standard_Level1",
-                "shader": "modelShader",
-                "outlineShader": "outlineShader"
-              },
-              {
-                "componentId": 24,
-                "componentType": 9,
-                "turretRangePositions": {
-                  "position0": [
-                    40.0,
-                    299.5,
-                    63.0
-                  ],
-                  "position1": [
-                    40.0,
-                    299.5,
-                    72.0
-                  ],
-                  "position2": [
-                    50.0,
-                    299.5,
-                    72.0
-                  ],
-                  "position3": [
-                    50.0,
-                    299.5,
-                    63.0
-                  ]
-                }
-              },
-              {
-                "componentId": 26,
-                "componentType": 10,
-                "offset": {
-                  "x": 0.0,
-                  "y": 1.5,
-                  "z": 2.0
-                },
-                "particleType": "turretShot",
-                "shader": "particleShader"
-              }
-
-            ],
-            "transform": {
-              "position": [
-                45.0,
-                299.5,
-                65.0
-              ],
-              "rotation": [
-                0.0,
-                0.0,
-                0.0
-              ],
-              "scale": [
-                0.3,
-                0.3,
-                0.3
-              ]
+              "componentId": 0,
+              "componentType": 3,
+              "maxSize": 128000,
+              "model": "sandModel",
+              "shader": "instanceModelShader"
             }
-          },
-          {
-            "NodeID": 15,
-            "NodeName": "topLayer",
-            "children": [],
-            "components": [
-              {
-                "componentId": 30,
-                "componentType": 3,
-                "maxSize": 128000,
-                "model": "topLayerModel",
-                "shader": "instanceModelShader"
-              }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
             ],
-            "transform": {
-              "position": [
-                0.0,
-                0.0,
-                0.0
-              ],
-              "rotation": [
-                0.0,
-                0.0,
-                0.0
-              ],
-              "scale": [
-                1.0,
-                1.0,
-                1.0
-              ]
-            }
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
           }
-        ],
+        },
+        {
+          "NodeID": 19,
+          "NodeName": "topLayer",
+          "children": [],
+          "components": [
+            {
+              "componentId": 31,
+              "componentType": 3,
+              "maxSize": 128000,
+              "model": "topLayerModel",
+              "shader": "instanceModelShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 2,
+          "NodeName": "blockManager",
+          "children": [],
+          "components": [
+            {
+              "cameraRefID": 2,
+              "componentId": 1,
+              "componentType": 2,
+              "depth": 100,
+              "height": 300,
+              "sandRendererRefID": 0,
+              "topLayerRendererRefID": 31,
+              "width": 100
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 3,
+          "NodeName": "player",
+          "children": [],
+          "components": [
+            {
+              "componentId": 5,
+              "componentType": 4
+            },
+            {
+              "componentId": 2,
+              "componentType": 0,
+              "offset": [
+                0.0,
+                1.7999999523162842,
+                0.0
+              ]
+            },
+            {
+              "blockManagerRefID": 1,
+              "cameraRefID": 2,
+              "componentId": 3,
+              "componentType": 1
+            },
+            {
+              "componentId": 27,
+              "componentType": 10,
+              "offset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "particleType": "jetpackUse",
+              "shader": "particleShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              49.0,
+              315.0,
+              99.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 6,
+          "NodeName": "Enemy1",
+          "children": [],
+          "components": [
+            {
+              "componentId": 6,
+              "componentType": 5,
+              "model": "antModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            },
+            {
+              "componentId": 7,
+              "componentType": 6,
+              "enemySize": 4
+            },
+            {
+              "componentId": 9,
+              "componentType": 7,
+              "entityType": 1,
+              "meshRendererRefID": 6,
+              "frameDuration": 1,
+              "isLoop": true
+            }
+          ],
+          "transform": {
+            "position": [
+              53.0,
+              300.2,
+              100.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 8,
+          "NodeName": "Enemy2",
+          "children": [],
+          "components": [
+            {
+              "componentId": 10,
+              "componentType": 5,
+              "model": "antModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            },
+            {
+              "componentId": 11,
+              "componentType": 6,
+              "enemySize": 4
+            },
+            {
+              "componentId": 12,
+              "componentType": 7,
+              "entityType": 1,
+              "meshRendererRefID": 10,
+              "frameDuration": 1,
+              "isLoop": true
+            }
+          ],
+          "transform": {
+            "position": [
+              58.0,
+              300.2,
+              100.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 9,
+          "NodeName": "Enemy3",
+          "children": [],
+          "components": [
+            {
+              "componentId": 13,
+              "componentType": 5,
+              "model": "antModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            },
+            {
+              "componentId": 14,
+              "componentType": 6,
+              "enemySize": 4
+            },
+            {
+              "componentId": 15,
+              "componentType": 7,
+              "entityType": 1,
+              "meshRendererRefID": 13,
+              "frameDuration": 1,
+              "isLoop": true
+            }
+          ],
+          "transform": {
+            "position": [
+              62.0,
+              300.2,
+              100.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 10,
+          "NodeName": "Enemy4",
+          "children": [],
+          "components": [
+            {
+              "componentId": 16,
+              "componentType": 5,
+              "model": "antModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            },
+            {
+              "componentId": 17,
+              "componentType": 6,
+              "enemySize": 4
+            },
+            {
+              "componentId": 18,
+              "componentType": 7,
+              "entityType": 1,
+              "meshRendererRefID": 16,
+              "frameDuration": 1,
+              "isLoop": true
+            }
+          ],
+          "transform": {
+            "position": [
+              62.0,
+              300.2,
+              105.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 7,
+          "NodeName": "BaseModel",
+          "children": [],
+          "components": [
+            {
+              "componentId": 8,
+              "componentType": 5,
+              "model": "baseModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              50.0,
+              299.5,
+              50.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.5,
+              1.5,
+              1.5
+            ]
+          }
+        },
+        {
+          "NodeID": 13,
+          "NodeName": "DomeStation",
+          "children": [],
+          "components": [
+            {
+              "componentId": 21,
+              "componentType": 5,
+              "model": "DomeStation",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              40.0,
+              299.5,
+              90.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        },
+        {
+          "NodeID": 18,
+          "NodeName": "RefuelStation",
+          "children": [],
+          "components": [
+            {
+              "componentId": 29,
+              "componentType": 5,
+              "model": "DomeStation",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            },
+            {
+              "componentId": 30,
+              "componentType": 11
+            }
+          ],
+          "transform": {
+            "position": [
+              40.0,
+              299.5,
+              60.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        },
+        {
+          "NodeID": 17,
+          "NodeName": "PlayerStation",
+          "children": [],
+          "components": [
+            {
+              "componentId": 28,
+              "componentType": 5,
+              "model": "PlayerStation",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              60.0,
+              299.5,
+              90.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        },
+        {
+          "NodeID": 12,
+          "NodeName": "cloud",
+          "children": [],
+          "components": [
+            {
+              "componentId": 20,
+              "componentType": 3,
+              "maxSize": 5000,
+              "model": "cloudModel",
+              "shader": "cloudShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 11,
+          "NodeName": "cloudManager",
+          "children": [],
+          "components": [
+            {
+              "cameraRefID": 2,
+              "componentId": 19,
+              "componentType": 8,
+              "depth": 50,
+              "height": 2,
+              "sandRendererRefID": 20,
+              "width": 50
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 14,
+          "NodeName": "Turret1",
+          "children": [],
+          "components": [
+            {
+              "componentId": 22,
+              "componentType": 5,
+              "model": "Turret_Standard_Level1",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            },
+            {
+              "componentId": 24,
+              "componentType": 9,
+              "turretRangePositions": {
+                "position0": [
+                  40.0,
+                  299.5,
+                  63.0
+                ],
+                "position1": [
+                  40.0,
+                  299.5,
+                  72.0
+                ],
+                "position2": [
+                  50.0,
+                  299.5,
+                  72.0
+                ],
+                "position3": [
+                  50.0,
+                  299.5,
+                  63.0
+                ]
+              }
+            },
+            {
+              "componentId": 26,
+              "componentType": 10,
+              "offset": {
+                "x": 0.0,
+                "y": 1.5,
+                "z": 2.0
+              },
+              "particleType": "turretShot",
+              "shader": "particleShader"
+            }
+
+          ],
+          "transform": {
+            "position": [
+              45.0,
+              299.5,
+              65.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        }
+      ],
         "components": [],
         "transform": {
             "position": [
