@@ -69,7 +69,7 @@ void BlockManager::Initiate() {
 
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
-    GenerateTopLayer(300,300);
+    GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(300,300),glm::ivec2(50,50));
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
@@ -429,15 +429,33 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     ApplyMask(glm::ivec3(centerX-2, centerY, centerZ-2), _entranceMask, maskDimensions);
 }
 
-void BlockManager::GenerateTopLayer(int sizeX, int sizeZ)
+#include <glm/gtc/noise.hpp> // Include GLM's noise module
+
+void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
 {
     std::vector<glm::mat4> instanceMatrix;
-    // Iterate over the grid dimensions
-    for (int x = 0; x < sizeX; x++) {
-        for (int z = 0; z < sizeZ; z++) {
+    float frequency = 0.1f; // Frequency of the noise (controls the detail level)
+    float amplitude = 2.0f; // Amplitude of the noise (controls the height variation)
 
-            // Calculate transform matrix for the current block
-            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, _height, z), glm::quat(), glm::vec3(1.0f));
+    int startX = center.x - dimensions.x / 2;
+    int startZ = center.y - dimensions.y / 2;
+
+    // Iterate over the grid dimensions
+    for (int x = startX; x < startX + dimensions.x; x++) {
+        for (int z = startZ; z < startZ + dimensions.y; z++) {
+            // Skip blocks within the deadzone
+            if (abs(x - center.x) <= deadzone.x && abs(z - center.y) <= deadzone.y) {
+                continue;
+            }
+
+            // Generate a height value using Perlin noise
+            float height = glm::perlin(glm::vec2(x * frequency, z * frequency)) * amplitude;
+
+            // Ensure height variations are within reasonable bounds
+            height = glm::clamp(height, -amplitude, amplitude);
+
+            // Calculate transform matrix for the current block with noise-adjusted height
+            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, _height + height, z), glm::quat(), glm::vec3(1.0f));
 
             // Add the block to the vector
             instanceMatrix.push_back(transformMatrix);
@@ -445,6 +463,7 @@ void BlockManager::GenerateTopLayer(int sizeX, int sizeZ)
     }
     _topLayerRendererRef->SetInstanceMatrix(instanceMatrix);
 }
+
 
 void BlockManager::InitializeMap(float initialFillRatio) {
     // Initialize the random number generator

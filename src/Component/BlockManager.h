@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <random>
+#include <glm/gtc/noise.hpp> 
 #include <unordered_set>
 #include "Core/Component.h"
 #include "Component/InstanceRenderer.h"
@@ -10,7 +11,6 @@
 #include "BlockData.h"
 #include "imgui.h"
 #include "Managers/ComponentsManager.h"
-
 
 // Define a struct to hold collision information for each corner
 struct CollisionInfo {
@@ -74,7 +74,7 @@ private:
     void GenerateSphereVectors(int radius);
     std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
     void GenerateMap(float initialFillRatio, int numIterations);
-    void GenerateTopLayer(int sizeX, int sizeZ);
+    void GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone);
     void InitializeMap(float initialFillRatio);
     void IterateCaveGeneration();
     void CheckEntityChunk(glm::vec3 entityPos);
