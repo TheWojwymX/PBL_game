@@ -412,7 +412,7 @@
                 "transform": {
                     "position": [
                         53.0,
-                        100.2,
+                        300.2,
                         100.0
                     ],
                     "rotation": [
@@ -456,7 +456,7 @@
                 "transform": {
                     "position": [
                         58.0,
-                        100.2,
+                        300.2,
                         100.0
                     ],
                     "rotation": [
@@ -500,7 +500,7 @@
                 "transform": {
                     "position": [
                         62.0,
-                        100.2,
+                        300.2,
                         100.0
                     ],
                     "rotation": [
@@ -544,7 +544,7 @@
                 "transform": {
                     "position": [
                         62.0,
-                        100.2,
+                        300.2,
                         105.0
                     ],
                     "rotation": [
@@ -575,7 +575,7 @@
                 "transform": {
                     "position": [
                         50.0,
-                        99.5,
+                        299.5,
                         50.0
                     ],
                     "rotation": [
@@ -606,7 +606,7 @@
                 "transform": {
                     "position": [
                         40.0,
-                        99.5,
+                        299.5,
                         90.0
                     ],
                     "rotation": [
@@ -641,7 +641,7 @@
                 "transform": {
                     "position": [
                         40.0,
-                        99.5,
+                        299.5,
                         60.0
                     ],
                     "rotation": [
@@ -672,7 +672,7 @@
                 "transform": {
                     "position": [
                         60.0,
-                        99.5,
+                        299.5,
                         90.0
                     ],
                     "rotation": [
@@ -769,22 +769,22 @@
                         "turretRangePositions": {
                             "position0": [
                                 40.0,
-                                99.5,
+                                299.5,
                                 63.0
                             ],
                             "position1": [
                                 40.0,
-                                99.5,
+                                299.5,
                                 72.0
                             ],
                             "position2": [
                                 50.0,
-                                99.5,
+                                299.5,
                                 72.0
                             ],
                             "position3": [
                                 50.0,
-                                99.5,
+                                299.5,
                                 63.0
                             ]
                         }
@@ -805,7 +805,7 @@
                 "transform": {
                     "position": [
                         45.0,
-                        99.5,
+                        299.5,
                         65.0
                     ],
                     "rotation": [
