@@ -422,7 +422,7 @@
               "componentType": 7,
               "entityType": 1,
               "meshRendererRefID": 6,
-              "frameDuration": 1,
+              "frameDuration": 0.2,
               "isLoop": true
             }
           ],
@@ -466,7 +466,7 @@
               "componentType": 7,
               "entityType": 1,
               "meshRendererRefID": 10,
-              "frameDuration": 1,
+              "frameDuration": 0.2,
               "isLoop": true
             }
           ],
@@ -510,7 +510,7 @@
               "componentType": 7,
               "entityType": 1,
               "meshRendererRefID": 13,
-              "frameDuration": 1,
+              "frameDuration": 0.2,
               "isLoop": true
             }
           ],
@@ -554,7 +554,7 @@
               "componentType": 7,
               "entityType": 1,
               "meshRendererRefID": 16,
-              "frameDuration": 1,
+              "frameDuration": 0.2,
               "isLoop": true
             }
           ],

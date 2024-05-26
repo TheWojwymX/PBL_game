@@ -50,7 +50,7 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
     }
 
     if (jsonData.contains("topLayerRendererRefID")) {
-        _sandRendererRefID = jsonData["topLayerRendererRefID"].get<int>();
+        _topLayerRendererRefID = jsonData["topLayerRendererRefID"].get<int>();
     }
 
     if (jsonData.contains("cameraRefID")) {
@@ -62,6 +62,7 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
 
 void BlockManager::Initiate() {
     _sandRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_sandRendererRefID);
+    _topLayerRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_topLayerRendererRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
     Component::Initiate();
 }
