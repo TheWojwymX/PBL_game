@@ -289,7 +289,7 @@
             {
               "componentId": 31,
               "componentType": 3,
-              "maxSize": 128000,
+              "maxSize": 250000,
               "model": "topLayerModel",
               "shader": "instanceModelShader"
             }

@@ -69,7 +69,7 @@ void BlockManager::Initiate() {
 
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
-    GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(300,300),glm::ivec2(50,50));
+    GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
@@ -429,33 +429,41 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     ApplyMask(glm::ivec3(centerX-2, centerY, centerZ-2), _entranceMask, maskDimensions);
 }
 
-#include <glm/gtc/noise.hpp> // Include GLM's noise module
-
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
 {
     std::vector<glm::mat4> instanceMatrix;
-    float frequency = 0.1f; // Frequency of the noise (controls the detail level)
-    float amplitude = 2.0f; // Amplitude of the noise (controls the height variation)
+    float frequency = 0.025f; // Frequency of the noise (controls the detail level)
+    float amplitude = 10.0f; // Amplitude of the noise (controls the height variation)
+    float smoothEnd = 0.35f;
 
     int startX = center.x - dimensions.x / 2;
     int startZ = center.y - dimensions.y / 2;
 
+    // Calculate the maximum distance from the edge of the deadzone to the point where full noise height is applied
+    int maxDistanceX = dimensions.x / 2 - deadzone.x;
+    int maxDistanceZ = dimensions.y / 2 - deadzone.y;
+
     // Iterate over the grid dimensions
     for (int x = startX; x < startX + dimensions.x; x++) {
         for (int z = startZ; z < startZ + dimensions.y; z++) {
-            // Skip blocks within the deadzone
-            if (abs(x - center.x) <= deadzone.x && abs(z - center.y) <= deadzone.y) {
+            // Calculate distance from the center of the deadzone
+            int distX = abs(x - center.x) - deadzone.x;
+            int distZ = abs(z - center.y) - deadzone.y;
+
+            // If inside the deadzone, skip the block
+            if (distX < 0 && distZ < 0) {
                 continue;
             }
 
             // Generate a height value using Perlin noise
             float height = glm::perlin(glm::vec2(x * frequency, z * frequency)) * amplitude;
 
-            // Ensure height variations are within reasonable bounds
-            height = glm::clamp(height, -amplitude, amplitude);
+            float smoothingFactor = glm::clamp(float(distX+distZ) / float((maxDistanceX+maxDistanceZ)/(1/ smoothEnd)), 0.0f, 1.0f);
+
+            height *= smoothingFactor;
 
             // Calculate transform matrix for the current block with noise-adjusted height
-            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, _height + height, z), glm::quat(), glm::vec3(1.0f));
+            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, (_height-1) + height, z), glm::quat(), glm::vec3(1.0f));
 
             // Add the block to the vector
             instanceMatrix.push_back(transformMatrix);
