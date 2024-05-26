@@ -432,10 +432,10 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                 float hp = 0.0f;
                 if (type == BlockType::SAND) {
                     if (y < 100) {
-                        hp = 6.0f;
+                        hp = 7.0f;
                     }
                     else if (y < 200) {
-                        hp = 4.0f;
+                        hp = 3.0f;
                     }
                     else {
                         hp = 1.0f;
@@ -479,24 +479,22 @@ void BlockManager::IterateCaveGeneration() {
 
         // Apply rules of cellular automaton to update the block state
         if (filledNeighbors >= 4) {
-            blockData.SetBlockType(BlockType::SAND); 
+            ChangeType(blockData, BlockType::SAND);
         }
         else if (filledNeighbors <= 2) {
-            blockData.SetBlockType(BlockType::EMPTY); 
+            ChangeType(blockData, BlockType::EMPTY);
         }
         else {
             float probability = 0.55f; 
             if (static_cast<float>(rand()) / RAND_MAX < probability) {
-                blockData.SetBlockType(BlockType::SAND); 
+                ChangeType(blockData, BlockType::SAND);
             }
             else {
-                blockData.SetBlockType(BlockType::EMPTY); 
+                ChangeType(blockData, BlockType::EMPTY);
             }
         }
     }
 }
-
-
 
 std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight) {
     CheckEntityChunk(entityPos);
@@ -560,6 +558,29 @@ void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
     if (newEntityChunk != _playerChunk) {
         _playerChunk = newEntityChunk;
         UpdateRenderedChunks();
+    }
+}
+
+void BlockManager::ChangeType(BlockData& blockData, BlockType type)
+{
+    blockData.SetBlockType(type);
+    switch (type)
+    {
+        case BlockType::EMPTY:
+            break;
+        case BlockType::SAND:
+                if (blockData.GetPosID().y < 100) {
+                    blockData.SetHP(7.0f);
+                }
+                else if (blockData.GetPosID().y < 200) {
+                    blockData.SetHP(3.0f);
+                }
+                else {
+                    blockData.SetHP(1.0f);
+                }
+            break;
+        default:
+            break;
     }
 }
 

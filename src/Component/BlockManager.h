@@ -74,6 +74,7 @@ private:
     void InitializeMap(float initialFillRatio);
     void IterateCaveGeneration();
     void CheckEntityChunk(glm::vec3 entityPos);
+    void ChangeType(BlockData& blockData, BlockType type);
 
 
     int GetIndex(glm::ivec3 point);
