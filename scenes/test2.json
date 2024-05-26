@@ -20,6 +20,10 @@
                 "Path": "../../res/Sand/Sand.obj"
             },
             {
+                "ModelName": "topLayerModel",
+                "Path": "../../res/Sand/Sand.obj"
+            },
+            {
                 "ModelName": "AntWalk1",
                 "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
             },
@@ -806,6 +810,37 @@
                         0.30000001192092896,
                         0.30000001192092896,
                         0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 15,
+                "NodeName": "topLayer",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 30,
+                        "componentType": 3,
+                        "maxSize": 128000,
+                        "model": "topLayerModel",
+                        "shader": "instanceModelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }

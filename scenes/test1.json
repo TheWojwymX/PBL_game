@@ -2,60 +2,64 @@
     "nextComponentId": 30,
     "nextNodeId": 19,
     "resources": {
-        "Models": [
-            {
-                "ModelName": "sandModel",
-                "Path": "../../res/Sand/Sand.obj"
-            },
-            {
-                "ModelName": "antModel",
-                "Path": "res/Models/Ant/ant-fixed.obj"
-            },
-            {
-                "ModelName": "baseModel",
-                "Path": "res/Models/Base/base_concept_2.0.obj"
-            },
-            {
-                "ModelName": "cloudModel",
-                "Path": "../../res/Sand/Sand.obj"
-            },
-            {
-                "ModelName": "AntWalk1",
-                "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
-            },
-            {
-                "ModelName": "AntWalk2",
-                "Path": "res/Models/Ant/ant_walk_0.1-1.obj"
-            },
-            {
-                "ModelName": "AntWalk3",
-                "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
-            },
-            {
-                "ModelName": "DomeStation",
-                "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
-            },
-            {
-                "ModelName": "PlayerStation",
-                "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
-            },
-            {
-                "ModelName": "RefuelStation",
-                "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
-            },
-            {
-                "ModelName": "Turret_Standard_Level1",
-                "Path": "../../res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj"
-            },
-            {
-                "ModelName": "Turret_Gunner_Level1",
-                "Path": "../../res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
-            },
-            {
-                "ModelName": "Turret_Parachute",
-                "Path": "../../res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
-            }
-        ],
+      "Models": [
+        {
+          "ModelName": "sandModel",
+          "Path": "../../res/Sand/Sand.obj"
+        },
+        {
+          "ModelName": "antModel",
+          "Path": "res/Models/Ant/ant-fixed.obj"
+        },
+        {
+          "ModelName": "baseModel",
+          "Path": "res/Models/Base/base_concept_2.0.obj"
+        },
+        {
+          "ModelName": "cloudModel",
+          "Path": "../../res/Sand/Sand.obj"
+        },
+        {
+          "ModelName": "topLayerModel",
+          "Path": "../../res/Sand/Sand.obj"
+        },
+        {
+          "ModelName": "AntWalk1",
+          "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
+        },
+        {
+          "ModelName": "AntWalk2",
+          "Path": "res/Models/Ant/ant_walk_0.1-1.obj"
+        },
+        {
+          "ModelName": "AntWalk3",
+          "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
+        },
+        {
+          "ModelName": "DomeStation",
+          "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+        },
+        {
+          "ModelName": "PlayerStation",
+          "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+        },
+        {
+          "ModelName": "RefuelStation",
+          "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+        },
+        {
+          "ModelName": "Turret_Standard_Level1",
+          "Path": "../../res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj"
+        },
+        {
+          "ModelName": "Turret_Gunner_Level1",
+          "Path": "../../res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
+        },
+        {
+          "ModelName": "Turret_Parachute",
+          "Path": "../../res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
+        }
+      ],
         "Shaders": [
             {
                 "ShaderName": "modelShader",
@@ -751,75 +755,106 @@
                     ]
                 }
             },
-            {
-                "NodeID": 14,
-                "NodeName": "Turret1",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 22,
-                        "componentType": 5,
-                        "model": "Turret_Standard_Level1",
-                        "shader": "modelShader",
-                        "outlineShader": "outlineShader"
-                    },
-                    {
-                        "componentId": 24,
-                        "componentType": 9,
-                        "turretRangePositions": {
-                            "position0": [
-                                40.0,
-                                299.5,
-                                63.0
-                            ],
-                            "position1": [
-                                40.0,
-                                299.5,
-                                72.0
-                            ],
-                            "position2": [
-                                50.0,
-                                299.5,
-                                72.0
-                            ],
-                            "position3": [
-                                50.0,
-                                299.5,
-                                63.0
-                            ]
-                        }
-                    },
-                    {
-                        "componentId": 26,
-                        "componentType": 10,
-                        "offset": {
-                            "x": 0.0,
-                            "y": 1.5,
-                            "z": 2.0
-                        },
-                        "particleType": "turretShot",
-                        "shader": "particleShader"
-                    }
-
-                ],
-                "transform": {
-                    "position": [
-                        45.0,
-                        299.5,
-                        65.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        0.3,
-                        0.3,
-                        0.3
-                    ]
+          {
+            "NodeID": 14,
+            "NodeName": "Turret1",
+            "children": [],
+            "components": [
+              {
+                "componentId": 22,
+                "componentType": 5,
+                "model": "Turret_Standard_Level1",
+                "shader": "modelShader",
+                "outlineShader": "outlineShader"
+              },
+              {
+                "componentId": 24,
+                "componentType": 9,
+                "turretRangePositions": {
+                  "position0": [
+                    40.0,
+                    299.5,
+                    63.0
+                  ],
+                  "position1": [
+                    40.0,
+                    299.5,
+                    72.0
+                  ],
+                  "position2": [
+                    50.0,
+                    299.5,
+                    72.0
+                  ],
+                  "position3": [
+                    50.0,
+                    299.5,
+                    63.0
+                  ]
                 }
+              },
+              {
+                "componentId": 26,
+                "componentType": 10,
+                "offset": {
+                  "x": 0.0,
+                  "y": 1.5,
+                  "z": 2.0
+                },
+                "particleType": "turretShot",
+                "shader": "particleShader"
+              }
+
+            ],
+            "transform": {
+              "position": [
+                45.0,
+                299.5,
+                65.0
+              ],
+              "rotation": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "scale": [
+                0.3,
+                0.3,
+                0.3
+              ]
             }
+          },
+          {
+            "NodeID": 15,
+            "NodeName": "topLayer",
+            "children": [],
+            "components": [
+              {
+                "componentId": 30,
+                "componentType": 3,
+                "maxSize": 128000,
+                "model": "topLayerModel",
+                "shader": "instanceModelShader"
+              }
+            ],
+            "transform": {
+              "position": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          }
         ],
         "components": [],
         "transform": {
