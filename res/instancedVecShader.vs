@@ -33,7 +33,7 @@ void main()
     // Calculate the height tint color using VariationFactor
     float height = position.y;
     if (height < 100.0) {
-        HeightTint = vec3(0.286, 0.062, 0.062); // Dark red tint
+        HeightTint = vec3(0.396, 0.019, 0.019); // Dark red tint
     } else if (height < 200.0) {
         HeightTint = vec3(0.824, 0.412, 0.118); // Brown tint
     } else {

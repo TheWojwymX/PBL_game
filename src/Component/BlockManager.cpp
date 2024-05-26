@@ -131,7 +131,7 @@ void BlockManager::UpdateBlocksVisibility() {
         UpdateBlockVisibility(blockData);
     }
 
-    HideEdges();
+    //HideEdges();
 }
 
 void BlockManager::HideEdges()
@@ -427,9 +427,26 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                 // Calculate transform matrix for the current block
                 glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
 
-                // Create BlockData object with Sand type if filled, otherwise Empty type
+                // Create BlockData object with appropriate HP based on block type
                 BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
-                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, 1.0f, shared_from_this());
+                float hp = 0.0f;
+                if (type == BlockType::SAND) {
+                    if (y < 100) {
+                        hp = 6.0f;
+                    }
+                    else if (y < 200) {
+                        hp = 4.0f;
+                    }
+                    else {
+                        hp = 1.0f;
+                    }
+                }
+
+                // Check if the block is on the edge and set its invincibility flag accordingly
+                bool isEdgeBlock = (x == 0 || x == _width - 1 || y == 0 || y == _height - 1 || z == 0 || z == _depth - 1);
+                bool invincible = isEdgeBlock;
+
+                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, hp, invincible, 1.0f, shared_from_this());
 
                 // Add the block to the vector
                 _blocksData.push_back(block);
@@ -437,6 +454,8 @@ void BlockManager::InitializeMap(float initialFillRatio) {
         }
     }
 }
+
+
 
 
 void BlockManager::IterateCaveGeneration() {
