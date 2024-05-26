@@ -10,7 +10,7 @@ GameManager &GameManager::getInstance() {
 
 void GameManager::pressToSkipPhase()
 {
-    if(INPUT.IsKeyPressed(77))
+    if(INPUT.IsKeyPressed(80))
     {
         currentTime = 31;
     }

@@ -3,26 +3,50 @@
 #include "Animation.h"
 #include "Core/Time.h"
 
-Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop)
-        : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop) {}
+Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop, bool isWalking)
+        : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop), _isWalking(isWalking) {}
 
-Animation::Animation() {
+Animation::Animation()
+{
     _type = ComponentType::ANIMATION;
 }
 
-void Animation::AddFrame(std::shared_ptr<Model> model)
+void Animation::AddWalkFrame(std::shared_ptr<Model> model)
 {
-    _frames.push_back(model);
+    _walkFrames.push_back(model);
+}
+
+void Animation::AddAttackFrame(std::shared_ptr<Model> model)
+{
+    _attackFrames.push_back(model);
+}
+
+void Animation::setIsWalking(bool state)
+{
+    _isWalking = state;
 }
 
 std::shared_ptr<Model> Animation::GetCurrentFrame()
 {
-    if (_frames.empty()) {
-        return nullptr;
-    }
+    if(_isWalking)
+    {
+        if (_walkFrames.empty()) {
+            return nullptr;
+        }
 
-    int frameIndex = static_cast<int>(_currentTime / _frameDuration) % _frames.size();
-    return _frames[frameIndex];
+        int frameIndex = static_cast<int>(_currentTime / _frameDuration) % _walkFrames.size();
+        return _walkFrames[frameIndex];
+    }
+    else
+    {
+        if (_attackFrames.empty()) {
+            return nullptr;
+        }
+
+        int frameIndex = static_cast<int>(_currentTime / _frameDuration) % _attackFrames.size();
+        return _attackFrames[frameIndex];
+
+    }
 }
 
 void Animation::Update() {
@@ -31,14 +55,31 @@ void Animation::Update() {
 
     if (_loop)
     {
-        while (_currentTime >= _frameDuration * _frames.size())
+        if(_isWalking)
         {
-            _currentTime -= _frameDuration * _frames.size();
+            while (_currentTime >= _frameDuration * _walkFrames.size())
+            {
+                _currentTime -= _frameDuration * _walkFrames.size();
+            }
+        }
+        else
+        {
+            while (_currentTime >= _frameDuration * _attackFrames.size())
+            {
+                _currentTime -= _frameDuration * _attackFrames.size();
+            }
         }
     }
     else
     {
-        _currentTime = std::min(_currentTime, _frameDuration * _frames.size() - 0.01f);
+        if(_isWalking)
+        {
+            _currentTime = std::min(_currentTime, _frameDuration * _walkFrames.size() - 0.01f);
+        }
+        else
+        {
+            _currentTime = std::min(_currentTime, _frameDuration * _attackFrames.size() - 0.01f);
+        }
     }
 
     _meshRenderer->_model = GetCurrentFrame();
@@ -61,7 +102,8 @@ nlohmann::json Animation::Serialize() {
 }
 
 void Animation::Deserialize(const nlohmann::json &jsonData) {
-    _frames.clear();
+    _walkFrames.clear();
+    _attackFrames.clear();
 
     if (jsonData.contains("entityType")) {
         _entityType = jsonData["entityType"].get<int>();
@@ -93,10 +135,49 @@ void Animation::InitFrames()
 {
     if (_entityType == 1)
     {
-        AddFrame(RESOURCEMANAGER.GetModelByName("antModel"));
-//        AddFrame(RESOURCEMANAGER.GetModelByName("AntWalk1"));
-//        AddFrame(RESOURCEMANAGER.GetModelByName("AntWalk2"));
-//        AddFrame(RESOURCEMANAGER.GetModelByName("AntWalk3"));
+        for(int i = 0; i < 6; i++)
+        {
+            AddWalkFrame(RESOURCEMANAGER.GetModelByName("AntWalk" + to_string(i)));
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            AddAttackFrame(RESOURCEMANAGER.GetModelByName("AntAttack" + to_string(i)));
+        }
     }
+}
 
+void Animation::setEntityType(int type)
+{
+    _entityType = type;
+}
+
+void Animation::setCurrentTime(float time)
+{
+    _currentTime = time;
+}
+
+void Animation::setMeshRenderer(const shared_ptr<MeshRenderer> &meshRenderer) {
+    _meshRenderer = meshRenderer;
+}
+
+void Animation::setFrameDuration(float frameDuration) {
+    _frameDuration = frameDuration;
+}
+
+void Animation::setLoop(bool loop) {
+    _loop = loop;
+}
+
+void Animation::setMeshRendererId(int meshRendererId) {
+    _meshRendererID = meshRendererId;
+}
+
+void Animation::InitComponent(int type)
+{
+    _currentTime = 0;
+    _entityType = type;
+    _isWalking = true;
+    _loop = true;
+    _frameDuration = 0.2;
+    InitFrames();
 }

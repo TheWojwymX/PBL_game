@@ -24,16 +24,44 @@
                 "Path": "../../res/Sand/Sand.obj"
             },
             {
+                "ModelName": "AntWalk0",
+                "Path": "../../res/Models/Ant/ant_walk_v1-0.obj"
+            },
+            {
                 "ModelName": "AntWalk1",
-                "Path": "res/Models/Ant/ant_walk_0.1-0.obj"
+                "Path": "../../res/Models/Ant/ant_walk_v1-1.obj"
             },
             {
                 "ModelName": "AntWalk2",
-                "Path": "res/Models/Ant/ant_walk_0.1-1.obj"
+                "Path": "../../res/Models/Ant/ant_walk_v1-2.obj"
             },
             {
                 "ModelName": "AntWalk3",
-                "Path": "res/Models/Ant/ant_walk_0.1-2.obj"
+                "Path": "../../res/Models/Ant/ant_walk_v1-3.obj"
+            },
+            {
+                "ModelName": "AntWalk4",
+                "Path": "../../res/Models/Ant/ant_walk_v1-4.obj"
+            },
+            {
+                "ModelName": "AntWalk5",
+                "Path": "../../res/Models/Ant/ant_walk_v1-5.obj"
+            },
+            {
+                "ModelName": "AntAttack0",
+                "Path": "../../res/Models/Ant/ant_attack_v1-0.obj"
+            },
+            {
+                "ModelName": "AntAttack1",
+                "Path": "../../res/Models/Ant/ant_attack_v1-1.obj"
+            },
+            {
+                "ModelName": "AntAttack2",
+                "Path": "../../res/Models/Ant/ant_attack_v1-2.obj"
+            },
+            {
+                "ModelName": "AntAttack3",
+                "Path": "../../res/Models/Ant/ant_attack_v1-3.obj"
             },
             {
                 "ModelName": "DomeStation",

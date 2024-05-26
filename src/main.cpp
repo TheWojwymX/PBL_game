@@ -182,9 +182,6 @@ int main(int, char**)
 
 /*    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();*/
-
-    shared_ptr<Model> antModel = make_shared<Model>("../../res/Models/Ant/ant_walk_0.1-0.obj", "Ant");
-
     //NODESMANAGER.getNodeByName("Enemy1")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
 
     ENEMIESMANAGER.Init();

@@ -149,6 +149,12 @@ void EnemiesManager::CheckIfAtWalls(){
 
             if(glm::distance(_enemies[i]->GetOwnerPosition(), CalcClosestDomePosition(_enemies[i])) < 0.1f){
                 _enemies[i]->_isAtWalls = true;
+                std::string nameOfEnemy = "Enemy" + to_string(i + 1);
+
+                if(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<Animation>() != nullptr)
+                {
+                    NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<Animation>()->setIsWalking(false);
+                }
             }
         }
     }
@@ -182,6 +188,17 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
     newMeshRenderer->Initiate();
     NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
 
+    auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
+    newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
+    newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID);
+    newAnimation->setCurrentTime(0);
+    newAnimation->setEntityType(1);
+    newAnimation->setIsWalking(true);
+    newAnimation->setLoop(true);
+    newAnimation->setFrameDuration(0.2f);
+    newAnimation->InitFrames();
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
+
     auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
     NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
     newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
@@ -206,8 +223,6 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
 
     //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
 
-    auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
-
     //std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
 }
 
@@ -220,7 +235,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
 
         glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[spawnerIndex]);
-        enemyPosition.y = 0.62 * scale.y + 99.49;
+        enemyPosition.y = 0.62 * scale.y + 299.49;
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
 
@@ -230,6 +245,12 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
         newMeshRenderer->Initiate();
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
+
+        auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
+        newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
+        newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID-1);
+        newAnimation->InitComponent(1);
+        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
 
         auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
         antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
