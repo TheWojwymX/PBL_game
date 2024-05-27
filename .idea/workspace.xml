@@ -32,7 +32,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-0.mtl.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-0.mtl.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/baza_1.0-9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbox_wall_3.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbox_wall_3.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbox_wall_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Wires/wire_wall_1.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Wires/wire_wall_1.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Base/Wires/wire_wall_1.0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scenes/ustawianie.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scenes/ustawianie2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scenes/ustawianie3.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,34 +98,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;CMake Application.SandBOX.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/RepoPBL/res/Images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "CMake Application.SandBOX.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging main",
+    "last_opened_file_path": "C:/RepoPBL/res/Models/Base/Wires",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res\Models\Base\Wires" />
+      <recent name="C:\RepoPBL\res\Models\Base\Sandbags" />
       <recent name="C:\RepoPBL\res\Images" />
       <recent name="C:\RepoPBL\res\fonts" />
       <recent name="C:\RepoPBL\res\fonts\Pixeloid" />
-      <recent name="C:\RepoPBL\src\HUD\Pages" />
-      <recent name="C:\RepoPBL\res\Models\Turrets\Level1" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\RepoPBL\res\Images" />
@@ -211,6 +245,7 @@
       <workItem from="1716457784700" duration="3213000" />
       <workItem from="1716555459207" duration="4154000" />
       <workItem from="1716660791633" duration="3746000" />
+      <workItem from="1716816209311" duration="8452000" />
     </task>
     <servers />
   </component>

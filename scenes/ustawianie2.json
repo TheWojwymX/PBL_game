@@ -102,6 +102,18 @@
             {
                 "ModelName": "BucketModel",
                 "Path": "../../res/Models/Base/Bucket/baza_1.0-0.mtl.obj"
+            },
+            {
+                "ModelName": "SandbagsModel",
+                "Path": "../../res/Models/Base/Sandbags/sandbox_wall_3.obj"
+            },
+            {
+                "ModelName": "WiresModel",
+                "Path": "../../res/Models/Base/Wires/wire_wall_1.0.obj"
+            },
+            {
+                "ModelName": "BucketModel",
+                "Path": "../../res/Models/Base/Bucket/baza_1.0-0.mtl.obj"
             }
         ],
         "Shaders": [
@@ -400,177 +412,9 @@
                 ],
                 "transform": {
                     "position": [
-                        49.0,
-                        315.0,
-                        99.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 6,
-                "NodeName": "Enemy1",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 6,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    },
-                    {
-                        "enemySize": 4.0
-                    },
-                    {
-                        "componentId": 9,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "frameDuration": 0.20000000298023224,
-                        "isLoop": true,
-                        "meshRendererRefID": 6
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        53.0,
-                        300.20001220703125,
-                        100.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 8,
-                "NodeName": "Enemy2",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 10,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    },
-                    {
-                        "enemySize": 4.0
-                    },
-                    {
-                        "componentId": 12,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "frameDuration": 0.20000000298023224,
-                        "isLoop": true,
-                        "meshRendererRefID": 10
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        58.0,
-                        300.20001220703125,
-                        100.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 9,
-                "NodeName": "Enemy3",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 13,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    },
-                    {
-                        "enemySize": 4.0
-                    },
-                    {
-                        "componentId": 15,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "frameDuration": 0.20000000298023224,
-                        "isLoop": true,
-                        "meshRendererRefID": 13
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        62.0,
-                        300.20001220703125,
-                        100.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            {
-                "NodeID": 10,
-                "NodeName": "Enemy4",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 16,
-                        "componentType": 5,
-                        "model": "antModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    },
-                    {
-                        "enemySize": 4.0
-                    },
-                    {
-                        "componentId": 18,
-                        "componentType": 7,
-                        "entityType": 1,
-                        "frameDuration": 0.20000000298023224,
-                        "isLoop": true,
-                        "meshRendererRefID": 16
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        62.0,
-                        300.20001220703125,
-                        105.0
+                        55.4000244140625,
+                        299.5,
+                        60.395450592041016
                     ],
                     "rotation": [
                         0.0,
@@ -605,7 +449,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.0061706313863396645,
+                        0.7071067690849304,
                         0.0
                     ],
                     "scale": [
@@ -636,7 +480,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.0061706313863396645,
+                        0.7071067690849304,
                         0.0
                     ],
                     "scale": [
@@ -729,7 +573,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.006169566418975592,
+                        0.7069846987724304,
                         0.0
                     ],
                     "scale": [
@@ -760,7 +604,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.006169566418975592,
+                        0.7069846987724304,
                         0.0
                     ],
                     "scale": [
@@ -791,7 +635,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.0033395367208868265,
+                        0.3826834559440613,
                         0.0
                     ],
                     "scale": [
@@ -822,7 +666,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.0033395367208868265,
+                        0.3826834559440613,
                         0.0
                     ],
                     "scale": [
@@ -853,7 +697,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        -0.0033395367208868265,
+                        -0.3826834559440613,
                         0.0
                     ],
                     "scale": [
@@ -884,7 +728,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        -0.0033395367208868265,
+                        -0.3826834559440613,
                         0.0
                     ],
                     "scale": [
@@ -915,7 +759,7 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.0012898800196126103,
+                        0.14780940115451813,
                         0.0
                     ],
                     "scale": [
@@ -940,17 +784,17 @@
                 ],
                 "transform": {
                     "position": [
-                        44.54999923706055,
+                        50.0,
                         299.5,
-                        37.20000076293945
+                        63.29999923706055
                     ],
                     "rotation": [
                         0.0,
-                        0.0012898800196126103,
+                        0.0,
                         0.0
                     ],
                     "scale": [
-                        0.20999999344348907,
+                        0.25,
                         0.25,
                         0.25
                     ]
@@ -971,17 +815,17 @@
                 ],
                 "transform": {
                     "position": [
-                        44.5,
+                        50.0,
                         299.5,
-                        62.79999923706055
+                        63.29999923706055
                     ],
                     "rotation": [
                         0.0,
-                        -0.0012898800196126103,
+                        0.0,
                         0.0
                     ],
                     "scale": [
-                        0.20999999344348907,
+                        0.25,
                         0.25,
                         0.25
                     ]
@@ -1002,17 +846,17 @@
                 ],
                 "transform": {
                     "position": [
-                        55.45000076293945,
+                        50.0,
                         299.5,
-                        37.20000076293945
+                        63.29999923706055
                     ],
                     "rotation": [
                         0.0,
-                        -0.0012898800196126103,
+                        0.0,
                         0.0
                     ],
                     "scale": [
-                        0.20999999344348907,
+                        0.25,
                         0.25,
                         0.25
                     ]
@@ -1099,7 +943,7 @@
                 ],
                 "transform": {
                     "position": [
-                        40.0,
+                        200.0,
                         299.5,
                         60.0
                     ],
@@ -1225,9 +1069,9 @@
                 ],
                 "transform": {
                     "position": [
+                        50.0,
                         0.0,
-                        0.0,
-                        0.0
+                        90.0
                     ],
                     "rotation": [
                         0.0,
@@ -1256,9 +1100,9 @@
                 ],
                 "transform": {
                     "position": [
+                        90.0,
                         0.0,
-                        0.0,
-                        0.0
+                        50.0
                     ],
                     "rotation": [
                         0.0,
@@ -1287,9 +1131,9 @@
                 ],
                 "transform": {
                     "position": [
+                        50.0,
                         0.0,
-                        0.0,
-                        0.0
+                        2.0
                     ],
                     "rotation": [
                         0.0,
@@ -1318,9 +1162,9 @@
                 ],
                 "transform": {
                     "position": [
+                        2.0,
                         0.0,
-                        0.0,
-                        0.0
+                        50.0
                     ],
                     "rotation": [
                         0.0,
@@ -1349,24 +1193,24 @@
                     {
                         "turretRangePositions": {
                             "position0": [
-                                40.0,
+                                52.171478271484375,
                                 299.5,
-                                63.0
+                                74.05132293701172
                             ],
                             "position1": [
-                                40.0,
+                                49.986480712890625,
                                 299.5,
-                                72.0
+                                95.94255065917969
                             ],
                             "position2": [
-                                50.0,
+                                36.055702209472656,
                                 299.5,
-                                72.0
+                                94.55209350585938
                             ],
                             "position3": [
-                                50.0,
+                                38.240699768066406,
                                 299.5,
-                                63.0
+                                72.6608657836914
                             ]
                         }
                     },
@@ -1384,13 +1228,44 @@
                 ],
                 "transform": {
                     "position": [
-                        45.0,
+                        45.01691436767578,
                         299.5,
-                        65.0
+                        75.25143432617188
                     ],
                     "rotation": [
                         0.0,
+                        -0.04972054436802864,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 39,
+                "NodeName": "BlueprintTurret",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 50,
+                        "componentType": 5,
+                        "model": "Turret_Gunner_Level1",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        56.406158447265625,
+                        299.5,
+                        62.12394714355469
+                    ],
+                    "rotation": [
                         0.0,
+                        0.2605312764644623,
                         0.0
                     ],
                     "scale": [

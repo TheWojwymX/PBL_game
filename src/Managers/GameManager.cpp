@@ -45,7 +45,7 @@ void GameManager::InitPhase()
     {
         //std::cout << "bronimy";
 
-        ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
+        //ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
     }
 }
 
