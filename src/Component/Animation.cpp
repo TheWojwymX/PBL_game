@@ -1,5 +1,6 @@
 #pragma once
 
+#include <random>
 #include "Animation.h"
 #include "Core/Time.h"
 
@@ -172,9 +173,17 @@ void Animation::setMeshRendererId(int meshRendererId) {
     _meshRendererID = meshRendererId;
 }
 
+float generateRandomFloat(std::mt19937& gen, std::uniform_real_distribution<float>& dis) {
+    return dis(gen);
+}
+
 void Animation::InitComponent(int type)
 {
-    _currentTime = 0;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 0.5f);
+
+    _currentTime = generateRandomFloat(gen, dis);
     _entityType = type;
     _isWalking = true;
     _loop = true;

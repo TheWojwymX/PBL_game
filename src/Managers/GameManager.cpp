@@ -34,6 +34,7 @@ void GameManager::InitPhase()
     if(currentPhase == 0) // kopanie
     {
         roundNumber++;
+        ENEMIESMANAGER.SetSymbolsForWave();
         //std::cout << "kopiemy";
     }
     else if (currentPhase == 1) // stawianie
@@ -43,12 +44,6 @@ void GameManager::InitPhase()
     else if (currentPhase == 2) // obrona
     {
         //std::cout << "bronimy";
-
-        // For now only 3 rounds are added
-        if (roundNumber > 3)
-        {
-            roundNumber = 3;
-        }
 
         ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
     }

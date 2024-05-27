@@ -71,6 +71,8 @@ public:
     void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex);
 
     void ChooseModelBasedOnDistance();
+
+    void SetSymbolsForWave();
 };
 
 

@@ -1,10 +1,14 @@
 {
-    "nextComponentId": 32,
-    "nextNodeId": 20,
+    "nextComponentId": 36,
+    "nextNodeId": 24,
     "resources": {
       "Models": [
         {
           "ModelName": "sandModel",
+          "Path": "../../res/Sand/Sand.obj"
+        },
+		{
+          "ModelName": "waveNotificationModel",
           "Path": "../../res/Sand/Sand.obj"
         },
         {
@@ -765,6 +769,130 @@
               1.0,
               1.0,
               1.0
+            ]
+          }
+        },
+        {
+          "NodeID": 20,
+          "NodeName": "waveSymbol1",
+          "children": [],
+          "components": [
+            {
+              "componentId": 32,
+              "componentType": 5,
+              "model": "waveNotificationModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              2.5,
+              2.5,
+              2.5
+            ]
+          }
+        },
+        {
+          "NodeID": 21,
+          "NodeName": "waveSymbol2",
+          "children": [],
+          "components": [
+            {
+              "componentId": 33,
+              "componentType": 5,
+              "model": "waveNotificationModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              2.5,
+              2.5,
+              2.5
+            ]
+          }
+        },
+        {
+          "NodeID": 22,
+          "NodeName": "waveSymbol3",
+          "children": [],
+          "components": [
+            {
+              "componentId": 34,
+              "componentType": 5,
+              "model": "waveNotificationModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              2.5,
+              2.5,
+              2.5
+            ]
+          }
+        },
+        {
+          "NodeID": 23,
+          "NodeName": "waveSymbol4",
+          "children": [],
+          "components": [
+            {
+              "componentId": 35,
+              "componentType": 5,
+              "model": "waveNotificationModel",
+              "shader": "modelShader",
+              "outlineShader": "outlineShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              2.5,
+              2.5,
+              2.5
             ]
           }
         },
