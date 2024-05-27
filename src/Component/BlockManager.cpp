@@ -423,10 +423,10 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     int centerZ = _depth / 2;
 
     // Define the mask dimensions
-    glm::ivec3 maskDimensions(4, 6, 4);
+    glm::ivec3 maskDimensions(6, 8, 6);
 
     // Apply the mask using _entranceMask
-    ApplyMask(glm::ivec3(centerX-2, centerY, centerZ-2), _entranceMask, maskDimensions);
+    ApplyMask(glm::ivec3(centerX-3, centerY, centerZ-3), _entranceMask, maskDimensions);
 }
 
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
