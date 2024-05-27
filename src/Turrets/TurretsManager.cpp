@@ -182,7 +182,7 @@ void TurretsManager::UpdateBlueprintTurret(){
     glm::vec3 forwardVector = glm::normalize(NODESMANAGER.getNodeByName("player")->GetComponent<Camera>()->GetFrontVector());
     float minDistance = 2.0f;
     glm::vec3 turretPosition = NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition() + forwardVector * minDistance;
-    turretPosition.y = 99.5;
+    turretPosition.y = GAMEMANAGER._groundLevel - 0.7;
     glm::vec2 playerFlatPosition(NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().x, NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().z);
     glm::vec2 turretFlatPosition(turretPosition.x, turretPosition.z);
     if (glm::distance(playerFlatPosition, turretFlatPosition) < minDistance) {
