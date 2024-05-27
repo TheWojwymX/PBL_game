@@ -79,8 +79,8 @@ void PlayerController::InteractionInput() {
     _timeSinceLastInteraction += TIME.GetDeltaTime();
 
     if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)) {
-        _blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower);
-        _timeSinceLastInteraction = 0.0f;
+        if(_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
+            _timeSinceLastInteraction = 0.0f;
     }
 }
 

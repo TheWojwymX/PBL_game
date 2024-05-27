@@ -89,15 +89,13 @@ void BlockManager::UpdateInstanceRenderer() {
 
         // Iterate through the blocks in the chunk
         for (BlockData* blockPtr : _visibleBlocks[chunkIndex]) {
-            if (blockPtr->GetBlockType() != BlockType::EMPTY && blockPtr->IsVisible()) {
-                // Add the block's transform matrix to instanceMatrix
-                instanceMatrix.push_back(blockPtr->GetMatrix());
-            }
+            instanceMatrix.push_back(blockPtr->GetMatrix());
         }
     }
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
+        std::cout << "Size of instanceMatrix: " << instanceMatrix.size() << std::endl;
         _sandRendererRef->SetInstanceMatrix(instanceMatrix);
     }
 }
@@ -205,7 +203,6 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData)
 void BlockManager::UpdateRenderedChunks() {
     _renderedChunks.clear(); // Clear the list of rendered blocks
 
-
     for (const glm::ivec3& offset : _sphereVectors[_renderDistance]) {
         glm::ivec3 chunkPos = _playerChunk + offset;
         if(ChunkInBounds(chunkPos))
@@ -216,10 +213,9 @@ void BlockManager::UpdateRenderedChunks() {
 }
 
 void BlockManager::SetVisibility(BlockData& blockData, bool state) {
-    // Set the visibility of the block
-    blockData.SetVisible(state);
-
     if (state && blockData.GetBlockType() != BlockType::EMPTY) {
+        blockData.SetVisible(state);
+
         // Add the blockData to _visibleBlocks
         _visibleBlocks[GetChunkIndex(blockData.GetChunkID(_chunkSize))].push_back(&blockData);
     }
@@ -270,7 +266,7 @@ bool BlockManager::RayIntersectsBlock(float rayLength, int radius, float digPowe
             int index = GetIndex(roundedPoint);
 
             // Check if the blockData is visible and change it to empty if so
-            if (_blocksData[index].IsVisible() && _blocksData[index].GetBlockType() != BlockType::EMPTY) {
+            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
                 DamageBlocks(roundedPoint,radius,digPower);
                 return true; // Block hit, no need to check further
             }

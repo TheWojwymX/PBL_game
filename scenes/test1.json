@@ -274,7 +274,7 @@
             {
               "componentId": 0,
               "componentType": 3,
-              "maxSize": 128000,
+              "maxSize": 256000,
               "model": "sandModel",
               "shader": "instanceModelShader"
             }
