@@ -13,11 +13,12 @@ nlohmann::json Node::Serialize() {
     // Transform
     auto transform = GetTransform();
     if (transform != nullptr) {
-        nodeJson["transform"] = {
-                {"position", {transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z}},
-                {"rotation", {transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z}},
-                {"scale",    {transform->GetScale().x,    transform->GetScale().y,    transform->GetScale().z}}
-        };
+
+        glm::vec3 eulerRotation = glm::degrees(glm::eulerAngles(transform->GetRotation()));
+
+        nodeJson["transform"]["position"] = {transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z};
+        nodeJson["transform"]["rotation"] = {eulerRotation.x, eulerRotation.y, eulerRotation.z};
+        nodeJson["transform"]["scale"] = {transform->GetScale().x, transform->GetScale().y, transform->GetScale().z};
     }
 
     // Components
