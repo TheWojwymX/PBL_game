@@ -148,8 +148,8 @@ int main(int, char**)
     bool dirActive = true;
 
     //Shadowmap Creation POV
-    glm::vec3 lightPos(50.0f, 120.0f, 40.0f);
-    glm::vec3 lightCenter(50.0f, 100.0f,50.0f);
+    glm::vec3 lightPos(50.0f, 350.0f, 40.0f);
+    glm::vec3 lightCenter(50.0f, 300.0f,50.0f);
 
     //SpotLight Properties
     bool isSpotActive = true;
@@ -283,7 +283,7 @@ int main(int, char**)
         dirDirection[1] = shadowDir.y;
         dirDirection[2] = shadowDir.z;
 
-        float near_plane = 0.2f, far_plane = 130.0f;
+        float near_plane = 0.2f, far_plane = 330.0f;
         glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
         glm::mat4 lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
         shadowMap.SetLightProjection(lightProjection);

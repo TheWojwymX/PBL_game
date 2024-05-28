@@ -34,6 +34,7 @@ uniform bool casing;
 uniform vec3 enemyPosition;
 uniform bool isJetpack;
 uniform vec3 jumpOff;
+uniform float groundLevel;
 
 layout (local_size_x = 1) in;
 
@@ -122,7 +123,7 @@ void main() {
             p.Scale = mix(0.1f, particleScale, lifeRatio);
 
             // Check for bounce when particle hits y = 105
-            if (p.Position.y <= 100.0 && !isJetpack) {
+            if (p.Position.y <= groundLevel && !isJetpack) {
                 if(onlyForward)
                 {
                 p.Life -= 4 * dt;
@@ -134,13 +135,16 @@ void main() {
                 p.Velocity.z = p.Velocity.z * 0.8;
 
                 // Set position exactly at 100 to prevent particles from going below it
-                p.Position.y = 100.0 + (100.0 - p.Position.y);
+                p.Position.y = groundLevel + (groundLevel - p.Position.y);
                 }
             }
             else if(p.Position.y <= jumpOff.y + 0.2 && isJetpack){
                 initGravity.y = 0.0;
                 p.Velocity.y = 0.0;
+                if(jumpOff.y <= p.Position.y)
+                {
                 p.Position.y = jumpOff.y + 0.2;
+                }
                 p.Velocity.x = p.Velocity.x * 0.8;
                 p.Velocity.z = p.Velocity.z * 0.8;
             }

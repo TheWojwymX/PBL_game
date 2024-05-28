@@ -220,6 +220,7 @@ void ParticleGenerator::Init() {
     computeShader->setVec3("gravity", gravity);
     computeShader->setBool("casing", casing);
     computeShader->setBool("isJetpack", isJetpack);
+    computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel);
 
     // Particle quad (single instance)
     unsigned int VBO;
