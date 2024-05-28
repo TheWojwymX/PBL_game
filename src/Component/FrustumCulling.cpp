@@ -182,3 +182,29 @@ glm::vec3 FrustumCulling::GetWorldMaxBoundingBox(const std::shared_ptr<Model>& m
 
     return worldMax;
 }
+
+std::vector<glm::vec3> FrustumCulling::GetRange(const std::shared_ptr<Model>& model, const glm::mat4& ctm) {
+    glm::vec3 localMin = model->GetMinBoundingBox(); // Local min bounding box
+    glm::vec3 localMax = model->GetMaxBoundingBox(); // Local max bounding box
+
+    // Define all eight corners of the bounding box in local space
+    std::vector<glm::vec3> localCorners = {
+            localMin,
+            glm::vec3(localMax.x, localMin.y, localMin.z),
+            glm::vec3(localMin.x, localMax.y, localMin.z),
+            glm::vec3(localMin.x, localMin.y, localMax.z),
+            glm::vec3(localMax.x, localMax.y, localMin.z),
+            glm::vec3(localMax.x, localMin.y, localMax.z),
+            glm::vec3(localMin.x, localMax.y, localMax.z),
+            localMax
+    };
+
+    // Transform all corners to world space
+    std::vector<glm::vec3> worldCorners;
+    for (const glm::vec3& corner : localCorners) {
+        glm::vec4 transformedCorner = ctm * glm::vec4(corner, 1.0f); // Transform to world space
+        worldCorners.push_back(glm::vec3(transformedCorner)); // Convert back to vec3
+    }
+
+    return worldCorners;
+}

@@ -195,6 +195,7 @@ int main(int, char**)
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
+    auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
 
     PAGEMANAGER.Init();
 
@@ -376,6 +377,10 @@ int main(int, char**)
         particleShader->setMat4("projection", projection);
         particleShader->setMat4("view", view);
         particleShader->setVec3("dirColor", dirColor);
+
+        rangeShader->use();
+        rangeShader->setMat4("projection", projection);
+        rangeShader->setMat4("view", view);
 
         GAMEMANAGER.root->Render(Transform::Origin());
 

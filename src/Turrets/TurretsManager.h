@@ -46,8 +46,8 @@ public:
 
     float _distanceToAnotherTurret = 1.5f;
 
-    float _sideRange = 7.0f;
-    float _forwardRange = 20.0f;
+    float _sideRange = 30.0f;
+    float _forwardRange = 50.0f;
     float _backRange = 2.0f;
     int selectedIndex = -1;
 

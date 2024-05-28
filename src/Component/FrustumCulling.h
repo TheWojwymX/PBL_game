@@ -23,6 +23,7 @@ public:
     static bool isBoxInFrustum(const std::vector<FrustumPlane>& planes, const glm::vec3& min, const glm::vec3& max);
     static glm::vec3 GetWorldMinBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm);
     static glm::vec3 GetWorldMaxBoundingBox(const std::shared_ptr<Model>& model, const glm::mat4& ctm);
+    static std::vector<glm::vec3> GetRange(const std::shared_ptr<Model>& model, const glm::mat4& ctm);
 
     static bool _renderWireframeBB;
 private:

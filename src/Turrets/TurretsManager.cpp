@@ -25,6 +25,7 @@ void TurretsManager::Update() {
     if(Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode) {
         _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
         NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintTurret")->GetComponent<MeshRenderer>()->IsEnabled());
+        NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
         //NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
         _isInBlueprintMode = !_isInBlueprintMode;
     }
@@ -37,6 +38,13 @@ void TurretsManager::Update() {
         _indexOfMovingTurret = RaycastTurrets();
         _isPlayerInMovingMode = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
+        auto rangeNodes = _turrets[_indexOfMovingTurret]->_ownerNode->getChildren();
+        for (const auto& node : rangeNodes){
+            if(node != nullptr)
+            {
+            node->GetComponent<MeshRenderer>()->SetEnabled(true);
+            }
+        }
     }else if(INPUT.IsMousePressed(1) && !_isInBlueprintMode && _isPlayerInMovingMode){
         PlaceMovingTurret();
     }
@@ -69,6 +77,7 @@ void TurretsManager::SpawnTurret(){
 
     //std::cout << "zespawniono" << std::endl;
     std::string nameOfTurret = "Turret" + to_string(_turrets.size() + 1);
+    std::string rangeIndicatorNode = "Range" + to_string(_turrets.size() + 1);
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfTurret);
 
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
@@ -96,8 +105,6 @@ void TurretsManager::SpawnTurret(){
     newTurret->_finalRotation = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation();
     newTurret->_finalPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
 
-    CalculateRangePositions(newTurret);
-
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetPosition(glm::vec3(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition().x,
@@ -106,48 +113,45 @@ void TurretsManager::SpawnTurret(){
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetScale(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetScale());
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetRotation(NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation());
 
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfTurret), rangeIndicatorNode);
+    auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("sandModel");
+    rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    rangeIndicator->SetEnabled(false);
+    rangeIndicator->Initiate();
+    NODESMANAGER.getNodeByName(rangeIndicatorNode)->AddComponent(rangeIndicator);
+    NODESMANAGER.getNodeByName(rangeIndicatorNode)->GetTransform()->AddPosition(glm::vec3(0.0f,0.0f,30.0f));
+    NODESMANAGER.getNodeByName(rangeIndicatorNode)->GetTransform()->SetScale(glm::vec3(_sideRange,0.2f,_forwardRange));
+
+    NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->UpdateGlobalCTM();
+    NODESMANAGER.getNodeByName(rangeIndicatorNode)->GetTransform()->UpdateGlobalCTM();
+
+    CalculateRangePositions(newTurret);
+
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
 }
 
 void TurretsManager::CalculateRangePositions(shared_ptr<Turret> turret){
-    glm::vec3 BPPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
-    glm::vec3 upVec = glm::vec3(0, 1, 0);
-    glm::vec3 forwardVec = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetRotation() * glm::vec3(0, 0, 1);
-    glm::vec3 backwardVec = -forwardVec;
-    glm::vec3 leftVec = glm::normalize(glm::cross(upVec, forwardVec));
-    glm::vec3 rightVec = -leftVec;
+    std::vector<glm::vec3> corners;
+    auto rangeNodes = turret->_ownerNode->getChildren();
+    for (const auto& node : rangeNodes) {
+        if (node != nullptr) {
+            corners = FrustumCulling::GetRange(node->GetComponent<MeshRenderer>()->_model,
+                                               node->GetTransform()->GetGlobalCTM());
+        }
+    }
 
-    glm::vec3 pos0 = BPPosition + leftVec * _sideRange + backwardVec * _backRange;
-    turret->_turretRangePositions[0] = pos0;
-
-    glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
-    turret->_turretRangePositions[1] = pos1;
-
-    glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
-    turret->_turretRangePositions[2] = pos2;
-
-    glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
-    turret->_turretRangePositions[3] = pos3;
-
-/*    std::cout << "_turretRangePositions[0]: x=" << turret->_turretRangePositions[0].x
-              << ", y=" << turret->_turretRangePositions[0].y
-              << ", z=" << turret->_turretRangePositions[0].z << std::endl;
-
-    std::cout << "_turretRangePositions[1]: x=" << turret->_turretRangePositions[1].x
-              << ", y=" << turret->_turretRangePositions[1].y
-              << ", z=" << turret->_turretRangePositions[1].z << std::endl;
-
-    std::cout << "_turretRangePositions[2]: x=" << turret->_turretRangePositions[2].x
-              << ", y=" << turret->_turretRangePositions[2].y
-              << ", z=" << turret->_turretRangePositions[2].z << std::endl;
-
-    std::cout << "_turretRangePositions[3]: x=" << turret->_turretRangePositions[3].x
-              << ", y=" << turret->_turretRangePositions[3].y
-              << ", z=" << turret->_turretRangePositions[3].z << std::endl;*/
+    turret->_turretRangePositions[0] = corners[0];
+    turret->_turretRangePositions[1] = corners[1];
+    turret->_turretRangePositions[2] = corners[3];
+    turret->_turretRangePositions[3] = corners[5];
 }
 
 void TurretsManager::PrepareBlueprintTurret() {
     std::string nameOfBlueprintTurret = "BlueprintTurret";
+    std::string blueprintRange = "BlueprintRange";
+
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfBlueprintTurret);
 
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
@@ -157,6 +161,17 @@ void TurretsManager::PrepareBlueprintTurret() {
     newMeshRenderer->Initiate();
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->AddComponent(newMeshRenderer);
     NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->SetEnabled(false);
+
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfBlueprintTurret), blueprintRange);
+    auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("sandModel");
+    rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    rangeIndicator->SetEnabled(false);
+    rangeIndicator->Initiate();
+    NODESMANAGER.getNodeByName(blueprintRange)->AddComponent(rangeIndicator);
+    NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->AddPosition(glm::vec3(0.0f,0.0f,30.0f));
+    NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->SetScale(glm::vec3(_sideRange,0.2f,_forwardRange));
 
 /*    std::string nameOfBlueprintRange = "BlueprintRange";
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfBlueprintTurret), nameOfBlueprintRange);
@@ -282,8 +297,10 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret>& turret, const shared_
 
         auto particleGenerators = turret->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
         for (const auto& generator : particleGenerators) {
-            generator->enemyPosition = enemy->GetOwnerPosition();
-            generator->SpawnParticles();
+            if(generator != nullptr) {
+                generator->enemyPosition = enemy->GetOwnerPosition();
+                generator->SpawnParticles();
+            }
         }
     }
 }
@@ -330,6 +347,13 @@ void TurretsManager::PlaceMovingTurret(){
     _turrets[_indexOfMovingTurret]->_isMoving = false;
     CalculateRangePositions(_turrets[_indexOfMovingTurret]);
     _turrets[_indexOfMovingTurret]->_finalPosition = NODESMANAGER.getNodeByName("BlueprintTurret")->GetTransform()->GetPosition();
+
+    auto rangeNodes = _turrets[_indexOfMovingTurret]->_ownerNode->getChildren();
+    for (const auto& node : rangeNodes){
+        if(node != nullptr) {
+            node->GetComponent<MeshRenderer>()->SetEnabled(false);
+        }
+    }
 }
 
 int TurretsManager::RaycastTurrets()
