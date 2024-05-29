@@ -141,11 +141,12 @@ void TurretsManager::CalculateRangePositions(shared_ptr<Turret> turret){
                                                node->GetTransform()->GetGlobalCTM());
         }
     }
-
-    turret->_turretRangePositions[0] = corners[0];
-    turret->_turretRangePositions[1] = corners[1];
-    turret->_turretRangePositions[2] = corners[3];
-    turret->_turretRangePositions[3] = corners[5];
+    if(!corners.empty()) {
+        turret->_turretRangePositions[0] = corners[0];
+        turret->_turretRangePositions[1] = corners[1];
+        turret->_turretRangePositions[2] = corners[3];
+        turret->_turretRangePositions[3] = corners[5];
+    }
 }
 
 void TurretsManager::PrepareBlueprintTurret() {
