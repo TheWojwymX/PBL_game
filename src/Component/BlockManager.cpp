@@ -24,6 +24,14 @@ nlohmann::json BlockManager::Serialize() {
         data["topLayerRendererRef"] = _topLayerRendererRef->_id;
     }
 
+    if (_plasticRendererRef) {
+        data["_plasticRendererRef"] = _plasticRendererRef->_id;
+    }
+
+    if (_metalRendererRef) {
+        data["_metalRendererRef"] = _metalRendererRef->_id;
+    }
+
     if(_cameraRef){
         data["cameraRefID"] = _cameraRef->_id;
     }
@@ -53,6 +61,14 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
         _topLayerRendererRefID = jsonData["topLayerRendererRefID"].get<int>();
     }
 
+    if (jsonData.contains("plasticRendererRefID")) {
+        _plasticRendererRefID = jsonData["plasticRendererRefID"].get<int>();
+    }
+
+    if (jsonData.contains("metalRendererRefID")) {
+        _metalRendererRefID = jsonData["metalRendererRefID"].get<int>();
+    }
+
     if (jsonData.contains("cameraRefID")) {
         _cameraRefID = jsonData["cameraRefID"].get<int>();
     }
@@ -77,7 +93,7 @@ void BlockManager::Init() {
 }
 
 void BlockManager::UpdateInstanceRenderer() {
-    std::vector<glm::mat4> instanceMatrix;
+    std::vector<glm::mat4> instancedSandMatrix;
 
     // Iterate through _renderedChunks and add visible non-empty blocks to instanceMatrix
     for (int chunkIndex : _renderedChunks) {
@@ -89,13 +105,17 @@ void BlockManager::UpdateInstanceRenderer() {
 
         // Iterate through the blocks in the chunk
         for (BlockData* blockPtr : _visibleBlocks[chunkIndex]) {
-            instanceMatrix.push_back(blockPtr->GetMatrix());
+            switch (blockPtr->GetBlockType()) {
+                case BlockType::DIRT:
+                    instancedSandMatrix.push_back(blockPtr->GetMatrix());
+                    break;
+            }
         }
     }
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        _sandRendererRef->SetInstanceMatrix(instanceMatrix);
+        _sandRendererRef->SetInstanceMatrix(instancedSandMatrix);
     }
 }
 
@@ -490,9 +510,9 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                 glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
 
                 // Create BlockData object with appropriate HP based on block type
-                BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
+                BlockType type = filled ? BlockType::DIRT : BlockType::EMPTY;
                 float hp = 0.0f;
-                if (type == BlockType::SAND) {
+                if (type == BlockType::DIRT) {
                     if (y < 100) {
                         hp = 7.0f;
                     }
@@ -536,7 +556,7 @@ void BlockManager::IterateCaveGeneration() {
 
             // Apply rules of cellular automaton to update the block state
             if (filledNeighbors >= 4) {
-                ChangeType(blockData, BlockType::SAND);
+                ChangeType(blockData, BlockType::DIRT);
             }
             else if (filledNeighbors <= 2) {
                 ChangeType(blockData, BlockType::EMPTY);
@@ -544,7 +564,7 @@ void BlockManager::IterateCaveGeneration() {
             else {
                 float probability = 0.55f;
                 if (static_cast<float>(rand()) / RAND_MAX < probability) {
-                    ChangeType(blockData, BlockType::SAND);
+                    ChangeType(blockData, BlockType::DIRT);
                 }
                 else {
                     ChangeType(blockData, BlockType::EMPTY);
@@ -627,7 +647,7 @@ void BlockManager::ChangeType(BlockData& blockData, BlockType type)
     {
         case BlockType::EMPTY:
             break;
-        case BlockType::SAND:
+        case BlockType::DIRT:
                 if (blockData.GetPosID().y < 100) {
                     blockData.SetHP(7.0f);
                 }

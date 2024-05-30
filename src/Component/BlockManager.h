@@ -15,7 +15,7 @@
 
 // Define a struct to hold collision information for each corner
 struct CollisionInfo {
-    bool isColliding = false;;
+    bool isColliding = false;
     glm::vec3 separationVector = glm::vec3(std::numeric_limits<float>::max());
     bool isGrounded = false;
 };
@@ -57,9 +57,13 @@ private:
     int _sandRendererRefID;
     std::shared_ptr<InstanceRenderer> _topLayerRendererRef;
     int _topLayerRendererRefID;
+    std::shared_ptr<InstanceRenderer> _plasticRendererRef;
+    int _plasticRendererRefID;
+    std::shared_ptr<InstanceRenderer> _metalRendererRef;
+    int _metalRendererRefID;
     std::shared_ptr<Camera> _cameraRef;
-    std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _cameraRefID;
+    std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _entranceMask[288] = {1,1,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,1,1,
                               1,1,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,1,1,
                               1,1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,1,

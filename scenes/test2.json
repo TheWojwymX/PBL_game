@@ -114,6 +114,10 @@
             {
                 "ModelName": "ShovelModel",
                 "Path": "../../res/Models/Shovel/shovel_1.3.obj"
+            },
+            {
+                "ModelName": "CapModel",
+                "Path": "../../res/Models/Cap/cap_1_1.1.obj"
             }
         ],
         "Shaders": [
@@ -349,7 +353,7 @@
                         "componentId": 84,
                         "componentType": 3,
                         "maxSize": 1000,
-                        "model": "plasticModel",
+                        "model": "CapModel",
                         "shader": "instancedSandShader"
                     }
                 ],
@@ -1669,19 +1673,19 @@
                 ],
                 "transform": {
                     "position": [
-                        50.0,
+                        200.0,
                         299.5,
-                        50.0
+                        200.0
                     ],
                     "rotation": [
                         0.0,
                         0.7071067690849304,
-                        0.0
+                        5.0
                     ],
                     "scale": [
-                        0.25,
-                        0.25,
-                        0.25
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             },

@@ -11,7 +11,9 @@ enum class BlockType {
     EMPTY,
     DIRT,
     SAND,
-    CLOUD
+    CLOUD,
+    PLASTIC,
+    METAL
 };
 
 class BlockData {
