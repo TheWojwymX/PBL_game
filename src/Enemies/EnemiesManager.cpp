@@ -132,17 +132,14 @@
         CheckIfAtWalls();
         AvoidEnemy();
         ChooseModelBasedOnDistance(); //LOD (safe to comment out)
-        if(Input::Instance().IsKeyPressed(80)) {
+        if(Input::Instance().IsKeyPressed(GLFW_KEY_KP_1)) {
 
             std::random_device rd;
             std::mt19937 gen(rd());
             std::uniform_real_distribution<float> dis(0.5f, 1.0f);
             float scale = dis(gen);
 
-            SpawnEnemy(2, glm::vec3(scale));
-        }
-        if(Input::Instance().IsKeyPressed(79)){
-            DealDamageToEnemy(50, _enemies[_testowaPrzeciwnicy]);
+            SpawnEnemy(2, glm::vec3(scale), 0);
         }
 
         for(int i = 0; i < _enemies.size(); i++) {
@@ -180,64 +177,6 @@
 
         enemy->TakeDamage(amount);
 
-    }
-
-    void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale) {
-        std::string nameOfEnemy = "Enemy" + to_string(_enemies.size() + 1);
-        std::string particleGeneratorNode = "Particle" +  to_string(_enemies.size() + 1);
-
-        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
-        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
-
-        glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[0]);
-        enemyPosition.y = 0.62f * scale.y + GAMEMANAGER._groundLevel - 0.75f;
-        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
-        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
-
-        // Tutaj podepniemy potem animacje przy spawnie
-        auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-        newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
-        newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
-        newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
-        newMeshRenderer->Initiate();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
-
-        auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
-        newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
-        newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID);
-        newAnimation->setCurrentTime(0);
-        newAnimation->setEntityType(1);
-        newAnimation->setIsWalking(true);
-        newAnimation->setLoop(true);
-        newAnimation->setFrameDuration(0.2f);
-        newAnimation->InitFrames();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
-
-        auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
-        newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
-        newEnemyComponent->_size = distanceToAvoid;
-        _enemies.push_back(newEnemyComponent);
-
-        auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
-        antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
-        antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
-        antShot->enemyScale = scale;
-        antShot->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
-        antShot->Init();
-        NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
-
-        auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antDie");
-        antDie->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
-        antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
-        antDie->enemyScale = scale;
-        antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
-        antDie->Init();
-        NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antDie);
-
-        //std::cout << newEnemyComponent->_destinationVector.x << "   " << newEnemyComponent->_destinationVector.z << std::endl;
-
-        //std::cout << NODESMANAGER.getNodeByName(nameOfEnemy)->_id << std::endl;
     }
 
     void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex) {

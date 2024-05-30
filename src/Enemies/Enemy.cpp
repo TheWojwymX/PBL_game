@@ -57,7 +57,6 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
 }
 
 void Enemy::Die(){
-    ENEMIESMANAGER._testowaPrzeciwnicy++;
     GAMEMANAGER.root->removeChild(_ownerNode);
     auto it = std::find(ENEMIESMANAGER._enemies.begin(), ENEMIESMANAGER._enemies.end(), shared_from_this());
     if (it != ENEMIESMANAGER._enemies.end()) {
