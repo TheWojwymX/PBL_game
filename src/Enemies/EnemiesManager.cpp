@@ -190,7 +190,7 @@
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
 
         glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[0]);
-        enemyPosition.y = 0.62 * scale.y + GAMEMANAGER._groundLevel;
+        enemyPosition.y = 0.62f * scale.y + GAMEMANAGER._groundLevel - 0.75f;
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
 

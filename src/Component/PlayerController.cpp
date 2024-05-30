@@ -144,11 +144,41 @@ void PlayerController::HandleMovement() {
 
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
 
+    if(CheckIsOutsideBase(_ownerTransform->GetPosition(), GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius)){
+        movementVector = CorrectBaseMovement(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius);
+    }
+
     std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
 
     _ownerTransform->AddPosition(collisionResult.first);
 
     CheckGrounded(collisionResult.second);
+
+
+}
+
+glm::vec3 PlayerController::CorrectBaseMovement(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 domePos, float domeRadius) {
+    glm::vec3 newPos = playerPos + movementVec;
+    glm::vec2 newPos2D = glm::vec2(newPos.x, newPos.z);
+    glm::vec2 direction = glm::normalize(newPos2D - domePos);
+    glm::vec2 perpDirection = glm::vec2(-direction.y, direction.x);
+
+    if (glm::distance(newPos2D, domePos) + 4.5f > domeRadius) {
+        glm::vec2 correctedMovement2D = glm::dot(glm::vec2(movementVec.x, movementVec.z), perpDirection) * perpDirection;
+        return glm::vec3(correctedMovement2D.x, movementVec.y, correctedMovement2D.y);
+    }
+    return movementVec;
+}
+
+bool PlayerController::CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius){
+
+    glm::vec2 playerPos2D = glm::vec2(playerPos.x, playerPos.z);
+
+    if(glm::distance(playerPos2D, domePos) + 4.5f > domeRadius && playerPos.y >= GAMEMANAGER._groundLevel - 0.7f){
+        return true;
+    } else{
+        return false;
+    }
 }
 
 void PlayerController::addToInspector(ImguiMain *imguiMain) {

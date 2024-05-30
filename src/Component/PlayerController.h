@@ -80,4 +80,8 @@ private:
     float _jetpackActivationDelay = 0.3f;
 
     void JetpackInput();
+
+    bool CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius);
+
+    glm::vec3 CorrectBaseMovement(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 domePos, float domeRadius);
 };
