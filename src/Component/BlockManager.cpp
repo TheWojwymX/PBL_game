@@ -95,7 +95,6 @@ void BlockManager::UpdateInstanceRenderer() {
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        //std::cout << "Size of instanceMatrix: " << instanceMatrix.size() << std::endl;
         _sandRendererRef->SetInstanceMatrix(instanceMatrix);
     }
 }
@@ -193,8 +192,6 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData)
     // Check if the block will be visible
     bool isVisible = !leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty ||
         !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty;
-
-    blockData.SetSideCollisions(rightBlockEmpty, leftBlockEmpty, topBlockEmpty, bottomBlockEmpty, frontBlockEmpty, backBlockEmpty);
 
     // Set the visibility of the block
     SetVisibility(blockData, isVisible);
@@ -346,7 +343,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
                 if (entityPosX + halfWidth > blockMin.x || entityPosX - halfWidth < blockMax.x) {
                     // Determine the separation vector in the x-axis
                     float direction = glm::sign(entityPosX - roundedPosX.x);
-                    info.separationVector.x = (std::abs((std::abs(entityPosX - roundedPosX.x) - (halfWidth + 0.5f))) + 0.00001f) * direction;
+                    info.separationVector.x = (std::abs((std::abs(entityPosX - roundedPosX.x) - (halfWidth + 0.5f))) + 0.0001f) * direction;
                     info.isColliding = true;
                 }
             }
@@ -363,14 +360,14 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
 
                 float entityPosY = entityPos.y + movementVector.y;
                 if (i < 4) {
-                    if (entityPosY < blockMax.y && entityPosY > roundedPosY.y) {
-                        info.separationVector.y = (std::abs((std::abs(entityPosY - blockMax.y))) + 0.00001f);
+                    if (entityPosY < blockMax.y) {
+                        info.separationVector.y = (std::abs((std::abs(entityPosY - blockMax.y))) + 0.0001f);
                         info.isColliding = true;
                     }
                 }
                 else if (i >= 8) {
-                    if (entityPosY + entityHeight > blockMin.y && entityPosY + entityHeight < roundedPosY.y) {
-                        info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.00001f) * -1;
+                    if (entityPosY + entityHeight > blockMin.y) {
+                        info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.0001f) * -1;
                         info.isColliding = true;
                     }
                 }
@@ -390,7 +387,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
                 if (entityPosZ + halfWidth > blockMin.z || entityPosZ - halfWidth < blockMax.z) {
                     // Determine the separation vector in the z-axis
                     float direction = glm::sign(entityPosZ - roundedPosZ.z);
-                    info.separationVector.z = (std::abs((std::abs(entityPosZ - roundedPosZ.z) - (halfWidth + 0.5f))) + 0.00001f) * direction;
+                    info.separationVector.z = (std::abs((std::abs(entityPosZ - roundedPosZ.z) - (halfWidth + 0.5f))) + 0.0001f) * direction;
                     info.isColliding = true;
                 }
             }
@@ -603,8 +600,9 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
         separationVector.z = 0.0f;
     }
 
-    //std::cout << "Mov: " << movementVector.y << " | SepX : " << separationVector.x << " | SepY : " << separationVector.y << "  | SepZ:" << separationVector.z <<  " | EposY : " << entityPos.y << std::endl;
+    
     movementVector += separationVector;
+    //std::cout << "Mov: " << movementVector.y << " | SepX : " << separationVector.x << " | SepY : " << separationVector.y << "  | SepZ:" << separationVector.z << " | EposY : " << entityPos.y + entityHeight << std::endl;
 
     // Return the separation vector
     return std::make_pair(movementVector,separationVector);

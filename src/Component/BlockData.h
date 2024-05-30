@@ -28,7 +28,6 @@ public:
     bool IsVisible() const { return _visible; }
     bool IsRendered() const { return _rendered; }
     glm::mat4 GetMatrix() const { return _matrix; }
-    bool GetSideCollision(int index) const { return _sideCollisions[index]; }
 
     void SetBlockType(BlockType blockType) { _blockType = blockType; }
     void SetPosID(glm::ivec3 posID) { _posID = posID; }
@@ -39,14 +38,6 @@ public:
     void SetVisible(bool visible) { _visible = visible; }
     void SetRendered(bool rendered) { _visible = rendered; }
     void SetMatrix(const glm::mat4& matrix) { _matrix = matrix; }
-    void SetSideCollisions(bool right, bool left, bool top, bool bottom, bool front, bool back) {
-        _sideCollisions[0] = right;
-        _sideCollisions[1] = left;
-        _sideCollisions[2] = top;
-        _sideCollisions[3] = bottom;
-        _sideCollisions[4] = front;
-        _sideCollisions[5] = back;
-    }
     glm::ivec3 GetChunkID(int chunkSize) const {return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize);}
 
     bool DamageBlock(float amount);
@@ -62,5 +53,4 @@ private:
     bool _visible;
     bool _rendered;
     glm::mat4 _matrix;
-    bool _sideCollisions[6];
 };
