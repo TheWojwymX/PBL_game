@@ -21,7 +21,7 @@ std::shared_ptr<Shader> ResourceManager::GetShaderByName(const string &name) {
             return shader;
         }
     }
-    std::cout << "No such shader!" << std::endl;
+    std::cout << "No shader named: "<< name << std::endl;
     return nullptr;
 }
 

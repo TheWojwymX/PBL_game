@@ -127,11 +127,11 @@
                 "fragmentPath": "res/fragLightObjectShader.fs",
                 "vertexPath": "res/vecLightObjectShader.vs"
             },
-            {
-                "ShaderName": "instanceModelShader",
-                "fragmentPath": "../../res/instancedFragShader.fs",
-                "vertexPath": "../../res/instancedVecShader.vs"
-            },
+          {
+            "ShaderName": "instancedSandShader",
+            "fragmentPath": "../../res/instancedSandFragShader.fs",
+            "vertexPath": "../../res/instancedSandVecShader.vs"
+          },
             {
                 "ShaderName": "skyboxShader",
                 "fragmentPath": "res/skyboxFragShader.fs",
@@ -288,7 +288,7 @@
               "componentType": 3,
               "maxSize": 256000,
               "model": "sandModel",
-              "shader": "instanceModelShader"
+              "shader": "instancedSandShader"
             }
           ],
           "transform": {
@@ -319,7 +319,7 @@
               "componentType": 3,
               "maxSize": 250000,
               "model": "topLayerModel",
-              "shader": "instanceModelShader"
+              "shader": "instancedSandShader"
             }
           ],
           "transform": {
@@ -350,7 +350,7 @@
               "componentType": 3,
               "maxSize": 1000,
               "model": "plasticModel",
-              "shader": "instanceModelShader"
+              "shader": "instancedSandShader"
             }
           ],
           "transform": {
@@ -381,7 +381,7 @@
               "componentType": 3,
               "maxSize": 1000,
               "model": "metalModel",
-              "shader": "instanceModelShader"
+              "shader": "instancedSandShader"
             }
           ],
           "transform": {

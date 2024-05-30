@@ -48,8 +48,8 @@ void ShadowMap::AssignShadowMapToShader() {
     RESOURCEMANAGER.GetShaderByName("modelShader")->use();
     RESOURCEMANAGER.GetShaderByName("modelShader")->setInt("shadowMap", 1);
 
-    RESOURCEMANAGER.GetShaderByName("instanceModelShader")->use();
-    RESOURCEMANAGER.GetShaderByName("instanceModelShader")->setInt("shadowMap", 1);
+    RESOURCEMANAGER.GetShaderByName("instancedSandShader")->use();
+    RESOURCEMANAGER.GetShaderByName("instancedSandShader")->setInt("shadowMap", 1);
 }
 
 void ShadowMap::BeginRender() {

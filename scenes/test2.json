@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 84,
-    "nextNodeId": 72,
+    "nextComponentId": 86,
+    "nextNodeId": 74,
     "resources": {
         "Models": [
             {
@@ -25,6 +25,14 @@
             },
             {
                 "ModelName": "topLayerModel",
+                "Path": "../../res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "plasticModel",
+                "Path": "../../res/Sand/Sand.obj"
+            },
+            {
+                "ModelName": "metalModel",
                 "Path": "../../res/Sand/Sand.obj"
             },
             {
@@ -120,9 +128,9 @@
                 "vertexPath": "res/vecLightObjectShader.vs"
             },
             {
-                "ShaderName": "instanceModelShader",
-                "fragmentPath": "../../res/instancedFragShader.fs",
-                "vertexPath": "../../res/instancedVecShader.vs"
+                "ShaderName": "instancedSandShader",
+                "fragmentPath": "../../res/instancedSandFragShader.fs",
+                "vertexPath": "../../res/instancedSandVecShader.vs"
             },
             {
                 "ShaderName": "skyboxShader",
@@ -280,7 +288,7 @@
                         "componentType": 3,
                         "maxSize": 256000,
                         "model": "sandModel",
-                        "shader": "instanceModelShader"
+                        "shader": "instancedSandShader"
                     }
                 ],
                 "transform": {
@@ -311,7 +319,69 @@
                         "componentType": 3,
                         "maxSize": 250000,
                         "model": "topLayerModel",
-                        "shader": "instanceModelShader"
+                        "shader": "instancedSandShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        -0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 72,
+                "NodeName": "plastic",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 84,
+                        "componentType": 3,
+                        "maxSize": 1000,
+                        "model": "plasticModel",
+                        "shader": "instancedSandShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        -0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 73,
+                "NodeName": "metal",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 85,
+                        "componentType": 3,
+                        "maxSize": 1000,
+                        "model": "metalModel",
+                        "shader": "instancedSandShader"
                     }
                 ],
                 "transform": {
