@@ -95,7 +95,7 @@ void BlockManager::UpdateInstanceRenderer() {
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        std::cout << "Size of instanceMatrix: " << instanceMatrix.size() << std::endl;
+        //std::cout << "Size of instanceMatrix: " << instanceMatrix.size() << std::endl;
         _sandRendererRef->SetInstanceMatrix(instanceMatrix);
     }
 }

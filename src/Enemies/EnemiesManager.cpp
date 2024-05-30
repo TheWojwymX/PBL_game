@@ -9,6 +9,28 @@
         return instance;
     }
 
+    void EnemiesManager::Update() {
+        ChooseModelBasedOnDistance(); //LOD (safe to comment out)
+        if(Input::Instance().IsKeyPressed(GLFW_KEY_KP_1)) {
+
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<float> dis(0.5f, 1.0f);
+            float scale = dis(gen);
+
+            SpawnEnemy(2, glm::vec3(scale), 0);
+        }
+
+        for(int i = 0; i < _enemies.size(); i++) {
+            if(_enemies[i] == nullptr) continue;
+            _enemies[i]->EnemyAI();
+            ReturnToComingForNormalDestination(_enemies[i]);
+            CheckIfAtWalls(_enemies[i]);
+            AvoidEnemy(_enemies[i]);
+        }
+
+    }
+
     void EnemiesManager::Init() {
         for(int i = 0; i < COMPONENTSMANAGER.GetComponents().size(); i++){
             if(COMPONENTSMANAGER.GetComponents()[i] != nullptr && COMPONENTSMANAGER.GetComponents()[i]->_type == ComponentType::ENEMYAI){
@@ -61,125 +83,63 @@
         }
     }
 
-
-
-    void EnemiesManager::ReturnToComingForNormalDestination(){
-        for(int i = 0; i < _enemies.size(); i++){
-            if(_enemies[i] == nullptr) continue;
-            if(_enemies[i]->_destinationVector != CalcClosestDomePosition(_enemies[i]) && glm::distance(_enemies[i]->_destinationVector, _enemies[i]->GetOwnerPosition()) <= 1){
-                _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
-                _enemies[i]->_isAvoiding = false;
-            }
+    void EnemiesManager::ReturnToComingForNormalDestination(shared_ptr<Enemy> enemy){
+        if(enemy->_destinationVector != CalcClosestDomePosition(enemy) && glm::distance(enemy->_destinationVector, enemy->GetOwnerPosition()) <= 1){
+            enemy->_destinationVector = CalcClosestDomePosition(enemy);
+            enemy->_isAvoiding = false;
         }
     }
 
-    void EnemiesManager::AvoidEnemy(){
-        for(int i = 0; i < _enemies.size(); i++) {
-            if(_enemies[i] == nullptr) continue;
-    /*        if(_enemies[i]->_isAvoiding){
-                continue;
-            }*/
+    void EnemiesManager::AvoidEnemy(shared_ptr<Enemy> thisEnemy){
+        if(thisEnemy->_isAtWalls){
+            return;
+        }
 
-            if(_enemies[i]->_isAtWalls){
-                continue;
+        glm::vec3 avoidanceVector(0.0f);
+        bool needsToAvoid = false;
+
+        for(int j = 0; j < _enemies.size(); j++) {
+            if(_enemies[j] == nullptr) continue;
+            if (thisEnemy == _enemies[j]) continue;
+
+            glm::vec3 toOther = _enemies[j]->GetOwnerPosition() - thisEnemy->GetOwnerPosition();
+            float distanceToOther = glm::length(toOther);
+
+            if (distanceToOther < (_enemies[j]->_size + thisEnemy->_size)/2) {
+                needsToAvoid = true;
+                toOther = glm::normalize(toOther);
+                avoidanceVector -= toOther / distanceToOther;
             }
+        }
 
-            glm::vec3 avoidanceVector(0.0f);
-            bool needsToAvoid = false;
-
-            for(int j = 0; j < _enemies.size(); j++) {
-                if(_enemies[j] == nullptr) continue;
-                if (i == j) continue;
-
-    /*            if(_enemies[j]->_isAvoiding){
-                    continue;
-                }*/
-
-    /*            if(_enemies[j]->_isAtWalls){
-                    continue;
-                }*/
-
-                glm::vec3 toOther = _enemies[j]->GetOwnerPosition() - _enemies[i]->GetOwnerPosition();
-                float distanceToOther = glm::length(toOther);
-
-                if (distanceToOther < (_enemies[j]->_size + _enemies[i]->_size)/2) {
-                    needsToAvoid = true;
-                    toOther = glm::normalize(toOther);
-                    avoidanceVector -= toOther / distanceToOther;
-                }
-            }
-
-            if (needsToAvoid) {
-                avoidanceVector = glm::normalize(avoidanceVector);
-                _enemies[i]->_isAvoiding = true;
-                avoidanceVector.y = 0;
-                _enemies[i]->_destinationVector = _enemies[i]->GetOwnerPosition() + avoidanceVector * 3.0f;
-                _enemies[i]->_distanceToStop = 1;
-            } else {
-                _enemies[i]->_isAvoiding = false;
-                _enemies[i]->_distanceToStop = 0.1;
-            }
+        if (needsToAvoid) {
+            avoidanceVector = glm::normalize(avoidanceVector);
+            thisEnemy->_isAvoiding = true;
+            avoidanceVector.y = 0;
+            thisEnemy->_destinationVector = thisEnemy->GetOwnerPosition() + avoidanceVector * 3.0f;
+            thisEnemy->_distanceToStop = 1;
+        } else {
+            thisEnemy->_isAvoiding = false;
+            thisEnemy->_distanceToStop = 0.1;
         }
     }
 
-    void EnemiesManager::Update() {
-
-    /*    for(int i = 0; i <= COMPONENTSMANAGER.Components.size() - 1; i++){
-            std::cout << COMPONENTSMANAGER.Components[i]->_id << ", ";
-        }*/
-
-        ReturnToComingForNormalDestination();
-        CheckIfAtWalls();
-        AvoidEnemy();
-        ChooseModelBasedOnDistance(); //LOD (safe to comment out)
-        if(Input::Instance().IsKeyPressed(GLFW_KEY_KP_1)) {
-
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_real_distribution<float> dis(0.5f, 1.0f);
-            float scale = dis(gen);
-
-            SpawnEnemy(2, glm::vec3(scale), 0);
-        }
-
-        for(int i = 0; i < _enemies.size(); i++) {
-            if(_enemies[i] == nullptr) continue;
-            _enemies[i]->EnemyAI();
-        }
-
-    }
-
-    void EnemiesManager::CheckIfAtWalls(){
-        for(int i = 0; i < _enemies.size(); i++) {
-
-            if(_enemies[i] == nullptr) continue;
-
-            if(!_enemies[i]->_isAtWalls){
-
-                //std::cout << "nie stoje pod murami i mam id " << _enemies[i]->_id << std::endl;
-
-                if(glm::distance(_enemies[i]->GetOwnerPosition(), CalcClosestDomePosition(_enemies[i])) < 0.1f){
-                    _enemies[i]->_isAtWalls = true;
-                    std::string nameOfEnemy = "Enemy" + to_string(i + 1);
-
-                    if(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<Animation>() != nullptr)
-                    {
-                        NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<Animation>()->setIsWalking(false);
-                    }
+    void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy){
+        if(!enemy->_isAtWalls){
+            if(glm::distance(enemy->GetOwnerPosition(), CalcClosestDomePosition(enemy)) < 0.1f){
+                enemy->_isAtWalls = true;
+                if(enemy->GetOwnerNode()->GetComponent<Animation>() != nullptr)
+                {
+                    enemy->GetOwnerNode()->GetComponent<Animation>()->setIsWalking(false);
                 }
             }
         }
-    }
-
-    void EnemiesManager::DealDamageToEnemy(int amount, const shared_ptr<Enemy>& enemy){
-
-        if(enemy == nullptr) return;
-
-        enemy->TakeDamage(amount);
-
     }
 
     void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex) {
+
+        std::cout << "Ilosc mrowek to: " << _enemies.size() << std::endl;
+
         if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size()) {
             std::string nameOfEnemy = "Enemy" + std::to_string(_enemies.size() + 1);
             std::string particleGeneratorNode = "Particle" +  to_string(_enemies.size() + 1);
@@ -220,7 +180,6 @@
             antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
             antDie->Init();
             NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antDie);
-
 
             auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
             NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);

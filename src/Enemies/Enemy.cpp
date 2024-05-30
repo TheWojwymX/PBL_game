@@ -30,17 +30,16 @@ void Enemy::Deserialize(const nlohmann::json &jsonData) {
 
 void Enemy::WalkToDestination(glm::vec3 *destination) {
 
+    if(_isAtWalls) return;
+
     if(destination != nullptr){
         _destinationVector = *destination;
     }
 
-    float slalomAmplitude = 0.01;
-    float slalomFrequency = 1.0f;
-
     if(glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop && !_shouldStay){
 
-        slalomTime += TIME.GetDeltaTime();
-        float sideMovement = sin(slalomTime * slalomFrequency) * slalomAmplitude;
+        _slalomTime += TIME.GetDeltaTime();
+        float sideMovement = sin(_slalomTime * _slalomFrequency) * _slalomAmplitude;
         glm::vec3 sideVector = glm::normalize(glm::cross(_ownerTransform->GetRotation() * glm::vec3(0, 1, 0), _ownerTransform->GetRotation() * glm::vec3(0, 0, -1))) * sideMovement;
 
         glm::vec3 currentPos = _ownerTransform->GetPosition();

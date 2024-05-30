@@ -41,10 +41,6 @@ public:
 
     float _distanceToStop;
 
-    void AvoidEnemy();
-
-    void ReturnToComingForNormalDestination();
-
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
     std::vector<glm::vec2> _spawnersPositions{
@@ -60,15 +56,17 @@ public:
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
 
-    void CheckIfAtWalls();
-
-    void DealDamageToEnemy(int amount, const shared_ptr<Enemy> &enemy);
-
     void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex);
 
     void ChooseModelBasedOnDistance();
 
     void SetSymbolsForWave();
+
+    void ReturnToComingForNormalDestination(shared_ptr<Enemy> enemy);
+
+    void CheckIfAtWalls(shared_ptr<Enemy> enemy);
+
+    void AvoidEnemy(shared_ptr<Enemy> thisEnemy);
 };
 
 

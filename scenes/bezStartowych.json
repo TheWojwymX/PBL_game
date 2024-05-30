@@ -1,0 +1,1780 @@
+{
+  "nextComponentId": 71,
+  "nextNodeId": 82,
+  "resources": {
+    "Models": [
+      {
+        "ModelName": "sandModel",
+        "Path": "../../res/Sand/Sand.obj"
+      },
+      {
+        "ModelName": "waveNotificationModel",
+        "Path": "../../res/Sand/Sand.obj"
+      },
+      {
+        "ModelName": "antModel",
+        "Path": "res/Models/Ant/ant-fixed.obj"
+      },
+      {
+        "ModelName": "baseModel",
+        "Path": "res/Models/Base/base_concept_2.0.obj"
+      },
+      {
+        "ModelName": "cloudModel",
+        "Path": "../../res/Sand/Sand.obj"
+      },
+      {
+        "ModelName": "topLayerModel",
+        "Path": "../../res/Sand/Sand.obj"
+      },
+      {
+        "ModelName": "AntWalk0",
+        "Path": "../../res/Models/Ant/ant_walk_v1-0.obj"
+      },
+      {
+        "ModelName": "AntWalk1",
+        "Path": "../../res/Models/Ant/ant_walk_v1-1.obj"
+      },
+      {
+        "ModelName": "AntWalk2",
+        "Path": "../../res/Models/Ant/ant_walk_v1-2.obj"
+      },
+      {
+        "ModelName": "AntWalk3",
+        "Path": "../../res/Models/Ant/ant_walk_v1-3.obj"
+      },
+      {
+        "ModelName": "AntWalk4",
+        "Path": "../../res/Models/Ant/ant_walk_v1-4.obj"
+      },
+      {
+        "ModelName": "AntWalk5",
+        "Path": "../../res/Models/Ant/ant_walk_v1-5.obj"
+      },
+      {
+        "ModelName": "AntAttack0",
+        "Path": "../../res/Models/Ant/ant_attack_v1-0.obj"
+      },
+      {
+        "ModelName": "AntAttack1",
+        "Path": "../../res/Models/Ant/ant_attack_v1-1.obj"
+      },
+      {
+        "ModelName": "AntAttack2",
+        "Path": "../../res/Models/Ant/ant_attack_v1-2.obj"
+      },
+      {
+        "ModelName": "AntAttack3",
+        "Path": "../../res/Models/Ant/ant_attack_v1-3.obj"
+      },
+      {
+        "ModelName": "DomeStation",
+        "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+      },
+      {
+        "ModelName": "PlayerStation",
+        "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+      },
+      {
+        "ModelName": "RefuelStation",
+        "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+      },
+      {
+        "ModelName": "Turret_Standard_Level1",
+        "Path": "../../res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj"
+      },
+      {
+        "ModelName": "Turret_Gunner_Level1",
+        "Path": "../../res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
+      },
+      {
+        "ModelName": "Turret_Parachute",
+        "Path": "../../res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
+      },
+      {
+        "ModelName": "SandbagsModel",
+        "Path": "../../res/Models/Base/Sandbags/sandbox_wall_3.obj"
+      },
+      {
+        "ModelName": "WiresModel",
+        "Path": "../../res/Models/Base/Wires/wire_wall_1.0.obj"
+      },
+      {
+        "ModelName": "BucketModel",
+        "Path": "../../res/Models/Base/Bucket/baza_1.0-0.mtl.obj"
+      }
+    ],
+    "Shaders": [
+      {
+        "ShaderName": "modelShader",
+        "fragmentPath": "../../res/fragShader.fs",
+        "vertexPath": "../../res/vecShader.vs"
+      },
+      {
+        "ShaderName": "lightObjectShader",
+        "fragmentPath": "res/fragLightObjectShader.fs",
+        "vertexPath": "res/vecLightObjectShader.vs"
+      },
+      {
+        "ShaderName": "instanceModelShader",
+        "fragmentPath": "../../res/instancedFragShader.fs",
+        "vertexPath": "../../res/instancedVecShader.vs"
+      },
+      {
+        "ShaderName": "skyboxShader",
+        "fragmentPath": "res/skyboxFragShader.fs",
+        "vertexPath": "res/skyboxVecShader.vs"
+      },
+      {
+        "ShaderName": "textShader",
+        "fragmentPath": "../../res/textShader.fs",
+        "vertexPath": "../../res/textShader.vs"
+      },
+      {
+        "ShaderName": "textureShader",
+        "fragmentPath": "../../res/textureShader.fs",
+        "vertexPath": "../../res/textureShader.vs"
+      },
+      {
+        "ShaderName": "cloudShader",
+        "fragmentPath": "../../res/cloudFragShader.fs",
+        "vertexPath": "../../res/cloudVecShader.vs"
+      },
+      {
+        "ShaderName": "toonShader",
+        "fragmentPath": "../../res/toonShader.fs",
+        "vertexPath": "../../res/toonShader.vs"
+      },
+      {
+        "ShaderName": "outlineShader",
+        "fragmentPath": "../../res/outlineShader.fs",
+        "vertexPath": "../../res/outlineShader.vs"
+      },
+      {
+        "ShaderName": "skyboxReflectionShader",
+        "fragmentPath": "../../res/skyboxReflectionShader.fs",
+        "vertexPath": "../../res/skyboxReflectionShader.vs"
+      },
+      {
+        "ShaderName": "shadowShader",
+        "fragmentPath": "../../res/shadowShader.fs",
+        "vertexPath": "../../res/shadowShader.vs"
+      },
+      {
+        "ShaderName": "shadowInstanceShader",
+        "fragmentPath": "../../res/shadowInstanceShader.fs",
+        "vertexPath": "../../res/shadowInstanceShader.vs"
+      },
+      {
+        "ShaderName": "wireframeShader",
+        "fragmentPath": "../../res/wireframeShader.fs",
+        "vertexPath": "../../res/wireframeShader.vs"
+      },
+      {
+        "ShaderName": "turretRangeShader",
+        "fragmentPath": "../../res/turretRange.fs",
+        "vertexPath": "../../res/turretRange.vs"
+      },
+      {
+        "ShaderName": "particleShader",
+        "fragmentPath": "../../res/particleShader.fs",
+        "vertexPath": "../../res/particleShader.vs"
+      }
+    ],
+    "cShaders": [
+      {
+        "ShaderName" : "particleComputeShader",
+        "path" : "../../res/particleCompute.glsl"
+      }
+    ],
+    "Sounds": [
+      {
+        "Path": "res/Sounds/ksu.mp3",
+        "SoundName": "BackgroundMusic",
+        "SoundID": 0,
+        "Type": 0
+      },
+      {
+        "Path": "res/Sounds/step1.mp3",
+        "SoundName": "ConcreteSound1",
+        "SoundID": 1,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step2.mp3",
+        "SoundName": "ConcreteSound2",
+        "SoundID": 2,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step3.mp3",
+        "SoundName": "ConcreteSound3",
+        "SoundID": 3,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/jump.mp3",
+        "SoundName": "JumpSound",
+        "SoundID": 4,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step4.mp3",
+        "SoundName": "ConcreteSound4",
+        "SoundID": 5,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step5.mp3",
+        "SoundName": "ConcreteSound5",
+        "SoundID": 6,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step6.mp3",
+        "SoundName": "ConcreteSound6",
+        "SoundID": 7,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step7.mp3",
+        "SoundName": "ConcreteSound7",
+        "SoundID": 8,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step8.mp3",
+        "SoundName": "ConcreteSound8",
+        "SoundID": 9,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step9.mp3",
+        "SoundName": "ConcreteSound9",
+        "SoundID": 10,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/step10.mp3",
+        "SoundName": "ConcreteSound10",
+        "SoundID": 11,
+        "Type": 1
+      }
+    ]
+  },
+  "root": {
+    "NodeID": 0,
+    "NodeName": "root",
+    "children": [
+      {
+        "NodeID": 1,
+        "NodeName": "sand",
+        "children": [],
+        "components": [
+          {
+            "componentId": 0,
+            "componentType": 3,
+            "maxSize": 256000,
+            "model": "sandModel",
+            "shader": "instanceModelShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 19,
+        "NodeName": "topLayer",
+        "children": [],
+        "components": [
+          {
+            "componentId": 31,
+            "componentType": 3,
+            "maxSize": 250000,
+            "model": "topLayerModel",
+            "shader": "instanceModelShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 2,
+        "NodeName": "blockManager",
+        "children": [],
+        "components": [
+          {
+            "cameraRefID": 2,
+            "componentId": 1,
+            "componentType": 2,
+            "depth": 100,
+            "height": 300,
+            "sandRendererRefID": 0,
+            "topLayerRendererRefID": 31,
+            "width": 100
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 3,
+        "NodeName": "player",
+        "children": [],
+        "components": [
+          {
+            "componentId": 5,
+            "componentType": 4
+          },
+          {
+            "componentId": 2,
+            "componentType": 0,
+            "offset": [
+              0.0,
+              1.7999999523162842,
+              0.0
+            ]
+          },
+          {
+            "blockManagerRefID": 1,
+            "cameraRefID": 2,
+            "componentId": 3,
+            "componentType": 1
+          },
+          {
+            "componentId": 27,
+            "componentType": 10,
+            "offset": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "particleType": "jetpackUse",
+            "shader": "particleShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            49.5,
+            315.0,
+            55.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID":40,
+        "NodeName":"Sanbags14",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":51,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            63.36,
+            299.5,
+            52.68
+          ],
+          "rotation":[
+            0,
+            447.6011,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":41,
+        "NodeName":"Sanbags10",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":52,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            50.96,
+            299.5,
+            36.44
+          ],
+          "rotation":[
+            0,
+            180,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":42,
+        "NodeName":"Sanbags11",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":53,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            56.58,
+            299.5,
+            37.9
+          ],
+          "rotation":[
+            0,
+            513.5095,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":43,
+        "NodeName":"Wires5",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":54,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            45.025,
+            299.36,
+            63.124
+          ],
+          "rotation":[
+            0,
+            439.2692,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":44,
+        "NodeName":"Wires11",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":55,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            45.125,
+            299.36,
+            35.964
+          ],
+          "rotation":[
+            0,
+            277.2596,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":45,
+        "NodeName":"Wires10",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":56,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            39.515,
+            299.36,
+            38.754
+          ],
+          "rotation":[
+            0,
+            313.3839,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":46,
+        "NodeName":"Sanbags4",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":57,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            51.88,
+            299.5,
+            62.75
+          ],
+          "rotation":[
+            0,
+            180,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":47,
+        "NodeName":"Wires4",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":58,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            51.435,
+            299.36,
+            63.594
+          ],
+          "rotation":[
+            0,
+            450.9965,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":48,
+        "NodeName":"Wires13",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":59,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            62.355,
+            299.36,
+            41.494
+          ],
+          "rotation":[
+            359.2408,
+            225.1974,
+            0.8475851
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":49,
+        "NodeName":"Wires1",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":60,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            64.21,
+            299.36,
+            52.12
+          ],
+          "rotation":[
+            0,
+            537.5507,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":50,
+        "NodeName":"Sanbags15",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":61,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            45.16,
+            299.5,
+            36.77
+          ],
+          "rotation":[
+            0,
+            187.7522,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":51,
+        "NodeName":"Sanbags8",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":62,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            40.07,
+            299.5,
+            39.11
+          ],
+          "rotation":[
+            0,
+            225,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":52,
+        "NodeName":"Wires15",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":63,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            57.675,
+            299.36,
+            37.304
+          ],
+          "rotation":[
+            359.0507,
+            239.8855,
+            0.6273988
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":53,
+        "NodeName":"Wires12",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":64,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            51.555,
+            299.36,
+            35.634
+          ],
+          "rotation":[
+            358.8635,
+            270.5196,
+            0.05617052
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":54,
+        "NodeName":"Sanbags3",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":65,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            37.07,
+            299.5,
+            55.81
+          ],
+          "rotation":[
+            0,
+            474.7079,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":55,
+        "NodeName":"Sanbags2",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":66,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            40.77,
+            299.5,
+            60.36
+          ],
+          "rotation":[
+            0,
+            500.3037,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":56,
+        "NodeName":"Wires9",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":67,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            36.095,
+            299.36,
+            43.244
+          ],
+          "rotation":[
+            0,
+            343.4217,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":57,
+        "NodeName":"Wires8",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":68,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            35.095,
+            299.36,
+            49.624
+          ],
+          "rotation":[
+            0,
+            360.9583,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":58,
+        "NodeName":"Sanbags12",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":69,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            61.12,
+            299.5,
+            41.49
+          ],
+          "rotation":[
+            0,
+            492.0717,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":59,
+        "NodeName":"Sanbags6",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":70,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            57.42,
+            299.5,
+            61.31
+          ],
+          "rotation":[
+            0,
+            207.6979,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":60,
+        "NodeName":"Wires6",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":71,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            39.515,
+            299.36,
+            60.304
+          ],
+          "rotation":[
+            0,
+            411.0347,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":61,
+        "NodeName":"Sanbags5",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":72,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            61.64,
+            299.5,
+            57.47
+          ],
+          "rotation":[
+            0,
+            234.1341,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":62,
+        "NodeName":"Wires14",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":73,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            64.335,
+            299.36,
+            46.374
+          ],
+          "rotation":[
+            359.803,
+            193.3177,
+            1.120679
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":63,
+        "NodeName":"Sanbags13",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":74,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            63.22,
+            299.5,
+            46.86
+          ],
+          "rotation":[
+            0,
+            456.7609,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":64,
+        "NodeName":"Wires2",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":75,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            62.286,
+            299.36,
+            57.985
+          ],
+          "rotation":[
+            0,
+            504.6304,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":65,
+        "NodeName":"Wires3",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":76,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            57.575,
+            299.36,
+            62.094
+          ],
+          "rotation":[
+            0,
+            477.4176,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":66,
+        "NodeName":"Sanbags1",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":77,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            46.1,
+            299.5,
+            62.49
+          ],
+          "rotation":[
+            0,
+            533.382,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":67,
+        "NodeName":"Wires7",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":78,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            35.895,
+            299.36,
+            55.164
+          ],
+          "rotation":[
+            0,
+            387.0529,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":68,
+        "NodeName":"Sanbags9",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":79,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            36.89,
+            299.5,
+            43.78
+          ],
+          "rotation":[
+            0,
+            248.6669,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":69,
+        "NodeName":"Wires16",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":80,
+            "componentType":5,
+            "model":"WiresModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            62.355,
+            299.36,
+            41.494
+          ],
+          "rotation":[
+            359.2408,
+            225.1974,
+            0.8475851
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID":70,
+        "NodeName":"Sanbags7",
+        "children":[
+
+        ],
+        "components":[
+          {
+            "componentId":81,
+            "componentType":5,
+            "model":"SandbagsModel",
+            "outlineShader":"outlineShader",
+            "shader":"modelShader"
+          }
+        ],
+        "transform":{
+          "position":[
+            35.75,
+            299.5,
+            49.5
+          ],
+          "rotation":[
+            0,
+            270,
+            0
+          ],
+          "scale":[
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+
+
+      {
+        "NodeID": 26,
+        "NodeName": "Bucket",
+        "children": [],
+        "components": [
+          {
+            "componentId": 37,
+            "componentType": 5,
+            "model": "BucketModel",
+            "outlineShader": "outlineShader",
+            "shader": "modelShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            50.0,
+            299.5,
+            50.0
+          ],
+          "rotation": [
+            0.0,
+            0.7071067690849304,
+            0.0
+          ],
+          "scale": [
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      },
+      {
+        "NodeID": 13,
+        "NodeName": "DomeStation",
+        "children": [],
+        "components": [
+          {
+            "componentId": 21,
+            "componentType": 5,
+            "model": "DomeStation",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            40.0,
+            299.5,
+            90.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 18,
+        "NodeName": "RefuelStation",
+        "children": [],
+        "components": [
+          {
+            "componentId": 29,
+            "componentType": 5,
+            "model": "DomeStation",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 30,
+            "componentType": 11
+          }
+        ],
+        "transform": {
+          "position": [
+            40.0,
+            299.5,
+            60.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 17,
+        "NodeName": "PlayerStation",
+        "children": [],
+        "components": [
+          {
+            "componentId": 28,
+            "componentType": 5,
+            "model": "PlayerStation",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            60.0,
+            299.5,
+            90.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 12,
+        "NodeName": "cloud",
+        "children": [],
+        "components": [
+          {
+            "componentId": 20,
+            "componentType": 3,
+            "maxSize": 5000,
+            "model": "cloudModel",
+            "shader": "cloudShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 11,
+        "NodeName": "cloudManager",
+        "children": [],
+        "components": [
+          {
+            "cameraRefID": 2,
+            "componentId": 19,
+            "componentType": 8,
+            "depth": 50,
+            "height": 2,
+            "sandRendererRefID": 20,
+            "width": 50
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 20,
+        "NodeName": "waveSymbol1",
+        "children": [],
+        "components": [
+          {
+            "componentId": 32,
+            "componentType": 5,
+            "model": "waveNotificationModel",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            2.5,
+            2.5,
+            2.5
+          ]
+        }
+      },
+      {
+        "NodeID": 21,
+        "NodeName": "waveSymbol2",
+        "children": [],
+        "components": [
+          {
+            "componentId": 33,
+            "componentType": 5,
+            "model": "waveNotificationModel",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            2.5,
+            2.5,
+            2.5
+          ]
+        }
+      },
+      {
+        "NodeID": 22,
+        "NodeName": "waveSymbol3",
+        "children": [],
+        "components": [
+          {
+            "componentId": 34,
+            "componentType": 5,
+            "model": "waveNotificationModel",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            2.5,
+            2.5,
+            2.5
+          ]
+        }
+      },
+      {
+        "NodeID": 23,
+        "NodeName": "waveSymbol4",
+        "children": [],
+        "components": [
+          {
+            "componentId": 35,
+            "componentType": 5,
+            "model": "waveNotificationModel",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            2.5,
+            2.5,
+            2.5
+          ]
+        }
+      }
+    ],
+    "components": [],
+    "transform": {
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  }
+}

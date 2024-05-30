@@ -30,7 +30,7 @@ public:
 
     bool _isAvoiding = false;
 
-    float slalomTime = 0.0f;
+    float _slalomTime = 0.0f;
 
     bool _isAtWalls = false;
 
@@ -45,6 +45,9 @@ public:
     float _attackTimer = _attackFrequency;
 
     float _size = 2;
+
+    float _slalomAmplitude = 0.01;
+    float _slalomFrequency = 1.0f;
 
     void TakeDamage(int amount);
 
