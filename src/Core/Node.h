@@ -18,6 +18,7 @@
 #include "Turrets/Turret.h"
 #include "ParticleGenerator.h"
 #include "Component/RefuelStation.h"
+#include "Component/ShovelController.h"
 
 class Node : public std::enable_shared_from_this<Node>{
 public:

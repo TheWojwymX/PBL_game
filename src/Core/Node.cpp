@@ -103,6 +103,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::REFUELSTATION:
                         ComponentsManager::getInstance().DeserializeComponent<RefuelStation>(componentJson);
                         break;
+                    case ComponentType::SHOVELCONTROLLER:
+                        ComponentsManager::getInstance().DeserializeComponent<ShovelController>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;

@@ -1,6 +1,6 @@
 {
-    "nextComponentId": 71,
-    "nextNodeId": 82,
+    "nextComponentId": 84,
+    "nextNodeId": 72,
     "resources": {
         "Models": [
             {
@@ -102,6 +102,10 @@
             {
                 "ModelName": "BucketModel",
                 "Path": "../../res/Models/Base/Bucket/baza_1.0-0.mtl.obj"
+            },
+            {
+                "ModelName": "ShovelModel",
+                "Path": "../../res/Models/Shovel/shovel_1.3.obj"
             }
         ],
         "Shaders": [
@@ -359,6 +363,41 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 71,
+                "NodeName": "Shovel",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 82,
+                        "componentType": 5,
+                        "model": "ShovelModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "componentId": 83,
+                        "componentType": 12
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.98021697998047,
+                        0.0
+                    ],
+                    "scale": [
+                        0.10000000149011612,
+                        0.10000000149011612,
+                        0.10000000149011612
                     ]
                 }
             },
