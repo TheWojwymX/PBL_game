@@ -5,6 +5,8 @@
 #include "Component/Camera.h"
 #include "Component/BlockManager.h"
 
+class ShovelController;
+
 class PlayerController : public Component {
 public:
     nlohmann::json Serialize() override;
@@ -36,6 +38,7 @@ public:
     float _jetpackFuel = 100.0f;
     float _maxJetpackFuel = 100.0f;
 
+    shared_ptr<ShovelController> _shovelController;
 private:
     float _speed;
     float _width;

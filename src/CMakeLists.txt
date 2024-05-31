@@ -107,7 +107,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Buttons/MessagePage/ContinueMessageButton.cpp
         HUD/Buttons/MessagePage/ContinueMessageButton.h
         Component/ShovelController.cpp
-        Component/ShovelController.h)
+        Component/ShovelController.h
+        Component/ShovelRenderer.cpp
+        Component/ShovelRenderer.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

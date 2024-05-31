@@ -195,6 +195,11 @@
                 "ShaderName": "particleShader",
                 "fragmentPath": "../../res/particleShader.fs",
                 "vertexPath": "../../res/particleShader.vs"
+            },
+            {
+                "ShaderName": "shovelShader",
+                "fragmentPath": "../../res/shovelShader.fs",
+                "vertexPath": "../../res/shovelShader.vs"
             }
         ],
         "Sounds": [
@@ -447,10 +452,9 @@
                 "components": [
                     {
                         "componentId": 82,
-                        "componentType": 5,
+                        "componentType": 13,
                         "model": "ShovelModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
+                        "shader": "shovelShader"
                     },
                     {
                         "componentId": 83,
@@ -469,9 +473,9 @@
                         0.0
                     ],
                     "scale": [
-                        0.10000000149011612,
-                        0.10000000149011612,
-                        0.10000000149011612
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
                     ]
                 }
             },

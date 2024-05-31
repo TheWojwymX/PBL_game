@@ -195,6 +195,11 @@
                 "ShaderName": "particleShader",
                 "fragmentPath": "../../res/particleShader.fs",
                 "vertexPath": "../../res/particleShader.vs"
+            },
+            {
+              "ShaderName": "shovelShader",
+              "fragmentPath": "../../res/shovelShader.fs",
+              "vertexPath": "../../res/shovelShader.vs"
             }
         ],
         "cShaders": [
@@ -449,10 +454,9 @@
           "components": [
             {
               "componentId": 82,
-              "componentType": 5,
+              "componentType": 13,
               "model": "ShovelModel",
-              "shader": "modelShader",
-              "outlineShader": "outlineShader"
+              "shader": "shovelShader"
             },
             {
               "componentId": 83,
@@ -471,9 +475,9 @@
               0.0
             ],
             "scale": [
-              0.1,
-              0.1,
-              0.1
+              0.3,
+              0.3,
+              0.3
             ]
           }
         },

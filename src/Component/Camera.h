@@ -51,6 +51,7 @@ public:
     float GetZoom() const { return _zoom; }
     glm::vec3 GetRightVector() const { return _right; }
     glm::vec3 GetFrontVector() const { return _front; }
+    glm::vec3 GetUpVector() const { return _up; }
     glm::mat4 GetProjectionMatrix(float screenWidth, float screenHeight) {
         return glm::perspective(glm::radians(_zoom), screenWidth / screenHeight, 0.1f, 1000.0f);
     }
