@@ -80,9 +80,10 @@ void PlayerController::MovementInput() {
 void PlayerController::InteractionInput() {
     _timeSinceLastInteraction += TIME.GetDeltaTime();
 
-    if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)) {
+    if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)
+        && !_shovelController->_isHidden && !_shovelController->_playHideAnim) {
         if(_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
-            _shovelController->_playAnim = true;
+            _shovelController->_playDigAnim = true;
             _timeSinceLastInteraction = 0.0f;
     }
 }
