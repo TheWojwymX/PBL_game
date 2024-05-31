@@ -3,6 +3,7 @@
 #include "Core/Input.h"
 #include "Core/Node.h"
 #include "Managers/GameManager.h"
+#include "ShovelController.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height, float digPower)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)), _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
@@ -43,6 +44,7 @@ void PlayerController::Deserialize(const nlohmann::json &jsonData) {
 void PlayerController::Initiate() {
     _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(_blockManagerRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
+    _shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();
     Component::Initiate();
 }
 
@@ -80,6 +82,7 @@ void PlayerController::InteractionInput() {
 
     if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)) {
         if(_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
+            _shovelController->_playAnim = true;
             _timeSinceLastInteraction = 0.0f;
     }
 }
