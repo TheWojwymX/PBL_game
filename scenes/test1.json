@@ -1,5 +1,5 @@
 {
-  "nextComponentId": 84,
+  "nextComponentId": 85,
   "nextNodeId": 72,
     "resources": {
       "Models": [
@@ -183,6 +183,11 @@
                 "ShaderName": "particleShader",
                 "fragmentPath": "../../res/particleShader.fs",
                 "vertexPath": "../../res/particleShader.vs"
+            },
+            {
+              "ShaderName": "shovelShader",
+              "fragmentPath": "../../res/shovelShader.fs",
+              "vertexPath": "../../res/shovelShader.vs"
             }
         ],
         "cShaders": [
@@ -372,11 +377,10 @@
           "children": [],
           "components": [
             {
-              "componentId": 82,
-              "componentType": 5,
+              "componentId": 84,
+              "componentType": 13,
               "model": "ShovelModel",
-              "shader": "modelShader",
-              "outlineShader": "outlineShader"
+              "shader": "shovelShader"
             },
             {
               "componentId": 83,
@@ -395,9 +399,9 @@
               0.0
             ],
             "scale": [
-              0.1,
-              0.1,
-              0.1
+              0.3,
+              0.3,
+              0.3
             ]
           }
         },
@@ -1673,9 +1677,9 @@
           ],
           "transform": {
             "position": [
-              50.0,
+              110.0,
               299.5,
-              50.0
+              110.0
             ],
             "rotation": [
               0.0,

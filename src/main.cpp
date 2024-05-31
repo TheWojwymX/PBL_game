@@ -54,6 +54,7 @@
 #include "Managers/UpgradeManager.h"
 #include "Turrets/TurretsManager.h"
 #include "Managers/TutorialManager.h"
+#include "Component/ShovelController.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -196,12 +197,16 @@ int main(int, char**)
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
     auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
+    auto shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
 
     PAGEMANAGER.Init();
 
     TURRETSMANAGER.Init();
 
     TUTORIALMANAGER.Init();
+
+    auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();;
+    auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();;
 
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
@@ -384,6 +389,34 @@ int main(int, char**)
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
+        // RealUpdate is after standard Update and has to be here if you want smooth rotation!
+        // This order (shovelRender -> shovelController -> shovelShader) is working and the place
+        // (at the end of loop) is also working, so it is recommended to not move it
+        // moving may cause some problems like lack of smoothness or models bugging
+        shovelRenderer->RenderShovel(Transform::Origin());
+        shovelController->RealUpdate();
+
+        shovelShader->use();
+        shovelShader->setVec3("dirLight.direction", dirDirection);
+        shovelShader->setVec3("dirLight.color", dirColor);
+        shovelShader->setInt("dirLight.isActive", dirActive);
+
+        shovelShader->setBool("spotLights[0].isActive", isSpotActive);
+        shovelShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        shovelShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
+        shovelShader->setFloat("spotLights[0].constant", spotLightConstant);
+        shovelShader->setFloat("spotLights[0].linear", spotLightLinear);
+        shovelShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
+        shovelShader->setVec3("spotLights[0].color", spotLightColor);
+        shovelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
+        shovelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
+
+        shovelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        shovelShader->setMat4("projection", projection);
+        shovelShader->setMat4("view", view);
+        shovelShader->setVec3("lightPos", lightPos);
+        shovelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+
         HUD.Update();
         PAGEMANAGER.Update();
 
@@ -392,7 +425,6 @@ int main(int, char**)
         imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);

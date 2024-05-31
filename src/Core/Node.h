@@ -19,6 +19,7 @@
 #include "ParticleGenerator.h"
 #include "Component/RefuelStation.h"
 #include "Component/ShovelController.h"
+#include "Component/ShovelRenderer.h"
 
 class Node : public std::enable_shared_from_this<Node>{
 public:

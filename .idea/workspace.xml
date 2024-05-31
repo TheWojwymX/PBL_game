@@ -32,14 +32,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Component/ShovelController.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Component/ShovelController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/shovelShader.fs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/shovelShader.vs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Component/ShovelRenderer.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Component/ShovelRenderer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/ShovelController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/ShovelController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/ComponentTypeEnum.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/ComponentTypeEnum.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +93,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "Merging main",
-    "last_opened_file_path": "C:/RepoPBL/res/Models/Base/Wires",
+    "last_opened_file_path": "C:/RepoPBL/res",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,11 +104,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res" />
       <recent name="C:\RepoPBL\res\Models\Base\Wires" />
       <recent name="C:\RepoPBL\res\Models\Base\Sandbags" />
       <recent name="C:\RepoPBL\res\Images" />
       <recent name="C:\RepoPBL\res\fonts" />
-      <recent name="C:\RepoPBL\res\fonts\Pixeloid" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\RepoPBL\res\Images" />
@@ -109,17 +119,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -224,6 +234,7 @@
       <workItem from="1716555459207" duration="4154000" />
       <workItem from="1716660791633" duration="3746000" />
       <workItem from="1716816209311" duration="8452000" />
+      <workItem from="1717146906861" duration="17666000" />
     </task>
     <servers />
   </component>

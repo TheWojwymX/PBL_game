@@ -23,6 +23,11 @@ public:
     void Update() override;
 
     std::shared_ptr<Node> _playerNode;
+    std::shared_ptr<Node> _shovelNode;
+
+    void SetPosAndRot();
+
+    void RealUpdate();
 };
 
 #endif //SANDBOX_SHOVELCONTROLLER_H
