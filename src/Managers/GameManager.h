@@ -30,7 +30,7 @@ public:
     std::shared_ptr<Node> root;
     int _mapSizeX = 200;
     int _mapSizeZ = 200;
-    int _domeRadius = 17;
+    int _domeRadius = 18;
     glm::vec2 _domePosition = glm::vec2(49.5, 49.5);
     float _groundLevel = 300.2;
     int roundNumber = -1;
