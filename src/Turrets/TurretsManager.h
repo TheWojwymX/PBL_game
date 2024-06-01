@@ -74,6 +74,8 @@ public:
     void PlaceMovingTurret();
 
     void CalculateRangePositions(shared_ptr<Turret> turret);
+
+    shared_ptr<Node> _player = NODESMANAGER.getNodeByName("player");
 };
 
 

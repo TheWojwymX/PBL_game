@@ -204,7 +204,7 @@
     glm::vec3 EnemiesManager::CalcClosestDomePosition(shared_ptr<Enemy> enemy){
         glm::vec2 vector = glm::vec2(enemy->GetOwnerPosition().x - GAMEMANAGER._domePosition.x, enemy->GetOwnerPosition().z - GAMEMANAGER._domePosition.y);
         vector = glm::normalize(vector);
-        vector = glm::vec2(GAMEMANAGER._domePosition.x + GAMEMANAGER._domeRadius * vector.x, GAMEMANAGER._domePosition.y + GAMEMANAGER._domeRadius * vector.y);
+        vector = glm::vec2(GAMEMANAGER._domePosition.x + (GAMEMANAGER._domeRadius + 4.5) * vector.x, GAMEMANAGER._domePosition.y + (GAMEMANAGER._domeRadius + 4.5) * vector.y);
 
         return glm::vec3(vector.x, enemy->GetOwnerPosition().y, vector.y);
     }

@@ -105,6 +105,7 @@ void PlayerController::CheckGrounded(glm::vec3 separationVector) {
 }
 
 void PlayerController::HandleMovement() {
+
     glm::vec3 move = _inputVector.x * _cameraRef->GetRightVector() + _inputVector.y * _cameraRef->GetFrontVector();
     move.y = 0.0f;
 
@@ -149,7 +150,11 @@ void PlayerController::HandleMovement() {
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
 
     if(CheckIsOutsideBase(_ownerTransform->GetPosition(), GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius)){
-        movementVector = CorrectBaseMovement(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius);
+        movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius, true);
+    }
+
+    if(CheckIfPlayerIsAtEntranceToMine()){
+        movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._mineEntranceRadius, false);
     }
 
     std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
@@ -161,18 +166,42 @@ void PlayerController::HandleMovement() {
 
 }
 
-glm::vec3 PlayerController::CorrectBaseMovement(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 domePos, float domeRadius) {
+bool PlayerController::CheckIfPlayerIsAtEntranceToMine(){
+    auto playerPos = _ownerNode->GetTransform()->GetPosition();
+    playerPos.y = GAMEMANAGER._groundLevel;
+
+    if(glm::distance(playerPos, glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel, GAMEMANAGER._domePosition.y)) <= GAMEMANAGER._mineEntranceRadius){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+glm::vec3 PlayerController::CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle) {
     glm::vec3 newPos = playerPos + movementVec;
     glm::vec2 newPos2D = glm::vec2(newPos.x, newPos.z);
-    glm::vec2 direction = glm::normalize(newPos2D - domePos);
+    glm::vec2 playerPos2D = glm::vec2(playerPos.x, playerPos.z);
+    glm::vec2 direction = glm::normalize(newPos2D - circleCenterPos);
     glm::vec2 perpDirection = glm::vec2(-direction.y, direction.x);
 
-    if (glm::distance(newPos2D, domePos) + 4.5f > domeRadius) {
-        glm::vec2 correctedMovement2D = glm::dot(glm::vec2(movementVec.x, movementVec.z), perpDirection) * perpDirection;
-        return glm::vec3(correctedMovement2D.x, movementVec.y, correctedMovement2D.y);
+    if (isInsideCircle) {
+        if (glm::distance(newPos2D, circleCenterPos) > circleRadius) {
+            glm::vec2 correctedMovement2D = glm::dot(glm::vec2(movementVec.x, movementVec.z), perpDirection) * perpDirection;
+            return glm::vec3(correctedMovement2D.x, movementVec.y, correctedMovement2D.y);
+        }
+    } else {
+        if (glm::distance(newPos2D, circleCenterPos) < circleRadius) {
+            glm::vec2 tangentMovement = glm::dot(glm::vec2(movementVec.x, movementVec.z), perpDirection) * perpDirection;
+            glm::vec2 radialMovement = direction * (circleRadius - glm::distance(playerPos2D, circleCenterPos));
+            float interpolationFactor = 0.5f;
+            glm::vec2 correctedMovement2D = glm::mix(tangentMovement, tangentMovement + radialMovement, interpolationFactor);
+            return glm::vec3(correctedMovement2D.x, movementVec.y, correctedMovement2D.y);
+        }
     }
+
     return movementVec;
 }
+
 
 bool PlayerController::CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius){
 

@@ -20,6 +20,8 @@ void TurretsManager::Init() {
 
 void TurretsManager::Update() {
 
+    //std::cout << _player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() << std::endl;
+
     UpdateBlueprintTurret();
 
     if(Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode) {
@@ -195,11 +197,11 @@ void TurretsManager::UpdateBlueprintTurret(){
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
 
-    glm::vec3 forwardVector = glm::normalize(NODESMANAGER.getNodeByName("player")->GetComponent<Camera>()->GetFrontVector());
+    glm::vec3 forwardVector = glm::normalize(_player->GetComponent<Camera>()->GetFrontVector());
     float minDistance = 2.0f;
-    glm::vec3 turretPosition = NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition() + forwardVector * minDistance;
+    glm::vec3 turretPosition = _player->GetTransform()->GetPosition() + forwardVector * minDistance;
     turretPosition.y = GAMEMANAGER._groundLevel - 0.7;
-    glm::vec2 playerFlatPosition(NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().x, NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().z);
+    glm::vec2 playerFlatPosition(_player->GetTransform()->GetPosition().x, _player->GetTransform()->GetPosition().z);
     glm::vec2 turretFlatPosition(turretPosition.x, turretPosition.z);
     if (glm::distance(playerFlatPosition, turretFlatPosition) < minDistance) {
         glm::vec2 direction = glm::normalize(turretFlatPosition - playerFlatPosition);
@@ -420,7 +422,7 @@ bool TurretsManager::isSelectedTurretInRange()
         std::string nameOfTurret = "Turret" + std::to_string(selectedIndex + 1);
 
         auto turretPosition = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetPosition();
-        auto playerPosition = NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition();
+        auto playerPosition = _player->GetTransform()->GetPosition();
 
         float distanceX = (turretPosition.x - playerPosition.x) * (turretPosition.x - playerPosition.x);
         float distanceY = (turretPosition.y - playerPosition.y) * (turretPosition.y - playerPosition.y);

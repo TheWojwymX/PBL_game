@@ -30,8 +30,9 @@ public:
     std::shared_ptr<Node> root;
     int _mapSizeX = 200;
     int _mapSizeZ = 200;
-    int _domeRadius = 18;
+    int _domeRadius = 13.5;
     glm::vec2 _domePosition = glm::vec2(49.5, 49.5);
+    float _mineEntranceRadius = 3.0f;
     float _groundLevel = 300.2;
     int roundNumber = -1;
     int currentPhase = 0; // 0 - kopanie, 1 - ustawianie, 2 - obrona

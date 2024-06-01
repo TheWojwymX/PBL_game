@@ -39,6 +39,9 @@ public:
     float _maxJetpackFuel = 100.0f;
 
     shared_ptr<ShovelController> _shovelController;
+
+    bool CheckIfPlayerIsAtEntranceToMine();
+
 private:
     float _speed;
     float _width;
@@ -86,5 +89,6 @@ private:
 
     bool CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius);
 
-    glm::vec3 CorrectBaseMovement(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 domePos, float domeRadius);
+    glm::vec3 CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle);
+
 };
