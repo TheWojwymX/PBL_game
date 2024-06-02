@@ -29,11 +29,11 @@
         },
         {
           "ModelName": "plasticModel",
-          "Path": "../../res/Sand/Sand.obj"
+          "Path": "../../res/Models/Cap/cap_1_1.1.obj"
         },
         {
           "ModelName": "metalModel",
-          "Path": "../../res/Sand/Sand.obj"
+          "Path": "../../res/Models/Cap/cap_1_1.1.obj"
         },
         {
           "ModelName": "AntSpawn0",
@@ -154,10 +154,6 @@
         {
           "ModelName": "ShovelModel",
           "Path": "../../res/Models/Shovel/shovel_1.3.obj"
-        },
-        {
-          "ModelName": "CapModel",
-          "Path": "../../res/Models/Cap/cap_1_1.1.obj"
         }
       ],
         "Shaders": [
@@ -399,8 +395,8 @@
             {
               "componentId": 84,
               "componentType": 3,
-              "maxSize": 1000,
-              "model": "CapModel",
+              "maxSize": 100000,
+              "model": "plasticModel",
               "shader": "instancedSandShader",
               "isDynamic": false
             }
@@ -431,7 +427,7 @@
             {
               "componentId": 85,
               "componentType": 3,
-              "maxSize": 1000,
+              "maxSize": 100000,
               "model": "metalModel",
               "shader": "instancedSandShader",
               "isDynamic": false

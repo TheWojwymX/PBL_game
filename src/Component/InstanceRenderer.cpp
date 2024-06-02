@@ -94,24 +94,62 @@ void InstanceRenderer::SetupInstanceModel() {
 void InstanceRenderer::CreateMatrixBuffer(int maxSize) {
     glGenBuffers(1, &_instanceBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
-
-    std::cout << _isDynamic << std::endl;
-
     if(_isDynamic)
         glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
     else
         glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_STATIC_DRAW);
 }
 
-void InstanceRenderer::addToInspector(ImguiMain *imguiMain)
+void InstanceRenderer::addToInspector(ImguiMain* imguiMain)
 {
     if (ImGui::TreeNode("Instance Renderer"))
     {
-        // Block Gui related things go there
-        ImGui::Text("Test1:");
-        ImGui::Text("Test2:");
+        // Display and edit the model name
+        char modelName[128];
+        strcpy(modelName, _model ? _model->_name.c_str() : "");
+        if (ImGui::InputText("Model Name", modelName, sizeof(modelName)))
+        {
+            _model = RESOURCEMANAGER.GetModelByName(modelName);
+        }
+
+        // Display and edit the max size
+        if (ImGui::InputInt("Max Size", (int*)&_maxSize))
+        {
+            CreateMatrixBuffer(_maxSize);
+            RefreshMatrixBuffer();
+        }
+
+        // Display and edit the shader name
+        char shaderName[128];
+        strcpy(shaderName, _shader ? _shader->_name.c_str() : "");
+        if (ImGui::InputText("Shader Name", shaderName, sizeof(shaderName)))
+        {
+            _shader = RESOURCEMANAGER.GetShaderByName(shaderName);
+        }
+
+        // Display and edit the dynamic flag
+        ImGui::Checkbox("Is Dynamic", &_isDynamic);
+
+        // Display the instance matrices
+        if (ImGui::TreeNode("Instance Matrices"))
+        {
+            for (size_t i = 0; i < _instanceMatrix.size(); ++i)
+            {
+                std::string label = "Matrix " + std::to_string(i);
+                if (ImGui::TreeNode(label.c_str()))
+                {
+                    for (int row = 0; row < 4; ++row)
+                    {
+                        std::string rowLabel = "Row " + std::to_string(row);
+                        ImGui::InputFloat4(rowLabel.c_str(), glm::value_ptr(_instanceMatrix[i][row]));
+                    }
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::TreePop();
+        }
 
         ImGui::TreePop();
-
     }
 }
+

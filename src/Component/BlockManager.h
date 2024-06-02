@@ -92,6 +92,7 @@ private:
     void CheckEntityChunk(glm::vec3 entityPos);
     void ChangeType(BlockData& blockData, BlockType type);
     void ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 maskDimensions);
+    void GenerateResources();
 
 
     int GetIndex(glm::ivec3 point);

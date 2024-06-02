@@ -86,6 +86,7 @@ void BlockManager::Initiate() {
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
     GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
+    GenerateResources();
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
@@ -94,6 +95,8 @@ void BlockManager::Init() {
 
 void BlockManager::UpdateInstanceRenderer() {
     std::vector<glm::mat4> instancedSandMatrix;
+    std::vector<glm::mat4> instancedPlasticMatrix;
+    std::vector<glm::mat4> instancedMetalMatrix;
 
     // Iterate through _renderedChunks and add visible non-empty blocks to instanceMatrix
     for (int chunkIndex : _renderedChunks) {
@@ -109,6 +112,11 @@ void BlockManager::UpdateInstanceRenderer() {
                 case BlockType::DIRT:
                     instancedSandMatrix.push_back(blockPtr->GetMatrix());
                     break;
+                case BlockType::PLASTIC:
+                    instancedPlasticMatrix.push_back(blockPtr->GetMatrix());
+                    break;
+                case BlockType::METAL:
+                    instancedMetalMatrix.push_back(blockPtr->GetMatrix());
             }
         }
     }
@@ -116,6 +124,12 @@ void BlockManager::UpdateInstanceRenderer() {
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
         _sandRendererRef->SetInstanceMatrix(instancedSandMatrix);
+    }
+    if (_plasticRendererRef) {
+        _plasticRendererRef->SetInstanceMatrix(instancedPlasticMatrix);
+    }
+    if (_metalRendererRef) {
+        _metalRendererRef->SetInstanceMatrix(instancedMetalMatrix);
     }
 }
 
@@ -647,6 +661,8 @@ void BlockManager::ChangeType(BlockData& blockData, BlockType type)
     {
         case BlockType::EMPTY:
             break;
+        case BlockType::METAL:
+        case BlockType::PLASTIC:
         case BlockType::DIRT:
                 if (blockData.GetPosID().y < 100) {
                     blockData.SetHP(7.0f);
@@ -690,6 +706,36 @@ void BlockManager::ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 mas
                     ChangeType(_blocksData[blockIndex], static_cast<BlockType>(maskValue));
                 }
             }
+        }
+    }
+}
+
+void BlockManager::GenerateResources()
+{
+    // Random number generator setup
+    std::random_device rd;  // Obtain a random number from hardware
+    std::mt19937 gen(rd()); // Seed the generator
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f); // Define the range
+
+    // Define the probability of a block being changed to METAL or PLASTIC
+    const double metalProbability = 0.01;   // 1% chance of being METAL
+    const double plasticProbability = 0.01; // 1% chance of being PLASTIC
+
+    // Iterate through the _blocksData container
+    for (auto& block : _blocksData)
+    {
+        // Generate a random number between 0 and 1
+        double randomValue = dis(gen);
+
+        // Check if the block should be changed to METAL
+        if (randomValue < metalProbability)
+        {
+            ChangeType(block,BlockType::METAL);
+        }
+        // Check if the block should be changed to PLASTIC
+        else if (randomValue < (metalProbability + plasticProbability))
+        {
+            ChangeType(block,BlockType::PLASTIC);
         }
     }
 }
