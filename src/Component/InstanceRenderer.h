@@ -7,7 +7,7 @@
 
 class InstanceRenderer : public Component {
 public:
-    InstanceRenderer(Model* model, int maxSize, Shader* shader);
+    InstanceRenderer(Model* model, int maxSize, Shader* shader, bool isDynamic);
 
     InstanceRenderer();
 
@@ -41,6 +41,7 @@ private:
     shared_ptr<Shader> _shader;
     unsigned int _maxSize;
     unsigned int _instanceBuffer;
+    bool _isDynamic;
 
     void SetupInstanceModel();
     void CreateMatrixBuffer(int maxSize);

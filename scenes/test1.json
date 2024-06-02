@@ -337,7 +337,8 @@
               "componentType": 3,
               "maxSize": 256000,
               "model": "sandModel",
-              "shader": "instancedSandShader"
+              "shader": "instancedSandShader",
+              "isDynamic": true
             }
           ],
           "transform": {
@@ -368,7 +369,8 @@
               "componentType": 3,
               "maxSize": 250000,
               "model": "topLayerModel",
-              "shader": "instancedSandShader"
+              "shader": "instancedSandShader",
+              "isDynamic": false
             }
           ],
           "transform": {
@@ -399,7 +401,8 @@
               "componentType": 3,
               "maxSize": 1000,
               "model": "CapModel",
-              "shader": "instancedSandShader"
+              "shader": "instancedSandShader",
+              "isDynamic": false
             }
           ],
           "transform": {
@@ -430,7 +433,8 @@
               "componentType": 3,
               "maxSize": 1000,
               "model": "metalModel",
-              "shader": "instancedSandShader"
+              "shader": "instancedSandShader",
+              "isDynamic": false
             }
           ],
           "transform": {
@@ -462,11 +466,11 @@
               "componentType": 2,
               "depth": 100,
               "height": 300,
+              "width": 100,
               "sandRendererRefID": 0,
               "topLayerRendererRefID": 31,
               "plasticRendererRefID": 84,
-              "metalRendererRefID": 85,
-              "width": 100
+              "metalRendererRefID": 85
             }
           ],
           "transform": {
@@ -3746,7 +3750,8 @@
               "componentType": 3,
               "maxSize": 5000,
               "model": "cloudModel",
-              "shader": "cloudShader"
+              "shader": "cloudShader",
+              "isDynamic":  true
             }
           ],
           "transform": {

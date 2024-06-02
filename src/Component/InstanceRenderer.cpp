@@ -1,7 +1,7 @@
 #include "InstanceRenderer.h"
 
-InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader)
-    : _model(model),_maxSize(maxSize) , _shader(shader) {
+InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader, bool isDynamic)
+    : _model(model),_maxSize(maxSize) , _shader(shader), _isDynamic(isDynamic) {
     CreateMatrixBuffer(maxSize);
     SetupInstanceModel();
 }
@@ -16,6 +16,7 @@ nlohmann::json InstanceRenderer::Serialize() {
     data["model"] = _model->_name;
     data["maxSize"] = _maxSize;
     data["shader"] = _shader->_name;
+    data["isDynamic"] = _isDynamic;
 
     return data;
 }
@@ -32,6 +33,10 @@ void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
 
     if (jsonData.contains("shader")) {
         _shader = RESOURCEMANAGER.GetShaderByName(jsonData["shader"].get<string>());
+    }
+
+    if (jsonData.contains("isDynamic")) {
+        _isDynamic = jsonData["isDynamic"].get<bool>();
     }
 
     CreateMatrixBuffer(_maxSize);
@@ -89,7 +94,13 @@ void InstanceRenderer::SetupInstanceModel() {
 void InstanceRenderer::CreateMatrixBuffer(int maxSize) {
     glGenBuffers(1, &_instanceBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
-    glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
+
+    std::cout << _isDynamic << std::endl;
+
+    if(_isDynamic)
+        glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
+    else
+        glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_STATIC_DRAW);
 }
 
 void InstanceRenderer::addToInspector(ImguiMain *imguiMain)

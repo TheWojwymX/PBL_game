@@ -335,6 +335,7 @@
                     {
                         "componentId": 0,
                         "componentType": 3,
+                        "isDynamic": true,
                         "maxSize": 256000,
                         "model": "sandModel",
                         "shader": "instancedSandShader"
@@ -366,6 +367,7 @@
                     {
                         "componentId": 31,
                         "componentType": 3,
+                        "isDynamic": false,
                         "maxSize": 250000,
                         "model": "topLayerModel",
                         "shader": "instancedSandShader"
@@ -397,6 +399,7 @@
                     {
                         "componentId": 84,
                         "componentType": 3,
+                        "isDynamic": false,
                         "maxSize": 1000,
                         "model": "CapModel",
                         "shader": "instancedSandShader"
@@ -428,6 +431,7 @@
                     {
                         "componentId": 85,
                         "componentType": 3,
+                        "isDynamic": false,
                         "maxSize": 1000,
                         "model": "metalModel",
                         "shader": "instancedSandShader"
@@ -3729,6 +3733,7 @@
                     {
                         "componentId": 20,
                         "componentType": 3,
+                        "isDynamic": true,
                         "maxSize": 5000,
                         "model": "cloudModel",
                         "shader": "cloudShader"
