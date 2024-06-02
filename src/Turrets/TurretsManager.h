@@ -76,6 +76,9 @@ public:
     void CalculateRangePositions(shared_ptr<Turret> turret);
 
     shared_ptr<Node> _player = NODESMANAGER.getNodeByName("player");
+    shared_ptr<Node> _blueprintTurret = make_shared<Node>();
+
+    bool ISInForbiddenArea();
 };
 
 

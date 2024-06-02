@@ -41,6 +41,7 @@ public:
     shared_ptr<ShovelController> _shovelController;
 
     bool CheckIfPlayerIsAtEntranceToMine();
+    bool _activeMineEntranceCollision = false;
 
 private:
     float _speed;

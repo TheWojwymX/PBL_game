@@ -153,8 +153,10 @@ void PlayerController::HandleMovement() {
         movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius, true);
     }
 
-    if(CheckIfPlayerIsAtEntranceToMine()){
-        movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._mineEntranceRadius, false);
+    if(_activeMineEntranceCollision){
+        if(CheckIfPlayerIsAtEntranceToMine()){
+            movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._mineEntranceRadius, false);
+        }
     }
 
     std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
