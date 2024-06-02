@@ -36,6 +36,26 @@
           "Path": "../../res/Sand/Sand.obj"
         },
         {
+          "ModelName": "AntSpawn0",
+          "Path": "../../res/Models/Ant/ant_spawn_v1-0.obj"
+        },
+        {
+          "ModelName": "AntSpawn1",
+          "Path": "../../res/Models/Ant/ant_spawn_v1-1.obj"
+        },
+        {
+          "ModelName": "AntSpawn2",
+          "Path": "../../res/Models/Ant/ant_spawn_v1-2.obj"
+        },
+        {
+          "ModelName": "AntSpawn3",
+          "Path": "../../res/Models/Ant/ant_spawn_v1-3.obj"
+        },
+        {
+          "ModelName": "AntSpawn4",
+          "Path": "../../res/Models/Ant/ant_spawn_v1-4.obj"
+        },
+        {
           "ModelName": "AntWalk0",
           "Path": "../../res/Models/Ant/ant_walk_v1-0.obj"
         },
@@ -74,6 +94,18 @@
         {
           "ModelName": "AntAttack3",
           "Path": "../../res/Models/Ant/ant_attack_v1-3.obj"
+        },
+        {
+          "ModelName": "AntDead0",
+          "Path": "../../res/Models/Ant/ant_dead_v1-0.obj"
+        },
+        {
+          "ModelName": "AntDead1",
+          "Path": "../../res/Models/Ant/ant_dead_v1-1.obj"
+        },
+        {
+          "ModelName": "AntDead2",
+          "Path": "../../res/Models/Ant/ant_dead_v1-2.obj"
         },
         {
           "ModelName": "DomeStation",

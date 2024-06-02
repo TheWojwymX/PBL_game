@@ -130,7 +130,7 @@
                 enemy->_isAtWalls = true;
                 if(enemy->GetOwnerNode()->GetComponent<Animation>() != nullptr)
                 {
-                    enemy->GetOwnerNode()->GetComponent<Animation>()->setIsWalking(false);
+                    enemy->GetOwnerNode()->GetComponent<Animation>()->_enemyState=state::ATTACK;
                 }
             }
         }
