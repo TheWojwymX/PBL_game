@@ -86,7 +86,7 @@ void BlockManager::Initiate() {
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
     GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
-    GenerateResources();
+    //GenerateResources();
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
