@@ -36,6 +36,7 @@ uniform vec3 jumpOff;
 uniform float groundLevel;
 uniform vec3 windDirection;
 uniform float windStrength;
+uniform bool isFlare;
 
 layout (local_size_x = 1) in;
 
@@ -120,10 +121,19 @@ void main() {
             p.Life -= dt;
 
             float lifeRatio = p.Life / particleLife;
+            if(!isFlare){
             p.Scale = mix(0.05f, particleScale, lifeRatio);
+            }
+            else{
+            if (p.Life > particleLife / 3) {
+                    p.Scale = mix(1.2f, particleScale, lifeRatio);
+                } else {
+                    p.Scale = mix(particleScale, 2.2, lifeRatio);
+                }
+            }
 
             // Check for bounce when particle hits y = 105
-            if (p.Position.y <= groundLevel && !isJetpack) {
+            if (p.Position.y <= groundLevel && !isJetpack && !isFlare) {
                 if(onlyForward)
                 {
                 p.Life -= 4 * dt;

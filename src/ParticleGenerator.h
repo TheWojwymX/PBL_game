@@ -71,6 +71,9 @@ private:
     float particleLife = 1.0f;
     unsigned int amount = 500;
 
+    bool counterXrotation = false;
+    bool isFlare = false;
+
     float XZvariation = 0.1f;
     glm::vec4 particleColor;
     float initialUpwardBoost;

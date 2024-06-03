@@ -50,16 +50,19 @@ void Turret::Update() {
     if(GAMEMANAGER._paused) return;
 
     if(_isFlying){
+        auto particleGenerator = _flare->GetComponent<ParticleGenerator>();
+
         if(glm::distance(GetOwnerPosition(), _finalPosition) <= 0.1){
-            std::cout << "przed usunieciem" << std::endl;
-            NODESMANAGER.getNodeByName("root")->removeChild(_flare);
-            std::cout << "po usunieciu" << std::endl;
             _isFlying = false;
             _ownerTransform->SetRotation(_finalRotation);
             _ownerTransform->SetPosition(_finalPosition);
             _ownerNode->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Gunner_Level1");
+            _flare = nullptr;
+            particleGenerator->toDelete = true;
             return;
            }
+
+        particleGenerator->SpawnParticles();
 
         _ownerTransform->SetPosition(glm::vec3(GetOwnerPosition().x, GetOwnerPosition().y - TIME.GetDeltaTime() * _flyingSpeed, GetOwnerPosition().z));
 

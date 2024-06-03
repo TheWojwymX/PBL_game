@@ -70,6 +70,15 @@ void ParticleGenerator::UpdateParticles() {
 
     rotatedOffset = glm::vec3(rotationMatrix * glm::vec4(offset, 1.0f));
 
+    glm::quat objectRotation = object->GetTransform()->GetRotation();
+
+    if(counterXrotation) {
+        objectRotation.x = 0.0f;
+        objectRotation.y = 0.0f;
+        objectRotation.z = 0.0f;
+    }
+
+
     computeShader->use();
     computeShader->setFloat("dt", dt);
     computeShader->setVec3("nodePosition", object->GetTransform()->GetPosition() + rotatedOffset);
@@ -78,7 +87,7 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setVec3("cameraPosition", camPosition);
     computeShader->setVec3("cameraForward", camForward);
     computeShader->setBool("hasSpawned", hasSpawned);
-    computeShader->setMat4("objectRotation", glm::toMat4(object->GetTransform()->GetRotation()));
+    computeShader->setMat4("objectRotation", glm::toMat4(objectRotation));
     computeShader->setVec3("enemyPosition", enemyPosition);
     computeShader->setVec3("jumpOff", jumpOffPoint);
     computeShader->setVec3("windDirection", GAMEMANAGER._windDirection);
@@ -120,7 +129,7 @@ void ParticleGenerator::RenderParticles() {
             }
         }
 
-        if (deadParticles == amount) {
+        if (deadParticles == amount && spawnDelay == 0.0f) {
             generateParticle = false;
         }
 
@@ -190,6 +199,7 @@ void ParticleGenerator::Init() {
     computeShader->setBool("casing", casing);
     computeShader->setBool("isJetpack", isJetpack);
     computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel);
+    computeShader->setBool("isFlare", isFlare);
 
     unsigned int VBO;
     float particle_quad[] = {
@@ -322,6 +332,24 @@ void ParticleGenerator::initiateParticleType() {
         onlyForward = false;
         casing = false;
         isJetpack = true;
+    }
+    else if (particleType == "flareParticles1"){
+        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        amount = 50;
+        newParticles = 2;
+        spawnDelay = 0.2f;
+        speedVariation = 0.2f;
+        XZvariation = 0.4f;
+        particleLife = 10.0f;
+        particleColor = glm::vec4(1.0f,0.293f,0.376f,1.0f);
+        initialUpwardBoost = 0.04f;
+        particleScale = 0.1f;
+        gravity = glm::vec3(0.0f, 0.0f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = true;
+        isFlare = true;
     }
 }
 

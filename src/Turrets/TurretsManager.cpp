@@ -110,6 +110,7 @@ void TurretsManager::SpawnTurret() {
     newFlareMeshRenderer->Initiate();
     flare->AddComponent(newFlareMeshRenderer);
 
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 360.0f);
@@ -118,6 +119,12 @@ void TurretsManager::SpawnTurret() {
     flare->GetTransform()->SetScale(glm::vec3(0.1, 0.1, 0.1));
     flare->GetTransform()->SetRotation(glm::vec3(flare->GetTransform()->GetRotation().x + 90, flare->GetTransform()->GetRotation().y + dis(gen),
                                                  flare->GetTransform()->GetRotation().z));
+
+    auto flareParticles1 = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "flareParticles1");
+    flareParticles1->SetOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+    flareParticles1->object = flare;
+    flareParticles1->Init();
+    flare->AddComponent(flareParticles1);
 
     //Turret spawning
     //std::cout << "zespawniono" << std::endl;
