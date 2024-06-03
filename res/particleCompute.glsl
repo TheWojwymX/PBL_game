@@ -3,7 +3,6 @@
 struct Particle {
     vec4 Position;
     vec4 Velocity;
-    vec4 Color;
     float Life;
     float Scale;
 };
@@ -35,6 +34,8 @@ uniform vec3 enemyPosition;
 uniform bool isJetpack;
 uniform vec3 jumpOff;
 uniform float groundLevel;
+uniform vec3 windDirection;
+uniform float windStrength;
 
 layout (local_size_x = 1) in;
 
@@ -68,7 +69,6 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     float changeSeed = float(index) + seed;
     particle.Position.xyz = nodePosition;
     particle.Position.w = 0.0f;
-    particle.Color = particleColor;
     particle.Life = particleLife;
     particle.Scale = particleScale;
 
@@ -111,7 +111,7 @@ void main() {
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
             // Update velocity with gravity
-            p.Velocity.xyz += initGravity * dt;
+            p.Velocity.xyz += (initGravity + windDirection * windStrength) * dt;
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
             // Decrease alpha to fade out particle
@@ -120,7 +120,7 @@ void main() {
             p.Life -= dt;
 
             float lifeRatio = p.Life / particleLife;
-            p.Scale = mix(0.1f, particleScale, lifeRatio);
+            p.Scale = mix(0.05f, particleScale, lifeRatio);
 
             // Check for bounce when particle hits y = 105
             if (p.Position.y <= groundLevel && !isJetpack) {

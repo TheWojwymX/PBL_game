@@ -11,8 +11,6 @@ void MeshRenderer::Render(glm::mat4 parentWorld) {
 
     if(FrustumCulling::IsInFrustum(_cameraRef->getViewProjectionMatrix(), world, _cameraRef->getFrustumPlanes(), _model)) {
         RenderModel(_model, world);
-        //framesRendered++;                                 //Uncomment both lines to see Frustum Culling work
-        //cout << "Rendering: " << framesRendered << endl;  //Frustum Culling working
     }
 }
 
@@ -92,7 +90,6 @@ void MeshRenderer::Deserialize(const nlohmann::json &jsonData) {
 
 void MeshRenderer::Initiate() {
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
-    framesRendered = 0;
     Component::Initiate();
 }
 

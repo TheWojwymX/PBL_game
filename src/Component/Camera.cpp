@@ -98,13 +98,13 @@ void Camera::addToInspector(ImguiMain *imguiMain) {
 }
 
 glm::vec3 Camera::LerpPosition(glm::vec3 currentPosition) {
-    float lerpValue = 0.1f;
+    float lerpValue = 0.25f;
     currentPosition = lerp(currentPosition, _position, lerpValue);
     return currentPosition;
 }
 
 glm::vec3 Camera::LerpDirection(glm::vec3 currentDirection) {
-    float lerpValue = 0.14f;
+    float lerpValue = 0.3f;
     currentDirection = lerp(currentDirection, _front, lerpValue);
     return currentDirection;
 }
