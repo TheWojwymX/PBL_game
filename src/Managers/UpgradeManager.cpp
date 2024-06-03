@@ -116,7 +116,7 @@ bool UpgradeManager::isTurretInRaycast()
 
 bool UpgradeManager::isTurretInRange()
 {
-    if(TURRETSMANAGER.isSelectedTurretInRange())
+    if(TURRETSMANAGER.IsSelectedTurretInRange())
     {
         return true;
     }

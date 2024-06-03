@@ -38,7 +38,7 @@ public:
 
     void SpawnTurret();
 
-    bool isSelectedTurretInRange();
+    bool IsSelectedTurretInRange();
 
     bool IsTooCloseToTurret(glm::vec3 pos);
 
@@ -78,7 +78,9 @@ public:
     shared_ptr<Node> _player = NODESMANAGER.getNodeByName("player");
     shared_ptr<Node> _blueprintTurret = make_shared<Node>();
 
-    bool ISInForbiddenArea();
+    bool IsInForbiddenArea();
+
+    glm::vec3 _additionalColor;
 };
 
 

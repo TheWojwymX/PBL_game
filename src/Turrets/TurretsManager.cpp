@@ -20,6 +20,13 @@ void TurretsManager::Init() {
 
 void TurretsManager::Update() {
 
+    if(IsInForbiddenArea()){
+        _additionalColor = glm::vec3(1.0, 0.0, 0.0);
+
+    }else{
+        _additionalColor = glm::vec3(0.3647, 0.8353, 0.3647);
+    }
+
     UpdateBlueprintTurret();
 
     if (Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f
@@ -33,7 +40,7 @@ void TurretsManager::Update() {
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = !_player->GetComponent<PlayerController>()->_activeMineEntranceCollision;
     }
 
-    if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !ISInForbiddenArea()) {
+    if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea()) {
         SpawnTurret();
     }
 
@@ -49,7 +56,7 @@ void TurretsManager::Update() {
                 node->GetComponent<MeshRenderer>()->SetEnabled(true);
             }
         }
-    } else if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && _isPlayerInMovingMode && !ISInForbiddenArea()) {
+    } else if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && _isPlayerInMovingMode && !IsInForbiddenArea()) {
         PlaceMovingTurret();
     }
 
@@ -57,13 +64,14 @@ void TurretsManager::Update() {
     CheckEnemiesInRange();
 }
 
-bool TurretsManager::ISInForbiddenArea(){
+bool TurretsManager::IsInForbiddenArea(){
     if(glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
        _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) > GAMEMANAGER._domeRadius - 0.1
        || glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
        _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) < GAMEMANAGER._mineEntranceRadius
        || IsTooCloseToTurret(_blueprintTurret->GetTransform()->GetPosition())){
         return true;
+
     }
     else{
         return false;
@@ -173,7 +181,7 @@ void TurretsManager::PrepareBlueprintTurret() {
 
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
     newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Gunner_Level1");
-    newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     newMeshRenderer->Initiate();
 
@@ -354,6 +362,7 @@ void TurretsManager::MoveTurret() {
         _turrets[_indexOfMovingTurret]->_finalPosition = glm::vec3(2137, 2137, 2137);
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetPosition(_blueprintTurret->GetTransform()->GetPosition());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetRotation(_blueprintTurret->GetTransform()->GetRotation());
+        _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     }
 }
 
@@ -370,6 +379,8 @@ void TurretsManager::PlaceMovingTurret() {
             node->GetComponent<MeshRenderer>()->SetEnabled(false);
         }
     }
+
+    _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
 }
 
 int TurretsManager::RaycastTurrets() {
@@ -427,7 +438,7 @@ bool TurretsManager::RayIntersectsBoundingBox(const glm::vec3 &rayOrigin, const 
     return true;
 }
 
-bool TurretsManager::isSelectedTurretInRange() {
+bool TurretsManager::IsSelectedTurretInRange() {
     if (selectedIndex != -1) {
         std::string nameOfTurret = "Turret" + std::to_string(selectedIndex + 1);
 

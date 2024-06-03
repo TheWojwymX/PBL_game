@@ -236,7 +236,12 @@
               "ShaderName": "shovelShader",
               "fragmentPath": "../../res/shovelShader.fs",
               "vertexPath": "../../res/shovelShader.vs"
-            }
+            },
+          {
+            "ShaderName": "blueprintShader",
+            "fragmentPath": "../../res/blueprintShader.fs",
+            "vertexPath": "../../res/blueprintShader.vs"
+          }
         ],
         "cShaders": [
             {

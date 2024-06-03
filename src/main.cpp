@@ -198,6 +198,7 @@ int main(int, char**)
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
     auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
     auto shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
+    auto blueprintShader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
 
     PAGEMANAGER.Init();
 
@@ -386,6 +387,14 @@ int main(int, char**)
         rangeShader->use();
         rangeShader->setMat4("projection", projection);
         rangeShader->setMat4("view", view);
+
+        ///
+        blueprintShader->use();
+
+        blueprintShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        blueprintShader->setMat4("projection", projection);
+        blueprintShader->setMat4("view", view);
+        blueprintShader->setVec3("additionalColor", TURRETSMANAGER._additionalColor);
 
         GAMEMANAGER.root->Render(Transform::Origin());
 
