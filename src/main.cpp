@@ -196,6 +196,7 @@ int main(int, char**)
     auto outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     auto skyboxReflectionShader = RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader");
     auto instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
+    auto instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
@@ -351,6 +352,7 @@ int main(int, char**)
         skyboxReflectionShader->setMat4("projection", projection);
         skyboxReflectionShader->setMat4("view", view);
 
+#pragma region InstancedSandShader setup
         instancedSandShader->use();
         instancedSandShader->setVec3("dirLight.direction", dirDirection);
         instancedSandShader->setVec3("dirLight.color", dirColor);
@@ -371,11 +373,35 @@ int main(int, char**)
         instancedSandShader->setMat4("view", view);
         instancedSandShader->setVec3("lightPos", lightPos);
         instancedSandShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+#pragma endregion
+
+#pragma region InstanceMetalShader setup
+        instancedMetalShader->use();
+        instancedMetalShader->setVec3("dirLight.direction", dirDirection);
+        instancedMetalShader->setVec3("dirLight.color", dirColor);
+        instancedMetalShader->setInt("dirLight.isActive", dirActive);
+
+        instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
+        instancedMetalShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
+        instancedMetalShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
+        instancedMetalShader->setFloat("spotLights[0].constant", spotLightConstant);
+        instancedMetalShader->setFloat("spotLights[0].linear", spotLightLinear);
+        instancedMetalShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
+        instancedMetalShader->setVec3("spotLights[0].color", spotLightColor);
+        instancedMetalShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
+        instancedMetalShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
+
+        instancedMetalShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        instancedMetalShader->setMat4("projection", projection);
+        instancedMetalShader->setMat4("view", view);
+        instancedMetalShader->setVec3("lightPos", lightPos);
+        instancedMetalShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
         lightObjectShader->use();
         lightObjectShader->setVec3("lightColor", dirColor);
         lightObjectShader->setMat4("projection", projection);
         lightObjectShader->setMat4("view", view);
+#pragma endregion
 
         cloudShader->use();
         cloudShader->setVec3("dirLight.direction", dirDirection);

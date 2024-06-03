@@ -33,7 +33,7 @@
             },
             {
                 "ModelName": "metalModel",
-                "Path": "../../res/Models/Cap/cap_1_1.1.obj"
+                "Path": "../../res/Models/Nut/NutModel.obj"
             },
             {
                 "ModelName": "AntSpawn0",
@@ -171,6 +171,11 @@
                 "ShaderName": "instancedSandShader",
                 "fragmentPath": "../../res/instancedSandFragShader.fs",
                 "vertexPath": "../../res/instancedSandVecShader.vs"
+            },
+            {
+                "ShaderName": "instancedMetalShader",
+                "fragmentPath": "../../res/instancedMetalFragShader.fs",
+                "vertexPath": "../../res/instancedMetalVecShader.vs"
             },
             {
                 "ShaderName": "skyboxShader",
@@ -435,7 +440,7 @@
                         "isDynamic": false,
                         "maxSize": 100000,
                         "model": "metalModel",
-                        "shader": "instancedSandShader"
+                        "shader": "instancedMetalShader"
                     }
                 ],
                 "transform": {
@@ -462,6 +467,8 @@
                 "children": [],
                 "components": [
                     {
+                        "_metalRendererRef": 85,
+                        "_plasticRendererRef": 84,
                         "cameraRefID": 2,
                         "componentId": 1,
                         "componentType": 2,

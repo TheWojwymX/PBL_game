@@ -79,6 +79,8 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
 void BlockManager::Initiate() {
     _sandRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_sandRendererRefID);
     _topLayerRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_topLayerRendererRefID);
+    _plasticRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_plasticRendererRefID);
+    _metalRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_metalRendererRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
     Component::Initiate();
 }

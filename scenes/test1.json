@@ -33,7 +33,7 @@
         },
         {
           "ModelName": "metalModel",
-          "Path": "../../res/Models/Cap/cap_1_1.1.obj"
+          "Path": "../../res/Models/Nut/NutModel.obj"
         },
         {
           "ModelName": "AntSpawn0",
@@ -156,93 +156,98 @@
           "Path": "../../res/Models/Shovel/Shovel_Green/shovel_green.obj"
         }
       ],
-        "Shaders": [
-            {
-                "ShaderName": "modelShader",
-                "fragmentPath": "../../res/fragShader.fs",
-                "vertexPath": "../../res/vecShader.vs"
-            },
-            {
-                "ShaderName": "lightObjectShader",
-                "fragmentPath": "res/fragLightObjectShader.fs",
-                "vertexPath": "res/vecLightObjectShader.vs"
-            },
-          {
-            "ShaderName": "instancedSandShader",
-            "fragmentPath": "../../res/instancedSandFragShader.fs",
-            "vertexPath": "../../res/instancedSandVecShader.vs"
-          },
-            {
-                "ShaderName": "skyboxShader",
-                "fragmentPath": "res/skyboxFragShader.fs",
-                "vertexPath": "res/skyboxVecShader.vs"
-            },
-            {
-                "ShaderName": "textShader",
-                "fragmentPath": "../../res/textShader.fs",
-                "vertexPath": "../../res/textShader.vs"
-            },
-            {
-                "ShaderName": "textureShader",
-                "fragmentPath": "../../res/textureShader.fs",
-                "vertexPath": "../../res/textureShader.vs"
-            },
-            {
-                "ShaderName": "cloudShader",
-                "fragmentPath": "../../res/cloudFragShader.fs",
-                "vertexPath": "../../res/cloudVecShader.vs"
-            },
-            {
-                "ShaderName": "toonShader",
-                "fragmentPath": "../../res/toonShader.fs",
-                "vertexPath": "../../res/toonShader.vs"
-            },
-            {
-                "ShaderName": "outlineShader",
-                "fragmentPath": "../../res/outlineShader.fs",
-                "vertexPath": "../../res/outlineShader.vs"
-            },
-            {
-                "ShaderName": "skyboxReflectionShader",
-                "fragmentPath": "../../res/skyboxReflectionShader.fs",
-                "vertexPath": "../../res/skyboxReflectionShader.vs"
-            },
-            {
-                "ShaderName": "shadowShader",
-                "fragmentPath": "../../res/shadowShader.fs",
-                "vertexPath": "../../res/shadowShader.vs"
-            },
-            {
-                "ShaderName": "shadowInstanceShader",
-                "fragmentPath": "../../res/shadowInstanceShader.fs",
-                "vertexPath": "../../res/shadowInstanceShader.vs"
-            },
-            {
-                "ShaderName": "wireframeShader",
-                "fragmentPath": "../../res/wireframeShader.fs",
-                "vertexPath": "../../res/wireframeShader.vs"
-            },
-            {
-                "ShaderName": "turretRangeShader",
-                "fragmentPath": "../../res/turretRange.fs",
-                "vertexPath": "../../res/turretRange.vs"
-            },
-            {
-                "ShaderName": "particleShader",
-                "fragmentPath": "../../res/particleShader.fs",
-                "vertexPath": "../../res/particleShader.vs"
-            },
-            {
-              "ShaderName": "shovelShader",
-              "fragmentPath": "../../res/shovelShader.fs",
-              "vertexPath": "../../res/shovelShader.vs"
-            },
-          {
-            "ShaderName": "blueprintShader",
-            "fragmentPath": "../../res/blueprintShader.fs",
-            "vertexPath": "../../res/blueprintShader.vs"
-          }
-        ],
+      "Shaders": [
+        {
+          "ShaderName": "modelShader",
+          "fragmentPath": "../../res/fragShader.fs",
+          "vertexPath": "../../res/vecShader.vs"
+        },
+        {
+          "ShaderName": "lightObjectShader",
+          "fragmentPath": "res/fragLightObjectShader.fs",
+          "vertexPath": "res/vecLightObjectShader.vs"
+        },
+        {
+          "ShaderName": "instancedSandShader",
+          "fragmentPath": "../../res/instancedSandFragShader.fs",
+          "vertexPath": "../../res/instancedSandVecShader.vs"
+        },
+        {
+          "ShaderName": "instancedMetalShader",
+          "fragmentPath": "../../res/instancedMetalFragShader.fs",
+          "vertexPath": "../../res/instancedMetalVecShader.vs"
+        },
+        {
+          "ShaderName": "skyboxShader",
+          "fragmentPath": "res/skyboxFragShader.fs",
+          "vertexPath": "res/skyboxVecShader.vs"
+        },
+        {
+          "ShaderName": "textShader",
+          "fragmentPath": "../../res/textShader.fs",
+          "vertexPath": "../../res/textShader.vs"
+        },
+        {
+          "ShaderName": "textureShader",
+          "fragmentPath": "../../res/textureShader.fs",
+          "vertexPath": "../../res/textureShader.vs"
+        },
+        {
+          "ShaderName": "cloudShader",
+          "fragmentPath": "../../res/cloudFragShader.fs",
+          "vertexPath": "../../res/cloudVecShader.vs"
+        },
+        {
+          "ShaderName": "toonShader",
+          "fragmentPath": "../../res/toonShader.fs",
+          "vertexPath": "../../res/toonShader.vs"
+        },
+        {
+          "ShaderName": "outlineShader",
+          "fragmentPath": "../../res/outlineShader.fs",
+          "vertexPath": "../../res/outlineShader.vs"
+        },
+        {
+          "ShaderName": "skyboxReflectionShader",
+          "fragmentPath": "../../res/skyboxReflectionShader.fs",
+          "vertexPath": "../../res/skyboxReflectionShader.vs"
+        },
+        {
+          "ShaderName": "shadowShader",
+          "fragmentPath": "../../res/shadowShader.fs",
+          "vertexPath": "../../res/shadowShader.vs"
+        },
+        {
+          "ShaderName": "shadowInstanceShader",
+          "fragmentPath": "../../res/shadowInstanceShader.fs",
+          "vertexPath": "../../res/shadowInstanceShader.vs"
+        },
+        {
+          "ShaderName": "wireframeShader",
+          "fragmentPath": "../../res/wireframeShader.fs",
+          "vertexPath": "../../res/wireframeShader.vs"
+        },
+        {
+          "ShaderName": "turretRangeShader",
+          "fragmentPath": "../../res/turretRange.fs",
+          "vertexPath": "../../res/turretRange.vs"
+        },
+        {
+          "ShaderName": "particleShader",
+          "fragmentPath": "../../res/particleShader.fs",
+          "vertexPath": "../../res/particleShader.vs"
+        },
+        {
+          "ShaderName": "shovelShader",
+          "fragmentPath": "../../res/shovelShader.fs",
+          "vertexPath": "../../res/shovelShader.vs"
+        },
+        {
+          "ShaderName": "blueprintShader",
+          "fragmentPath": "../../res/blueprintShader.fs",
+          "vertexPath": "../../res/blueprintShader.vs"
+        }
+      ],
         "cShaders": [
             {
                 "ShaderName" : "particleComputeShader",
@@ -434,7 +439,7 @@
               "componentType": 3,
               "maxSize": 100000,
               "model": "metalModel",
-              "shader": "instancedSandShader",
+              "shader": "instancedMetalShader",
               "isDynamic": false
             }
           ],
@@ -470,7 +475,7 @@
               "width": 100,
               "sandRendererRefID": 0,
               "topLayerRendererRefID": 31,
-              "plasticRendererRefID": 84,
+              "plasticRendererRefID": 84, 
               "metalRendererRefID": 85
             }
           ],
