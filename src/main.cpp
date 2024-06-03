@@ -222,6 +222,10 @@ int main(int, char**)
             //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
         }
 
+        if(INPUT.IsKeyPressed(GLFW_KEY_RIGHT_BRACKET)){
+            TUTORIALMANAGER._isTutorialEnded = true;
+        }
+
         if(!GAMEMANAGER._paused){
             ENEMIESMANAGER.Update();
             TURRETSMANAGER.Update();

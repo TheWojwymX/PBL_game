@@ -42,15 +42,15 @@ public:
 
     bool CheckIfPlayerIsAtEntranceToMine();
     bool _activeMineEntranceCollision = false;
+    bool _isGrounded;
+    float _speed;
 
 private:
-    float _speed;
     float _width;
     float _height;
     float _gravity;
     float _jumpHeight;
     float _groundLevel;
-    bool _isGrounded;
     bool _jump;
     float _reach;
     int _radius;

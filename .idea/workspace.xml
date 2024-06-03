@@ -32,19 +32,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +76,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "CMake Application.SandBOX.executor": "Debug",
+    "CMake Application.SandBOX.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -228,7 +225,8 @@
       <workItem from="1717181433658" duration="9960000" />
       <workItem from="1717234901923" duration="9007000" />
       <workItem from="1717276894265" duration="4549000" />
-      <workItem from="1717403734209" duration="2748000" />
+      <workItem from="1717403734209" duration="3410000" />
+      <workItem from="1717414288985" duration="16177000" />
     </task>
     <servers />
   </component>

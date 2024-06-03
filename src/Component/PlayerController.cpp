@@ -262,11 +262,16 @@ void PlayerController::UpgradeReach(){
 void PlayerController::UpgradeSpeed(){
     if (_speed < 15) {
 
-        if(GAMEMANAGER._money < _speedUpgradeCost){
-            std::cout << "Nie ma dosc pieniedzy na ulepsznie speeda" << std::endl;
-            return;
-        }else{
-            GAMEMANAGER._money -= _speedUpgradeCost;
+        if(_speed == 8.0){
+            increaseSpeedLevel();
+        }
+        else{
+            if(GAMEMANAGER._money < _speedUpgradeCost){
+                std::cout << "Nie ma dosc pieniedzy na ulepsznie speeda" << std::endl;
+                return;
+            }else{
+                GAMEMANAGER._money -= _speedUpgradeCost;
+            }
         }
 
         increaseSpeedLevel();

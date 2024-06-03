@@ -2,7 +2,7 @@
 
 #include "GameManager.h"
 #include "../Enemies/EnemiesManager.h"
-
+#include "../Managers/TutorialManager.h"
 GameManager &GameManager::getInstance() {
     static GameManager instance;
     return instance;
@@ -18,14 +18,16 @@ void GameManager::pressToSkipPhase()
 
 void GameManager::Update()
 {
-    currentTime += TIME.GetDeltaTime();
-    pressToSkipPhase();
+    if(TUTORIALMANAGER._isTutorialEnded){
+        currentTime += TIME.GetDeltaTime();
+        pressToSkipPhase();
 
-    if (currentTime >= phaseTime)
-    {
-        currentTime = 0.0f;
-        currentPhase = (currentPhase + 1) % 3;
-        InitPhase();
+        if (currentTime >= phaseTime)
+        {
+            currentTime = 0.0f;
+            currentPhase = (currentPhase + 1) % 3;
+            InitPhase();
+        }
     }
 }
 
