@@ -51,6 +51,9 @@ void Turret::Update() {
 
     if(_isFlying){
         if(glm::distance(GetOwnerPosition(), _finalPosition) <= 0.1){
+            std::cout << "przed usunieciem" << std::endl;
+            NODESMANAGER.getNodeByName("root")->removeChild(_flare);
+            std::cout << "po usunieciu" << std::endl;
             _isFlying = false;
             _ownerTransform->SetRotation(_finalRotation);
             _ownerTransform->SetPosition(_finalPosition);

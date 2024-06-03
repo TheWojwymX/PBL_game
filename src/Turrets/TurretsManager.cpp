@@ -40,7 +40,7 @@ void TurretsManager::Update() {
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = !_player->GetComponent<PlayerController>()->_activeMineEntranceCollision;
     }
 
-    if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea()) {
+    if (INPUT.IsMousePressed(1) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea()) {
         SpawnTurret();
     }
 
@@ -99,6 +99,27 @@ void TurretsManager::SpawnTurret() {
         GAMEMANAGER._money -= _turretCost;
     }
 
+    //Flare spawning
+    std::string nameOfFlare = "Flare" + to_string(_turrets.size() + 1);
+    shared_ptr<Node> flare = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfFlare);
+
+    auto newFlareMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    newFlareMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("ShovelModel");
+    newFlareMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    newFlareMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newFlareMeshRenderer->Initiate();
+    flare->AddComponent(newFlareMeshRenderer);
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 360.0f);
+
+    flare->GetTransform()->SetPosition(_blueprintTurret->GetTransform()->GetPosition());
+    flare->GetTransform()->SetScale(glm::vec3(0.1, 0.1, 0.1));
+    flare->GetTransform()->SetRotation(glm::vec3(flare->GetTransform()->GetRotation().x + 90, flare->GetTransform()->GetRotation().y + dis(gen),
+                                                 flare->GetTransform()->GetRotation().z));
+
+    //Turret spawning
     //std::cout << "zespawniono" << std::endl;
     std::string nameOfTurret = "Turret" + to_string(_turrets.size() + 1);
     std::string rangeIndicatorNode = "Range" + to_string(_turrets.size() + 1);
@@ -128,6 +149,7 @@ void TurretsManager::SpawnTurret() {
     newTurret->_isFlying = true;
     newTurret->_finalRotation = _blueprintTurret->GetTransform()->GetRotation();
     newTurret->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
+    newTurret->_flare = NODESMANAGER.getNodeByName(nameOfFlare);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
 

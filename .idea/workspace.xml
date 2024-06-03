@@ -32,15 +32,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/blueprintShader.fs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/blueprintShader.vs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/shovel_1.3.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +79,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "CMake Application.SandBOX.executor": "Run",
+    "CMake Application.SandBOX.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -84,7 +88,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "Merging main",
-    "last_opened_file_path": "C:/RepoPBL/res/Models/Base/Wires",
+    "last_opened_file_path": "C:/RepoPBL/res/Models/Shovel/Shovel_Green",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -95,18 +99,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res\Models\Shovel\Shovel_Green" />
       <recent name="C:\RepoPBL\res\Models\Base\Wires" />
       <recent name="C:\RepoPBL\res\Models\Base\Sandbags\SandbagsV3" />
       <recent name="C:\RepoPBL\res\Models\Base\Sandbags\SandbagsV2" />
       <recent name="C:\RepoPBL\res\Models\Base\Sandbags\SandbagsV1" />
-      <recent name="C:\RepoPBL\res" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res\Models\Shovel\Shovel_Blue" />
+      <recent name="C:\RepoPBL\res\Models\Shovel" />
       <recent name="C:\RepoPBL\res" />
       <recent name="C:\RepoPBL\res\Images" />
       <recent name="C:\RepoPBL\src\HUD\Pages\TurretUpgradeMenu" />
-      <recent name="C:\RepoPBL\src\HUD\Pages\PauseMenu" />
-      <recent name="C:\RepoPBL\src\HUD\Pages\PlayerUpgradeMenu" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
@@ -116,11 +120,6 @@
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -229,6 +228,7 @@
       <workItem from="1717181433658" duration="9960000" />
       <workItem from="1717234901923" duration="9007000" />
       <workItem from="1717276894265" duration="4549000" />
+      <workItem from="1717403734209" duration="2748000" />
     </task>
     <servers />
   </component>

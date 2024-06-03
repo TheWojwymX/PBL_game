@@ -153,7 +153,7 @@
             },
             {
                 "ModelName": "ShovelModel",
-                "Path": "../../res/Models/Shovel/shovel_1.3.obj"
+                "Path": "../../res/Models/Shovel/Shovel_Green/shovel_green.obj"
             }
         ],
         "Shaders": [

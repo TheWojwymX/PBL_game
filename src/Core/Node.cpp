@@ -165,7 +165,7 @@ void Node::Update() {
             component->Update();
 
     for (auto &child: _children)
-        child->Update();
+        if(child != nullptr) child->Update();
 }
 
 void Node::Render(glm::mat4 parentWorld) {

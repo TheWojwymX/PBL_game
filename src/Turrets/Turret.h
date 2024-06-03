@@ -37,6 +37,8 @@ public:
     float _damage = 35;
 
     float _timer = 0.0f;
+
+    std::shared_ptr<Node> _flare;
 };
 
 
