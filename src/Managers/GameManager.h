@@ -45,6 +45,9 @@ public:
 
     int _money = 50;
 
+    glm::vec3 _windDirection{0.0f};
+    float _windStrength = 0.0f;
+
     void EnableMouse();
     void DisableMouse();
 

@@ -84,7 +84,7 @@ int main(int, char**)
     // GL 4.3 + GLSL 430
     const char* glsl_version = "#version 430";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
@@ -149,19 +149,22 @@ int main(int, char**)
     bool dirActive = true;
 
     //Shadowmap Creation POV
-    glm::vec3 lightPos(50.0f, 350.0f, 40.0f);
+    glm::vec3 lightPos(49.999f, 350.0f, 40.0f);
     glm::vec3 lightCenter(50.0f, 300.0f,50.0f);
+
+    glm::vec3 windDirection(1.0f,0.0f,0.0f);
+    float windStrength = 0.0f;
 
     //SpotLight Properties
     bool isSpotActive = true;
     glm::vec3 spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
     glm::vec3 spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
     glm::vec3 spotLightColor(1.0f);
-    float spotLightConstant = 1.0f;
-    float spotLightLinear = 0.1f;
-    float spotLightQuadratic = 0.03f;
-    float spotLightCutOff = 16.5f;
-    float spotLightOuterCutOff = 20.5f;
+    float spotLightConstant = 2.0f;
+    float spotLightLinear = 0.15f;
+    float spotLightQuadratic = 0.06f;
+    float spotLightCutOff = 20.5f;
+    float spotLightOuterCutOff = 24.5f;
     bool _renderWireframeBB = false;
 
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
@@ -264,6 +267,9 @@ int main(int, char**)
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 
+        ImGui::SliderFloat3("Wind Direction", &windDirection[0],-1.0f,1.0f);
+        ImGui::SliderFloat("Wind Strength", &windStrength, -10.0f, 10.0f);
+
         FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
         // Applying clear color
@@ -271,6 +277,10 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glDepthMask(GL_FALSE);
+
+        GAMEMANAGER._windDirection = normalize(windDirection);
+        GAMEMANAGER._windStrength = windStrength;
+
         RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
 
         glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
@@ -290,7 +300,7 @@ int main(int, char**)
         dirDirection[1] = shadowDir.y;
         dirDirection[2] = shadowDir.z;
 
-        float near_plane = 0.2f, far_plane = 330.0f;
+        float near_plane = 0.2f, far_plane = 150.0f;
         glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
         glm::mat4 lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
         shadowMap.SetLightProjection(lightProjection);

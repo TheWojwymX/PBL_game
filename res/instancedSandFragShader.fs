@@ -3,7 +3,7 @@ out vec4 FragColor;
 
 // Define constants for lighting calculations
 #define AMBIENT_STRENGTH 0.25
-#define SPECULAR_STRENGTH 0.5
+#define SPECULAR_STRENGTH 0.3
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
 
@@ -155,7 +155,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
-    return (ambient + diffuse); //+specular
+    return (specular); //+specular
 }
 
 float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
@@ -169,10 +169,10 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-    float bias =  0.001;
-    //vec3 normal = normalize(Normal);
-    //vec3 lightDir = normalize(lightPos - FragPos);
-    //float bias = max(0.008 * dot(normal, lightDir), 0.005);
+    //float bias =  0.001;
+    vec3 normal = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float bias = max(0.008 * dot(normal, lightDir), 0.005);
     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
     float shadow = 0.0;
@@ -187,11 +187,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
     }
     shadow /= 9.0;
 
-    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.3, 0.0, 1.0)); // Blend shadow with spotlight intensity
-
-    // keep the shadow at 0.0 when outside the far_plane region of the light's frustum.
-    if(projCoords.z > 1.0)
-        shadow = 0.0;
+    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.33, 0.0, 1.0)); // Shadow brightness 0.33
 
     return shadow - 0.2;
 }
@@ -205,12 +201,12 @@ float CalcSpotLightIntensity(SpotLight spotLight, vec3 fragPos)
     float distance = length(spotLight.position - fragPos);
 
     // Calculate attenuation based on distance
-    float attenuation = 1.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));
+    float attenuation = 2.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));
 
     // Calculate the spotlight intensity based on the angle within the cone
     float theta = dot(lightDir, normalize(-spotLight.direction));
     float epsilon = spotLight.cutOff - spotLight.outerCutOff;
-    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.0, 1.0);
+    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.1, 1.0); //Flashlight effect on shadow
 
     // Final intensity considering attenuation and angle
     return attenuation * intensity;

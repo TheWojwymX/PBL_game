@@ -32,6 +32,9 @@ public:
     glm::vec3 min;
     glm::vec3 max;
 
+    glm::vec3 worldMax;
+    glm::vec3 worldMin;
+
     // model data 
     vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
     vector<Mesh>    meshes;

@@ -35,7 +35,6 @@ public:
     shared_ptr<Shader> _shader; // Raw pointer to the shader
     shared_ptr<Shader> _outlineShader; // Raw pointer to the outline shader
     std::shared_ptr<Camera> _cameraRef;
-    int framesRendered;
 
     void RenderModel(shared_ptr<Model> model, glm::mat4 ctm);
 };

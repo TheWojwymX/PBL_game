@@ -68,7 +68,6 @@ void ParticleGenerator::UpdateParticles() {
     glm::quat rotationQuat = object->GetTransform()->GetRotation();
     glm::mat4 rotationMatrix = glm::toMat4(rotationQuat);
 
-    // Adjust `offset` based on the rotation
     rotatedOffset = glm::vec3(rotationMatrix * glm::vec4(offset, 1.0f));
 
     computeShader->use();
@@ -82,11 +81,12 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setMat4("objectRotation", glm::toMat4(object->GetTransform()->GetRotation()));
     computeShader->setVec3("enemyPosition", enemyPosition);
     computeShader->setVec3("jumpOff", jumpOffPoint);
+    computeShader->setVec3("windDirection", GAMEMANAGER._windDirection);
+    computeShader->setFloat("windStrength", GAMEMANAGER._windStrength);
 
     generatorPosition = object->GetTransform()->GetPosition() + rotatedOffset;
 
     hasSpawned = true;
-
 
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, particleBuffer);
     glDispatchCompute(amount, 1, 1);
@@ -94,111 +94,80 @@ void ParticleGenerator::UpdateParticles() {
 }
 
 void ParticleGenerator::RenderParticles() {
-    //bool visible = glm::dot(camForward, glm::normalize(object->GetTransform()->GetPosition() + rotatedOffset) - camPosition) > 0.6f;
-    //if((visible && particleType != "turretShot") || particleType == "turretShot") {
-        glm::mat4 viewMatrix = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
-        glm::vec3 cameraPosition = glm::vec3(viewMatrix[3]);
-        glm::vec3 cameraForward = -glm::normalize(glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]));
+    int deadParticles = 0;
 
-        std::vector<std::pair<float, unsigned int>> distanceIndexPairs;
+    glm::vec3 objectPositionWithOffset = object->GetTransform()->GetPosition() + rotatedOffset;
+    glm::vec3 vectorToObject = objectPositionWithOffset - camPosition;
+    glm::vec3 normalizedCamForward = glm::normalize(camForward);
+    glm::vec3 normalizedVectorToObject = glm::normalize(vectorToObject);
+    float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
+    bool visible = dotProduct > 0.1f;
 
-        // Map particle buffer
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, particleBuffer);
-        Particle *particleData = (Particle *) glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, amount * sizeof(Particle),
-                                                               GL_MAP_READ_BIT);
+    if((visible && particleType != "turretShot") || particleType == "turretShot") {
 
-        int deadParticles = 0;
+        Particle *particleData = this->particleData;
+
+        std::vector<glm::vec3> offsets;
+        std::vector<float> scales;
+
         for (unsigned int i = 0; i < amount; ++i) {
             Particle &particle = particleData[i];
             if (particle.Life > 0.0f) {
-                glm::vec3 particleToCamera = glm::vec3(cameraPosition.x - particle.Position.x,
-                                                       cameraPosition.y - particle.Position.y,
-                                                       cameraPosition.z - particle.Position.z);
-                float distanceAlongView = glm::dot(particleToCamera, cameraForward);
-                distanceIndexPairs.push_back({distanceAlongView, i});
-
-            }
-            else{
-                deadParticles++;
+                offsets.push_back(particle.Position);
+                scales.push_back(particle.Scale);
+            } else {
+                if (!firstPass) deadParticles++;
             }
         }
 
-        if (deadParticles == amount)
-        {
+        if (deadParticles == amount) {
             generateParticle = false;
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
 
-        // Sort particles by distance
-        std::sort(distanceIndexPairs.begin(), distanceIndexPairs.end(),
-                  [](const std::pair<float, unsigned int> &a, const std::pair<float, unsigned int> &b) {
-                      return a.first < b.first;
-                  });
-
-        // Prepare instance data
-        std::vector<glm::vec3> offsets;
-        std::vector<glm::vec4> colors;
-        std::vector<float> scales;
-
-        for (const auto &pair: distanceIndexPairs) {
-            const Particle &particle = particleData[pair.second];
-            if (particle.Life > 0.0f) {
-                offsets.push_back(particle.Position);
-                colors.push_back(particle.Color);
-                scales.push_back(particle.Scale);
-            }
-        }
-
-        // Create a single buffer for all instance data
         size_t offsetSize = offsets.size() * sizeof(glm::vec3);
-        size_t colorSize = colors.size() * sizeof(glm::vec4);
         size_t scaleSize = scales.size() * sizeof(float);
-        size_t totalSize = offsetSize + colorSize + scaleSize;
 
-        glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-        glBufferData(GL_ARRAY_BUFFER, totalSize, nullptr, GL_DYNAMIC_DRAW);
+        char *bufferPointer = instanceData[currentBuffer];
+        memcpy(bufferPointer, offsets.data(), offsetSize);
+        memcpy(bufferPointer + offsetSize, scales.data(), scaleSize);
 
-        // Fill the buffer
-        glBufferSubData(GL_ARRAY_BUFFER, 0, offsetSize, offsets.data());
-        glBufferSubData(GL_ARRAY_BUFFER, offsetSize, colorSize, colors.data());
-        glBufferSubData(GL_ARRAY_BUFFER, offsetSize + colorSize, scaleSize, scales.data());
-
-        // Set up instance attributes
         glBindVertexArray(VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, instanceVBOs[currentBuffer]);
 
         // Instance Position (Location 2)
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (GLvoid *) 0);
         glVertexAttribDivisor(2, 1);
 
-        // Instance Color (Location 3)
-        glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (GLvoid *) (offsetSize));
-        glVertexAttribDivisor(3, 1);
-
         // Instance Scale (Location 4)
         glEnableVertexAttribArray(4);
-        glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(float), (GLvoid *) (offsetSize + colorSize));
+        glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(float), (GLvoid *) (offsetSize));
         glVertexAttribDivisor(4, 1);
 
-        // Render
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         shader->use();
+        shader->setVec4("pColor" ,particleColor);
         texture.Bind();
+
         glDrawArraysInstanced(GL_TRIANGLES, 0, 6, offsets.size());
+
         glBindVertexArray(0);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //}
+        currentBuffer = (currentBuffer + 1) % 2;
+    }
+
     if (deadParticles == amount) {
         if (toDelete) {
             GAMEMANAGER.root->removeChild(_ownerNode);
         }
     }
+
+    firstPass = false;
 }
 
 void ParticleGenerator::Init() {
-    // Initialize compute shader and set its parameters
     computeShader = std::make_shared<ComputeShader>("../../res/particleCompute.glsl", "computeShader");
     if(object == nullptr) object = this->GetOwnerNode();
     initiateParticleType();
@@ -222,10 +191,8 @@ void ParticleGenerator::Init() {
     computeShader->setBool("isJetpack", isJetpack);
     computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel);
 
-    // Particle quad (single instance)
     unsigned int VBO;
     float particle_quad[] = {
-            // Position   // TexCoords
             -0.5f, 0.5f, 0.0f, 1.0f,
             0.5f, -0.5f, 1.0f, 0.0f,
             -0.5f, -0.5f, 0.0f, 0.0f,
@@ -235,7 +202,6 @@ void ParticleGenerator::Init() {
             0.5f, -0.5f, 1.0f, 0.0f
     };
 
-    // Generate and bind VAO for the particle quad
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
@@ -246,20 +212,18 @@ void ParticleGenerator::Init() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
 
-    // Initialize instance buffer (offsets, colors, scales)
-    glGenBuffers(1, &instanceVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, amount * sizeof(glm::vec3) + amount * sizeof(glm::vec4) + amount * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
+    size_t bufferSize = amount * sizeof(glm::vec3) + amount * sizeof(float);
+    glGenBuffers(2, instanceVBOs);
+    for (int i = 0; i < 2; ++i) {
+        glBindBuffer(GL_ARRAY_BUFFER, instanceVBOs[i]);
+        glBufferStorage(GL_ARRAY_BUFFER, bufferSize, nullptr, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
+        instanceData[i] = (char*)glMapBufferRange(GL_ARRAY_BUFFER, 0, bufferSize, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
+    }
 
     // Attribute 2: Offsets
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (GLvoid*)0);
     glVertexAttribDivisor(2, 1);
-
-    // Attribute 3: Colors
-    glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (GLvoid*)(amount * sizeof(glm::vec3)));
-    glVertexAttribDivisor(3, 1);
 
     // Attribute 4: Scales
     glEnableVertexAttribArray(4);
@@ -268,11 +232,11 @@ void ParticleGenerator::Init() {
 
     glBindVertexArray(0);
 
-    // Initialize particles buffer for compute shader
     particles.resize(amount);
     glGenBuffers(1, &particleBuffer);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, particleBuffer);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, amount * sizeof(Particle), particles.data(), GL_DYNAMIC_DRAW);
+    glBufferStorage(GL_SHADER_STORAGE_BUFFER, amount * sizeof(Particle), nullptr, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
+    particleData = (Particle*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, amount * sizeof(Particle), GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, particleBuffer);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
@@ -280,7 +244,7 @@ void ParticleGenerator::Init() {
 void ParticleGenerator::initiateParticleType() {
     if (particleType == "turretCasing") {
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
-        amount = 100;
+        amount = 50;
         newParticles = 1;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
@@ -297,12 +261,12 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "turretShot"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
-        amount = 100;
+        amount = 30;
         newParticles = 1;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 90.0f;
-        particleLife = 4.0f;
+        particleLife = 3.0f;
         particleColor = glm::vec4(0.8f,0.8f,0.0f,1.0f);
         initialUpwardBoost = 0.0f;
         particleScale = 0.25f;
@@ -313,12 +277,12 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "antShot"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
-        amount = 50;
-        newParticles = 5;
+        amount = 21;
+        newParticles = 3;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 1.0f;
-        particleLife = 3.0f;
+        particleLife = 4.0f;
         particleColor = glm::vec4(0.3f,0.0f,0.0f,1.0f);
         SetInitialUpwardBoost(enemyScale, 0.0f);
         SetPartScale(enemyScale, 0.0f);
@@ -329,12 +293,12 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "antDie"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
-        amount = 30;
-        newParticles = 30;
+        amount = 5;
+        newParticles = 5;
         spawnDelay = 0.0f;
         speedVariation = 1.0f;
         XZvariation = 2.0f;
-        particleLife = 6.0f;
+        particleLife = 4.0f;
         particleColor = glm::vec4(0.545f,0.271f,0.075f,1.0f);
         initialUpwardBoost = 1.0f;
         SetPartScale(enemyScale, 0.0f);
@@ -345,7 +309,7 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "jetpackUse"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
-        amount = 1000;
+        amount = 100;
         newParticles = 3;
         spawnDelay = 0.1f;
         speedVariation = 1.0f;

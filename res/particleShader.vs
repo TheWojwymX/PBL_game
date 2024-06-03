@@ -2,20 +2,12 @@
 
 layout (location = 0) in vec4 vertex;  // <vec2 position, vec2 texCoords>
 layout (location = 2) in vec3 instancePosition;  // Particle position
-layout (location = 3) in vec4 instanceColor;     // Particle color
 layout (location = 4) in float instanceScale;    // Particle scale
-
-out vec2 TexCoords;
-out vec4 ParticleColor;
 
 uniform mat4 projection;
 uniform mat4 view;
 
 void main() {
-    // Particle texture coordinates and color
-    TexCoords = vertex.zw;
-    ParticleColor = instanceColor;
-
     // Get the camera's direction (typically the negative of the z-axis in the view matrix)
     vec3 cameraDirection = -normalize(vec3(view[0][2], view[1][2], view[2][2]));
 
