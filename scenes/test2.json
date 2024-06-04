@@ -3845,6 +3845,10 @@
                         "model": "WormModel",
                         "outlineShader": "outlineShader",
                         "shader": "modelShader"
+                    },
+                    {
+                        "axis": 1.0,
+                        "speed": 1.0
                     }
                 ],
                 "transform": {
