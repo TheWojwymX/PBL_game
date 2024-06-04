@@ -27,6 +27,7 @@ void TutorialManager::Update() {
         case 1:
             if(GAMEMANAGER._money == 100){
                 DisplayAndChangeMessage();
+                std::cout << "qwe";
             }
             /*else if(glm::distance(_messagesPositions[_actualMessage], _player->GetTransform()->GetPosition()) > 50){ //tutaj pozycja wykopania surowcow
                 WarningSystem();
