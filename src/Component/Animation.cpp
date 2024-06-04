@@ -56,7 +56,18 @@ std::shared_ptr<Model> Animation::GetCurrentFrame()
             {
                 return nullptr;
             }
-            int frameIndex = static_cast<int>(_currentTime / _frameDuration) % _deadFrames.size();
+
+            int frameIndex;
+
+            if(_toDelete)
+            {
+                frameIndex = static_cast<int>(_deadFrames.size()-1);
+            }
+            else
+            {
+                frameIndex = static_cast<int>(_currentTime / _frameDuration) % _deadFrames.size();
+            }
+
             return _deadFrames[frameIndex];
         }
     }
@@ -80,6 +91,15 @@ void Animation::Update() {
         _currentTime = generateRandomFloat(gen, dis);
     }
 
+    if (_enemyState == DEAD && !IsAnimationFinished() && !_toDelete)
+    {
+        _currentTime = std::min(_currentTime, _frameDuration * _deadFrames.size() - 0.01f);
+    }
+    else if (_enemyState == DEAD && IsAnimationFinished())
+    {
+        _toDelete = true;
+    }
+
     if (_loop)
     {
         switch (_enemyState)
@@ -101,15 +121,6 @@ void Animation::Update() {
                 }
                 break;
             }
-
-            case DEAD:
-            {
-                while (_currentTime >= _frameDuration * _deadFrames.size())
-                {
-                    _currentTime -= _frameDuration * _deadFrames.size();
-                }
-                break;
-            }
         }
     }
     else
@@ -125,12 +136,6 @@ void Animation::Update() {
             case ATTACK:
             {
                 _currentTime = std::min(_currentTime, _frameDuration * _attackFrames.size() - 0.01f);
-                break;
-            }
-
-            case DEAD:
-            {
-                _currentTime = std::min(_currentTime, _frameDuration * _deadFrames.size() - 0.01f);
                 break;
             }
         }
@@ -210,6 +215,32 @@ void Animation::InitFrames()
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead0"));
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead1"));
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead2"));
+    }
+    else if(_entityType == 2)
+    {
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn0"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn1"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn2"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn3"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn4"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn5"));
+
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk0"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk1"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk2"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk3"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk4"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk5"));
+
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack0"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack1"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack2"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack3"));
+
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead0"));
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead1"));
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead2"));
+
     }
 }
 

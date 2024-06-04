@@ -28,6 +28,8 @@ public:
     Animation();
     Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop, state enemyState);
     state _enemyState = WALK;
+    bool _toDelete = false;
+
 
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json &jsonData) override;

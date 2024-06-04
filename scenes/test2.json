@@ -108,6 +108,82 @@
                 "Path": "../../res/Models/Ant/ant_dead_v1-2.obj"
             },
             {
+                "ModelName": "BeetleSpawn0",
+                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-0.obj"
+            },
+            {
+                "ModelName": "BeetleSpawn1",
+                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-1.obj"
+            },
+            {
+                "ModelName": "BeetleSpawn2",
+                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-2.obj"
+            },
+            {
+                "ModelName": "BeetleSpawn3",
+                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-3.obj"
+            },
+            {
+                "ModelName": "BeetleSpawn4",
+                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-4.obj"
+            },
+            {
+                "ModelName": "BeetleSpawn5",
+                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-5.obj"
+            },
+            {
+                "ModelName": "BeetleWalk0",
+                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-0.obj"
+            },
+            {
+                "ModelName": "BeetleWalk1",
+                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-1.obj"
+            },
+            {
+                "ModelName": "BeetleWalk2",
+                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-2.obj"
+            },
+            {
+                "ModelName": "BeetleWalk3",
+                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-3.obj"
+            },
+            {
+                "ModelName": "BeetleWalk4",
+                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-4.obj"
+            },
+            {
+                "ModelName": "BeetleWalk5",
+                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-5.obj"
+            },
+            {
+                "ModelName": "BeetleAttack0",
+                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-0.obj"
+            },
+            {
+                "ModelName": "BeetleAttack1",
+                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-1.obj"
+            },
+            {
+                "ModelName": "BeetleAttack2",
+                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-2.obj"
+            },
+            {
+                "ModelName": "BeetleAttack3",
+                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-3.obj"
+            },
+            {
+                "ModelName": "BeetleDead0",
+                "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-0.obj"
+            },
+            {
+                "ModelName": "BeetleDead1",
+                "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-1.obj"
+            },
+            {
+                "ModelName": "BeetleDead2",
+                "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-2.obj"
+            },
+            {
                 "ModelName": "DomeStation",
                 "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
             },

@@ -105,7 +105,7 @@ public:
 
     bool _isAfterWarning = false;
 
-    bool _isTutorialEnded = false;
+    bool _isTutorialEnded = true;
 
     void SpawnTutorialEnemies(int spawnerIndex);
 

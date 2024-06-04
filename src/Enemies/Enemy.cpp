@@ -80,12 +80,19 @@ void Enemy::TakeDamage(int amount){
         }
     }
 
-    if(_hp <= 0){
+    if(_hp <= 0)
+    {
         if(particleDead != nullptr) {
             particleDead->SpawnParticles();
             particleDead->toDelete = true;
         }
-        Die();
+
+        auto anim = _ownerNode->GetComponent<Animation>();
+        anim->_enemyState = DEAD;
+        if(anim->_toDelete)
+        {
+            Die();
+        }
     }
 }
 
@@ -105,8 +112,12 @@ void Enemy::AttackDome(){
 }
 
 //Just like update but connected to EnemiesManager
-void Enemy::EnemyAI() {
-    AttackDome();
-    WalkToDestination();
-    Component::Update();
+void Enemy::EnemyAI()
+{
+    if(!_ownerNode->GetComponent<Animation>()->_toDelete)
+    {
+        AttackDome();
+        WalkToDestination();
+        Component::Update();
+    }
 }
