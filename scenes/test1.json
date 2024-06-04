@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 178,
-  "nextNodeId": 166,
+  "nextComponentId": 180,
+  "nextNodeId": 167,
     "resources": {
       "Models": [
         {
@@ -230,6 +230,10 @@
         {
           "ModelName": "ShovelModel",
           "Path": "../../res/Models/Shovel/Shovel_Green/shovel_green.obj"
+        },
+        {
+          "ModelName": "WormModel",
+          "Path": "../../res/Models/Worm/robal.obj"
         }
       ],
       "Shaders": [
@@ -551,7 +555,7 @@
               "width": 100,
               "sandRendererRefID": 0,
               "topLayerRendererRefID": 31,
-              "plasticRendererRefID": 84, 
+              "plasticRendererRefID": 84,
               "metalRendererRefID": 85
             }
           ],
@@ -3513,10 +3517,6 @@
             ]
           }
         },
-
-
-
-
         {
           "NodeID": 26,
           "NodeName": "Bucket",
@@ -3656,7 +3656,7 @@
               "maxSize": 5000,
               "model": "cloudModel",
               "shader": "cloudShader",
-              "isDynamic":  true
+              "isDynamic": true
             }
           ],
           "transform": {
@@ -3831,6 +3831,37 @@
               2.5,
               2.5,
               2.5
+            ]
+          }
+        },
+        {
+          "NodeID": 166,
+          "NodeName": "Worm",
+          "children": [],
+          "components": [
+            {
+              "componentId": 178,
+              "componentType": 5,
+              "model": "WormModel",
+              "outlineShader": "outlineShader",
+              "shader": "modelShader"
+            }
+          ],
+          "transform": {
+            "position": [
+              143.125,
+              299.8,
+              162.571
+            ],
+            "rotation": [
+              0,
+              334.157,
+              0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
             ]
           }
         }

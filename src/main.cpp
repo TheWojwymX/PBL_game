@@ -20,6 +20,8 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/Skybox.h"
 #include "Component/ShadowMap.h"
+#include "Component/Rotate.h"
+
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/SceneManager.h"
