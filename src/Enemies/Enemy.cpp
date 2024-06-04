@@ -114,7 +114,7 @@ void Enemy::AttackDome(){
 //Just like update but connected to EnemiesManager
 void Enemy::EnemyAI()
 {
-    if(!_ownerNode->GetComponent<Animation>()->_toDelete)
+    if(_ownerNode->GetComponent<Animation>()->_enemyState != DEAD)
     {
         AttackDome();
         WalkToDestination();

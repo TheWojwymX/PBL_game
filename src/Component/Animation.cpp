@@ -3,6 +3,8 @@
 #include <random>
 #include "Animation.h"
 #include "Core/Time.h"
+#include "Core/Node.h"
+
 
 Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop, state enemyState)
         : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop), _enemyState(enemyState) {}
@@ -59,7 +61,7 @@ std::shared_ptr<Model> Animation::GetCurrentFrame()
 
             int frameIndex;
 
-            if(_toDelete)
+            if(IsAnimationFinished())
             {
                 frameIndex = static_cast<int>(_deadFrames.size()-1);
             }
@@ -91,13 +93,16 @@ void Animation::Update() {
         _currentTime = generateRandomFloat(gen, dis);
     }
 
-    if (_enemyState == DEAD && !IsAnimationFinished() && !_toDelete)
+    if (_enemyState == DEAD && IsAnimationFinished())
     {
-        _currentTime = std::min(_currentTime, _frameDuration * _deadFrames.size() - 0.01f);
-    }
-    else if (_enemyState == DEAD && IsAnimationFinished())
-    {
-        _toDelete = true;
+        if(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y > GAMEMANAGER._groundLevel - 2)
+        {
+            _meshRenderer->GetOwnerNode()->GetTransform()->SetPosition(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y - TIME.GetDeltaTime(), 1);
+        }
+        else
+        {
+            _toDelete = true;
+        }
     }
 
     if (_loop)

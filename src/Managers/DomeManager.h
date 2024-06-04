@@ -13,11 +13,9 @@ public:
 
     int hp;
     int maxHP = 200;
-    float iTime;
-    bool isInvincible;
 
 private:
-    DomeManager() : hp(200),iTime(0),isInvincible(false) {}
+    DomeManager() : hp(200) {}
 
 
 };

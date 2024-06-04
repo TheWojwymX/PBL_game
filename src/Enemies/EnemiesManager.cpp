@@ -129,7 +129,8 @@
         if(!enemy->_isAtWalls){
             if(glm::distance(enemy->GetOwnerPosition(), CalcClosestDomePosition(enemy)) < 0.1f){
                 enemy->_isAtWalls = true;
-                if(enemy->GetOwnerNode()->GetComponent<Animation>() != nullptr)
+                auto animation = enemy->GetOwnerNode()->GetComponent<Animation>();
+                if(animation != nullptr && animation->_enemyState != DEAD)
                 {
                     enemy->GetOwnerNode()->GetComponent<Animation>()->_enemyState=state::ATTACK;
                 }
