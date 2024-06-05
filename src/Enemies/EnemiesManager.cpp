@@ -11,7 +11,7 @@
 
     void EnemiesManager::Update() {
         ChooseModelBasedOnDistance(); //LOD (safe to comment out)
-        if(Input::Instance().IsKeyPressed(GLFW_KEY_KP_1)) {
+        if(Input::Instance().IsKeyPressed(GLFW_KEY_1)) {
 
             std::random_device rd;
             std::mt19937 gen(rd());

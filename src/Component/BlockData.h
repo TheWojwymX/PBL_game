@@ -30,6 +30,7 @@ public:
     bool IsVisible() const { return _visible; }
     bool IsRendered() const { return _rendered; }
     glm::mat4 GetMatrix() const { return _matrix; }
+    bool IsSolid() const { return _blockType != BlockType::EMPTY; }
 
     void SetBlockType(BlockType blockType) { _blockType = blockType; }
     void SetPosID(glm::ivec3 posID) { _posID = posID; }

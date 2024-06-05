@@ -454,7 +454,7 @@
                         "componentId": 31,
                         "componentType": 3,
                         "isDynamic": false,
-                        "maxSize": 250000,
+                        "maxSize": 379000,
                         "model": "topLayerModel",
                         "shader": "instancedSandShader"
                     }

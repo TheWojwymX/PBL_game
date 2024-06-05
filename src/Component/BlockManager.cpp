@@ -88,7 +88,7 @@ void BlockManager::Initiate() {
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
     GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
-    //GenerateResources();
+    GenerateResources();
     GenerateSphereVectors(31);
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
@@ -174,20 +174,14 @@ void BlockManager::UpdateBlocksVisibility() {
         UpdateBlockVisibility(blockData);
     }
 
-    //HideEdges();
+    HideEdges();
 }
 
 void BlockManager::HideEdges()
 {
-    for (auto& blocks : _visibleBlocks) {
-        for (BlockData* blockData : blocks) {
-            if (blockData->GetPosID().y == 0) {
-                blockData->SetVisible(false);
-            }
-            else if (blockData->GetPosID().y != _height - 1) {
-                if (blockData->GetPosID().x == 0 || blockData->GetPosID().x == _width - 1) blockData->SetVisible(false);
-                else if (blockData->GetPosID().z == 0 || blockData->GetPosID().z == _depth - 1) blockData->SetVisible(false);
-            }
+    for (BlockData& blockData : _blocksData) {
+        if (IsEdgeBlock(blockData)) {
+            blockData.SetVisible(false);
         }
     }
 }
@@ -246,7 +240,7 @@ void BlockManager::UpdateRenderedChunks() {
 }
 
 void BlockManager::SetVisibility(BlockData& blockData, bool state) {
-    if (state && blockData.GetBlockType() != BlockType::EMPTY) {
+    if (state && blockData.IsSolid() && !IsEdgeBlock(blockData)) {
         blockData.SetVisible(state);
 
         // Add the blockData to _visibleBlocks
@@ -299,7 +293,7 @@ bool BlockManager::RayIntersectsBlock(float rayLength, int radius, float digPowe
             int index = GetIndex(roundedPoint);
 
             // Check if the blockData is visible and change it to empty if so
-            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+            if (_blocksData[index].IsSolid()) {
                 DamageBlocks(roundedPoint,radius,digPower);
                 return true; // Block hit, no need to check further
             }
@@ -317,7 +311,7 @@ void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
         glm::ivec3 pos = hitPos + offset;
         if (InBounds(pos)) {
             int index = GetIndex(pos);
-            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+            if (_blocksData[index].IsSolid()) {
                 if (_blocksData[index].DamageBlock(digPower)) {
                     _blocksData[index].SetBlockType(BlockType::EMPTY);
                     UpdateNeighbourVisibility(_blocksData[index]);
@@ -370,7 +364,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
             int index = GetIndex(roundedPosX);
             
             // Check if the block at the index is not empty
-            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+            if (_blocksData[index].IsSolid()) {
                 // Calculate the AABB extents of the block
                 glm::vec3 blockMin = glm::vec3(roundedPosX) - glm::vec3(0.5f);
                 glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
@@ -389,7 +383,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
             int index = GetIndex(roundedPosY);
 
             // Check if the block at the index is not empty
-            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+            if (_blocksData[index].IsSolid()) {
                 // Calculate the AABB extents of the block
                 glm::vec3 blockMin = glm::vec3(roundedPosY) - glm::vec3(0.5f);
                 glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
@@ -414,7 +408,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
             int index = GetIndex(roundedPosZ);
 
             // Check if the block at the index is not empty
-            if (_blocksData[index].GetBlockType() != BlockType::EMPTY) {
+            if (_blocksData[index].IsSolid()) {
                 // Calculate the AABB extents of the block
                 glm::vec3 blockMin = glm::vec3(roundedPosZ) - glm::vec3(0.5f);
                 glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
@@ -486,19 +480,28 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
             // Generate a height value using Perlin noise
             float height = glm::perlin(glm::vec2(x * frequency, z * frequency)) * amplitude;
 
-            float smoothingFactor = glm::clamp(float(distX+distZ) / float((maxDistanceX+maxDistanceZ)/(1/ smoothEnd)), 0.0f, 1.0f);
+            float smoothingFactor = glm::clamp(float(distX + distZ) / float((maxDistanceX + maxDistanceZ) / (1 / smoothEnd)), 0.0f, 1.0f);
 
             height *= smoothingFactor;
 
             // Calculate transform matrix for the current block with noise-adjusted height
-            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, (_height-1) + height, z), glm::quat(), glm::vec3(1.0f));
+            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, (_height - 1) + height, z), glm::quat(), glm::vec3(1.0f));
 
             // Add the block to the vector
             instanceMatrix.push_back(transformMatrix);
         }
     }
+
+    // Iterate over _blocksData and add edge blocks to instanceMatrix
+    for (BlockData& blockData : _blocksData) {
+        if (IsEdgeBlock(blockData) && blockData.IsSolid()) {
+            instanceMatrix.push_back(blockData.GetMatrix());
+        }
+    }
+
     _topLayerRendererRef->SetInstanceMatrix(instanceMatrix);
 }
+
 
 
 void BlockManager::InitializeMap(float initialFillRatio) {
@@ -758,7 +761,7 @@ int BlockManager::GetChunkIndex(int x, int y, int z) {
 }
 
 bool BlockManager::CheckAdjacency(int x, int y, int z){
-    return _blocksData[GetIndex(x, y, z)].GetBlockType() != BlockType::EMPTY;
+    return _blocksData[GetIndex(x, y, z)].IsSolid();
 }
 
 bool BlockManager::InBounds(glm::ivec3 position) {
@@ -784,6 +787,14 @@ bool BlockManager::IsEdgeBlock(int x, int y, int z)
 {
     return (x == 0 || x == _width - 1 || y == 0 || y == _height - 1 || z == 0 || z == _depth - 1);
 }
+
+bool BlockManager::IsEdgeBlock(BlockData& blockData)
+{
+    glm::ivec3 pos = blockData.GetPosID(); 
+
+    return IsEdgeBlock(pos.x, pos.y, pos.z);
+}
+
 
 void BlockManager::addToInspector(ImguiMain *imguiMain) {
     if (ImGui::TreeNode("BlockManager")) {

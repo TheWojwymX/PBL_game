@@ -20,6 +20,15 @@ struct CollisionInfo {
     bool isGrounded = false;
 };
 
+struct LayerInfo {
+    int startY;
+    int endY;
+    int metalAmount;
+    int plasticAmount;
+    float initialFill;
+    int caveIterations;
+};
+
 
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
 public:
@@ -191,4 +200,5 @@ private:
     bool InBounds(int x, int y, int z);
     bool ChunkInBounds(glm::ivec3 position);
     bool IsEdgeBlock(int x, int y, int z);
+    bool IsEdgeBlock(BlockData& blockData);
 };
