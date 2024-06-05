@@ -88,10 +88,9 @@ void Enemy::TakeDamage(int amount){
         }
 
         auto anim = _ownerNode->GetComponent<Animation>();
-        anim->_enemyState = DEAD;
-        if(anim->_toDelete)
+        if (anim != nullptr)
         {
-            Die();
+            anim->_enemyState = DEAD;
         }
     }
 }
@@ -114,7 +113,14 @@ void Enemy::AttackDome(){
 //Just like update but connected to EnemiesManager
 void Enemy::EnemyAI()
 {
-    if(_ownerNode->GetComponent<Animation>()->_enemyState != DEAD)
+    auto anim = _ownerNode->GetComponent<Animation>();
+    if (anim->_enemyState == DEAD && anim->_toDelete)
+    {
+        Die();
+        return;
+    }
+
+    if(anim->_enemyState != DEAD)
     {
         AttackDome();
         WalkToDestination();
