@@ -185,15 +185,15 @@
         },
         {
           "ModelName": "DomeStation",
-          "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+          "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
         },
         {
           "ModelName": "PlayerStation",
-          "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+          "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
         },
         {
           "ModelName": "RefuelStation",
-          "Path": "../../res/Models/UpgradeStations/player_upgrade_station_v0.8.obj"
+          "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
         },
         {
           "ModelName": "Turret_Standard_Level1",
