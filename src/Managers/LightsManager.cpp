@@ -93,6 +93,10 @@ void LightsManager::AddGlowstick() {
     glowstickMeshRenderer->Initiate();
     glowstickNode->AddComponent(glowstickMeshRenderer);
 
+    auto glowstickMovement = COMPONENTSMANAGER.CreateComponent<GlowstickMovement>();
+    glowstickNode->AddComponent(glowstickMovement);
+    glowstickMovement->Init();
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(-2.0f, 2.0f);

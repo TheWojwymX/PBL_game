@@ -164,7 +164,7 @@ void ParticleGenerator::RenderParticles() {
 
         glBindVertexArray(0);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        currentBuffer = (currentBuffer + 1) % 2;
+        currentBuffer = (currentBuffer + 1) % 3;
     }
 
     if (deadParticles == amount) {
@@ -223,8 +223,8 @@ void ParticleGenerator::Init() {
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
 
     size_t bufferSize = amount * sizeof(glm::vec3) + amount * sizeof(float);
-    glGenBuffers(2, instanceVBOs);
-    for (int i = 0; i < 2; ++i) {
+    glGenBuffers(3, instanceVBOs);
+    for (int i = 0; i < 3; ++i) {
         glBindBuffer(GL_ARRAY_BUFFER, instanceVBOs[i]);
         glBufferStorage(GL_ARRAY_BUFFER, bufferSize, nullptr, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
         instanceData[i] = (char*)glMapBufferRange(GL_ARRAY_BUFFER, 0, bufferSize, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);

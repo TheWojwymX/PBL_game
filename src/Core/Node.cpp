@@ -115,6 +115,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::DISABLER:
                         ComponentsManager::getInstance().DeserializeComponent<Disabler>(componentJson);
                         break;
+                    case ComponentType::GLOWSTICKMOVEMENT:
+                        ComponentsManager::getInstance().DeserializeComponent<GlowstickMovement>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;

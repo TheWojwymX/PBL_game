@@ -17,7 +17,8 @@ enum class ComponentType {
     SHOVELCONTROLLER, //12
     SHOVELRENDERER, //13
     ROTATE, //14
-    DISABLER // 15
+    DISABLER, // 15
+    GLOWSTICKMOVEMENT //16
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H

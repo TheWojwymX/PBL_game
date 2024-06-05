@@ -113,7 +113,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Component/Rotate.h
         Component/Rotate.cpp
         Component/Disabler.h
-        Component/Disabler.cpp Managers/LightsManager.h Managers/LightsManager.cpp)
+        Component/Disabler.cpp Managers/LightsManager.h Managers/LightsManager.cpp Component/GlowstickMovement.h Component/GlowstickMovement.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

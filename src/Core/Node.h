@@ -23,6 +23,7 @@
 #include "Component/ShovelRenderer.h"
 #include "Component/Rotate.h"
 #include "Component/Disabler.h"
+#include "Component/GlowstickMovement.h"
 
 class Node : public std::enable_shared_from_this<Node> {
 public:
