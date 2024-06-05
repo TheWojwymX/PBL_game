@@ -3,9 +3,12 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include <variant>
+#include <vector>
+#include <iostream>
 
 class BlockManager;
 class CloudManager;
+class GlowstickMovement;
 
 enum class BlockType {
     EMPTY,
@@ -31,6 +34,8 @@ public:
     bool IsRendered() const { return _rendered; }
     glm::mat4 GetMatrix() const { return _matrix; }
     bool IsSolid() const { return _blockType != BlockType::EMPTY; }
+    bool IsMaterial() const { return _blockType == BlockType::PLASTIC || _blockType == BlockType::METAL; }
+    void AddGlowstick(std::shared_ptr<GlowstickMovement> glowstick) {_stuckGlowsticks.push_back(glowstick);}
 
     void SetBlockType(BlockType blockType) { _blockType = blockType; }
     void SetPosID(glm::ivec3 posID) { _posID = posID; }
@@ -41,8 +46,9 @@ public:
     void SetVisible(bool visible) { _visible = visible; }
     void SetRendered(bool rendered) { _visible = rendered; }
     void SetMatrix(const glm::mat4& matrix) { _matrix = matrix; }
-    glm::ivec3 GetChunkID(int chunkSize) const {return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize);}
+    glm::ivec3 GetChunkID(int chunkSize) const { return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize); }
 
+    void UnstuckGlowsticks();
     bool DamageBlock(float amount);
 
 private:
@@ -56,4 +62,5 @@ private:
     bool _visible;
     bool _rendered;
     glm::mat4 _matrix;
+    std::vector<std::shared_ptr<GlowstickMovement>> _stuckGlowsticks;
 };

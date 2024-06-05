@@ -88,8 +88,8 @@ void BlockManager::Initiate() {
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
     GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
-    GenerateResources();
     GenerateSphereVectors(31);
+    GenerateResources();
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateRenderedChunks();
@@ -175,6 +175,7 @@ void BlockManager::UpdateBlocksVisibility() {
     }
 
     HideEdges();
+    UpdateVisibilityNearResources();
 }
 
 void BlockManager::HideEdges()
@@ -192,8 +193,6 @@ void BlockManager::UpdateNeighbourVisibility(BlockData& blockData)
     int x = posID.x;
     int y = posID.y;
     int z = posID.z;
-
-    // Update visibility for neighboring blocks
 
     if (x - 1 >= 0 && x - 1 < _width) SetVisibility(_blocksData[GetIndex(x - 1, y, z)], true); // Left
     if (x + 1 >= 0 && x + 1 < _width) SetVisibility(_blocksData[GetIndex(x + 1, y, z)], true); // Right
@@ -313,9 +312,7 @@ void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
             int index = GetIndex(pos);
             if (_blocksData[index].IsSolid()) {
                 if (_blocksData[index].DamageBlock(digPower)) {
-                    _blocksData[index].SetBlockType(BlockType::EMPTY);
-                    UpdateNeighbourVisibility(_blocksData[index]);
-                    chunksToUpdate.insert(GetChunkIndex(_blocksData[index].GetChunkID(_chunkSize)));
+                    chunksToUpdate.insert(DestroyBlock(_blocksData[index]));
                     updateFlag = true;
                 }
             }
@@ -639,11 +636,66 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
 
     
     movementVector += separationVector;
-    //std::cout << "Mov: " << movementVector.y << " | SepX : " << separationVector.x << " | SepY : " << separationVector.y << "  | SepZ:" << separationVector.z << " | EposY : " << entityPos.y + entityHeight << std::endl;
 
     // Return the separation vector
     return std::make_pair(movementVector,separationVector);
 }
+
+std::tuple<bool, BlockData*, glm::vec3> BlockManager::CheckSimpleEntityCollision(glm::vec3 entityPos) {
+    glm::ivec3 roundedPos = glm::round(entityPos);
+    glm::vec3 separationVector = glm::vec3(0.0f);
+
+    if (InBounds(roundedPos)) {
+        int index = GetIndex(roundedPos);
+
+        // Check if the block at the index is not empty
+        if (_blocksData[index].IsSolid()) {
+            // Calculate the AABB extents of the block
+            glm::vec3 blockMin = glm::vec3(roundedPos) - glm::vec3(0.5f);
+            glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
+
+            if (entityPos.x > blockMin.x || entityPos.x < blockMax.x) {
+                float direction = glm::sign(entityPos.x - roundedPos.x);
+                separationVector.x = (std::abs((std::abs(entityPos.x - roundedPos.x) - 0.5f)) + 0.0001f) * direction;
+            }
+
+            if (entityPos.y < blockMax.y) {
+                separationVector.y = (std::abs((std::abs(entityPos.y - blockMax.y))) + 0.0001f);
+            }
+            else if (entityPos.y > blockMin.y) {
+                separationVector.y = (std::abs((std::abs(entityPos.y - blockMin.y))) + 0.0001f) * -1;
+            }
+
+            if (entityPos.z > blockMin.z || entityPos.z < blockMax.z) {
+                float direction = glm::sign(entityPos.z - roundedPos.z);
+                separationVector.z = (std::abs((std::abs(entityPos.z - roundedPos.z) - 0.5f)) + 0.0001f) * direction;
+            }
+
+            // Find the smallest component of the separation vector
+            float smallestComponent = std::min(std::min(separationVector.x, separationVector.y), separationVector.z);
+
+            // Set other components to zero except the smallest one
+            if (smallestComponent == separationVector.x) {
+                separationVector.y = 0.0f;
+                separationVector.z = 0.0f;
+            }
+            else if (smallestComponent == separationVector.y) {
+                separationVector.x = 0.0f;
+                separationVector.z = 0.0f;
+            }
+            else {
+                separationVector.x = 0.0f;
+                separationVector.y = 0.0f;
+            }
+
+            return std::make_tuple(true, &_blocksData[index], separationVector);
+        }
+    }
+
+    // If no collision, return false and nullptr
+    return std::make_tuple(false, nullptr, glm::vec3(0.0f));
+}
+
 
 void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
     glm::ivec3 gridPosition = glm::round(entityPos);
@@ -725,7 +777,7 @@ void BlockManager::GenerateResources()
 
     // Generate Poisson disk distribution points
     std::vector<glm::vec3> poissonPoints = GeneratePoissonDiskPoints();
-    std::cout << poissonPoints.size() << std::endl;
+    std::cout <<"Materials: "<< poissonPoints.size() << std::endl;
     // Iterate through the Poisson disk points
     for (const auto& point : poissonPoints)
     {
@@ -747,14 +799,12 @@ void BlockManager::GenerateResources()
                 if (randomValue < metalProbability)
                 {
                     ChangeType(_blocksData[index], BlockType::METAL);
-                    //UpdateNeighbourVisibility(_blocksData[index]);
                     break;
                 }
                 // Check if the block should be changed to PLASTIC
                 else if (randomValue < (metalProbability + plasticProbability))
                 {
                     ChangeType(_blocksData[index], BlockType::PLASTIC);
-                    //UpdateNeighbourVisibility(_blocksData[index]);
                     break;
                 }
             }
@@ -812,13 +862,29 @@ std::vector<glm::vec3> BlockManager::GeneratePoissonDiskPoints()
     return points;
 }
 
+void BlockManager::UpdateVisibilityNearResources()
+{
+    for (auto& blockData : _blocksData) {
+        if(blockData.IsMaterial())
+            UpdateNeighbourVisibility(blockData);
+    }
+}
+
+int BlockManager::DestroyBlock(BlockData& blockData)
+{
+    blockData.SetBlockType(BlockType::EMPTY);
+    UpdateNeighbourVisibility(blockData);
+    blockData.UnstuckGlowsticks();
+    return GetChunkIndex(blockData.GetChunkID(_chunkSize));
+}
+
 
 int BlockManager::GetIndex(glm::ivec3 point) {
-    return point.x + (_width * _depth * point.y) + point.z * _width;
+    return point.x + (_width * (point.z + _depth * point.y));
 }
 
 int BlockManager::GetIndex(int x, int y, int z) {
-    return x + (_width * _depth * y) + z * _width;
+    return x + (_width * (z + _depth * y));
 }
 
 int BlockManager::GetChunkIndex(glm::ivec3 chunk) {
@@ -843,7 +909,7 @@ bool BlockManager::InBounds(int x, int y, int z) {
         x < _width && y < _height && z < _depth;
 }
 
-bool BlockManager::InBounds(glm::ivec3 position, float margin)
+bool BlockManager::InBounds(glm::ivec3 position, int margin)
 {
     return position.x >= margin && position.x < (_width - margin) &&
         position.y >= margin && position.y < (_height - margin) &&
@@ -881,6 +947,17 @@ bool BlockManager::IsPointTooClose(const std::vector<glm::vec3>& points, const g
         }
     }
     return false;
+}
+
+
+BlockData* BlockManager::GetBlock(glm::ivec3 position) {
+    if (InBounds(position)) {
+        int index = GetIndex(position);
+        return &_blocksData[index];
+    }
+    else {
+        return nullptr;
+    }
 }
 
 

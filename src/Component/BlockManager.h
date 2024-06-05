@@ -17,7 +17,6 @@
 struct CollisionInfo {
     bool isColliding = false;
     glm::vec3 separationVector = glm::vec3(std::numeric_limits<float>::max());
-    bool isGrounded = false;
 };
 
 struct LayerInfo {
@@ -45,7 +44,8 @@ public:
     void Init() override;
 
     bool RayIntersectsBlock(float rayLength, int radius, float digPower);
-    std::pair<glm::vec3,glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
+    std::pair<glm::vec3, glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
+    std::tuple<bool, BlockData*, glm::vec3> CheckSimpleEntityCollision(glm::vec3 entityPos);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
@@ -190,6 +190,8 @@ private:
     void ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 maskDimensions);
     void GenerateResources();
     std::vector<glm::vec3> GeneratePoissonDiskPoints();
+    void UpdateVisibilityNearResources();
+    int DestroyBlock(BlockData& blockData);
 
 
     int GetIndex(glm::ivec3 point);
@@ -199,9 +201,10 @@ private:
     bool CheckAdjacency(int x, int y, int z);
     bool InBounds(glm::ivec3 position);
     bool InBounds(int x, int y, int z);
-    bool InBounds(glm::ivec3 position, float margin);
+    bool InBounds(glm::ivec3 position, int margin);
     bool ChunkInBounds(glm::ivec3 position);
     bool IsEdgeBlock(int x, int y, int z);
     bool IsEdgeBlock(BlockData& blockData);
     bool IsPointTooClose(const std::vector<glm::vec3>& points, const glm::vec3& candidate, float minDist);
+    BlockData* GetBlock(glm::ivec3 position);
 };
