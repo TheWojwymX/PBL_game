@@ -53,6 +53,9 @@ void ShadowMap::AssignShadowMapToShader() {
 
     RESOURCEMANAGER.GetShaderByName("instancedMetalShader")->use();
     RESOURCEMANAGER.GetShaderByName("instancedMetalShader")->setInt("shadowMap", 1);
+
+    RESOURCEMANAGER.GetShaderByName("instancedPlasticShader")->use();
+    RESOURCEMANAGER.GetShaderByName("instancedPlasticShader")->setInt("shadowMap", 1);
 }
 
 void ShadowMap::BeginRender() {

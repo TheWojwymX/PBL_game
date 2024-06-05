@@ -1,7 +1,3 @@
-//
-// Created by Jacek on 10.04.2024.
-//
-
 #define GAMEMANAGER GameManager::getInstance()
 
 #ifndef OPENGLGP_GAMEMANAGER_H
@@ -26,6 +22,8 @@ public:
     void Update();
     void InitPhase();
     void pressToSkipPhase();
+    void AddMetal(int amount);
+    void AddPlastic(int amount);
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 200;
@@ -53,6 +51,10 @@ public:
 
     void Pause();
     void Unpause();
+
+private:
+    int _metal = 0;
+    int _plastic = 0;
 };
 
 

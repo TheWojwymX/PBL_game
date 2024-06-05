@@ -191,6 +191,7 @@ int main(int, char**)
     auto skyboxReflectionShader = RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader");
     auto instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
     auto instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
+    auto instancedPlasticShader = RESOURCEMANAGER.GetShaderByName("instancedPlasticShader");
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
@@ -363,12 +364,25 @@ int main(int, char**)
         instancedMetalShader->setMat4("view", view);
         instancedMetalShader->setVec3("lightPos", lightPos);
         instancedMetalShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+#pragma endregion
+
+#pragma region InstancePlasticShader setup
+        instancedPlasticShader->use();
+        instancedPlasticShader->setVec3("dirLight.direction", dirDirection);
+        instancedPlasticShader->setVec3("dirLight.color", dirColor);
+        instancedPlasticShader->setInt("dirLight.isActive", dirActive);
+
+        instancedPlasticShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        instancedPlasticShader->setMat4("projection", projection);
+        instancedPlasticShader->setMat4("view", view);
+        instancedPlasticShader->setVec3("lightPos", lightPos);
+        instancedPlasticShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+#pragma endregion
 
         lightObjectShader->use();
         lightObjectShader->setVec3("lightColor", dirColor);
         lightObjectShader->setMat4("projection", projection);
         lightObjectShader->setMat4("view", view);
-#pragma endregion
 
         cloudShader->use();
         cloudShader->setVec3("dirLight.direction", dirDirection);

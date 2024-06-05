@@ -29,7 +29,7 @@
             },
             {
                 "ModelName": "plasticModel",
-                "Path": "../../res/Models/Cap/cap_1_1.1.obj"
+                "Path": "../../res/Models/Cap/cap.obj"
             },
             {
                 "ModelName": "metalModel",
@@ -256,6 +256,11 @@
                 "ShaderName": "instancedMetalShader",
                 "fragmentPath": "../../res/instancedMetalFragShader.fs",
                 "vertexPath": "../../res/instancedMetalVecShader.vs"
+            },
+            {
+                "ShaderName": "instancedPlasticShader",
+                "fragmentPath": "../../res/instancedPlasticFragShader.fs",
+                "vertexPath": "../../res/instancedPlasticVecShader.vs"
             },
             {
                 "ShaderName": "skyboxShader",
@@ -485,10 +490,10 @@
                     {
                         "componentId": 84,
                         "componentType": 3,
-                        "isDynamic": false,
+                        "isDynamic": true,
                         "maxSize": 100000,
                         "model": "plasticModel",
-                        "shader": "instancedSandShader"
+                        "shader": "instancedPlasticShader"
                     }
                 ],
                 "transform": {
@@ -517,7 +522,7 @@
                     {
                         "componentId": 85,
                         "componentType": 3,
-                        "isDynamic": false,
+                        "isDynamic": true,
                         "maxSize": 100000,
                         "model": "metalModel",
                         "shader": "instancedMetalShader"
@@ -3852,7 +3857,7 @@
                             "y": 0.0,
                             "z": 1.0
                         },
-                        "speed": 15.0
+                        "speed": 20.0
                     },
                     {
                         "delay": 30.0

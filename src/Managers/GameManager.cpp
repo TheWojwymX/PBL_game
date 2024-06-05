@@ -16,6 +16,16 @@ void GameManager::pressToSkipPhase()
     }
 }
 
+void GameManager::AddMetal(int amount)
+{
+    _plastic += amount;
+}
+
+void GameManager::AddPlastic(int amount)
+{
+    _metal += amount;
+}
+
 void GameManager::Update()
 {
     if(TUTORIALMANAGER._isTutorialEnded){
