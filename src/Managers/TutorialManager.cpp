@@ -15,8 +15,8 @@ void TutorialManager::Init() {
     DisplayAndChangeMessage();
     _player = NODESMANAGER.getNodeByName("player");
 
-    _messagesPositions[2] = glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel - 5, GAMEMANAGER._domePosition.y);
-    _messagesPositions[3] = glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel, GAMEMANAGER._domePosition.y);
+    NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
+            ENEMIESMANAGER._spawnersPositions[0][0], 320, ENEMIESMANAGER._spawnersPositions[0][1]));
 }
 
 void TutorialManager::Update() {
@@ -24,50 +24,10 @@ void TutorialManager::Update() {
     if(_isTutorialEnded) return;
 
     switch (_actualMessage) {
+        //po pokonaniu pierwszej fali sie konczy
         case 1:
-            if(GAMEMANAGER._money == 100){
-                DisplayAndChangeMessage();
-                std::cout << "qwe";
-            }
-            /*else if(glm::distance(_messagesPositions[_actualMessage], _player->GetTransform()->GetPosition()) > 50){ //tutaj pozycja wykopania surowcow
-                WarningSystem();
-            }
-            else if(glm::distance(_messagesPositions[_actualMessage], _player->GetTransform()->GetPosition()) > 50){ //tutaj pozycja wykopania surowcow + 20
-                WarningSystem();
-            }*/
-            break;
+            _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
 
-        case 2:
-            if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) < 1){
-                DisplayAndChangeMessage();
-                NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
-                        ENEMIESMANAGER._spawnersPositions[0][0], 320, ENEMIESMANAGER._spawnersPositions[0][1]));
-                std::cout << "teraz powinno sie pojawic";
-
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 20 && !_isAfterWarning){
-                WarningSystem();
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 30){
-                WarningSystem();
-            }
-            break;
-
-        case 3:
-            if(_player->GetTransform()->GetPosition().y >= 299.5 && _player->GetComponent<PlayerController>()->_isGrounded){
-                DisplayAndChangeMessage();
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 20 && !_isAfterWarning &&
-                    _player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 30 && _player->GetTransform()->GetPosition().y
-                                                                                                         < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
-            break;
-
-        case 4:
             if(!_firstWaveSpawned && !TURRETSMANAGER._turrets.empty()){
 
                 if(_timer < 5){
@@ -80,14 +40,6 @@ void TutorialManager::Update() {
                     _timer = 0;
                 }
             }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 20 && !_isAfterWarning &&
-                    _player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 30 && _player->GetTransform()->GetPosition().y
-                                                                                                         < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
             else if(_firstWaveSpawned){
                 if(ENEMIESMANAGER._enemies[0] == nullptr && ENEMIESMANAGER._enemies[1] == nullptr && ENEMIESMANAGER._enemies[2] == nullptr){
                     DisplayAndChangeMessage();
@@ -99,7 +51,10 @@ void TutorialManager::Update() {
             }
             break;
 
-        case 5:
+        //po pokonaniu 2 fali sie konczy
+        case 2:
+            _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
+
             if(!_secondWaveSpawned){
                 if(TURRETSMANAGER._isPlayerInMovingMode){
                     _isTimerOn = true;
@@ -116,35 +71,77 @@ void TutorialManager::Update() {
                     }
                 }
             }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 20 && !_isAfterWarning &&
-                    _player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 30 && _player->GetTransform()->GetPosition().y
-                                                                                                         < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
             else if(_secondWaveSpawned){
                 if(ENEMIESMANAGER._enemies[3] == nullptr && ENEMIESMANAGER._enemies[4] == nullptr && ENEMIESMANAGER._enemies[5] == nullptr){
                     DisplayAndChangeMessage();
-                    NODESMANAGER.getNodeByName("waveSymbol2")->GetTransform()->SetPosition(glm::vec3(
-                            ENEMIESMANAGER._spawnersPositions[1][0], 0, ENEMIESMANAGER._spawnersPositions[1][1]));
+                    NODESMANAGER.getNodeByName("waveSymbol2")->GetTransform()->SetPosition(glm::vec3(ENEMIESMANAGER._spawnersPositions[1][0], 0,
+                                                                                                     ENEMIESMANAGER._spawnersPositions[1][1]));
+                    _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
                 }
             }
             break;
 
+        //konczy sie po dojsciu do podziemii
+        case 3:
+            if(glm::distance(_player->GetTransform()->GetPosition(), glm::vec3(49.15, 288.5, 49.8)) < 3 && _player->GetTransform()->GetPosition().y == 288.5){
+                DisplayAndChangeMessage();
+            }
+            break;
+
+        //Konczy sie po zdobyciu pieniedzy
+        case 4:
+            if(GAMEMANAGER._money == 100){
+                DisplayAndChangeMessage();
+            }
+            else if(WarningSystem(0)){
+                return;
+            }
+            break;
+
+        //Konczy sie po dojsciu do dolu dziury
+        case 5:
+            if(glm::distance(_player->GetTransform()->GetPosition(), glm::vec3(49.15, 288.5, 49.8)) < 2 && _player->GetTransform()->GetPosition().y == 288.5){
+                DisplayAndChangeMessage();
+            }
+            else if(WarningSystem(1)){
+                return;
+            }
+            break;
+
+        //konczy sie po wyleceniu na powierzchnie
         case 6:
+            if(_player->GetTransform()->GetPosition().y >= 299.5 && _player->GetComponent<PlayerController>()->_isGrounded){
+                DisplayAndChangeMessage();
+            }
+            else if(_player->GetTransform()->GetPosition().y < 299.5){
+                if(WarningSystem(1)) {
+                    return;
+                }
+            }
+            break;
+
+        //konczy sie jak paliwo jest na 100%
+        case 7:
+            if(_player->GetComponent<PlayerController>()->_jetpackFuel == _player->GetComponent<PlayerController>()->_maxJetpackFuel && PAGEMANAGER._isInPage == false){
+                DisplayAndChangeMessage();
+            }
+            else if(_player->GetTransform()->GetPosition().y < 299.5){
+                if(WarningSystem(1)) {
+                    return;
+                }
+            }
+            break;
+
+        //konczy sie jak ulepszy szybkosc
+        case 8:
             if(_player->GetComponent<PlayerController>()->_speed > 8.0 && PAGEMANAGER._isInPage == false){
                 DisplayAndChangeMessage();
                 _isTutorialEnded = true;
             }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 20 && !_isAfterWarning &&
-                    _player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel){
-                WarningSystem();
-            }
-            else if(glm::distance(_messagesPositions[2], _player->GetTransform()->GetPosition()) > 30 && _player->GetTransform()->GetPosition().y
-                                                                                                         < GAMEMANAGER._groundLevel){
-                WarningSystem();
+            else if(_player->GetTransform()->GetPosition().y < 299.5){
+                if(WarningSystem(1)) {
+                    return;
+                }
             }
             break;
 
@@ -183,12 +180,18 @@ void TutorialManager::DisplaySpecialMessage(string message) {
     PAGEMANAGER.DisplayMessagePage();
 }
 
-void TutorialManager::WarningSystem(){
-    if(!_isAfterWarning){
+bool TutorialManager::WarningSystem(int messageNumber) {
+
+    if(glm::distance(_messagesPositions[messageNumber], _player->GetTransform()->GetPosition()) > 20 && !_isAfterWarning){
         DisplaySpecialMessage(_specialMessages[0]);
         _isAfterWarning = true;
-    }else {
+        return true;
+    }
+    else if(glm::distance(_messagesPositions[messageNumber], _player->GetTransform()->GetPosition()) > 30){
         DisplaySpecialMessage(_specialMessages[1]);
         _isTutorialEnded = true;
+        return true;
     }
+
+    return false;
 }

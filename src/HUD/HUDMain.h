@@ -32,8 +32,6 @@ public:
 
     HUDMain &operator=(const HUDMain &) = delete;
 
-    ImageRenderer _hpEmptyImage;
-    ImageRenderer _hpFullImage;
     ImageRenderer _crosshairImage;
 
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
@@ -52,6 +50,8 @@ public:
     float _hpSpriteTimer = 0.0;
     float _hpSpriteInterval = 0.3f;
     int _hpSpriteCurrentFrame = 0;
+
+    shared_ptr<Node> _playerNode;
 };
 
 
