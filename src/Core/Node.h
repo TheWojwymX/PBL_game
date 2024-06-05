@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <glm/glm.hpp>
@@ -21,8 +22,9 @@
 #include "Component/ShovelController.h"
 #include "Component/ShovelRenderer.h"
 #include "Component/Rotate.h"
+#include "Component/Disabler.h"
 
-class Node : public std::enable_shared_from_this<Node>{
+class Node : public std::enable_shared_from_this<Node> {
 public:
     Node();
     string _name;
@@ -30,7 +32,7 @@ public:
 
     nlohmann::json Serialize();
 
-    void Deserialize(const nlohmann::json &nodeJson);
+    void Deserialize(const nlohmann::json& nodeJson);
 
     std::shared_ptr<Transform> GetTransform() { return _local; }
 
@@ -56,9 +58,9 @@ public:
         return nullptr; // Component of type T not found
     }
 
-    const vector<std::shared_ptr<Node>> &getChildren() const;
+    const vector<std::shared_ptr<Node>>& getChildren() const;
 
-    const vector<std::shared_ptr<Component>> &getComponents() const;
+    const vector<std::shared_ptr<Component>>& getComponents() const;
 
     template <typename T>
     std::vector<std::shared_ptr<T>> GetAllComponents() const {
@@ -72,7 +74,9 @@ public:
         return matchingComponents; // Return all components of type T
     }
 
+    void SetEnabled(bool enabled);
 private:
+    bool _enabled = true; 
     std::shared_ptr<Transform> _local;
     std::vector<std::shared_ptr<Node>> _children;
     std::vector<std::shared_ptr<Component>> _components;

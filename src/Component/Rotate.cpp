@@ -9,7 +9,9 @@ Rotate::Rotate() : _axis(glm::vec3(0.0f, 1.0f, 0.0f)), _speed(1.0f)
 void Rotate::Deserialize(const nlohmann::json& jsonData)
 {
     if (jsonData.contains("axis")) {
-        _axis.x = jsonData["axis"].get<float>();
+        _axis.x = jsonData["axis"]["x"].get<float>();
+        _axis.y = jsonData["axis"]["y"].get<float>();
+        _axis.z = jsonData["axis"]["z"].get<float>();
     }
 
     if (jsonData.contains("speed")) {
@@ -22,8 +24,11 @@ void Rotate::Deserialize(const nlohmann::json& jsonData)
 nlohmann::json Rotate::Serialize()
 {
     nlohmann::json data;
-
-    data["axis"] = _axis.x;
+    data["axis"] = {
+            {"x", _axis.x},
+            {"y", _axis.y},
+            {"z", _axis.z}
+    };
     data["speed"] = _speed;
 
     return data;

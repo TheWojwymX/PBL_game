@@ -16,7 +16,8 @@ enum class ComponentType {
     REFUELSTATION, //11
     SHOVELCONTROLLER, //12
     SHOVELRENDERER, //13
-    ROTATE //14
+    ROTATE, //14
+    DISABLER // 15
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H

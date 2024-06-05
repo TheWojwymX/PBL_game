@@ -110,7 +110,10 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Component/ShovelController.h
         Component/ShovelRenderer.cpp
         Component/ShovelRenderer.h
-        Component/Rotate.cpp)
+        Component/Rotate.h
+        Component/Rotate.cpp
+        Component/Disabler.h
+        Component/Disabler.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

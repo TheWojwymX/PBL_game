@@ -112,6 +112,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::ROTATE:
                         ComponentsManager::getInstance().DeserializeComponent<Rotate>(componentJson);
                         break;
+                    case ComponentType::DISABLER:
+                        ComponentsManager::getInstance().DeserializeComponent<Disabler>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;
@@ -144,58 +147,74 @@ void Node::AddComponent(std::shared_ptr<Component> component) {
     _components.push_back(component);
 }
 
+void Node::SetEnabled(bool enabled) {
+    _enabled = enabled;
+}
+
 void Node::Init() {
-    for (auto &component: _components)
+    if (!_enabled) return; // Check if node is enabled
+
+    for (auto& component : _components)
         if (component->IsEnabled())
             component->Init();
 
-    for (auto &child: _children)
+    for (auto& child : _children)
         child->Init();
 }
 
 void Node::Input() {
-    for (auto &component: _components)
+    if (!_enabled) return; // Check if node is enabled
+
+    for (auto& component : _components)
         if (component->IsEnabled())
             component->Input();
 
-    for (auto &child: _children)
+    for (auto& child : _children)
         child->Input();
 }
 
 void Node::Update() {
-    for (auto &component: _components)
+    if (!_enabled) return; // Check if node is enabled
+
+    for (auto& component : _components)
         if (component->IsEnabled())
             component->Update();
 
-    for (auto &child: _children)
-        if(child != nullptr) child->Update();
+    for (auto& child : _children)
+        if (child != nullptr) child->Update();
 }
 
 void Node::Render(glm::mat4 parentWorld) {
+    if (!_enabled) return; // Check if node is enabled
+
     glm::mat4 world = _local->Combine(parentWorld);
 
-    for (auto &component: _components)
+    for (auto& component : _components)
         if (component->IsEnabled())
             component->Render(parentWorld);
 
-    for (auto &child: _children)
-        if(child != nullptr) child->Render(world);
+    for (auto& child : _children)
+        if (child != nullptr) child->Render(world);
 }
 
 void Node::RenderShadows(glm::mat4 parentWorld) {
+    if (!_enabled) return; // Check if node is enabled
+
     glm::mat4 world = _local->Combine(parentWorld);
 
-    for (auto &component: _components)
+    for (auto& component : _components)
         if (component->IsEnabled())
             component->RenderShadows(parentWorld);
 
-    for (auto &child: _children)
+    for (auto& child : _children)
         child->RenderShadows(world);
 }
 
 void Node::UpdateTransforms(glm::mat4 parentWorld) {
+    if (!_enabled) return; // Check if node is enabled
+
     glm::mat4 world = _local->Combine(parentWorld);
-    for (auto &child: _children)
+    for (auto& child : _children)
         child->UpdateTransforms(world);
 }
 

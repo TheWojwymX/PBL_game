@@ -1,5 +1,5 @@
 {
-    "nextComponentId": 180,
+    "nextComponentId": 181,
     "nextNodeId": 167,
     "resources": {
         "Models": [
@@ -3847,19 +3847,26 @@
                         "shader": "modelShader"
                     },
                     {
-                        "axis": 1.0,
-                        "speed": 1.0
+                        "axis": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "speed": 15.0
+                    },
+                    {
+                        "delay": 30.0
                     }
                 ],
                 "transform": {
                     "position": [
-                        143.125,
+                        -150.0,
                         299.79998779296875,
-                        162.5709991455078
+                        500.0
                     ],
                     "rotation": [
                         0.0,
-                        -25.84299659729004,
+                        89.98021697998047,
                         0.0
                     ],
                     "scale": [

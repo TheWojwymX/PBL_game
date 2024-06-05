@@ -21,6 +21,7 @@
 #include "Component/Skybox.h"
 #include "Component/ShadowMap.h"
 #include "Component/Rotate.h"
+#include "Component/Disabler.h"
 
 
 #include "Managers/ComponentsManager.h"

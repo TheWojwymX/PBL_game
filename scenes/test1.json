@@ -1,5 +1,5 @@
 {
-  "nextComponentId": 180,
+  "nextComponentId": 181,
   "nextNodeId": 167,
     "resources": {
       "Models": [
@@ -3849,19 +3849,28 @@
             {
               "componentId": 179,
               "componentType": 14,
-              "axis": 1.0,
-              "speed": 1.0
+              "axis": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              },
+              "speed": 15.0
+            },
+            {
+              "componentId": 180,
+              "componentType": 15,
+              "delay": 30.0
             }
           ],
           "transform": {
             "position": [
-              143.125,
+              -150,
               299.8,
-              162.571
+              500
             ],
             "rotation": [
               0,
-              334.157,
+              90,
               0
             ],
             "scale": [
