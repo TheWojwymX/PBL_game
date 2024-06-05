@@ -92,10 +92,9 @@ public:
     float _tutorialTimer = 0;
 
     std::vector<glm::vec3> _messagesPositions{
-        glm::vec3 (0,0,0),
-        glm::vec3 (1,0,0),
-        glm::vec3 (1,0,0),
-        glm::vec3 (1,0,0),
+        glm::vec3 (52,288.5,55),
+        glm::vec3(49.15, 288.5, 49.8),
+
     };
 
     void DisplayAndChangeMessage();
@@ -104,7 +103,7 @@ public:
 
     void DisplaySpecialMessage(string message);
 
-    void WarningSystem();
+    bool WarningSystem(int messageNumber);
 
     bool _isAfterWarning = false;
 
