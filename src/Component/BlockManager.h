@@ -199,6 +199,7 @@ private:
     bool CheckAdjacency(int x, int y, int z);
     bool InBounds(glm::ivec3 position);
     bool InBounds(int x, int y, int z);
+    bool InBounds(glm::ivec3 position, float margin);
     bool ChunkInBounds(glm::ivec3 position);
     bool IsEdgeBlock(int x, int y, int z);
     bool IsEdgeBlock(BlockData& blockData);

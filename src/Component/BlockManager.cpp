@@ -738,7 +738,7 @@ void BlockManager::GenerateResources()
 
             // Check if the block below is not empty
             glm::ivec3 belowPosition = position + glm::ivec3(0, -1, 0);
-            if (InBounds(belowPosition) && _blocksData[GetIndex(belowPosition)].IsSolid())
+            if (InBounds(belowPosition,1) && _blocksData[GetIndex(belowPosition)].IsSolid())
             {
                 // Generate a random number between 0 and 1
                 double randomValue = dis(gen);
@@ -769,8 +769,8 @@ std::vector<glm::vec3> BlockManager::GeneratePoissonDiskPoints()
 {
     std::vector<glm::vec3> points;
     // Parameters for Poisson disk sampling
-    float minDist = 10.0f;  // Minimum distance between points
-    int k = 10;            // Number of attempts
+    float minDist = 7.0f;  // Minimum distance between points
+    int k = 10;             // Number of attempts
 
     // Define the bounds for sampling
     glm::vec3 sampleRegionSize = glm::vec3(_width, _height, _depth);
@@ -794,7 +794,7 @@ std::vector<glm::vec3> BlockManager::GeneratePoissonDiskPoints()
             glm::vec3 dir = glm::vec3(glm::cos(angle), glm::sin(angle), glm::tan(angle));
             glm::vec3 candidate = spawnCenter + dir * minDist * (1.0f + dis(gen));
 
-            if (InBounds(glm::round(candidate)) && !IsPointTooClose(points, candidate, minDist))
+            if (InBounds(glm::round(candidate), 1) && !IsPointTooClose(points, candidate, minDist))
             {
                 points.push_back(candidate);
                 spawnPoints.push_back(candidate);
@@ -811,6 +811,7 @@ std::vector<glm::vec3> BlockManager::GeneratePoissonDiskPoints()
 
     return points;
 }
+
 
 int BlockManager::GetIndex(glm::ivec3 point) {
     return point.x + (_width * _depth * point.y) + point.z * _width;
@@ -840,6 +841,13 @@ bool BlockManager::InBounds(glm::ivec3 position) {
 bool BlockManager::InBounds(int x, int y, int z) {
     return x >= 0 && y >= 0 && z >= 0 &&
         x < _width && y < _height && z < _depth;
+}
+
+bool BlockManager::InBounds(glm::ivec3 position, float margin)
+{
+    return position.x >= margin && position.x < (_width - margin) &&
+        position.y >= margin && position.y < (_height - margin) &&
+        position.z >= margin && position.z < (_depth - margin);
 }
 
 bool BlockManager::ChunkInBounds(glm::ivec3 position) {

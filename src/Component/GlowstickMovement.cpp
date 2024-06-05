@@ -1,21 +1,31 @@
 #include "GlowstickMovement.h"
 
-GlowstickMovement::GlowstickMovement() {
+GlowstickMovement::GlowstickMovement(): _movementVector(glm::vec3(0.0f)), _velocity(glm::vec3(0.0f))
+{
     _type = ComponentType::GLOWSTICKMOVEMENT;
 }
 
+
 void GlowstickMovement::Init(){
-    frontVector = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
+    _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(1);
+    _frontVector = COMPONENTSMANAGER.GetComponentByID<Camera>(2)->GetFrontVector();
     float initialSpeed = 5.0f;
-    velocity = frontVector * initialSpeed;
+    _velocity = _frontVector * initialSpeed;
 }
 
 void GlowstickMovement::Update(){
-    nodePosition = _ownerNode->GetTransform()->GetPosition();
+    _velocity.y -= 9.8f * TIME.GetDeltaTime();
 
-    velocity.y -= 9.8f * TIME.GetDeltaTime();
+    _movementVector = _velocity * TIME.GetDeltaTime();
 
-    nodePosition += velocity * TIME.GetDeltaTime();
+    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), _movementVector, .05f, .20f);
+    _ownerTransform->AddPosition(collisionResult.first);
+    
+    ResolveCollision(collisionResult.second);
+}
 
-    _ownerNode->GetTransform()->SetPosition(nodePosition);
+void GlowstickMovement::ResolveCollision(glm::vec3 collisionVector)
+{
+    if (collisionVector != glm::vec3(0.0f))
+        SetEnabled(false);
 }

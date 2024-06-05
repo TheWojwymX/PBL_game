@@ -164,8 +164,6 @@ void PlayerController::HandleMovement() {
     _ownerTransform->AddPosition(collisionResult.first);
 
     CheckGrounded(collisionResult.second);
-
-
 }
 
 bool PlayerController::CheckIfPlayerIsAtEntranceToMine(){
