@@ -97,8 +97,8 @@ void FrustumCulling::RenderBoundingBox(const glm::mat4& viewProjectionMatrix, st
 }
 
 bool FrustumCulling::isBoxInFrustum(const std::vector<FrustumPlane>& planes, std::vector<glm::vec3> worldCorners) {
-    glm::vec3 min;
-    glm::vec3 max;
+    glm::vec3 min = worldCorners[0];
+    glm::vec3 max = worldCorners[7];
 
     for (const glm::vec3 &point: worldCorners) {
         max.x = std::max(max.x, point.x);

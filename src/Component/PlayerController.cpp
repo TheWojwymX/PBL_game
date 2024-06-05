@@ -286,6 +286,7 @@ void PlayerController::HandleUpgrades() {
     }
     if(Input::Instance().IsKeyPressed(74)) {
         UpgradeReach();
+        LIGHTSMANAGER.AddGlowstick();
     }
     if(Input::Instance().IsKeyPressed(75)) {
         UpgradeSpeed();

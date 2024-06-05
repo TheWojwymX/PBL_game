@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include "Component/Camera.h"
 #include "Component/BlockManager.h"
+#include "Managers/LightsManager.h"
 
 class ShovelController;
 

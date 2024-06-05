@@ -10,8 +10,10 @@ void MeshRenderer::Render(glm::mat4 parentWorld) {
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
 
     if(FrustumCulling::IsInFrustum(_cameraRef->getViewProjectionMatrix(), world, _cameraRef->getFrustumPlanes(), _model)) {
+        isInFrustum = true;
         RenderModel(_model, world);
     }
+    else isInFrustum = false;
 }
 
 void MeshRenderer::RenderShadows(glm::mat4 parentWorld) {

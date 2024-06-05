@@ -28,6 +28,7 @@
 #include "Managers/SceneManager.h"
 #include "Managers/ResourceManager.h"
 #include "Managers/NodesManager.h"
+#include "Managers/LightsManager.h"
 #include "Gui/ImguiMain.h"
 #include "ParticleGenerator.h"
 
@@ -158,16 +159,6 @@ int main(int, char**)
     glm::vec3 windDirection(1.0f,0.0f,0.0f);
     float windStrength = 0.0f;
 
-    //SpotLight Properties
-    bool isSpotActive = true;
-    glm::vec3 spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
-    glm::vec3 spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
-    glm::vec3 spotLightColor(1.0f);
-    float spotLightConstant = 2.0f;
-    float spotLightLinear = 0.15f;
-    float spotLightQuadratic = 0.06f;
-    float spotLightCutOff = 20.5f;
-    float spotLightOuterCutOff = 24.5f;
     bool _renderWireframeBB = false;
 
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
@@ -212,6 +203,8 @@ int main(int, char**)
     TURRETSMANAGER.Init();
 
     TUTORIALMANAGER.Init();
+
+    LIGHTSMANAGER.InitLights();
 
     auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();;
     auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();;
@@ -264,9 +257,7 @@ int main(int, char**)
         ImGui::End();
 
         // Quick Debug
-        ImGui::Checkbox("Flashlight", &isSpotActive);
-        ImGui::ColorEdit3("Spot light Color", glm::value_ptr(spotLightColor));
-        ImGui::InputFloat("Spot light Strength", &spotLightQuadratic);
+        ImGui::Checkbox("Flashlight", &LIGHTSMANAGER.isSpotActive);
 
         ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
         ImGui::InputFloat3("Center", &lightCenter[0]);
@@ -299,9 +290,6 @@ int main(int, char**)
 
         skybox.draw();
 
-        spotLightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpPosition(spotLightCurrentPosition);
-        spotLightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpDirection(spotLightCurrentDirection);
-
         //ShadowMap Creation
         glm::vec3 shadowDir = glm::normalize(lightCenter - lightPos);
         dirDirection[0] = shadowDir.x;
@@ -323,20 +311,12 @@ int main(int, char**)
 
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT); //Reset Viewport After Rendering to Shadow Map
 
+        LIGHTSMANAGER.UpdateLights();
+
         modelShader->use();
         modelShader->setVec3("dirLight.direction", dirDirection);
         modelShader->setVec3("dirLight.color", dirColor);
         modelShader->setInt("dirLight.isActive", dirActive);
-
-        modelShader->setBool("spotLights[0].isActive", isSpotActive);
-        modelShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
-        modelShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
-        modelShader->setFloat("spotLights[0].constant", spotLightConstant);
-        modelShader->setFloat("spotLights[0].linear", spotLightLinear);
-        modelShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
-        modelShader->setVec3("spotLights[0].color", spotLightColor);
-        modelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
-        modelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
 
         modelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         modelShader->setMat4("projection", projection);
@@ -365,16 +345,6 @@ int main(int, char**)
         instancedSandShader->setVec3("dirLight.color", dirColor);
         instancedSandShader->setInt("dirLight.isActive", dirActive);
 
-        instancedSandShader->setBool("spotLights[0].isActive", isSpotActive);
-        instancedSandShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
-        instancedSandShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
-        instancedSandShader->setFloat("spotLights[0].constant", spotLightConstant);
-        instancedSandShader->setFloat("spotLights[0].linear", spotLightLinear);
-        instancedSandShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
-        instancedSandShader->setVec3("spotLights[0].color", spotLightColor);
-        instancedSandShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
-        instancedSandShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
-
         instancedSandShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         instancedSandShader->setMat4("projection", projection);
         instancedSandShader->setMat4("view", view);
@@ -387,16 +357,6 @@ int main(int, char**)
         instancedMetalShader->setVec3("dirLight.direction", dirDirection);
         instancedMetalShader->setVec3("dirLight.color", dirColor);
         instancedMetalShader->setInt("dirLight.isActive", dirActive);
-
-        instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
-        instancedMetalShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
-        instancedMetalShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
-        instancedMetalShader->setFloat("spotLights[0].constant", spotLightConstant);
-        instancedMetalShader->setFloat("spotLights[0].linear", spotLightLinear);
-        instancedMetalShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
-        instancedMetalShader->setVec3("spotLights[0].color", spotLightColor);
-        instancedMetalShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
-        instancedMetalShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
 
         instancedMetalShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         instancedMetalShader->setMat4("projection", projection);
@@ -452,16 +412,6 @@ int main(int, char**)
         shovelShader->setVec3("dirLight.direction", dirDirection);
         shovelShader->setVec3("dirLight.color", dirColor);
         shovelShader->setInt("dirLight.isActive", dirActive);
-
-        shovelShader->setBool("spotLights[0].isActive", isSpotActive);
-        shovelShader->setVec3("spotLights[0].position", spotLightCurrentPosition);
-        shovelShader->setVec3("spotLights[0].direction", spotLightCurrentDirection);
-        shovelShader->setFloat("spotLights[0].constant", spotLightConstant);
-        shovelShader->setFloat("spotLights[0].linear", spotLightLinear);
-        shovelShader->setFloat("spotLights[0].quadratic", spotLightQuadratic);
-        shovelShader->setVec3("spotLights[0].color", spotLightColor);
-        shovelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(spotLightCutOff)));
-        shovelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(spotLightOuterCutOff)));
 
         shovelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
         shovelShader->setMat4("projection", projection);
