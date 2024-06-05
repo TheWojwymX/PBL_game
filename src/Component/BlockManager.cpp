@@ -715,32 +715,101 @@ void BlockManager::ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 mas
 
 void BlockManager::GenerateResources()
 {
-    // Random number generator setup
-    std::random_device rd;  // Obtain a random number from hardware
-    std::mt19937 gen(rd()); // Seed the generator
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f); // Define the range
+    std::random_device rd;  
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
     // Define the probability of a block being changed to METAL or PLASTIC
-    const double metalProbability = 0.01;   // 1% chance of being METAL
-    const double plasticProbability = 0.01; // 1% chance of being PLASTIC
+    const double metalProbability = .5;   // 50% chance of being METAL
+    const double plasticProbability = .5; // 50% chance of being PLASTIC
 
-    // Iterate through the _blocksData container
-    for (auto& block : _blocksData)
+    // Generate Poisson disk distribution points
+    std::vector<glm::vec3> poissonPoints = GeneratePoissonDiskPoints();
+    std::cout << poissonPoints.size() << std::endl;
+    // Iterate through the Poisson disk points
+    for (const auto& point : poissonPoints)
     {
-        // Generate a random number between 0 and 1
-        double randomValue = dis(gen);
+        glm::ivec3 position = glm::round(point);
 
-        // Check if the block should be changed to METAL
-        if (randomValue < metalProbability)
+        // Check if the position is within bounds
+        while (InBounds(position))
         {
-            ChangeType(block,BlockType::METAL);
-        }
-        // Check if the block should be changed to PLASTIC
-        else if (randomValue < (metalProbability + plasticProbability))
-        {
-            ChangeType(block,BlockType::PLASTIC);
+            int index = GetIndex(position);
+
+            // Check if the block below is not empty
+            glm::ivec3 belowPosition = position + glm::ivec3(0, -1, 0);
+            if (InBounds(belowPosition) && _blocksData[GetIndex(belowPosition)].IsSolid())
+            {
+                // Generate a random number between 0 and 1
+                double randomValue = dis(gen);
+
+                // Check if the block should be changed to METAL
+                if (randomValue < metalProbability)
+                {
+                    ChangeType(_blocksData[index], BlockType::METAL);
+                    //UpdateNeighbourVisibility(_blocksData[index]);
+                    break;
+                }
+                // Check if the block should be changed to PLASTIC
+                else if (randomValue < (metalProbability + plasticProbability))
+                {
+                    ChangeType(_blocksData[index], BlockType::PLASTIC);
+                    //UpdateNeighbourVisibility(_blocksData[index]);
+                    break;
+                }
+            }
+
+            // Move one block down
+            position += glm::ivec3(0, -1, 0);
         }
     }
+}
+
+std::vector<glm::vec3> BlockManager::GeneratePoissonDiskPoints()
+{
+    std::vector<glm::vec3> points;
+    // Parameters for Poisson disk sampling
+    float minDist = 10.0f;  // Minimum distance between points
+    int k = 10;            // Number of attempts
+
+    // Define the bounds for sampling
+    glm::vec3 sampleRegionSize = glm::vec3(_width, _height, _depth);
+    std::vector<glm::vec3> spawnPoints;
+    spawnPoints.push_back(sampleRegionSize / 2.0f);
+
+    // Random number generator setup
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+    while (!spawnPoints.empty())
+    {
+        int spawnIndex = static_cast<int>(dis(gen) * spawnPoints.size());
+        glm::vec3 spawnCenter = spawnPoints[spawnIndex];
+        bool candidateAccepted = false;
+
+        for (int i = 0; i < k; ++i)
+        {
+            float angle = dis(gen) * 2.0f * glm::pi<float>();
+            glm::vec3 dir = glm::vec3(glm::cos(angle), glm::sin(angle), glm::tan(angle));
+            glm::vec3 candidate = spawnCenter + dir * minDist * (1.0f + dis(gen));
+
+            if (InBounds(glm::round(candidate)) && !IsPointTooClose(points, candidate, minDist))
+            {
+                points.push_back(candidate);
+                spawnPoints.push_back(candidate);
+                candidateAccepted = true;
+                break;
+            }
+        }
+
+        if (!candidateAccepted)
+        {
+            spawnPoints.erase(spawnPoints.begin() + spawnIndex);
+        }
+    }
+
+    return points;
 }
 
 int BlockManager::GetIndex(glm::ivec3 point) {
@@ -792,6 +861,18 @@ bool BlockManager::IsEdgeBlock(BlockData& blockData)
     glm::ivec3 pos = blockData.GetPosID(); 
 
     return IsEdgeBlock(pos.x, pos.y, pos.z);
+}
+
+bool BlockManager::IsPointTooClose(const std::vector<glm::vec3>& points, const glm::vec3& candidate, float minDist)
+{
+    for (const auto& point : points)
+    {
+        if (glm::distance(point, candidate) < minDist)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 

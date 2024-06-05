@@ -189,6 +189,7 @@ private:
     void ChangeType(BlockData& blockData, BlockType type);
     void ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 maskDimensions);
     void GenerateResources();
+    std::vector<glm::vec3> GeneratePoissonDiskPoints();
 
 
     int GetIndex(glm::ivec3 point);
@@ -201,4 +202,5 @@ private:
     bool ChunkInBounds(glm::ivec3 position);
     bool IsEdgeBlock(int x, int y, int z);
     bool IsEdgeBlock(BlockData& blockData);
+    bool IsPointTooClose(const std::vector<glm::vec3>& points, const glm::vec3& candidate, float minDist);
 };
