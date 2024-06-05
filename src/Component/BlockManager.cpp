@@ -334,27 +334,25 @@ void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
 std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight) {
     std::vector<CollisionInfo> collisionInfoList;
 
-    // Calculate the positions of the corners of the entity's AABB
-    glm::vec3 corners[12];
-    corners[0] = entityPos + glm::vec3(-halfWidth, 0.0f, -halfWidth);
-    corners[1] = entityPos + glm::vec3(halfWidth, 0.0f, -halfWidth);
-    corners[2] = entityPos + glm::vec3(-halfWidth, 0.0f, halfWidth);
-    corners[3] = entityPos + glm::vec3(halfWidth, 0.0f, halfWidth);
-    corners[4] = entityPos + glm::vec3(-halfWidth, 1.0f, -halfWidth);
-    corners[5] = entityPos + glm::vec3(halfWidth, 1.0f, -halfWidth);
-    corners[6] = entityPos + glm::vec3(-halfWidth, 1.0f, halfWidth);
-    corners[7] = entityPos + glm::vec3(halfWidth, 1.0f, halfWidth);
-    corners[8] = entityPos + glm::vec3(-halfWidth, entityHeight, -halfWidth);
-    corners[9] = entityPos + glm::vec3(halfWidth, entityHeight, -halfWidth);
-    corners[10] = entityPos + glm::vec3(-halfWidth, entityHeight, halfWidth);
-    corners[11] = entityPos + glm::vec3(halfWidth, entityHeight, halfWidth);
+    // Calculate the number of layers based on the entity's height
+    int numLayers = static_cast<int>(glm::ceil(entityHeight));
 
-    // Iterate through the lower corners (0-3) and check collision with the nearest blocks below
-    for (int i = 0; i < 12; i++) {
-        // Round the position of the corner to get the ID of the nearest block below
-        glm::ivec3 roundedPosX = glm::round(glm::vec3(corners[i].x + movementVector.x, corners[i].y,corners[i].z));
+    // Generate corners dynamically
+    std::vector<glm::vec3> corners;
+    for (int i = 0; i <= numLayers; ++i) {
+        float yOffset = (i == numLayers) ? entityHeight : static_cast<float>(i);
+        corners.push_back(entityPos + glm::vec3(-halfWidth, yOffset, -halfWidth));
+        corners.push_back(entityPos + glm::vec3(halfWidth, yOffset, -halfWidth));
+        corners.push_back(entityPos + glm::vec3(-halfWidth, yOffset, halfWidth));
+        corners.push_back(entityPos + glm::vec3(halfWidth, yOffset, halfWidth));
+    }
+
+    // Iterate through the corners and check collision with the nearest blocks
+    for (size_t i = 0; i < corners.size(); ++i) {
+        // Round the position of the corner to get the ID of the nearest block
+        glm::ivec3 roundedPosX = glm::round(glm::vec3(corners[i].x + movementVector.x, corners[i].y, corners[i].z));
         glm::ivec3 roundedPosY = glm::round(glm::vec3(corners[i].x, corners[i].y + movementVector.y, corners[i].z));
-        glm::ivec3 roundedPosZ = glm::round(glm::vec3(corners[i].x , corners[i].y, corners[i].z + movementVector.z));
+        glm::ivec3 roundedPosZ = glm::round(glm::vec3(corners[i].x, corners[i].y, corners[i].z + movementVector.z));
 
         // Initialize CollisionInfo for the current corner
         CollisionInfo info;
@@ -362,7 +360,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
         // Check if the rounded position is within bounds
         if (InBounds(roundedPosX)) {
             int index = GetIndex(roundedPosX);
-            
+
             // Check if the block at the index is not empty
             if (_blocksData[index].IsSolid()) {
                 // Calculate the AABB extents of the block
@@ -395,7 +393,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
                         info.isColliding = true;
                     }
                 }
-                else if (i >= 8) {
+                else if (i >= (corners.size() - 4)) {
                     if (entityPosY + entityHeight > blockMin.y) {
                         info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.0001f) * -1;
                         info.isColliding = true;
@@ -430,6 +428,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
     // Return the list of collision information for each corner
     return collisionInfoList;
 }
+
 
 void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     // Initialize the map with a given initial fill ratio (percentage of cells initially filled)
