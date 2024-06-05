@@ -58,8 +58,8 @@ private:
     bool firstPass = true;
     unsigned int VAO, VBO, particleBuffer;
     Particle* particleData;
-    GLuint instanceVBOs[2];
-    char* instanceData[2];
+    GLuint instanceVBOs[3];
+    char* instanceData[3];
     int currentBuffer = 1;
 
     glm::vec3 offset{0.0f};

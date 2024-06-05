@@ -36,7 +36,7 @@ public:
 
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
 
-    float _jetpackFuel = 100.0f;
+    float _jetpackFuel = 50.0f;
     float _maxJetpackFuel = 100.0f;
 
     shared_ptr<ShovelController> _shovelController;

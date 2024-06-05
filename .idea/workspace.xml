@@ -28,6 +28,7 @@
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Release" ENABLED="true" CONFIG_NAME="Release" />
     </configurations>
   </component>
   <component name="ChangeListManager">
@@ -35,11 +36,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ParticleGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ParticleGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleGenerator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +53,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -74,7 +78,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "CMake Application.SandBOX.executor": "Debug",
+    "CMake Application.SandBOX.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
@@ -90,6 +94,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CMakeSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -232,6 +237,8 @@
       <workItem from="1717403734209" duration="3410000" />
       <workItem from="1717414288985" duration="16177000" />
       <workItem from="1717509263240" duration="1156000" />
+      <workItem from="1717595305137" duration="1271000" />
+      <workItem from="1717596633535" duration="9542000" />
     </task>
     <servers />
   </component>

@@ -26,54 +26,57 @@ public:
     int _actualMessage = 0;
     std::vector<string> _messages{
 
-        "So, private, you decided to call for help, huh? \n"
-        "Okay, let's start with the basics. Press [F] to\n"
-        "turn on flashlight. See that tunnel? Go to it \n"
-        "[WSAD and spacebar] and continue digging [LMB] \n"
-        "for resources. When you find some, dig them out too!",
+        "So, private, you decided to call for help, huh?\n"
+        " Okay, let's start with the basics. See that \n"
+        "exclamation point? The threat of an attack coming \n"
+        "soon. Approach the sandbags [WSAD and spacebar] \n"
+        "and call for backup from [L]. which you need to \n"
+        "[RMB] to throw a flare that will summon a \n"
+        "paratrooper. Remember that you must connect the \n"
+        "soldier in such a way that his barrel is outside \n"
+        "the base!",
 
-        "Great, so you've mined your first resources. \n"
-        "This should be enough for now. Follow the glow \n"
-        "sticks to find the exit.",
+        "Good job! But watch out, it's not over yet, they're \n"
+        "coming from the other side! Approach the gunner's \n"
+        "unit and use [RMB] to move the turret to the right \n"
+        "place. Additionally, after placing it, click \"F\" to \n"
+        "open the upgrade menu. You can upgrade damage - you \n"
+        "should be equipped with basic resources.",
 
-        "So you're at the exit, but you can't jump \n"
-        "that high? Rest assured, your jetpack should \n"
-        "have enough fuel to get you out of here. Hold \n"
-        "[space], fly out and land on the surface! \n"
-        "But watch out for fuel - if you're downstairs \n"
-        "with an empty tank, I won't be able to help you!",
+        "Great! You repelled the attack! But your mission is \n"
+        "only just beginning. See the hole in the middle of \n"
+        "the base? It's a mine, jump in and find some \n"
+        "resources!",
 
-        "Congratulations, you've made it to the surface! \n"
-        "Just don't get lazy here! See those exclamation \n"
-        "marks? They symbolize that an attack will come \n"
-        "soon! Quick, you need to buy support with mined \n"
-        "resources! Press [L], set the target position \n"
-        "and press [RMB] to confirm! You can also move \n"
-        "your turret after landing with [RMB]!",
+        "Okay, you're in a cave. Look for materials - metal \n"
+        "caps, plastic caps - these are all materials that \n"
+        "will be necessary to upgrade your base and buy \n"
+        "more turrets. Dig them out by holding [LMB].",
 
-        "Watch out, it's not over yet! They're coming from\n"
-        "the other side! Move the turret with [RMB]. You \n"
-        "can also upgrade them using the menu available \n"
-        "by pressing [F] on the turret.",
+        "That should be enough for now. \n"
+        "Return to the hole and climb to the surface.",
 
-        "Good job! What now you ask? Well, the training is \n"
-        "almost complete. I must also inform you that in \n"
-        "the upgrade station you can improve your skills, \n"
-        "and in the doma station you can buy more life \n"
-        "and repair damage. Try to improve your speed \n"
-        "now. This time it will be at the company's expense.",
+        "Well, you can't jump that high. But don't worry, \n"
+        "you can use some of the materials you get to turn \n"
+        "them into jetpack fuel. Press [] and then hold \n"
+        "spacebar to fly out.",
+
+        "Okay, you're on the surface. Now you can use the \n"
+        "refueling station to have a full supply in your \n"
+        "jetpack just in case. Just stand next to it and \n"
+        "wait, the process is completely automatic.",
+
+        "This is practically the end of the training. \n"
+        "Oh, I almost forgot - in the upgrade station \n"
+        "you can improve your skills, and in the doma \n"
+        "station you can buy more life and repair damage. \n"
+        "Try to improve your speed now. This time it will \n"
+        "be at the company's expense.",
 
         "Congratulations, you have just completed your training! \n"
         "Your next task is to mine, improve the base and fend \n"
         "off attacks (the time for which is marked in the upper \n"
-        "left corner). And one more thing, before going down, \n"
-        "remember to refuel at the refuel station. Just stand \n"
-        "next to it and wait a few seconds until it is full. \n"
-        "However, if you ever end up in the caves without fuel, \n"
-        "don't worry - you can constantly convert raw materials \n"
-        "into fuel."
-
-
+        "left corner)."
     };
 
     std::vector<string> _specialMessages{

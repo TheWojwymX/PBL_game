@@ -58,6 +58,8 @@ void HUDMain::Init() {
         hp->Init(path.c_str(), hpVertices, true, true);
         _baseHPImages.push_back(hp);
     }
+
+    _playerNode = NODESMANAGER.getNodeByName("player");
 }
 
 void HUDMain::Update() {
@@ -167,7 +169,27 @@ void HUDMain::Update() {
     _crosshairImage.UpdateImage();
 
     //text
-    TEXTRENDERER.RenderText(to_string(GAMEMANAGER._money), -0.95f, -0.95f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    TEXTRENDERER.RenderText("Money: " + to_string(GAMEMANAGER._money), -0.97f, -0.95f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    string nextPhaseName;
+    if(GAMEMANAGER.currentPhase == 0){
+        nextPhaseName = "Setup";
+    }
+    else if(GAMEMANAGER.currentPhase == 1){
+        nextPhaseName = "Enemy attack";
+    }
+    else if(GAMEMANAGER.currentPhase == 2){
+        nextPhaseName = "Mining";
+    }
+
+    TEXTRENDERER.RenderText("Next phase: " + nextPhaseName, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    TEXTRENDERER.RenderText("Fuel: " + to_string((_playerNode->GetComponent<PlayerController>()->
+            _jetpackFuel/_playerNode->GetComponent<PlayerController>()->_maxJetpackFuel) * 100), 0.30, -0.95f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    TEXTRENDERER.RenderText("Y: " + to_string((int)std::floor(_playerNode->GetTransform()->GetPosition().y)), 0.60, 0.35f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
