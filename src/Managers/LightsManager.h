@@ -22,6 +22,18 @@ public:
 
     bool isSpotActive = false;
     int glowstickCount = 0;
+
+    float flashlightConstant = 10.0f;
+    float flashlightLinear = 0.233f;
+    float flashlightQuadratic = 0.06f;
+
+    float glowstickConstant = 5.0f;
+    float glowstickLinear = 2.049f;
+    float glowstickQuadratic = 0.737f;
+
+    float glowstickConstantNoFlash = 3.65f;
+    float glowstickLinearNoFlash = 0.9f;
+    float glowstickQuadraticNoFlash = 0.4f;
 private:
     void UpdateShaders();
 
@@ -33,16 +45,11 @@ private:
     glm::vec3 flashlightCurrentPosition = glm::vec3(0.0f);
     glm::vec3 flashlightCurrentDirection = glm::vec3(0.0f);
     glm::vec3 flashlightColor = glm::vec3(1.0f);
-    float flashlightConstant = 2.0f;
-    float flashlightLinear = 0.15f;
-    float flashlightQuadratic = 0.06f;
     float flashlightCutOff = 20.5f;
     float flashlightOuterCutOff = 24.5f;
 
     glm::vec3 glowstickColor = glm::vec3(1.0f);
     std::vector<glm::vec3> glowstickColors;
-    float glowstickConstant = 3.0f;
-    float glowstickLinear = 3.0f;
-    float glowstickQuadratic = 3.0f;
+
     int maxGlowsticks = 10;
 };

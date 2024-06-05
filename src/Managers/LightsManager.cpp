@@ -51,9 +51,16 @@ void LightsManager::UpdateShaders(){
 
     for (int i = 0; i < maxGlowsticks; i++) {
         string name = "pointLights[" + to_string(i) + "]";
-        instancedSandShader->setFloat(name + ".constant", glowstickConstant);
-        instancedSandShader->setFloat(name + ".linear", glowstickLinear);
-        instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
+        if(isSpotActive) {
+            instancedSandShader->setFloat(name + ".constant", glowstickConstant);
+            instancedSandShader->setFloat(name + ".linear", glowstickLinear);
+            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
+        }
+        else{
+            instancedSandShader->setFloat(name + ".constant", glowstickConstantNoFlash);
+            instancedSandShader->setFloat(name + ".linear", glowstickLinearNoFlash);
+            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
+        }
     }
 
     instancedMetalShader->use();

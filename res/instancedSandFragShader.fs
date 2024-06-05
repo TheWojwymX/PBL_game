@@ -88,7 +88,7 @@ void main()
         if(pointLights[i].isActive)
         {
             float distance = length(pointLights[i].position - FragPos);
-            float maxDistance = 10.0;
+            float maxDistance = 30.0;
 
             if (distance < maxDistance)
             {
@@ -161,7 +161,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
-    return (specular); //+specular
+    return (specular + ambient + diffuse); //+specular
 }
 
 float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float pointLightIntensity)
@@ -193,7 +193,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
     }
     shadow /= 9.0;
 
-    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.33, 0.0, 1.0)); // Shadow brightness 0.33
+    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.16, 0.0, 1.0)); // Shadow brightness 0.33
 
     return shadow - 0.2;
 }
@@ -212,7 +212,7 @@ float CalcSpotLightIntensity(SpotLight spotLight, vec3 fragPos)
     // Calculate the spotlight intensity based on the angle within the cone
     float theta = dot(lightDir, normalize(-spotLight.direction));
     float epsilon = spotLight.cutOff - spotLight.outerCutOff;
-    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.1, 1.0); //Flashlight effect on shadow
+    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.13, 1.0); //Flashlight effect on shadow
 
     // Final intensity considering attenuation and angle
     return attenuation * intensity;

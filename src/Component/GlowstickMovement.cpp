@@ -9,7 +9,7 @@ GlowstickMovement::GlowstickMovement(): _movementVector(glm::vec3(0.0f)), _veloc
 void GlowstickMovement::Init(){
     _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(1);
     _frontVector = COMPONENTSMANAGER.GetComponentByID<Camera>(2)->GetFrontVector();
-    float initialSpeed = 5.0f;
+    float initialSpeed = 13.0f;
     _velocity = _frontVector * initialSpeed;
 }
 

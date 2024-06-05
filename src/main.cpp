@@ -265,8 +265,24 @@ int main(int, char**)
         // Quick Debug
         ImGui::Checkbox("Flashlight", &LIGHTSMANAGER.isSpotActive);
 
+        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant,-10.0f,10.0f);
+        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
+        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
+
         ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
         ImGui::InputFloat3("Center", &lightCenter[0]);
+
+        ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant,-5.0f,5.0f);
+        ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
+        ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
+
+        ImGui::SliderFloat("glowstickConstantNoLight", &LIGHTSMANAGER.glowstickConstantNoFlash,-10.0f,10.0f);
+        ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
+        ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
+
+        float glowstickConstant = 3.0f;
+        float glowstickLinear = 3.0f;
+        float glowstickQuadratic = 3.0f;
 
         ImGui::ColorEdit3("Directional Light Color", dirColor);
 
@@ -274,6 +290,7 @@ int main(int, char**)
 
         ImGui::SliderFloat3("Wind Direction", &windDirection[0],-1.0f,1.0f);
         ImGui::SliderFloat("Wind Strength", &windStrength, -10.0f, 10.0f);
+
 
         FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
