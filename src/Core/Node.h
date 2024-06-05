@@ -61,6 +61,8 @@ public:
 
     const vector<std::shared_ptr<Node>>& getChildren() const;
 
+    const std::shared_ptr<Node>& getFirstChild() const;
+
     const vector<std::shared_ptr<Component>>& getComponents() const;
 
     template <typename T>

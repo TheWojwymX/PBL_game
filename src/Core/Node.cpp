@@ -225,6 +225,10 @@ const vector<std::shared_ptr<Node>> &Node::getChildren() const {
     return _children;
 }
 
+const std::shared_ptr<Node> &Node::getFirstChild() const {
+    return _children[0];
+}
+
 const vector<std::shared_ptr<Component>> &Node::getComponents() const {
     return _components;
 }

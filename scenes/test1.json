@@ -234,6 +234,14 @@
         {
           "ModelName": "WormModel",
           "Path": "../../res/Models/Worm/robal.obj"
+        },
+        {
+          "ModelName": "RangeIndicatorReal",
+          "Path": "../../res/Models/RangeIndicators/prosty.obj"
+        },
+        {
+          "ModelName": "RangeIndicatorVisual",
+          "Path": "../../res/Models/RangeIndicators/okragly.obj"
         }
       ],
       "Shaders": [

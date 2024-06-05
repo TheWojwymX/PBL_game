@@ -221,7 +221,7 @@ void TurretsManager::PrepareBlueprintTurret() {
     NODESMANAGER.createNode(_blueprintTurret, blueprintRange);
     auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
     rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("sandModel");
-    rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->SetEnabled(false);
     rangeIndicator->Initiate();
@@ -392,6 +392,7 @@ void TurretsManager::MoveTurret() {
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetPosition(_blueprintTurret->GetTransform()->GetPosition());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetRotation(_blueprintTurret->GetTransform()->GetRotation());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
+        _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     }
 }
 
@@ -410,6 +411,7 @@ void TurretsManager::PlaceMovingTurret() {
     }
 
     _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
 }
 
 int TurretsManager::RaycastTurrets() {

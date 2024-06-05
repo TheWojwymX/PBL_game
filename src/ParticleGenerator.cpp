@@ -198,7 +198,7 @@ void ParticleGenerator::Init() {
     computeShader->setVec3("gravity", gravity);
     computeShader->setBool("casing", casing);
     computeShader->setBool("isJetpack", isJetpack);
-    computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel);
+    computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel - 0.6);
     computeShader->setBool("isFlare", isFlare);
 
     unsigned int VBO;
