@@ -169,7 +169,7 @@ void HUDMain::Update() {
     _crosshairImage.UpdateImage();
 
     //text
-    TEXTRENDERER.RenderText("Money: " + to_string(GAMEMANAGER._money), -0.97f, -0.95f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    TEXTRENDERER.RenderText("P: " + to_string(GAMEMANAGER._plastic) + "  M: " + to_string(GAMEMANAGER._metal), -0.97f, -0.95f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
     TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -189,7 +189,7 @@ void HUDMain::Update() {
     TEXTRENDERER.RenderText("Fuel: " + to_string((_playerNode->GetComponent<PlayerController>()->
             _jetpackFuel/_playerNode->GetComponent<PlayerController>()->_maxJetpackFuel) * 100), 0.30, -0.95f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
-    TEXTRENDERER.RenderText("Y: " + to_string((int)std::floor(_playerNode->GetTransform()->GetPosition().y)), 0.60, 0.35f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    TEXTRENDERER.RenderText("Y: " + to_string((int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.60, 0.35f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

@@ -65,10 +65,6 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
-// settings
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 720;
-
 int main(int, char**)
 {
     // Setup window
@@ -135,7 +131,7 @@ int main(int, char**)
     skybox.init();
 
     // Init
-    INPUT.Init(GAMEMANAGER._window, SCR_WIDTH, SCR_HEIGHT);
+    INPUT.Init(GAMEMANAGER._window, GAMEMANAGER._screenWidth, GAMEMANAGER._screenHeight);
     GAMEMANAGER.root->Init();
 
     //ShadowMap init
@@ -161,8 +157,8 @@ int main(int, char**)
 
     bool _renderWireframeBB = false;
 
-    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(SCR_WIDTH);
-    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(SCR_HEIGHT);
+    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(GAMEMANAGER._screenWidth);
+    ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(GAMEMANAGER._screenHeight);
 
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
@@ -215,7 +211,8 @@ int main(int, char**)
     {
         //debugging adding money
         if(INPUT.IsKeyPressed(77)){
-            GAMEMANAGER._money += 10;
+            GAMEMANAGER._plastic += 10;
+            GAMEMANAGER._metal += 10;
             //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
         }
 
@@ -305,7 +302,7 @@ int main(int, char**)
 
         RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
 
-        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()), (float)GAMEMANAGER._screenWidth / (float)GAMEMANAGER._screenHeight, 0.1f, 1000.0f);
         glm::mat4 view = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
         glm::mat4 skyboxView = glm::mat4(glm::mat3(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix())); // remove translation from the view matrix
         skyboxShader->setMat4("view", skyboxView);
@@ -332,7 +329,7 @@ int main(int, char**)
         shadowMap.RenderMap();
         shadowMap.EndRender();
 
-        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT); //Reset Viewport After Rendering to Shadow Map
+        glViewport(0, 0, GAMEMANAGER._screenWidth, GAMEMANAGER._screenHeight); //Reset Viewport After Rendering to Shadow Map
 
         LIGHTSMANAGER.UpdateLights();
 

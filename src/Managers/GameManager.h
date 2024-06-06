@@ -8,8 +8,8 @@
 class GameManager {
 
 public:
-    int _screenWidth = 1280;
-    int _screenHeight = 720;
+    int _screenWidth = 1920;
+    int _screenHeight = 1080;
     GLFWwindow* _window;
 
     void Init();
@@ -41,8 +41,6 @@ public:
 
     bool _paused = false;
 
-    int _money = 50;
-
     glm::vec3 _windDirection{0.0f};
     float _windStrength = 0.0f;
 
@@ -52,9 +50,8 @@ public:
     void Pause();
     void Unpause();
 
-private:
-    int _metal = 0;
-    int _plastic = 0;
+    int _metal = 50;
+    int _plastic = 50;
 };
 
 

@@ -90,7 +90,7 @@ void TutorialManager::Update() {
 
         //Konczy sie po zdobyciu pieniedzy
         case 4:
-            if(GAMEMANAGER._money == 100){
+            if(GAMEMANAGER._plastic >= 100 && GAMEMANAGER._metal >= 100){
                 DisplayAndChangeMessage();
             }
             else if(WarningSystem(0)){

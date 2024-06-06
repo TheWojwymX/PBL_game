@@ -63,7 +63,7 @@ void GameManager::InitPhase()
 
 
 void GameManager::Init() {
-    _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", NULL, NULL);
+    _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", glfwGetPrimaryMonitor(), NULL);
 }
 
 void GameManager::EnableMouse() {

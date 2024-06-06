@@ -126,12 +126,12 @@ bool UpgradeManager::isTurretInRange()
 void UpgradeManager::upgradeDomeHp()
 {
 
-    if(GAMEMANAGER._money < _domeHPUpgradeCost) {
+    if(GAMEMANAGER._plastic < _domeHPUpgradeCost) {
         std::cout << "Brak pieniedzy na ulepszenie HP doma" << std::endl;
         return;
     }
     else{
-        GAMEMANAGER._money -= _domeHPUpgradeCost;
+        GAMEMANAGER._plastic -= _domeHPUpgradeCost;
     }
 
     DOMEMANAGER.maxHP += 20;
@@ -140,12 +140,12 @@ void UpgradeManager::upgradeDomeHp()
 
 void UpgradeManager::upgradeTurretDamage()
 {
-    if(GAMEMANAGER._money < _turretDamageUpgradeCost){
+    if(GAMEMANAGER._metal < _turretDamageUpgradeCost){
         std::cout << "Brak pieniedzy na ulepszenie obrazen dzialka" << std::endl;
         return;
     }
     else{
-        GAMEMANAGER._money -= _turretDamageUpgradeCost;
+        GAMEMANAGER._metal -= _turretDamageUpgradeCost;
     }
 
     if (TURRETSMANAGER.selectedIndex == -1)
@@ -161,12 +161,12 @@ void UpgradeManager::upgradeTurretDamage()
 
 void UpgradeManager::upgradeTurretFireRate() {
 
-    if(GAMEMANAGER._money < _turretFireRateUpgradeCost){
+    if(GAMEMANAGER._metal < _turretFireRateUpgradeCost){
         std::cout << "Brak pieniedzy na ulepszenie szybkostrzelnosci dzialka" << std::endl;
         return;
     }
     else{
-        GAMEMANAGER._money -= _turretFireRateUpgradeCost;
+        GAMEMANAGER._metal -= _turretFireRateUpgradeCost;
     }
 
     if (TURRETSMANAGER.selectedIndex == -1)
