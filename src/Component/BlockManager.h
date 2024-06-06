@@ -104,6 +104,8 @@ private:
     void GenerateTunnel(std::vector<glm::ivec3> points, int size);
     void GenerateTunnels();
     glm::ivec3 QuadraticBezier(const glm::ivec3& p0, const glm::ivec3& p1, const glm::ivec3& p2, float t);
+    glm::ivec3 GetRandomSideBlock(glm::ivec2 yRange);
+    glm::ivec3 GetRandomSideBlock(glm::ivec2 yRange, glm::ivec3 exclude);
 
 
     int GetIndex(glm::ivec3 point);

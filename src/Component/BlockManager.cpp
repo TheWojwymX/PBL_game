@@ -355,7 +355,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
         // Initialize CollisionInfo for the current corner
         CollisionInfo info;
 
-        // Check if the rounded position is within bounds
+        // Check if the rounded position is within bounds for X-axis
         if (InBounds(roundedPosX)) {
             int index = GetIndex(roundedPosX);
 
@@ -375,6 +375,27 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
             }
         }
 
+        // Check if the rounded position is within bounds for Z-axis
+        if (InBounds(roundedPosZ)) {
+            int index = GetIndex(roundedPosZ);
+
+            // Check if the block at the index is not empty
+            if (_blocksData[index].IsSolid()) {
+                // Calculate the AABB extents of the block
+                glm::vec3 blockMin = glm::vec3(roundedPosZ) - glm::vec3(0.5f);
+                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
+
+                float entityPosZ = entityPos.z + movementVector.z;
+                if (entityPosZ + halfWidth > blockMin.z || entityPosZ - halfWidth < blockMax.z) {
+                    // Determine the separation vector in the z-axis
+                    float direction = glm::sign(entityPosZ - roundedPosZ.z);
+                    info.separationVector.z = (std::abs((std::abs(entityPosZ - roundedPosZ.z) - (halfWidth + 0.5f))) + 0.0001f) * direction;
+                    info.isColliding = true;
+                }
+            }
+        }
+
+        // Check if the rounded position is within bounds for Y-axis
         if (InBounds(roundedPosY)) {
             int index = GetIndex(roundedPosY);
 
@@ -400,25 +421,6 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
             }
         }
 
-        if (InBounds(roundedPosZ)) {
-            int index = GetIndex(roundedPosZ);
-
-            // Check if the block at the index is not empty
-            if (_blocksData[index].IsSolid()) {
-                // Calculate the AABB extents of the block
-                glm::vec3 blockMin = glm::vec3(roundedPosZ) - glm::vec3(0.5f);
-                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
-
-                float entityPosZ = entityPos.z + movementVector.z;
-                if (entityPosZ + halfWidth > blockMin.z || entityPosZ - halfWidth < blockMax.z) {
-                    // Determine the separation vector in the z-axis
-                    float direction = glm::sign(entityPosZ - roundedPosZ.z);
-                    info.separationVector.z = (std::abs((std::abs(entityPosZ - roundedPosZ.z) - (halfWidth + 0.5f))) + 0.0001f) * direction;
-                    info.isColliding = true;
-                }
-            }
-        }
-
         // Add collision info to the list
         collisionInfoList.push_back(info);
     }
@@ -426,6 +428,7 @@ std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entity
     // Return the list of collision information for each corner
     return collisionInfoList;
 }
+
 
 
 void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
@@ -581,7 +584,7 @@ void BlockManager::IterateCaveGeneration() {
     }
 }
 
-std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight) {
+std::pair<glm::vec3, glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight) {
     CheckEntityChunk(entityPos);
 
     // Calculate the half extents of the entity's AABB
@@ -599,7 +602,7 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
         if (collisionInfo.isColliding) {
             // Update separationVector based on the smallest non-zero component
             if (std::abs(collisionInfo.separationVector.x) < std::abs(collisionInfo.separationVector.z)) {
-                if(std::abs(collisionInfo.separationVector.x) < std::abs(smallestX))
+                if (std::abs(collisionInfo.separationVector.x) < std::abs(smallestX))
                     smallestX = collisionInfo.separationVector.x;
             }
             else if (collisionInfo.separationVector.z < std::numeric_limits<float>::max()) {
@@ -628,11 +631,16 @@ std::pair<glm::vec3,glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 enti
     }
 
     
+    // Debug: Print the movementVector and separationVector
+    //std::cout << "Movement Vector: " << movementVector.x << ", " << movementVector.y << ", " << movementVector.z << std::endl;
+    //std::cout << "Separation Vector: " << separationVector.x << ", " << separationVector.y << ", " << separationVector.z << std::endl;
+
     movementVector += separationVector;
 
-    // Return the separation vector
-    return std::make_pair(movementVector,separationVector);
+    // Return the adjusted movementVector and the separationVector
+    return std::make_pair(movementVector, separationVector);
 }
+
 
 std::tuple<bool, BlockData*, glm::vec3> BlockManager::CheckSimpleEntityCollision(glm::vec3 entityPos) {
     glm::ivec3 roundedPos = glm::round(entityPos);
@@ -952,37 +960,11 @@ void BlockManager::GenerateTunnels() {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
-    int startXLayer1 = 0;
-    int startZLayer1 = 0;
+    glm::ivec3 startLayer1 = GetRandomSideBlock(glm::ivec2(200, 250));
+    std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
 
-    // Determine start point for the first tunnel (from layer 1 to layer 2)
-    if ((dis(gen) > 0.5f)) {
-        startXLayer1 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
-        startZLayer1 = static_cast<int>(dis(gen) * (_depth - 1));
-    }
-    else {
-        startXLayer1 = static_cast<int>(dis(gen) * (_width - 1));
-        startZLayer1 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
-    }
-
-    glm::ivec3 startLayer1 = glm::ivec3(startXLayer1, 200 + static_cast<int>(dis(gen) * 50), startZLayer1);
-    //std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
-
-    int endXLayer2 = 0;
-    int endZLayer2 = 0;
-
-    // Determine start point for the first tunnel (from layer 1 to layer 2)
-    if ((dis(gen) > 0.5f)) {
-        endXLayer2 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
-        endZLayer2 = static_cast<int>(dis(gen) * (_depth - 1));
-    }
-    else {
-        endXLayer2 = static_cast<int>(dis(gen) * (_width - 1));
-        endZLayer2 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
-    }
-
-    glm::ivec3 endLayer2 = glm::ivec3(endXLayer2, 150 + static_cast<int>(dis(gen) * 100), endZLayer2);
-    //std::cout << "EndPoint for tunnel 1: " << endLayer2.x << ", " << endLayer2.y << ", " << endLayer2.z << std::endl;
+    glm::ivec3 endLayer2 = GetRandomSideBlock(glm::ivec2(150, 250), startLayer1);
+    std::cout << "EndPoint for tunnel 1: " << endLayer2.x << ", " << endLayer2.y << ", " << endLayer2.z << std::endl;
 
     // Generate intermediate points within the map for the first tunnel
     std::vector<glm::ivec3> pointsTunnel1;
@@ -1001,37 +983,13 @@ void BlockManager::GenerateTunnels() {
     // Generate the first tunnel
     GenerateTunnel(pointsTunnel1, 6);
 
-    int startXLayer2 = 0;
-    int startZLayer2 = 0;
 
-    // Determine start point for the first tunnel (from layer 1 to layer 2)
-    if ((dis(gen) > 0.5f)) {
-        startXLayer2 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
-        startZLayer2 = static_cast<int>(dis(gen) * (_depth - 1));
-    }
-    else {
-        startXLayer2 = static_cast<int>(dis(gen) * (_width - 1));
-        startZLayer2 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
-    }
 
-    glm::ivec3 startLayer2 = glm::ivec3(startXLayer2, 100 + static_cast<int>(dis(gen) * 50), startZLayer2);
-    //std::cout << "StartPoint for tunnel 2: " << startLayer2.x << ", " << startLayer2.y << ", " << startLayer2.z << std::endl;
+    glm::ivec3 startLayer2 = GetRandomSideBlock(glm::ivec2(100, 150));
+    std::cout << "StartPoint for tunnel 2: " << startLayer2.x << ", " << startLayer2.y << ", " << startLayer2.z << std::endl;
 
-    int endXLayer3 = 0;
-    int endZLayer3 = 0;
-
-    // Determine start point for the first tunnel (from layer 1 to layer 2)
-    if ((dis(gen) > 0.5f)) {
-        endXLayer3 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
-        endZLayer3 = static_cast<int>(dis(gen) * (_depth - 1));
-    }
-    else {
-        endXLayer3 = static_cast<int>(dis(gen) * (_width - 1));
-        endZLayer3 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
-    }
-
-    glm::ivec3 endLayer3 = glm::ivec3(endXLayer3, 50 + static_cast<int>(dis(gen) * 101), endZLayer3);
-    //std::cout << "EndPoint for tunnel 2: " << endLayer3.x << ", " << endLayer3.y << ", " << endLayer3.z << std::endl;
+    glm::ivec3 endLayer3 = GetRandomSideBlock(glm::ivec2(50, 150), startLayer2);
+    std::cout << "EndPoint for tunnel 2: " << endLayer3.x << ", " << endLayer3.y << ", " << endLayer3.z << std::endl;
 
     // Generate intermediate points within the map for the second tunnel
     std::vector<glm::ivec3> pointsTunnel2;
@@ -1062,6 +1020,50 @@ glm::ivec3 BlockManager::QuadraticBezier(const glm::ivec3& p0, const glm::ivec3&
     p += tt * glm::vec3(p2);          // t^2 * P2
 
     return glm::ivec3(glm::round(p));
+}
+
+glm::ivec3 BlockManager::GetRandomSideBlock(glm::ivec2 yRange)
+{
+    // Random number generator setup
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+    int x = 0;
+    int z = 0;
+
+    if (dis(gen) > 0.5f) {
+        x = (dis(gen) > 0.5f) ? (_width - 1) : 0;
+        z = static_cast<int>(dis(gen) * (_depth - 1));
+    }
+    else {
+        x = static_cast<int>(dis(gen) * (_width - 1));
+        z = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+    }
+
+    return glm::ivec3(x, yRange.x + static_cast<int>(dis(gen) * (yRange.y - yRange.x)), z);
+}
+
+glm::ivec3 BlockManager::GetRandomSideBlock(glm::ivec2 yRange, glm::ivec3 exclude)
+{
+    // Random number generator setup
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+    int x = 0;
+    int z = 0;
+
+    if (dis(gen) > 0.5f && (exclude.x != (_width - 1) || exclude.x != 0)) {
+        x = (dis(gen) > 0.5f) ? (_width - 1) : 0;
+        z = static_cast<int>(dis(gen) * (_depth - 1));
+    }
+    else {
+        x = static_cast<int>(dis(gen) * (_width - 1));
+        z = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+    }
+
+    return glm::ivec3(x, yRange.x + static_cast<int>(dis(gen) * (yRange.y - yRange.x)), z);
 }
 
 int BlockManager::GetIndex(glm::ivec3 point) {
