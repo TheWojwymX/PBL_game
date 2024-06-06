@@ -444,7 +444,7 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     // Apply the mask using _entranceMask
     ApplyMask(glm::ivec3(centerX-3, centerY, centerZ-3), _entranceMask, _entranceMaskDimensions);
 
-    ApplyMask(glm::ivec3(centerX - 3, centerY-7, centerZ - 3), _tutorialCaveMask, _tutorialCaveMaskDimensions);
+    ApplyMask(glm::ivec3(centerX - 11, centerY-5, centerZ - 12), _tutorialCaveMask, _tutorialCaveMaskDimensions);
 }
 
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
@@ -696,6 +696,13 @@ std::tuple<bool, BlockData*, glm::vec3> BlockManager::CheckSimpleEntityCollision
     return std::make_tuple(false, nullptr, glm::vec3(0.0f));
 }
 
+glm::vec3 BlockManager::GetCaveFloor(glm::vec3 entityPos)
+{
+    glm::ivec3 roundedPos = glm::round(entityPos);
+
+    return glm::vec3();
+}
+
 
 void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
     glm::ivec3 gridPosition = glm::round(entityPos);
@@ -734,7 +741,7 @@ void BlockManager::ChangeType(BlockData& blockData, BlockType type)
     }
 }
 
-void BlockManager::ApplyMask(glm::ivec3 startPos, int* maskArray, glm::ivec3 maskDimensions) {
+void BlockManager::ApplyMask(glm::ivec3 startPos, char* maskArray, glm::ivec3 maskDimensions) {
     int maskSizeX = maskDimensions.x;
     int maskSizeY = maskDimensions.y;
     int maskSizeZ = maskDimensions.z;
