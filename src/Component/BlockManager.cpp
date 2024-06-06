@@ -87,6 +87,7 @@ void BlockManager::Initiate() {
 
 void BlockManager::Init() {
     GenerateMap(0.5f,7);
+    ApplyMasks();
     GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
     GenerateSphereVectors(31);
     GenerateResources();
@@ -435,16 +436,6 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     for (int i = 0; i < numIterations; ++i) {
         IterateCaveGeneration();
     }
-
-    // Calculate the center of the top layer
-    int centerX = _width / 2;
-    int centerY = _height - 1; // assuming the top layer is the highest y value
-    int centerZ = _depth / 2;
-
-    // Apply the mask using _entranceMask
-    ApplyMask(glm::ivec3(centerX-3, centerY, centerZ-3), _entranceMask, _entranceMaskDimensions);
-
-    ApplyMask(glm::ivec3(centerX - 11, centerY-5, centerZ - 12), _tutorialCaveMask, _tutorialCaveMaskDimensions);
 }
 
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
@@ -696,12 +687,32 @@ std::tuple<bool, BlockData*, glm::vec3> BlockManager::CheckSimpleEntityCollision
     return std::make_tuple(false, nullptr, glm::vec3(0.0f));
 }
 
-glm::vec3 BlockManager::GetCaveFloor(glm::vec3 entityPos)
-{
+float BlockManager::GetCaveFloor(glm::vec3 entityPos, int maxDistance) {
     glm::ivec3 roundedPos = glm::round(entityPos);
+    int startY = roundedPos.y;
+    int distance = 0;
 
-    return glm::vec3();
+    do {
+        if (InBounds(roundedPos))
+        {
+            int index = GetIndex(roundedPos);
+
+            // Check if the block at the index is solid
+            if (_blocksData[index].IsSolid()) {
+                return roundedPos.y + 1.0f;
+            }
+        }
+
+        // Move down to the next block
+        roundedPos.y -= 1;
+        distance++;
+    } while ( distance <= maxDistance);
+
+    // Return entityPos.y - maxDistance if no solid block is found within the maxDistance
+    return glm::round(entityPos.y) - maxDistance + 1.0f;
 }
+
+
 
 
 void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
@@ -879,10 +890,32 @@ void BlockManager::UpdateVisibilityNearResources()
 
 int BlockManager::DestroyBlock(BlockData& blockData)
 {
+    switch (blockData.GetBlockType())
+    {
+        case BlockType::PLASTIC:
+            GAMEMANAGER.AddPlastic(1);
+        case BlockType::METAL:
+            GAMEMANAGER.AddMetal(1);
+        default:
+            break;
+    }
     blockData.SetBlockType(BlockType::EMPTY);
     UpdateNeighbourVisibility(blockData);
     blockData.UnstuckGlowsticks();
     return GetChunkIndex(blockData.GetChunkID(_chunkSize));
+}
+
+void BlockManager::ApplyMasks()
+{
+    // Calculate the center of the top layer
+    int centerX = _width / 2;
+    int centerY = _height - 1; // assuming the top layer is the highest y value
+    int centerZ = _depth / 2;
+
+    // Apply the mask using _entranceMask
+    ApplyMask(glm::ivec3(centerX - 3, centerY, centerZ - 3), _entranceMask, _entranceMaskDimensions);
+
+    ApplyMask(glm::ivec3(centerX - 11, centerY - 5, centerZ - 12), _tutorialCaveMask, _tutorialCaveMaskDimensions);
 }
 
 
