@@ -50,6 +50,8 @@ uniform sampler2D shadowMap;
 
 uniform vec3 viewPos;
 uniform vec3 lightPos;
+uniform vec3 glowstickColor;
+uniform bool isGlowstick = false;
 
 uniform DirLight dirLight;
 
@@ -65,7 +67,12 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 spotLightColor = vec3(0.0);
-    
+
+    vec4 texColor = texture(texture_diffuse1, TexCoords);
+
+    float threshold = 0.1;
+    bool isBlack = all(lessThan(texColor.rgb, vec3(threshold)));
+
     //directional light
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
 
@@ -80,7 +87,11 @@ void main()
 
     vec3 finalColor = (dirLightColor + spotLightColor);
 
-    FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
+    if(isBlack && glowstickColor.y >= -2.0 && glowstickColor.y <= 2.0 && glowstickColor.x >= -2.0 && glowstickColor.x <= 2.0 && glowstickColor.z >= -2.0 && glowstickColor.z <= 2.0){
+    texColor.rgb = glowstickColor;
+    }
+
+    FragColor = vec4(finalColor, 1.0) * texColor;
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)

@@ -131,7 +131,6 @@ void PlayerController::HandleMovement() {
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {
         _ownerNode->GetComponent<PlayerAudioController>()->PlayJumpSound();
-        _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = _ownerTransform->GetPosition();
         _velocity.y = sqrtf(_jumpHeight * -2.0f * _gravity);
         _jump = true;
     }
@@ -140,6 +139,7 @@ void PlayerController::HandleMovement() {
     if (_isUsingJetpack && _jetpackFuel > 0) {
         _velocity.y += _jetpackStrength * TIME.GetDeltaTime();
         _jetpackFuel -= _jetpackFuelConsumption * TIME.GetDeltaTime();
+        _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f,_blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
         _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
         if (_jetpackFuel < 0) _jetpackFuel = 0;
     } else if (!_isUsingJetpack && _jetpackFuel < _maxJetpackFuel) {

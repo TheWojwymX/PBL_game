@@ -5,6 +5,7 @@ struct Particle {
     vec4 Velocity;
     float Life;
     float Scale;
+    float Ground;
 };
 
 layout (std430, binding = 0) buffer Particles {
@@ -72,6 +73,7 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     particle.Position.w = 0.0f;
     particle.Life = particleLife;
     particle.Scale = particleScale;
+    particle.Ground = jumpOff.y;
 
     vec3 initialVelocity;
 
@@ -148,12 +150,12 @@ void main() {
                 p.Position.y = groundLevel + (groundLevel - p.Position.y);
                 }
             }
-            else if(p.Position.y <= jumpOff.y + 0.2 && isJetpack){
+            else if(p.Position.y <= p.Ground - 0.5 + 0.2 && isJetpack){
                 initGravity.y = 0.0;
                 p.Velocity.y = 0.0;
-                if(jumpOff.y <= p.Position.y)
+                if(p.Ground <= p.Position.y)
                 {
-                p.Position.y = jumpOff.y + 0.2;
+                p.Position.y = p.Ground - 0.5 + 0.2;
                 }
                 p.Velocity.x = p.Velocity.x * 0.8;
                 p.Velocity.z = p.Velocity.z * 0.8;

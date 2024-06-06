@@ -91,10 +91,10 @@ void LightsManager::AddGlowstick() {
     std::string glowstickNodeName = "Glowstick" + to_string(glowstickCount);
     shared_ptr<Node> glowstickNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), glowstickNodeName);
     glowstickNode->GetTransform()->SetPosition(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
-    glowstickNode->GetTransform()->SetScale(glm::vec3(0.05, 0.05, 0.05));
+    glowstickNode->GetTransform()->SetScale(glm::vec3(1.4, 1.4, 1.4));
 
     auto glowstickMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    glowstickMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("ShovelModel");
+    glowstickMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("glowstickModel");
     glowstickMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     glowstickMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     glowstickMeshRenderer->Initiate();
@@ -113,6 +113,8 @@ void LightsManager::AddGlowstick() {
     } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.5f);
     glowstickColors.push_back(glowstickColor);
 
+    modelShader->use();
+    modelShader->setVec3("glowstickColor", glowstickColor);
 }
 
 void LightsManager::UpdateGlowsticks() {

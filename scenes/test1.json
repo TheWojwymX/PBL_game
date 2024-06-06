@@ -242,6 +242,10 @@
         {
           "ModelName": "RangeIndicatorVisual",
           "Path": "../../res/Models/RangeIndicators/okragly.obj"
+        },
+        {
+          "ModelName": "glowstickModel",
+          "Path": "../../res/Models/Glowstick/palka.obj"
         }
       ],
       "Shaders": [

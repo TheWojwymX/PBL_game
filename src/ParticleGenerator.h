@@ -16,10 +16,11 @@ struct Particle {
     glm::vec4 Velocity;
     float Life;
     float Scale;
-    float pad[2];
+    float Ground;
+    float pad;
 
     Particle()
-            : Position(0.0f), Velocity(0.0f), Life(0.0f), Scale(0.5f), pad{0.0f,0.0f} {}
+            : Position(0.0f), Velocity(0.0f), Life(0.0f), Scale(0.5f), Ground(0.0f), pad(0.0f) {}
 };
 
 class ParticleGenerator : public Component {
