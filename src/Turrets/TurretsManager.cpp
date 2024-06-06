@@ -92,11 +92,11 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
 
 void TurretsManager::SpawnTurret() {
 
-    if (GAMEMANAGER._money < _turretCost) {
+    if (GAMEMANAGER._metal < _turretCost) {
         std::cout << "Brak pieniedzy na dzialko" << std::endl;
         return;
     } else {
-        GAMEMANAGER._money -= _turretCost;
+        GAMEMANAGER._metal -= _turretCost;
     }
 
     //Flare spawning
