@@ -101,6 +101,9 @@ private:
     void UpdateVisibilityNearResources();
     int DestroyBlock(BlockData& blockData);
     void ApplyMasks();
+    void GenerateTunnel(std::vector<glm::ivec3> points, int size);
+    void GenerateTunnels();
+    glm::ivec3 QuadraticBezier(const glm::ivec3& p0, const glm::ivec3& p1, const glm::ivec3& p2, float t);
 
 
     int GetIndex(glm::ivec3 point);
@@ -113,6 +116,7 @@ private:
     bool InBounds(glm::ivec3 position, int margin);
     bool ChunkInBounds(glm::ivec3 position);
     bool IsEdgeBlock(int x, int y, int z);
+    bool IsEdgeBlock(glm::ivec3 pos);
     bool IsEdgeBlock(BlockData& blockData);
     bool IsPointTooClose(const std::vector<glm::vec3>& points, const glm::vec3& candidate, float minDist);
     BlockData* GetBlock(glm::ivec3 position);

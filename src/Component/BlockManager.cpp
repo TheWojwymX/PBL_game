@@ -86,11 +86,11 @@ void BlockManager::Initiate() {
 }
 
 void BlockManager::Init() {
-    GenerateMap(0.5f,7);
-    ApplyMasks();
-    GenerateTopLayer(glm::ivec2(50,50),glm::ivec2(500,500),glm::ivec2(50,50));
     GenerateSphereVectors(31);
+    GenerateMap(0.5f,7);
     GenerateResources();
+    ApplyMasks();
+    GenerateTopLayer(glm::ivec2(50, 50), glm::ivec2(500, 500), glm::ivec2(50, 50));
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateRenderedChunks();
@@ -436,6 +436,8 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     for (int i = 0; i < numIterations; ++i) {
         IterateCaveGeneration();
     }
+
+    GenerateTunnels();
 }
 
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
@@ -918,6 +920,149 @@ void BlockManager::ApplyMasks()
     ApplyMask(glm::ivec3(centerX - 11, centerY - 5, centerZ - 12), _tutorialCaveMask, _tutorialCaveMaskDimensions);
 }
 
+void BlockManager::GenerateTunnel(std::vector<glm::ivec3> points, int size)
+{
+    // Control points for the curve
+    glm::ivec3 start = points.front();
+    glm::ivec3 end = points.back();
+    glm::ivec3 control = (points.size() > 2) ? points[1] : glm::ivec3((start.x + end.x) / 2, (start.y + end.y) / 2, (start.z + end.z) / 2 + 20);
+
+    int numSteps = 100;
+
+    std::vector<glm::ivec3> pathPoints;
+    for (int i = 0; i <= numSteps; ++i) {
+        float t = static_cast<float>(i) / numSteps;
+        pathPoints.push_back(QuadraticBezier(start, control, end, t));
+    }
+
+    for (const glm::ivec3& currentPos : pathPoints) {
+        for (const glm::ivec3& offset : _sphereVectors[size]) {
+            glm::ivec3 pos = currentPos + offset;
+            if (InBounds(pos) && !IsEdgeBlock(pos)) {
+                int index = GetIndex(pos);
+                ChangeType(_blocksData[index], BlockType::EMPTY);
+            }
+        }
+    }
+}
+
+void BlockManager::GenerateTunnels() {
+    // Random number generator setup
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+    int startXLayer1 = 0;
+    int startZLayer1 = 0;
+
+    // Determine start point for the first tunnel (from layer 1 to layer 2)
+    if ((dis(gen) > 0.5f)) {
+        startXLayer1 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
+        startZLayer1 = static_cast<int>(dis(gen) * (_depth - 1));
+    }
+    else {
+        startXLayer1 = static_cast<int>(dis(gen) * (_width - 1));
+        startZLayer1 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+    }
+
+    glm::ivec3 startLayer1 = glm::ivec3(startXLayer1, 200 + static_cast<int>(dis(gen) * 50), startZLayer1);
+    //std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
+
+    int endXLayer2 = 0;
+    int endZLayer2 = 0;
+
+    // Determine start point for the first tunnel (from layer 1 to layer 2)
+    if ((dis(gen) > 0.5f)) {
+        endXLayer2 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
+        endZLayer2 = static_cast<int>(dis(gen) * (_depth - 1));
+    }
+    else {
+        endXLayer2 = static_cast<int>(dis(gen) * (_width - 1));
+        endZLayer2 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+    }
+
+    glm::ivec3 endLayer2 = glm::ivec3(endXLayer2, 150 + static_cast<int>(dis(gen) * 100), endZLayer2);
+    //std::cout << "EndPoint for tunnel 1: " << endLayer2.x << ", " << endLayer2.y << ", " << endLayer2.z << std::endl;
+
+    // Generate intermediate points within the map for the first tunnel
+    std::vector<glm::ivec3> pointsTunnel1;
+    pointsTunnel1.push_back(startLayer1);
+    int numPointsTunnel1 = 1 + static_cast<int>(dis(gen) * 2); // Random number of intermediate points (1 to 2)
+    for (int i = 0; i < numPointsTunnel1; ++i) {
+        int interX = static_cast<int>(dis(gen) * _width);
+        int interZ = static_cast<int>(dis(gen) * (_depth - 1));
+        int interY = startLayer1.y + 20 + static_cast<int>(dis(gen) * (endLayer2.y - startLayer1.y - 40));
+        glm::ivec3 point = glm::ivec3(interX, interY, interZ);
+        pointsTunnel1.push_back(point);
+        //std::cout << "Point for tunnel 1: " << point.x << ", " << point.y << ", " << point.z << std::endl;
+    }
+    pointsTunnel1.push_back(endLayer2);
+
+    // Generate the first tunnel
+    GenerateTunnel(pointsTunnel1, 6);
+
+    int startXLayer2 = 0;
+    int startZLayer2 = 0;
+
+    // Determine start point for the first tunnel (from layer 1 to layer 2)
+    if ((dis(gen) > 0.5f)) {
+        startXLayer2 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
+        startZLayer2 = static_cast<int>(dis(gen) * (_depth - 1));
+    }
+    else {
+        startXLayer2 = static_cast<int>(dis(gen) * (_width - 1));
+        startZLayer2 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+    }
+
+    glm::ivec3 startLayer2 = glm::ivec3(startXLayer2, 100 + static_cast<int>(dis(gen) * 50), startZLayer2);
+    //std::cout << "StartPoint for tunnel 2: " << startLayer2.x << ", " << startLayer2.y << ", " << startLayer2.z << std::endl;
+
+    int endXLayer3 = 0;
+    int endZLayer3 = 0;
+
+    // Determine start point for the first tunnel (from layer 1 to layer 2)
+    if ((dis(gen) > 0.5f)) {
+        endXLayer3 = (dis(gen) > 0.5f) ? (_width - 1) : 0;
+        endZLayer3 = static_cast<int>(dis(gen) * (_depth - 1));
+    }
+    else {
+        endXLayer3 = static_cast<int>(dis(gen) * (_width - 1));
+        endZLayer3 = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+    }
+
+    glm::ivec3 endLayer3 = glm::ivec3(endXLayer3, 50 + static_cast<int>(dis(gen) * 101), endZLayer3);
+    //std::cout << "EndPoint for tunnel 2: " << endLayer3.x << ", " << endLayer3.y << ", " << endLayer3.z << std::endl;
+
+    // Generate intermediate points within the map for the second tunnel
+    std::vector<glm::ivec3> pointsTunnel2;
+    pointsTunnel2.push_back(startLayer2);
+    int numPointsTunnel2 = 1 + static_cast<int>(dis(gen) * 2); // Random number of intermediate points (1 to 3)
+    for (int i = 0; i < numPointsTunnel2; ++i) {
+        int interX = static_cast<int>(dis(gen) * _width);
+        int interZ = static_cast<int>(dis(gen) * (_depth - 1));
+        int interY = startLayer2.y + 20 + static_cast<int>(dis(gen) * (endLayer3.y - startLayer2.y - 40));
+        glm::ivec3 point = glm::ivec3(interX, interY, interZ);
+        pointsTunnel2.push_back(point);
+        //std::cout << "Point for tunnel 2: " << point.x << ", " << point.y << ", " << point.z << std::endl;
+    }
+    pointsTunnel2.push_back(endLayer3);
+
+    // Generate the second tunnel
+    GenerateTunnel(pointsTunnel2, 8);
+}
+
+
+glm::ivec3 BlockManager::QuadraticBezier(const glm::ivec3& p0, const glm::ivec3& p1, const glm::ivec3& p2, float t) {
+    float u = 1.0f - t;
+    float tt = t * t;
+    float uu = u * u;
+
+    glm::vec3 p = uu * glm::vec3(p0); // (1-t)^2 * P0
+    p += 2 * u * t * glm::vec3(p1);   // 2(1-t)t * P1
+    p += tt * glm::vec3(p2);          // t^2 * P2
+
+    return glm::ivec3(glm::round(p));
+}
 
 int BlockManager::GetIndex(glm::ivec3 point) {
     return point.x + (_width * (point.z + _depth * point.y));
@@ -968,6 +1113,11 @@ bool BlockManager::ChunkInBounds(glm::ivec3 position) {
 bool BlockManager::IsEdgeBlock(int x, int y, int z)
 {
     return (x == 0 || x == _width - 1 || y == 0 || y == _height - 1 || z == 0 || z == _depth - 1);
+}
+
+bool BlockManager::IsEdgeBlock(glm::ivec3 pos)
+{
+    return (pos.x == 0 || pos.x == _width - 1 || pos.y == 0 || pos.y == _height - 1 || pos.z == 0 || pos.z == _depth - 1);
 }
 
 bool BlockManager::IsEdgeBlock(BlockData& blockData)
