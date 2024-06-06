@@ -18,7 +18,7 @@ void EnemiesManager::Update() {
         std::uniform_real_distribution<float> dis(0.5f, 1.0f);
         float scale = dis(gen);
 
-        SpawnEnemy(2, glm::vec3(scale), 0);
+        SpawnEnemy(2, glm::vec3(scale), 0, ANT);
     }
 
     for(int i = 0; i < _enemies.size(); i++)
@@ -52,36 +52,35 @@ void EnemiesManager::Init() {
                 glm::vec3(_spawnersPositions[i][0], 0, _spawnersPositions[i][1]));
     }
 
-    //Here you can modify rounds
-    _roundsInfo[0] = {{0, 3}}; // Spawner 0 - spawn 3 enemies
-    _roundsInfo[1] = {{2, 3}}; // Spawner 1 - spawn 3 enemies
-    _roundsInfo[2] = {{2, 2}, {1, 2}}; //Spawner 2 - spawn 2 enemies, Spawner 1 - spawn 2 enemies
-    _roundsInfo[3] = {{3, 3}, {2, 2}}; //Spawner 3 - spawn 3 enemies, Spawner 2 - spawn 2 enemies
+    _roundsInfo[0] = {{0, 3, ANT}}; // Spawner 0 - spawn 3 ANT enemies
+    _roundsInfo[1] = {{2, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
+    _roundsInfo[2] = {{2, 2, ANT}, {1, 2, ANT}}; // Spawner 2 - spawn 2 ANT enemies, Spawner 1 - spawn 2 ANT enemies
+    _roundsInfo[3] = {{3, 3, ANT}, {2, 2, ANT}}; // Spawner 3 - spawn 3 ANT enemies, Spawner 2 - spawn 2 ANT enemies
 
-    //TEMPORARY
-    _roundsInfo[4] = {{0, 3}}; // Spawner 0 - spawn 3 enemies
-    _roundsInfo[5] = {{1, 3}}; // Spawner 1 - spawn 3 enemies
-    _roundsInfo[6] = {{2, 2}, {1, 2}}; //Spawner 2 - spawn 2 enemies, Spawner 1 - spawn 2 enemies
-    _roundsInfo[7] = {{3, 3}, {2, 2}}; //Spawner 3 - spawn 3 enemies, Spawner 2 - spawn 2 enemies
-    //
+    // TEMPORARY
+    _roundsInfo[4] = {{0, 3, ANT}}; // Spawner 0 - spawn 3 ANT enemies
+    _roundsInfo[5] = {{1, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
+    _roundsInfo[6] = {{2, 2, ANT}, {1, 2, ANT}}; // Spawner 2 - spawn 2 ANT enemies, Spawner 1 - spawn 2 ANT enemies
+    _roundsInfo[7] = {{3, 3, ANT}, {2, 2, ANT}}; // Spawner 3 - spawn 3 ANT enemies, Spawner 2 - spawn 2 ANT enemies
 
 }
 
-void EnemiesManager::SpawnEnemiesForRound(int roundNumber) {
-
+void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
+{
     if (_roundsInfo.find(roundNumber) != _roundsInfo.end()) {
         const auto &spawns = _roundsInfo[roundNumber];
         for (const auto &spawn : spawns) {
-            for (int i = 0; i < spawn.second; ++i) {
+            int spawnerIndex = std::get<0>(spawn);
+            int enemyCount = std::get<1>(spawn);
+            enemyType type = std::get<2>(spawn);
 
-                const auto &spawns = _roundsInfo[roundNumber];
-
+            for (int i = 0; i < enemyCount; ++i) {
                 std::random_device rd;
                 std::mt19937 gen(rd());
                 std::uniform_real_distribution<float> dis(0.5f, 1.0f);
                 float scale = dis(gen);
 
-                SpawnEnemy(2, glm::vec3(scale), spawn.first); // Example: spawn.first is spawnerIndex, spawn.second is enemyCount
+                SpawnEnemy(2, glm::vec3(scale), spawnerIndex, type);
             }
         }
     }
@@ -150,11 +149,13 @@ void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
     }
 }
 
-void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex) {
+void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, enemyType type)
+{
 
-    std::cout << "Ilosc mrowek to: " << _enemies.size() << std::endl;
+//    std::cout << "Ilosc mrowek to: " << _enemies.size() << std::endl;
 
-    if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size()) {
+    if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size())
+    {
         std::string nameOfEnemy = "Enemy" + std::to_string(_enemies.size() + 1);
         std::string particleGeneratorNode = "Particle" +  to_string(_enemies.size() + 1);
 
@@ -176,7 +177,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
         newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
         newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID-1);
-        newAnimation->InitComponent(1);
+        newAnimation->InitComponent((int)(type + 1));
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
 
         auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
@@ -199,6 +200,9 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
         newEnemyComponent->_size = distanceToAvoid;
+        newEnemyComponent->_enemyType = type;
+        newEnemyComponent->setUp();
+
         _enemies.push_back(newEnemyComponent);
     }
 }
@@ -245,17 +249,21 @@ void EnemiesManager::ChooseModelBasedOnDistance() {
     }
 }
 
-void EnemiesManager::SetSymbolsForWave() {
-    //First hide all the symbols
+void EnemiesManager::SetSymbolsForWave()
+{
+    // First hide all the symbols
     for (int i = 0; i < 4; i++) {
         NODESMANAGER.getNodeByName("waveSymbol" + to_string(i + 1))->GetTransform()->SetPosition(
                 glm::vec3(_spawnersPositions[i][0], 0, _spawnersPositions[i][1]));
     }
 
-    if (_roundsInfo.find(GAMEMANAGER.roundNumber) != _roundsInfo.end()) {
+    // Check if the current round number exists in the _roundsInfo
+    if (_roundsInfo.find(GAMEMANAGER.roundNumber) != _roundsInfo.end())
+    {
         auto &roundInfo = _roundsInfo[GAMEMANAGER.roundNumber];
-        for (const auto &spawnerInfo: roundInfo) {
-            int spawnerIndex = spawnerInfo.first;
+        for (const auto &spawnerInfo : roundInfo) {
+            int spawnerIndex = std::get<0>(spawnerInfo);
+            // Show the symbol for this spawner
             NODESMANAGER.getNodeByName(
                     "waveSymbol" + std::to_string(spawnerIndex + 1))->GetTransform()->SetPosition(
                     glm::vec3(_spawnersPositions[spawnerIndex][0], 320, _spawnersPositions[spawnerIndex][1]));

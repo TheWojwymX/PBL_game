@@ -63,7 +63,8 @@ void Enemy::Die(){
     }
 }
 
-void Enemy::TakeDamage(int amount){
+void Enemy::TakeDamage(int amount)
+{
     _hp -= amount;
 
     std::regex pattern("^Particle\\d+$");
@@ -125,5 +126,23 @@ void Enemy::EnemyAI()
         AttackDome();
         WalkToDestination();
         Component::Update();
+    }
+}
+
+void Enemy::setUp()
+{
+    switch (_enemyType) {
+        case ANT:
+            _walkingSpeed = 8;
+            _hp = 100;
+            _damage = 5;
+            break;
+
+        case BEETLE:
+            _walkingSpeed = 4;
+            _hp = 200;
+            _armored = true;
+            _damage = 10;
+            break;
     }
 }

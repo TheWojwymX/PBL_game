@@ -10,52 +10,40 @@
 #include "Managers/GameManager.h"
 #include <regex>
 
+enum enemyType { ANT, BEETLE };
+
 class Enemy : public Component, public std::enable_shared_from_this<Enemy> {
 
 public:
-
-    Enemy();
-
-    nlohmann::json Serialize() override;
-
-    void Deserialize(const nlohmann::json &jsonData) override;
+    bool _isAvoiding = false;
+    bool _isAtWalls = false;
+    bool _shouldStay = false;
+    bool _armored = false;
 
     glm::vec3 _destinationVector;
-
-    float _distanceToStop = 0.1;
-
-    void WalkToDestination(glm::vec3 *destination = nullptr);
-
+    enemyType _enemyType;
     int _walkingSpeed = 5;
-
-    bool _isAvoiding = false;
-
-    float _slalomTime = 0.0f;
-
-    bool _isAtWalls = false;
-
-    bool _shouldStay = false;
-
     int _hp = 100;
-
     int _damage = 5;
 
+    float _distanceToStop = 0.1;
+    float _slalomTime = 0.0f;
     float _attackFrequency = 3;
-
     float _attackTimer = _attackFrequency;
-
     float _size = 2;
-
     float _slalomAmplitude = 0.01;
     float _slalomFrequency = 1.0f;
 
+    Enemy();
+    nlohmann::json Serialize() override;
+    void Deserialize(const nlohmann::json &jsonData) override;
+
+    void WalkToDestination(glm::vec3 *destination = nullptr);
     void TakeDamage(int amount);
-
     void Die();
-
     void AttackDome();
-
     void EnemyAI();
+    void setUp();
 };
 
 #endif //SANDBOX_ENEMY_H

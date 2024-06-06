@@ -50,13 +50,13 @@ public:
         glm::vec2(2.0, 50.0)
     };
 
-    std::unordered_map<int, std::vector<std::pair<int, int>>> _roundsInfo;
+    std::unordered_map<int, std::vector<std::tuple<int, int, enemyType>>> _roundsInfo;
 
     void SpawnEnemiesForRound(int roundNumber);
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
 
-    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex);
+    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, enemyType type);
 
     void ChooseModelBasedOnDistance();
 
