@@ -39,8 +39,10 @@ private:
 
     std::shared_ptr<Shader> instancedSandShader;
     std::shared_ptr<Shader> instancedMetalShader;
+    std::shared_ptr<Shader> instancedPlasticShader;
     std::shared_ptr<Shader> modelShader;
     std::shared_ptr<Shader> shovelShader;
+    std::shared_ptr<Shader> glowstickShader;
 
     glm::vec3 flashlightCurrentPosition = glm::vec3(0.0f);
     glm::vec3 flashlightCurrentDirection = glm::vec3(0.0f);

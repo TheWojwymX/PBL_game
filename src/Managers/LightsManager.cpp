@@ -17,8 +17,10 @@ void LightsManager::UpdateLights() {
 void LightsManager::InitLights() {
     instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
     instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
+    instancedPlasticShader = RESOURCEMANAGER.GetShaderByName("instancedPlasticShader");
     modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
     shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
+    glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
 
     //Flashlight Properties
     isSpotActive = true;
@@ -38,6 +40,17 @@ void LightsManager::UpdateShaders(){
     modelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     modelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
 
+    glowstickShader->use();
+    glowstickShader->setBool("spotLights[0].isActive", isSpotActive);
+    glowstickShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
+    glowstickShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
+    glowstickShader->setFloat("spotLights[0].constant", flashlightConstant);
+    glowstickShader->setFloat("spotLights[0].linear", flashlightLinear);
+    glowstickShader->setFloat("spotLights[0].quadratic", flashlightQuadratic);
+    glowstickShader->setVec3("spotLights[0].color", flashlightColor);
+    glowstickShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
+    glowstickShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
+
     instancedSandShader->use();
     instancedSandShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedSandShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
@@ -49,20 +62,6 @@ void LightsManager::UpdateShaders(){
     instancedSandShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     instancedSandShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
 
-    for (int i = 0; i < maxGlowsticks; i++) {
-        string name = "pointLights[" + to_string(i) + "]";
-        if(isSpotActive) {
-            instancedSandShader->setFloat(name + ".constant", glowstickConstant);
-            instancedSandShader->setFloat(name + ".linear", glowstickLinear);
-            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
-        }
-        else{
-            instancedSandShader->setFloat(name + ".constant", glowstickConstantNoFlash);
-            instancedSandShader->setFloat(name + ".linear", glowstickLinearNoFlash);
-            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
-        }
-    }
-
     instancedMetalShader->use();
     instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedMetalShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
@@ -73,6 +72,53 @@ void LightsManager::UpdateShaders(){
     instancedMetalShader->setVec3("spotLights[0].color", flashlightColor);
     instancedMetalShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     instancedMetalShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
+
+    instancedPlasticShader->use();
+    instancedPlasticShader->setBool("spotLights[0].isActive", isSpotActive);
+    instancedPlasticShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
+    instancedPlasticShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
+    instancedPlasticShader->setFloat("spotLights[0].constant", flashlightConstant);
+    instancedPlasticShader->setFloat("spotLights[0].linear", flashlightLinear);
+    instancedPlasticShader->setFloat("spotLights[0].quadratic", flashlightQuadratic);
+    instancedPlasticShader->setVec3("spotLights[0].color", flashlightColor);
+    instancedPlasticShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
+    instancedPlasticShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
+
+    for (int i = 0; i < maxGlowsticks; i++) {
+        string name = "pointLights[" + to_string(i) + "]";
+        if(isSpotActive) {
+            instancedSandShader->use();
+            instancedSandShader->setFloat(name + ".constant", glowstickConstant);
+            instancedSandShader->setFloat(name + ".linear", glowstickLinear);
+            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
+
+            instancedMetalShader->use();
+            instancedMetalShader->setFloat(name + ".constant", glowstickConstant);
+            instancedMetalShader->setFloat(name + ".linear", glowstickLinear);
+            instancedMetalShader->setFloat(name + ".quadratic", glowstickQuadratic);
+
+            instancedPlasticShader->use();
+            instancedPlasticShader->setFloat(name + ".constant", glowstickConstant);
+            instancedPlasticShader->setFloat(name + ".linear", glowstickLinear);
+            instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadratic);
+        }
+        else{
+            instancedSandShader->use();
+            instancedSandShader->setFloat(name + ".constant", glowstickConstantNoFlash);
+            instancedSandShader->setFloat(name + ".linear", glowstickLinearNoFlash);
+            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
+
+            instancedMetalShader->use();
+            instancedMetalShader->setFloat(name + ".constant", glowstickConstantNoFlash);
+            instancedMetalShader->setFloat(name + ".linear", glowstickLinearNoFlash);
+            instancedMetalShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
+
+            instancedPlasticShader->use();
+            instancedPlasticShader->setFloat(name + ".constant", glowstickConstantNoFlash);
+            instancedPlasticShader->setFloat(name + ".linear", glowstickLinearNoFlash);
+            instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
+        }
+    }
 
     shovelShader->use();
     shovelShader->setBool("spotLights[0].isActive", isSpotActive);
@@ -95,7 +141,7 @@ void LightsManager::AddGlowstick() {
 
     auto glowstickMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
     glowstickMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("glowstickModel");
-    glowstickMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    glowstickMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
     glowstickMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     glowstickMeshRenderer->Initiate();
     glowstickNode->AddComponent(glowstickMeshRenderer);
@@ -113,8 +159,8 @@ void LightsManager::AddGlowstick() {
     } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.5f);
     glowstickColors.push_back(glowstickColor);
 
-    modelShader->use();
-    modelShader->setVec3("glowstickColor", glowstickColor);
+    glowstickShader->use();
+    glowstickShader->setVec3("glowstickColor", glowstickColor);
 }
 
 void LightsManager::UpdateGlowsticks() {
@@ -126,7 +172,7 @@ void LightsManager::UpdateGlowsticks() {
         auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
         glm::vec3 glowstickPosition = thisGlowstick->GetTransform()->GetPosition();
 
-        if (glm::distance(glowstickPosition, camPosition) < 10.0f || thisGlowstick->GetComponent<MeshRenderer>()->isInFrustum) {
+        if (glm::distance(glowstickPosition, camPosition) < 40.0f) {
             visibleGlowsticks.push_back(glowstickPosition);
             visibleGlowstickColors.push_back(glowstickColors[i]);
         }
@@ -152,12 +198,29 @@ void LightsManager::UpdateGlowsticks() {
         instancedSandShader->setBool(name + ".isActive", true);
         instancedSandShader->setVec3(name + ".position", visibleGlowsticks[i]);
         instancedSandShader->setVec3(name + ".color", visibleGlowstickColors[i]);
+
+        instancedMetalShader->use();
+        instancedMetalShader->setBool(name + ".isActive", true);
+        instancedMetalShader->setVec3(name + ".position", visibleGlowsticks[i]);
+        instancedMetalShader->setVec3(name + ".color", visibleGlowstickColors[i]);
+
+        instancedPlasticShader->use();
+        instancedPlasticShader->setBool(name + ".isActive", true);
+        instancedPlasticShader->setVec3(name + ".position", visibleGlowsticks[i]);
+        instancedPlasticShader->setVec3(name + ".color", visibleGlowstickColors[i]);
     }
 
     if (glowstickCount > visibleGlowsticks.size()) {
         for (int i = visibleGlowsticks.size(); i < glowstickCount; i++) {
             string name = "pointLights[" + to_string(i) + "]";
+            instancedSandShader->use();
             instancedSandShader->setBool(name + ".isActive", false);
+
+            instancedMetalShader->use();
+            instancedMetalShader->setBool(name + ".isActive", false);
+
+            instancedPlasticShader->use();
+            instancedPlasticShader->setBool(name + ".isActive", false);
         }
     }
 

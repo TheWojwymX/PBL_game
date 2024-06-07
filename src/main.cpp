@@ -213,6 +213,7 @@ int main(int, char**)
     auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
     auto shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
     auto blueprintShader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
+    auto glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
 
     PAGEMANAGER.Init();
 
@@ -362,6 +363,17 @@ int main(int, char**)
         modelShader->setMat4("view", view);
         modelShader->setVec3("lightPos", lightPos);
         modelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+
+        glowstickShader->use();
+        glowstickShader->setVec3("dirLight.direction", dirDirection);
+        glowstickShader->setVec3("dirLight.color", dirColor);
+        glowstickShader->setInt("dirLight.isActive", dirActive);
+
+        glowstickShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+        glowstickShader->setMat4("projection", projection);
+        glowstickShader->setMat4("view", view);
+        glowstickShader->setVec3("lightPos", lightPos);
+        glowstickShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
         outlineShader->use();
         outlineShader->setVec3("dirLight.direction", dirDirection);

@@ -343,6 +343,11 @@
           "ShaderName": "blueprintShader",
           "fragmentPath": "../../res/blueprintShader.fs",
           "vertexPath": "../../res/blueprintShader.vs"
+        },
+        {
+          "ShaderName": "glowstickShader",
+          "fragmentPath": "../../res/glowstickShader.fs",
+          "vertexPath": "../../res/glowstickShader.vs"
         }
       ],
         "cShaders": [

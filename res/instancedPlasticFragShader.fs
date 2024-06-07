@@ -3,9 +3,10 @@ out vec4 FragColor;
 
 // Define constants for lighting calculations
 #define AMBIENT_STRENGTH 0.25
-#define SPECULAR_STRENGTH 0.5
-#define SHININESS 32
+#define SPECULAR_STRENGTH 99
+#define SHININESS 220
 #define NR_SPOT_LIGHTS 1
+#define NR_POINT_LIGHTS 10
 
 // Define structures for different types of lights
 struct DirLight {
@@ -20,7 +21,7 @@ struct PointLight {
     float linear;
     float quadratic;
     vec3 color;
-    int isActive;
+    bool isActive;
 };
 
 struct SpotLight {
@@ -50,13 +51,15 @@ uniform vec3 viewPos;
 uniform vec3 lightPos;
 uniform DirLight dirLight;
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
+uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 // Function prototypes for lighting calculations
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity);
+float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float pointLightIntensity);
 float CalcSpotLightIntensity(SpotLight spotLight, vec3 fragPos);
+float CalcPointLightIntensity(PointLight pointLight, vec3 fragPos);
 
 void main()
 {
@@ -64,7 +67,9 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 spotLightColor = vec3(0.0);
+    vec3 pointLightColor = vec3(0.0);
     float totalSpotlightIntensity = 0.0f;
+    float totalPointlightIntensity = 0.0f;
 
     // Calculate the directional light contribution (as before)
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
@@ -78,14 +83,31 @@ void main()
         }
     }
 
-    float shadow = ShadowCalculation(FragPosLightSpace, totalSpotlightIntensity);
+    for(int i = 0; i < NR_POINT_LIGHTS; i++)
+    {
+        if(pointLights[i].isActive)
+        {
+            float distance = length(pointLights[i].position - FragPos);
+            float maxDistance = 30.0;
+
+            if (distance < maxDistance)
+            {
+                pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+                totalPointlightIntensity += CalcPointLightIntensity(pointLights[i], FragPos);
+            }
+        }
+    }
+
+    vec3 clamped = clamp(pointLightColor, vec3(0.0,0.0,0.0),  vec3(1.0,1.0,1.0));
+
+    float shadow = ShadowCalculation(FragPosLightSpace, totalSpotlightIntensity, totalPointlightIntensity);
 
     // Apply height-based tint directly
     vec3 heightTint = HeightTint;
 
     // Modify the final color with a smaller scaled variation factor for brightness adjustment
     float brightnessFactor = 1.0 + (VariationFactor - 0.5) * 0.05; // Reduce the effect of brightness variation
-    vec3 finalColor = (dirLightColor + spotLightColor) * shadow * heightTint * brightnessFactor;
+    vec3 finalColor = (dirLightColor + spotLightColor + clamped) * shadow * heightTint * brightnessFactor;
 
     // Combine the final color with the texture color
     FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
@@ -110,25 +132,22 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    if (light.isActive == 0)
-        return vec3(0.0);
-    vec3 lightDir = normalize(light.position - fragPos);
-    // diffuse shading
-    float diff = max(dot(normal, lightDir), 0.0);
-    // specular shading
-    vec3 halfwayDir = normalize(lightDir + viewDir);
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), SHININESS);
-    // attenuation
+    if (!light.isActive) return vec3(0.0);
     float distance = length(light.position - fragPos);
-    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
-    // combine results
-    vec3 ambient = light.color * AMBIENT_STRENGTH;
-    vec3 diffuse = light.color * diff;
-    vec3 specular = light.color * spec * SPECULAR_STRENGTH;
-    ambient *= attenuation;
-    diffuse *= attenuation;
-    specular *= attenuation;
-    return (ambient + diffuse + specular);
+    float attenuation = 6.5 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+    vec3 ambient = vec3(1.0,1.0,1.0) * attenuation * 10;
+
+// Diffuse component
+    vec3 lightDir = normalize(light.position - fragPos);
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = vec3(1.0,1.0,1.0) * diff * attenuation;
+
+    // Specular component
+        vec3 reflectDir = reflect(-lightDir, normal);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), SHININESS); // 32 is the shininess exponent, adjust as needed
+        vec3 specular = vec3(1.0,1.0,1.0) * SPECULAR_STRENGTH * spec * attenuation;
+
+    return ambient + specular;
 }
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -155,10 +174,10 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
-    return (ambient + diffuse); //+specular
+    return (specular + ambient + diffuse); //+specular
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
+float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float pointLightIntensity)
 {
     // perform perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -169,10 +188,10 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-    float bias =  0.001;
-    //vec3 normal = normalize(Normal);
-    //vec3 lightDir = normalize(lightPos - FragPos);
-    //float bias = max(0.008 * dot(normal, lightDir), 0.005);
+    //float bias =  0.001;
+    vec3 normal = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float bias = max(0.008 * dot(normal, lightDir), 0.005);
     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
     float shadow = 0.0;
@@ -187,11 +206,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity)
     }
     shadow /= 9.0;
 
-    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + 0.3, 0.0, 1.0)); // Blend shadow with spotlight intensity
-
-    // keep the shadow at 0.0 when outside the far_plane region of the light's frustum.
-    if(projCoords.z > 1.0)
-        shadow = 0.0;
+    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.14, 0.0, 1.0)); // Shadow brightness 0.33
 
     return shadow - 0.2;
 }
@@ -205,13 +220,25 @@ float CalcSpotLightIntensity(SpotLight spotLight, vec3 fragPos)
     float distance = length(spotLight.position - fragPos);
 
     // Calculate attenuation based on distance
-    float attenuation = 1.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));
+    float attenuation = 2.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));
 
     // Calculate the spotlight intensity based on the angle within the cone
     float theta = dot(lightDir, normalize(-spotLight.direction));
     float epsilon = spotLight.cutOff - spotLight.outerCutOff;
-    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.0, 1.0);
+    float intensity = clamp((theta - spotLight.outerCutOff) / epsilon, 0.13, 1.0); //Flashlight effect on shadow
 
     // Final intensity considering attenuation and angle
     return attenuation * intensity;
+}
+
+float CalcPointLightIntensity(PointLight pointLight, vec3 fragPos)
+{
+    // Calculate the distance between the point light and the fragment
+    float distance = length(pointLight.position - fragPos);
+
+    // Calculate attenuation based on distance
+    float attenuation = 2.0 / (pointLight.constant + pointLight.linear * distance + pointLight.quadratic * (distance * distance));
+
+    // The intensity of a point light does not depend on angle, only on attenuation
+    return attenuation;
 }
