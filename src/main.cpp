@@ -139,7 +139,7 @@ int main(int, char**)
     AUDIOENGINEMANAGER.Init();
 
     // Deserialization of resources and nodes
-    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("../../scenes/test1.json");
+    GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("scenes/test1.json");
 
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
     RESOURCEMANAGER.GetShaderByName("skyboxShader")->setInt("skybox", 0);
@@ -189,7 +189,7 @@ int main(int, char**)
     // json save for testing
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(GAMEMANAGER.root);
     //std::cout << jsonData;
-    SCENEMANAGER.SaveToJsonFile(jsonData, "../../scenes/test2.json");
+    SCENEMANAGER.SaveToJsonFile(jsonData, "scenes/test2.json");
 
     HUD.Init();
 

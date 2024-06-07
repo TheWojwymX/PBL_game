@@ -2,12 +2,12 @@
 
 Skybox::Skybox() {
     faces = {
-            "../../res/Skybox/right.png",
-            "../../res/Skybox/left.png",
-            "../../res/Skybox/top.png",
-            "../../res/Skybox/bottom.png",
-            "../../res/Skybox/front.png",
-            "../../res/Skybox/back.png"
+            "res/Skybox/right.png",
+            "res/Skybox/left.png",
+            "res/Skybox/top.png",
+            "res/Skybox/bottom.png",
+            "res/Skybox/front.png",
+            "res/Skybox/back.png"
     };
 }
 

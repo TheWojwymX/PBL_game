@@ -24,6 +24,10 @@ file(GLOB MODEL_FILES
     *.mtl
 )
 
+file(COPY ${CMAKE_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR}/src)
+file(COPY ${CMAKE_SOURCE_DIR}/scenes DESTINATION ${CMAKE_BINARY_DIR}/src)
+file(COPY ${CMAKE_SOURCE_DIR}/thirdparty DESTINATION ${CMAKE_BINARY_DIR}/src)
+
 # Define the executable
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} ${TEXTURE_FILES}
         ../thirdparty/miniaudio.h
@@ -111,6 +115,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Component/ShovelRenderer.cpp
         Component/ShovelRenderer.h
         Component/Rotate.h
+        model.h
+        mesh.h
+        shader_s.h
         Component/Rotate.cpp
         Component/Disabler.h
         Component/Disabler.cpp Managers/LightsManager.h Managers/LightsManager.cpp Component/GlowstickMovement.h Component/GlowstickMovement.cpp)

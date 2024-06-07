@@ -34,7 +34,9 @@ public:
     // ------------------------------------------------------------------------
     Shader(const char* vertexPath, const char* fragmentPath, std::string shaderName)
     {
+
         _name = std::move(shaderName);
+        std::cout << "Szukam w: " << vertexPath << std::endl;
         _vertexPath = vertexPath;
         _fragmentPath = fragmentPath;
 
@@ -64,6 +66,7 @@ public:
         }
         catch (std::ifstream::failure& e)
         {
+            std::cout << vertexPath << std::endl;
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
         }
         const char* vShaderCode = vertexCode.c_str();

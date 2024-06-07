@@ -12,9 +12,9 @@
 class Button {
 public:
 
-    const char *_backgroundImagePath = "../../res/Images/Button/idle.png";
-    const char *_hoverBackgroundImagePath = "../../res/Images/Button/hover.png";
-    const char *_clickedBackgroundImagePath = "../../res/Images/Button/clicked.png";
+    const char *_backgroundImagePath = "res/Images/Button/idle.png";
+    const char *_hoverBackgroundImagePath = "res/Images/Button/hover.png";
+    const char *_clickedBackgroundImagePath = "res/Images/Button/clicked.png";
 
     ImageRenderer _backgroundImage;
     ImageRenderer _hoverBackgroundImage;

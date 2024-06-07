@@ -37,7 +37,7 @@ void TextRenderer::Init() {
         }
 
         // find path to font
-        std::string font_name = "../../res/fonts/Pixeloid/PixeloidMono.ttf";
+        std::string font_name = "res/fonts/Pixeloid/PixeloidMono.ttf";
         if (font_name.empty())
         {
             std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;

@@ -53,6 +53,7 @@ public:
         }
         catch (std::ifstream::failure& e)
         {
+            std:: cout << computePath << std::endl;
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
         }
         const char* cShaderCode = computeCode.c_str();

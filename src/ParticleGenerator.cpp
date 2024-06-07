@@ -177,7 +177,7 @@ void ParticleGenerator::RenderParticles() {
 }
 
 void ParticleGenerator::Init() {
-    computeShader = std::make_shared<ComputeShader>("../../res/particleCompute.glsl", "computeShader");
+    computeShader = std::make_shared<ComputeShader>("res/particleCompute.glsl", "computeShader");
     if(object == nullptr) object = this->GetOwnerNode();
     initiateParticleType();
     Component::Initiate();
@@ -253,7 +253,7 @@ void ParticleGenerator::Init() {
 
 void ParticleGenerator::initiateParticleType() {
     if (particleType == "turretCasing") {
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("Particle/particle.png", true);
         amount = 50;
         newParticles = 1;
         spawnDelay = 0.0f;
@@ -270,7 +270,7 @@ void ParticleGenerator::initiateParticleType() {
 
     }
     else if (particleType == "turretShot"){
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("Particle/particle.png", true);
         amount = 30;
         newParticles = 1;
         spawnDelay = 0.0f;
@@ -286,7 +286,7 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
     }
     else if (particleType == "antShot"){
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 21;
         newParticles = 3;
         spawnDelay = 0.0f;
@@ -302,7 +302,7 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
     }
     else if (particleType == "antDie"){
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 5;
         newParticles = 5;
         spawnDelay = 0.0f;
@@ -318,7 +318,7 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
     }
     else if (particleType == "jetpackUse"){
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 100;
         newParticles = 3;
         spawnDelay = 0.1f;
@@ -334,7 +334,7 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = true;
     }
     else if (particleType == "flareParticles1"){
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 50;
         newParticles = 2;
         spawnDelay = 0.2f;

@@ -27,7 +27,7 @@ public:
             -0.8f, -0.2f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
             -0.8f,  -0.9f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
-    const char *_generalImagePath = "../../res/Images/placeholderGeneral.png";
+    const char *_generalImagePath = "res/Images/placeholderGeneral.png";
     ImageRenderer _generalImage;
 
     ContinueMessageButton _continueDialogButton;
