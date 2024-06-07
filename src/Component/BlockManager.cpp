@@ -630,12 +630,25 @@ std::pair<glm::vec3, glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 ent
         separationVector.z = 0.0f;
     }
 
-    
-    // Debug: Print the movementVector and separationVector
-    //std::cout << "Movement Vector: " << movementVector.x << ", " << movementVector.y << ", " << movementVector.z << std::endl;
-    //std::cout << "Separation Vector: " << separationVector.x << ", " << separationVector.y << ", " << separationVector.z << std::endl;
+    // Calculate magnitudes of movementVector and separationVector
+    float moveX = std::abs(movementVector.x);
+    float sepX = std::abs(separationVector.x);
 
-    movementVector += separationVector;
+    float moveZ = std::abs(movementVector.z);
+    float sepZ = std::abs(separationVector.z);
+
+    float badCollTreshold = 0.35f;
+
+    // Check if separationVector is within 10% of the movementVector
+    if (sepX <= moveX * (1.0f + badCollTreshold) && sepZ <= moveZ * (1.0f + badCollTreshold)) {
+        movementVector += separationVector;
+    }
+    else {
+        movementVector.y += separationVector.y;
+    }
+    // Debug: Print the movementVector and separationVector
+   //std::cout << "Movement Vector: " << movementVector.x << ", " << movementVector.y << ", " << movementVector.z << std::endl;
+   //std::cout << "Separation Vector: " << separationVector.x << ", " << separationVector.y << ", " << separationVector.z << std::endl;
 
     // Return the adjusted movementVector and the separationVector
     return std::make_pair(movementVector, separationVector);
