@@ -195,13 +195,24 @@ void UpgradeManager::Update() {
         NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
     }
 
-    if(isTurretInRaycast() && isTurretInRange()){
-        TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
-    }else{
-        for(int i = 0; i < TURRETSMANAGER._turrets.size(); i++){
+    if(isTurretInRaycast() && isTurretInRange()) {
+        highlightSingleTurret(TURRETSMANAGER.RaycastTurrets());
+    } else {
+        for(int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
             TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
         }
     }
 }
 
+void UpgradeManager::highlightSingleTurret(int turretIndex)
+{
+    for(int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
+        TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
+    }
+
+    // Highlight the specified turret
+    if(turretIndex != -1) {
+        TURRETSMANAGER._turrets[turretIndex]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+    }
+}
 
