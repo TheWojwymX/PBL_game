@@ -33,6 +33,10 @@ public:
     HUDMain &operator=(const HUDMain &) = delete;
 
     ImageRenderer _crosshairImage;
+    ImageRenderer _metalImage;
+    ImageRenderer _plasticImage;
+    ImageRenderer _jetpackEmpty;
+    ImageRenderer _jetpackBar;
 
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
 
@@ -52,6 +56,8 @@ public:
     int _hpSpriteCurrentFrame = 0;
 
     shared_ptr<Node> _playerNode;
+
+    glm::vec3 interpolateColor(float percentFuel);
 };
 
 

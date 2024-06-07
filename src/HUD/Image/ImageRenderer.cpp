@@ -64,7 +64,36 @@ void ImageRenderer::UpdateImage(std::array<float, 32>* vertices) {
     }
 
     // render container
+    glm::vec3 color = glm::vec3(1.0,1.0,0.0);
     RESOURCEMANAGER.GetShaderByName("textureShader")->use();
+    RESOURCEMANAGER.GetShaderByName("textureShader")->setBool("useColor", false);
+    RESOURCEMANAGER.GetShaderByName("textureShader")->setVec3("additionalColor", color);
+
+    glBindVertexArray(_VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void ImageRenderer::UpdateImage(std::array<float, 32>* vertices, glm::vec3 additionalColor) {
+
+    if(!_shouldRender) return;
+
+    // bind Texture
+    glBindTexture(GL_TEXTURE_2D, _textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    if(vertices){
+        _vertices = *vertices;
+        glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, 32 * sizeof(float), _vertices.data());
+    }
+
+    // render container
+    glm::vec3 color = glm::vec3(1.0,1.0,0.0);
+    RESOURCEMANAGER.GetShaderByName("textureShader")->use();
+    RESOURCEMANAGER.GetShaderByName("textureShader")->setBool("useColor", true);
+    RESOURCEMANAGER.GetShaderByName("textureShader")->setVec3("additionalColor", additionalColor);
+
     glBindVertexArray(_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

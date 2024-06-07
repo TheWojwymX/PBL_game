@@ -52,7 +52,7 @@ public:
     void Pause();
     void Unpause();
 
-    int _metal = 50;
+    int _metal = 30;
     int _plastic = 50;
 };
 
