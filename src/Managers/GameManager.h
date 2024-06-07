@@ -8,6 +8,8 @@
 class GameManager {
 
 public:
+    bool _isFullscreen = false;
+
     int _screenWidth = 1280;
     int _screenHeight = 720;
     GLFWwindow* _window;

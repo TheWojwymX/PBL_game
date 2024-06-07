@@ -63,7 +63,13 @@ void GameManager::InitPhase()
 
 
 void GameManager::Init() {
-    _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", NULL, NULL);
+    if(_isFullscreen){
+        _screenWidth = 1920;
+        _screenHeight = 1080;
+        _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", glfwGetPrimaryMonitor(), NULL);
+    }else{
+        _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", NULL, NULL);
+    }
 }
 
 void GameManager::EnableMouse() {
