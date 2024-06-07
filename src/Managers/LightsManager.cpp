@@ -23,7 +23,7 @@ void LightsManager::InitLights() {
     glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
 
     //Flashlight Properties
-    isSpotActive = true;
+    isSpotActive = false;
     flashlightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
 }
