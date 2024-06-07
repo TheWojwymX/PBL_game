@@ -8,8 +8,8 @@
 class GameManager {
 
 public:
-    int _screenWidth = 1920;
-    int _screenHeight = 1080;
+    int _screenWidth = 1280;
+    int _screenHeight = 720;
     GLFWwindow* _window;
 
     void Init();
