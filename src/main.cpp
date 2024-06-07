@@ -234,6 +234,9 @@ int main(int, char**)
             GAMEMANAGER._metal += 10;
             //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
         }
+        if(INPUT.IsKeyPressed(GLFW_KEY_5)){
+            RESOURCEMANAGER.GetSoundByID(14)->PlaySoundSim();
+        }
 
         if(INPUT.IsKeyPressed(GLFW_KEY_RIGHT_BRACKET) && !TUTORIALMANAGER._isTutorialEnded){
             NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(

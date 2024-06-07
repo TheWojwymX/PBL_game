@@ -354,6 +354,12 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
             if (generator != nullptr) {
                 generator->enemyPosition = enemy->GetOwnerPosition();
                 generator->SpawnParticles();
+
+                static std::random_device rd;
+                static std::mt19937 gen(rd());
+                std::uniform_int_distribution<> dis(12, 13);
+
+                RESOURCEMANAGER.GetSoundByID(dis(gen))->PlaySoundSim();
             }
         }
     }
