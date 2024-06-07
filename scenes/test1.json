@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 183,
-  "nextNodeId": 169,
+  "nextComponentId": 184,
+  "nextNodeId": 170,
   "resources": {
     "Models": [
       {
@@ -310,6 +310,10 @@
       {
         "ModelName": "RakeModel",
         "Path": "res/Models/Rake/Rake.obj"
+      },
+      {
+        "ModelName": "BigShovelModel",
+        "Path": "res/Models/BigShovel/BigShovel.obj"
       }
     ],
     "Shaders": [
@@ -1186,6 +1190,37 @@
             -20.0,
             65.0,
             15.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 169,
+        "NodeName": "BigShovel",
+        "children": [],
+        "components": [
+          {
+            "componentId": 183,
+            "componentType": 5,
+            "model": "BigShovelModel",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            125,
+            295,
+            -150
+          ],
+          "rotation": [
+            15,
+            30,
+            -15
           ],
           "scale": [
             1.0,
