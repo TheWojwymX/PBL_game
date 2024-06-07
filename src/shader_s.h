@@ -36,7 +36,6 @@ public:
     {
 
         _name = std::move(shaderName);
-        std::cout << "Szukam w: " << vertexPath << std::endl;
         _vertexPath = vertexPath;
         _fragmentPath = fragmentPath;
 
