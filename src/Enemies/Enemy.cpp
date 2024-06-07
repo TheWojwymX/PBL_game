@@ -141,8 +141,13 @@ void Enemy::setUp()
         case BEETLE:
             _walkingSpeed = 4;
             _hp = 200;
-            _armored = true;
             _damage = 10;
+            break;
+
+        case WASP:
+            _walkingSpeed = 5;
+            _hp = 150;
+            _damage = 7;
             break;
     }
 }

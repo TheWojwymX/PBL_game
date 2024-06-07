@@ -36,7 +36,7 @@ public:
 
     bool _shouldEnableBlueprintTurret = false;
 
-    void SpawnTurret();
+    void SpawnTurret(turretType type);
 
     bool IsSelectedTurretInRange();
 
@@ -45,6 +45,8 @@ public:
     bool _isInBlueprintMode = false;
 
     float _distanceToAnotherTurret = 1.5f;
+
+    turretType finaltype = MINIGUN;
 
     float _sideRange = 30.0f;
     float _forwardRange = 50.0f;

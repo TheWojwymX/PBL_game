@@ -52,7 +52,8 @@ void EnemiesManager::Init() {
                 glm::vec3(_spawnersPositions[i][0], 0, _spawnersPositions[i][1]));
     }
 
-    _roundsInfo[0] = {{0, 3, ANT}}; // Spawner 0 - spawn 3 ANT enemies
+    _roundsInfo[0] = {{0, 3, ANT}, {0, 3, BEETLE}, {0, 3, WASP}}; // TEST
+
     _roundsInfo[1] = {{2, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
     _roundsInfo[2] = {{2, 2, ANT}, {1, 2, ANT}}; // Spawner 2 - spawn 2 ANT enemies, Spawner 1 - spawn 2 ANT enemies
     _roundsInfo[3] = {{3, 3, ANT}, {2, 2, ANT}}; // Spawner 3 - spawn 3 ANT enemies, Spawner 2 - spawn 2 ANT enemies

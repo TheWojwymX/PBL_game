@@ -1,3 +1,4 @@
+
 //
 // Created by Jacek on 13.05.2024.
 //
@@ -29,8 +30,10 @@ void TurretsManager::Update() {
 
     UpdateBlueprintTurret();
 
+
     if (Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f
-        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine()) {
+        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine())
+    {
         _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
         _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(!_blueprintTurret->GetComponent<MeshRenderer>()->IsEnabled());
         NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(
@@ -40,8 +43,24 @@ void TurretsManager::Update() {
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = !_player->GetComponent<PlayerController>()->_activeMineEntranceCollision;
     }
 
-    if (INPUT.IsMousePressed(1) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea()) {
-        SpawnTurret();
+    if(Input::Instance().IsKeyPressed(90))
+    {
+        finaltype = MINIGUN;
+    }
+
+    if(Input::Instance().IsKeyPressed(88))
+    {
+        finaltype = SNIPER;
+    }
+
+    if(Input::Instance().IsKeyPressed(67))
+    {
+        finaltype = RIFLE;
+    }
+
+    if (INPUT.IsMousePressed(1) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea())
+    {
+        SpawnTurret(finaltype);
     }
 
     if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying
@@ -66,9 +85,9 @@ void TurretsManager::Update() {
 
 bool TurretsManager::IsInForbiddenArea(){
     if(glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
-       _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) > GAMEMANAGER._domeRadius - 0.1
+                               _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) > GAMEMANAGER._domeRadius - 0.1
        || glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
-       _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) < GAMEMANAGER._mineEntranceRadius
+                                  _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) < GAMEMANAGER._mineEntranceRadius
        || IsTooCloseToTurret(_blueprintTurret->GetTransform()->GetPosition())){
         return true;
 
@@ -90,7 +109,7 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
     return false;
 }
 
-void TurretsManager::SpawnTurret() {
+void TurretsManager::SpawnTurret(turretType type) {
 
     if (GAMEMANAGER._metal < _turretCost) {
         std::cout << "Brak pieniedzy na dzialko" << std::endl;
@@ -154,6 +173,8 @@ void TurretsManager::SpawnTurret() {
     auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
     newTurret->Initiate();
     newTurret->_isFlying = true;
+    newTurret->_turretType = type;
+    newTurret->setUp();
     newTurret->_finalRotation = _blueprintTurret->GetTransform()->GetRotation();
     newTurret->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
     newTurret->_flare = NODESMANAGER.getNodeByName(nameOfFlare);
@@ -300,6 +321,8 @@ void TurretsManager::CheckEnemiesInRange() {
 
             if (ENEMIESMANAGER._enemies[j] == nullptr) continue;
 
+            if (ENEMIESMANAGER._enemies[j]->_hp <= 0) continue;
+
             glm::vec3 enemyPos = ENEMIESMANAGER._enemies[j]->GetOwnerPosition();
 
             if (isPointInRectangle(enemyPos, _turrets[i]->_turretRangePositions)) {
@@ -307,29 +330,54 @@ void TurretsManager::CheckEnemiesInRange() {
             }
         }
 
-        std::shared_ptr<Enemy> closestEnemy;
+        std::shared_ptr<Enemy> targetEnemy = nullptr;
+        float closestDistance = std::numeric_limits<float>::max();
 
-        if (!enemiesInRange.empty()) {
-            closestEnemy = enemiesInRange[0];
+        for (const auto& enemy : enemiesInRange) {
+            float distance = glm::distance(_turrets[i]->GetOwnerPosition(), enemy->GetOwnerPosition());
 
-            for (int j = 0; j < enemiesInRange.size(); j++) {
-                if (glm::distance(_turrets[i]->GetOwnerPosition(),
-                                  closestEnemy->GetOwnerPosition()) >
-                    glm::distance(_turrets[i]->GetOwnerPosition(),
-                                  enemiesInRange[j]->GetOwnerPosition())) {
-                    closestEnemy = enemiesInRange[j];
-                }
+            switch (_turrets[i]->_turretType) {
+                case MINIGUN:
+                    if (enemy->_enemyType == ANT) {
+                        if (distance < closestDistance) {
+                            targetEnemy = enemy;
+                            closestDistance = distance;
+                        }
+                    } else if (enemy->_enemyType == BEETLE && targetEnemy == nullptr) {
+                        targetEnemy = enemy;
+                    }
+                    break;
+
+                case SNIPER:
+                    if (enemy->_enemyType == BEETLE) {
+                        if (distance < closestDistance) {
+                            targetEnemy = enemy;
+                            closestDistance = distance;
+                        }
+                    } else if (enemy->_enemyType == ANT && targetEnemy == nullptr) {
+                        targetEnemy = enemy;
+                    }
+                    break;
+
+                case RIFLE:
+                    if (enemy->_enemyType == WASP) {
+                        if (distance < closestDistance) {
+                            targetEnemy = enemy;
+                            closestDistance = distance;
+                        }
+                    }
+                    break;
             }
+        }
 
+        if (targetEnemy) {
             glm::vec3 turretPosition = _turrets[i]->_ownerNode->GetTransform()->GetPosition();
-            glm::vec3 enemyPosition = closestEnemy->GetOwnerPosition();
+            glm::vec3 enemyPosition = targetEnemy->GetOwnerPosition();
             enemyPosition.y = turretPosition.y;
             glm::vec3 lookDirection = glm::normalize(enemyPosition - turretPosition);
             _turrets[i]->_ownerNode->GetTransform()->LookAt(lookDirection);
 
-            AttackEnemy(_turrets[i], closestEnemy);
-
-            //std::cout << "najblizej jest " << closestEnemy->_ownerNode->_name << endl;
+            AttackEnemy(_turrets[i], targetEnemy);
         } else {
             Reload(_turrets[i]);
         }
@@ -343,11 +391,48 @@ void TurretsManager::Reload(const shared_ptr<Turret> &turret) {
 }
 
 void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_ptr<Enemy> &enemy) {
-    if (turret->_timer < turret->_fireRate) {
+    if (turret->_timer < turret->_fireRate)
+    {
         turret->_timer += TIME.GetDeltaTime();
-    } else {
+    }
+    else
+    {
         turret->_timer = 0.0f;
-        enemy->TakeDamage(turret->_damage);
+
+        int finalDamage;
+        turretType _turretType = turret->_turretType;
+        enemyType _enemyType = enemy->_enemyType;
+
+        switch(turret->_turretType)
+        {
+            case MINIGUN:
+                if (_enemyType == BEETLE)
+                {
+                    finalDamage = 0.5 * turret->_damage;
+                }
+                else
+                {
+                    finalDamage = turret->_damage;
+                }
+                break;
+
+            case SNIPER:
+                if (_enemyType == ANT)
+                {
+                    finalDamage = 0.5 * turret->_damage;
+                }
+                else
+                {
+                    finalDamage = turret->_damage;
+                }
+                break;
+
+            case RIFLE:
+                finalDamage = turret->_damage;
+                break;
+        }
+
+        enemy->TakeDamage(finalDamage);
 
         auto particleGenerators = turret->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
         for (const auto &generator: particleGenerators) {

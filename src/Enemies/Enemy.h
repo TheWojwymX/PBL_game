@@ -10,7 +10,7 @@
 #include "Managers/GameManager.h"
 #include <regex>
 
-enum enemyType { ANT, BEETLE };
+enum enemyType { ANT, BEETLE, WASP };
 
 class Enemy : public Component, public std::enable_shared_from_this<Enemy> {
 
@@ -18,10 +18,9 @@ public:
     bool _isAvoiding = false;
     bool _isAtWalls = false;
     bool _shouldStay = false;
-    bool _armored = false;
 
     glm::vec3 _destinationVector;
-    enemyType _enemyType;
+    enemyType _enemyType = ANT;
     int _walkingSpeed = 5;
     int _hp = 100;
     int _damage = 5;

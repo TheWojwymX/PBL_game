@@ -184,6 +184,82 @@
           "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-2.obj"
         },
         {
+          "ModelName": "WaspSpawn0",
+          "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.obj"
+        },
+        {
+          "ModelName": "WaspSpawn1",
+          "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.obj"
+        },
+        {
+          "ModelName": "WaspSpawn2",
+          "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.obj"
+        },
+        {
+          "ModelName": "WaspSpawn3",
+          "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.obj"
+        },
+        {
+          "ModelName": "WaspFly0",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.obj"
+        },
+        {
+          "ModelName": "WaspFly1",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.obj"
+        },
+        {
+          "ModelName": "WaspFly2",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.obj"
+        },
+        {
+          "ModelName": "WaspFly3",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.obj"
+        },
+        {
+          "ModelName": "WaspFly4",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.obj"
+        },
+        {
+          "ModelName": "WaspFly5",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.obj"
+        },
+        {
+          "ModelName": "WaspFly6",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.obj"
+        },
+        {
+          "ModelName": "WaspFly7",
+          "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.obj"
+        },
+        {
+          "ModelName": "WaspAttack0",
+          "Path": "../../res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.obj"
+        },
+        {
+          "ModelName": "WaspAttack1",
+          "Path": "../../res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.obj"
+        },
+        {
+          "ModelName": "WaspAttack2",
+          "Path": "../../res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj"
+        },
+        {
+          "ModelName": "WaspDead0",
+          "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj"
+        },
+        {
+          "ModelName": "WaspDead1",
+          "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj"
+        },
+        {
+          "ModelName": "WaspDead2",
+          "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj"
+        },
+        {
+          "ModelName": "WaspDead3",
+          "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj"
+        },
+        {
           "ModelName": "DomeStation",
           "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
         },

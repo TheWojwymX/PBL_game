@@ -33,19 +33,74 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_01.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_02.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Sounds/GunnerShot/stzal2.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/stzal2.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant-fixed.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant-fixed.mtl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/AudioEngineManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/AudioEngineManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sound.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sound.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Animation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

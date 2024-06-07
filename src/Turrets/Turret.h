@@ -5,8 +5,9 @@
 #ifndef SANDBOX_TURRET_H
 #define SANDBOX_TURRET_H
 
-
 #include "Core/Component.h"
+
+enum turretType { MINIGUN, SNIPER, RIFLE };
 
 class Turret : public Component, public std::enable_shared_from_this<Turret> {
 
@@ -18,6 +19,10 @@ public:
     void Deserialize(const nlohmann::json &jsonData) override;
 
     void Update() override;
+
+    void setUp();
+
+    turretType _turretType = MINIGUN;
 
     bool _isFlying = false;
     float _flyingSpeed = 2;

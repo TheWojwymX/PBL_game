@@ -245,7 +245,31 @@ void Animation::InitFrames()
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead0"));
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead1"));
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead2"));
+    }
+    else if(_entityType == 3)
+    {
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn0"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn1"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn2"));
+        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn3"));
 
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly0"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly1"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly2"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly3"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly4"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly5"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly6"));
+        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly7"));
+
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack0"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack1"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack2"));
+
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead0"));
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead1"));
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead2"));
+        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead3"));
     }
 }
 
@@ -281,7 +305,7 @@ void Animation::InitComponent(int type)
     _entityType = type;
     _enemyState = SPAWN;
     _loop = true;
-    _frameDuration = 0.2;
+    _frameDuration = 0.15;
     InitFrames();
 }
 

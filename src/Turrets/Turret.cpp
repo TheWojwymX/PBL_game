@@ -88,3 +88,23 @@ void Turret::Update() {
 
     Component::Update();
 }
+
+void Turret::setUp()
+{
+    switch(_turretType)
+    {
+        case MINIGUN:
+            _fireRate = 0.5;
+            _damage = 35;
+            break;
+        case SNIPER:
+            _fireRate = 0.5;
+            _damage = 35;
+            break;
+        case RIFLE:
+            _fireRate = 0.5;
+            _damage = 35;
+            break;
+    }
+}
+
