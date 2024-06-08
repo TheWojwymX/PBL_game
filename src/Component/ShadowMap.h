@@ -4,7 +4,7 @@
 
 class ShadowMap {
 public:
-    ShadowMap(unsigned int shadowWidth = 4096, unsigned int shadowHeight = 4096);
+    ShadowMap(unsigned int shadowWidth = 10240, unsigned int shadowHeight = 5760);
     ~ShadowMap();
 
     // Initialize the shadow map
