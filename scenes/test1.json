@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 187,
-  "nextNodeId": 173,
+  "nextComponentId": 188,
+  "nextNodeId": 174,
   "resources": {
     "Models": [
       {
@@ -322,6 +322,10 @@
       {
         "ModelName": "Mold3Model",
         "Path": "res/Models/Molds/3/3.obj"
+      },
+      {
+        "ModelName": "Mold7Model",
+        "Path": "res/Models/Molds/7/7.obj"
       }
     ],
     "Shaders": [
@@ -1322,6 +1326,37 @@
             -15,
             -70,
             -20
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 173,
+        "NodeName": "Mold7",
+        "children": [],
+        "components": [
+          {
+            "componentId": 187,
+            "componentType": 5,
+            "model": "Mold7Model",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            -40,
+            299,
+            200
+          ],
+          "rotation": [
+            30,
+            -30,
+            20
           ],
           "scale": [
             1.0,
