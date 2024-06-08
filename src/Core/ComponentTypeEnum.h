@@ -19,7 +19,8 @@ enum class ComponentType {
     ROTATE, //14
     DISABLER, // 15
     GLOWSTICKMOVEMENT, //16
-    TOPLAYERSNAP //17
+    PDACONTROLLER, // 17
+    TOPLAYERSNAP //18
 };
 
 #endif //OPENGLGP_COMPONENTTYPEENUM_H

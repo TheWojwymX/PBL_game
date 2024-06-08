@@ -58,6 +58,8 @@ public:
     shared_ptr<Node> _playerNode;
 
     glm::vec3 interpolateColor(float percentFuel);
+
+    bool _shouldShowCrosshair = true;
 };
 
 
