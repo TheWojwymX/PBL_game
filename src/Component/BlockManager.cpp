@@ -126,13 +126,13 @@ void BlockManager::UpdateInstanceRenderer() {
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        _sandRendererRef->SetInstanceMatrix(instancedSandMatrix);
+        _sandRendererRef->RefreshMatrixBuffer(instancedSandMatrix);
     }
     if (_plasticRendererRef) {
-        _plasticRendererRef->SetInstanceMatrix(instancedPlasticMatrix);
+        _plasticRendererRef->RefreshMatrixBuffer(instancedPlasticMatrix);
     }
     if (_metalRendererRef) {
-        _metalRendererRef->SetInstanceMatrix(instancedMetalMatrix);
+        _metalRendererRef->RefreshMatrixBuffer(instancedMetalMatrix);
     }
 }
 
@@ -446,6 +446,8 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
 {
     std::vector<glm::mat4> instanceMatrix;
+    _topLayerHeights.clear();
+
     float frequency = 0.025f; // Frequency of the noise (controls the detail level)
     float amplitude = 10.0f; // Amplitude of the noise (controls the height variation)
     float smoothEnd = 0.35f;
@@ -478,6 +480,7 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
 
             // Calculate transform matrix for the current block with noise-adjusted height
             glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, (_height - 1) + height, z), glm::quat(), glm::vec3(1.0f));
+            _topLayerHeights.push_back((_height - 1) + height);
 
             // Add the block to the vector
             instanceMatrix.push_back(transformMatrix);
@@ -491,7 +494,7 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
         }
     }
 
-    _topLayerRendererRef->SetInstanceMatrix(instanceMatrix);
+    _topLayerRendererRef->RefreshMatrixBuffer(instanceMatrix);
 }
 
 
@@ -735,7 +738,10 @@ float BlockManager::GetCaveFloor(glm::vec3 entityPos, int maxDistance) {
     return glm::round(entityPos.y) - maxDistance + 1.0f;
 }
 
-
+float BlockManager::GetTopLayerFloor(glm::vec3 entityPos)
+{
+    return 0.0f;
+}
 
 
 void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {

@@ -25,20 +25,14 @@ public:
         _shader = newShader;
     }
 
-    void RefreshMatrixBuffer();
-
-    // Getters
-    const std::vector<glm::mat4>& GetInstanceMatrix() const { return _instanceMatrix; }
+    void RefreshMatrixBuffer(const std::vector<glm::mat4>& instanceMatrix);
 
     void addToInspector(ImguiMain *imguiMain) override;
 
-    // Setters
-    void SetInstanceMatrix(const std::vector<glm::mat4>& instanceMatrix) { _instanceMatrix = instanceMatrix; RefreshMatrixBuffer(); }
-
 private:
     shared_ptr<Model> _model;
-    std::vector<glm::mat4> _instanceMatrix;
     shared_ptr<Shader> _shader;
+    unsigned int _instanceMatrixSize;
     unsigned int _maxSize;
     unsigned int _instanceBuffer;
     bool _isDynamic;

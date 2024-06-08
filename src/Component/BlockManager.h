@@ -49,6 +49,7 @@ public:
     std::pair<glm::vec3, glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
     std::tuple<bool, BlockData*, glm::vec3> CheckSimpleEntityCollision(glm::vec3 entityPos);
     float GetCaveFloor(glm::vec3 entityPos, int maxDistance);
+    float GetTopLayerFloor(glm::vec3 entityPos);
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
@@ -76,6 +77,7 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     int _cameraRefID;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
+    std::vector<float> _topLayerHeights;
 
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();

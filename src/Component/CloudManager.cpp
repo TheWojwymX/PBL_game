@@ -104,7 +104,7 @@ void CloudManager::UpdateInstanceRenderer() {
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        _sandRendererRef->SetInstanceMatrix(instanceMatrix);
+        _sandRendererRef->RefreshMatrixBuffer(instanceMatrix);
     }
 }
 
