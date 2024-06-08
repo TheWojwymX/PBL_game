@@ -20,6 +20,7 @@
 #include "ParticleGenerator.h"
 #include "Component/RefuelStation.h"
 #include "Component/ShovelController.h"
+#include "Component/PDAController.h"
 #include "Component/ShovelRenderer.h"
 #include "Component/Rotate.h"
 #include "Component/Disabler.h"

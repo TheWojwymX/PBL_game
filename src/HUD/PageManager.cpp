@@ -24,6 +24,8 @@ void PageManager::Init() {
     _pages.push_back(_domeUpgradeMenu);
     _messagePage->Init();
     _pages.push_back(_messagePage);
+    _PDAPage->Init();
+    _pages.push_back(_PDAPage);
 }
 
 void PageManager::Update() {
@@ -37,6 +39,7 @@ void PageManager::Update() {
     _turretUpgradeMenu->Update();
     _domeUpgradeMenu->Update();
     _messagePage->Update();
+    _PDAPage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

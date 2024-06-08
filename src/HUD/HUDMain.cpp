@@ -211,7 +211,9 @@ void HUDMain::Update() {
         _baseHPImages[16]->UpdateImage(&hpVertices);
     }
     ///
-    _crosshairImage.UpdateImage();
+    if(_shouldShowCrosshair){
+        _crosshairImage.UpdateImage();
+    }
 
     _plasticImage.UpdateImage();
     _metalImage.UpdateImage();
