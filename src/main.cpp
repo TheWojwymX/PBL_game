@@ -50,6 +50,7 @@
 #include "Managers/LightsManager.h"
 #include "Gui/ImguiMain.h"
 #include "ParticleGenerator.h"
+#include "WindSimulation.h"
 
 #include "Enemies/EnemiesManager.h"
 
@@ -172,8 +173,11 @@ int main(int, char**)
     glm::vec3 lightPos(49.999f, 330.0f, 120.0f);
     glm::vec3 lightCenter(50.0f, 250.0f,90.0f);
 
-    glm::vec3 windDirection(1.0f,0.0f,0.0f);
-    float windStrength = 0.0f;
+    glm::vec3 windDirection(0.0f,0.0f,0.0f);
+    float windStrength = 0.7f;
+
+    dryden_model::DrydenWind windModel;
+    windModel.initialize(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0);
 
     bool _renderWireframeBB = false;
 
@@ -304,10 +308,6 @@ int main(int, char**)
         ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
         ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
 
-        float glowstickConstant = 3.0f;
-        float glowstickLinear = 3.0f;
-        float glowstickQuadratic = 3.0f;
-
         ImGui::ColorEdit3("Directional Light Color", dirColor);
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
@@ -315,6 +315,8 @@ int main(int, char**)
         ImGui::SliderFloat3("Wind Direction", &windDirection[0],-1.0f,1.0f);
         ImGui::SliderFloat("Wind Strength", &windStrength, -10.0f, 10.0f);
 
+        windDirection = windModel.getWind(5 * TIME.GetDeltaTime());
+        windDirection.y /= 10;
 
         FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
