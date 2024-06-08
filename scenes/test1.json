@@ -318,6 +318,14 @@
       {
         "ModelName": "Mold1Model",
         "Path": "res/Models/Molds/1/1.obj"
+      },
+      {
+        "ModelName": "PDAModel",
+        "Path": "../../res/Models/PDA/krotkofalowka_v2-1.obj"
+      },
+      {
+        "ModelName": "PDAAntennaModel",
+        "Path": "../../res/Models/PDA/antena/krotkofalowka_v2-0.obj"
       }
     ],
     "Shaders": [
@@ -686,6 +694,74 @@
             1.0,
             1.0,
             1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 69,
+        "NodeName": "PDAAntenna",
+        "children": [],
+        "components": [
+          {
+            "componentId": 78,
+            "componentType": 13,
+            "model": "PDAAntennaModel",
+            "shader": "shovelShader"
+          },
+          {
+            "componentId": 79,
+            "componentType": 17
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            90.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 70,
+        "NodeName": "PDA",
+        "children": [],
+        "components": [
+          {
+            "componentId": 80,
+            "componentType": 13,
+            "model": "PDAModel",
+            "shader": "shovelShader"
+          },
+          {
+            "componentId": 81,
+            "componentType": 17
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            90.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
           ]
         }
       },

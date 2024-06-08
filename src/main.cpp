@@ -78,6 +78,7 @@
 #include "Turrets/TurretsManager.h"
 #include "Managers/TutorialManager.h"
 #include "Component/ShovelController.h"
+#include "Component/PDAController.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -223,9 +224,12 @@ int main(int, char**)
 
     LIGHTSMANAGER.InitLights();
 
-    auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();;
-    auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();;
+    auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();
+    auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();
 
+    auto uPDAController = NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>();
+    auto uPDARenderer = NODESMANAGER.getNodeByName("PDA")->GetComponent<ShovelRenderer>();
+    auto uPDAAntennaRenderer = NODESMANAGER.getNodeByName("PDAAntenna")->GetComponent<ShovelRenderer>();
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
@@ -474,6 +478,10 @@ int main(int, char**)
         // moving may cause some problems like lack of smoothness or models bugging
         shovelRenderer->RenderShovel(Transform::Origin());
         shovelController->RealUpdate();
+
+        uPDAAntennaRenderer->RenderShovel(Transform::Origin());
+        uPDARenderer->RenderShovel(Transform::Origin());
+        uPDAController->RealUpdate();
 
         shovelShader->use();
         shovelShader->setVec3("dirLight.direction", dirDirection);

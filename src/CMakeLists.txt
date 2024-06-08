@@ -120,7 +120,11 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         shader_s.h
         Component/Rotate.cpp
         Component/Disabler.h
-        Component/Disabler.cpp Managers/LightsManager.h Managers/LightsManager.cpp Component/GlowstickMovement.h Component/GlowstickMovement.cpp)
+        Component/Disabler.cpp Managers/LightsManager.h Managers/LightsManager.cpp Component/GlowstickMovement.h Component/GlowstickMovement.cpp
+        Component/PDAController.cpp
+        Component/PDAController.h
+        HUD/Pages/PDA/PDAPage.cpp
+        HUD/Pages/PDA/PDAPage.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

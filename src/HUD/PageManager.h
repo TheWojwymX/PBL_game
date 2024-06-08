@@ -15,6 +15,7 @@
 #include "HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h"
 #include "HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h"
 #include "HUD/Pages/MessagePage/MessagePage.h"
+#include "HUD/Pages/PDA/PDAPage.h"
 
 class PageManager {
 public:
@@ -40,6 +41,7 @@ public:
     std::shared_ptr<DomeUpgradeMenu> _domeUpgradeMenu = std::make_shared<DomeUpgradeMenu>();
 
     std::shared_ptr<MessagePage> _messagePage = std::make_shared<MessagePage>();
+    std::shared_ptr<PDAPage> _PDAPage = std::make_shared<PDAPage>();
 
     void CheckInputs();
 
