@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 185,
-  "nextNodeId": 171,
+  "nextComponentId": 187,
+  "nextNodeId": 173,
   "resources": {
     "Models": [
       {
@@ -318,6 +318,10 @@
       {
         "ModelName": "Mold1Model",
         "Path": "res/Models/Molds/1/1.obj"
+      },
+      {
+        "ModelName": "Mold3Model",
+        "Path": "res/Models/Molds/3/3.obj"
       }
     ],
     "Shaders": [
@@ -1256,6 +1260,68 @@
             -15,
             30,
             15
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 171,
+        "NodeName": "Mold3(1)",
+        "children": [],
+        "components": [
+          {
+            "componentId": 185,
+            "componentType": 5,
+            "model": "Mold3Model",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            160,
+            296,
+            -50
+          ],
+          "rotation": [
+            -35,
+            -30,
+            10
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 172,
+        "NodeName": "Mold3(2)",
+        "children": [],
+        "components": [
+          {
+            "componentId": 186,
+            "componentType": 5,
+            "model": "Mold3Model",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            230,
+            297,
+            85
+          ],
+          "rotation": [
+            -15,
+            -70,
+            -20
           ],
           "scale": [
             1.0,
