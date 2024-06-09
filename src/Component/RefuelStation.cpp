@@ -46,14 +46,14 @@ void RefuelStation::Refuel(){
             _fuelTimer += TIME.GetDeltaTime();
         }
         else{
-            std::cout << "Your fuel is " << playerController->_jetpackFuel << std::endl;
+            //std::cout << "Your fuel is " << playerController->_jetpackFuel << std::endl;
             _fuelTimer = 0;
             playerController->_jetpackFuel += _howMuchFuelPerCharge;
         }
     }
     else{
         playerController->_jetpackFuel = playerController->_maxJetpackFuel;
-        std::cout << "You already have max fuel!" << std::endl;
+        //std::cout << "You already have max fuel!" << std::endl;
     }
 }
 

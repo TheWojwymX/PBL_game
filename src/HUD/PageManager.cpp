@@ -115,11 +115,11 @@ void PageManager::CloseAllOtherPages(const shared_ptr<Page> &pageException) {
 void PageManager::HideMessagePage(){
     _isInPage = false;
     _messagePage->_shouldRender = false;
-    GAMEMANAGER.Unpause();
+    //GAMEMANAGER.Unpause();
 }
 
 void PageManager::DisplayMessagePage(){
     _isInPage = true;
     _messagePage->_shouldRender = true;
-    GAMEMANAGER.Pause();
+    //GAMEMANAGER.Pause();
 }

@@ -59,7 +59,12 @@ public:
 
     glm::vec3 interpolateColor(float percentFuel);
 
-    bool _shouldShowCrosshair = true;
+    bool _shouldShowCrosshair = false;
+    bool _shouldShowHP = false;
+    bool _shouldShowFuel = false;
+    bool _shouldShowMaterials = false;
+    bool _shouldShowDepth = false;
+    bool _shouldShowPhaseInfo = false;
 };
 
 

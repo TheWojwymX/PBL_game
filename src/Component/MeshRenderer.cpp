@@ -11,7 +11,9 @@ void MeshRenderer::Render(glm::mat4 parentWorld) {
 
     if(FrustumCulling::IsInFrustum(_cameraRef->getViewProjectionMatrix(), world, _cameraRef->getFrustumPlanes(), _model)) {
         isInFrustum = true;
-        RenderModel(_model, world);
+        if(!_disableModel){
+            RenderModel(_model, world);
+        }
     }
     else isInFrustum = false;
 }

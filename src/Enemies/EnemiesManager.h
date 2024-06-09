@@ -44,10 +44,10 @@ public:
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
     std::vector<glm::vec2> _spawnersPositions{
-        glm::vec2(50.0, 90.0),
-        glm::vec2(90.0, 50.0),
-        glm::vec2(50.0, 2.0),
-        glm::vec2(2.0, 50.0)
+        glm::vec2(50.0, 150.0),
+        glm::vec2(150.0, 50.0),
+        glm::vec2(110.0, 2.0),
+        glm::vec2(2.0, 110.0)
     };
 
     std::unordered_map<int, std::vector<std::tuple<int, int, enemyType>>> _roundsInfo;

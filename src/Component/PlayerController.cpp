@@ -279,7 +279,7 @@ void PlayerController::UpgradeSpeed(){
 }
 
 void PlayerController::HandleUpgrades() {
-    if(Input::Instance().IsKeyPressed(74)) {
+    if(Input::Instance().IsMousePressed(1) && NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 1.0) {
         LIGHTSMANAGER.AddGlowstick();
     }
 }
@@ -310,4 +310,8 @@ void PlayerController::JetpackInput() {
         _spaceKeyWasPressed = false;
         _isUsingJetpack = false;
     }
+}
+
+void PlayerController::SetGravity(float gravity) {
+    _gravity = gravity;
 }

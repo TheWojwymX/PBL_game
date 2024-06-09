@@ -13,7 +13,7 @@ public:
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    PlayerController(float speed = 8.0f, float gravity = -20.0f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, int radius = 2, float width = 0.5f, float height = 1.8f, float digPower = 0.25f);
+    PlayerController(float speed = 8.0f, float gravity = 0.0f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, int radius = 2, float width = 0.5f, float height = 1.8f, float digPower = 0.25f);
     void Initiate() override;
 
 
@@ -34,9 +34,11 @@ public:
 
     void UpgradeSpeed();
 
+    void SetGravity(float gravity);
+
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
 
-    float _jetpackFuel = 50.0f;
+    float _jetpackFuel = 0.0f;
     float _maxJetpackFuel = 100.0f;
 
     shared_ptr<ShovelController> _shovelController;
@@ -45,6 +47,7 @@ public:
     bool _activeMineEntranceCollision = false;
     bool _isGrounded;
     float _speed;
+    bool _isUsingJetpack = false;
 
 private:
     float _width;
@@ -81,7 +84,6 @@ private:
     float _jetpackStrength = 25.0f;
     float _jetpackFuelConsumption = 10.0f; // Fuel consumed per second when using the jetpack
     float _jetpackFuelRecovery = 0.0f;     // Fuel recovered per second when not using the jetpack
-    bool _isUsingJetpack = false;
 
     bool _spaceKeyWasPressed = false;
     std::chrono::steady_clock::time_point _lastSpacePressTime;

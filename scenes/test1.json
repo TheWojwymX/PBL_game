@@ -706,6 +706,37 @@
         }
       },
       {
+        "NodeID": 68,
+        "NodeName": "Paratrooper",
+        "children": [],
+        "components": [
+          {
+            "componentId": 77,
+            "componentType": 5,
+            "model": "Turret_Parachute",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            46.614,
+            299.5,
+            60.652
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
         "NodeID": 69,
         "NodeName": "PDAAntenna",
         "children": [],
@@ -846,7 +877,7 @@
         "transform": {
           "position": [
             46.614,
-            299.5,
+            320.5,
             60.652
           ],
           "rotation": [

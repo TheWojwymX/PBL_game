@@ -158,65 +158,68 @@ void HUDMain::Update() {
     float percentHP = (static_cast<float>(actualDomeHP) / static_cast<float>(maxHP)) * 100;
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
+    if(_shouldShowHP){
+        if(percentHP > 0 && percentHP <= 6){
+            _baseHPImages[0]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 6 && percentHP <= 12){
+            _baseHPImages[1]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 12 && percentHP <= 19){
+            _baseHPImages[2]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 19 && percentHP <= 25){
+            _baseHPImages[3]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 25 && percentHP <= 31){
+            _baseHPImages[4]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 31 && percentHP <= 37){
+            _baseHPImages[5]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 37 && percentHP <= 44){
+            _baseHPImages[6]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 44 && percentHP <= 50){
+            _baseHPImages[7]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 50 && percentHP <= 56){
+            _baseHPImages[8]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 56 && percentHP <= 62){
+            _baseHPImages[9]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 62 && percentHP <= 69){
+            _baseHPImages[10]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 69 && percentHP <= 75){
+            _baseHPImages[11]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 75 && percentHP <= 81){
+            _baseHPImages[12]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 81 && percentHP <= 87){
+            _baseHPImages[13]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 87 && percentHP <= 93){
+            _baseHPImages[14]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP > 93 && percentHP < 100){
+            _baseHPImages[15]->UpdateImage(&hpVertices);
+        }
+        else if(percentHP == 100){
+            _baseHPImages[16]->UpdateImage(&hpVertices);
+        }
+    }
 
-    if(percentHP > 0 && percentHP <= 6){
-        _baseHPImages[0]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 6 && percentHP <= 12){
-        _baseHPImages[1]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 12 && percentHP <= 19){
-        _baseHPImages[2]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 19 && percentHP <= 25){
-        _baseHPImages[3]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 25 && percentHP <= 31){
-        _baseHPImages[4]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 31 && percentHP <= 37){
-        _baseHPImages[5]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 37 && percentHP <= 44){
-        _baseHPImages[6]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 44 && percentHP <= 50){
-        _baseHPImages[7]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 50 && percentHP <= 56){
-        _baseHPImages[8]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 56 && percentHP <= 62){
-        _baseHPImages[9]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 62 && percentHP <= 69){
-        _baseHPImages[10]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 69 && percentHP <= 75){
-        _baseHPImages[11]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 75 && percentHP <= 81){
-        _baseHPImages[12]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 81 && percentHP <= 87){
-        _baseHPImages[13]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 87 && percentHP <= 93){
-        _baseHPImages[14]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP > 93 && percentHP < 100){
-        _baseHPImages[15]->UpdateImage(&hpVertices);
-    }
-    else if(percentHP == 100){
-        _baseHPImages[16]->UpdateImage(&hpVertices);
-    }
-    ///
     if(_shouldShowCrosshair){
         _crosshairImage.UpdateImage();
     }
 
-    _plasticImage.UpdateImage();
-    _metalImage.UpdateImage();
+    if(_shouldShowMaterials){
+        _plasticImage.UpdateImage();
+        _metalImage.UpdateImage();
+    }
 
     //jetpack
     glm::vec3 leftDownCorner = glm::vec3(0.83, -0.8, 0.0);
@@ -232,32 +235,40 @@ void HUDMain::Update() {
             leftDownCorner.x,  leftDownCorner.y, 0.0f,              1.0f, 1.0f, 0.0f,   1.0f, 0.0f  // bottom left
     };
 
-    glm::vec3 color = interpolateColor(percentFuel);
-    _jetpackBar.UpdateImage(&verticesJetpackBar, color);
+    if(_shouldShowFuel){
+        glm::vec3 color = interpolateColor(percentFuel);
+        _jetpackBar.UpdateImage(&verticesJetpackBar, color);
 
-    _jetpackEmpty.UpdateImage();
+        _jetpackEmpty.UpdateImage();
+    }
 
     //text
-    TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.38f, -0.92f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    if(_shouldShowMaterials){
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.38f, -0.92f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
-    TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.78f, -0.92f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
-    TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
-    string nextPhaseName;
-    if(GAMEMANAGER.currentPhase == 0){
-        nextPhaseName = "Setup";
-    }
-    else if(GAMEMANAGER.currentPhase == 1){
-        nextPhaseName = "Enemy attack";
-    }
-    else if(GAMEMANAGER.currentPhase == 2){
-        nextPhaseName = "Mining";
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.78f, -0.92f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
-    TEXTRENDERER.RenderText("Next phase: " + nextPhaseName, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    if(_shouldShowPhaseInfo){
+        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
-    TEXTRENDERER.RenderText("Y: " + to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.60, 0.35f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        string nextPhaseName;
+        if(GAMEMANAGER.currentPhase == 0){
+            nextPhaseName = "Setup";
+        }
+        else if(GAMEMANAGER.currentPhase == 1){
+            nextPhaseName = "Enemy attack";
+        }
+        else if(GAMEMANAGER.currentPhase == 2){
+            nextPhaseName = "Mining";
+        }
+
+        TEXTRENDERER.RenderText("Next phase: " + nextPhaseName, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    }
+
+    if(_shouldShowDepth){
+        TEXTRENDERER.RenderText("Y: " + to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.60, 0.35f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    }
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

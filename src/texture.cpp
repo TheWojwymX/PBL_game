@@ -8,7 +8,7 @@ Texture2D::Texture2D()
     glGenTextures(1, &this->ID);
 }
 
-void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char* data)
+void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char* data, const char* path)
 {
     this->Width = width;
     this->Height = height;
@@ -20,7 +20,7 @@ void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char*
     }
     else
     {
-        std::cout << "Failed to load texture" << std::endl;
+        std::cout << "Failed to load texture at path: " << path << std::endl;
     }
     // set Texture wrap and filter modes
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->Wrap_S);
@@ -49,7 +49,7 @@ Texture2D Texture2D::loadTextureFromFile(const char *file, bool alpha) {
     int width, height, nrChannels;
     unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
     // now generate texture
-    texture.Generate(width, height, data);
+    texture.Generate(width, height, data, file);
     // and finally free image data
     stbi_image_free(data);
     return texture;

@@ -252,7 +252,7 @@ int main(int, char**)
                     ENEMIESMANAGER._spawnersPositions[0][0], 0, ENEMIESMANAGER._spawnersPositions[0][1]));
             NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
                     ENEMIESMANAGER._spawnersPositions[1][1], 0, ENEMIESMANAGER._spawnersPositions[0][1]));
-            TUTORIALMANAGER._isTutorialEnded = true;
+            TUTORIALMANAGER.SkipTutorial();
             NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
         }
 

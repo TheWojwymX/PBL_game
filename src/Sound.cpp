@@ -30,7 +30,7 @@ void Sound::PlaySound() {
     if (ma_sound_start(&_sound) != MA_SUCCESS) {
         std::cerr << "Failed to start sound: " << _name << std::endl;
     } else {
-        std::cout << "Playing sound: " << _name << std::endl;
+        //std::cout << "Playing sound: " << _name << std::endl;
     }
 }
 

@@ -28,7 +28,7 @@ void GameManager::AddPlastic(int amount)
 
 void GameManager::Update()
 {
-    if(TUTORIALMANAGER._isTutorialEnded){
+    if(TUTORIALMANAGER._isFreePlay){
         currentTime += TIME.GetDeltaTime();
         pressToSkipPhase();
 
