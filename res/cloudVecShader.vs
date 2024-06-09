@@ -2,7 +2,7 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
-layout (location = 3) in mat4 aInstanceMatrix;
+layout (location = 3) in vec3 aInstancePos; // Changed from mat4 to vec3
 
 out vec2 TexCoords;
 out vec3 Normal;
@@ -23,8 +23,8 @@ void main()
 {
     TexCoords = aTexCoords;
 
-    // Adjust the entire instance matrix to prevent stretching due to boundary wrapping
-    mat4 wrappedInstanceMatrix = aInstanceMatrix;
+    // Adjust the entire instance position to prevent stretching due to boundary wrapping
+    vec3 wrappedInstancePos = aInstancePos; // Applying scaling factors
 
     // Boundary setup
     float boundary = 1400.0f;
@@ -34,22 +34,22 @@ void main()
     vec3 cloudPosition = initialCloudPosition + vec3(moveX - boundary, 0.0, 0.0);
 
     // Wrap the cloud position at instance level
-    wrappedInstanceMatrix[3].x += cloudPosition.x;
+    wrappedInstancePos.x += cloudPosition.x;
 
-    if (wrappedInstanceMatrix[3].x > boundary) {
-        wrappedInstanceMatrix[3].x -= offset;
-    } else if (wrappedInstanceMatrix[3].x < -boundary) {
-        wrappedInstanceMatrix[3].x += offset;
+    if (wrappedInstancePos.x > boundary) {
+        wrappedInstancePos.x -= offset;
+    } else if (wrappedInstancePos.x < -boundary) {
+        wrappedInstancePos.x += offset;
     }
 
-    // Transform the position from model space to world space with wrapped instance matrix
-    vec4 worldPosition = wrappedInstanceMatrix * vec4(aPos, 1.0);
+    // Transform the position from model space to world space with wrapped instance position
+    vec4 worldPosition = vec4((aPos * vec3(70.0, 8.5, 70.0)) + wrappedInstancePos, 1.0);
 
     FragPos = vec3(worldPosition);
-    Normal = mat3(transpose(inverse(wrappedInstanceMatrix))) * aNormal;
+    Normal = aNormal;
 
     // Calculate the variation factor
-    VariationFactor = random(wrappedInstanceMatrix[3].xyz);
+    VariationFactor = random(wrappedInstancePos);
 
     gl_Position = projection * view * worldPosition;
 }

@@ -58,12 +58,10 @@ void CloudManager::Initiate()
 }
 
 void CloudManager::Init() {
-    /*
     GenerateMap();
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateInstanceRenderer();
-    */
 }
 
 void CloudManager::GenerateMap() {
@@ -79,10 +77,6 @@ void CloudManager::GenerateMap() {
                 bool filled;
                 if(normalized < 0.4f) filled = true;
                 else filled = false;
-
-                //cout << normalized << endl;
-
-                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(-2500 + (70 * x), 430, -2500 + (70 * z)), glm::quat(), glm::vec3(70.0f,8.5f,70.0f));
 
                 BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
                 // Create BlockData object with Sand type and add it to the vector
