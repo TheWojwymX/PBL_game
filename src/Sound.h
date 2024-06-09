@@ -28,6 +28,7 @@ public:
     SoundType _soundType;
 
     Sound(const std::string &name, const std::string &path, int id, SoundType soundType);
+    ~Sound();
 
     nlohmann::json Serialize();
 

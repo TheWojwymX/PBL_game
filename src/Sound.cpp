@@ -21,15 +21,17 @@ Sound::Sound(const std::string &name, const std::string &path, int id, SoundType
     }
 }
 
-void Sound::PlaySound() {
-    ma_sound_start(&_sound);
+Sound::~Sound() {
+    ma_sound_uninit(&_sound);
+    std::cout << "Sound uninitialized: " << _name << std::endl;
 }
 
-void on_sound_end(void* pUserData, ma_sound* pSound) {
-    printf("Callback called. pSound: %p\n", pSound);
-    //ma_sound_uninit(pSound);
-    //delete pSound;
-    printf("Sound playback ended and memory released.\n");
+void Sound::PlaySound() {
+    if (ma_sound_start(&_sound) != MA_SUCCESS) {
+        std::cerr << "Failed to start sound: " << _name << std::endl;
+    } else {
+        std::cout << "Playing sound: " << _name << std::endl;
+    }
 }
 
 void Sound::PlaySoundSim() {
@@ -51,7 +53,6 @@ void Sound::PlaySoundSim() {
         ma_sound_set_volume(sound, AUDIOENGINEMANAGER._sfxVolume);
     }
 
-    ma_sound_set_end_callback(sound, on_sound_end, nullptr);
     result = ma_sound_start(sound);
 
     if (result != MA_SUCCESS) {
@@ -60,6 +61,9 @@ void Sound::PlaySoundSim() {
         delete sound;
         return;
     }
+
+    AUDIOENGINEMANAGER._activeSounds.push_back(sound);
+
 }
 
 nlohmann::json Sound::Serialize() {

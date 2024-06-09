@@ -7,6 +7,7 @@
 #ifndef OPENGLGP_AUDIOMANAGER_H
 #define OPENGLGP_AUDIOMANAGER_H
 
+#include <vector>
 #include "../thirdparty/miniaudio.h"
 
 class AudioEngineManager {
@@ -34,6 +35,10 @@ public:
 
     float _musicVolume = 1;
     float _sfxVolume = 0.5;
+
+    std::vector<ma_sound*> _activeSounds;
+    void CleanupFinishedSounds();
+
 };
 
 
