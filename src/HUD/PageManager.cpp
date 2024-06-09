@@ -6,7 +6,7 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/UpgradeManager.h"
-
+#include "Managers/TutorialManager.h"
 
 PageManager &PageManager::getInstance() {
     static PageManager instance;
@@ -66,7 +66,14 @@ void PageManager::CheckInputs() {
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
             GAMEMANAGER.Pause();
-        } else {
+        }
+        else if(TUTORIALMANAGER._actualMessage == 8){
+            CloseAllPages();
+            _isInPage = true;
+            _playerUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.Pause();
+        }
+        else {
             _isInPage = false;
             CloseAllPages();
             GAMEMANAGER.Unpause();
@@ -77,7 +84,13 @@ void PageManager::CheckInputs() {
             _isInPage = true;
             _turretUpgradeMenu->_shouldRender = true;
             GAMEMANAGER.Pause();
-        } else {
+        }
+        else if(TUTORIALMANAGER._actualMessage == 8){
+            CloseAllPages();
+            _isInPage = true;
+            _playerUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.Pause();
+        }else {
             _isInPage = false;
             CloseAllPages();
             GAMEMANAGER.Unpause();
@@ -87,7 +100,14 @@ void PageManager::CheckInputs() {
             _isInPage = true;
             _domeUpgradeMenu->_shouldRender = true;
             GAMEMANAGER.Pause();
-        } else {
+        }
+        else if(TUTORIALMANAGER._actualMessage == 8){
+            CloseAllPages();
+            _isInPage = true;
+            _playerUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.Pause();
+        }
+        else {
             _isInPage = false;
             CloseAllPages();
             GAMEMANAGER.Unpause();

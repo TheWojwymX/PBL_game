@@ -66,7 +66,7 @@ public:
 
     void Reload(const shared_ptr<Turret> &turret);
 
-    int _turretCost = 10;
+    int _turretCost = 1;
 
     void MoveTurret();
 

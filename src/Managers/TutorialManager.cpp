@@ -44,7 +44,7 @@ void TutorialManager::Update() {
                                                                _player->GetTransform()->GetPosition().z));
                 _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
 
-                if(_timer < 5 && !_firstEnemySpawned){
+                if(_timer < 1 && !_firstEnemySpawned){
                     _timer += TIME.GetDeltaTime();
                 }else if(!_firstEnemySpawned){
                     _firstEnemySpawned = true;

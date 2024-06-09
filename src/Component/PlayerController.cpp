@@ -64,6 +64,10 @@ void PlayerController::Update() {
         HandleUpgrades();
         //cout << _jetpackFuel << endl;
     }
+
+    if(INPUT.IsKeyPressed(GLFW_KEY_R)){
+        GetFuelForMaterials();
+    }
 }
 
 void PlayerController::MovementInput() {
@@ -314,4 +318,14 @@ void PlayerController::JetpackInput() {
 
 void PlayerController::SetGravity(float gravity) {
     _gravity = gravity;
+}
+
+void PlayerController::GetFuelForMaterials() {
+    if(GAMEMANAGER._metal >= 1 && _jetpackFuel < _maxJetpackFuel){
+        GAMEMANAGER._metal--;
+        _jetpackFuel += 20;
+        if(_jetpackFuel > _maxJetpackFuel){
+            _jetpackFuel = _maxJetpackFuel;
+        }
+    }
 }

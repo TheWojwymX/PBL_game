@@ -26,33 +26,37 @@ public:
     int _actualMessage = 0;
     std::vector<string> _messages{
 
-        "Quick! Call reinforcements [L] using materials!\n",
+        "Quick! Call reinforcements [L] using \n"
+        "materials!\n",
 
         "Choose position with [RMB]. \n",
 
-        "There is one more on another side! Relocate \n"
-        "the turret with [RMB]. You lose if base gets \n"
-        "destroyed. \n",
+        "There is one more on another side! \n"
+        "Relocate the turret with [RMB]. \n"
+        "You lose if base gets destroyed. \n",
 
-        "Go look for more materials in the hole. \n",
+        "Go look for more materials in the \n"
+        "hole. \n",
 
         "Press [RMB] to throw a flare. \n",
 
         "Dig up materials using [LMB]. \n",
 
-        "Go back for upgrades. Get Jetpack fuel from \n"
-        "materials [E]. Hold [SPACE] to use jetpack. \n",
+        "Go back for upgrades. Get Jetpack \n"
+        "fuel from materials [R]. Hold \n"
+        "[SPACE] to use jetpack. \n",
 
-        "Interact with upgrade stations [F] and check out \n"
-        "the upgrades. \n",
+        "Interact with upgrade stations [F] \n"
+        "and check out the upgrades. \n",
 
         "Exit with [ESC] or [F]. \n",
 
-        "Go and gather materials but remember to come \n"
-        "back in time and prepare for defense. \n",
+        "Go and gather materials but \n"
+        "remember to come back in time \n"
+        "and prepare for defense. \n",
 
-        "Depth and arrow pointing to the hole will help \n"
-        "you get back. \n",
+        "Depth and arrow pointing to the \n"
+        "hole will help you get back. \n",
 
     };
 

@@ -8,9 +8,7 @@ void MessagePage::Init() {
 
     SetVertices(_backgroundVertices);
 
-    _generalImage.Init(_generalImagePath, _generalImageVertices, true, false);
-
-    _continueDialogButton.Init();
+    //_generalImage.Init(_generalImagePath, _generalImageVertices, true, false);
 
     Page::Init();
 }
@@ -18,9 +16,8 @@ void MessagePage::Init() {
 void MessagePage::Update() {
     if(_shouldRender){
         Page::Update();
-        _generalImage.UpdateImage();
-        _continueDialogButton.Update();
-        TEXTRENDERER.RenderText(_actualText, -0.5f,  -0.3f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        //_generalImage.UpdateImage();
+        TEXTRENDERER.RenderText(_actualText, -0.28f,  -0.7f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
     }
 }
 

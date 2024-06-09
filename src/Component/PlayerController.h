@@ -38,6 +38,8 @@ public:
 
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
 
+    void GetFuelForMaterials();
+
     float _jetpackFuel = 0.0f;
     float _maxJetpackFuel = 100.0f;
 
