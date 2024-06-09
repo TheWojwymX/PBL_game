@@ -918,8 +918,10 @@ int BlockManager::DestroyBlock(BlockData& blockData)
     {
         case BlockType::PLASTIC:
             GAMEMANAGER.AddPlastic(1);
+            break;
         case BlockType::METAL:
             GAMEMANAGER.AddMetal(1);
+            break;
         default:
             break;
     }
