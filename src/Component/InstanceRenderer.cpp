@@ -1,8 +1,8 @@
 #include "InstanceRenderer.h"
 
 InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader, bool isDynamic)
-    : _model(model),_maxSize(maxSize) , _shader(shader), _isDynamic(isDynamic) {
-    CreateMatrixBuffer(maxSize);
+    : _model(model), _maxSize(maxSize), _shader(shader), _isDynamic(isDynamic) {
+    CreatePositionBuffer(maxSize);
     SetupInstanceModel();
 }
 
@@ -21,10 +21,10 @@ nlohmann::json InstanceRenderer::Serialize() {
     return data;
 }
 
-void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
+void InstanceRenderer::Deserialize(const nlohmann::json& jsonData) {
 
     if (jsonData.contains("model")) {
-        _model = RESOURCEMANAGER.GetModelByName(jsonData["model"].get<string>());
+        _model = RESOURCEMANAGER.GetModelByName(jsonData["model"].get<std::string>());
     }
 
     if (jsonData.contains("maxSize")) {
@@ -32,14 +32,14 @@ void InstanceRenderer::Deserialize(const nlohmann::json &jsonData) {
     }
 
     if (jsonData.contains("shader")) {
-        _shader = RESOURCEMANAGER.GetShaderByName(jsonData["shader"].get<string>());
+        _shader = RESOURCEMANAGER.GetShaderByName(jsonData["shader"].get<std::string>());
     }
 
     if (jsonData.contains("isDynamic")) {
         _isDynamic = jsonData["isDynamic"].get<bool>();
     }
 
-    CreateMatrixBuffer(_maxSize);
+    CreatePositionBuffer(_maxSize);
     SetupInstanceModel();
 
     Component::Deserialize(jsonData);
@@ -51,54 +51,44 @@ void InstanceRenderer::Initiate() {
 
 void InstanceRenderer::Render(glm::mat4 parentWorld) {
     _shader->use();
-    _model->InstanceDraw(*_shader, _instanceMatrixSize);
+    _model->InstanceDraw(*_shader, _instancePositionSize);
 }
 
 void InstanceRenderer::RenderShadows(glm::mat4 parentWorld) {
-    shared_ptr<Shader> currentShader = _shader;
+    std::shared_ptr<Shader> currentShader = _shader;
     SetShader(RESOURCEMANAGER.GetShaderByName("shadowInstanceShader"));
     _shader->use();
-    _model->InstanceDraw(*_shader, _instanceMatrixSize);
+    _model->InstanceDraw(*_shader, _instancePositionSize);
     SetShader(currentShader);
 }
 
-void InstanceRenderer::RefreshMatrixBuffer(const std::vector<glm::mat4>& instanceMatrix) {
-    _instanceMatrixSize = instanceMatrix.size();
+void InstanceRenderer::RefreshPositionBuffer(const std::vector<glm::vec3>& instancePositions) {
+    _instancePositionSize = instancePositions.size();
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, _instanceMatrixSize * sizeof(glm::mat4), instanceMatrix.data());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, _instancePositionSize * sizeof(glm::vec3), instancePositions.data());
 }
 
 void InstanceRenderer::SetupInstanceModel() {
-    for (unsigned int i = 0; i < _model->meshes.size(); i++)
-    {
+    for (unsigned int i = 0; i < _model->meshes.size(); i++) {
         unsigned int VAO = _model->meshes[i].VAO;
         glBindVertexArray(VAO);
-        // set attribute pointers for matrix (4 times vec4)
-        glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
-        glEnableVertexAttribArray(4);
-        glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(glm::vec4)));
-        glEnableVertexAttribArray(5);
-        glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
-        glEnableVertexAttribArray(6);
-        glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
 
-        glVertexAttribDivisor(3, 1);
-        glVertexAttribDivisor(4, 1);
-        glVertexAttribDivisor(5, 1);
-        glVertexAttribDivisor(6, 1);
+        // Set attribute pointers for vec3 position
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+        glVertexAttribDivisor(3, 1); 
 
         glBindVertexArray(0);
     }
 }
 
-void InstanceRenderer::CreateMatrixBuffer(int maxSize) {
+void InstanceRenderer::CreatePositionBuffer(int maxSize) {
     glGenBuffers(1, &_instanceBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _instanceBuffer);
-    if(_isDynamic)
-        glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
+    if (_isDynamic)
+        glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::vec3), nullptr, GL_DYNAMIC_DRAW);
     else
-        glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::mat4), nullptr, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::vec3), nullptr, GL_STATIC_DRAW);
 }
 
 void InstanceRenderer::addToInspector(ImguiMain* imguiMain)
@@ -114,7 +104,10 @@ void InstanceRenderer::addToInspector(ImguiMain* imguiMain)
         }
 
         // Display and edit the max size
-        if (ImGui::InputInt("Max Size", (int*)&_maxSize)) {};
+        int maxSize = static_cast<int>(_maxSize); // Use a temporary variable for ImGui
+        if (ImGui::InputInt("Max Size", &maxSize)) {
+            _maxSize = static_cast<unsigned int>(maxSize);
+        }
 
         // Display and edit the shader name
         char shaderName[128];
@@ -130,4 +123,3 @@ void InstanceRenderer::addToInspector(ImguiMain* imguiMain)
         ImGui::TreePop();
     }
 }
-

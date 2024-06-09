@@ -58,10 +58,12 @@ void CloudManager::Initiate()
 }
 
 void CloudManager::Init() {
+    /*
     GenerateMap();
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateInstanceRenderer();
+    */
 }
 
 void CloudManager::GenerateMap() {
@@ -84,7 +86,7 @@ void CloudManager::GenerateMap() {
 
                 BlockType type = filled ? BlockType::SAND : BlockType::EMPTY;
                 // Create BlockData object with Sand type and add it to the vector
-                BlockData cloudBlock(type, glm::ivec3(x, y, z), transformMatrix, 1.0f, false, density, shared_from_this());
+                BlockData cloudBlock(type, glm::vec3(-2500 + (70 * x), 430, -2500 + (70 * z)), 1.0f, false, density, shared_from_this());
                 _blocksData.push_back(cloudBlock);
             }
         }
@@ -92,19 +94,18 @@ void CloudManager::GenerateMap() {
 }
 
 void CloudManager::UpdateInstanceRenderer() {
-    std::vector<glm::mat4> instanceMatrix;
+    std::vector<glm::vec3> instancePositions;
 
     // Iterate through _visibleBlocks and add visible non-empty blocks to instanceMatrix
     for (const auto& blockPtr : _visibleBlocks) {
         const BlockData& blockData = *blockPtr;
 
-        glm::mat4 transformMatrix = blockData.GetMatrix();
-        instanceMatrix.push_back(transformMatrix);
+        instancePositions.push_back(blockData.GetPosID());
     }
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        _sandRendererRef->RefreshMatrixBuffer(instanceMatrix);
+        _sandRendererRef->RefreshPositionBuffer(instancePositions);
     }
 }
 

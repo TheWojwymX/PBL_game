@@ -97,9 +97,9 @@ void BlockManager::Init() {
 }
 
 void BlockManager::UpdateInstanceRenderer() {
-    std::vector<glm::mat4> instancedSandMatrix;
-    std::vector<glm::mat4> instancedPlasticMatrix;
-    std::vector<glm::mat4> instancedMetalMatrix;
+    std::vector<glm::vec3> instancedSandPosition;
+    std::vector<glm::vec3> instancedPlasticPosition;
+    std::vector<glm::vec3> instancedMetalPosition;
 
     // Iterate through _renderedChunks and add visible non-empty blocks to instanceMatrix
     for (int chunkIndex : _renderedChunks) {
@@ -113,26 +113,26 @@ void BlockManager::UpdateInstanceRenderer() {
         for (BlockData* blockPtr : _visibleBlocks[chunkIndex]) {
             switch (blockPtr->GetBlockType()) {
                 case BlockType::DIRT:
-                    instancedSandMatrix.push_back(blockPtr->GetMatrix());
+                    instancedSandPosition.push_back(blockPtr->GetPosID());
                     break;
                 case BlockType::PLASTIC:
-                    instancedPlasticMatrix.push_back(blockPtr->GetMatrix());
+                    instancedPlasticPosition.push_back(blockPtr->GetPosID());
                     break;
                 case BlockType::METAL:
-                    instancedMetalMatrix.push_back(blockPtr->GetMatrix());
+                    instancedMetalPosition.push_back(blockPtr->GetPosID());
             }
         }
     }
 
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
-        _sandRendererRef->RefreshMatrixBuffer(instancedSandMatrix);
+        _sandRendererRef->RefreshPositionBuffer(instancedSandPosition);
     }
     if (_plasticRendererRef) {
-        _plasticRendererRef->RefreshMatrixBuffer(instancedPlasticMatrix);
+        _plasticRendererRef->RefreshPositionBuffer(instancedPlasticPosition);
     }
     if (_metalRendererRef) {
-        _metalRendererRef->RefreshMatrixBuffer(instancedMetalMatrix);
+        _metalRendererRef->RefreshPositionBuffer(instancedMetalPosition);
     }
 }
 
@@ -445,7 +445,7 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
 
 void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
 {
-    std::vector<glm::mat4> instanceMatrix;
+    std::vector<glm::vec3> instancePositions;
     _topLayerHeights.clear();
 
     float frequency = 0.025f; // Frequency of the noise (controls the detail level)
@@ -478,23 +478,21 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
 
             height *= smoothingFactor;
 
-            // Calculate transform matrix for the current block with noise-adjusted height
-            glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, (_height - 1) + height, z), glm::quat(), glm::vec3(1.0f));
             _topLayerHeights.push_back((_height - 1) + height);
 
             // Add the block to the vector
-            instanceMatrix.push_back(transformMatrix);
+            instancePositions.push_back(glm::vec3(x, (_height - 1) + height, z));
         }
     }
 
     // Iterate over _blocksData and add edge blocks to instanceMatrix
     for (BlockData& blockData : _blocksData) {
         if (IsEdgeBlock(blockData) && blockData.IsSolid()) {
-            instanceMatrix.push_back(blockData.GetMatrix());
+            instancePositions.push_back(blockData.GetPosID());
         }
     }
 
-    _topLayerRendererRef->RefreshMatrixBuffer(instanceMatrix);
+    _topLayerRendererRef->RefreshPositionBuffer(instancePositions);
 }
 
 
@@ -519,9 +517,6 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                 if (isEdgeBlock)
                     filled = true;
 
-                // Calculate transform matrix for the current block
-                glm::mat4 transformMatrix = Transform::CalculateTransformMatrix(glm::vec3(x, y, z), glm::quat(), glm::vec3(1.0f));
-
                 // Create BlockData object with appropriate HP based on block type
                 BlockType type = filled ? BlockType::DIRT : BlockType::EMPTY;
                 float hp = 0.0f;
@@ -537,7 +532,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                     }
                 }
 
-                BlockData block(type, glm::ivec3(x, y, z), transformMatrix, hp, isEdgeBlock, 1.0f, shared_from_this());
+                BlockData block(type, glm::ivec3(x, y, z), hp, isEdgeBlock, 1.0f, shared_from_this());
 
                 // Add the block to the vector
                 _blocksData.push_back(block);

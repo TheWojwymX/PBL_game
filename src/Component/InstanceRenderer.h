@@ -21,22 +21,22 @@ public:
 
     void RenderShadows(glm::mat4 parentWorld) override;
 
-    void SetShader(shared_ptr<Shader> newShader) {
+    void SetShader(std::shared_ptr<Shader> newShader) {
         _shader = newShader;
     }
 
-    void RefreshMatrixBuffer(const std::vector<glm::mat4>& instanceMatrix);
+    void RefreshPositionBuffer(const std::vector<glm::vec3>& instancePositions);
 
-    void addToInspector(ImguiMain *imguiMain) override;
+    void addToInspector(ImguiMain* imguiMain) override;
 
 private:
-    shared_ptr<Model> _model;
-    shared_ptr<Shader> _shader;
-    unsigned int _instanceMatrixSize;
+    std::shared_ptr<Model> _model;
+    std::shared_ptr<Shader> _shader;
+    unsigned int _instancePositionSize;
     unsigned int _maxSize;
     unsigned int _instanceBuffer;
     bool _isDynamic;
 
     void SetupInstanceModel();
-    void CreateMatrixBuffer(int maxSize);
+    void CreatePositionBuffer(int maxSize);
 };

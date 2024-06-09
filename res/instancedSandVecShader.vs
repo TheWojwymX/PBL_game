@@ -2,7 +2,7 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
-layout (location = 3) in mat4 aInstanceMatrix;
+layout (location = 3) in vec3 aInstancePos; 
 
 out vec2 TexCoords;
 out vec3 Normal;
@@ -21,17 +21,23 @@ float random(vec3 position) {
 
 void main()
 {
-    TexCoords = aTexCoords;    
-    FragPos = vec3(aInstanceMatrix * vec4(aPos, 1.0));
-    Normal = mat3(transpose(inverse(aInstanceMatrix))) * aNormal; 
+    TexCoords = aTexCoords; 
     
-    vec3 position = aInstanceMatrix[3].xyz; // Extract position vector from the instance matrix
-    VariationFactor = random(position); // Use the position vector to generate variation
+    // Calculate world position using instance position and vertex position
+    vec3 worldPos = aPos + aInstancePos;
+    FragPos = worldPos;
+    
+    // Normal is directly aNormal since no transformation is required
+    Normal = aNormal;
 
-    FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
+    // Calculate the variation factor using instance position
+    VariationFactor = random(aInstancePos);
 
-    // Calculate the height tint color using VariationFactor
-    float height = position.y;
+    // Transform FragPos to light space
+    FragPosLightSpace = lightSpaceMatrix * vec4(worldPos, 1.0);
+
+    // Calculate the height tint color based on height
+    float height = aInstancePos.y;
     if (height < 100.0) {
         HeightTint = vec3(0.396, 0.019, 0.019); // Dark red tint
     } else if (height < 200.0) {
@@ -40,5 +46,6 @@ void main()
         HeightTint = vec3(1, 0.863, 0.471); // Light yellow tint 
     }
 
-    gl_Position = projection * view * aInstanceMatrix * vec4(aPos, 1.0);
+    // Calculate final position
+    gl_Position = projection * view * vec4(worldPos, 1.0);
 }
