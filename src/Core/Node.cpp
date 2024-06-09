@@ -121,6 +121,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::PDACONTROLLER:
                         ComponentsManager::getInstance().DeserializeComponent<PDAController>(componentJson);
                         break;
+                    case ComponentType::TOPLAYERSNAP:
+                        ComponentsManager::getInstance().DeserializeComponent<TopLayerSnap>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;

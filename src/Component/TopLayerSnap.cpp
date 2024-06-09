@@ -29,7 +29,7 @@ void TopLayerSnap::Init()
 
 void TopLayerSnap::Update()
 {
-	_ownerTransform->AddPosition(_yOffset, 1);
+	_ownerTransform->SetPosition(_blockManagerRef->GetTopLayerFloor(_ownerTransform->GetPosition()) + _yOffset, 1);
 	_isEnabled = false;
 }
 

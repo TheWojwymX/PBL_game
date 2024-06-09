@@ -77,7 +77,7 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     int _cameraRefID;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
-    std::vector<float> _topLayerHeights;
+    std::vector<glm::vec3> _topLayerPositions;
 
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();

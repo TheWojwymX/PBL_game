@@ -1,5 +1,5 @@
 {
-  "nextComponentId": 188,
+  "nextComponentId": 194,
   "nextNodeId": 174,
   "resources": {
     "Models": [
@@ -1297,6 +1297,11 @@
             "model": "RakeModel",
             "shader": "modelShader",
             "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 188,
+            "componentType": 18,
+            "yOffset": -3
           }
         ],
         "transform": {
@@ -1328,6 +1333,11 @@
             "model": "BigShovelModel",
             "shader": "modelShader",
             "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 189,
+            "componentType": 18,
+            "yOffset": -6
           }
         ],
         "transform": {
@@ -1359,6 +1369,11 @@
             "model": "Mold1Model",
             "shader": "modelShader",
             "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 190,
+            "componentType": 18,
+            "yOffset": -2
           }
         ],
         "transform": {
@@ -1390,6 +1405,11 @@
             "model": "Mold3Model",
             "shader": "modelShader",
             "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 191,
+            "componentType": 18,
+            "yOffset": -2
           }
         ],
         "transform": {
@@ -1421,6 +1441,11 @@
             "model": "Mold3Model",
             "shader": "modelShader",
             "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 192,
+            "componentType": 18,
+            "yOffset": -2
           }
         ],
         "transform": {
@@ -1452,6 +1477,11 @@
             "model": "Mold7Model",
             "shader": "modelShader",
             "outlineShader": "outlineShader"
+          },
+          {
+            "componentId": 193,
+            "componentType": 18,
+            "yOffset": -2
           }
         ],
         "transform": {

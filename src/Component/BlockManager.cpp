@@ -443,10 +443,9 @@ void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     GenerateTunnels();
 }
 
-void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone)
-{
+void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, glm::ivec2 deadzone) {
     std::vector<glm::vec3> instancePositions;
-    _topLayerHeights.clear();
+    _topLayerPositions.clear();
 
     float frequency = 0.025f; // Frequency of the noise (controls the detail level)
     float amplitude = 10.0f; // Amplitude of the noise (controls the height variation)
@@ -458,6 +457,15 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
     // Calculate the maximum distance from the edge of the deadzone to the point where full noise height is applied
     int maxDistanceX = dimensions.x / 2 - deadzone.x;
     int maxDistanceZ = dimensions.y / 2 - deadzone.y;
+
+    // Seed for randomness
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1000.0f);
+
+    // Generate random offsets for the Perlin noise
+    float randomOffsetX = dis(gen);
+    float randomOffsetZ = dis(gen);
 
     // Iterate over the grid dimensions
     for (int x = startX; x < startX + dimensions.x; x++) {
@@ -471,19 +479,18 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
                 continue;
             }
 
-            // Generate a height value using Perlin noise
-            float height = glm::perlin(glm::vec2(x * frequency, z * frequency)) * amplitude;
+            // Generate a height value using Perlin noise with random offsets
+            float height = glm::perlin(glm::vec2((x + randomOffsetX) * frequency, (z + randomOffsetZ) * frequency)) * amplitude;
 
             float smoothingFactor = glm::clamp(float(distX + distZ) / float((maxDistanceX + maxDistanceZ) / (1 / smoothEnd)), 0.0f, 1.0f);
 
             height *= smoothingFactor;
 
-            _topLayerHeights.push_back((_height - 1) + height);
-
             // Add the block to the vector
             instancePositions.push_back(glm::vec3(x, (_height - 1) + height, z));
         }
     }
+    _topLayerPositions = instancePositions;
 
     // Iterate over _blocksData and add edge blocks to instanceMatrix
     for (BlockData& blockData : _blocksData) {
@@ -494,7 +501,6 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
 
     _topLayerRendererRef->RefreshPositionBuffer(instancePositions);
 }
-
 
 
 void BlockManager::InitializeMap(float initialFillRatio) {
@@ -735,8 +741,15 @@ float BlockManager::GetCaveFloor(glm::vec3 entityPos, int maxDistance) {
 
 float BlockManager::GetTopLayerFloor(glm::vec3 entityPos)
 {
-    return 0.0f;
+    float tolerance = 1.0f;
+
+    for (const auto& pos : _topLayerPositions) {
+        if (std::abs(pos.x - entityPos.x) < tolerance && std::abs(pos.z - entityPos.z) < tolerance) {
+            return pos.y;
+        }
+    }
 }
+
 
 
 void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
@@ -977,10 +990,10 @@ void BlockManager::GenerateTunnels() {
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
     glm::ivec3 startLayer1 = GetRandomSideBlock(glm::ivec2(200, 250));
-    std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
+    //std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
 
     glm::ivec3 endLayer2 = GetRandomSideBlock(glm::ivec2(150, 250), startLayer1);
-    std::cout << "EndPoint for tunnel 1: " << endLayer2.x << ", " << endLayer2.y << ", " << endLayer2.z << std::endl;
+    //std::cout << "EndPoint for tunnel 1: " << endLayer2.x << ", " << endLayer2.y << ", " << endLayer2.z << std::endl;
 
     // Generate intermediate points within the map for the first tunnel
     std::vector<glm::ivec3> pointsTunnel1;
@@ -1002,10 +1015,10 @@ void BlockManager::GenerateTunnels() {
 
 
     glm::ivec3 startLayer2 = GetRandomSideBlock(glm::ivec2(100, 150));
-    std::cout << "StartPoint for tunnel 2: " << startLayer2.x << ", " << startLayer2.y << ", " << startLayer2.z << std::endl;
+    //std::cout << "StartPoint for tunnel 2: " << startLayer2.x << ", " << startLayer2.y << ", " << startLayer2.z << std::endl;
 
     glm::ivec3 endLayer3 = GetRandomSideBlock(glm::ivec2(50, 150), startLayer2);
-    std::cout << "EndPoint for tunnel 2: " << endLayer3.x << ", " << endLayer3.y << ", " << endLayer3.z << std::endl;
+    //std::cout << "EndPoint for tunnel 2: " << endLayer3.x << ", " << endLayer3.y << ", " << endLayer3.z << std::endl;
 
     // Generate intermediate points within the map for the second tunnel
     std::vector<glm::ivec3> pointsTunnel2;

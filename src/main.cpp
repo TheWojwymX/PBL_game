@@ -41,6 +41,7 @@
 #include "Component/ShadowMap.h"
 #include "Component/Rotate.h"
 #include "Component/Disabler.h"
+#include "Component/TopLayerSnap.h"
 
 
 #include "Managers/ComponentsManager.h"
