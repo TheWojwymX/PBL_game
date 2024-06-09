@@ -14,12 +14,10 @@ struct DirLight {
 // Input from vertex shader
 in vec3 FragPos;
 in vec3 Normal;
-in vec2 TexCoords;
 in float VariationFactor; // Variation factor from the vertex shader
 in float ClipDistance;
 
 // Uniforms for view and lighting properties
-uniform sampler2D texture_diffuse1;
 uniform vec3 viewPos;
 uniform DirLight dirLight;
 

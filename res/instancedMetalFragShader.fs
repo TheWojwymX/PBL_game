@@ -3,8 +3,8 @@ out vec4 FragColor;
 
 // Define constants for lighting calculations
 #define AMBIENT_STRENGTH 0.25
-#define SPECULAR_STRENGTH 99
-#define SHININESS 1000
+#define SPECULAR_STRENGTH 1.0 
+#define SHININESS 256 
 #define NR_SPOT_LIGHTS 1
 #define NR_POINT_LIGHTS 10
 
@@ -39,13 +39,11 @@ struct SpotLight {
 // Input from vertex shader
 in vec3 FragPos;
 in vec3 Normal;
-in vec2 TexCoords;
 in float VariationFactor; // Variation factor from the vertex shader
 in vec4 FragPosLightSpace;
 in vec3 HeightTint; // Add height tint color input
 
 // Uniforms for view and lighting properties
-uniform sampler2D texture_diffuse1;
 uniform sampler2D shadowMap;
 uniform vec3 viewPos;
 uniform vec3 lightPos;
@@ -110,7 +108,7 @@ void main()
     vec3 finalColor = (dirLightColor + spotLightColor + clamped) * shadow * heightTint * brightnessFactor;
 
     // Combine the final color with the texture color
-    FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
+    FragColor = vec4(finalColor, 1.0);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)

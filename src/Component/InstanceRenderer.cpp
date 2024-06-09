@@ -73,10 +73,9 @@ void InstanceRenderer::SetupInstanceModel() {
         unsigned int VAO = _model->meshes[i].VAO;
         glBindVertexArray(VAO);
 
-        // Set attribute pointers for vec3 position
-        glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-        glVertexAttribDivisor(3, 1); 
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+        glVertexAttribDivisor(2, 1);
 
         glBindVertexArray(0);
     }

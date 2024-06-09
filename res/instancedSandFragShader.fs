@@ -37,15 +37,13 @@ struct SpotLight {
 };
 
 // Input from vertex shader
-in vec3 FragPos;
 in vec3 Normal;
-in vec2 TexCoords;
-in float VariationFactor; // Variation factor from the vertex shader
+in vec3 FragPos;
+in float VariationFactor; 
 in vec4 FragPosLightSpace;
-in vec3 HeightTint; // Add height tint color input
+in vec3 HeightTint; 
 
 // Uniforms for view and lighting properties
-uniform sampler2D texture_diffuse1;
 uniform sampler2D shadowMap;
 uniform vec3 viewPos;
 uniform vec3 lightPos;
@@ -108,7 +106,7 @@ void main()
     vec3 finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow * heightTint * brightnessFactor;
 
     // Combine the final color with the texture color
-    FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
+    FragColor = vec4(finalColor, 1.0);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
