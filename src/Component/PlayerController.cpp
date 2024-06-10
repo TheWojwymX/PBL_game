@@ -152,6 +152,7 @@ void PlayerController::HandleMovement() {
     }
 
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
+    movementVector = glm::clamp(movementVector, -glm::vec3(0.999f), glm::vec3(0.999f));
 
     if(CheckIsOutsideBase(_ownerTransform->GetPosition(), GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius)){
         movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius, true);

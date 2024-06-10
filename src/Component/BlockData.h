@@ -35,6 +35,8 @@ public:
     bool IsSolid() const { return _blockType != BlockType::EMPTY; }
     bool IsMaterial() const { return _blockType == BlockType::PLASTIC || _blockType == BlockType::METAL; }
     void AddGlowstick(std::shared_ptr<GlowstickMovement> glowstick) {_stuckGlowsticks.push_back(glowstick);}
+    glm::ivec3 GetChunkID(int chunkSize) const { return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize); }
+    bool GetCollAxis(int side) { return _collAxis[side]; }
 
     void SetBlockType(BlockType blockType) { _blockType = blockType; }
     void SetPosID(glm::ivec3 posID) { _posID = posID; }
@@ -44,7 +46,11 @@ public:
     void SetBlockManager(std::weak_ptr<BlockManager> blockManager) { _blockManager = blockManager; }
     void SetVisible(bool visible) { _visible = visible; }
     void SetRendered(bool rendered) { _visible = rendered; }
-    glm::ivec3 GetChunkID(int chunkSize) const { return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize); }
+    void SetCollAxis(bool xAxis, bool yAxis, bool zAxis) {
+        _collAxis[0] = xAxis;
+        _collAxis[1] = yAxis;
+        _collAxis[2] = zAxis;
+    }
 
     void UnstuckGlowsticks();
     bool DamageBlock(float amount);
@@ -60,4 +66,5 @@ private:
     bool _visible;
     bool _rendered;
     std::vector<std::shared_ptr<GlowstickMovement>> _stuckGlowsticks;
+    bool _collAxis[3] = { false, false, false};
 };

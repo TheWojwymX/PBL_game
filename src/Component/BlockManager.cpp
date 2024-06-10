@@ -195,12 +195,27 @@ void BlockManager::UpdateNeighbourVisibility(BlockData& blockData)
     int y = posID.y;
     int z = posID.z;
 
-    if (x - 1 >= 0 && x - 1 < _width) SetVisibility(_blocksData[GetIndex(x - 1, y, z)], true); // Left
-    if (x + 1 >= 0 && x + 1 < _width) SetVisibility(_blocksData[GetIndex(x + 1, y, z)], true); // Right
-    if (y + 1 >= 0 && y + 1 < _height) SetVisibility(_blocksData[GetIndex(x, y + 1, z)], true); // Top
-    if (y - 1 >= 0 && y - 1 < _height) SetVisibility(_blocksData[GetIndex(x, y - 1, z)], true); // Bottom
-    if (z + 1 >= 0 && z + 1 < _depth) SetVisibility(_blocksData[GetIndex(x, y, z + 1)], true); // Front
-    if (z - 1 >= 0 && z - 1 < _depth) SetVisibility(_blocksData[GetIndex(x, y, z - 1)], true); // Back
+    if (x - 1 >= 0 && x - 1 < _width) UpdateBlockVisibility(_blocksData[GetIndex(x - 1, y, z)]); // Left
+    if (x + 1 >= 0 && x + 1 < _width) UpdateBlockVisibility(_blocksData[GetIndex(x + 1, y, z)]); // Right
+    if (y + 1 >= 0 && y + 1 < _height) UpdateBlockVisibility(_blocksData[GetIndex(x, y + 1, z)]); // Top
+    if (y - 1 >= 0 && y - 1 < _height) UpdateBlockVisibility(_blocksData[GetIndex(x, y - 1, z)]); // Bottom
+    if (z + 1 >= 0 && z + 1 < _depth) UpdateBlockVisibility(_blocksData[GetIndex(x, y, z + 1)]); // Front
+    if (z - 1 >= 0 && z - 1 < _depth) UpdateBlockVisibility(_blocksData[GetIndex(x, y, z - 1)]); // Back
+}
+
+void BlockManager::UpdateNeighbourVisibility(BlockData& blockData,bool state)
+{
+    glm::ivec3 posID = blockData.GetPosID();
+    int x = posID.x;
+    int y = posID.y;
+    int z = posID.z;
+
+    if (x - 1 >= 0 && x - 1 < _width) SetVisibility(_blocksData[GetIndex(x - 1, y, z)], state); // Left
+    if (x + 1 >= 0 && x + 1 < _width) SetVisibility(_blocksData[GetIndex(x + 1, y, z)], state); // Right
+    if (y + 1 >= 0 && y + 1 < _height) SetVisibility(_blocksData[GetIndex(x, y + 1, z)], state); // Top
+    if (y - 1 >= 0 && y - 1 < _height) SetVisibility(_blocksData[GetIndex(x, y - 1, z)], state); // Bottom
+    if (z + 1 >= 0 && z + 1 < _depth) SetVisibility(_blocksData[GetIndex(x, y, z + 1)], state); // Front
+    if (z - 1 >= 0 && z - 1 < _depth) SetVisibility(_blocksData[GetIndex(x, y, z - 1)], state); // Back
 }
 
 void BlockManager::UpdateBlockVisibility(BlockData& blockData)
@@ -212,16 +227,17 @@ void BlockManager::UpdateBlockVisibility(BlockData& blockData)
     int z = posID.z;
 
     // Check adjacent blocks for emptiness
-    bool leftBlockEmpty = x - 1 >= 0 && CheckAdjacency(x - 1, y, z);
-    bool rightBlockEmpty = x + 1 < _width && CheckAdjacency(x + 1, y, z);
-    bool topBlockEmpty = y + 1 < _height && CheckAdjacency(x, y + 1, z);
-    bool bottomBlockEmpty = y - 1 >= 0 && CheckAdjacency(x, y - 1, z);
-    bool frontBlockEmpty = z + 1 < _depth && CheckAdjacency(x, y, z + 1);
-    bool backBlockEmpty = z - 1 >= 0 && CheckAdjacency(x, y, z - 1);
+    bool leftBlockSolid = x - 1 >= 0 && CheckAdjacency(x - 1, y, z);
+    bool rightBlockSolid = x + 1 < _width && CheckAdjacency(x + 1, y, z);
+    bool bottomBlockSolid = y - 1 >= 0 && CheckAdjacency(x, y - 1, z);
+    bool topBlockSolid = y + 1 < _height && CheckAdjacency(x, y + 1, z);
+    bool backBlockSolid = z - 1 >= 0 && CheckAdjacency(x, y, z - 1);
+    bool frontBlockSolid = z + 1 < _depth && CheckAdjacency(x, y, z + 1);
 
     // Check if the block will be visible
-    bool isVisible = !leftBlockEmpty || !rightBlockEmpty || !topBlockEmpty ||
-        !bottomBlockEmpty || !frontBlockEmpty || !backBlockEmpty;
+    bool isVisible = !leftBlockSolid || !rightBlockSolid || !topBlockSolid || !bottomBlockSolid || !frontBlockSolid || !backBlockSolid;
+
+    blockData.SetCollAxis(!leftBlockSolid || !rightBlockSolid, !topBlockSolid || !bottomBlockSolid, !frontBlockSolid || !backBlockSolid);
 
     // Set the visibility of the block
     SetVisibility(blockData, isVisible);
@@ -327,109 +343,6 @@ void BlockManager::DamageBlocks(glm::ivec3 hitPos, int radius, float digPower)
         UpdateRenderedChunks();
     }
 }
-
-
-std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight) {
-    std::vector<CollisionInfo> collisionInfoList;
-
-    // Calculate the number of layers based on the entity's height
-    int numLayers = static_cast<int>(glm::ceil(entityHeight));
-
-    // Generate corners dynamically
-    std::vector<glm::vec3> corners;
-    for (int i = 0; i <= numLayers; ++i) {
-        float yOffset = (i == numLayers) ? entityHeight : static_cast<float>(i);
-        corners.push_back(entityPos + glm::vec3(-halfWidth, yOffset, -halfWidth));
-        corners.push_back(entityPos + glm::vec3(halfWidth, yOffset, -halfWidth));
-        corners.push_back(entityPos + glm::vec3(-halfWidth, yOffset, halfWidth));
-        corners.push_back(entityPos + glm::vec3(halfWidth, yOffset, halfWidth));
-    }
-
-    // Iterate through the corners and check collision with the nearest blocks
-    for (size_t i = 0; i < corners.size(); ++i) {
-        // Round the position of the corner to get the ID of the nearest block
-        glm::ivec3 roundedPosX = glm::round(glm::vec3(corners[i].x + movementVector.x, corners[i].y, corners[i].z));
-        glm::ivec3 roundedPosY = glm::round(glm::vec3(corners[i].x, corners[i].y + movementVector.y, corners[i].z));
-        glm::ivec3 roundedPosZ = glm::round(glm::vec3(corners[i].x, corners[i].y, corners[i].z + movementVector.z));
-
-        // Initialize CollisionInfo for the current corner
-        CollisionInfo info;
-
-        // Check if the rounded position is within bounds for X-axis
-        if (InBounds(roundedPosX)) {
-            int index = GetIndex(roundedPosX);
-
-            // Check if the block at the index is not empty
-            if (_blocksData[index].IsSolid()) {
-                // Calculate the AABB extents of the block
-                glm::vec3 blockMin = glm::vec3(roundedPosX) - glm::vec3(0.5f);
-                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
-
-                float entityPosX = entityPos.x + movementVector.x;
-                if (entityPosX + halfWidth > blockMin.x || entityPosX - halfWidth < blockMax.x) {
-                    // Determine the separation vector in the x-axis
-                    float direction = glm::sign(entityPosX - roundedPosX.x);
-                    info.separationVector.x = (std::abs((std::abs(entityPosX - roundedPosX.x) - (halfWidth + 0.5f))) + 0.0001f) * direction;
-                    info.isColliding = true;
-                }
-            }
-        }
-
-        // Check if the rounded position is within bounds for Z-axis
-        if (InBounds(roundedPosZ)) {
-            int index = GetIndex(roundedPosZ);
-
-            // Check if the block at the index is not empty
-            if (_blocksData[index].IsSolid()) {
-                // Calculate the AABB extents of the block
-                glm::vec3 blockMin = glm::vec3(roundedPosZ) - glm::vec3(0.5f);
-                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
-
-                float entityPosZ = entityPos.z + movementVector.z;
-                if (entityPosZ + halfWidth > blockMin.z || entityPosZ - halfWidth < blockMax.z) {
-                    // Determine the separation vector in the z-axis
-                    float direction = glm::sign(entityPosZ - roundedPosZ.z);
-                    info.separationVector.z = (std::abs((std::abs(entityPosZ - roundedPosZ.z) - (halfWidth + 0.5f))) + 0.0001f) * direction;
-                    info.isColliding = true;
-                }
-            }
-        }
-
-        // Check if the rounded position is within bounds for Y-axis
-        if (InBounds(roundedPosY)) {
-            int index = GetIndex(roundedPosY);
-
-            // Check if the block at the index is not empty
-            if (_blocksData[index].IsSolid()) {
-                // Calculate the AABB extents of the block
-                glm::vec3 blockMin = glm::vec3(roundedPosY) - glm::vec3(0.5f);
-                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
-
-                float entityPosY = entityPos.y + movementVector.y;
-                if (i < 4) {
-                    if (entityPosY < blockMax.y) {
-                        info.separationVector.y = (std::abs((std::abs(entityPosY - blockMax.y))) + 0.0001f);
-                        info.isColliding = true;
-                    }
-                }
-                else if (i >= (corners.size() - 4)) {
-                    if (entityPosY + entityHeight > blockMin.y) {
-                        info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.0001f) * -1;
-                        info.isColliding = true;
-                    }
-                }
-            }
-        }
-
-        // Add collision info to the list
-        collisionInfoList.push_back(info);
-    }
-
-    // Return the list of collision information for each corner
-    return collisionInfoList;
-}
-
-
 
 void BlockManager::GenerateMap(float initialFillRatio, int numIterations) {
     // Initialize the map with a given initial fill ratio (percentage of cells initially filled)
@@ -588,6 +501,97 @@ void BlockManager::IterateCaveGeneration() {
     }
 }
 
+std::vector<CollisionInfo> BlockManager::CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight) {
+    std::vector<CollisionInfo> collisionInfoList;
+
+    // Calculate the number of layers based on the entity's height
+    int numLayers = static_cast<int>(glm::ceil(entityHeight));
+
+    // Generate corners dynamically
+    std::vector<glm::vec3> corners;
+    for (int i = 0; i <= numLayers; ++i) {
+        float yOffset = (i == numLayers) ? entityHeight : static_cast<float>(i);
+        corners.push_back(entityPos + glm::vec3(-halfWidth, yOffset, -halfWidth));
+        corners.push_back(entityPos + glm::vec3(halfWidth, yOffset, -halfWidth));
+        corners.push_back(entityPos + glm::vec3(-halfWidth, yOffset, halfWidth));
+        corners.push_back(entityPos + glm::vec3(halfWidth, yOffset, halfWidth));
+    }
+
+    // Iterate through the corners and check collision with the nearest blocks
+    for (size_t i = 0; i < corners.size(); ++i) {
+        // Round the position of the corner to get the ID of the nearest block
+        glm::ivec3 roundedPosXZ = glm::round(glm::vec3(corners[i].x + movementVector.x, corners[i].y, corners[i].z + movementVector.z));
+        glm::ivec3 roundedPosY = glm::round(glm::vec3(corners[i].x, corners[i].y + movementVector.y, corners[i].z));
+
+        // Initialize CollisionInfo for the current corner
+        CollisionInfo info;
+
+        // Check if the rounded position is within bounds for X-axis
+        if (InBounds(roundedPosXZ)) {
+            int index = GetIndex(roundedPosXZ);
+       
+            // Check if the block at the index is not empty
+            if (_blocksData[index].IsSolid()) {
+                //std::cout << "colX: " << _blocksData[index].GetCollAxis(0) << " colY: " << _blocksData[index].GetCollAxis(1) << " colZ: " << _blocksData[index].GetCollAxis(2) << std::endl;
+                // Calculate the AABB extents of the block
+                glm::vec3 blockMin = glm::vec3(roundedPosXZ) - glm::vec3(0.5f);
+                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
+
+                float entityPosX = entityPos.x + movementVector.x;
+                if (_blocksData[index].GetCollAxis(0) && (entityPosX + halfWidth > blockMin.x || entityPosX - halfWidth < blockMax.x)) {
+                    // Determine the separation vector in the x-axis
+                    float direction = glm::sign(entityPosX - roundedPosXZ.x);
+                    info.separationVector.x = (std::abs((std::abs(entityPosX - roundedPosXZ.x) - (halfWidth + 0.5f))) + 0.0001f) * direction;
+                    info.isColliding = true;
+                }
+
+                float entityPosZ = entityPos.z + movementVector.z;
+                if (_blocksData[index].GetCollAxis(2) && (entityPosZ + halfWidth > blockMin.z || entityPosZ - halfWidth < blockMax.z)) {
+                    // Determine the separation vector in the z-axis
+                    float direction = glm::sign(entityPosZ - roundedPosXZ.z);
+                    info.separationVector.z = (std::abs((std::abs(entityPosZ - roundedPosXZ.z) - (halfWidth + 0.5f))) + 0.0001f) * direction;
+                    info.isColliding = true;
+                }
+                //std::cout<<"" << std::endl;
+            }
+        }
+
+        // Check if the rounded position is within bounds for Y-axis
+        if (InBounds(roundedPosY)) {
+            int index = GetIndex(roundedPosY);
+
+            // Check if the block at the index is not empty
+            if (_blocksData[index].IsSolid()) {
+                // Calculate the AABB extents of the block
+                glm::vec3 blockMin = glm::vec3(roundedPosY) - glm::vec3(0.5f);
+                glm::vec3 blockMax = blockMin + glm::vec3(1.0f);
+
+                float entityPosY = entityPos.y + movementVector.y;
+                if (_blocksData[index].GetCollAxis(1)) {
+                    if (i < 4) {
+                        if (entityPosY < blockMax.y) {
+                            info.separationVector.y = (std::abs((std::abs(entityPosY - blockMax.y))) + 0.0001f);
+                            info.isColliding = true;
+                        }
+                    }
+                    else if (i >= (corners.size() - 4)) {
+                        if (entityPosY + entityHeight > blockMin.y) {
+                            info.separationVector.y = (std::abs((std::abs(entityPosY + entityHeight - blockMin.y))) + 0.0001f) * -1;
+                            info.isColliding = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(info.isColliding)
+            collisionInfoList.push_back(info);
+    }
+
+    // Return the list of collision information for each corner
+    return collisionInfoList;
+}
+
 std::pair<glm::vec3, glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight) {
     CheckEntityChunk(entityPos);
 
@@ -602,22 +606,19 @@ std::pair<glm::vec3, glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 ent
     float smallestZ = std::numeric_limits<float>::max();
 
     for (const CollisionInfo& collisionInfo : collisionInfoList) {
-        // Check if collision occurred
-        if (collisionInfo.isColliding) {
-            // Update separationVector based on the smallest non-zero component
-            if (std::abs(collisionInfo.separationVector.x) < std::abs(collisionInfo.separationVector.z)) {
-                if (std::abs(collisionInfo.separationVector.x) < std::abs(smallestX))
-                    smallestX = collisionInfo.separationVector.x;
-            }
-            else if (collisionInfo.separationVector.z < std::numeric_limits<float>::max()) {
-                if (std::abs(collisionInfo.separationVector.z) < std::abs(smallestZ))
-                    smallestZ = collisionInfo.separationVector.z;
-            }
+        // Update separationVector based on the smallest non-zero component
+        if (std::abs(collisionInfo.separationVector.x) < std::abs(collisionInfo.separationVector.z)) {
+            if (std::abs(collisionInfo.separationVector.x) < std::abs(smallestX))
+                smallestX = collisionInfo.separationVector.x;
+        }
+        else if (collisionInfo.separationVector.z < std::numeric_limits<float>::max()) {
+            if (std::abs(collisionInfo.separationVector.z) < std::abs(smallestZ))
+                smallestZ = collisionInfo.separationVector.z;
+        }
 
-            if (collisionInfo.separationVector.y < std::numeric_limits<float>::max()) {
-                if (std::abs(collisionInfo.separationVector.y) < std::abs(smallestY))
-                    smallestY = collisionInfo.separationVector.y;
-            }
+        if (collisionInfo.separationVector.y < std::numeric_limits<float>::max()) {
+            if (std::abs(collisionInfo.separationVector.y) < std::abs(smallestY))
+                smallestY = collisionInfo.separationVector.y;
         }
     }
 
@@ -634,25 +635,11 @@ std::pair<glm::vec3, glm::vec3> BlockManager::CheckEntityCollision(glm::vec3 ent
         separationVector.z = 0.0f;
     }
 
-    // Calculate magnitudes of movementVector and separationVector
-    float moveX = std::abs(movementVector.x);
-    float sepX = std::abs(separationVector.x);
-
-    float moveZ = std::abs(movementVector.z);
-    float sepZ = std::abs(separationVector.z);
-
-    float badCollTreshold = 0.35f;
-
-    // Check if separationVector is within 10% of the movementVector
-    if (sepX <= moveX * (1.0f + badCollTreshold) && sepZ <= moveZ * (1.0f + badCollTreshold)) {
-        movementVector += separationVector;
-    }
-    else {
-        movementVector.y += separationVector.y;
-    }
     // Debug: Print the movementVector and separationVector
    //std::cout << "Movement Vector: " << movementVector.x << ", " << movementVector.y << ", " << movementVector.z << std::endl;
    //std::cout << "Separation Vector: " << separationVector.x << ", " << separationVector.y << ", " << separationVector.z << std::endl;
+
+    movementVector += separationVector;
 
     // Return the adjusted movementVector and the separationVector
     return std::make_pair(movementVector, separationVector);
@@ -832,7 +819,7 @@ void BlockManager::GenerateResources()
 
     // Generate Poisson disk distribution points
     std::vector<glm::vec3> poissonPoints = GeneratePoissonDiskPoints();
-    std::cout <<"Materials: "<< poissonPoints.size() << std::endl;
+    //std::cout <<"Materials: "<< poissonPoints.size() << std::endl;
     // Iterate through the Poisson disk points
     for (const auto& point : poissonPoints)
     {
@@ -921,7 +908,7 @@ void BlockManager::UpdateVisibilityNearResources()
 {
     for (auto& blockData : _blocksData) {
         if(blockData.IsMaterial())
-            UpdateNeighbourVisibility(blockData);
+            UpdateNeighbourVisibility(blockData, true);
     }
 }
 
@@ -942,6 +929,10 @@ int BlockManager::DestroyBlock(BlockData& blockData)
     UpdateNeighbourVisibility(blockData);
     blockData.UnstuckGlowsticks();
     return GetChunkIndex(blockData.GetChunkID(_chunkSize));
+}
+
+void BlockManager::UpdateAxisCollisions(BlockData& blockData)
+{
 }
 
 void BlockManager::ApplyMasks()

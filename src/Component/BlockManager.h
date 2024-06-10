@@ -88,6 +88,7 @@ private:
     void HideEdges();
     void UpdateBlockVisibility(BlockData& blockData);
     void UpdateNeighbourVisibility(BlockData& blockData);
+    void UpdateNeighbourVisibility(BlockData& blockData, bool state);
     void SetVisibility(BlockData& blockData, bool state);
     void GenerateSphereVectors(int radius);
     std::vector<CollisionInfo> CalculateCollisionInfo(glm::vec3 entityPos, glm::vec3 movementVector, float halfWidth, float entityHeight);
@@ -102,6 +103,7 @@ private:
     std::vector<glm::vec3> GeneratePoissonDiskPoints();
     void UpdateVisibilityNearResources();
     int DestroyBlock(BlockData& blockData);
+    void UpdateAxisCollisions(BlockData& blockData);
     void ApplyMasks();
     void GenerateTunnel(std::vector<glm::ivec3> points, int size);
     void GenerateTunnels();
