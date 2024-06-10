@@ -6,6 +6,7 @@
 #include "Core/Component.h"
 #include "Component/Transform.h"
 #include <memory>
+#include <algorithm>
 #include "Component/Camera.h"
 #include "Component/PlayerController.h"
 #include "Component/InstanceRenderer.h"
@@ -80,6 +81,7 @@ public:
     }
 
     void SetEnabled(bool enabled);
+    static void MoveElementToEnd(std::vector<std::shared_ptr<Node>>& children, const std::string& targetName);
 private:
     bool _enabled = true; 
     std::shared_ptr<Transform> _local;

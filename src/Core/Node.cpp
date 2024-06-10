@@ -189,6 +189,10 @@ void Node::Update() {
         if (component->IsEnabled())
             component->Update();
 
+    if(!_children.empty() && _children.back()->_name != "BlueprintTurret"){
+        MoveElementToEnd(_children, "BlueprintTurret");
+    }
+
     for (auto& child : _children)
         if (child != nullptr) child->Update();
 }
@@ -265,3 +269,8 @@ void Node::removeChild(std::shared_ptr<Node> child)
     }
 }
 
+void Node::MoveElementToEnd(std::vector<std::shared_ptr<Node>>& children, const std::string& targetName) {
+    std::stable_partition(children.begin(), children.end(), [&targetName](const std::shared_ptr<Node>& child) {
+        return child->_name != targetName;
+    });
+}
