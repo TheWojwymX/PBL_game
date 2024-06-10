@@ -1,26 +1,22 @@
 //
-// Created by Jacek on 09.05.2024.
+// Created by Jacek on 10.06.2024.
 //
 
-#ifndef SANDBOX_RESUMEBUTTON_H
-#define SANDBOX_RESUMEBUTTON_H
-
+#ifndef SANDBOX_MAINMENUSTARTBUTTON_H
+#define SANDBOX_MAINMENUSTARTBUTTON_H
 
 #include "HUD/Buttons/Button.h"
 
-class ResumeButton : public Button {
+class MainMenuStartButton : public Button {
 public:
-
     void Init() override;
 
     void Update() override;
 
     void Onclick() override;
 
-    std::string _text = "";
-
-    glm::vec3 leftDownCorner = glm::vec3(-0.1864583, 0.1296296, 0.0);
-    glm::vec3 rightTopCorner = glm::vec3(0.1875, 0.3166667, 0.0);
+    glm::vec3 leftDownCorner = glm::vec3(-0.1875, -0.03704, 0.0);
+    glm::vec3 rightTopCorner = glm::vec3(0.1859375, 0.1481481, 0.0);
     array<float, 32> _buttonVertices{
             // positions          // colors           // texture coords
             rightTopCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -29,14 +25,17 @@ public:
             leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
+    std::string _text = "";
+
     void SetVertices(const array<float, 32> &vertices) override;
 
     void SetText(std::string text, float textSize) override;
 
-    const char *_backgroundImagePath = "res/Images/Button/resume.png";
-    const char *_hoverBackgroundImagePath = "res/Images/Button/resume_hover.png";
-    const char *_clickedBackgroundImagePath = "res/Images/Button/resume_clicked.png";
+    const char *_backgroundImagePath = "res/Images/Button/start.png";
+    const char *_hoverBackgroundImagePath = "res/Images/Button/start_hover.png";
+    const char *_clickedBackgroundImagePath = "res/Images/Button/start_clicked.png";
+
 };
 
 
-#endif //SANDBOX_RESUMEBUTTON_H
+#endif //SANDBOX_MAINMENUSTARTBUTTON_H

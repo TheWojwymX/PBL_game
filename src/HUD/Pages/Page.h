@@ -28,6 +28,8 @@ public:
     bool _shouldRender = false;
 
     virtual void SetVertices(const array<float, 32> &vertices);
+
+    virtual void SetBackgroundImagePath(const char * path);
 };
 
 

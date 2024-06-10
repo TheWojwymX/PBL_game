@@ -6,11 +6,12 @@
 
 void PauseMenuPage::Init() {
 
+    SetBackgroundImagePath(_backgroundImagePath);
     SetVertices(_backgroundVertices);
-
     _resumeButton.Init();
     _quitButton.Init();
     _settingsButton.Init();
+    _logo.Init(_logoImagePath, _logoVertices, true, false);
 
     Page::Init();
 }
@@ -21,6 +22,7 @@ void PauseMenuPage::Update() {
         _resumeButton.Update();
         _quitButton.Update();
         _settingsButton.Update();
+        _logo.UpdateImage();
     }
 }
 

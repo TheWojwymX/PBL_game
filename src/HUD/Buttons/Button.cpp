@@ -38,8 +38,8 @@ void Button::CheckClick() {
 bool Button::CheckHover() {
     float leftX = _buttonVertices[16];
     float rightX = _buttonVertices[0];
-    float bottomY = _buttonVertices[9];
-    float topY = _buttonVertices[1];
+    float bottomY = _buttonVertices[1];
+    float topY = _buttonVertices[9];
 
     glm::vec2 mousePos = INPUT.GetMouseFixedPos();
 
@@ -92,4 +92,16 @@ void Button::SetVertices(const array<float, 32> &vertices) {
 void Button::SetText(std::string text, float textSize) {
     _text = text;
     _textSize = textSize;
+}
+
+void Button::SetBackgroundImagePath(const char *path) {
+    _backgroundImagePath = path;
+}
+
+void Button::SetHoverImagePath(const char *path) {
+    _hoverBackgroundImagePath = path;
+}
+
+void Button::SetClickedImagePath(const char *path) {
+    _clickedBackgroundImagePath = path;
 }

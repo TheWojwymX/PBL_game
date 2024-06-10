@@ -1,11 +1,11 @@
 //
-// Created by Jacek on 12.05.2024.
+// Created by Jacek on 10.06.2024.
 //
 
-#include "QuitButton.h"
+#include "MainMenuQuitButton.h"
 #include "Managers/GameManager.h"
 
-void QuitButton::Init() {
+void MainMenuQuitButton::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
     SetHoverImagePath(_hoverBackgroundImagePath);
     SetClickedImagePath(_clickedBackgroundImagePath);
@@ -14,20 +14,18 @@ void QuitButton::Init() {
     Button::Init();
 }
 
-void QuitButton::Update() {
+void MainMenuQuitButton::Update() {
     Button::Update();
 }
 
-void QuitButton::SetVertices(const array<float, 32> &vertices) {
+void MainMenuQuitButton::SetVertices(const array<float, 32> &vertices) {
     Button::SetVertices(vertices);
 }
 
-void QuitButton::Onclick() {
-    std::cout << "Kliknieto wyjscie.";
+void MainMenuQuitButton::Onclick() {
     glfwSetWindowShouldClose(GAMEMANAGER._window, 1);
-    Button::Onclick();
 }
 
-void QuitButton::SetText(std::string text, float textSize) {
+void MainMenuQuitButton::SetText(std::string text, float textSize) {
     Button::SetText(text, 1);
 }

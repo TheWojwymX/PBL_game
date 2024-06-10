@@ -54,6 +54,8 @@ public:
 
     int _metal = 1;
     int _plastic = 0;
+
+    bool _isInMainMenu = true;
 };
 
 

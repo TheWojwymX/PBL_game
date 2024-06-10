@@ -5,6 +5,9 @@
 #include "SettingsButton.h"
 
 void SettingsButton::Init() {
+    SetBackgroundImagePath(_backgroundImagePath);
+    SetHoverImagePath(_hoverBackgroundImagePath);
+    SetClickedImagePath(_clickedBackgroundImagePath);
     SetVertices(_buttonVertices);
     SetText(_text, 1);
     Button::Init();

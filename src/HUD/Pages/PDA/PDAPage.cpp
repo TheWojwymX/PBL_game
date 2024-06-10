@@ -8,13 +8,11 @@
 void PDAPage::Init() {
 
     SetVertices(_backgroundVertices);
-    _PDAMenu.Init("../../res/Images/PDA/placeHolderPDAMenu.png", verticesPDAMenu, true, false);
     Page::Init();
 }
 
 void PDAPage::Update() {
     if(_shouldRender){
-        _PDAMenu.UpdateImage();
         Page::Update();
     }
 }

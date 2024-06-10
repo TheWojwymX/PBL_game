@@ -32,6 +32,10 @@ public:
 
     virtual void SetVertices(const array<float, 32> &vertices);
 
+    virtual void SetBackgroundImagePath(const char * path);
+    virtual void SetHoverImagePath(const char * path);
+    virtual void SetClickedImagePath(const char * path);
+
     virtual void SetText(std::string text, float textSize);
 
 protected:

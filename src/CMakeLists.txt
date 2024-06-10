@@ -130,7 +130,17 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Pages/PDA/PDAPage.cpp
         HUD/Pages/PDA/PDAPage.h
         WindSimulation.h
-        WindSimulation.cpp)
+        WindSimulation.cpp
+        HUD/Pages/MainMenuPage/MainMenuPage.cpp
+        HUD/Pages/MainMenuPage/MainMenuPage.h
+        HUD/Buttons/MainMenu/MainMenuStartButton.cpp
+        HUD/Buttons/MainMenu/MainMenuStartButton.h
+        HUD/Buttons/MainMenu/MainMenuCreditsButton.cpp
+        HUD/Buttons/MainMenu/MainMenuCreditsButton.h
+        HUD/Buttons/MainMenu/MainMenuSettingsButton.cpp
+        HUD/Buttons/MainMenu/MainMenuSettingsButton.h
+        HUD/Buttons/MainMenu/MainMenuQuitButton.cpp
+        HUD/Buttons/MainMenu/MainMenuQuitButton.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

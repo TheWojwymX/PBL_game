@@ -15,3 +15,7 @@ void Page::Update() {
 void Page::SetVertices(const array<float, 32> &vertices) {
     _backgroundVertices = vertices;
 }
+
+void Page::SetBackgroundImagePath(const char *path) {
+    _backgroundImagePath = path;
+}
