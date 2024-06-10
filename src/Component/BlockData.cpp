@@ -22,6 +22,26 @@ bool BlockData::DamageBlock(float amount) {
         return false; // Block is invincible, no damage taken
     }
 
+    string nodeName = to_string(_posID.x) + to_string(_posID.y) + to_string(_posID.z);
+    if(NODESMANAGER.getNodeByName(nodeName) == nullptr && (GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::METAL)) {
+        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("Sandbags"), nodeName);
+        NODESMANAGER.getNodeByName(nodeName)->GetTransform()->SetPosition(_posID);
+
+        string particleType;
+        if(GetBlockType() == BlockType::PLASTIC){particleType = "digPlastic";}
+        else {particleType = "digMetal";}
+
+        auto hitResourceParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), particleType);
+        hitResourceParticles->SetOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+        hitResourceParticles->object = NODESMANAGER.getNodeByName(nodeName);
+        hitResourceParticles->Init();
+        NODESMANAGER.getNodeByName(nodeName)->AddComponent(hitResourceParticles);
+    }
+    else if(GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::METAL)
+    {
+        NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
+    }
+
     _HP -= amount;
     return _HP <= 0;
 }

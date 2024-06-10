@@ -9,6 +9,7 @@
 #include "glm/glm.hpp"
 #include <glm/gtx/quaternion.hpp>
 #include "Managers/NodesManager.h"
+#include "WindSimulation.h"
 
 
 struct Particle {
@@ -89,6 +90,8 @@ private:
 
     bool onlyForward;
     bool casing;
+    bool ambient = false;
+    bool isUnderground = false;
     unsigned int newParticles = 10;
     bool isJetpack = false;
 

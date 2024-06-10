@@ -112,7 +112,7 @@ void ParticleGenerator::RenderParticles() {
     float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
     bool visible = dotProduct > 0.1f;
 
-    if((visible && particleType != "turretShot") || particleType == "turretShot") {
+    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles") {
 
         Particle *particleData = this->particleData;
 
@@ -200,6 +200,8 @@ void ParticleGenerator::Init() {
     computeShader->setBool("isJetpack", isJetpack);
     computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel - 0.6);
     computeShader->setBool("isFlare", isFlare);
+    computeShader->setBool("ambient", ambient);
+    computeShader->setBool("isUnderground", isUnderground);
 
     unsigned int VBO;
     float particle_quad[] = {
@@ -350,6 +352,65 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
         counterXrotation = true;
         isFlare = true;
+    }
+    else if (particleType == "ambientSandParticles"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 3000;
+        newParticles = 200;
+        spawnDelay = 1.0f;
+        speedVariation = 0.2f;
+        XZvariation = 100.4f;
+        particleLife = 60.0f;
+        particleColor = glm::vec4(0.882f,0.757f,0.431f,1.0f);
+        initialUpwardBoost = 0.04f;
+        particleScale = 0.2f;
+        gravity = glm::vec3(0.0f, 0.0f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = false;
+        isFlare = false;
+        ambient = true;
+    }
+    else if (particleType == "digMetal"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 20;
+        newParticles = 3;
+        spawnDelay = 0.0f;
+        speedVariation = 1.0f;
+        XZvariation = 2.0f;
+        particleLife = 0.7f;
+        particleColor = glm::vec4(0.6f,0.6f,0.6f,1.0f);
+        initialUpwardBoost = 1.0f;
+        particleScale = 0.3f;
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = false;
+        isFlare = false;
+        ambient = false;
+        isUnderground = true;
+    }
+    else if (particleType == "digPlastic"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 20;
+        newParticles = 3;
+        spawnDelay = 0.0f;
+        speedVariation = 1.0f;
+        XZvariation = 2.0f;
+        particleLife = 0.7f;
+        particleColor = glm::vec4(0.8627f,0.0784f,0.2353f,1.0f);
+        initialUpwardBoost = 1.0f;
+        particleScale = 0.3f;
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = false;
+        isFlare = false;
+        ambient = false;
+        isUnderground = true;
     }
 }
 

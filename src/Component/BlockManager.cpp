@@ -914,13 +914,18 @@ void BlockManager::UpdateVisibilityNearResources()
 
 int BlockManager::DestroyBlock(BlockData& blockData)
 {
+    glm::vec3 _posID;
     switch (blockData.GetBlockType())
     {
         case BlockType::PLASTIC:
             GAMEMANAGER.AddPlastic(1);
+            _posID = blockData.GetPosID();
+            NODESMANAGER.getNodeByName(to_string(int(_posID.x)) + to_string(int(_posID.y)) + to_string(int(_posID.z)))->GetComponent<ParticleGenerator>()->toDelete = true;
             break;
         case BlockType::METAL:
             GAMEMANAGER.AddMetal(1);
+            _posID = blockData.GetPosID();
+            NODESMANAGER.getNodeByName(to_string(int(_posID.x)) + to_string(int(_posID.y)) + to_string(int(_posID.z)))->GetComponent<ParticleGenerator>()->toDelete = true;
             break;
         default:
             break;

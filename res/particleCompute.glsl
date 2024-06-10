@@ -38,6 +38,8 @@ uniform float groundLevel;
 uniform vec3 windDirection;
 uniform float windStrength;
 uniform bool isFlare;
+uniform bool ambient;
+uniform bool isUnderground;
 
 layout (local_size_x = 1) in;
 
@@ -114,7 +116,7 @@ void main() {
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
             // Update velocity with gravity
-            p.Velocity.xyz += (initGravity + windDirection * windStrength) * dt;
+            p.Velocity.xyz += (initGravity + ((windDirection * windStrength) * (random(id) * 0.1 + 0.9))) * dt;
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
             // Decrease alpha to fade out particle
@@ -135,16 +137,22 @@ void main() {
             }
 
             // Check for bounce when particle hits y = 105
-            if (p.Position.y <= groundLevel && !isJetpack && !isFlare) {
+            if (p.Position.y <= groundLevel && !isJetpack && !isFlare && !isUnderground) {
                 if(onlyForward)
                 {
                 p.Life -= 4 * dt;
                 }
                 else{
                 // Reflect the y velocity for a bounce and dampen it to lose energy
+
+                if(!ambient){
                 p.Velocity.y = -p.Velocity.y * 0.8; // Adjust 0.8 damping factor as needed
                 p.Velocity.x = p.Velocity.x * 0.8;
                 p.Velocity.z = p.Velocity.z * 0.8;
+                }
+                if(ambient){
+                p.Velocity.y = -p.Velocity.y * 0.2;
+                }
 
                 // Set position exactly at 100 to prevent particles from going below it
                 p.Position.y = groundLevel + (groundLevel - p.Position.y);
@@ -164,6 +172,42 @@ void main() {
             //else{
             //p.Life = 0.0;
             //}
+            if(ambient){
+            if(p.Life < particleLife - 2.2){
+                p.Life = particleLife - 2.3;
+                p.Velocity.xz = p.Velocity.xz * 0.999;
+                p.Velocity.y = p.Velocity.y * 0.999;
+            }
+            else if(p.Life < particleLife - 2.0){
+            p.Velocity = vec4(0.0, 0.0, 0.0, 0.0);
+            }
+
+            if(p.Position.x > 200){
+            p.Position.x = -200;
+            }
+
+            if(p.Position.z > 200){
+            p.Position.z = -200;
+            }
+
+            if(p.Position.x < -200){
+            p.Position.x = 200;
+            }
+
+            if(p.Position.z < -200){
+            p.Position.z = 200;
+            }
+
+            if(p.Position.y < 299){
+            p.Position.y = 400;
+            }
+
+            if(p.Position.y > 306){
+            p.Position.y = 300;
+            }
+
+
+            }
         }
 
         particles[id] = p;
