@@ -52,11 +52,29 @@ void Turret::Update() {
     if(_isFlying){
         auto particleGenerator = _flare->GetComponent<ParticleGenerator>();
 
-        if(glm::distance(GetOwnerPosition(), _finalPosition) <= 0.1){
+        if(glm::distance(GetOwnerPosition(), _finalPosition) <= 0.1)
+        {
             _isFlying = false;
             _ownerTransform->SetRotation(_finalRotation);
             _ownerTransform->SetPosition(_finalPosition);
-            _ownerNode->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Gunner_Level1");
+
+            auto model =  _ownerNode->GetComponent<MeshRenderer>()->_model;
+            switch(_turretType)
+            {
+                case MINIGUN:
+                    model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
+                    break;
+
+                case SNIPER:
+                    model = RESOURCEMANAGER.GetModelByName("Turret_Bazooka_Level1");
+                    break;
+
+                case RIFLE:
+                    model = RESOURCEMANAGER.GetModelByName("Turret_Standard_Level1");
+                    break;
+            }
+
+            _ownerNode->GetComponent<MeshRenderer>()->_model = model;
             _flare = nullptr;
             particleGenerator->toDelete = true;
             return;

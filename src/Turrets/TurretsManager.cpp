@@ -230,7 +230,7 @@ void TurretsManager::PrepareBlueprintTurret() {
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfBlueprintTurret);
 
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Gunner_Level1");
+    newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
     newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     newMeshRenderer->Initiate();

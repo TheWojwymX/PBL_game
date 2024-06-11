@@ -53,7 +53,7 @@ std::shared_ptr<Model> ResourceManager::GetModelByName(const string &name) {
             return model;
         }
     }
-    std::cout << "No such model!" << std::endl;
+    std::cout << "No such model: " << name << std::endl;
     return nullptr;
 }
 

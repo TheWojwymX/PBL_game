@@ -272,8 +272,12 @@
         "Path": "res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj"
       },
       {
-        "ModelName": "Turret_Gunner_Level1",
-        "Path": "res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
+        "ModelName": "Turret_Minigun_Level1",
+        "Path": "res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.obj"
+      },
+      {
+        "ModelName": "Turret_Bazooka_Level1",
+        "Path": "res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.obj"
       },
       {
         "ModelName": "Turret_Parachute",
