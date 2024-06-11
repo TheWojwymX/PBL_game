@@ -145,8 +145,11 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
 }
 
 void Node::AddChild(std::shared_ptr<Node> child) {
-    child->GetTransform()->SetParent(_local);
-    _children.push_back(child);
+    if (child) {
+        child->_parent = shared_from_this();
+        child->GetTransform()->SetParent(_local);
+        _children.push_back(child);
+    }
 }
 
 void Node::AddComponent(std::shared_ptr<Component> component) {
@@ -188,10 +191,6 @@ void Node::Update() {
     for (auto& component : _components)
         if (component->IsEnabled())
             component->Update();
-
-    if(!_children.empty() && _children.back()->_name != "BlueprintTurret"){
-        MoveElementToEnd(_children, "BlueprintTurret");
-    }
 
     for (auto& child : _children)
         if (child != nullptr) child->Update();
@@ -269,8 +268,11 @@ void Node::removeChild(std::shared_ptr<Node> child)
     }
 }
 
-void Node::MoveElementToEnd(std::vector<std::shared_ptr<Node>>& children, const std::string& targetName) {
-    std::stable_partition(children.begin(), children.end(), [&targetName](const std::shared_ptr<Node>& child) {
-        return child->_name != targetName;
-    });
+void Node::MoveChildToEnd(std::shared_ptr<Node> child) {
+    auto it = std::find(_children.begin(), _children.end(), child);
+    if (it != _children.end() && it != _children.end() - 1) {
+        std::shared_ptr<Node> temp = *it;
+        _children.erase(it);
+        _children.push_back(temp);
+    }
 }

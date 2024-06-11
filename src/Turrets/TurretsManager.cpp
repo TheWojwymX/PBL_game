@@ -36,6 +36,7 @@ void TurretsManager::Update() {
     {
         _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
         _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(!_blueprintTurret->GetComponent<MeshRenderer>()->IsEnabled());
+        _blueprintTurret->GetParent()->MoveChildToEnd(_blueprintTurret);
         NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(
                 !NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
         //NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
@@ -69,6 +70,7 @@ void TurretsManager::Update() {
         _isPlayerInMovingMode = true;
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
+        _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd( _turrets[_indexOfMovingTurret]->_ownerNode);
         auto rangeNodes = _turrets[_indexOfMovingTurret]->_ownerNode->getChildren();
         for (const auto &node: rangeNodes) {
             if (node != nullptr) {

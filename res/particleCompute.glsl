@@ -6,6 +6,7 @@ struct Particle {
     float Life;
     float Scale;
     float Ground;
+    float Weight;
 };
 
 layout (std430, binding = 0) buffer Particles {
@@ -76,6 +77,12 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     particle.Life = particleLife;
     particle.Scale = particleScale;
     particle.Ground = jumpOff.y;
+    if(ambient){
+    particle.Weight = (random(changeSeed) * 2) + 0.1 ;
+    }
+    else{
+    particle.Weight = 1.0;
+    }
 
     vec3 initialVelocity;
 
@@ -116,7 +123,7 @@ void main() {
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
             // Update velocity with gravity
-            p.Velocity.xyz += (initGravity + ((windDirection * windStrength) * (random(id) * 0.1 + 0.9))) * dt;
+            p.Velocity.xyz += (initGravity + ((windDirection * windStrength) * p.Weight)) * dt;
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
             // Decrease alpha to fade out particle
@@ -202,7 +209,7 @@ void main() {
             p.Position.y = 400;
             }
 
-            if(p.Position.y > 306){
+            if(p.Position.y > 310){
             p.Position.y = 300;
             }
 

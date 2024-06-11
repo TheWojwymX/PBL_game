@@ -18,10 +18,10 @@ struct Particle {
     float Life;
     float Scale;
     float Ground;
-    float pad;
+    float Weight;
 
     Particle()
-            : Position(0.0f), Velocity(0.0f), Life(0.0f), Scale(0.5f), Ground(0.0f), pad(0.0f) {}
+            : Position(0.0f), Velocity(0.0f), Life(0.0f), Scale(0.5f), Ground(0.0f), Weight(1.0f) {}
 };
 
 class ParticleGenerator : public Component {

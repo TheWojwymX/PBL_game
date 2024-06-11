@@ -103,6 +103,15 @@ void ParticleGenerator::UpdateParticles() {
 }
 
 void ParticleGenerator::RenderParticles() {
+
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, particleBuffer);
+    void* bufferData = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY);
+    if (bufferData) {
+        std::memset(bufferData, 0, amount * sizeof(Particle));
+        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+    }
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
     int deadParticles = 0;
 
     glm::vec3 objectPositionWithOffset = object->GetTransform()->GetPosition() + rotatedOffset;
@@ -169,6 +178,7 @@ void ParticleGenerator::RenderParticles() {
 
     if (deadParticles == amount) {
         if (toDelete) {
+            generateParticle = false;
             GAMEMANAGER.root->removeChild(_ownerNode);
         }
     }
@@ -309,7 +319,7 @@ void ParticleGenerator::initiateParticleType() {
         newParticles = 5;
         spawnDelay = 0.0f;
         speedVariation = 1.0f;
-        XZvariation = 2.0f;
+        XZvariation = 1.0f;
         particleLife = 4.0f;
         particleColor = glm::vec4(0.545f,0.271f,0.075f,1.0f);
         initialUpwardBoost = 1.0f;
@@ -337,8 +347,8 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "flareParticles1"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 50;
-        newParticles = 2;
+        amount = 100;
+        newParticles = 3;
         spawnDelay = 0.2f;
         speedVariation = 0.2f;
         XZvariation = 0.4f;
@@ -356,15 +366,15 @@ void ParticleGenerator::initiateParticleType() {
     else if (particleType == "ambientSandParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 3000;
-        newParticles = 200;
+        newParticles = 3000;
         spawnDelay = 1.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
         particleLife = 60.0f;
-        particleColor = glm::vec4(0.882f,0.757f,0.431f,1.0f);
+        particleColor = glm::vec4(0.882f,0.677f,0.351f,1.0f);
         initialUpwardBoost = 0.04f;
-        particleScale = 0.2f;
-        gravity = glm::vec3(0.0f, 0.0f, 0.0f);
+        particleScale = 0.28f;
+        gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         onlyForward = false;
         casing = false;
         isJetpack = false;

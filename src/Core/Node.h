@@ -50,6 +50,7 @@ public:
     void UpdateTransforms(glm::mat4 parentWorld);
     void addToInspector(ImguiMain* imguiMain);
     void removeChild(std::shared_ptr<Node> child);
+    std::shared_ptr<Node> GetParent() const { return _parent.lock(); }
 
     template <typename T>
     std::shared_ptr<T> GetComponent() const {
@@ -81,10 +82,11 @@ public:
     }
 
     void SetEnabled(bool enabled);
-    static void MoveElementToEnd(std::vector<std::shared_ptr<Node>>& children, const std::string& targetName);
+    void MoveChildToEnd(std::shared_ptr<Node> child);
 private:
     bool _enabled = true; 
     std::shared_ptr<Transform> _local;
     std::vector<std::shared_ptr<Node>> _children;
     std::vector<std::shared_ptr<Component>> _components;
+    std::weak_ptr<Node> _parent;
 };

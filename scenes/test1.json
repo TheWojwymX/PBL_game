@@ -293,11 +293,11 @@
       },
       {
         "ModelName": "RangeIndicatorReal",
-        "Path": "res/Models/RangeIndicators/prosty.obj"
+        "Path": "res/Models/RangeIndicators/prosty_v2.obj"
       },
       {
         "ModelName": "RangeIndicatorVisual",
-        "Path": "res/Models/RangeIndicators/okragly.obj"
+        "Path": "res/Models/RangeIndicators/okragly_v2.obj"
       },
       {
         "ModelName": "glowstickModel",
