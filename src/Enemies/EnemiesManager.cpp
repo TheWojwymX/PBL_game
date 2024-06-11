@@ -18,7 +18,7 @@ void EnemiesManager::Update() {
         std::uniform_real_distribution<float> dis(0.5f, 1.0f);
         float scale = dis(gen);
 
-        SpawnEnemy(2, glm::vec3(scale), 0, ANT);
+        SpawnEnemy(2.5, glm::vec3(scale), 0, ANT);
     }
 
     for(int i = 0; i < _enemies.size(); i++)
@@ -81,7 +81,7 @@ void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
                 std::uniform_real_distribution<float> dis(0.5f, 1.0f);
                 float scale = dis(gen);
 
-                SpawnEnemy(2, glm::vec3(scale), spawnerIndex, type);
+                SpawnEnemy(2.5, glm::vec3(scale), spawnerIndex, type);
             }
         }
     }
@@ -99,26 +99,41 @@ void EnemiesManager::ReturnToComingForNormalDestination(shared_ptr<Enemy> enemy)
 
 void EnemiesManager::AvoidEnemy(shared_ptr<Enemy> thisEnemy)
 {
-    if(thisEnemy == nullptr) return;
+    if (thisEnemy == nullptr) return;
 
-    if(thisEnemy->_isAtWalls){
+    if (thisEnemy->_isAtWalls) {
         return;
     }
 
     glm::vec3 avoidanceVector(0.0f);
     bool needsToAvoid = false;
 
-    for(int j = 0; j < _enemies.size(); j++) {
-        if(_enemies[j] == nullptr) continue;
+    for (int j = 0; j < _enemies.size(); j++) {
+        if (_enemies[j] == nullptr) continue;
         if (thisEnemy == _enemies[j]) continue;
 
-        glm::vec3 toOther = _enemies[j]->GetOwnerPosition() - thisEnemy->GetOwnerPosition();
-        float distanceToOther = glm::length(toOther);
+        bool shouldAvoid = false;
 
-        if (distanceToOther < (_enemies[j]->_size + thisEnemy->_size)/2) {
-            needsToAvoid = true;
-            toOther = glm::normalize(toOther);
-            avoidanceVector -= toOther / distanceToOther;
+        // Ants and beetles avoid each other
+        if ((thisEnemy->_enemyType == ANT || thisEnemy->_enemyType == BEETLE) &&
+            (_enemies[j]->_enemyType == ANT || _enemies[j]->_enemyType == BEETLE)) {
+            shouldAvoid = true;
+        }
+
+        // Wasps avoid other wasps
+        if (thisEnemy->_enemyType == WASP && _enemies[j]->_enemyType == WASP) {
+            shouldAvoid = true;
+        }
+
+        if (shouldAvoid) {
+            glm::vec3 toOther = _enemies[j]->GetOwnerPosition() - thisEnemy->GetOwnerPosition();
+            float distanceToOther = glm::length(toOther);
+
+            if (distanceToOther < (_enemies[j]->_size + thisEnemy->_size) / 2) {
+                needsToAvoid = true;
+                toOther = glm::normalize(toOther);
+                avoidanceVector -= toOther / distanceToOther;
+            }
         }
     }
 
@@ -165,6 +180,12 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
 
         glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[spawnerIndex]);
         enemyPosition.y = 0.62 * scale.y + 299.49;
+
+        if (type == WASP)
+        {
+            enemyPosition.y = enemyPosition.y + 1.5;
+        }
+
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
 
