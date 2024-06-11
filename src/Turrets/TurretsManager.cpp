@@ -270,6 +270,20 @@ void TurretsManager::UpdateBlueprintTurret() {
     //if(!_shouldEnableBlueprintTurret) return;
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
+    switch(finaltype)
+    {
+        case MINIGUN:
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
+            break;
+
+        case SNIPER:
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Bazooka_Level1");
+            break;
+
+        case RIFLE:
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Standard_Level1");
+            break;
+    }
 
     glm::vec3 forwardVector = glm::normalize(_player->GetComponent<Camera>()->GetFrontVector());
     float minDistance = 2.0f;
