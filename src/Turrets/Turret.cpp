@@ -74,8 +74,9 @@ void Turret::Update() {
                     break;
             }
 
+            std::cout << "kiedy sie wykona";
             _ownerNode->GetComponent<MeshRenderer>()->_model = model;
-            _flare = nullptr;
+            _flare->GetComponent<MeshRenderer>()->_disableModel = true;
             particleGenerator->toDelete = true;
             return;
            }

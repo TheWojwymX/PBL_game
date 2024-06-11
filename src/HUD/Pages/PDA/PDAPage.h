@@ -30,6 +30,9 @@ public:
     void DisplayPDAPage();
 
     void HidePDAPage();
+
+    const char* _PDABackgroundPath = "res/Images/PDA/placeholderPDAMenu.png";
+
 };
 
 

@@ -30,15 +30,7 @@ void PDAController::Update() {
 }
 
 void PDAController::RealUpdate() {
-    if (INPUT.GetKeyDown(GLFW_KEY_KP_5) && !_isHidden && !_playShowAnim) {
-        _playHideAnim = true;
-        HUD._shouldShowCrosshair = true;
-        PAGEMANAGER._PDAPage->HidePDAPage();
-    } else if (INPUT.GetKeyDown(GLFW_KEY_KP_5) && _isHidden && !_playHideAnim) {
-        _playShowAnim = true;
-        HUD._shouldShowCrosshair = false;
-        PAGEMANAGER._PDAPage->DisplayPDAPage();
-    }
+
 
     if(PAGEMANAGER._isInPage == false && !_isHidden){
         PlayHidePDA();
@@ -61,11 +53,21 @@ void PDAController::PlayShowAntenna(){
     //std::cout << "aktualny offset: " << _antennaActualYoffset << "    docelowy: " << _antennaYoffset << std::endl;
 
     if(_antennaActualYoffset >= _antennaYoffset){
-        _antennaActualYoffset -= 0.01;
+        _antennaActualYoffset -= 3 * TIME.GetDeltaTime();
     }
     else{
         _playShowAntennaAnim = false;
     }
+}
+
+void PDAController::HideImmediately(){
+    _playShowAnim = false;
+    _playShowAntennaAnim = false;
+    _actualVisibilityOffset = _visibilityOffset;
+    _visibilityAnimationTimer = 0;
+    _playHideAnim = false;
+    _isHidden = true;
+    _antennaActualYoffset = 0;
 }
 
 void PDAController::PlayHidePDA() {
@@ -85,17 +87,19 @@ void PDAController::PlayHidePDA() {
 }
 
 void PDAController::PlayShowPDA() {
+    _isHidden = false;
     if (_visibilityAnimationTimer < _visibilityAnimationTime) {
         _visibilityAnimationTimer += TIME.GetDeltaTime();
         if (_visibilityAnimationTimer < _visibilityAnimationTime) {
+            if(_visibilityAnimationTimer >= 0.5 * _visibilityAnimationTime && _playShowAntennaAnim == false){
+                _playShowAntennaAnim = true;
+            }
             float t = glm::clamp(_visibilityAnimationTimer / _visibilityAnimationTime, 0.0f, 1.0f);
             _actualVisibilityOffset = glm::mix(_actualVisibilityOffset, 0.0f, t);
         } else {
             _actualVisibilityOffset = 0;
             _visibilityAnimationTimer = 0;
             _playShowAnim = false;
-            _isHidden = false;
-            _playShowAntennaAnim = true;
         }
     }
 }

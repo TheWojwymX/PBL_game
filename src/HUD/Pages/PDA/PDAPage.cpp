@@ -6,7 +6,7 @@
 #include "HUD/PageManager.h"
 
 void PDAPage::Init() {
-
+    SetBackgroundImagePath(_PDABackgroundPath);
     SetVertices(_backgroundVertices);
     Page::Init();
 }

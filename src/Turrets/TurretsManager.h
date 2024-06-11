@@ -66,7 +66,10 @@ public:
 
     void Reload(const shared_ptr<Turret> &turret);
 
-    int _turretCost = 1;
+    int _actualTurretCost = 1;
+    int _minigunCost = 1;
+    int _rifleCost = 2;
+    int _sniperCost = 3;
 
     void MoveTurret();
 
@@ -83,6 +86,20 @@ public:
     bool IsInForbiddenArea();
 
     glm::vec3 _additionalColor;
+
+    shared_ptr<PDAController> _PDAController = make_shared<PDAController>();
+
+    bool _isInTurretChoiceMenu = false;
+
+    void PlayerActions();
+
+    void ShowBlueprintTurret();
+
+    void HideBlueprintTurret();
+
+    void ChangeToSpawningMode();
+
+    void ChangeToMovingMode();
 };
 
 
