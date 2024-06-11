@@ -54,7 +54,7 @@ public:
 
     void UnstuckGlowsticks();
     bool DamageBlock(float amount);
-
+    void HandleParticles();
 private:
     BlockType _blockType;
     glm::ivec3 _posID;

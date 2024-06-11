@@ -22,6 +22,13 @@ bool BlockData::DamageBlock(float amount) {
         return false; // Block is invincible, no damage taken
     }
 
+    HandleParticles();
+
+    _HP -= amount;
+    return _HP <= 0;
+}
+
+void BlockData::HandleParticles() {
     string nodeName = to_string(_posID.x) + to_string(_posID.y) + to_string(_posID.z);
     if(NODESMANAGER.getNodeByName(nodeName) == nullptr && (GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::METAL)) {
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("Sandbags"), nodeName);
@@ -41,7 +48,4 @@ bool BlockData::DamageBlock(float amount) {
     {
         NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
     }
-
-    _HP -= amount;
-    return _HP <= 0;
 }
