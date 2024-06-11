@@ -4,6 +4,7 @@
 //
 
 #include "TurretsManager.h"
+#include "HUD/PageManager.h"
 
 TurretsManager &TurretsManager::getInstance() {
     static TurretsManager instance;
@@ -17,55 +18,100 @@ void TurretsManager::Init() {
         }
     }
     PrepareBlueprintTurret();
+
+    _PDAController = NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>();
 }
 
-void TurretsManager::Update() {
+void TurretsManager::ShowBlueprintTurret(){
+    _shouldEnableBlueprintTurret = true;
+    _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(true);
+    NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(true);
+    _isInBlueprintMode = true;
+    _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
+}
 
-    if(IsInForbiddenArea()){
-        _additionalColor = glm::vec3(1.0, 0.0, 0.0);
+void TurretsManager::HideBlueprintTurret(){
+    _shouldEnableBlueprintTurret = false;
+    _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(false);
+    NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(false);
+    _isInBlueprintMode = false;
+    _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
+}
 
-    }else{
-        _additionalColor = glm::vec3(0.3647, 0.8353, 0.3647);
+void TurretsManager::ChangeToSpawningMode(){
+    _PDAController->HideImmediately();
+    HUD._shouldShowCrosshair = true;
+    PAGEMANAGER._PDAPage->HidePDAPage();
+    _isInTurretChoiceMenu = false;
+}
+
+void TurretsManager::PlayerActions(){
+
+    if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim
+        && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f && !_isPlayerInMovingMode) {
+        _PDAController->_playShowAnim = true;
+        HUD._shouldShowCrosshair = false;
+        PAGEMANAGER._PDAPage->DisplayPDAPage();
+        _isInTurretChoiceMenu = true;
+        HideBlueprintTurret();
+    }
+    else if (INPUT.IsKeyPressed(GLFW_KEY_4) && !_PDAController->_isHidden &&
+        _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f && !_isPlayerInMovingMode) {
+        _PDAController->HideImmediately();
+        HUD._shouldShowCrosshair = true;
+        PAGEMANAGER._PDAPage->HidePDAPage();
+        _isInTurretChoiceMenu = false;
     }
 
-    UpdateBlueprintTurret();
-
-
-    if (Input::Instance().IsKeyPressed(76) && !_isPlayerInMovingMode && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f
-        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine())
+    if(Input::Instance().IsKeyPressed(GLFW_KEY_1) && _isInTurretChoiceMenu)
     {
-        _shouldEnableBlueprintTurret = !_shouldEnableBlueprintTurret;
-        _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(!_blueprintTurret->GetComponent<MeshRenderer>()->IsEnabled());
-        _blueprintTurret->GetParent()->MoveChildToEnd(_blueprintTurret);
-        NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(
-                !NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
-        //NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(!NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->IsEnabled());
-        _isInBlueprintMode = !_isInBlueprintMode;
-        _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = !_player->GetComponent<PlayerController>()->_activeMineEntranceCollision;
-    }
-
-    if(Input::Instance().IsKeyPressed(90))
-    {
+        if (GAMEMANAGER._metal < _minigunCost){
+            return;
+        }
         finaltype = MINIGUN;
+        _actualTurretCost = _minigunCost;
+        ChangeToSpawningMode();
+        ShowBlueprintTurret();
     }
-
-    if(Input::Instance().IsKeyPressed(88))
+    else if(Input::Instance().IsKeyPressed(GLFW_KEY_2) && _isInTurretChoiceMenu)
     {
+        if (GAMEMANAGER._metal < _rifleCost){
+            return;
+        }
         finaltype = SNIPER;
+        _actualTurretCost = _rifleCost;
+        ChangeToSpawningMode();
+        ShowBlueprintTurret();
     }
-
-    if(Input::Instance().IsKeyPressed(67))
+    else if(Input::Instance().IsKeyPressed(GLFW_KEY_3) && _isInTurretChoiceMenu)
     {
+        if (GAMEMANAGER._metal < _sniperCost){
+            return;
+        }
         finaltype = RIFLE;
+        _actualTurretCost = _sniperCost;
+        ChangeToSpawningMode();
+        ShowBlueprintTurret();
     }
-
-    if (INPUT.IsMousePressed(1) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea())
+    else if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu)
     {
+        if (GAMEMANAGER._metal < _actualTurretCost){
+            return;
+        }
         SpawnTurret(finaltype);
+        HideBlueprintTurret();
+    }
+    else if(INPUT.IsKeyPressed(GLFW_KEY_Q) && (_isInBlueprintMode || _isInTurretChoiceMenu) && !_isPlayerInMovingMode){
+        HideBlueprintTurret();
+        _PDAController->HideImmediately();
+        HUD._shouldShowCrosshair = true;
+        PAGEMANAGER._PDAPage->HidePDAPage();
+        _isInTurretChoiceMenu = false;
     }
 
     if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying
-        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine()) {
+        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && !_isInTurretChoiceMenu) {
+
         _indexOfMovingTurret = RaycastTurrets();
         _isPlayerInMovingMode = true;
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
@@ -77,10 +123,26 @@ void TurretsManager::Update() {
                 node->GetComponent<MeshRenderer>()->SetEnabled(true);
             }
         }
-    } else if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && _isPlayerInMovingMode && !IsInForbiddenArea()) {
+        finaltype = _turrets[_indexOfMovingTurret]->_turretType;
+        ShowBlueprintTurret();
+    } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
         PlaceMovingTurret();
+        HideBlueprintTurret();
+    }
+}
+
+void TurretsManager::Update() {
+
+    PlayerActions();
+
+    if(IsInForbiddenArea()){
+        _additionalColor = glm::vec3(1.0, 0.0, 0.0);
+
+    }else{
+        _additionalColor = glm::vec3(0.3647, 0.8353, 0.3647);
     }
 
+    UpdateBlueprintTurret();
     MoveTurret();
     CheckEnemiesInRange();
 }
@@ -113,11 +175,11 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
 
 void TurretsManager::SpawnTurret(turretType type) {
 
-    if (GAMEMANAGER._metal < _turretCost) {
+    if (GAMEMANAGER._metal < _actualTurretCost) {
         std::cout << "Brak pieniedzy na dzialko" << std::endl;
         return;
     } else {
-        GAMEMANAGER._metal -= _turretCost;
+        GAMEMANAGER._metal -= _actualTurretCost;
     }
 
     //Flare spawning
@@ -251,25 +313,11 @@ void TurretsManager::PrepareBlueprintTurret() {
     NODESMANAGER.getNodeByName(blueprintRange)->AddComponent(rangeIndicator);
     NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 30.0f));
     NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
-
-/*    std::string nameOfBlueprintRange = "BlueprintRange";
-    NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfBlueprintTurret), nameOfBlueprintRange);
-
-    auto newMeshRenderer2 = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    newMeshRenderer2->_model = RESOURCEMANAGER.GetModelByName("cloudModel");
-    newMeshRenderer2->_shader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
-    newMeshRenderer2->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
-    newMeshRenderer2->Initiate();
-    NODESMANAGER.getNodeByName(nameOfBlueprintRange)->AddComponent(newMeshRenderer2);
-    NODESMANAGER.getNodeByName(nameOfBlueprintRange)->GetComponent<MeshRenderer>()->SetEnabled(false);*/
-
-
-    //std::cout <<  NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetRotation().x << "   " << NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetRotation().y << "  " << NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetRotation().z << std::endl;
 }
 
 void TurretsManager::UpdateBlueprintTurret() {
 
-    //if(!_shouldEnableBlueprintTurret) return;
+    if(!_shouldEnableBlueprintTurret) return;
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
     switch(finaltype)

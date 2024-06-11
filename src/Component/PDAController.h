@@ -53,6 +53,8 @@ public:
     bool _playShowAntennaAnim = false;
 
     void PlayShowAntenna();
+
+    void HideImmediately();
 };
 
 
