@@ -117,12 +117,6 @@ void TurretsManager::PlayerActions(){
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
         _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd( _turrets[_indexOfMovingTurret]->_ownerNode);
-        auto rangeNodes = _turrets[_indexOfMovingTurret]->_ownerNode->getChildren();
-        for (const auto &node: rangeNodes) {
-            if (node != nullptr) {
-                node->GetComponent<MeshRenderer>()->SetEnabled(true);
-            }
-        }
         finaltype = _turrets[_indexOfMovingTurret]->_turretType;
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
@@ -252,18 +246,20 @@ void TurretsManager::SpawnTurret(turretType type) {
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetRotation(_blueprintTurret->GetTransform()->GetRotation());
 
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName(nameOfTurret), rangeIndicatorNode);
+
+    auto rangeNode = NODESMANAGER.getNodeByName(rangeIndicatorNode);
     auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
     rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("sandModel");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
-    rangeIndicator->SetEnabled(false);
     rangeIndicator->Initiate();
-    NODESMANAGER.getNodeByName(rangeIndicatorNode)->AddComponent(rangeIndicator);
-    NODESMANAGER.getNodeByName(rangeIndicatorNode)->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 30.0f));
-    NODESMANAGER.getNodeByName(rangeIndicatorNode)->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
+    rangeIndicator->SetEnabled(false);
+    rangeNode->AddComponent(rangeIndicator);
+    rangeNode->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 30.0f));
+    rangeNode->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->UpdateGlobalCTM();
-    NODESMANAGER.getNodeByName(rangeIndicatorNode)->GetTransform()->UpdateGlobalCTM();
+    rangeNode->GetTransform()->UpdateGlobalCTM();
 
     CalculateRangePositions(newTurret);
 
@@ -310,10 +306,12 @@ void TurretsManager::PrepareBlueprintTurret() {
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->SetEnabled(false);
     rangeIndicator->Initiate();
+
     NODESMANAGER.getNodeByName(blueprintRange)->AddComponent(rangeIndicator);
     NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 30.0f));
     NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
 }
+
 
 void TurretsManager::UpdateBlueprintTurret() {
 
@@ -368,6 +366,8 @@ void TurretsManager::UpdateBlueprintTurret() {
     glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
     glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
     glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
+
+    _blueprintTurret->GetParent()->MoveChildToEnd(_blueprintTurret);
 }
 
 void TurretsManager::CheckEnemiesInRange() {
@@ -557,13 +557,6 @@ void TurretsManager::PlaceMovingTurret() {
     _turrets[_indexOfMovingTurret]->_isMoving = false;
     CalculateRangePositions(_turrets[_indexOfMovingTurret]);
     _turrets[_indexOfMovingTurret]->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
-
-    auto rangeNodes = _turrets[_indexOfMovingTurret]->_ownerNode->getChildren();
-    for (const auto &node: rangeNodes) {
-        if (node != nullptr) {
-            node->GetComponent<MeshRenderer>()->SetEnabled(false);
-        }
-    }
 
     _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
