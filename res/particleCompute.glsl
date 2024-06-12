@@ -78,7 +78,7 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     particle.Scale = particleScale;
     particle.Ground = jumpOff.y;
     if(ambient){
-    particle.Weight = (random(changeSeed) * 2) + 0.1 ;
+    particle.Weight = (random(changeSeed) * 3) + 0.1 ;
     }
     else{
     particle.Weight = 1.0;
@@ -192,20 +192,20 @@ void main() {
             p.Scale = 0.0;
             }
 
-            if(p.Position.x > 150){
-            p.Position.x = -150;
+            if(p.Position.x > 120){
+            p.Position.x = -20;
             }
 
-            if(p.Position.z > 150){
-            p.Position.z = -150;
+            if(p.Position.z > 120){
+            p.Position.z = -20;
             }
 
-            if(p.Position.x < -150){
-            p.Position.x = 150;
+            if(p.Position.x < -20){
+            p.Position.x = 120;
             }
 
-            if(p.Position.z < -150){
-            p.Position.z = 150;
+            if(p.Position.z < -20){
+            p.Position.z = 120;
             }
 
             if(p.Position.y < 299){

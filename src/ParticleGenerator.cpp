@@ -365,8 +365,8 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "ambientSandParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 300;
-        newParticles = 300;
+        amount = 200;
+        newParticles = 200;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
@@ -421,6 +421,25 @@ void ParticleGenerator::initiateParticleType() {
         isFlare = false;
         ambient = false;
         isUnderground = true;
+    }
+    else if (particleType == "rainParticles"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 10000;
+        newParticles = 10000;
+        spawnDelay = 0.0f;
+        speedVariation = 0.2f;
+        XZvariation = 100.4f;
+        particleLife = 60.0f;
+        particleColor = glm::vec4(0.682f,0.651f,0.882f,1.0f);
+        initialUpwardBoost = 0.04f;
+        particleScale = 0.20f;
+        gravity = glm::vec3(0.0f, -0.0f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = false;
+        isFlare = false;
+        ambient = true;
     }
 }
 
