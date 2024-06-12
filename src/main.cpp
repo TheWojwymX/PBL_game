@@ -295,38 +295,6 @@ int main(int, char**)
             NODESMANAGER.getNodeByName("AntModel")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
         }*/
 
-            // Start the Dear ImGui frame
-            imguiMain->draw();
-
-            ImGui::Begin("Depth Map");
-            ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
-            ImGui::Image((void *) (intptr_t) shadowMap.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
-            ImGui::End();
-
-            // Quick Debug
-            ImGui::Checkbox("Flashlight", &LIGHTSMANAGER.isSpotActive);
-
-            ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
-            ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
-            ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
-
-            ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
-            ImGui::InputFloat3("Center", &lightCenter[0]);
-
-            ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
-            ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
-            ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
-
-            ImGui::SliderFloat("glowstickConstantNoLight", &LIGHTSMANAGER.glowstickConstantNoFlash, -10.0f, 10.0f);
-            ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
-            ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
-
-            ImGui::ColorEdit3("Directional Light Color", dirColor);
-
-            ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
-
-            ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
-
             FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
             // Applying clear color
@@ -502,18 +470,51 @@ int main(int, char**)
             shovelShader->setVec3("lightPos", lightPos);
             shovelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
 
-            HUD.Update();
 
-            imguiMain->endDraw();
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
 
         }
-
-        HUD.Update();
         PAGEMANAGER.Update();
-
+        HUD.Update();
         AUDIOENGINEMANAGER.Update();
+
+
+        // Start the Dear ImGui frame
+        imguiMain->draw();
+
+        ImGui::Begin("Depth Map");
+        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
+        ImGui::Image((void *) (intptr_t) shadowMap.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::End();
+
+        // Quick Debug
+        ImGui::Checkbox("Flashlight", &LIGHTSMANAGER.isSpotActive);
+
+        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
+        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
+        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
+
+        ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
+        ImGui::InputFloat3("Center", &lightCenter[0]);
+
+        ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
+        ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
+        ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
+
+        ImGui::SliderFloat("glowstickConstantNoLight", &LIGHTSMANAGER.glowstickConstantNoFlash, -10.0f, 10.0f);
+        ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
+        ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
+
+        ImGui::ColorEdit3("Directional Light Color", dirColor);
+
+        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
+
+        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
+
+        imguiMain->endDraw();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);
