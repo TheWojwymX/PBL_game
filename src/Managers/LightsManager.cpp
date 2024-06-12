@@ -6,7 +6,7 @@ LightsManager &LightsManager::getInstance() {
     return instance;
 }
 
-void LightsManager::UpdateLights() {
+void LightsManager::Update() {
     flashlightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpPosition(flashlightCurrentPosition);
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpDirection(flashlightCurrentDirection);
 

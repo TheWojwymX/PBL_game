@@ -90,8 +90,8 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setMat4("objectRotation", glm::toMat4(objectRotation));
     computeShader->setVec3("enemyPosition", enemyPosition);
     computeShader->setVec3("jumpOff", jumpOffPoint);
-    computeShader->setVec3("windDirection", GAMEMANAGER._windDirection);
-    computeShader->setFloat("windStrength", GAMEMANAGER._windStrength);
+    computeShader->setVec3("windDirection", WEATHERMANAGER.getWindDirection());
+    computeShader->setFloat("windStrength", WEATHERMANAGER.getWindStrength());
 
     generatorPosition = object->GetTransform()->GetPosition() + rotatedOffset;
 
@@ -365,9 +365,9 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "ambientSandParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 3000;
-        newParticles = 3000;
-        spawnDelay = 1.0f;
+        amount = 300;
+        newParticles = 300;
+        spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
         particleLife = 60.0f;

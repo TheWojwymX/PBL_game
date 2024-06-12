@@ -10,6 +10,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include "Managers/NodesManager.h"
 #include "WindSimulation.h"
+#include "Managers/WeatherManager.h"
 
 
 struct Particle {

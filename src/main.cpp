@@ -49,6 +49,7 @@
 #include "Managers/ResourceManager.h"
 #include "Managers/NodesManager.h"
 #include "Managers/LightsManager.h"
+#include "Managers/WeatherManager.h"
 #include "Gui/ImguiMain.h"
 #include "ParticleGenerator.h"
 #include "WindSimulation.h"
@@ -162,8 +163,9 @@ int main(int, char**)
     shadowMap.Init();
     shadowMap.AssignShadowMapToShader();
 
+
     glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
-    float cloudSpeed = 8.0f;
+    float cloudSpeed = 5.0f;
 
     //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
@@ -174,12 +176,6 @@ int main(int, char**)
     //Shadowmap Creation POV
     glm::vec3 lightPos(49.999f, 330.0f, 120.0f);
     glm::vec3 lightCenter(50.0f, 250.0f,90.0f);
-
-    glm::vec3 windDirection(0.0f,0.0f,0.0f);
-    float windStrength = 0.7f;
-
-    dryden_model::DrydenWind windModel;
-    windModel.initialize(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0);
 
     bool _renderWireframeBB = false;
 
@@ -229,6 +225,8 @@ int main(int, char**)
     TUTORIALMANAGER.Init();
 
     LIGHTSMANAGER.InitLights();
+
+    WEATHERMANAGER.Init();
 
     auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();
     auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();
@@ -282,6 +280,8 @@ int main(int, char**)
             }
 
             UPGRADEMANAGER.Update();
+            LIGHTSMANAGER.Update();
+            WEATHERMANAGER.Update();
 
             // Input
             GAMEMANAGER.root->Input();
@@ -325,11 +325,7 @@ int main(int, char**)
 
             ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 
-            ImGui::SliderFloat3("Wind Direction", &windDirection[0], -1.0f, 1.0f);
-            ImGui::SliderFloat("Wind Strength", &windStrength, -10.0f, 10.0f);
-
-            windDirection = windModel.getWind(5 * TIME.GetDeltaTime());
-            windDirection.y /= 10;
+            ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 
             FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
@@ -338,9 +334,6 @@ int main(int, char**)
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
             glDepthMask(GL_FALSE);
-
-            GAMEMANAGER._windDirection = normalize(windDirection);
-            GAMEMANAGER._windStrength = windStrength;
 
             RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
 
@@ -374,8 +367,6 @@ int main(int, char**)
             shadowMap.EndRender();
 
             glViewport(0, 0, GAMEMANAGER._screenWidth, GAMEMANAGER._screenHeight); //Reset Viewport After Rendering to Shadow Map
-
-            LIGHTSMANAGER.UpdateLights();
 
             modelShader->use();
             modelShader->setVec3("dirLight.direction", dirDirection);
@@ -519,6 +510,7 @@ int main(int, char**)
 
         }
 
+        HUD.Update();
         PAGEMANAGER.Update();
 
         AUDIOENGINEMANAGER.Update();

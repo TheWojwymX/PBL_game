@@ -180,29 +180,32 @@ void main() {
             //p.Life = 0.0;
             //}
             if(ambient){
-            if(p.Life < particleLife - 2.2){
+            if(p.Life < particleLife - 2.05){
                 p.Life = particleLife - 2.3;
-                p.Velocity.xz = p.Velocity.xz * 0.999;
-                p.Velocity.y = p.Velocity.y * 0.999;
+                p.Velocity.xyz = p.Velocity.xyz * 0.999;
             }
             else if(p.Life < particleLife - 2.0){
             p.Velocity = vec4(0.0, 0.0, 0.0, 0.0);
+            p.Scale = particleScale/2;
+            }
+            else if(p.Life > particleLife - 2.0){
+            p.Scale = 0.0;
             }
 
-            if(p.Position.x > 200){
-            p.Position.x = -200;
+            if(p.Position.x > 150){
+            p.Position.x = -150;
             }
 
-            if(p.Position.z > 200){
-            p.Position.z = -200;
+            if(p.Position.z > 150){
+            p.Position.z = -150;
             }
 
-            if(p.Position.x < -200){
-            p.Position.x = 200;
+            if(p.Position.x < -150){
+            p.Position.x = 150;
             }
 
-            if(p.Position.z < -200){
-            p.Position.z = 200;
+            if(p.Position.z < -150){
+            p.Position.z = 150;
             }
 
             if(p.Position.y < 299){
