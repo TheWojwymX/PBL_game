@@ -38,6 +38,11 @@ public:
     ImageRenderer _jetpackEmpty;
     ImageRenderer _jetpackBar;
 
+    ImageRenderer _waveTimerGreen;
+    ImageRenderer _waveTimerRed;
+    ImageRenderer _waveArrowGreen;
+    ImageRenderer _waveArrowRed;
+
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
 
     glm::vec2 hpTopRight = glm::vec2(0.952f, 0.952f);

@@ -71,6 +71,31 @@ void HUDMain::Init() {
             leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
+    leftDownCorner = glm::vec3(-1, 0.4, 0.0);
+    rightTopCorner = glm::vec3(-0.5, 1, 0.0);
+    std::array<float, 32> verticesTimerBar{
+            // positions          // colors           // texture coords
+            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+    };
+
+    glm::vec3 middlePoint = glm::vec3((leftDownCorner.x + rightTopCorner.x) / 2.0f, (leftDownCorner.y + rightTopCorner.y) / 2.0f, 0);
+    leftDownCorner = glm::vec3(middlePoint.x, middlePoint.y - 0.05, 0);
+    rightTopCorner = glm::vec3(middlePoint.x + 0.25, middlePoint.y + 0.05, 0);
+    std::array<float, 32> verticesArrow{
+            // positions          // colors           // texture coords
+            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+    };
+
+    _waveArrowRed._rotationAngle = 0;
+    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", verticesArrow, true, false);
+
+    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", verticesTimerBar, true, false);
     _crosshairImage.Init("../../res/Images/crosshair041.png", verticesCrosshair, true, false);
     _plasticImage.Init("../../res/Images/Icons/plasticIcon.png", verticesPlastic, true, false);
     _metalImage.Init("../../res/Images/Icons/metalIcon.png", verticesMetal, true, false);
@@ -242,6 +267,12 @@ void HUDMain::Update() {
         _jetpackEmpty.UpdateImage();
     }
 
+    //Timer
+    _waveTimerGreen.UpdateImage();
+
+    _waveArrowRed._rotationAngle = _waveArrowRed._rotationAngle - 0.1;
+    _waveArrowRed.UpdateImage();
+
     //text
     if(_shouldShowMaterials){
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.38f, -0.92f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -250,7 +281,7 @@ void HUDMain::Update() {
     }
 
     if(_shouldShowPhaseInfo){
-        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+/*        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
         string nextPhaseName;
         if(GAMEMANAGER.currentPhase == 0){
@@ -263,7 +294,7 @@ void HUDMain::Update() {
             nextPhaseName = "Mining";
         }
 
-        TEXTRENDERER.RenderText("Next phase: " + nextPhaseName, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText("Next phase: " + nextPhaseName, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));*/
     }
 
     if(_shouldShowDepth){

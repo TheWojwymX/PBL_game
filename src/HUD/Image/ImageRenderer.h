@@ -27,6 +27,9 @@ public:
     bool _shouldRender = true;
 
     void UpdateImage(array<float, 32> *vertices, glm::vec3 additionalColor);
+
+    void Render();
+    float _rotationAngle = 0.0f;
 };
 
 
