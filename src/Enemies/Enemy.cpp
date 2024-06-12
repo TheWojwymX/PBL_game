@@ -101,6 +101,7 @@ void Enemy::AttackDome(){
     if(!_isAtWalls) return;
 
     if(_attackTimer >= _attackFrequency){
+        RESOURCEMANAGER.GetSoundByID(15)->PlaySoundSim(_ownerNode);
         DOMEMANAGER.takeDamage(_damage);
         //std::cout << "DOME HP: " << DOMEMANAGER.hp << std::endl;
         //std::cout << "ATTACKED DOME FOR " << _damage << std::endl;

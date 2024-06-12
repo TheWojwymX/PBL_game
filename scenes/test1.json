@@ -538,6 +538,24 @@
         "SoundName": "GunnerShot3",
         "SoundID": 14,
         "Type": 1
+      },
+      {
+        "Path": "res/Sounds/atak1.mp3",
+        "SoundName": "atak1",
+        "SoundID": 15,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/jetpack1.mp3",
+        "SoundName": "jetpack1",
+        "SoundID": 16,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/kopanie1.mp3",
+        "SoundName": "kopanie1",
+        "SoundID": 17,
+        "Type": 1
       }
     ]
   },

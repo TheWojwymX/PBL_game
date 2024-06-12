@@ -87,6 +87,7 @@ void PlayerController::InteractionInput() {
     if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)
         && !_shovelController->_isHidden && !_shovelController->_playHideAnim) {
         if(_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
+            RESOURCEMANAGER.GetSoundByID(17)->PlaySoundSim(_ownerNode);
             _shovelController->_playDigAnim = true;
             _timeSinceLastInteraction = 0.0f;
     }
@@ -141,6 +142,7 @@ void PlayerController::HandleMovement() {
 
     // Handle jetpack
     if (_isUsingJetpack && _jetpackFuel > 0) {
+        RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode);
         _velocity.y += _jetpackStrength * TIME.GetDeltaTime();
         _jetpackFuel -= _jetpackFuelConsumption * TIME.GetDeltaTime();
         _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f,_blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
