@@ -4,8 +4,10 @@
 
 #include <thread>
 #include "Sound.h"
+#include "Core/Node.h"
 
-Sound::Sound(const std::string &name, const std::string &path, int id, SoundType soundType) : _name(name), _path(path), _id(id), _soundType(soundType) {
+Sound::Sound(const std::string &name, const std::string &path, int id, SoundType soundType)
+        : _name(name), _path(path), _id(id), _soundType(soundType) {
 
     _result = ma_sound_init_from_file(&AUDIOENGINEMANAGER._engine, _path.c_str(), 0, NULL, NULL, &_sound);
     if (_result != MA_SUCCESS) {
@@ -26,7 +28,14 @@ Sound::~Sound() {
     std::cout << "Sound uninitialized: " << _name << std::endl;
 }
 
-void Sound::PlaySound() {
+void Sound::PlaySound(std::shared_ptr<Node> soundSourceNode) {
+    if(_playerNode == nullptr){
+        _playerNode = NODESMANAGER.getNodeByName("player");
+    }
+
+    float volume = CalculateVolumeToPlayerDistance(soundSourceNode);
+    ChangeVolume(volume);
+
     if (ma_sound_start(&_sound) != MA_SUCCESS) {
         std::cerr << "Failed to start sound: " << _name << std::endl;
     } else {
@@ -34,7 +43,14 @@ void Sound::PlaySound() {
     }
 }
 
-void Sound::PlaySoundSim() {
+void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode) {
+
+    if(_playerNode == nullptr){
+        _playerNode = NODESMANAGER.getNodeByName("player");
+    }
+
+    float volume = CalculateVolumeToPlayerDistance(soundSourceNode);
+
     ma_sound* sound = new ma_sound; // Dynamically allocate memory for the sound instance
 
     //std::cout << sound->pDataSource << std::endl;
@@ -47,11 +63,7 @@ void Sound::PlaySoundSim() {
     }
 
     // Set the volume based on the sound type
-    if (_soundType == SoundType::MUSIC) {
-        ma_sound_set_volume(sound, AUDIOENGINEMANAGER._musicVolume);
-    } else if (_soundType == SoundType::SFX) {
-        ma_sound_set_volume(sound, AUDIOENGINEMANAGER._sfxVolume);
-    }
+    ma_sound_set_volume(sound, volume);
 
     result = ma_sound_start(sound);
 
@@ -85,12 +97,28 @@ void Sound::SetLooping(bool looping) {
     ma_sound_set_looping(&_sound, looping);
 }
 
+float Sound::CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNode) {
+    float distance = glm::distance(_playerNode->GetTransform()->GetPosition(), soundSourceNode->GetTransform()->GetPosition());
 
-/*
-// Fade in over 1 second.
-ma_sound_set_fade_in_milliseconds(&sound, 0, 1, 1000);
+    if (distance <= 0) {
+        if (_soundType == SoundType::MUSIC) {
+            return AUDIOENGINEMANAGER._musicVolume;
+        } else if (_soundType == SoundType::SFX) {
+            return AUDIOENGINEMANAGER._sfxVolume;
+        }
+    } else if (distance < _maxSoundDistance) {
+        float normalizedDistance = distance / _maxSoundDistance;
+        float logDistance = log(normalizedDistance + 1); // log(1) = 0, log(x) where x -> 0 is negative, thus adding 1 to avoid negative values
 
-// ... sometime later ...
-
-// Fade out over 1 second, starting from the current volume.
-ma_sound_set_fade_in_milliseconds(&sound, -1, 0, 1000);*/
+        if (_soundType == SoundType::MUSIC) {
+            float maxVolume = AUDIOENGINEMANAGER._musicVolume;
+            return maxVolume - maxVolume * logDistance;
+        } else if (_soundType == SoundType::SFX) {
+            float maxVolume = AUDIOENGINEMANAGER._sfxVolume;
+            std::cout << maxVolume - maxVolume * logDistance << std::endl;
+            return maxVolume - maxVolume * logDistance;
+        }
+    } else {
+        return 0;
+    }
+}

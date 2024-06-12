@@ -11,6 +11,8 @@
 #include <iostream>
 #include "../thirdparty/nlohmann/json.hpp"
 
+class Node;
+
 enum class SoundType {
     MUSIC,
     SFX
@@ -32,14 +34,19 @@ public:
 
     nlohmann::json Serialize();
 
-    void PlaySound();
+    void PlaySound(std::shared_ptr<Node> soundSourceNode);
 
     void ChangeVolume(float volume);
 
     void SetLooping(bool looping);
 
-    void PlaySoundSim();
+    void PlaySoundSim(std::shared_ptr<Node> soundSourceNode);
 
+    std::shared_ptr<Node> _playerNode = nullptr;
+
+    float CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNode);
+
+    float _maxSoundDistance = 20;
 };
 
 

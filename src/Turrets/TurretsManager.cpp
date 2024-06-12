@@ -508,7 +508,7 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
                 static std::mt19937 gen(rd());
                 std::uniform_int_distribution<> dis(12, 13);
 
-                RESOURCEMANAGER.GetSoundByID(dis(gen))->PlaySoundSim();
+                RESOURCEMANAGER.GetSoundByID(dis(gen))->PlaySoundSim(turret->_ownerNode);
             }
         }
     }

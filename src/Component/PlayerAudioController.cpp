@@ -48,7 +48,7 @@ void PlayerAudioController::ResetStepTime(){
 }
 
 void PlayerAudioController::PlayJumpSound(){
-    RESOURCEMANAGER.GetSoundByName("JumpSound")->PlaySound();
+    RESOURCEMANAGER.GetSoundByName("JumpSound")->PlaySound(_ownerNode);
 }
 
 void PlayerAudioController::PlayRandomStepSound() {
@@ -59,5 +59,5 @@ void PlayerAudioController::PlayRandomStepSound() {
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, _stepSoundIDs.size() - 1);
 
-    RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[dis(gen)])->PlaySound();
+    RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[dis(gen)])->PlaySound(_ownerNode);
 }

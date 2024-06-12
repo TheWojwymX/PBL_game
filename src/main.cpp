@@ -261,7 +261,7 @@ int main(int, char**)
                 //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
             }
             if (INPUT.IsKeyPressed(GLFW_KEY_5)) {
-                RESOURCEMANAGER.GetSoundByID(14)->PlaySoundSim();
+                RESOURCEMANAGER.GetSoundByID(14)->PlaySoundSim(std::shared_ptr<Node>());
             }
 
             if (INPUT.IsKeyPressed(GLFW_KEY_RIGHT_BRACKET) && !TUTORIALMANAGER._isTutorialEnded) {
