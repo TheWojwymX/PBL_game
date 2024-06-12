@@ -110,7 +110,7 @@ void TurretsManager::PlayerActions(){
     }
 
     if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying
-        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && !_isInTurretChoiceMenu) {
+        && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && !_isInTurretChoiceMenu && IsSelectedTurretInRange()) {
 
         _indexOfMovingTurret = RaycastTurrets();
         _isPlayerInMovingMode = true;
@@ -636,7 +636,7 @@ bool TurretsManager::IsSelectedTurretInRange() {
         float distanceZ = (turretPosition.z - playerPosition.z) * (turretPosition.z - playerPosition.z);
         float distance = distanceX + distanceY + distanceZ;
 
-        return distance + 0.01 <= 25;
+        return distance + 0.01 <= 12;
     }
     return false;
 }
