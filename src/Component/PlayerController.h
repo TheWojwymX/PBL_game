@@ -83,13 +83,13 @@ private:
     int _reachUpgradeCost = 10;
     int _speedUpgradeCost = 10;
 
-    float _jetpackStrength = 25.0f;
+    float _jetpackStrength = 35.0f;
     float _jetpackFuelConsumption = 10.0f; // Fuel consumed per second when using the jetpack
     float _jetpackFuelRecovery = 0.0f;     // Fuel recovered per second when not using the jetpack
 
     bool _spaceKeyWasPressed = false;
     std::chrono::steady_clock::time_point _lastSpacePressTime;
-    float _jetpackActivationDelay = 0.3f;
+    float _jetpackActivationDelay = 0.25f;
 
     void JetpackInput();
 

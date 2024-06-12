@@ -103,7 +103,6 @@ private:
     std::vector<glm::vec3> GeneratePoissonDiskPoints();
     void UpdateVisibilityNearResources();
     int DestroyBlock(BlockData& blockData);
-    void UpdateAxisCollisions(BlockData& blockData);
     void ApplyMasks();
     void GenerateTunnel(std::vector<glm::ivec3> points, int size);
     void GenerateTunnels();

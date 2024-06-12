@@ -16,7 +16,7 @@ const float YAW = 90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 30.0f;
 const float SENSITIVITY = 0.1f;
-const float ZOOM = 65.0f;
+const float ZOOM = 75.0f;
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum CameraMovement {
