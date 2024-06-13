@@ -140,18 +140,7 @@ void PlayerController::HandleMovement() {
         _jump = true;
     }
 
-    // Handle jetpack
-    if (_isUsingJetpack && _jetpackFuel > 0) {
-        RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode);
-        _velocity.y += _jetpackStrength * TIME.GetDeltaTime();
-        _jetpackFuel -= _jetpackFuelConsumption * TIME.GetDeltaTime();
-        _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f,_blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
-        _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
-        if (_jetpackFuel < 0) _jetpackFuel = 0;
-    } else if (!_isUsingJetpack && _jetpackFuel < _maxJetpackFuel) {
-        _jetpackFuel += _jetpackFuelRecovery * TIME.GetDeltaTime();
-        if (_jetpackFuel > _maxJetpackFuel) _jetpackFuel = _maxJetpackFuel;
-    }
+    HandleJetpack();
 
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
     movementVector = glm::clamp(movementVector, -glm::vec3(0.999f), glm::vec3(0.999f));
@@ -171,6 +160,22 @@ void PlayerController::HandleMovement() {
     _ownerTransform->AddPosition(collisionResult.first);
 
     CheckGrounded(collisionResult.second);
+}
+
+void PlayerController::HandleJetpack()
+{
+    if (_isUsingJetpack && _jetpackFuel > 0 && _ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
+        RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode);
+        _velocity.y += _jetpackStrength * TIME.GetDeltaTime();
+        _jetpackFuel -= _jetpackFuelConsumption * TIME.GetDeltaTime();
+        _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f, _blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
+        _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
+        if (_jetpackFuel < 0) _jetpackFuel = 0;
+    }
+    else if (!_isUsingJetpack && _jetpackFuel < _maxJetpackFuel) {
+        _jetpackFuel += _jetpackFuelRecovery * TIME.GetDeltaTime();
+        if (_jetpackFuel > _maxJetpackFuel) _jetpackFuel = _maxJetpackFuel;
+    }
 }
 
 bool PlayerController::CheckIfPlayerIsAtEntranceToMine(){

@@ -208,7 +208,7 @@ void ParticleGenerator::Init() {
     computeShader->setBool("onlyForward", onlyForward);
     computeShader->setBool("casing", casing);
     computeShader->setBool("isJetpack", isJetpack);
-    computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel - 0.6);
+    computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel);
     computeShader->setBool("isFlare", isFlare);
     computeShader->setBool("ambient", ambient);
     computeShader->setBool("isUnderground", isUnderground);

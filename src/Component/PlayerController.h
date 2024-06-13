@@ -72,6 +72,7 @@ private:
 
     void CheckGrounded(glm::vec3 separationVector);
     void HandleMovement();
+    void HandleJetpack();
     void MovementInput();
     void InteractionInput();
 
