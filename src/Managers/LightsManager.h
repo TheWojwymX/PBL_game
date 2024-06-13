@@ -30,10 +30,14 @@ public:
     float glowstickConstant = 5.0f;
     float glowstickLinear = 2.049f;
     float glowstickQuadratic = 0.737f;
-
-    float glowstickConstantNoFlash = 3.65f;
-    float glowstickLinearNoFlash = 0.9f;
-    float glowstickQuadraticNoFlash = 0.4f;
+    /*
+    float glowstickConstantNoFlash = 2.0f;   // Increased to reduce close-range intensity
+    float glowstickLinearNoFlash = 0.7f;     // Increased to manage mid-range attenuation
+    float glowstickQuadraticNoFlash = 0.1f;  // Slightly increased to smooth out the falloff
+    */
+    float glowstickConstantNoFlash = 3.0f;   // Maintained to control close-range intensity
+    float glowstickLinearNoFlash = 0.4f;     // Decreased for more gradual mid-range attenuation
+    float glowstickQuadraticNoFlash = 0.05f; // Decreased to allow light to reach further
 private:
     void UpdateShaders();
 

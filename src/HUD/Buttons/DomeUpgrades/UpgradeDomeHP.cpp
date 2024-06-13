@@ -19,7 +19,7 @@ void UpgradeDomeHP::SetVertices(const array<float, 32> &vertices) {
 }
 
 void UpgradeDomeHP::Onclick() {
-    UPGRADEMANAGER.upgradeDomeHp();
+    UPGRADEMANAGER.UpgradeDomeHp();
 }
 
 void UpgradeDomeHP::SetText(std::string text, float textSize) {

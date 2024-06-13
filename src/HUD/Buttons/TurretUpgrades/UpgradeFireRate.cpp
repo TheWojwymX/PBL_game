@@ -19,7 +19,7 @@ void UpgradeFireRate::SetVertices(const array<float, 32> &vertices) {
 }
 
 void UpgradeFireRate::Onclick() {
-    UPGRADEMANAGER.upgradeTurretFireRate();
+    UPGRADEMANAGER.UpgradeTurretFireRate();
 }
 
 void UpgradeFireRate::SetText(std::string text, float textSize) {

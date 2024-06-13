@@ -26,6 +26,16 @@ void GameManager::AddPlastic(int amount)
     _plastic += amount;
 }
 
+bool GameManager::HasMaterials(glm::ivec2 mat) {
+    return mat.x <= _plastic && mat.y <= _metal;
+}
+
+void GameManager::RemoveMaterials(glm::ivec2 mat)
+{
+    _plastic -= mat.x;
+    _metal -= mat.y;
+}
+
 void GameManager::Update()
 {
     if(TUTORIALMANAGER._isFreePlay){

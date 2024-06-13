@@ -19,7 +19,7 @@ void UpgradeDamage::SetVertices(const array<float, 32> &vertices) {
 }
 
 void UpgradeDamage::Onclick() {
-    UPGRADEMANAGER.upgradeTurretDamage();
+    UPGRADEMANAGER.UpgradeTurretDamage();
 }
 
 void UpgradeDamage::SetText(std::string text, float textSize) {

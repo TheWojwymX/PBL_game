@@ -26,6 +26,8 @@ public:
     void pressToSkipPhase();
     void AddMetal(int amount);
     void AddPlastic(int amount);
+    bool HasMaterials(glm::ivec2 mat);
+    void RemoveMaterials(glm::ivec2 mat);
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 100;

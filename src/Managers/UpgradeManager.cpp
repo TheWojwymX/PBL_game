@@ -4,9 +4,27 @@
 
 #include "UpgradeManager.h"
 
-UpgradeManager &UpgradeManager::getInstance() {
+UpgradeManager &UpgradeManager::GetInstance() {
     static UpgradeManager instance;
     return instance;
+}
+
+UpgradeManager::UpgradeManager() {
+    _domeHPUpgrades.upgradeCosts = {
+        {10, 20},   //1
+        {15, 25},   //2
+        {20, 30},   //3
+        {25, 35},   //4
+        {30, 40}    //5
+    };
+
+    _domeHPUpgrades.upgradeValues = {
+        20.0f,      //1
+        30.0f,      //2
+        40.0f,      //3
+        50.0f,      //4
+        60.0f       //5
+    };
 }
 
 bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
@@ -29,7 +47,7 @@ bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const 
     return true;
 }
 
-bool UpgradeManager::isDomeStationInRaycast() {
+bool UpgradeManager::IsDomeStationInRaycast() {
     auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
     glm::vec3 cameraPosition = camera->GetPosition();
     glm::vec3 rayDirection = camera->GetDirection();
@@ -54,20 +72,17 @@ bool UpgradeManager::isDomeStationInRaycast() {
     return false;
 }
 
-bool UpgradeManager::isDomeStationInRange()
+bool UpgradeManager::IsDomeStationInRange()
 {
 
     auto _domeStation = NODESMANAGER.getNodeByName("DomeStation")->GetTransform()->GetPosition();
     auto playerPosition = NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition();
-    float distanceX = (_domeStation.x - playerPosition.x) * (_domeStation.x - playerPosition.x);
-    float distanceY = (_domeStation.y - playerPosition.y) * (_domeStation.y - playerPosition.y);
-    float distanceZ = (_domeStation.z - playerPosition.z) * (_domeStation.z - playerPosition.z);
-    float distance = distanceX + distanceY + distanceZ;
+    float distance = glm::distance2(_domeStation, playerPosition);
 
     return distance + 0.01 <= _radiusSquared;
 }
 
-bool UpgradeManager::isPlayerStationInRaycast()
+bool UpgradeManager::IsPlayerStationInRaycast()
 {
     auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
     glm::vec3 cameraPosition = camera->GetPosition();
@@ -93,19 +108,16 @@ bool UpgradeManager::isPlayerStationInRaycast()
     return false;
 }
 
-bool UpgradeManager::isPlayerStationInRange()
+bool UpgradeManager::IsPlayerStationInRange()
 {
     auto _playerStation = NODESMANAGER.getNodeByName("PlayerStation")->GetTransform()->GetPosition();
     auto playerPosition = NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition();
-    float distanceX = (_playerStation.x - playerPosition.x) * (_playerStation.x - playerPosition.x);
-    float distanceY = (_playerStation.y - playerPosition.y) * (_playerStation.y - playerPosition.y);
-    float distanceZ = (_playerStation.z - playerPosition.z) * (_playerStation.z - playerPosition.z);
-    float distance = distanceX + distanceY + distanceZ;
+    float distance = glm::distance2(_playerStation, playerPosition);
 
     return distance + 0.01 <= _radiusSquared;
 }
 
-bool UpgradeManager::isTurretInRaycast()
+bool UpgradeManager::IsTurretInRaycast()
 {
     if(TURRETSMANAGER.RaycastTurrets() != -1)
     {
@@ -114,7 +126,7 @@ bool UpgradeManager::isTurretInRaycast()
     return false;
 }
 
-bool UpgradeManager::isTurretInRange()
+bool UpgradeManager::IsTurretInRange()
 {
     if(TURRETSMANAGER.IsSelectedTurretInRange())
     {
@@ -123,22 +135,31 @@ bool UpgradeManager::isTurretInRange()
     return false;
 }
 
-void UpgradeManager::upgradeDomeHp()
-{
-
-    if(GAMEMANAGER._plastic < _domeHPUpgradeCost) {
-        std::cout << "Brak pieniedzy na ulepszenie HP doma" << std::endl;
+void UpgradeManager::UpgradeDomeHp() {
+    char domeHPLevel = DOMEMANAGER.GetDomeHPLevel();
+    if (domeHPLevel >= _domeHPUpgrades.upgradeCosts.size()) {
+        std::cout << "No more upgrades available for Dome HP." << std::endl;
         return;
     }
-    else{
-        GAMEMANAGER._plastic -= _domeHPUpgradeCost;
+
+    // Check if enough resources for upgrade
+    glm::ivec2 upgradeCost = _domeHPUpgrades.upgradeCosts[domeHPLevel];
+    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+        std::cout << "Not enough materials to upgrade Dome HP." << std::endl;
+        return;
     }
 
-    DOMEMANAGER.maxHP += 20;
-    cout << "Current dome max HP: " << DOMEMANAGER.maxHP << endl;
+    // Deduct resources
+    GAMEMANAGER.RemoveMaterials(upgradeCost);
+
+    // Apply upgrade
+    DOMEMANAGER.UpgradeDomeHP(_domeHPUpgrades.upgradeValues[domeHPLevel]);
+
+    // Print current dome max HP
+    std::cout << "Current dome max HP: " << DOMEMANAGER.maxHP << std::endl;
 }
 
-void UpgradeManager::upgradeTurretDamage()
+void UpgradeManager::UpgradeTurretDamage()
 {
     if(GAMEMANAGER._metal < _turretDamageUpgradeCost){
         std::cout << "Brak pieniedzy na ulepszenie obrazen dzialka" << std::endl;
@@ -159,7 +180,7 @@ void UpgradeManager::upgradeTurretDamage()
     }
 }
 
-void UpgradeManager::upgradeTurretFireRate() {
+void UpgradeManager::UpgradeTurretFireRate() {
 
     if(GAMEMANAGER._metal < _turretFireRateUpgradeCost){
         std::cout << "Brak pieniedzy na ulepszenie szybkostrzelnosci dzialka" << std::endl;
@@ -181,22 +202,22 @@ void UpgradeManager::upgradeTurretFireRate() {
 }
 
 void UpgradeManager::Update() {
-    if(isPlayerStationInRaycast() && isPlayerStationInRange()){
+    if(IsPlayerStationInRaycast() && IsPlayerStationInRange()){
         NODESMANAGER.getNodeByName("PlayerStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
     }
     else if(NODESMANAGER.getNodeByName("PlayerStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline == true){
         NODESMANAGER.getNodeByName("PlayerStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
     }
 
-    if(isDomeStationInRaycast() && isDomeStationInRange()){
+    if(IsDomeStationInRaycast() && IsDomeStationInRange()){
         NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
     }
     else if(NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline == true){
         NODESMANAGER.getNodeByName("DomeStation")->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
     }
 
-    if(isTurretInRaycast() && isTurretInRange()) {
-        highlightSingleTurret(TURRETSMANAGER.RaycastTurrets());
+    if(IsTurretInRaycast() && IsTurretInRange()) {
+        HighlightSingleTurret(TURRETSMANAGER.RaycastTurrets());
     } else {
         for(int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
             TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
@@ -204,7 +225,7 @@ void UpgradeManager::Update() {
     }
 }
 
-void UpgradeManager::highlightSingleTurret(int turretIndex)
+void UpgradeManager::HighlightSingleTurret(int turretIndex)
 {
     for(int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
         TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;

@@ -172,7 +172,7 @@ void LightsManager::UpdateGlowsticks() {
         auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
         glm::vec3 glowstickPosition = thisGlowstick->GetTransform()->GetPosition();
 
-        if (glm::distance(glowstickPosition, camPosition) < 40.0f) {
+        if (glm::distance(glowstickPosition, camPosition) < 60.0f) {
             visibleGlowsticks.push_back(glowstickPosition);
             visibleGlowstickColors.push_back(glowstickColors[i]);
         }
