@@ -257,15 +257,11 @@
       },
       {
         "ModelName": "DomeStation",
-        "Path": "res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
+        "Path": "res/Models/UpgradeStations/base/base_upgrade_stationv4.obj"
       },
       {
         "ModelName": "PlayerStation",
-        "Path": "res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
-      },
-      {
-        "ModelName": "RefuelStation",
-        "Path": "res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
+        "Path": "res/Models/UpgradeStations/player/player_upgrade_station_v2.obj"
       },
       {
         "ModelName": "Turret_Standard_Level1",
@@ -960,54 +956,19 @@
         ],
         "transform": {
           "position": [
-            46.0,
+            43.3,
             299.5,
-            46.0
+            49.5
           ],
           "rotation": [
             0.0,
-            0.0,
+            90.0,
             0.0
           ],
           "scale": [
-            0.3,
-            0.3,
-            0.3
-          ]
-        }
-      },
-      {
-        "NodeID": 18,
-        "NodeName": "RefuelStation",
-        "children": [],
-        "components": [
-          {
-            "componentId": 29,
-            "componentType": 5,
-            "model": "DomeStation",
-            "shader": "modelShader",
-            "outlineShader": "outlineShader"
-          },
-          {
-            "componentId": 30,
-            "componentType": 11
-          }
-        ],
-        "transform": {
-          "position": [
-            54.5,
-            299.5,
-            46.0
-          ],
-          "rotation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "scale": [
-            0.3,
-            0.3,
-            0.3
+            1,
+            1,
+            1
           ]
         }
       },
@@ -1026,13 +987,13 @@
         ],
         "transform": {
           "position": [
-            54.0,
+            55.7,
             299.5,
-            56.0
+            49.5
           ],
           "rotation": [
             0.0,
-            0.0,
+            -90.0,
             0.0
           ],
           "scale": [

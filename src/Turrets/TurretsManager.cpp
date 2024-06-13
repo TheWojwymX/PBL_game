@@ -48,7 +48,7 @@ void TurretsManager::ChangeToSpawningMode(){
 void TurretsManager::PlayerActions(){
 
     if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim
-        && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f && !_isPlayerInMovingMode) {
+        && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
         _PDAController->_playShowAnim = true;
         HUD._shouldShowCrosshair = false;
         PAGEMANAGER._PDAPage->DisplayPDAPage();
@@ -56,7 +56,7 @@ void TurretsManager::PlayerActions(){
         HideBlueprintTurret();
     }
     else if (INPUT.IsKeyPressed(GLFW_KEY_4) && !_PDAController->_isHidden &&
-        _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel - 0.7f && !_isPlayerInMovingMode) {
+        _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
         _PDAController->HideImmediately();
         HUD._shouldShowCrosshair = true;
         PAGEMANAGER._PDAPage->HidePDAPage();
@@ -336,7 +336,7 @@ void TurretsManager::UpdateBlueprintTurret() {
     glm::vec3 forwardVector = glm::normalize(_player->GetComponent<Camera>()->GetFrontVector());
     float minDistance = 2.0f;
     glm::vec3 turretPosition = _player->GetTransform()->GetPosition() + forwardVector * minDistance;
-    turretPosition.y = GAMEMANAGER._groundLevel - 0.7;
+    turretPosition.y = GAMEMANAGER._groundLevel;
     glm::vec2 playerFlatPosition(_player->GetTransform()->GetPosition().x, _player->GetTransform()->GetPosition().z);
     glm::vec2 turretFlatPosition(turretPosition.x, turretPosition.z);
     if (glm::distance(playerFlatPosition, turretFlatPosition) < minDistance) {

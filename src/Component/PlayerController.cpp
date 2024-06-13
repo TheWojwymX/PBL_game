@@ -219,7 +219,7 @@ bool PlayerController::CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos
 
     glm::vec2 playerPos2D = glm::vec2(playerPos.x, playerPos.z);
 
-    if(glm::distance(playerPos2D, domePos) + 4.5f > domeRadius && playerPos.y >= GAMEMANAGER._groundLevel - 0.7f){
+    if(glm::distance(playerPos2D, domePos) + 4.5f > domeRadius && playerPos.y >= GAMEMANAGER._groundLevel){
         return true;
     } else{
         return false;
