@@ -24,7 +24,8 @@ void WeatherManager::Update(){
     if(windDirection.y < -0.1) windDirection.y = -0.1;
 
     timeSinceLastCheck += TIME.GetDeltaTime();
-    if(timeSinceLastCheck >= rainCheckInterval)
+    timer += TIME.GetDeltaTime();
+    if(timeSinceLastCheck >= 5*rainCheckInterval)
     {
         timeSinceLastCheck = 0.0f;
 
@@ -37,35 +38,52 @@ void WeatherManager::Update(){
             }
         }
     }
-    // Update rain duration
-    if (isRaining) {
-        //cout <<"pada" << endl;
-        rainTimeLeft -= TIME.GetDeltaTime();
-        timeSinceLastParticleSpawn += TIME.GetDeltaTime();
-        auto particleGenerator = NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>();
-        auto maxParticles = particleGenerator->newParticles;
-        if(spawnedParticles < particleGenerator->amount) {
-            if (rainTimeLeft >= (2 * rainDuration / 3) && timeSinceLastParticleSpawn >= 10 * particleSpawnInterval) {
-                windDirection.y = -0.5f;
-                particleGenerator->gravity = glm::vec3(0.0f, -2.0f, 0.0f);
-                particleGenerator->SpawnParticles(); //spawn once
-                timeSinceLastParticleSpawn = 0.0f;
-            } else if (rainTimeLeft < 2 * rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
-                windDirection.y = -1.5f;
-                particleGenerator->gravity = glm::vec3(0.0f, -5.0f, 0.0f);
-                NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
-                timeSinceLastParticleSpawn = 0.0f;
-            } else if (rainTimeLeft < rainDuration / 3 && timeSinceLastParticleSpawn >= 10 * particleSpawnInterval) {
-                windDirection.y = -0.5f;
-                particleGenerator->gravity = glm::vec3(0.0f, -2.0f, 0.0f);
-                particleGenerator->SpawnParticles(); //spawn once
-                timeSinceLastParticleSpawn = 0.0f;
-            }
-        }
-        if (rainTimeLeft <= 0.0f) {
-            isRaining = false;
-        }
-    }
+    
+//    // Update rain duration
+//    if (isRaining) {
+//        rainTimeLeft -= TIME.GetDeltaTime();
+//        timeSinceLastParticleSpawn += TIME.GetDeltaTime();
+//        auto particleGenerator = NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>();
+//        auto maxParticles = particleGenerator->newParticles;
+//        if(spawnedParticles < particleGenerator->amount) {
+//            if (rainTimeLeft >= (2 * rainDuration / 3) && timeSinceLastParticleSpawn >= 10 * particleSpawnInterval) {
+//                windDirection.y = -0.5f;
+//                particleGenerator->gravity = glm::vec3(0.0f, -2.0f, 0.0f);
+//                particleGenerator->SpawnParticles(); //spawn once
+//                timeSinceLastParticleSpawn = 0.0f;
+//            } else if (rainTimeLeft < 2 * rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
+//                windDirection.y = -1.5f;
+//                particleGenerator->gravity = glm::vec3(0.0f, -5.0f, 0.0f);
+//                NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+//                timeSinceLastParticleSpawn = 0.0f;
+//            } else if (rainTimeLeft < rainDuration / 3 && timeSinceLastParticleSpawn >= 10 * particleSpawnInterval) {
+//                windDirection.y = -0.5f;
+//                particleGenerator->gravity = glm::vec3(0.0f, -2.0f, 0.0f);
+//                particleGenerator->SpawnParticles(); //spawn once
+//                timeSinceLastParticleSpawn = 0.0f;
+//            }
+//        }
+//        if (rainTimeLeft <= 0.0f) {
+//            isRaining = false;
+//        }
+//    }
+
+//    if(timer >= particleSpawnInterval)
+//    {
+//        timer = 0.0f;
+//        if (!increasing) {
+//            LIGHTSMANAGER.lightPos.z -= 0.1f;
+//            if (LIGHTSMANAGER.lightPos.z <= 20.0f) {
+//                increasing = true;
+//            }
+//        }
+//        else {
+//            LIGHTSMANAGER.lightPos.z += 0.1f;
+//            if (LIGHTSMANAGER.lightPos.z >= 150.0f) {
+//                increasing = false;
+//            }
+//        }
+//    }
 }
 
 void WeatherManager::SetupAmbientParticles() {
@@ -85,7 +103,7 @@ void WeatherManager::SetupAmbientParticles() {
 void WeatherManager::SetupRainParticles() {
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "RainParticles");
     auto node = NODESMANAGER.getNodeByName("RainParticles");
-    node->GetTransform()->SetPosition(glm::vec3(53.0f,299.0f,50.0f));
+    node->GetTransform()->SetPosition(glm::vec3(53.0f,319.0f,50.0f));
 
     auto rainParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "rainParticles");
     rainParticles->SetOffset(glm::vec3(0.0f, 0.5f, 0.0f));
@@ -95,7 +113,7 @@ void WeatherManager::SetupRainParticles() {
 
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "RainParticles2");
     auto node2 = NODESMANAGER.getNodeByName("RainParticles2");
-    node2->GetTransform()->SetPosition(glm::vec3(53.0f,299.0f,50.0f));
+    node2->GetTransform()->SetPosition(glm::vec3(53.0f,319.0f,50.0f));
 
     auto rainParticles2 = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "rainParticlesFull");
     rainParticles2->SetOffset(glm::vec3(0.0f, 0.5f, 0.0f));

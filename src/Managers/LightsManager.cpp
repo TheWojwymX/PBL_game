@@ -21,11 +21,18 @@ void LightsManager::InitLights() {
     modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
     shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
     glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
+    outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
+    cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
+    particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
 
     //Flashlight Properties
     isSpotActive = false;
     flashlightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
+
+    lightPos = glm::vec3(49.999f, 330.0f, 120.0f);
+    lightCenter = glm::vec3(50.0f, 250.0f,90.0f);
 }
 
 void LightsManager::UpdateShaders(){
@@ -40,6 +47,11 @@ void LightsManager::UpdateShaders(){
     modelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     modelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
 
+    modelShader->setVec3("dirLight.direction", dirDirection);
+    modelShader->setVec3("dirLight.color", dirColor);
+    modelShader->setInt("dirLight.isActive", dirActive);
+    modelShader->setVec3("lightPos", lightPos);
+
     glowstickShader->use();
     glowstickShader->setBool("spotLights[0].isActive", isSpotActive);
     glowstickShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
@@ -50,6 +62,16 @@ void LightsManager::UpdateShaders(){
     glowstickShader->setVec3("spotLights[0].color", flashlightColor);
     glowstickShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     glowstickShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
+
+    glowstickShader->setVec3("dirLight.direction", dirDirection);
+    glowstickShader->setVec3("dirLight.color", dirColor);
+    glowstickShader->setInt("dirLight.isActive", dirActive);
+    glowstickShader->setVec3("lightPos", lightPos);
+
+    outlineShader->use();
+    outlineShader->setVec3("dirLight.direction", dirDirection);
+    outlineShader->setVec3("dirLight.color", dirColor);
+    outlineShader->setInt("dirLight.isActive", dirActive);
 
     instancedSandShader->use();
     instancedSandShader->setBool("spotLights[0].isActive", isSpotActive);
@@ -62,6 +84,11 @@ void LightsManager::UpdateShaders(){
     instancedSandShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     instancedSandShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
 
+    instancedSandShader->setVec3("dirLight.direction", dirDirection);
+    instancedSandShader->setVec3("dirLight.color", dirColor);
+    instancedSandShader->setInt("dirLight.isActive", dirActive);
+    instancedSandShader->setVec3("lightPos", lightPos);
+
     instancedMetalShader->use();
     instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedMetalShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
@@ -73,6 +100,11 @@ void LightsManager::UpdateShaders(){
     instancedMetalShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     instancedMetalShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
 
+    instancedMetalShader->setVec3("dirLight.direction", dirDirection);
+    instancedMetalShader->setVec3("dirLight.color", dirColor);
+    instancedMetalShader->setInt("dirLight.isActive", dirActive);
+    instancedMetalShader->setVec3("lightPos", lightPos);
+
     instancedPlasticShader->use();
     instancedPlasticShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedPlasticShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
@@ -83,6 +115,11 @@ void LightsManager::UpdateShaders(){
     instancedPlasticShader->setVec3("spotLights[0].color", flashlightColor);
     instancedPlasticShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     instancedPlasticShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
+
+    instancedPlasticShader->setVec3("dirLight.direction", dirDirection);
+    instancedPlasticShader->setVec3("dirLight.color", dirColor);
+    instancedPlasticShader->setInt("dirLight.isActive", dirActive);
+    instancedPlasticShader->setVec3("lightPos", lightPos);
 
     for (int i = 0; i < maxGlowsticks; i++) {
         string name = "pointLights[" + to_string(i) + "]";
@@ -130,6 +167,22 @@ void LightsManager::UpdateShaders(){
     shovelShader->setVec3("spotLights[0].color", flashlightColor);
     shovelShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
     shovelShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
+
+    shovelShader->setVec3("dirLight.direction", dirDirection);
+    shovelShader->setVec3("dirLight.color", dirColor);
+    shovelShader->setInt("dirLight.isActive", dirActive);
+    shovelShader->setVec3("lightPos", lightPos);
+
+    lightObjectShader->use();
+    lightObjectShader->setVec3("lightColor", dirColor);
+
+    cloudShader->use();
+    cloudShader->setVec3("dirLight.direction", dirDirection);
+    cloudShader->setVec3("dirLight.color", dirColor);
+    cloudShader->setInt("dirLight.isActive", dirActive);
+
+    particleShader->use();
+    particleShader->setVec3("dirColor", dirColor);
 }
 
 void LightsManager::AddGlowstick() {

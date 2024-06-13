@@ -4,6 +4,11 @@ ShadowMap::ShadowMap(unsigned int shadowWidth, unsigned int shadowHeight)
         : shadowWidth(shadowWidth), shadowHeight(shadowHeight), depthMapFBO(0), depthMap(0) {
 }
 
+ShadowMap &ShadowMap::getInstance() {
+    static ShadowMap instance;
+    return instance;
+}
+
 ShadowMap::~ShadowMap() {
     if (depthMapFBO != 0) {
         glDeleteFramebuffers(1, &depthMapFBO);

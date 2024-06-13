@@ -440,7 +440,7 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "rainParticlesFull"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 3000;
+        amount = 5000;
         newParticles = 100;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
@@ -448,7 +448,7 @@ void ParticleGenerator::initiateParticleType() {
         particleLife = 10.0f;
         particleColor = glm::vec4(0.682f,0.651f,0.898f,1.0f);
         initialUpwardBoost = 0.04f;
-        particleScale = 0.21f;
+        particleScale = 0.24f;
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         ambient = true;
         rain = true;

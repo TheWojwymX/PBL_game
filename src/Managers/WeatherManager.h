@@ -31,7 +31,7 @@ private:
     DrydenWind windModel;
 
     bool isRaining = false;
-    float rainProbability = 0.05f; //100%
+    float rainProbability = 0.9f; //100%
     float rainCheckInterval = 5.0f;
     float rainDuration = 50.0f;
     float timeSinceLastCheck = 0.0f;
@@ -39,4 +39,6 @@ private:
     int spawnedParticles = 0;
     float particleSpawnInterval = 0.016f;
     float timeSinceLastParticleSpawn = 0.0f;
+    float timer = 0.0f;
+    bool increasing = false;
 };

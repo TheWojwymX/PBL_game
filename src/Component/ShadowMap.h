@@ -1,10 +1,13 @@
 #pragma once
 
+#define SHADOWMAP ShadowMap::getInstance()
+
 #include "Managers/GameManager.h"
 
 class ShadowMap {
 public:
-    ShadowMap(unsigned int shadowWidth = 2560, unsigned int shadowHeight = 1440);
+    ShadowMap(unsigned int shadowWidth = 10240, unsigned int shadowHeight = 5760);
+    static ShadowMap &getInstance();
     ~ShadowMap();
 
     // Initialize the shadow map

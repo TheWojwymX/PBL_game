@@ -224,20 +224,20 @@ void main() {
                 }
             }
             else{
-                if(p.Position.x > 100){
-                p.Position.x = 0;
+                if(p.Position.x > 80){
+                p.Position.x = 20;
                 }
 
-                if(p.Position.z > 100){
-                p.Position.z = 0;
+                if(p.Position.z > 80){
+                p.Position.z = 20;
                 }
 
-                if(p.Position.x < 0){
-                p.Position.x = 100;
+                if(p.Position.x < 20){
+                p.Position.x = 80;
                 }
 
-                if(p.Position.z < 0){
-                p.Position.z = 100;
+                if(p.Position.z < 20){
+                p.Position.z = 80;
                 }
 
                 if(p.Position.y < 300){

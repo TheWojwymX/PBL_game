@@ -38,6 +38,14 @@ public:
     float glowstickConstantNoFlash = 3.0f;   // Maintained to control close-range intensity
     float glowstickLinearNoFlash = 0.4f;     // Decreased for more gradual mid-range attenuation
     float glowstickQuadraticNoFlash = 0.05f; // Decreased to allow light to reach further
+
+    float dirColor[3] = { 0.999f, 0.999f, 1.00f };
+    float skyColor[3] = { 0.999f, 0.999f, 1.00f };
+    float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
+    bool dirActive = true;
+
+    glm::vec3 lightPos;
+    glm::vec3 lightCenter;
 private:
     void UpdateShaders();
 
@@ -47,6 +55,10 @@ private:
     std::shared_ptr<Shader> modelShader;
     std::shared_ptr<Shader> shovelShader;
     std::shared_ptr<Shader> glowstickShader;
+    std::shared_ptr<Shader> outlineShader;
+    std::shared_ptr<Shader> lightObjectShader;
+    std::shared_ptr<Shader> cloudShader;
+    std::shared_ptr<Shader> particleShader;
 
     glm::vec3 flashlightCurrentPosition = glm::vec3(0.0f);
     glm::vec3 flashlightCurrentDirection = glm::vec3(0.0f);

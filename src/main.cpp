@@ -159,25 +159,15 @@ int main(int, char**)
     INPUT.Init(GAMEMANAGER._window, GAMEMANAGER._screenWidth, GAMEMANAGER._screenHeight);
     GAMEMANAGER.root->Init();
 
-    //ShadowMap init
-    ShadowMap shadowMap;
-    shadowMap.Init();
-    shadowMap.AssignShadowMapToShader();
+    SHADOWMAP.Init();
+    SHADOWMAP.AssignShadowMapToShader();
 
     FRAMEBUFFER.Init();
 
     glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
     float cloudSpeed = 5.0f;
 
-    //Directional Light Properties
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
-    float dirColor[3] = { 0.999f, 0.999f, 1.00f };
-    float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
-    bool dirActive = true;
-
-    //Shadowmap Creation POV
-    glm::vec3 lightPos(49.999f, 330.0f, 120.0f);
-    glm::vec3 lightCenter(50.0f, 250.0f,90.0f);
 
     bool _renderWireframeBB = false;
 
@@ -312,56 +302,46 @@ int main(int, char**)
             skyboxShader->setMat4("view", skyboxView);
             skyboxShader->setMat4("projection", projection);
 
+            skyboxShader->setVec3("lightPos", LIGHTSMANAGER.lightPos);
+            skyboxShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            skyboxShader->setVec3("lightColor", LIGHTSMANAGER.skyColor);
+
             skybox.draw();
 
             //ShadowMap Creation
-            glm::vec3 shadowDir = glm::normalize(lightCenter - lightPos);
-            dirDirection[0] = shadowDir.x;
-            dirDirection[1] = shadowDir.y;
-            dirDirection[2] = shadowDir.z;
+            glm::vec3 shadowDir = glm::normalize(LIGHTSMANAGER.lightCenter - LIGHTSMANAGER.lightPos);
+            LIGHTSMANAGER.dirDirection[0] = shadowDir.x;
+            LIGHTSMANAGER.dirDirection[1] = shadowDir.y;
+            LIGHTSMANAGER.dirDirection[2] = shadowDir.z;
 
-            float near_plane = 0.2f, far_plane = 150.0f;
+            float near_plane = 0.2f, far_plane = 250.0f;
             glm::mat4 lightProjection = glm::ortho(-300.0f, 300.0f, -100.0f, 100.0f, near_plane, far_plane);
-            glm::mat4 lightView = glm::lookAt(lightPos, lightCenter, glm::vec3(0.0, 1.0, 0.0));
-            shadowMap.SetLightProjection(lightProjection);
-            shadowMap.SetLightView(lightView);
-            shadowMap.AssignLightSpaceMatrixToShader();
+            glm::mat4 lightView = glm::lookAt(LIGHTSMANAGER.lightPos, LIGHTSMANAGER.lightCenter, glm::vec3(0.0, 1.0, 0.0));
+            SHADOWMAP.SetLightProjection(lightProjection);
+            SHADOWMAP.SetLightView(lightView);
+            SHADOWMAP.AssignLightSpaceMatrixToShader();
 
             glDepthMask(GL_TRUE);
 
-            shadowMap.BeginRender();
-            shadowMap.RenderMap();
-            shadowMap.EndRender();
+            SHADOWMAP.BeginRender();
+            SHADOWMAP.RenderMap();
+            SHADOWMAP.EndRender();
 
             glViewport(0, 0, GAMEMANAGER._screenWidth, GAMEMANAGER._screenHeight); //Reset Viewport After Rendering to Shadow Map
 
             modelShader->use();
-            modelShader->setVec3("dirLight.direction", dirDirection);
-            modelShader->setVec3("dirLight.color", dirColor);
-            modelShader->setInt("dirLight.isActive", dirActive);
-
             modelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             modelShader->setMat4("projection", projection);
             modelShader->setMat4("view", view);
-            modelShader->setVec3("lightPos", lightPos);
-            modelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+            modelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 
             glowstickShader->use();
-            glowstickShader->setVec3("dirLight.direction", dirDirection);
-            glowstickShader->setVec3("dirLight.color", dirColor);
-            glowstickShader->setInt("dirLight.isActive", dirActive);
-
             glowstickShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             glowstickShader->setMat4("projection", projection);
             glowstickShader->setMat4("view", view);
-            glowstickShader->setVec3("lightPos", lightPos);
-            glowstickShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+            glowstickShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 
             outlineShader->use();
-            outlineShader->setVec3("dirLight.direction", dirDirection);
-            outlineShader->setVec3("dirLight.color", dirColor);
-            outlineShader->setInt("dirLight.isActive", dirActive);
-
             outlineShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             outlineShader->setMat4("projection", projection);
             outlineShader->setMat4("view", view);
@@ -374,53 +354,33 @@ int main(int, char**)
 
 #pragma region InstancedSandShader setup
             instancedSandShader->use();
-            instancedSandShader->setVec3("dirLight.direction", dirDirection);
-            instancedSandShader->setVec3("dirLight.color", dirColor);
-            instancedSandShader->setInt("dirLight.isActive", dirActive);
-
             instancedSandShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             instancedSandShader->setMat4("projection", projection);
             instancedSandShader->setMat4("view", view);
-            instancedSandShader->setVec3("lightPos", lightPos);
-            instancedSandShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+            instancedSandShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 #pragma endregion
 
 #pragma region InstanceMetalShader setup
             instancedMetalShader->use();
-            instancedMetalShader->setVec3("dirLight.direction", dirDirection);
-            instancedMetalShader->setVec3("dirLight.color", dirColor);
-            instancedMetalShader->setInt("dirLight.isActive", dirActive);
-
             instancedMetalShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             instancedMetalShader->setMat4("projection", projection);
             instancedMetalShader->setMat4("view", view);
-            instancedMetalShader->setVec3("lightPos", lightPos);
-            instancedMetalShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+            instancedMetalShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 #pragma endregion
 
 #pragma region InstancePlasticShader setup
             instancedPlasticShader->use();
-            instancedPlasticShader->setVec3("dirLight.direction", dirDirection);
-            instancedPlasticShader->setVec3("dirLight.color", dirColor);
-            instancedPlasticShader->setInt("dirLight.isActive", dirActive);
-
             instancedPlasticShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             instancedPlasticShader->setMat4("projection", projection);
             instancedPlasticShader->setMat4("view", view);
-            instancedPlasticShader->setVec3("lightPos", lightPos);
-            instancedPlasticShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+            instancedPlasticShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 #pragma endregion
 
             lightObjectShader->use();
-            lightObjectShader->setVec3("lightColor", dirColor);
             lightObjectShader->setMat4("projection", projection);
             lightObjectShader->setMat4("view", view);
 
             cloudShader->use();
-            cloudShader->setVec3("dirLight.direction", dirDirection);
-            cloudShader->setVec3("dirLight.color", dirColor);
-            cloudShader->setInt("dirLight.isActive", dirActive);
-
             cloudShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             cloudShader->setVec3("initialCloudPosition", initialCloudPosition);
             cloudShader->setFloat("cloudSpeed", cloudSpeed);
@@ -431,7 +391,6 @@ int main(int, char**)
             particleShader->use();
             particleShader->setMat4("projection", projection);
             particleShader->setMat4("view", view);
-            particleShader->setVec3("dirColor", dirColor);
 
             rangeShader->use();
             rangeShader->setMat4("projection", projection);
@@ -461,15 +420,10 @@ int main(int, char**)
             uPDAController->RealUpdate();
 
             shovelShader->use();
-            shovelShader->setVec3("dirLight.direction", dirDirection);
-            shovelShader->setVec3("dirLight.color", dirColor);
-            shovelShader->setInt("dirLight.isActive", dirActive);
-
             shovelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             shovelShader->setMat4("projection", projection);
             shovelShader->setMat4("view", view);
-            shovelShader->setVec3("lightPos", lightPos);
-            shovelShader->setMat4("lightSpaceMatrix", shadowMap.GetLightSpaceMatrix());
+            shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
         }
         PAGEMANAGER.Update();
         HUD.Update();
@@ -481,7 +435,7 @@ int main(int, char**)
 
         ImGui::Begin("Depth Map");
         ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
-        ImGui::Image((void *) (intptr_t) shadowMap.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
         ImGui::End();
 
         ImGui::Begin("Framebuffer");
@@ -496,8 +450,8 @@ int main(int, char**)
         ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
         ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
 
-        ImGui::InputFloat3("Light Position", &lightPos[0]);  // Change lightPos
-        ImGui::InputFloat3("Center", &lightCenter[0]);
+        ImGui::InputFloat3("Light Position", &LIGHTSMANAGER.lightPos[0]);  // Change lightPos
+        ImGui::InputFloat3("Center", &LIGHTSMANAGER.lightCenter[0]);
 
         ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
         ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
@@ -507,7 +461,8 @@ int main(int, char**)
         ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
         ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
 
-        ImGui::ColorEdit3("Directional Light Color", dirColor);
+        ImGui::ColorEdit3("Directional Light Color", LIGHTSMANAGER.dirColor);
+        ImGui::ColorEdit3("Sky Color", LIGHTSMANAGER.skyColor);
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 
