@@ -92,6 +92,7 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setVec3("jumpOff", jumpOffPoint);
     computeShader->setVec3("windDirection", WEATHERMANAGER.getWindDirection());
     computeShader->setFloat("windStrength", WEATHERMANAGER.getWindStrength());
+    computeShader->setVec3("gravity", gravity);
 
     generatorPosition = object->GetTransform()->GetPosition() + rotatedOffset;
 
@@ -121,7 +122,7 @@ void ParticleGenerator::RenderParticles() {
     float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
     bool visible = dotProduct > 0.1f;
 
-    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles") {
+    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles") {
 
         Particle *particleData = this->particleData;
 
@@ -205,13 +206,13 @@ void ParticleGenerator::Init() {
     computeShader->setFloat("initialUpwardBoost", initialUpwardBoost);
     computeShader->setFloat("particleScale", particleScale);
     computeShader->setBool("onlyForward", onlyForward);
-    computeShader->setVec3("gravity", gravity);
     computeShader->setBool("casing", casing);
     computeShader->setBool("isJetpack", isJetpack);
     computeShader->setFloat("groundLevel", GAMEMANAGER._groundLevel - 0.6);
     computeShader->setBool("isFlare", isFlare);
     computeShader->setBool("ambient", ambient);
     computeShader->setBool("isUnderground", isUnderground);
+    computeShader->setBool("rain", rain);
 
     unsigned int VBO;
     float particle_quad[] = {
@@ -424,22 +425,33 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "rainParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 10000;
-        newParticles = 10000;
+        amount = 1000;
+        newParticles = 10;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
-        particleLife = 60.0f;
+        particleLife = 10.0f;
         particleColor = glm::vec4(0.682f,0.651f,0.882f,1.0f);
         initialUpwardBoost = 0.04f;
         particleScale = 0.20f;
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
-        onlyForward = false;
-        casing = false;
-        isJetpack = false;
-        counterXrotation = false;
-        isFlare = false;
         ambient = true;
+        rain = true;
+    }
+    else if (particleType == "rainParticlesFull"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 3000;
+        newParticles = 100;
+        spawnDelay = 0.0f;
+        speedVariation = 0.2f;
+        XZvariation = 100.4f;
+        particleLife = 10.0f;
+        particleColor = glm::vec4(0.682f,0.651f,0.898f,1.0f);
+        initialUpwardBoost = 0.04f;
+        particleScale = 0.21f;
+        gravity = glm::vec3(0.0f, -0.0f, 0.0f);
+        ambient = true;
+        rain = true;
     }
 }
 

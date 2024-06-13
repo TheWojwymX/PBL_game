@@ -41,6 +41,7 @@ uniform float windStrength;
 uniform bool isFlare;
 uniform bool ambient;
 uniform bool isUnderground;
+uniform bool rain;
 
 layout (local_size_x = 1) in;
 
@@ -160,6 +161,9 @@ void main() {
                 if(ambient){
                 p.Velocity.y = -p.Velocity.y * 0.2;
                 }
+                if(rain){
+                p.Velocity.y = -p.Velocity.y * 0.1;
+                }
 
                 // Set position exactly at 100 to prevent particles from going below it
                 p.Position.y = groundLevel + (groundLevel - p.Position.y);
@@ -181,7 +185,9 @@ void main() {
             //}
             if(ambient){
             if(p.Life < particleLife - 2.05){
+                if(!rain){
                 p.Life = particleLife - 2.3;
+                }
                 p.Velocity.xyz = p.Velocity.xyz * 0.999;
             }
             else if(p.Life < particleLife - 2.0){
@@ -192,28 +198,55 @@ void main() {
             p.Scale = 0.0;
             }
 
-            if(p.Position.x > 120){
-            p.Position.x = -20;
-            }
+            if(!rain){
+                if(p.Position.x > 120){
+                p.Position.x = -20;
+                }
 
-            if(p.Position.z > 120){
-            p.Position.z = -20;
-            }
+                if(p.Position.z > 120){
+                p.Position.z = -20;
+                }
 
-            if(p.Position.x < -20){
-            p.Position.x = 120;
-            }
+                if(p.Position.x < -20){
+                p.Position.x = 120;
+                }
 
-            if(p.Position.z < -20){
-            p.Position.z = 120;
-            }
+                if(p.Position.z < -20){
+                p.Position.z = 120;
+                }
 
-            if(p.Position.y < 299){
-            p.Position.y = 400;
-            }
+                if(p.Position.y < 299){
+                p.Position.y = 400;
+                }
 
-            if(p.Position.y > 310){
-            p.Position.y = 300;
+                if(p.Position.y > 310){
+                p.Position.y = 300;
+                }
+            }
+            else{
+                if(p.Position.x > 100){
+                p.Position.x = 0;
+                }
+
+                if(p.Position.z > 100){
+                p.Position.z = 0;
+                }
+
+                if(p.Position.x < 0){
+                p.Position.x = 100;
+                }
+
+                if(p.Position.z < 0){
+                p.Position.z = 100;
+                }
+
+                if(p.Position.y < 300){
+                p.Position.y = 330;
+                }
+
+                if(p.Position.y > 330){
+                p.Position.y = 300;
+                }
             }
 
 

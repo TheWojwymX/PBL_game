@@ -50,8 +50,11 @@ public:
     glm::vec3 enemyScale;
     glm::vec3 enemyPosition;
     glm::vec3 generatorPosition;
+    unsigned int newParticles = 10;
+    unsigned int amount = 500;
     bool toDelete = false;
     glm::vec3 jumpOffPoint{0.0f};
+    glm::vec3 gravity;
 private:
 
     std::shared_ptr<ComputeShader> computeShader;
@@ -72,7 +75,7 @@ private:
     float spawnDelay = 1.0f;
     float speedVariation = 0.2f;
     float particleLife = 1.0f;
-    unsigned int amount = 500;
+
 
     bool counterXrotation = false;
     bool isFlare = false;
@@ -81,7 +84,7 @@ private:
     glm::vec4 particleColor;
     float initialUpwardBoost;
     float particleScale;
-    glm::vec3 gravity;
+
 
     bool hasSpawned = false;
 
@@ -92,8 +95,8 @@ private:
     bool onlyForward;
     bool casing;
     bool ambient = false;
+    bool rain = false;
     bool isUnderground = false;
-    unsigned int newParticles = 10;
     bool isJetpack = false;
 
     void initiateParticleType();
