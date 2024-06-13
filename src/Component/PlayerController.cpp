@@ -61,7 +61,7 @@ void PlayerController::Input() {
 void PlayerController::Update() {
     if(!GAMEMANAGER._paused){
         HandleMovement();
-        HandleUpgrades();
+        HandleGlowstick();
         //cout << _jetpackFuel << endl;
     }
 
@@ -285,9 +285,19 @@ void PlayerController::UpgradeSpeed(){
     else cout << "MAX speed Level" << endl;
 }
 
-void PlayerController::HandleUpgrades() {
-    if(Input::Instance().IsMousePressed(1) && NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 1.0) {
-        LIGHTSMANAGER.AddGlowstick();
+void PlayerController::HandleGlowstick() {
+    // Get delta time in seconds
+    float deltaTime = TIME.GetDeltaTime();
+
+    // Update the cooldown timer
+    _glowstickCooldownTimer += deltaTime;
+
+    // Check if cooldown has elapsed
+    if (_glowstickCooldownTimer >= _glowstickCooldown) {
+        if (Input::Instance().IsMousePressed(1) && NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 1.0) {
+            LIGHTSMANAGER.AddGlowstick();
+            _glowstickCooldownTimer = 0.0f; 
+        }
     }
 }
 

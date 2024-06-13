@@ -26,7 +26,7 @@ public:
 
     void addToInspector(ImguiMain *imguiMain) override;
 
-    void HandleUpgrades();
+    void HandleGlowstick();
 
     void UpgradeRadius();
 
@@ -90,6 +90,9 @@ private:
     bool _spaceKeyWasPressed = false;
     std::chrono::steady_clock::time_point _lastSpacePressTime;
     float _jetpackActivationDelay = 0.25f;
+
+    float _glowstickCooldownTimer = 0.0f;
+    float _glowstickCooldown = 2.0f;
 
     void JetpackInput();
 
