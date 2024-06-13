@@ -125,7 +125,7 @@ void HUDMain::Init() {
     _jetpackBar.Init("res/Images/HUD/jetpackBar.png", verticesJetpackEmpty, false, false);
 
     _waveArrowRed._rotationAngle = 0;
-    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", verticesArrow, true, false);
+    _waveArrowRed.Init("res/Images/ButtonBlue.png", verticesArrow, true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", verticesTimerBar, true, false);
 
     _depthMeterBackground.Init("res/Images/HUD/depth0.png", verticesDepthMeter, true, false);

@@ -35,6 +35,15 @@ void ImageRenderer::Init(const char *file, std::array<float, 32> vertices, bool 
     _textureID = texture.ID;
 }
 
+void printMatrix(const glm::mat4& matrix) {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 void ImageRenderer::UpdateImage(std::array<float, 32>* vertices) {
     if (!_shouldRender) return;
 
@@ -48,17 +57,24 @@ void ImageRenderer::UpdateImage(std::array<float, 32>* vertices) {
         glBufferSubData(GL_ARRAY_BUFFER, 0, 32 * sizeof(float), _vertices.data());
     }
 
-    glm::vec3 leftCenter = glm::vec3(
-            _vertices[24],
-            (_vertices[25] + _vertices[9]) / 2.0f,
-            0.0f
-    );
-
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, leftCenter);
-    model = glm::rotate(model, glm::radians(_rotationAngle), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, -leftCenter);
+    if(_rotationAngle != 0){
+        glm::vec3 leftCenter = glm::vec3(
+                _vertices[16],
+                (_vertices[1] + _vertices[9]) / 2.0f,
+                0.0f
+        );
 
+        model = glm::translate(model, leftCenter);
+        std::cout << "Model matrix after translation to leftCenter:" << std::endl;
+        printMatrix(model);
+        model = glm::rotate(model, glm::radians(_rotationAngle), glm::vec3(0.0f, 0.0f, 1.0f));
+        std::cout << "Model matrix after rotation:" << std::endl;
+        printMatrix(model);
+        model = glm::translate(model, -leftCenter);
+        std::cout << "Model matrix after translation back from leftCenter:" << std::endl;
+        printMatrix(model);
+    }
     glm::vec3 color = glm::vec3(1.0, 1.0, 0.0);
     auto shader = RESOURCEMANAGER.GetShaderByName("textureShader");
     shader->use();

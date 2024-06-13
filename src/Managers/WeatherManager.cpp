@@ -39,7 +39,7 @@ void WeatherManager::Update(){
     }
     // Update rain duration
     if (isRaining) {
-        cout <<"pada" << endl;
+        //cout <<"pada" << endl;
         rainTimeLeft -= TIME.GetDeltaTime();
         timeSinceLastParticleSpawn += TIME.GetDeltaTime();
         auto particleGenerator = NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>();
