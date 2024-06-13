@@ -1,26 +1,23 @@
-//
-// Created by Jacek on 06.04.2024.
-//
+#pragma once
 
-#ifndef OPENGLGP_IMAGEHUD_H
-#define OPENGLGP_IMAGEHUD_H
-
-#include "../../texture.h"
+#include "texture.h"
 #include "Managers/ResourceManager.h"
+#include <memory>
 
 class ImageRenderer {
-
 public:
 
     unsigned int _VBO, _VAO, _EBO;
 
     int _textureID;
+    std::shared_ptr<Shader> _shader;
 
     array<float, 32> _vertices;
 
     ImageRenderer();
 
-    void Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic);
+    void Init(const char* file, array<float, 32> vertices, bool isAlpha, bool isDynamic);
+    void Init(const char* file, glm::vec3 initialPosition, bool isAlpha, bool isDynamic);
 
     void UpdateImage(std::array<float, 32>* vertices = nullptr);
 
@@ -29,8 +26,15 @@ public:
     void UpdateImage(array<float, 32> *vertices, glm::vec3 additionalColor);
 
     void Render();
-    float _rotationAngle = 0.0f;
+
+    void AddRotation(float value);
+private:
+    glm::vec2 _pixelPosition;
+    float _rotationAngle;
+    glm::mat4 _model;
+
+    float _screenWidth;
+    float _screenHeight;
+
+    void UpdateModel();
 };
-
-
-#endif //OPENGLGP_IMAGEHUD_H

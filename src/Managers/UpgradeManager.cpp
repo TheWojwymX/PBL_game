@@ -10,6 +10,7 @@ UpgradeManager &UpgradeManager::GetInstance() {
 }
 
 UpgradeManager::UpgradeManager() {
+    //Dome HP upgrades
     _domeHPUpgrades.upgradeCosts = {
         {10, 20},   //1
         {15, 25},   //2
@@ -25,6 +26,8 @@ UpgradeManager::UpgradeManager() {
         50.0f,      //4
         60.0f       //5
     };
+
+
 }
 
 bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
@@ -156,7 +159,31 @@ void UpgradeManager::UpgradeDomeHp() {
     DOMEMANAGER.UpgradeDomeHP(_domeHPUpgrades.upgradeValues[domeHPLevel]);
 
     // Print current dome max HP
-    std::cout << "Current dome max HP: " << DOMEMANAGER.maxHP << std::endl;
+    std::cout << "Current dome max HP: " << DOMEMANAGER.GetDomeMaxHP() << std::endl;
+}
+
+void UpgradeManager::UpgradeDomeHPRegen() {
+    char domeHPRegenLevel = DOMEMANAGER.GetDomeHPRegenLevel();
+    if (domeHPRegenLevel >= _domeHPRegenUpgrades.upgradeCosts.size()) {
+        std::cout << "No more upgrades available for Dome HP Regeneration." << std::endl;
+        return;
+    }
+
+    // Check if enough resources for upgrade
+    glm::ivec2 upgradeCost = _domeHPRegenUpgrades.upgradeCosts[domeHPRegenLevel];
+    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+        std::cout << "Not enough materials to upgrade Dome HP Regeneration." << std::endl;
+        return;
+    }
+
+    // Deduct resources
+    GAMEMANAGER.RemoveMaterials(upgradeCost);
+
+    // Apply upgrade
+    DOMEMANAGER.UpgradeDomeHPRegen(_domeHPRegenUpgrades.upgradeValues[domeHPRegenLevel]);
+
+    // Print current dome max HP
+    std::cout << "Current dome max HP Regen: " << DOMEMANAGER.GetDomeMaxHP() << std::endl;
 }
 
 void UpgradeManager::UpgradeTurretDamage()

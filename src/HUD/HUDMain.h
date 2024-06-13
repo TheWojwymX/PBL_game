@@ -1,14 +1,8 @@
-//
-// Created by Jacek on 03.04.2024.
-//
+#pragma once
 
 #define HUD HUDMain::getInstance()
-
-#ifndef OPENGLGP_HUD_H
-#define OPENGLGP_HUD_H
-
 #include "Text/TextRenderer.h"
-#include "Image/ImageRenderer.h"
+#include "HUD/Image/ImageRenderer.h"
 #include "core/Time.h"
 #include "Managers/DomeManager.h"
 #include "Managers/GameManager.h"
@@ -70,6 +64,3 @@ public:
     ImageRenderer testowy;
     bool czyWyswietlacTestowy = false;
 };
-
-
-#endif //OPENGLGP_HUD_H

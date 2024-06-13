@@ -6,7 +6,6 @@
 
 void MainMenuPage::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
-    SetVertices(_backgroundVertices);
     _shouldRender = true;
     _startButton->Init();
     _settingsButton->Init();
@@ -23,8 +22,4 @@ void MainMenuPage::Update() {
         _creditsButton->Update();
         _quitButton->Update();
     }
-}
-
-void MainMenuPage::SetVertices(const array<float, 32> &vertices) {
-    Page::SetVertices(vertices);
 }

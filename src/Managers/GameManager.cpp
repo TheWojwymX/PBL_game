@@ -3,7 +3,7 @@
 #include "GameManager.h"
 #include "../Enemies/EnemiesManager.h"
 #include "../Managers/TutorialManager.h"
-GameManager &GameManager::getInstance() {
+GameManager &GameManager::GetInstance() {
     static GameManager instance;
     return instance;
 }

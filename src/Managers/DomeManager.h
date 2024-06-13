@@ -1,22 +1,35 @@
 #pragma once
 
+#include <glm/glm.hpp>
+#include "Core/Time.h"
+#include <iostream>
+
 #define DOMEMANAGER DomeManager::getInstance()
 
 class DomeManager {
 public:
-    static DomeManager &getInstance();
-    ~DomeManager() = default;
-    DomeManager(const DomeManager &) = delete;
-    DomeManager &operator=(const DomeManager &) = delete;
-    void takeDamage(int value);
-    void Update();
-    char GetDomeHPLevel() { return _domeHPLevel; }
-    void UpgradeDomeHP(float value) { maxHP+=value; _domeHPLevel++; }
+    static DomeManager& getInstance();
+    DomeManager(const DomeManager&) = delete;
+    DomeManager& operator=(const DomeManager&) = delete;
 
-    int hp;
-    int maxHP = 200;
+    void TakeDamage(float value);
+    void Update();
+    void RegenHP();
+
+    float GetDomeHP() { return _hp; }
+    float GetDomeMaxHP() { return _maxHP; }
+    char GetDomeHPLevel() { return _domeHPLevel; }
+    char GetDomeHPRegenLevel() { return _domeHPRegenLevel; }
+    void UpgradeDomeHP(float value) { _maxHP += value; _hp += static_cast<int>(value); _domeHPLevel++; }
+    void UpgradeDomeHPRegen(float value) { _maxHP += value; _domeHPRegenLevel++; }
 
 private:
-    char _domeHPLevel = 0;
-    DomeManager() : hp(200) {}
+    char _domeHPLevel;
+    char _domeHPRegenLevel;
+    float _regenRate;
+
+    float _hp;
+    float _maxHP;
+
+    DomeManager();
 };

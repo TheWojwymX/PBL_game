@@ -11,8 +11,8 @@
 #define UPGRADEMANAGER UpgradeManager::GetInstance()
 
 struct Upgrades {
-    std::vector<glm::ivec2> upgradeCosts; 
-    std::vector<float> upgradeValues;      
+    std::vector<glm::ivec2> upgradeCosts;
+    std::vector<float> upgradeValues;
 };
 
 class UpgradeManager {
@@ -32,6 +32,7 @@ public:
         const glm::vec3& minBoundingBox, const glm::vec3& maxBoundingBox);
 
     void UpgradeDomeHp();
+    void UpgradeDomeHPRegen();
     void UpgradeTurretDamage();
     void UpgradeTurretFireRate();
 
@@ -48,8 +49,7 @@ public:
 
     int _turretFireRateUpgradeCost = 10;
     int _turretDamageUpgradeCost = 10;
-    int _domeHPUpgradeCost = 10;
-
 private:
     Upgrades _domeHPUpgrades;
+    Upgrades _domeHPRegenUpgrades;
 };

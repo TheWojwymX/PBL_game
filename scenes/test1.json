@@ -378,6 +378,11 @@
         "vertexPath": "res/textureShader.vs"
       },
       {
+        "ShaderName": "textureShaderColor",
+        "fragmentPath": "res/textureShaderColor.fs",
+        "vertexPath": "res/textureShaderColor.vs"
+      },
+      {
         "ShaderName": "cloudShader",
         "fragmentPath": "res/cloudFragShader.fs",
         "vertexPath": "res/cloudVecShader.vs"

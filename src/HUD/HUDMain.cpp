@@ -1,6 +1,4 @@
-//
-// Created by Jacek on 03.04.2024.
-//
+#pragma once
 
 #include "HUDMain.h"
 
@@ -14,136 +12,31 @@ void HUDMain::Init() {
     //text
     TEXTRENDERER.Init();
 
-    //images
-    //crosshair
-    std::array<float, 32> verticesCrosshair{
-            // positions          // colors           // texture coords
-            0.03f,  0.05f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            0.03f, -0.05f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -0.03f, -0.05f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.03f,  0.05f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
+    _crosshairImage.Init("res/Images/crosshair041.png", glm::vec3(0, 0, 0), true, false);
+    _materialsBackground.Init("res/Images/HUD/materials_background.png", glm::vec3(-45,-47.0,0), true, false);
+    _plasticImage.Init("res/Images/HUD/plastic_icon.png", glm::vec3(-47, -47.0, 0), true, false);
+    _metalImage.Init("res/Images/HUD/metal_icon.png", glm::vec3(-43, -47.0, 0), true, false);
+    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", glm::vec3(45, -25, 0), true, false);
+    _jetpackBar.Init("res/Images/HUD/jetpackBar.png", glm::vec3(45, -25, 0), false, false);
+    _depthMeterBackground.Init("res/Images/HUD/depth0.png", glm::vec3(47, 30, 0), true, false);
+    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", glm::vec3(-47, 47, 0), true, false);
+    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", glm::vec3(-49,49,0),true, true);
 
-    //materials
-    glm::vec3 leftDownCorner = glm::vec3(-0.9708333, -0.9444444, 0.0);
-    glm::vec3 rightTopCorner = glm::vec3(-0.671875, -0.8092593, 0.0);
-    std::array<float, 32> verticesMaterialsBackground{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    leftDownCorner = glm::vec3(-0.9552083, -0.9333333, 0.0);
-    rightTopCorner = glm::vec3(-0.8932292, -0.8222222, 0.0);
-    std::array<float, 32> verticesPlastic{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    leftDownCorner = glm::vec3(-0.8125, -0.9333333, 0.0);
-    rightTopCorner = glm::vec3(-0.7489583, -0.8222222, 0.0);
-    std::array<float, 32> verticesMetal{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    //jetpack
-    leftDownCorner = glm::vec3(0.790625, -0.7583333, 0.0);
-    rightTopCorner = glm::vec3(0.9723958, 0.4138889, 0.0);
-    std::array<float, 32> verticesJetpackEmpty{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    std::array<float, 32> hpVertices{
-            // positions          // colors           // texture coords
-            hpTopRight.x,  hpTopRight.y, 0.0f,        1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            hpBottomRight.x, hpBottomRight.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            hpBottomLeft.x, hpBottomLeft.y, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            hpTopLeft.x, hpTopLeft.y, 0.0f,           1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    leftDownCorner=glm::vec3(-0.9708333,0.5666667,0.0);
-    rightTopCorner=glm::vec3(-0.7708333,0.9203704,0.0);
-    std::array<float, 32> verticesTimerBar{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    leftDownCorner = glm::vec3(-0.8677083, 0.6981481, 0.0);
-    rightTopCorner = glm::vec3(-0.7708333, 0.7888889, 0.0);
-    std::array<float, 32> verticesArrow{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    leftDownCorner = glm::vec3(0.73125, -0.9444444, 0.0);
-    rightTopCorner = glm::vec3(0.9723958, -0.7916667, 0.0);
-    std::array<float, 32> verticesDepthMeter{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
-    leftDownCorner = glm::vec3(-1, -1, 0.0);
-    rightTopCorner = glm::vec3(1, 1, 0.0);
-    std::array<float, 32> testoweVertices{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-    testowy.Init("res/Images/HUD/testowy.png", testoweVertices, true, false);
-
-    _crosshairImage.Init("res/Images/crosshair041.png", verticesCrosshair, true, false);
-
-    _materialsBackground.Init("res/Images/HUD/materials_background.png", verticesMaterialsBackground, true, false);
-    _plasticImage.Init("res/Images/HUD/plastic_icon.png", verticesPlastic, true, false);
-    _metalImage.Init("res/Images/HUD/metal_icon.png", verticesMetal, true, false);
-
-    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", verticesJetpackEmpty, true, false);
-    _jetpackBar.Init("res/Images/HUD/jetpackBar.png", verticesJetpackEmpty, false, false);
-
-    _waveArrowRed._rotationAngle = 0;
-    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", verticesArrow, true, false);
-    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", verticesTimerBar, true, false);
-
-    _depthMeterBackground.Init("res/Images/HUD/depth0.png", verticesDepthMeter, true, false);
-
+    
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/Border/bar_" + std::to_string(5*i) + ".png";
-        hp->Init(path.c_str(), hpVertices, true, true);
+        hp->Init(path.c_str(), glm::vec3(47,47,0), true, true);
         _baseHPImages.push_back(hp);
     }
 
     for(int i = 0; i <= 3; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/InsideImages/inside" + std::to_string(i) + ".png";
-        hp->Init(path.c_str(), hpVertices, true, true);
+        hp->Init(path.c_str(), glm::vec3(47, 47, 0), true, true);
         _baseInsideImages.push_back(hp);
     }
-
+    
     _playerNode = NODESMANAGER.getNodeByName("player");
 }
 
@@ -199,9 +92,9 @@ void HUDMain::Update() {
             leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
 
-    int actualDomeHP = DOMEMANAGER.hp;
-    int maxHP = DOMEMANAGER.maxHP;
-    float percentHP = (static_cast<float>(actualDomeHP) / static_cast<float>(maxHP)) * 100;
+    float actualDomeHP = DOMEMANAGER.GetDomeHP();
+    float maxHP = DOMEMANAGER.GetDomeMaxHP();
+    float percentHP = actualDomeHP / maxHP * 100;
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
     if(_shouldShowHP){
@@ -229,14 +122,14 @@ void HUDMain::Update() {
     }
 
     if(_shouldShowCrosshair){
-        _crosshairImage.UpdateImage();
+        _crosshairImage.Render();
     }
 
     //materials
     if(_shouldShowMaterials){
-        _materialsBackground.UpdateImage();
-        _plasticImage.UpdateImage();
-        _metalImage.UpdateImage();
+        _materialsBackground.Render();
+        _plasticImage.Render();
+        _metalImage.Render();
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.8833333, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.7395833, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
@@ -259,12 +152,12 @@ void HUDMain::Update() {
         glm::vec3 color = interpolateColor(percentFuel);
         _jetpackBar.UpdateImage(&verticesJetpackBar, color);
 
-        _jetpackEmpty.UpdateImage();
+        _jetpackEmpty.Render();
     }
 
     //depthMeter
     if(_shouldShowDepth){
-        _depthMeterBackground.UpdateImage();
+        _depthMeterBackground.Render();
         TEXTRENDERER.RenderText(to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.82, -0.8833333, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
@@ -272,10 +165,10 @@ void HUDMain::Update() {
     if(_shouldShowPhaseInfo){
 
         //Timer
-        _waveTimerGreen.UpdateImage();
+        _waveTimerGreen.Render();
 
-        _waveArrowRed._rotationAngle = _waveArrowRed._rotationAngle - 0.1;
-        _waveArrowRed.UpdateImage();
+        _waveArrowRed.AddRotation(15.0f * TIME.GetDeltaTime());
+        _waveArrowRed.Render();
 
 /*        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 

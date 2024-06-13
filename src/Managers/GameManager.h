@@ -1,7 +1,6 @@
-#define GAMEMANAGER GameManager::getInstance()
+#pragma once
 
-#ifndef OPENGLGP_GAMEMANAGER_H
-#define OPENGLGP_GAMEMANAGER_H
+#define GAMEMANAGER GameManager::GetInstance()
 
 #include "Core/Node.h"
 
@@ -16,7 +15,7 @@ public:
 
     void Init();
 
-    static GameManager &getInstance();
+    static GameManager &GetInstance();
     ~GameManager() = default;
     GameManager() = default;
     GameManager(const GameManager &) = delete;
@@ -59,6 +58,3 @@ public:
 
     bool _isInMainMenu = true;
 };
-
-
-#endif //OPENGLGP_GAMEMANAGER_H
