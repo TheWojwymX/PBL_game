@@ -33,20 +33,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.mtl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/ResourceManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/ResourceManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Button.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Button.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/Page.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/Page.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Managers/WeatherManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/WeatherManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +53,9 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -91,7 +88,7 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/RepoPBL/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/RepoPBL/res/Images/HUD/BaseHP/InsideImages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -103,32 +100,32 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res\Images\HUD\BaseHP\InsideImages" />
+      <recent name="C:\RepoPBL\res\Images\HUD\BaseHP\Border" />
+      <recent name="C:\RepoPBL\res\Images\HUD" />
+      <recent name="C:\RepoPBL\cmake-build-release\src\res\Images\HUD" />
       <recent name="C:\RepoPBL\src" />
-      <recent name="C:\RepoPBL\res\Sounds\GunnerShot" />
-      <recent name="C:\RepoPBL\res\Models\Shovel\Shovel_Green" />
-      <recent name="C:\RepoPBL\res\Models\Base\Wires" />
-      <recent name="C:\RepoPBL\res\Models\Base\Sandbags\SandbagsV3" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RepoPBL\res\Images\HUD" />
       <recent name="C:\RepoPBL\res\Sounds" />
       <recent name="C:\RepoPBL\res\Models\Shovel\Shovel_Blue" />
       <recent name="C:\RepoPBL\res\Models\Shovel" />
       <recent name="C:\RepoPBL\res" />
-      <recent name="C:\RepoPBL\res\Images" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -249,6 +246,7 @@
       <workItem from="1717742218137" duration="3755000" />
       <workItem from="1717749877725" duration="2227000" />
       <workItem from="1717767333985" duration="8454000" />
+      <workItem from="1718268028553" duration="3838000" />
     </task>
     <servers />
   </component>

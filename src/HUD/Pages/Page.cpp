@@ -9,7 +9,7 @@ void Page::Init() {
 }
 
 void Page::Update() {
-    _backgroundImage.UpdateImage();
+    _backgroundImage.UpdateImage(nullptr, nullptr);
 }
 
 void Page::SetVertices(const array<float, 32> &vertices) {

@@ -22,7 +22,7 @@ void PauseMenuPage::Update() {
         _resumeButton.Update();
         _quitButton.Update();
         _settingsButton.Update();
-        _logo.UpdateImage();
+        _logo.UpdateImage(nullptr, nullptr);
     }
 }
 

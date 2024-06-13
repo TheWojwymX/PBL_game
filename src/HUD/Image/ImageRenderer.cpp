@@ -35,42 +35,7 @@ void ImageRenderer::Init(const char *file, std::array<float, 32> vertices, bool 
     _textureID = texture.ID;
 }
 
-void ImageRenderer::UpdateImage(std::array<float, 32>* vertices) {
-    if (!_shouldRender) return;
-
-    glBindTexture(GL_TEXTURE_2D, _textureID);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-    if (vertices) {
-        _vertices = *vertices;
-        glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, 32 * sizeof(float), _vertices.data());
-    }
-
-    glm::vec3 leftCenter = glm::vec3(
-            _vertices[24],
-            (_vertices[25] + _vertices[9]) / 2.0f,
-            0.0f
-    );
-
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, leftCenter);
-    model = glm::rotate(model, glm::radians(_rotationAngle), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, -leftCenter);
-
-    glm::vec3 color = glm::vec3(1.0, 1.0, 0.0);
-    auto shader = RESOURCEMANAGER.GetShaderByName("textureShader");
-    shader->use();
-    shader->setBool("useColor", false);
-    shader->setVec3("additionalColor", color);
-    shader->setMat4("model", model);
-
-    glBindVertexArray(_VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-}
-
-void ImageRenderer::UpdateImage(std::array<float, 32>* vertices, glm::vec3 additionalColor) {
+void ImageRenderer::UpdateImage(std::array<float, 32>* vertices, glm::vec3* additionalColor = nullptr) {
     if (!_shouldRender) return;
 
     glBindTexture(GL_TEXTURE_2D, _textureID);
@@ -96,10 +61,19 @@ void ImageRenderer::UpdateImage(std::array<float, 32>* vertices, glm::vec3 addit
 
     auto shader = RESOURCEMANAGER.GetShaderByName("textureShader");
     shader->use();
-    shader->setBool("useColor", true);
-    shader->setVec3("additionalColor", additionalColor);
+
+    if (additionalColor) {
+        shader->setBool("useColor", true);
+        shader->setVec3("additionalColor", *additionalColor);
+    } else {
+        glm::vec3 defaultColor = glm::vec3(1.0f, 1.0f, 0.0f);
+        shader->setBool("useColor", false);
+        shader->setVec3("additionalColor", defaultColor);
+    }
+
     shader->setMat4("model", model);
 
     glBindVertexArray(_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
+

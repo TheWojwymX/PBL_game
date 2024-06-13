@@ -16,9 +16,9 @@ void Button::Init() {
 }
 
 void Button::Update() {
-    _backgroundImage.UpdateImage();
-    _hoverBackgroundImage.UpdateImage();
-    _clickedBackgroundImage.UpdateImage();
+    _backgroundImage.UpdateImage(nullptr, nullptr);
+    _hoverBackgroundImage.UpdateImage(nullptr, nullptr);
+    _clickedBackgroundImage.UpdateImage(nullptr, nullptr);
 
     TEXTRENDERER.RenderTextCentered(_text, (_buttonVertices[0] + _buttonVertices[16]) / 2.0f, (_buttonVertices[1] + _buttonVertices[17]) / 2.0f, _textSize, glm::vec3(1.0f, 1.0f, 1.0f));
 

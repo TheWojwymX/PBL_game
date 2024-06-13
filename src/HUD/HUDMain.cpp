@@ -176,7 +176,7 @@ void HUDMain::Update() {
         czyWyswietlacTestowy = !czyWyswietlacTestowy;
     }
     if(czyWyswietlacTestowy){
-        testowy.UpdateImage();
+        testowy.UpdateImage(nullptr, nullptr);
     }
 
     glm::vec leftDownCorner = glm::vec3(0.7614583, 0.5564815, 0.0);
@@ -206,37 +206,37 @@ void HUDMain::Update() {
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
     if(_shouldShowHP){
         if(percentHP <= 0){
-            _baseInsideImages[3]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[3]->UpdateImage(&verticesHPBorder, nullptr);
         }
         else if(percentHP < 33){
-            _baseInsideImages[2]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[2]->UpdateImage(&verticesHPBorder, nullptr);
         }
         else if(percentHP < 66){
-            _baseInsideImages[1]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[1]->UpdateImage(&verticesHPBorder, nullptr);
         }
         else{
-            _baseInsideImages[0]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[0]->UpdateImage(&verticesHPBorder, nullptr);
         }
 
         if (percentHP <= 0) {
-            _baseHPImages[0]->UpdateImage(&verticesHPBorder);
+            _baseHPImages[0]->UpdateImage(&verticesHPBorder, nullptr);
         } else if (percentHP == 100) {
-            _baseHPImages[20]->UpdateImage(&verticesHPBorder);
+            _baseHPImages[20]->UpdateImage(&verticesHPBorder, nullptr);
         } else {
             int index = (percentHP - 1) / 5;
-            _baseHPImages[index + 1]->UpdateImage(&verticesHPBorder);
+            _baseHPImages[index + 1]->UpdateImage(&verticesHPBorder, nullptr);
         }
     }
 
     if(_shouldShowCrosshair){
-        _crosshairImage.UpdateImage();
+        _crosshairImage.UpdateImage(nullptr, nullptr);
     }
 
     //materials
     if(_shouldShowMaterials){
-        _materialsBackground.UpdateImage();
-        _plasticImage.UpdateImage();
-        _metalImage.UpdateImage();
+        _materialsBackground.UpdateImage(nullptr, nullptr);
+        _plasticImage.UpdateImage(nullptr, nullptr);
+        _metalImage.UpdateImage(nullptr, nullptr);
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.8833333, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.7395833, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
@@ -257,14 +257,14 @@ void HUDMain::Update() {
 
     if(_shouldShowFuel){
         glm::vec3 color = interpolateColor(percentFuel);
-        _jetpackBar.UpdateImage(&verticesJetpackBar, color);
+        _jetpackBar.UpdateImage(&verticesJetpackBar, &color);
 
-        _jetpackEmpty.UpdateImage();
+        _jetpackEmpty.UpdateImage(nullptr, nullptr);
     }
 
     //depthMeter
     if(_shouldShowDepth){
-        _depthMeterBackground.UpdateImage();
+        _depthMeterBackground.UpdateImage(nullptr, nullptr);
         TEXTRENDERER.RenderText(to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.82, -0.8833333, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
@@ -272,10 +272,10 @@ void HUDMain::Update() {
     if(_shouldShowPhaseInfo){
 
         //Timer
-        _waveTimerGreen.UpdateImage();
+        _waveTimerGreen.UpdateImage(nullptr, nullptr);
 
         _waveArrowRed._rotationAngle = _waveArrowRed._rotationAngle - 0.1;
-        _waveArrowRed.UpdateImage();
+        _waveArrowRed.UpdateImage(nullptr, nullptr);
 
 /*        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 

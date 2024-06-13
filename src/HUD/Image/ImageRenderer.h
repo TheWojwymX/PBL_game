@@ -22,14 +22,11 @@ public:
 
     void Init(const char *file, array<float, 32> vertices, bool isAlpha, bool isDynamic);
 
-    void UpdateImage(std::array<float, 32>* vertices = nullptr);
-
     bool _shouldRender = true;
 
-    void UpdateImage(array<float, 32> *vertices, glm::vec3 additionalColor);
-
-    void Render();
     float _rotationAngle = 0.0f;
+
+    void UpdateImage(array<float, 32> *vertices, glm::vec3 *additionalColor);
 };
 
 
