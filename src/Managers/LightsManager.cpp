@@ -152,11 +152,11 @@ void LightsManager::AddGlowstick() {
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(-2.0f, 2.0f);
+    std::uniform_real_distribution<float> dis(-1.0f, 1.0f);
 
     do {
         glowstickColor = glm::vec3(dis(gen), dis(gen), dis(gen));
-    } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.5f);
+    } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.7f);
     glowstickColors.push_back(glowstickColor);
 
     glowstickShader->use();
