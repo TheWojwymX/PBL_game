@@ -39,7 +39,9 @@ public:
 
     //Player upgrade station Guziki do upgradu:   Jetpack Capacity, Mining reach, Mining Radius, Mining Speed
     void UpgradeJetpackCapacity();
-
+    void UpgradeMiningSpeed();
+    void UpgradeMiningReach();
+    void UpgradeMiningRadius();
 
     void UpgradeTurretDamage();
     void UpgradeTurretFireRate();
@@ -65,7 +67,9 @@ private:
     Upgrades _evacuateCost;
 
     Upgrades _jetpackCapacityUpgrades;
-
+    Upgrades _miningSpeedUpgrades;
+    Upgrades _miningReachUpgrades;
+    Upgrades _miningRadiusUpgrades;
 
     std::shared_ptr<PlayerController> _playerRef;
 };

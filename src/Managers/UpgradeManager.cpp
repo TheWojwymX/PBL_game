@@ -8,6 +8,7 @@ UpgradeManager& UpgradeManager::GetInstance() {
 UpgradeManager::UpgradeManager() {
     _playerRef = COMPONENTSMANAGER.GetComponentByID<PlayerController>(3);
 
+
     // Dome HP upgrades
     _domeHPUpgrades.upgradeCosts = {
         {10, 20},   //1
@@ -24,6 +25,8 @@ UpgradeManager::UpgradeManager() {
         50.0f,      //4
         60.0f       //5
     };
+    ///////////////////////
+
 
     // Dome HP Regen upgrades
     _domeHPRegenUpgrades.upgradeCosts = {
@@ -41,6 +44,8 @@ UpgradeManager::UpgradeManager() {
         4.0f,       //4
         5.0f        //5
     };
+    ///////////////////////
+    
 
     // Dome HP Repair upgrade
     _domeHPRepair.upgradeCosts = {
@@ -50,11 +55,17 @@ UpgradeManager::UpgradeManager() {
     _domeHPRepair.upgradeValues = {
         10.0f       // Single value
     };
+    ///////////////////////
 
+
+    // Evacuate cost
     _evacuateCost.upgradeCosts = {
         {100, 100}  // Single cost
     };
+    ///////////////////////
 
+
+    // JetpackCapacity Upgrades
     _jetpackCapacityUpgrades.upgradeCosts = {
         {10, 20},   // 1
         {15, 25},   // 2
@@ -70,6 +81,64 @@ UpgradeManager::UpgradeManager() {
         80.0f,      // 4
         90.0f       // 5
     };
+    ///////////////////////
+
+
+    // Mining Speed Upgrades
+    _miningSpeedUpgrades.upgradeCosts = {
+        {15, 25},   // 1
+        {20, 30},   // 2
+        {25, 35},   // 3
+        {30, 40},   // 4
+        {35, 45}    // 5
+    };
+
+    _miningSpeedUpgrades.upgradeValues = {
+        0.25f,       // 1
+        0.25f,       // 2
+        0.25f,       // 3
+        0.25f,       // 4
+        0.25f        // 5
+    };
+    ///////////////////////
+
+
+    // Mining Reach upgrades
+    _miningReachUpgrades.upgradeCosts = {
+        {10, 20},   // 1
+        {15, 25},   // 2
+        {20, 30},   // 3
+        {25, 35},   // 4
+        {30, 40}    // 5
+    };
+
+    _miningReachUpgrades.upgradeValues = {
+        2.0f,       // 1
+        3.0f,       // 2
+        4.0f,       // 3
+        5.0f,       // 4
+        6.0f        // 5
+    };
+    ///////////////////////
+
+
+    // Mining Radius upgrades
+    _miningRadiusUpgrades.upgradeCosts = {
+        {10, 20},   // 1
+        {15, 25},   // 2
+        {20, 30},   // 3
+        {25, 35},   // 4
+        {30, 40}    // 5
+    };
+
+    _miningRadiusUpgrades.upgradeValues = {
+        1.0f,       // 1
+        1.0f,       // 2
+        1.0f,       // 3
+        1.0f,       // 4
+        1.0f        // 5
+    };
+    ///////////////////////
 }
 
 bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
@@ -283,6 +352,71 @@ void UpgradeManager::UpgradeJetpackCapacity()
     // Apply upgrade
     _playerRef->UpgradeJetpackCapacity(_jetpackCapacityUpgrades.upgradeValues[jetpackLevel]);
 }
+
+void UpgradeManager::UpgradeMiningSpeed() {
+    char miningSpeedLevel = _playerRef->GetMiningSpeedLevel();
+    if (miningSpeedLevel >= _miningSpeedUpgrades.upgradeCosts.size()) {
+        std::cout << "No more upgrades available for Mining Speed." << std::endl;
+        return;
+    }
+
+    // Check if enough resources for upgrade
+    glm::ivec2 upgradeCost = _miningSpeedUpgrades.upgradeCosts[miningSpeedLevel];
+    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+        std::cout << "Not enough materials to upgrade Mining Speed." << std::endl;
+        return;
+    }
+
+    // Deduct resources
+    GAMEMANAGER.RemoveMaterials(upgradeCost);
+
+    // Apply upgrade
+    _playerRef->UpgradeMiningSpeed(_miningSpeedUpgrades.upgradeValues[miningSpeedLevel]);
+}
+
+void UpgradeManager::UpgradeMiningReach() {
+    char miningReachLevel = _playerRef->GetMiningReachLevel();
+    if (miningReachLevel >= _miningReachUpgrades.upgradeCosts.size()) {
+        std::cout << "No more upgrades available for Mining Reach." << std::endl;
+        return;
+    }
+
+    // Check if enough resources for upgrade
+    glm::ivec2 upgradeCost = _miningReachUpgrades.upgradeCosts[miningReachLevel];
+    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+        std::cout << "Not enough materials to upgrade Mining Reach." << std::endl;
+        return;
+    }
+
+    // Deduct resources
+    GAMEMANAGER.RemoveMaterials(upgradeCost);
+
+    // Apply upgrade
+    _playerRef->UpgradeMiningReach(_miningReachUpgrades.upgradeValues[miningReachLevel]);
+}
+
+void UpgradeManager::UpgradeMiningRadius() {
+    char miningRadiusLevel = _playerRef->GetMiningRadiusLevel();
+    if (miningRadiusLevel >= _miningRadiusUpgrades.upgradeCosts.size()) {
+        std::cout << "No more upgrades available for Mining Radius." << std::endl;
+        return;
+    }
+
+    // Check if enough resources for upgrade
+    glm::ivec2 upgradeCost = _miningRadiusUpgrades.upgradeCosts[miningRadiusLevel];
+    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+        std::cout << "Not enough materials to upgrade Mining Radius." << std::endl;
+        return;
+    }
+
+    // Deduct resources
+    GAMEMANAGER.RemoveMaterials(upgradeCost);
+
+    // Apply upgrade
+    _playerRef->UpgradeMiningRadius(_miningRadiusUpgrades.upgradeValues[miningRadiusLevel]);
+}
+
+
 
 void UpgradeManager::UpgradeTurretDamage()
 {
