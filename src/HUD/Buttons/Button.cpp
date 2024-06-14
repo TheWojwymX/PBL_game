@@ -61,15 +61,9 @@ bool Button::CheckHover() {
     glm::vec2 mousePos = INPUT.GetMouseFixedPos();
     glm::vec2 downLeftCorner, topRightCorner;
 
-    if (_usePosition) {
-        auto corners = _backgroundImage.GetCorners();
-        downLeftCorner = corners.first;
-        topRightCorner = corners.second;
-    }
-    else {
-        downLeftCorner = _corners.first;
-        topRightCorner = _corners.second;
-    }
+    auto corners = _backgroundImage.GetCorners();
+    downLeftCorner = corners.first;
+    topRightCorner = corners.second;
 
     return mousePos.x > downLeftCorner.x && mousePos.x < topRightCorner.x &&
         mousePos.y > downLeftCorner.y && mousePos.y < topRightCorner.y;

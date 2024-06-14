@@ -15,6 +15,11 @@ struct Upgrades {
     std::vector<float> upgradeValues;
 };
 
+struct TurretUpgrades {
+    std::vector<glm::ivec2> upgradeCosts;
+    std::vector<glm::vec2> upgradeValues;
+};
+
 class UpgradeManager {
 public:
     glm::vec3 _domeStation = { 40, 100, 90 };
@@ -37,12 +42,13 @@ public:
     void DomeHPRepair();
     void Evacuate();
 
-    //Player upgrade station Guziki do upgradu:   Jetpack Capacity, Mining reach, Mining Radius, Mining Speed
+    //Player upgrade station
     void UpgradeJetpackCapacity();
     void UpgradeMiningSpeed();
     void UpgradeMiningReach();
     void UpgradeMiningRadius();
 
+    //Turret Upgrade
     void UpgradeTurretDamage();
     void UpgradeTurretFireRate();
 
