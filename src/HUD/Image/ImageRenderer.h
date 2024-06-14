@@ -25,6 +25,9 @@ public:
     void AddRotation(float value);
     glm::vec2 CalculateCenter();
     std::pair<glm::vec2, glm::vec2> GetCorners();
+
+    void SetRotationAngle(float rotationAngle);
+
 private:
     glm::vec2 _pixelPosition;
     float _rotationAngle;

@@ -63,4 +63,8 @@ public:
 
     ImageRenderer testowy;
     bool czyWyswietlacTestowy = false;
+
+    static glm::vec2 ConvertCoords(const glm::vec2 &coords);
+
+    void WaveTimerGUIManager();
 };
