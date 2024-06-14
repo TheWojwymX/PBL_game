@@ -23,8 +23,8 @@ Sound::Sound(const std::string &name, const std::string &path, int id, SoundType
     }
 }
 
-Sound::~Sound() {
-    ma_sound_uninit(&_sound);
+Sound::~Sound()
+{
     std::cout << "Sound uninitialized: " << _name << std::endl;
 }
 
