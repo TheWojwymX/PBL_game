@@ -204,3 +204,8 @@ std::pair<glm::vec2, glm::vec2> ImageRenderer::GetCorners() {
 
     return std::make_pair(downLeftCorner, topRightCorner);
 }
+
+void ImageRenderer::SetRotationAngle(float rotationAngle) {
+    _rotationAngle = rotationAngle;
+    UpdateModel();
+}

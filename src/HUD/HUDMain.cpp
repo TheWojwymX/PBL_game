@@ -7,37 +7,43 @@ HUDMain& HUDMain::getInstance() {
     return instance;
 }
 
+glm::vec2 HUDMain::ConvertCoords(const glm::vec2& coords) {
+    float x = (coords.x / 1920.0f) * 100.0f - 50.0f;
+    float y = (1.0f - (coords.y / 1080.0f)) * 100.0f - 50.0f;
+    return glm::vec2(x, y);
+}
+
 void HUDMain::Init() {
 
     //text
     TEXTRENDERER.Init();
 
     _crosshairImage.Init("res/Images/crosshair041.png", glm::vec2(0, 0), 0, true, false);
-    _materialsBackground.Init("res/Images/HUD/materials_background.png", glm::vec2(-45,-47.0),0, true, false);
-    _plasticImage.Init("res/Images/HUD/plastic_icon.png", glm::vec2(-47, -47.0),0, true, false);
-    _metalImage.Init("res/Images/HUD/metal_icon.png", glm::vec2(-43, -47.0),0, true, false);
-    //_jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", glm::vec2(45, -25),0, true, false);
-    //_jetpackBar.Init("res/Images/HUD/jetpackBar.png", glm::vec2(45, -25),0, false, false);
-    _depthMeterBackground.Init("res/Images/HUD/depth0.png", glm::vec2(47, 30),0, true, false);
-    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", glm::vec2(-47, 47),0, true, false);
-    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", glm::vec2(-49,49),0,true, true);
+    _materialsBackground.Init("res/Images/HUD/materials_background.png", ConvertCoords(glm::vec2(28, 1051)), ConvertCoords(glm::vec2(314, 967)), true, false);
+    _plasticImage.Init("res/Images/HUD/plastic_icon.png", ConvertCoords(glm::vec2(44, 1039)), ConvertCoords(glm::vec2(103, 979)), true, false);
+    _metalImage.Init("res/Images/HUD/metal_icon.png", ConvertCoords(glm::vec2(179, 1039)), ConvertCoords(glm::vec2(241, 979)), true, false);
+    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", ConvertCoords(glm::vec2(1719, 949)), ConvertCoords(glm::vec2(1891, 316)), true, false);
+    _depthMeterBackground.Init("res/Images/HUD/depth0.png", ConvertCoords(glm::vec2(1662, 1051)), ConvertCoords(glm::vec2(1891, 967)), true, false);
+    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", ConvertCoords(glm::vec2(28, 234)), ConvertCoords(glm::vec2(219, 43)), true, false);
+    _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", ConvertCoords(glm::vec2(28, 234)), ConvertCoords(glm::vec2(219, 43)), true, false);
+    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", ConvertCoords(glm::vec2(124, 139)),0,true, true);
+    _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", ConvertCoords(glm::vec2(124, 139)),0,true, true);
+    testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
-    /*
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/Border/bar_" + std::to_string(5*i) + ".png";
-        hp->Init(path.c_str(), glm::vec2(47,47),0, true, true);
+        hp->Init(path.c_str(), ConvertCoords(glm::vec2(1689, 240)), ConvertCoords(glm::vec2(1891, 37)), true, false);
         _baseHPImages.push_back(hp);
     }
 
     for(int i = 0; i <= 3; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/InsideImages/inside" + std::to_string(i) + ".png";
-        hp->Init(path.c_str(), glm::vec2(47, 47),0, true, true);
+        hp->Init(path.c_str(), ConvertCoords(glm::vec2(1711, 217)), ConvertCoords(glm::vec2(1869, 59)), true, false);
         _baseInsideImages.push_back(hp);
     }
-    */
-    
+
     _playerNode = NODESMANAGER.getNodeByName("player");
 }
 
@@ -70,59 +76,43 @@ void HUDMain::Update() {
         czyWyswietlacTestowy = !czyWyswietlacTestowy;
     }
     if(czyWyswietlacTestowy){
-        //testowy.UpdateImage();
+        testowy.Render();
     }
 
     glm::vec leftDownCorner = glm::vec3(0.7614583, 0.5564815, 0.0);
     glm::vec rightTopCorner = glm::vec3(0.9723958, 0.9314815, 0.0);
-    std::array<float, 32> verticesHPBorder{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
 
     leftDownCorner = glm::vec3(0.78, 0.58, 0.0);
     rightTopCorner = glm::vec3(0.959, 0.899, 0.0);
-    std::array<float, 32> verticesHPInside{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            rightTopCorner.x, rightTopCorner.y, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            leftDownCorner.x, rightTopCorner.y, leftDownCorner.z,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
 
     float actualDomeHP = DOMEMANAGER.GetDomeHP();
     float maxHP = DOMEMANAGER.GetDomeMaxHP();
     float percentHP = actualDomeHP / maxHP * 100;
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
-    /*
     if(_shouldShowHP){
         if(percentHP <= 0){
-            _baseInsideImages[3]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[3]->Render();
         }
         else if(percentHP < 33){
-            _baseInsideImages[2]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[2]->Render();
         }
         else if(percentHP < 66){
-            _baseInsideImages[1]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[1]->Render();
         }
         else{
-            _baseInsideImages[0]->UpdateImage(&verticesHPInside);
+            _baseInsideImages[0]->Render();
         }
 
         if (percentHP <= 0) {
-            _baseHPImages[0]->UpdateImage(&verticesHPBorder);
+            _baseHPImages[0]->Render();
         } else if (percentHP == 100) {
-            _baseHPImages[20]->UpdateImage(&verticesHPBorder);
+            _baseHPImages[20]->Render();
         } else {
             int index = (percentHP - 1) / 5;
-            _baseHPImages[index + 1]->UpdateImage(&verticesHPBorder);
+            _baseHPImages[index + 1]->Render();
         }
     }
-    */
     if(_shouldShowCrosshair){
         _crosshairImage.Render();
     }
@@ -142,22 +132,12 @@ void HUDMain::Update() {
     rightTopCorner = glm::vec3(0.963, 0.3981481, 0.0);
     float percentFuel = (_playerNode->GetComponent<PlayerController>()->_jetpackFuel/_playerNode->GetComponent<PlayerController>()->_maxJetpackFuel) * 100;
     float y = (percentFuel - 0.0f) * (rightTopCorner.y - (leftDownCorner.y)) / (100.0f - 0.0f) + (leftDownCorner.y);
-
-    std::array<float, 32> verticesJetpackBar{
-            // positions          // colors           // texture coords
-            rightTopCorner.x,  leftDownCorner.y, rightTopCorner.z,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            rightTopCorner.x,  y, 0.0f,                             0.0f, 1.0f, 0.0f,   1.0f, 1.0f, // top right
-            leftDownCorner.x,  y, leftDownCorner.z,                 0.0f, 0.0f, 1.0f,   0.0f, 1.0f, // top left
-            leftDownCorner.x,  leftDownCorner.y, 0.0f,              1.0f, 1.0f, 0.0f,   1.0f, 0.0f  // bottom left
-    };
+    */
 
     if(_shouldShowFuel){
-        glm::vec3 color = interpolateColor(percentFuel);
-        _jetpackBar.UpdateImage(&verticesJetpackBar, color);
-
         _jetpackEmpty.Render();
     }
-    */
+
 
     //depthMeter
     if(_shouldShowDepth){
@@ -167,29 +147,36 @@ void HUDMain::Update() {
 
     //timer
     if(_shouldShowPhaseInfo){
+        WaveTimerGUIManager();
 
-        //Timer
-        _waveTimerGreen.Render();
-
-        _waveArrowRed.AddRotation(15.0f * TIME.GetDeltaTime());
-        _waveArrowRed.Render();
-
-/*        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
-        string nextPhaseName;
-        if(GAMEMANAGER.currentPhase == 0){
-            nextPhaseName = "Setup";
-        }
-        else if(GAMEMANAGER.currentPhase == 1){
-            nextPhaseName = "Enemy attack";
-        }
-        else if(GAMEMANAGER.currentPhase == 2){
-            nextPhaseName = "Mining";
-        }
-
-        TEXTRENDERER.RenderText("Next phase: " + nextPhaseName, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));*/
+        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText("Actual phase: " + GAMEMANAGER.currentPhase, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+}
+
+void HUDMain::WaveTimerGUIManager(){
+
+    auto phaseTime = GAMEMANAGER.phaseTime;
+    auto currentTime = GAMEMANAGER.currentTime;
+    auto currentPhase = GAMEMANAGER.currentPhase;
+
+    if (phaseTime == 0) {
+        phaseTime = 0.001;
+    }
+    float proportion = currentTime / phaseTime;
+    float degrees = -((proportion * 360.0f) - 90.0f);
+
+    if(currentPhase == 0){
+        _waveTimerGreen.Render();
+        _waveArrowRed.Render();
+        _waveArrowRed.SetRotationAngle(degrees);
+    }
+    else if(currentPhase == 1){
+        _waveTimerRed.Render();
+        _waveArrowGreen.Render();
+        _waveArrowGreen.SetRotationAngle(degrees);
+    }
 }
