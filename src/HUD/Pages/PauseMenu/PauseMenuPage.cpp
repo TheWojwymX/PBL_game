@@ -10,6 +10,6 @@ void PauseMenuPage::Init() {
 void PauseMenuPage::Update() {
     if(_shouldRender){
         Page::Update();
-        _logo.UpdateImage();
+        _logo.Render();
     }
 }

@@ -16,13 +16,13 @@ void HUDMain::Init() {
     _materialsBackground.Init("res/Images/HUD/materials_background.png", glm::vec2(-45,-47.0),0, true, false);
     _plasticImage.Init("res/Images/HUD/plastic_icon.png", glm::vec2(-47, -47.0),0, true, false);
     _metalImage.Init("res/Images/HUD/metal_icon.png", glm::vec2(-43, -47.0),0, true, false);
-    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", glm::vec2(45, -25),0, true, false);
-    _jetpackBar.Init("res/Images/HUD/jetpackBar.png", glm::vec2(45, -25),0, false, false);
+    //_jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", glm::vec2(45, -25),0, true, false);
+    //_jetpackBar.Init("res/Images/HUD/jetpackBar.png", glm::vec2(45, -25),0, false, false);
     _depthMeterBackground.Init("res/Images/HUD/depth0.png", glm::vec2(47, 30),0, true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", glm::vec2(-47, 47),0, true, false);
     _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", glm::vec2(-49,49),0,true, true);
 
-    
+    /*
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/Border/bar_" + std::to_string(5*i) + ".png";
@@ -36,6 +36,7 @@ void HUDMain::Init() {
         hp->Init(path.c_str(), glm::vec2(47, 47),0, true, true);
         _baseInsideImages.push_back(hp);
     }
+    */
     
     _playerNode = NODESMANAGER.getNodeByName("player");
 }
@@ -69,7 +70,7 @@ void HUDMain::Update() {
         czyWyswietlacTestowy = !czyWyswietlacTestowy;
     }
     if(czyWyswietlacTestowy){
-        testowy.UpdateImage();
+        //testowy.UpdateImage();
     }
 
     glm::vec leftDownCorner = glm::vec3(0.7614583, 0.5564815, 0.0);
@@ -97,6 +98,7 @@ void HUDMain::Update() {
     float percentHP = actualDomeHP / maxHP * 100;
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
+    /*
     if(_shouldShowHP){
         if(percentHP <= 0){
             _baseInsideImages[3]->UpdateImage(&verticesHPInside);
@@ -120,7 +122,7 @@ void HUDMain::Update() {
             _baseHPImages[index + 1]->UpdateImage(&verticesHPBorder);
         }
     }
-
+    */
     if(_shouldShowCrosshair){
         _crosshairImage.Render();
     }
@@ -134,6 +136,7 @@ void HUDMain::Update() {
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.7395833, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
+    /*
     //jetpack
     leftDownCorner = glm::vec3(0.8875, -0.7407407, 0.0);
     rightTopCorner = glm::vec3(0.963, 0.3981481, 0.0);
@@ -154,6 +157,7 @@ void HUDMain::Update() {
 
         _jetpackEmpty.Render();
     }
+    */
 
     //depthMeter
     if(_shouldShowDepth){
