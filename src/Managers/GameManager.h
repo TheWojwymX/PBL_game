@@ -27,6 +27,7 @@ public:
     void AddPlastic(int amount);
     bool HasMaterials(glm::ivec2 mat);
     void RemoveMaterials(glm::ivec2 mat);
+    void StartGame();
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 100;
@@ -55,6 +56,9 @@ public:
 
     int _metal = 1;
     int _plastic = 0;
+
+
+
 
     bool _isInMainMenu = true;
 };

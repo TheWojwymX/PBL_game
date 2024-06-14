@@ -1,5 +1,13 @@
 #include "Button.h"
 
+Button::Button(const char* backgroundImagePath, const char* hoverBackgroundImagePath, const char* clickedBackgroundImagePath,
+    glm::vec2 position, std::function<void()> onClickFunction)
+    : _backgroundImagePath(backgroundImagePath),
+    _hoverBackgroundImagePath(hoverBackgroundImagePath),
+    _clickedBackgroundImagePath(clickedBackgroundImagePath),
+    _position(position),
+    _onClickFunction(onClickFunction) {}
+
 void Button::Init() {
     _backgroundImage.Init(_backgroundImagePath, _position, 0, true, false);
     _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _position, 0, true, false);
@@ -16,8 +24,8 @@ void Button::Update() {
     _hoverBackgroundImage.Render();
     _clickedBackgroundImage.Render();
 
-    glm::vec2 buttonCenter = _backgroundImage.CalculateCenter();
-    TEXTRENDERER.RenderTextCentered(_text, buttonCenter.x, buttonCenter.y, _textSize, glm::vec3(1.0f, 1.0f, 1.0f));
+    //glm::vec2 buttonCenter = _backgroundImage.CalculateCenter();
+    //TEXTRENDERER.RenderTextCentered(_text, buttonCenter.x, buttonCenter.y, _textSize, glm::vec3(1.0f, 1.0f, 1.0f));
 
     TimerCount();
     AppareanceManager();
@@ -26,7 +34,7 @@ void Button::Update() {
 }
 
 void Button::CheckClick() {
-    if(CheckHover() && INPUT.IsMousePressed(0)){
+    if (CheckHover() && INPUT.IsMousePressed(0)) {
         Onclick();
         _timerOn = true;
     }
@@ -48,20 +56,20 @@ bool Button::CheckHover() {
     }
 }
 
-void Button::AppareanceManager(){
-    if(_timerOn){
+void Button::AppareanceManager() {
+    if (_timerOn) {
         _backgroundImage._shouldRender = false;
         _clickedBackgroundImage._shouldRender = true;
         _hoverBackgroundImage._shouldRender = false;
         return;
     }
-    else if(CheckHover()){
+    else if (CheckHover()) {
         _backgroundImage._shouldRender = false;
         _clickedBackgroundImage._shouldRender = false;
         _hoverBackgroundImage._shouldRender = true;
         return;
     }
-    else{
+    else {
         _backgroundImage._shouldRender = true;
         _clickedBackgroundImage._shouldRender = false;
         _hoverBackgroundImage._shouldRender = false;
@@ -69,10 +77,10 @@ void Button::AppareanceManager(){
     }
 }
 
-void Button::TimerCount(){
-    if(_timerOn){
+void Button::TimerCount() {
+    if (_timerOn) {
         _clickedTimer += TIME.GetDeltaTime();
-        if(_clickedTimer >= 0.2){
+        if (_clickedTimer >= 0.2) {
             _timerOn = false;
             _clickedTimer = 0.0f;
         }
@@ -80,7 +88,9 @@ void Button::TimerCount(){
 }
 
 void Button::Onclick() {
-
+    if (_onClickFunction) {
+        _onClickFunction();
+    }
 }
 
 void Button::SetText(std::string text, float textSize) {
@@ -88,19 +98,18 @@ void Button::SetText(std::string text, float textSize) {
     _textSize = textSize;
 }
 
-void Button::SetBackgroundImagePath(const char *path) {
+void Button::SetBackgroundImagePath(const char* path) {
     _backgroundImagePath = path;
 }
 
-void Button::SetHoverImagePath(const char *path) {
+void Button::SetHoverImagePath(const char* path) {
     _hoverBackgroundImagePath = path;
 }
 
-void Button::SetClickedImagePath(const char *path) {
+void Button::SetClickedImagePath(const char* path) {
     _clickedBackgroundImagePath = path;
 }
 
-void Button::SetButtonPosition(glm::vec2 position)
-{
+void Button::SetButtonPosition(glm::vec2 position) {
     _position = position;
 }

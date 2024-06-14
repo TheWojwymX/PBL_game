@@ -1,21 +1,25 @@
 #pragma once
 
 #include "HUD/Pages/Page.h"
-#include "HUD/Buttons/MainMenu/MainMenuStartButton.h"
-#include "HUD/Buttons/MainMenu/MainMenuCreditsButton.h"
-#include "HUD/Buttons/MainMenu/MainMenuSettingsButton.h"
-#include "HUD/Buttons/MainMenu/MainMenuQuitButton.h"
+#include "HUD/Buttons/Button.h"
+#include "Managers/GameManager.h"
+#include <memory>
 
 class MainMenuPage : public Page {
 public:
     void Init() override;
-
     void Update() override;
 
     const char* _backgroundImagePath = "res/Images/MainMenu/mainMenu.png";
 
-    shared_ptr<MainMenuStartButton> _startButton = make_shared<MainMenuStartButton>();
-    shared_ptr<MainMenuSettingsButton> _settingsButton = make_shared<MainMenuSettingsButton>();
-    shared_ptr<MainMenuCreditsButton> _creditsButton = make_shared<MainMenuCreditsButton>();
-    shared_ptr<MainMenuQuitButton> _quitButton = make_shared<MainMenuQuitButton>();
+    std::shared_ptr<Button> _startButton;
+    std::shared_ptr<Button> _settingsButton;
+    std::shared_ptr<Button> _creditsButton;
+    std::shared_ptr<Button> _quitButton; 
+
+private:
+    void SetupButtons();
+    void SettingsTest();
+    void CreditsButtonOnClick();
+    void QuitButtonOnClick();
 };

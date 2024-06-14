@@ -4,6 +4,8 @@
 
 #include "TutorialManager.h"
 #include "HUD/PageManager.h"
+#include "Enemies/EnemiesManager.h"
+#include "Turrets/TurretsManager.h"
 
 TutorialManager &TutorialManager::getInstance() {
     static TutorialManager instance;

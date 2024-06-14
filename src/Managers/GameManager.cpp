@@ -36,6 +36,11 @@ void GameManager::RemoveMaterials(glm::ivec2 mat)
     _metal -= mat.y;
 }
 
+void GameManager::StartGame()
+{
+    _isInMainMenu = false;
+}
+
 void GameManager::Update()
 {
     if(TUTORIALMANAGER._isFreePlay){

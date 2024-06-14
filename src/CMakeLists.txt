@@ -68,13 +68,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h
         HUD/Buttons/Button.cpp
         HUD/Buttons/Button.h
-        HUD/Buttons/PauseMenu/ResumeButton.cpp
-        HUD/Buttons/PauseMenu/ResumeButton.h
-        HUD/Buttons/PauseMenu/QuitButton.cpp
-        HUD/Buttons/PauseMenu/QuitButton.h
-        HUD/Buttons/PauseMenu/QuitButton.cpp
-        HUD/Buttons/PauseMenu/SettingsButton.cpp
-        HUD/Buttons/PauseMenu/SettingsButton.h
         Managers/DomeManager.cpp
         Managers/DomeManager.h
         Managers/UpgradeManager.cpp
@@ -84,32 +77,16 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Turrets/Turret.cpp
         Turrets/Turret.h
 	  ComputeShader.h
-        HUD/Buttons/Player/UpgradeReach.cpp
-        HUD/Buttons/Player/UpgradeReach.h
-        HUD/Buttons/Player/UpgradeRadius.cpp
-        HUD/Buttons/Player/UpgradeRadius.h
-        HUD/Buttons/Player/UpgradeSpeed.cpp
-        HUD/Buttons/Player/UpgradeSpeed.h
         HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.cpp
         HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h
-        HUD/Buttons/TurretUpgrades/UpgradeFireRate.cpp
-        HUD/Buttons/TurretUpgrades/UpgradeFireRate.h
-        HUD/Buttons/TurretUpgrades/UpgradeDamage.cpp
-        HUD/Buttons/TurretUpgrades/UpgradeDamage.h
         HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.cpp
         HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h
-        HUD/Buttons/DomeUpgrades/UpgradeDomeHP.cpp
-        HUD/Buttons/DomeUpgrades/UpgradeDomeHP.h
-        HUD/Buttons/Player/JetpackRefuel.cpp
-        HUD/Buttons/Player/JetpackRefuel.h
         Component/RefuelStation.cpp
         Component/RefuelStation.h
         HUD/Pages/MessagePage/MessagePage.cpp
         HUD/Pages/MessagePage/MessagePage.h
         Managers/TutorialManager.cpp
         Managers/TutorialManager.h
-        HUD/Buttons/MessagePage/ContinueMessageButton.cpp
-        HUD/Buttons/MessagePage/ContinueMessageButton.h
         Component/ShovelController.cpp
         Component/ShovelController.h
         Component/ShovelRenderer.cpp
@@ -133,14 +110,10 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         WindSimulation.cpp
         HUD/Pages/MainMenuPage/MainMenuPage.cpp
         HUD/Pages/MainMenuPage/MainMenuPage.h
-        HUD/Buttons/MainMenu/MainMenuStartButton.cpp
-        HUD/Buttons/MainMenu/MainMenuStartButton.h
-        HUD/Buttons/MainMenu/MainMenuCreditsButton.cpp
-        HUD/Buttons/MainMenu/MainMenuCreditsButton.h
-        HUD/Buttons/MainMenu/MainMenuSettingsButton.cpp
-        HUD/Buttons/MainMenu/MainMenuSettingsButton.h
-        HUD/Buttons/MainMenu/MainMenuQuitButton.cpp
-        HUD/Buttons/MainMenu/MainMenuQuitButton.h Managers/WeatherManager.h Managers/WeatherManager.cpp Framebuffer.h Framebuffer.cpp)
+        Managers/WeatherManager.h 
+	Managers/WeatherManager.cpp 
+	Framebuffer.h 
+	Framebuffer.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
