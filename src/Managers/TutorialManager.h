@@ -26,10 +26,10 @@ public:
     int _actualMessage = 0;
     std::vector<string> _messages{
 
-        "Quick! Call reinforcements [L] using \n"
-        "materials!\n",
+        "Quick! Take radio [4] and call support [1]\n"
+        "using materials!\n",
 
-        "Choose position with [RMB]. \n",
+        "Choose position with [LMB]. \n",
 
         "There is one more on another side! \n"
         "Relocate the turret with [RMB]. \n"
@@ -62,9 +62,7 @@ public:
 
     std::vector<string> _specialMessages{
 
-            "Come back, private! You must follow my instructions \n"
-            "exactly, otherwise the training will be interrupted \n"
-            "and you will be on your own!",
+            "Yurn back or tutorial will be canceled \n",
 
             "As you prefer. The training is interrupted. I hope \n"
             "you know what you're doing. Good luck."

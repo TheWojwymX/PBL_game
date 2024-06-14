@@ -265,9 +265,8 @@ int main(int, char**)
                 TURRETSMANAGER.Update();
                 DOMEMANAGER.Update();
                 GAMEMANAGER.Update();
-                TUTORIALMANAGER.Update();
             }
-
+            TUTORIALMANAGER.Update();
             UPGRADEMANAGER.Update();
             LIGHTSMANAGER.Update();
             WEATHERMANAGER.Update();

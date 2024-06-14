@@ -27,9 +27,7 @@ void TutorialManager::Update() {
     //std::cout << "tutorial skonczony: " << _isTutorialEnded << "   aktualna wiadomosc: " << _actualMessage << std::endl;
 
     if(_isTutorialEnded) return;
-
     switch (_actualMessage) {
-
         //konczy sie po wyladowaniu
         case 0:
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
@@ -41,26 +39,28 @@ void TutorialManager::Update() {
                 HUD._shouldShowCrosshair = true;
             }
             else{
-                _player->GetTransform()->SetPosition(glm::vec3(_player->GetTransform()->GetPosition().x,
-                                                               _player->GetTransform()->GetPosition().y - 0.01,
-                                                               _player->GetTransform()->GetPosition().z));
-                _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
-
-                if(_timer < 1 && !_firstEnemySpawned){
-                    _timer += TIME.GetDeltaTime();
-                }else if(!_firstEnemySpawned){
-                    _firstEnemySpawned = true;
-                    SpawnTutorialEnemies(0);
-                    ENEMIESMANAGER._enemies[0]->_walkingSpeed = ENEMIESMANAGER._enemies[0]->_walkingSpeed * 0.5;
-                    _timer = 0;
+                if(!GAMEMANAGER._paused) {
+                    _player->GetTransform()->SetPosition(glm::vec3(_player->GetTransform()->GetPosition().x,
+                                                                   _player->GetTransform()->GetPosition().y - TIME.GetDeltaTime(),
+                                                                   _player->GetTransform()->GetPosition().z));
+                    _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
+                    if (_timer < 1 && !_firstEnemySpawned) {
+                        _timer += TIME.GetDeltaTime();
+                    } else if (!_firstEnemySpawned) {
+                        _firstEnemySpawned = true;
+                        SpawnTutorialEnemies(0);
+                        ENEMIESMANAGER._enemies[0]->_walkingSpeed = ENEMIESMANAGER._enemies[0]->_walkingSpeed * 0.5;
+                        _timer = 0;
+                    }
                 }
             }
             break;
 
-        //konczy sie po kliknieciu L
+        //konczy sie po przejsciu do wyboru pozycji
         case 1:
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
-            if(INPUT.GetKeyDown(GLFW_KEY_L)){
+
+            if(TURRETSMANAGER._isInBlueprintMode){
                 DisplayAndChangeMessage();
             }
             break;
@@ -68,9 +68,10 @@ void TutorialManager::Update() {
         //konczy sie po pokonaniu mrowki
         case 2:
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
-            if(INPUT.GetMouseButtonDown(1)){
-                PAGEMANAGER.CloseAllPages();
+            if(!TURRETSMANAGER._isInBlueprintMode && PAGEMANAGER._isInPage){
+                PAGEMANAGER.HideMessagePage();
             }
+
             else if(ENEMIESMANAGER._enemies[0] == nullptr){
                 SpawnTutorialEnemies(2);
                 ENEMIESMANAGER._enemies[1]->_walkingSpeed = ENEMIESMANAGER._enemies[1]->_walkingSpeed * 0.6;
@@ -196,6 +197,8 @@ void TutorialManager::SkipTutorial() {
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
     _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
 
+    PAGEMANAGER.HideMessagePage();
+
     HUD._shouldShowCrosshair = true;
     HUD._shouldShowHP = true;
     HUD._shouldShowFuel = true;
@@ -242,8 +245,8 @@ bool TutorialManager::WarningSystem(int messageNumber) {
         return true;
     }
     else if(glm::distance(_messagesPositions[messageNumber], _player->GetTransform()->GetPosition()) > 30){
-        DisplaySpecialMessage(_specialMessages[1]);
-        _isTutorialEnded = true;
+        //DisplaySpecialMessage(_specialMessages[1]);
+        SkipTutorial();
         return true;
     }
 

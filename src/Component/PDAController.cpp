@@ -31,11 +31,6 @@ void PDAController::Update() {
 
 void PDAController::RealUpdate() {
 
-
-    if(PAGEMANAGER._isInPage == false && !_isHidden){
-        PlayHidePDA();
-    }
-
     if (_playHideAnim) {
         PlayHidePDA();
     }
