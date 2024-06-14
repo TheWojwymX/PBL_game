@@ -1,22 +1,14 @@
-//
-// Created by Jacek on 21.05.2024.
-//
-
 #include "UpgradeSpeed.h"
 #include "Managers/NodesManager.h"
 
 void UpgradeSpeed::Init() {
-    SetVertices(_buttonVertices);
+    SetButtonPosition(glm::vec2(0,3));
     SetText(_text, 1);
     Button::Init();
 }
 
 void UpgradeSpeed::Update() {
     Button::Update();
-}
-
-void UpgradeSpeed::SetVertices(const array<float, 32> &vertices) {
-    Button::SetVertices(vertices);
 }
 
 void UpgradeSpeed::Onclick() {

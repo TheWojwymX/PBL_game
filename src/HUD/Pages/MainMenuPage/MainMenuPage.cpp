@@ -1,11 +1,8 @@
-//
-// Created by Jacek on 10.06.2024.
-//
-
 #include "MainMenuPage.h"
 
 void MainMenuPage::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
+    SetCorners(glm::vec2(-50, -50), glm::vec2(50, 50));
     _shouldRender = true;
     _startButton->Init();
     _settingsButton->Init();

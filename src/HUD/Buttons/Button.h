@@ -1,9 +1,4 @@
-//
-// Created by Jacek on 09.05.2024.
-//
-
-#ifndef SANDBOX_BUTTON_H
-#define SANDBOX_BUTTON_H
+#pragma once
 
 #include "../Image/ImageRenderer.h"
 #include "../Text/TextRenderer.h"
@@ -30,11 +25,11 @@ public:
 
     virtual void Onclick();
 
-    virtual void SetVertices(const array<float, 32> &vertices);
-
     virtual void SetBackgroundImagePath(const char * path);
     virtual void SetHoverImagePath(const char * path);
     virtual void SetClickedImagePath(const char * path);
+
+    void SetButtonPosition(glm::vec2 position);
 
     virtual void SetText(std::string text, float textSize);
 
@@ -43,18 +38,10 @@ protected:
     float _clickedTimer = 0.0f;
     bool _timerOn = false;
 
-    array<float, 32> _buttonVertices{
-            // positions          // colors           // texture coords
-            0.03f,  0.05f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            0.03f, -0.05f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -0.03f, -0.05f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.03f,  0.05f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-
     void AppareanceManager();
 
     void TimerCount();
+
+private:
+    glm::vec2 _position;
 };
-
-
-#endif //SANDBOX_BUTTON_H

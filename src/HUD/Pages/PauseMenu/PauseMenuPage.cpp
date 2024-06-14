@@ -5,7 +5,7 @@ void PauseMenuPage::Init() {
     _resumeButton.Init();
     _quitButton.Init();
     _settingsButton.Init();
-    _logo.Init(_logoImagePath, glm::vec3(0,0,0), true, false);
+    _logo.Init(_logoImagePath, glm::vec2(0,0),0, true, false);
 
     Page::Init();
 }

@@ -1,21 +1,13 @@
-//
-// Created by Jacek on 21.05.2024.
-//
-
 #include "UpgradeDomeHP.h"
 
 void UpgradeDomeHP::Init() {
-    SetVertices(_buttonVertices);
+    SetButtonPosition(glm::vec2(0,0));
     SetText(_text, 1);
     Button::Init();
 }
 
 void UpgradeDomeHP::Update() {
     Button::Update();
-}
-
-void UpgradeDomeHP::SetVertices(const array<float, 32> &vertices) {
-    Button::SetVertices(vertices);
 }
 
 void UpgradeDomeHP::Onclick() {

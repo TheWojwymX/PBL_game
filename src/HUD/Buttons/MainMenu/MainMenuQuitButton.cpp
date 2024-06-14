@@ -1,7 +1,3 @@
-//
-// Created by Jacek on 10.06.2024.
-//
-
 #include "MainMenuQuitButton.h"
 #include "Managers/GameManager.h"
 
@@ -9,17 +5,13 @@ void MainMenuQuitButton::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
     SetHoverImagePath(_hoverBackgroundImagePath);
     SetClickedImagePath(_clickedBackgroundImagePath);
-    SetVertices(_buttonVertices);
+    SetButtonPosition(glm::vec2(0, 0));
     SetText(_text, 1);
     Button::Init();
 }
 
 void MainMenuQuitButton::Update() {
     Button::Update();
-}
-
-void MainMenuQuitButton::SetVertices(const array<float, 32> &vertices) {
-    Button::SetVertices(vertices);
 }
 
 void MainMenuQuitButton::Onclick() {

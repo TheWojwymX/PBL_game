@@ -7,7 +7,6 @@
 #include "HUD/Buttons/MainMenu/MainMenuQuitButton.h"
 
 class MainMenuPage : public Page {
-
 public:
     void Init() override;
 

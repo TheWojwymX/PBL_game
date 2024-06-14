@@ -16,4 +16,9 @@ public:
     bool _shouldRender = false;
 
     virtual void SetBackgroundImagePath(const char * path);
+    void SetCorners(glm::vec2 downLeftCorner, glm::vec2 topRightCorner);
+
+private:
+    glm::vec2 _downLeftCorner;
+    glm::vec2 _topRightCorner;
 };

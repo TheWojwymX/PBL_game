@@ -1,13 +1,9 @@
-//
-// Created by Jacek on 09.05.2024.
-//
-
 #include "Button.h"
 
 void Button::Init() {
-    _backgroundImage.Init(_backgroundImagePath, _buttonVertices, true, false);
-    _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _buttonVertices, true, false);
-    _clickedBackgroundImage.Init(_clickedBackgroundImagePath, _buttonVertices, true, false);
+    _backgroundImage.Init(_backgroundImagePath, _position, 0, true, false);
+    _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _position, 0, true, false);
+    _clickedBackgroundImage.Init(_clickedBackgroundImagePath, _position, 0, true, false);
 
     TEXTRENDERER.Init();
 
@@ -16,11 +12,12 @@ void Button::Init() {
 }
 
 void Button::Update() {
-    _backgroundImage.UpdateImage();
-    _hoverBackgroundImage.UpdateImage();
-    _clickedBackgroundImage.UpdateImage();
+    _backgroundImage.Render();
+    _hoverBackgroundImage.Render();
+    _clickedBackgroundImage.Render();
 
-    TEXTRENDERER.RenderTextCentered(_text, (_buttonVertices[0] + _buttonVertices[16]) / 2.0f, (_buttonVertices[1] + _buttonVertices[17]) / 2.0f, _textSize, glm::vec3(1.0f, 1.0f, 1.0f));
+    glm::vec2 buttonCenter = _backgroundImage.CalculateCenter();
+    TEXTRENDERER.RenderTextCentered(_text, buttonCenter.x, buttonCenter.y, _textSize, glm::vec3(1.0f, 1.0f, 1.0f));
 
     TimerCount();
     AppareanceManager();
@@ -36,16 +33,17 @@ void Button::CheckClick() {
 }
 
 bool Button::CheckHover() {
-    float leftX = _buttonVertices[16];
-    float rightX = _buttonVertices[0];
-    float bottomY = _buttonVertices[1];
-    float topY = _buttonVertices[9];
+    auto corners = _backgroundImage.GetCorners();
+    glm::vec2 downLeftCorner = corners.first;
+    glm::vec2 topRightCorner = corners.second;
 
     glm::vec2 mousePos = INPUT.GetMouseFixedPos();
 
-    if (mousePos.x > leftX && mousePos.x < rightX && mousePos.y > bottomY && mousePos.y < topY) {
+    if (mousePos.x > downLeftCorner.x && mousePos.x < topRightCorner.x &&
+        mousePos.y > downLeftCorner.y && mousePos.y < topRightCorner.y) {
         return true;
-    } else {
+    }
+    else {
         return false;
     }
 }
@@ -85,10 +83,6 @@ void Button::Onclick() {
 
 }
 
-void Button::SetVertices(const array<float, 32> &vertices) {
-        _buttonVertices = vertices;
-}
-
 void Button::SetText(std::string text, float textSize) {
     _text = text;
     _textSize = textSize;
@@ -104,4 +98,9 @@ void Button::SetHoverImagePath(const char *path) {
 
 void Button::SetClickedImagePath(const char *path) {
     _clickedBackgroundImagePath = path;
+}
+
+void Button::SetButtonPosition(glm::vec2 position)
+{
+    _position = position;
 }

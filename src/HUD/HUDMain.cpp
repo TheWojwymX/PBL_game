@@ -12,28 +12,28 @@ void HUDMain::Init() {
     //text
     TEXTRENDERER.Init();
 
-    _crosshairImage.Init("res/Images/crosshair041.png", glm::vec3(0, 0, 0), true, false);
-    _materialsBackground.Init("res/Images/HUD/materials_background.png", glm::vec3(-45,-47.0,0), true, false);
-    _plasticImage.Init("res/Images/HUD/plastic_icon.png", glm::vec3(-47, -47.0, 0), true, false);
-    _metalImage.Init("res/Images/HUD/metal_icon.png", glm::vec3(-43, -47.0, 0), true, false);
-    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", glm::vec3(45, -25, 0), true, false);
-    _jetpackBar.Init("res/Images/HUD/jetpackBar.png", glm::vec3(45, -25, 0), false, false);
-    _depthMeterBackground.Init("res/Images/HUD/depth0.png", glm::vec3(47, 30, 0), true, false);
-    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", glm::vec3(-47, 47, 0), true, false);
-    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", glm::vec3(-49,49,0),true, true);
+    _crosshairImage.Init("res/Images/crosshair041.png", glm::vec2(0, 0), 0, true, false);
+    _materialsBackground.Init("res/Images/HUD/materials_background.png", glm::vec2(-45,-47.0),0, true, false);
+    _plasticImage.Init("res/Images/HUD/plastic_icon.png", glm::vec2(-47, -47.0),0, true, false);
+    _metalImage.Init("res/Images/HUD/metal_icon.png", glm::vec2(-43, -47.0),0, true, false);
+    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", glm::vec2(45, -25),0, true, false);
+    _jetpackBar.Init("res/Images/HUD/jetpackBar.png", glm::vec2(45, -25),0, false, false);
+    _depthMeterBackground.Init("res/Images/HUD/depth0.png", glm::vec2(47, 30),0, true, false);
+    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", glm::vec2(-47, 47),0, true, false);
+    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", glm::vec2(-49,49),0,true, true);
 
     
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/Border/bar_" + std::to_string(5*i) + ".png";
-        hp->Init(path.c_str(), glm::vec3(47,47,0), true, true);
+        hp->Init(path.c_str(), glm::vec2(47,47),0, true, true);
         _baseHPImages.push_back(hp);
     }
 
     for(int i = 0; i <= 3; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/InsideImages/inside" + std::to_string(i) + ".png";
-        hp->Init(path.c_str(), glm::vec3(47, 47, 0), true, true);
+        hp->Init(path.c_str(), glm::vec2(47, 47),0, true, true);
         _baseInsideImages.push_back(hp);
     }
     

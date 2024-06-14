@@ -1,23 +1,15 @@
-//
-// Created by Jacek on 25.05.2024.
-//
-
 #include "ContinueMessageButton.h"
 #include "Managers/TutorialManager.h"
 #include "HUD/PageManager.h"
 
 void ContinueMessageButton::Init() {
-    SetVertices(_buttonVertices);
+    SetButtonPosition(glm::vec2(0,0));
     SetText(_text, 1);
     Button::Init();
 }
 
 void ContinueMessageButton::Update() {
     Button::Update();
-}
-
-void ContinueMessageButton::SetVertices(const array<float, 32> &vertices) {
-    Button::SetVertices(vertices);
 }
 
 void ContinueMessageButton::Onclick() {
