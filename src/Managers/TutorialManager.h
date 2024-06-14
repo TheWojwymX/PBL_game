@@ -26,43 +26,33 @@ public:
     int _actualMessage = 0;
     std::vector<string> _messages{
 
-        "Quick! Take radio [4] and call support [1]\n"
-        "using materials!\n",
+            "QUICK! TAKE RADIO [4] AND CALL SUPPORT [1]!",
 
-        "Choose position with [LMB]. \n",
+            "CHOOSE POSITION WITH [LMB].",
 
-        "There is one more on another side! \n"
-        "Relocate the turret with [RMB]. \n"
-        "You lose if base gets destroyed. \n",
+            "THERE IS ONE MORE ON ANOTHER SIDE! MOVE TURRET WITH [RMB]. YOU LOSE IF BASE GETS DESTROYED.",
 
-        "Go look for more materials in the \n"
-        "hole. \n",
+            "GO LOOK FOR MORE MATERIALS IN THE HOLE.",
 
-        "Press [RMB] to throw a flare. \n",
+            "PRESS [RMB] TO THROW A FLARE.",
 
-        "Dig up materials using [LMB]. \n",
+            "DIG UP MATERIALS USING [LMB].",
 
-        "Go back for upgrades. Get Jetpack \n"
-        "fuel from materials [R]. Hold \n"
-        "[SPACE] to use jetpack. \n",
+            "GO BACK FOR UPGRADES. GET JETPACK FUEL FROM MATERIALS [R]. HOLD [SPACE] TO USE JETPACK.",
 
-        "Interact with upgrade stations [F] \n"
-        "and check out the upgrades. \n",
+            "INTERACT WITH UPGRADE STATIONS [F] AND CHECK OUT THE UPGRADES.",
 
-        "Exit with [ESC] or [F]. \n",
+            "EXIT WITH [ESC] OR [F].",
 
-        "Go and gather materials but \n"
-        "remember to come back in time \n"
-        "and prepare for defense. \n",
+            "GO AND GATHER MATERIALS BUT REMEMBER TO COME BACK IN TIME AND PREPARE FOR DEFENSE.",
 
-        "Depth and arrow pointing to the \n"
-        "hole will help you get back. \n",
+            "DEPTH AND ARROW POINTING TO THE HOLE WILL HELP YOU GET BACK.",
 
     };
 
     std::vector<string> _specialMessages{
 
-            "Yurn back or tutorial will be canceled \n",
+            "TURN BACK OR TUTORIAL WILL BE CANCELED!",
 
             "As you prefer. The training is interrupted. I hope \n"
             "you know what you're doing. Good luck."

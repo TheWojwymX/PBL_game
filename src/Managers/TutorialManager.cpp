@@ -41,7 +41,7 @@ void TutorialManager::Update() {
             else{
                 if(!GAMEMANAGER._paused) {
                     _player->GetTransform()->SetPosition(glm::vec3(_player->GetTransform()->GetPosition().x,
-                                                                   _player->GetTransform()->GetPosition().y - TIME.GetDeltaTime(),
+                                                                   _player->GetTransform()->GetPosition().y - TIME.GetDeltaTime() * 2,
                                                                    _player->GetTransform()->GetPosition().z));
                     _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
                     if (_timer < 1 && !_firstEnemySpawned) {
