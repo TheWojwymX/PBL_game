@@ -1,13 +1,8 @@
-//
-// Created by Jacek on 13.05.2024.
-//
-
-#ifndef SANDBOX_TURRET_H
-#define SANDBOX_TURRET_H
+#pragma once
 
 #include "Core/Component.h"
 
-enum turretType { MINIGUN, SNIPER, RIFLE };
+enum TurretType { MINIGUN, SNIPER, RIFLE };
 
 class Turret : public Component, public std::enable_shared_from_this<Turret> {
 
@@ -21,8 +16,12 @@ public:
     void Update() override;
 
     void setUp();
+    void Upgrade(glm::vec2 values);
 
-    turretType _turretType = MINIGUN;
+    void SetTurretType(TurretType type) { _turretType = type; }
+    TurretType GetTurretType() { return _turretType; }
+    char GetUpgradeLevel() { return _upgradeLevel; }
+
 
     bool _isFlying = false;
     float _flyingSpeed = 2;
@@ -44,7 +43,10 @@ public:
     float _timer = 0.0f;
 
     std::shared_ptr<Node> _flare;
+private:
+    TurretType _turretType = MINIGUN;
+    char _upgradeLevel = 0;
+
+    void HandleSpawn();
+    void UpdateModel();
 };
-
-
-#endif //SANDBOX_TURRET_H

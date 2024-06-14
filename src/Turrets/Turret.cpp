@@ -1,7 +1,3 @@
-//
-// Created by Jacek on 13.05.2024.
-//
-
 #include "Turret.h"
 #include "Core/Time.h"
 #include "Core/Input.h"
@@ -49,63 +45,7 @@ void Turret::Update() {
 
     if(GAMEMANAGER._paused) return;
 
-    if(_isFlying){
-        auto particleGenerator = _flare->GetComponent<ParticleGenerator>();
-
-        if(glm::distance(GetOwnerPosition(), _finalPosition) <= 0.1)
-        {
-            _isFlying = false;
-            _ownerTransform->SetRotation(_finalRotation);
-            _ownerTransform->SetPosition(_finalPosition);
-
-            auto model =  _ownerNode->GetComponent<MeshRenderer>()->_model;
-            switch(_turretType)
-            {
-                case MINIGUN:
-                    model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
-                    break;
-
-                case SNIPER:
-                    model = RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level1");
-                    break;
-
-                case RIFLE:
-                    model = RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level1");
-                    break;
-            }
-
-            std::cout << "kiedy sie wykona";
-            _ownerNode->GetComponent<MeshRenderer>()->_model = model;
-            _flare->GetComponent<MeshRenderer>()->_disableModel = true;
-            particleGenerator->toDelete = true;
-            return;
-           }
-
-        particleGenerator->SpawnParticles();
-
-        _ownerTransform->SetPosition(glm::vec3(GetOwnerPosition().x, GetOwnerPosition().y - TIME.GetDeltaTime() * _flyingSpeed, GetOwnerPosition().z));
-
-        if(_swingDirection == 1){
-            _swingTimer += TIME.GetDeltaTime();
-            if(_swingTimer >= _rightMax){
-                _swingTimer = _rightMax;
-                _swingDirection = 2;
-            }
-        }
-        else if(_swingDirection == 2){
-            _swingTimer -= TIME.GetDeltaTime();
-            if(_swingTimer <= _leftMax){
-                _swingTimer = _leftMax;
-                _swingDirection = 1;
-            }
-        }
-
-        glm::quat swingRotation = glm::angleAxis(0.3f * _swingTimer, glm::vec3(0, 0, 1));
-        glm::quat newRotation = _finalRotation * swingRotation;
-        _ownerTransform->SetRotation(newRotation);
-    }
-
-    Component::Update();
+    HandleSpawn();
 }
 
 void Turret::setUp()
@@ -125,5 +65,124 @@ void Turret::setUp()
             _damage = 35;
             break;
     }
+}
+
+void Turret::Upgrade(glm::vec2 values)
+{
+    _damage += values.x;
+    _fireRate += values.y;
+    _upgradeLevel++;
+}
+
+void Turret::HandleSpawn()
+{
+    if (_isFlying) {
+        auto particleGenerator = _flare->GetComponent<ParticleGenerator>();
+
+        if (glm::distance(GetOwnerPosition(), _finalPosition) <= 0.1)
+        {
+            _isFlying = false;
+            _ownerTransform->SetRotation(_finalRotation);
+            _ownerTransform->SetPosition(_finalPosition);
+
+            UpdateModel();
+
+            _flare->GetComponent<MeshRenderer>()->_disableModel = true;
+            particleGenerator->toDelete = true;
+            return;
+        }
+
+        particleGenerator->SpawnParticles();
+
+        _ownerTransform->SetPosition(glm::vec3(GetOwnerPosition().x, GetOwnerPosition().y - TIME.GetDeltaTime() * _flyingSpeed, GetOwnerPosition().z));
+
+        if (_swingDirection == 1) {
+            _swingTimer += TIME.GetDeltaTime();
+            if (_swingTimer >= _rightMax) {
+                _swingTimer = _rightMax;
+                _swingDirection = 2;
+            }
+        }
+        else if (_swingDirection == 2) {
+            _swingTimer -= TIME.GetDeltaTime();
+            if (_swingTimer <= _leftMax) {
+                _swingTimer = _leftMax;
+                _swingDirection = 1;
+            }
+        }
+
+        glm::quat swingRotation = glm::angleAxis(0.3f * _swingTimer, glm::vec3(0, 0, 1));
+        glm::quat newRotation = _finalRotation * swingRotation;
+        _ownerTransform->SetRotation(newRotation);
+    }
+}
+
+void Turret::UpdateModel() {
+    auto meshRenderer = _ownerNode->GetComponent<MeshRenderer>();
+    if (!meshRenderer) {
+        std::cerr << "MeshRenderer component not found!" << std::endl;
+        return;
+    }
+
+    std::string modelName;
+
+    switch (_turretType) {
+    case MINIGUN:
+        switch (_upgradeLevel) {
+        case 0:
+            modelName = "Turret_Minigun_Level1";
+            break;
+        case 1:
+            modelName = "Turret_Minigun_Level2";
+            break;
+        case 2:
+            modelName = "Turret_Minigun_Level3";
+            break;
+        default:
+            std::cerr << "Invalid upgrade level for Minigun" << std::endl;
+            return;
+        }
+        break;
+
+    case SNIPER:
+        switch (_upgradeLevel) {
+        case 0:
+            modelName = "Turret_Sniper_Level1";
+            break;
+        case 1:
+            modelName = "Turret_Sniper_Level2";
+            break;
+        case 2:
+            modelName = "Turret_Sniper_Level3";
+            break;
+        default:
+            std::cerr << "Invalid upgrade level for Sniper" << std::endl;
+            return;
+        }
+        break;
+
+    case RIFLE:
+        switch (_upgradeLevel) {
+        case 0:
+            modelName = "Turret_Rifle_Level1";
+            break;
+        case 1:
+            modelName = "Turret_Rifle_Level2";
+            break;
+        case 2:
+            modelName = "Turret_Rifle_Level3";
+            break;
+        default:
+            std::cerr << "Invalid upgrade level for Rifle" << std::endl;
+            return;
+        }
+        break;
+
+    default:
+        std::cerr << "Unknown turret type" << std::endl;
+        return;
+    }
+
+    meshRenderer->_model = RESOURCEMANAGER.GetModelByName(modelName);
 }
 

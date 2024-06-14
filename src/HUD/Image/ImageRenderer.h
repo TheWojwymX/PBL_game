@@ -33,7 +33,7 @@ private:
     glm::vec2 _pixelPosition;
     float _rotationAngle;
     glm::mat4 _model;
-    std::array<float, 20> _vertices2;
+    std::array<float, 20> _vertices;
 
     float _screenWidth;
     float _screenHeight;

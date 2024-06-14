@@ -117,7 +117,7 @@ void TurretsManager::PlayerActions(){
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
         _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd( _turrets[_indexOfMovingTurret]->_ownerNode);
-        finaltype = _turrets[_indexOfMovingTurret]->_turretType;
+        finaltype = _turrets[_indexOfMovingTurret]->GetTurretType();
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
         PlaceMovingTurret();
@@ -167,7 +167,7 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
     return false;
 }
 
-void TurretsManager::SpawnTurret(turretType type) {
+void TurretsManager::SpawnTurret(TurretType type) {
 
     if (GAMEMANAGER._metal < _actualTurretCost) {
         std::cout << "Brak pieniedzy na dzialko" << std::endl;
@@ -231,7 +231,7 @@ void TurretsManager::SpawnTurret(turretType type) {
     auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
     newTurret->Initiate();
     newTurret->_isFlying = true;
-    newTurret->_turretType = type;
+    newTurret->SetTurretType(type);
     newTurret->setUp();
     newTurret->_finalRotation = _blueprintTurret->GetTransform()->GetRotation();
     newTurret->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
@@ -400,7 +400,7 @@ void TurretsManager::CheckEnemiesInRange() {
         for (const auto& enemy : enemiesInRange) {
             float distance = glm::distance(_turrets[i]->GetOwnerPosition(), enemy->GetOwnerPosition());
 
-            switch (_turrets[i]->_turretType) {
+            switch (_turrets[i]->GetTurretType()) {
                 case MINIGUN:
                     if (enemy->_enemyType == ANT) {
                         if (distance < closestDistance) {
@@ -464,10 +464,10 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
         turret->_timer = 0.0f;
 
         int finalDamage;
-        turretType _turretType = turret->_turretType;
+        TurretType _turretType = turret->GetTurretType();
         enemyType _enemyType = enemy->_enemyType;
 
-        switch(turret->_turretType)
+        switch(_turretType)
         {
             case MINIGUN:
                 if (_enemyType == BEETLE)

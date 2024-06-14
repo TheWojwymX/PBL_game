@@ -49,8 +49,7 @@ public:
     void UpgradeMiningRadius();
 
     //Turret Upgrade
-    void UpgradeTurretDamage();
-    void UpgradeTurretFireRate();
+    void UpgradeTurret();
 
     bool IsDomeStationInRaycast();
     bool IsDomeStationInRange();
@@ -62,10 +61,6 @@ public:
     bool IsPlayerStationInRange();
 
     void Update();
-
-    int _turretFireRateUpgradeCost = 10;
-    int _turretDamageUpgradeCost = 10;
-
 private:
     Upgrades _domeHPUpgrades;
     Upgrades _domeHPRegenUpgrades;
@@ -76,6 +71,10 @@ private:
     Upgrades _miningSpeedUpgrades;
     Upgrades _miningReachUpgrades;
     Upgrades _miningRadiusUpgrades;
+
+    TurretUpgrades _minigunUpgrades;
+    TurretUpgrades _sniperUpgrades;
+    TurretUpgrades _rifleUpgrades;
 
     std::shared_ptr<PlayerController> _playerRef;
 };

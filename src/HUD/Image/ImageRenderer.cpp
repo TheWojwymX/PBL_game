@@ -25,7 +25,7 @@ void ImageRenderer::Init(const char* file, glm::vec2 initialPosition, float init
     float yOffset = relativeHeight / 2.0f;
 
     // Define vertices in normalized device coordinates (NDC)
-    _vertices2 = {
+    _vertices = {
         // Positions          // Tex Coords
         xOffset, -yOffset,   1.0f, 1.0f, // Bottom-right (y tex coord from 0.0f to 1.0f)
         xOffset,  yOffset,   1.0f, 0.0f, // Top-right (y tex coord from 1.0f to 0.0f)
@@ -64,7 +64,7 @@ void ImageRenderer::Init(const char* file, glm::vec2 downLeftCorner, glm::vec2 t
     float y1 = (topRightCorner.y * 0.02f * _screenHeight) / _screenHeight;
 
     // Define vertices in normalized device coordinates (NDC) with appropriate texture coordinates
-    _vertices2 = {
+    _vertices = {
         // Positions          // Tex Coords
         x1, y0,              1.0f, 1.0f, // Bottom-right (y tex coord from 0.0f to 1.0f)
         x1, y1,              1.0f, 0.0f, // Top-right (y tex coord from 1.0f to 0.0f)
@@ -141,7 +141,7 @@ void ImageRenderer::SetupBuffers(bool isDynamic) {
     glBindVertexArray(_VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_vertices2), _vertices2.data(), isDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_vertices), _vertices.data(), isDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -165,7 +165,7 @@ glm::vec2 ImageRenderer::CalculateCenter() {
     // Define vertices in NDC after transformation by _model
     glm::vec4 transformedVertices[4];
     for (int i = 0; i < 4; ++i) {
-        glm::vec4 vertex = glm::vec4(_vertices2[i * 4], _vertices2[i * 4 + 1], 0.0f, 1.0f); // Assuming only x, y coordinates for simplicity
+        glm::vec4 vertex = glm::vec4(_vertices[i * 4], _vertices[i * 4 + 1], 0.0f, 1.0f); // Assuming only x, y coordinates for simplicity
         transformedVertices[i] = _model * vertex;
     }
 
@@ -191,7 +191,7 @@ std::pair<glm::vec2, glm::vec2> ImageRenderer::GetCorners() {
     // Apply model matrix to vertices
     glm::vec4 transformedVertices[4];
     for (int i = 0; i < 4; ++i) {
-        glm::vec4 vertex = glm::vec4(_vertices2[i * 4], _vertices2[i * 4 + 1], 0.0f, 1.0f); // Assuming only x, y coordinates for simplicity
+        glm::vec4 vertex = glm::vec4(_vertices[i * 4], _vertices[i * 4 + 1], 0.0f, 1.0f); // Assuming only x, y coordinates for simplicity
         transformedVertices[i] = _model * vertex;
     }
 

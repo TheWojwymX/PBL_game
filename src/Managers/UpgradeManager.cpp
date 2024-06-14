@@ -139,6 +139,41 @@ UpgradeManager::UpgradeManager() {
         1.0f        // 5
     };
     ///////////////////////
+
+
+    // Initialize Turret Upgrades
+    // Minigun Upgrades
+    _minigunUpgrades.upgradeCosts = {
+        {20, 30},   // 1
+        {30, 40}    // 2
+    };
+
+    _minigunUpgrades.upgradeValues = {
+        {10.0f, 1.0f},  // 1 (damage, fire rate)
+        {15.0f, 1.5f}   // 2 (damage, fire rate)
+    };
+
+    // Sniper Upgrades
+    _sniperUpgrades.upgradeCosts = {
+        {25, 35},   // 1
+        {35, 45}    // 2
+    };
+
+    _sniperUpgrades.upgradeValues = {
+        {20.0f, 2.0f},  // 1 (damage, fire rate)
+        {30.0f, 2.5f}   // 2 (damage, fire rate)
+    };
+
+    // Rifle Upgrades
+    _rifleUpgrades.upgradeCosts = {
+        {15, 25},   // 1
+        {25, 35}    // 2
+    };
+
+    _rifleUpgrades.upgradeValues = {
+        {8.0f, 1.2f},   // 1 (damage, fire rate)
+        {12.0f, 1.7f}   // 2 (damage, fire rate)
+    };
 }
 
 bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
@@ -160,6 +195,55 @@ bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const 
     // Check for intersection
     return true;
 }
+
+void UpgradeManager::UpgradeTurret() {
+    if (TURRETSMANAGER.selectedIndex == -1) {
+        std::cout << "You are not looking at turret" << std::endl;
+        return;
+    }
+
+    auto selectedTurret = TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex];
+    TurretType turretType = selectedTurret->GetTurretType();  // Assuming you have a method to get the type
+    int upgradeLevel = selectedTurret->GetUpgradeLevel();    // Assuming you have a method to get the current upgrade level
+
+    TurretUpgrades* turretUpgrades;
+    switch (turretType) {
+    case TurretType::MINIGUN:
+        turretUpgrades = &_minigunUpgrades;
+        break;
+    case TurretType::SNIPER:
+        turretUpgrades = &_sniperUpgrades;
+        break;
+    case TurretType::RIFLE:
+        turretUpgrades = &_rifleUpgrades;
+        break;
+    default:
+        std::cout << "Unknown turret type" << std::endl;
+        return;
+    }
+
+    // Check if maximum upgrade level is reached
+    if (upgradeLevel >= turretUpgrades->upgradeCosts.size()) {
+        std::cout << "Max level reached for this turret" << std::endl;
+        return;
+    }
+
+    glm::ivec2 cost = turretUpgrades->upgradeCosts[upgradeLevel];
+
+    // Check if the player has enough resources
+    if (!GAMEMANAGER.HasMaterials(cost)) {
+        std::cout << "Not enough resources to upgrade the turret" << std::endl;
+        return;
+    }
+
+    // Deduct resources
+    GAMEMANAGER.RemoveMaterials(cost);
+
+    // Apply the upgrade
+    glm::vec2 upgradeValues = turretUpgrades->upgradeValues[upgradeLevel];
+    selectedTurret->Upgrade(upgradeValues);
+}
+
 
 bool UpgradeManager::IsDomeStationInRaycast() {
     auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
@@ -414,50 +498,6 @@ void UpgradeManager::UpgradeMiningRadius() {
 
     // Apply upgrade
     _playerRef->UpgradeMiningRadius(_miningRadiusUpgrades.upgradeValues[miningRadiusLevel]);
-}
-
-
-
-void UpgradeManager::UpgradeTurretDamage()
-{
-    if (GAMEMANAGER._metal < _turretDamageUpgradeCost) {
-        std::cout << "Brak pieniedzy na ulepszenie obrazen dzialka" << std::endl;
-        return;
-    }
-    else {
-        GAMEMANAGER._metal -= _turretDamageUpgradeCost;
-    }
-
-    if (TURRETSMANAGER.selectedIndex == -1)
-    {
-        cout << "You are not looking at turret" << endl;
-    }
-    else
-    {
-        TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_damage += 5;
-        cout << "Current turret damage: " + to_string(TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_damage) << endl;
-    }
-}
-
-void UpgradeManager::UpgradeTurretFireRate() {
-
-    if (GAMEMANAGER._metal < _turretFireRateUpgradeCost) {
-        std::cout << "Brak pieniedzy na ulepszenie szybkostrzelnosci dzialka" << std::endl;
-        return;
-    }
-    else {
-        GAMEMANAGER._metal -= _turretFireRateUpgradeCost;
-    }
-
-    if (TURRETSMANAGER.selectedIndex == -1)
-    {
-        cout << "You are not looking at turret" << endl;
-    }
-    else
-    {
-        TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_fireRate -= 0.1;
-        cout << "Current fire rate: " + to_string(TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex]->_fireRate) << endl;
-    }
 }
 
 void UpgradeManager::Update() {
