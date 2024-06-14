@@ -22,8 +22,6 @@ void PageManager::Init() {
     _pages.push_back(_turretUpgradeMenu);
     _domeUpgradeMenu->Init();
     _pages.push_back(_domeUpgradeMenu);
-    _messagePage->Init();
-    _pages.push_back(_messagePage);
     _PDAPage->Init();
     _pages.push_back(_PDAPage);
 }
@@ -38,7 +36,6 @@ void PageManager::Update() {
     _playerUpgradeMenu->Update();
     _turretUpgradeMenu->Update();
     _domeUpgradeMenu->Update();
-    _messagePage->Update();
     _PDAPage->Update();
 
     glEnable(GL_DEPTH_TEST);
@@ -65,52 +62,43 @@ void PageManager::CheckInputs() {
         if (!_isInPage) {
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
-            GAMEMANAGER.Pause();
         }
         else if(TUTORIALMANAGER._actualMessage == 8){
             CloseAllPages();
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
-            GAMEMANAGER.Pause();
         }
         else {
             _isInPage = false;
             CloseAllPages();
-            GAMEMANAGER.Unpause();
         }
         //it has to be this order because isTurretInRange won't work with index -1
     } else if (INPUT.IsKeyPressed(70) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsTurretInRaycast() && UPGRADEMANAGER.IsTurretInRange()) {
         if (!_isInPage) {
             _isInPage = true;
             _turretUpgradeMenu->_shouldRender = true;
-            GAMEMANAGER.Pause();
         }
         else if(TUTORIALMANAGER._actualMessage == 8){
             CloseAllPages();
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
-            GAMEMANAGER.Pause();
         }else {
             _isInPage = false;
             CloseAllPages();
-            GAMEMANAGER.Unpause();
         }
     } else if (INPUT.IsKeyPressed(70) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsDomeStationInRange() && UPGRADEMANAGER.IsDomeStationInRaycast()) {
         if (!_isInPage) {
             _isInPage = true;
             _domeUpgradeMenu->_shouldRender = true;
-            GAMEMANAGER.Pause();
         }
         else if(TUTORIALMANAGER._actualMessage == 8){
             CloseAllPages();
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
-            GAMEMANAGER.Pause();
         }
         else {
             _isInPage = false;
             CloseAllPages();
-            GAMEMANAGER.Unpause();
         }
     }
 
@@ -130,16 +118,4 @@ void PageManager::CloseAllOtherPages(const shared_ptr<Page> &pageException) {
             page->_shouldRender = false;
         }
     }
-}
-
-void PageManager::HideMessagePage(){
-    _isInPage = false;
-    _messagePage->_shouldRender = false;
-    //GAMEMANAGER.Unpause();
-}
-
-void PageManager::DisplayMessagePage(){
-    _isInPage = true;
-    _messagePage->_shouldRender = true;
-    //GAMEMANAGER.Pause();
 }

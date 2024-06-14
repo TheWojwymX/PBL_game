@@ -7,64 +7,41 @@ HUDMain& HUDMain::getInstance() {
     return instance;
 }
 
-glm::vec2 HUDMain::ConvertCoords(const glm::vec2& coords) {
-    float x = (coords.x / 1920.0f) * 100.0f - 50.0f;
-    float y = (1.0f - (coords.y / 1080.0f)) * 100.0f - 50.0f;
-    return glm::vec2(x, y);
-}
-
 void HUDMain::Init() {
 
     //text
     TEXTRENDERER.Init();
 
     _crosshairImage.Init("res/Images/crosshair041.png", glm::vec2(0, 0), 0, true, false);
-    _materialsBackground.Init("res/Images/HUD/materials_background.png", ConvertCoords(glm::vec2(28, 1051)), ConvertCoords(glm::vec2(314, 967)), true, false);
-    _plasticImage.Init("res/Images/HUD/plastic_icon.png", ConvertCoords(glm::vec2(44, 1039)), ConvertCoords(glm::vec2(103, 979)), true, false);
-    _metalImage.Init("res/Images/HUD/metal_icon.png", ConvertCoords(glm::vec2(179, 1039)), ConvertCoords(glm::vec2(241, 979)), true, false);
-    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", ConvertCoords(glm::vec2(1719, 949)), ConvertCoords(glm::vec2(1891, 316)), true, false);
-    _depthMeterBackground.Init("res/Images/HUD/depth0.png", ConvertCoords(glm::vec2(1662, 1051)), ConvertCoords(glm::vec2(1891, 967)), true, false);
-    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", ConvertCoords(glm::vec2(28, 234)), ConvertCoords(glm::vec2(219, 43)), true, false);
-    _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", ConvertCoords(glm::vec2(28, 234)), ConvertCoords(glm::vec2(219, 43)), true, false);
-    _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", ConvertCoords(glm::vec2(124, 139)), 90, true, true);
-    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", ConvertCoords(glm::vec2(124, 139)), 90, true, true);
+    _materialsBackground.Init("res/Images/HUD/materials_background.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(314, 967)), true, false);
+    _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(44, 1039)), CoordsConverter::ConvertCoords(glm::vec2(103, 979)), true, false);
+    _metalImage.Init("res/Images/HUD/metal_icon.png", CoordsConverter::ConvertCoords(glm::vec2(179, 1039)), CoordsConverter::ConvertCoords(glm::vec2(241, 979)), true, false);
+    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", CoordsConverter::ConvertCoords(glm::vec2(1719, 949)), CoordsConverter::ConvertCoords(glm::vec2(1891, 316)), true, false);
+    _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
+    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
+    _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
+    _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
+    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
+
+    _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(343, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
 
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/Border/bar_" + std::to_string(5*i) + ".png";
-        hp->Init(path.c_str(), ConvertCoords(glm::vec2(1689, 240)), ConvertCoords(glm::vec2(1891, 37)), true, false);
+        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1689, 240)), CoordsConverter::ConvertCoords(glm::vec2(1891, 37)), true, false);
         _baseHPImages.push_back(hp);
     }
 
     for(int i = 0; i <= 3; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/InsideImages/inside" + std::to_string(i) + ".png";
-        hp->Init(path.c_str(), ConvertCoords(glm::vec2(1711, 217)), ConvertCoords(glm::vec2(1869, 59)), true, false);
+        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1711, 217)), CoordsConverter::ConvertCoords(glm::vec2(1869, 59)), true, false);
         _baseInsideImages.push_back(hp);
     }
 
     _playerNode = NODESMANAGER.getNodeByName("player");
 }
-
-glm::vec3 HUDMain::interpolateColor(float percentFuel) {
-    glm::vec3 color;
-
-    percentFuel = glm::clamp(percentFuel, 0.0f, 100.0f);
-
-    if (percentFuel <= 50.0f) {
-        color.r = 1.0f;
-        color.g = percentFuel / 50.0f;
-        color.b = 0.0f;
-    } else {
-        color.r = (100.0f - percentFuel) / 50.0f;
-        color.g = 1.0f;
-        color.b = 0.0f;
-    }
-
-    return color;
-}
-
 
 void HUDMain::Update() {
 
@@ -90,7 +67,7 @@ void HUDMain::Update() {
     float percentHP = actualDomeHP / maxHP * 100;
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
-    if(_shouldShowHP){
+    if(_shouldShowHP && _isAfterTutorialHP){
         if(percentHP <= 0){
             _baseInsideImages[3]->Render();
         }
@@ -113,17 +90,22 @@ void HUDMain::Update() {
             _baseHPImages[index + 1]->Render();
         }
     }
-    if(_shouldShowCrosshair){
+    if(_shouldShowCrosshair && _isAfterTutorialCrosshair){
         _crosshairImage.Render();
     }
 
+    if(_isTutorialNeededAtMoment && _shouldShowTutorial){
+        _tutorialBackground.Render();
+        TEXTRENDERER.RenderTextCentered(_actualText, 0.0f, -0.865, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f));
+    }
+
     //materials
-    if(_shouldShowMaterials){
+    if(_shouldShowMaterials && _isAfterTutorialMaterials){
         _materialsBackground.Render();
         _plasticImage.Render();
         _metalImage.Render();
-        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.8833333, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
-        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.7395833, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.8833333, -0.879, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.7395833, -0.879, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
     /*
@@ -134,19 +116,19 @@ void HUDMain::Update() {
     float y = (percentFuel - 0.0f) * (rightTopCorner.y - (leftDownCorner.y)) / (100.0f - 0.0f) + (leftDownCorner.y);
     */
 
-    if(_shouldShowFuel){
+    if(_shouldShowFuel && _isAfterTutorialFuel){
         _jetpackEmpty.Render();
     }
 
 
     //depthMeter
-    if(_shouldShowDepth){
+    if(_shouldShowDepth && _isAfterTutorialDepth){
         _depthMeterBackground.Render();
-        TEXTRENDERER.RenderText(to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.82, -0.8833333, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.82, -0.8833333, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
     //timer
-    if(_shouldShowPhaseInfo){
+    if(_shouldShowPhaseInfo && _isAfterTutorialPhaseInfo){
         WaveTimerGUIManager();
 
         //TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -191,4 +173,42 @@ void HUDMain::WaveTimerGUIManager() {
             _clockTimer = 0;
         }
     }
+}
+
+void HUDMain::DisableHUD() {
+    _shouldShowCrosshair = false;
+    _shouldShowHP = false;
+    _shouldShowFuel = false;
+    _shouldShowMaterials = false;
+    _shouldShowDepth = false;
+    _shouldShowPhaseInfo = false;
+    _shouldShowTutorial = false;
+}
+
+void HUDMain::EnableHUD() {
+    if (_isAfterTutorialCrosshair) {
+        _shouldShowCrosshair = true;
+    }
+
+    if (_isAfterTutorialHP) {
+        _shouldShowHP = true;
+    }
+
+    if (_isAfterTutorialFuel) {
+        _shouldShowFuel = true;
+    }
+
+    if (_isAfterTutorialMaterials) {
+        _shouldShowMaterials = true;
+    }
+
+    if (_isAfterTutorialDepth) {
+        _shouldShowDepth = true;
+    }
+
+    if (_isAfterTutorialPhaseInfo) {
+        _shouldShowPhaseInfo = true;
+    }
+
+    _shouldShowTutorial = true;
 }

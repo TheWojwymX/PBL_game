@@ -40,7 +40,6 @@ public:
     std::shared_ptr<TurretUpgradeMenu> _turretUpgradeMenu = std::make_shared<TurretUpgradeMenu>();
     std::shared_ptr<DomeUpgradeMenu> _domeUpgradeMenu = std::make_shared<DomeUpgradeMenu>();
 
-    std::shared_ptr<MessagePage> _messagePage = std::make_shared<MessagePage>();
     std::shared_ptr<PDAPage> _PDAPage = std::make_shared<PDAPage>();
 
     void CheckInputs();
@@ -48,10 +47,6 @@ public:
     void CloseAllOtherPages(const shared_ptr<Page>& pageException);
 
     void CloseAllPages();
-
-    void DisplayMessagePage();
-
-    void HideMessagePage();
 };
 
 

@@ -18,8 +18,6 @@ public:
     TutorialManager(const TutorialManager &) = delete;
     TutorialManager &operator=(const TutorialManager &) = delete;
 
-    shared_ptr<MessagePage> _dialogPage;
-
     void Init();
     void Update();
 
@@ -93,6 +91,8 @@ public:
     bool _isFreePlay = false;
 
     void SkipTutorial();
+
+    void ControllHud(bool crosshair, bool materials, bool hp, bool fuel, bool phase, bool depth);
 };
 
 

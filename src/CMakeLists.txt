@@ -113,7 +113,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/WeatherManager.h 
 	Managers/WeatherManager.cpp 
 	Framebuffer.h 
-	Framebuffer.cpp)
+	Framebuffer.cpp
+		HUD/CoordsConverter.cpp
+		HUD/CoordsConverter.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
