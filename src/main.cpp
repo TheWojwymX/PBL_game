@@ -276,7 +276,6 @@ int main(int, char**)
 
             // Update
             GAMEMANAGER.root->Update();
-            GAMEMANAGER.Update();
 
 /*        if(TIME.GetTime() > 10 && TIME.GetTime() < 11){
             std::cout << "minal czas";

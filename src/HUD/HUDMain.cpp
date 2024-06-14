@@ -26,8 +26,8 @@ void HUDMain::Init() {
     _depthMeterBackground.Init("res/Images/HUD/depth0.png", ConvertCoords(glm::vec2(1662, 1051)), ConvertCoords(glm::vec2(1891, 967)), true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", ConvertCoords(glm::vec2(28, 234)), ConvertCoords(glm::vec2(219, 43)), true, false);
     _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", ConvertCoords(glm::vec2(28, 234)), ConvertCoords(glm::vec2(219, 43)), true, false);
-    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", ConvertCoords(glm::vec2(124, 139)),0,true, true);
-    _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", ConvertCoords(glm::vec2(124, 139)),0,true, true);
+    _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", ConvertCoords(glm::vec2(124, 139)), 90, true, true);
+    _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
     for(int i = 0; i <= 20; i++){
@@ -149,16 +149,14 @@ void HUDMain::Update() {
     if(_shouldShowPhaseInfo){
         WaveTimerGUIManager();
 
-        TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-        TEXTRENDERER.RenderText("Actual phase: " + GAMEMANAGER.currentPhase, -0.97f, 0.75f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        //TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 }
 
-void HUDMain::WaveTimerGUIManager(){
-
+void HUDMain::WaveTimerGUIManager() {
     auto phaseTime = GAMEMANAGER.phaseTime;
     auto currentTime = GAMEMANAGER.currentTime;
     auto currentPhase = GAMEMANAGER.currentPhase;
@@ -166,17 +164,31 @@ void HUDMain::WaveTimerGUIManager(){
     if (phaseTime == 0) {
         phaseTime = 0.001;
     }
+
     float proportion = currentTime / phaseTime;
     float degrees = -((proportion * 360.0f) - 90.0f);
 
-    if(currentPhase == 0){
+    degrees = round(degrees);
+
+    if (currentPhase == 0) {
         _waveTimerGreen.Render();
-        _waveArrowRed.Render();
-        _waveArrowRed.SetRotationAngle(degrees);
-    }
-    else if(currentPhase == 1){
-        _waveTimerRed.Render();
         _waveArrowGreen.Render();
-        _waveArrowGreen.SetRotationAngle(degrees);
+        if (_clockTimer < _clockInterval) {
+            _clockTimer += TIME.GetDeltaTime();
+        } else {
+            _waveArrowGreen.SetRotationAngle(degrees);
+            _waveArrowRed.SetRotationAngle(degrees);
+            _clockTimer = 0;
+        }
+    } else if (currentPhase == 1) {
+        _waveTimerRed.Render();
+        _waveArrowRed.Render();
+        if (_clockTimer < _clockInterval) {
+            _clockTimer += TIME.GetDeltaTime();
+        } else {
+            _waveArrowRed.SetRotationAngle(degrees);
+            _waveArrowGreen.SetRotationAngle(degrees);
+            _clockTimer = 0;
+        }
     }
 }

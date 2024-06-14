@@ -37,8 +37,8 @@ public:
 
     ImageRenderer _waveTimerGreen;
     ImageRenderer _waveTimerRed;
-    ImageRenderer _waveArrowGreen;
     ImageRenderer _waveArrowRed;
+    ImageRenderer _waveArrowGreen;
 
     ImageRenderer _depthMeterBackground;
 
@@ -67,4 +67,7 @@ public:
     static glm::vec2 ConvertCoords(const glm::vec2 &coords);
 
     void WaveTimerGUIManager();
+
+    float _clockTimer = 0.0f;
+    float _clockInterval = 0.5f;
 };
