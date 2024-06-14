@@ -66,11 +66,11 @@ void Turret::Update() {
                     break;
 
                 case SNIPER:
-                    model = RESOURCEMANAGER.GetModelByName("Turret_Bazooka_Level1");
+                    model = RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level1");
                     break;
 
                 case RIFLE:
-                    model = RESOURCEMANAGER.GetModelByName("Turret_Standard_Level1");
+                    model = RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level1");
                     break;
             }
 

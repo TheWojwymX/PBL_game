@@ -325,11 +325,11 @@ void TurretsManager::UpdateBlueprintTurret() {
             break;
 
         case SNIPER:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Bazooka_Level1");
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level1");
             break;
 
         case RIFLE:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Standard_Level1");
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level1");
             break;
     }
 

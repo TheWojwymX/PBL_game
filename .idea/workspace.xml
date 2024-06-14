@@ -33,12 +33,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/WaveTimer/strzalka_czerwona.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Images/WaveTimer/strzalka_czerwona.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/WaveTimer/strzalka_zielona.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Images/WaveTimer/strzalka_zielona.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Bazooka/Level1/bazooka_soldier_LVL1_2.0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/Level1/machinegun_soldier_LVL1_2.0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
