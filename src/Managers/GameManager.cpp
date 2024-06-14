@@ -79,13 +79,34 @@ void GameManager::InitPhase()
 
 
 void GameManager::Init() {
-    if(_isFullscreen){
+    if (_isFullscreen) {
         _screenWidth = 1920;
         _screenHeight = 1080;
         _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", glfwGetPrimaryMonitor(), NULL);
-    }else{
+    }
+    else {
         _window = glfwCreateWindow(_screenWidth, _screenHeight, "SandBOX", NULL, NULL);
     }
+
+    if (!_window) {
+        std::cerr << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return;
+    }
+
+    // Make the OpenGL context current for the new window
+    glfwMakeContextCurrent(_window);
+
+    // Retrieve the actual dimensions of the framebuffer
+    int actualWidth, actualHeight;
+    glfwGetFramebufferSize(_window, &actualWidth, &actualHeight);
+
+    // Update _screenWidth and _screenHeight with the actual dimensions
+    _screenWidth = actualWidth;
+    _screenHeight = actualHeight;
+
+    // For debugging purposes
+    std::cout << "Actual framebuffer size: " << actualWidth << "x" << actualHeight << std::endl;
 }
 
 void GameManager::EnableMouse() {
