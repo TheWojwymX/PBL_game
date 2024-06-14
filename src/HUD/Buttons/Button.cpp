@@ -6,12 +6,29 @@ Button::Button(const char* backgroundImagePath, const char* hoverBackgroundImage
     _hoverBackgroundImagePath(hoverBackgroundImagePath),
     _clickedBackgroundImagePath(clickedBackgroundImagePath),
     _position(position),
+    _usePosition(true), // Use position
+    _onClickFunction(onClickFunction) {}
+
+Button::Button(const char* backgroundImagePath, const char* hoverBackgroundImagePath, const char* clickedBackgroundImagePath,
+    glm::vec2 downLeftCorner, glm::vec2 topRightCorner, std::function<void()> onClickFunction)
+    : _backgroundImagePath(backgroundImagePath),
+    _hoverBackgroundImagePath(hoverBackgroundImagePath),
+    _clickedBackgroundImagePath(clickedBackgroundImagePath),
+    _corners(downLeftCorner, topRightCorner),
+    _usePosition(false), // Use corners
     _onClickFunction(onClickFunction) {}
 
 void Button::Init() {
-    _backgroundImage.Init(_backgroundImagePath, _position, 0, true, false);
-    _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _position, 0, true, false);
-    _clickedBackgroundImage.Init(_clickedBackgroundImagePath, _position, 0, true, false);
+    if (_usePosition) {
+        _backgroundImage.Init(_backgroundImagePath, _position, 0, true, false);
+        _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _position, 0, true, false);
+        _clickedBackgroundImage.Init(_clickedBackgroundImagePath, _position, 0, true, false);
+    }
+    else {
+        _backgroundImage.Init(_backgroundImagePath, _corners.first, _corners.second, true, false);
+        _hoverBackgroundImage.Init(_hoverBackgroundImagePath, _corners.first, _corners.second, true, false);
+        _clickedBackgroundImage.Init(_clickedBackgroundImagePath, _corners.first, _corners.second, true, false);
+    }
 
     TEXTRENDERER.Init();
 
@@ -41,19 +58,21 @@ void Button::CheckClick() {
 }
 
 bool Button::CheckHover() {
-    auto corners = _backgroundImage.GetCorners();
-    glm::vec2 downLeftCorner = corners.first;
-    glm::vec2 topRightCorner = corners.second;
-
     glm::vec2 mousePos = INPUT.GetMouseFixedPos();
+    glm::vec2 downLeftCorner, topRightCorner;
 
-    if (mousePos.x > downLeftCorner.x && mousePos.x < topRightCorner.x &&
-        mousePos.y > downLeftCorner.y && mousePos.y < topRightCorner.y) {
-        return true;
+    if (_usePosition) {
+        auto corners = _backgroundImage.GetCorners();
+        downLeftCorner = corners.first;
+        topRightCorner = corners.second;
     }
     else {
-        return false;
+        downLeftCorner = _corners.first;
+        topRightCorner = _corners.second;
     }
+
+    return mousePos.x > downLeftCorner.x && mousePos.x < topRightCorner.x &&
+        mousePos.y > downLeftCorner.y && mousePos.y < topRightCorner.y;
 }
 
 void Button::AppareanceManager() {
@@ -112,4 +131,10 @@ void Button::SetClickedImagePath(const char* path) {
 
 void Button::SetButtonPosition(glm::vec2 position) {
     _position = position;
+    _usePosition = true; 
+}
+
+void Button::SetCorners(glm::vec2 downLeftCorner, glm::vec2 topRightCorner) {
+    _corners = std::make_pair(downLeftCorner, topRightCorner);
+    _usePosition = false; 
 }

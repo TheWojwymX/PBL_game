@@ -23,6 +23,7 @@ public:
     void Render();
 
     void AddRotation(float value);
+
     glm::vec2 CalculateCenter();
     std::pair<glm::vec2, glm::vec2> GetCorners();
 private:

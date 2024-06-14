@@ -155,14 +155,11 @@ void ImageRenderer::SetupBuffers(bool isDynamic) {
     glEnableVertexAttribArray(1);
 }
 
-
-
 void ImageRenderer::AddRotation(float value)
 {
     _rotationAngle += value;
     UpdateModel();
 }
-
 
 glm::vec2 ImageRenderer::CalculateCenter() {
     // Define vertices in NDC after transformation by _model

@@ -7,8 +7,13 @@
 
 class Button {
 public:
+    // Constructor using position
     Button(const char* backgroundImagePath, const char* hoverBackgroundImagePath, const char* clickedBackgroundImagePath,
         glm::vec2 position, std::function<void()> onClickFunction);
+
+    // Constructor using corners
+    Button(const char* backgroundImagePath, const char* hoverBackgroundImagePath, const char* clickedBackgroundImagePath,
+        glm::vec2 downLeftCorner, glm::vec2 topRightCorner, std::function<void()> onClickFunction);
 
     void Init();
     void Update();
@@ -21,6 +26,7 @@ public:
     void SetClickedImagePath(const char* path);
 
     void SetButtonPosition(glm::vec2 position);
+    void SetCorners(glm::vec2 downLeftCorner, glm::vec2 topRightCorner);
     void SetText(std::string text, float textSize);
 
 protected:
@@ -32,6 +38,9 @@ protected:
 
 private:
     glm::vec2 _position;
+    std::pair<glm::vec2, glm::vec2> _corners;
+    bool _usePosition;
+
     const char* _backgroundImagePath;
     const char* _hoverBackgroundImagePath;
     const char* _clickedBackgroundImagePath;
