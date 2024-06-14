@@ -181,7 +181,7 @@ void TurretsManager::SpawnTurret(turretType type) {
     shared_ptr<Node> flare = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfFlare);
 
     auto newFlareMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    newFlareMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("ShovelModel");
+    newFlareMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("flareModel");
     newFlareMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     newFlareMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     newFlareMeshRenderer->Initiate();

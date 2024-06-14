@@ -138,7 +138,7 @@ void main() {
             }
             else{
             if (p.Life > particleLife / 3) {
-                    p.Scale = mix(1.2f, particleScale, lifeRatio);
+                    p.Scale = mix(1.7f, particleScale, lifeRatio);
                 } else {
                     p.Scale = mix(particleScale, 2.2, lifeRatio);
                 }

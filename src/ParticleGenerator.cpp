@@ -353,10 +353,10 @@ void ParticleGenerator::initiateParticleType() {
         spawnDelay = 0.2f;
         speedVariation = 0.2f;
         XZvariation = 0.4f;
-        particleLife = 10.0f;
-        particleColor = glm::vec4(1.0f,0.293f,0.376f,1.0f);
-        initialUpwardBoost = 0.04f;
-        particleScale = 0.1f;
+        particleLife = 8.0f;
+        particleColor = glm::vec4(1.0f,0.123f,0.226f,1.0f);
+        initialUpwardBoost = 0.50f;
+        particleScale = 0.05f;
         gravity = glm::vec3(0.0f, 0.0f, 0.0f);
         onlyForward = false;
         casing = false;
@@ -426,11 +426,11 @@ void ParticleGenerator::initiateParticleType() {
     else if (particleType == "rainParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 1000;
-        newParticles = 10;
+        newParticles = 1;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
-        XZvariation = 100.4f;
-        particleLife = 10.0f;
+        XZvariation = 30.4f;
+        particleLife = 15.0f;
         particleColor = glm::vec4(0.682f,0.651f,0.882f,1.0f);
         initialUpwardBoost = 0.04f;
         particleScale = 0.20f;
@@ -441,7 +441,7 @@ void ParticleGenerator::initiateParticleType() {
     else if (particleType == "rainParticlesFull"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 5000;
-        newParticles = 100;
+        newParticles = 1;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;

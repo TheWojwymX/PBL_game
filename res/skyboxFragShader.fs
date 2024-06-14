@@ -25,7 +25,7 @@ void main()
         bool isRedTexture = (color.r > 0.5 && color.g < 0.7 && color.b < 0.5);
 
         // Simulate lighting effect by using a simple dot product
-        float diff = isRedTexture ? max(dotProduct, 1.0) : max(dotProduct, 0.6);
+        float diff = isRedTexture ? max(dotProduct, 0.8) : max(dotProduct, 0.6);
 
         // Calculate weighting factor based on the blue component
         float blueWeight = color.b;

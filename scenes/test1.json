@@ -359,6 +359,11 @@
         "ModelName": "PDAAntennaModel",
         "Path": "../../res/Models/PDA/antena/krotkofalowka_v2-0.obj"
       }
+    ,
+      {
+        "ModelName": "flareModel",
+        "Path": "../../res/Models/Flare/flara_pomniejszona.obj"
+      }
     ],
     "Shaders": [
       {
