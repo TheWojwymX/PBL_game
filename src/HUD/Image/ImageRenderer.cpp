@@ -187,6 +187,8 @@ void ImageRenderer::UpdateImage(std::array<float, 32>* vertices, glm::vec3 addit
 
 void ImageRenderer::Render()
 {
+    if (!_shouldRender) return;
+
     // Activate the shader program
     _shader->use();
 
