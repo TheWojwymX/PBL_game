@@ -122,8 +122,8 @@ void HUDMain::Update() {
         _materialsBackground.Render();
         _plasticImage.Render();
         _metalImage.Render();
-        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.8833333, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
-        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.7395833, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.8833333, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.7395833, -0.8888889, 0.35f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
     /*

@@ -7,7 +7,7 @@
 class GameManager {
 
 public:
-    bool _isFullscreen = false;
+    bool _isFullscreen = true;
 
     int _screenWidth = 1920;
     int _screenHeight = 1080;

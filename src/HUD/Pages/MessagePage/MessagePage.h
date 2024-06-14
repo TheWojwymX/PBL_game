@@ -5,12 +5,13 @@
 
 class MessagePage : public Page  {
 public:
-    const char *_generalImagePath = "res/Images/placeholderGeneral.png";
-    ImageRenderer _generalImage;
+    const char *_backgroundImagePath = "res/Images/HUD/tutorial_window.png";
+    ImageRenderer _backgroundImage;
 
     void Init() override;
 
     void Update() override;
     string _actualText = "default";
 
+    glm::vec2 ConvertCoords(const glm::vec2 &coords);
 };
