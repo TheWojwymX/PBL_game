@@ -2,7 +2,10 @@
 
 #include "GameManager.h"
 #include "../Enemies/EnemiesManager.h"
+#include "../HUD/PageManager.h"
 #include "../Managers/TutorialManager.h"
+
+
 GameManager &GameManager::GetInstance() {
     static GameManager instance;
     return instance;
@@ -97,10 +100,14 @@ void GameManager::DisableMouse() {
 
 void GameManager::Pause() {
     _paused = true;
+    PAGEMANAGER._pauseMenuPage->_shouldRender = true;
+    HUD.DisableHUD();
     EnableMouse();
 }
 
 void GameManager::Unpause() {
     _paused = false;
+    PAGEMANAGER._pauseMenuPage->_shouldRender = false;
+    HUD.EnableHUD();
     DisableMouse();
 }

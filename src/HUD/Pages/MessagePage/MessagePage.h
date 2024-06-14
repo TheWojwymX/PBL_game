@@ -12,6 +12,4 @@ public:
 
     void Update() override;
     string _actualText = "default";
-
-    glm::vec2 ConvertCoords(const glm::vec2 &coords);
 };

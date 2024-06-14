@@ -7,6 +7,7 @@
 #include "Managers/DomeManager.h"
 #include "Managers/GameManager.h"
 #include <GLFW/glfw3.h>
+#include "CoordsConverter.h"
 
 class HUDMain {
 
@@ -52,8 +53,6 @@ public:
 
     shared_ptr<Node> _playerNode;
 
-    glm::vec3 interpolateColor(float percentFuel);
-
     bool _shouldShowCrosshair = false;
     bool _shouldShowHP = false;
     bool _shouldShowFuel = false;
@@ -61,13 +60,29 @@ public:
     bool _shouldShowDepth = false;
     bool _shouldShowPhaseInfo = false;
 
-    ImageRenderer testowy;
-    bool czyWyswietlacTestowy = false;
+    bool _isAfterTutorialCrosshair = false;
+    bool _isAfterTutorialHP = false;
+    bool _isAfterTutorialFuel = false;
+    bool _isAfterTutorialMaterials = false;
+    bool _isAfterTutorialDepth = false;
+    bool _isAfterTutorialPhaseInfo = false;
 
-    static glm::vec2 ConvertCoords(const glm::vec2 &coords);
+
+    ImageRenderer testowy;
+    ImageRenderer _tutorialBackground;
+    bool _isTutorialNeededAtMoment = false;
+    bool _shouldShowTutorial = false;
+    string _actualText;
+
+    bool czyWyswietlacTestowy = false;
 
     void WaveTimerGUIManager();
 
     float _clockTimer = 0.0f;
     float _clockInterval = 0.5f;
+
+    void DisableHUD();
+    void EnableHUD();
+
+
 };

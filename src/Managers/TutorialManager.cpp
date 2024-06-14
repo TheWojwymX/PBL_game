@@ -13,30 +13,30 @@ TutorialManager &TutorialManager::getInstance() {
 }
 
 void TutorialManager::Init() {
-    _dialogPage = PAGEMANAGER._messagePage;
     _player = NODESMANAGER.getNodeByName("player");
     _paratrooper = NODESMANAGER.getNodeByName("Paratrooper");
     _paratrooper->GetComponent<MeshRenderer>()->_disableModel = true;
     NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
             ENEMIESMANAGER._spawnersPositions[0][0], 320, ENEMIESMANAGER._spawnersPositions[0][1]));
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
+    HUD._actualText = _messages[_actualMessage];
 }
 
 void TutorialManager::Update() {
-
     //std::cout << "tutorial skonczony: " << _isTutorialEnded << "   aktualna wiadomosc: " << _actualMessage << std::endl;
 
     if(_isTutorialEnded) return;
     switch (_actualMessage) {
         //konczy sie po wyladowaniu
         case 0:
+            ControllHud(0,0,0,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
             if(_player->GetComponent<PlayerController>()->_isGrounded){
                DisplayAndChangeMessage();
                _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
                NODESMANAGER.getNodeByName("root")->removeChild(_paratrooper);
-                HUD._shouldShowMaterials = true;
                 HUD._shouldShowCrosshair = true;
+                HUD._shouldShowMaterials = true;
             }
             else{
                 if(!GAMEMANAGER._paused) {
@@ -58,6 +58,7 @@ void TutorialManager::Update() {
 
         //konczy sie po przejsciu do wyboru pozycji
         case 1:
+            ControllHud(1,1,0,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
 
             if(TURRETSMANAGER._isInBlueprintMode){
@@ -67,9 +68,10 @@ void TutorialManager::Update() {
 
         //konczy sie po pokonaniu mrowki
         case 2:
+            ControllHud(1,1,0,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
-            if(!TURRETSMANAGER._isInBlueprintMode && PAGEMANAGER._isInPage){
-                PAGEMANAGER.HideMessagePage();
+            if(!TURRETSMANAGER._isInBlueprintMode && HUD._isTutorialNeededAtMoment == true){
+                HUD._isTutorialNeededAtMoment = false;
             }
 
             else if(ENEMIESMANAGER._enemies[0] == nullptr){
@@ -83,9 +85,10 @@ void TutorialManager::Update() {
 
         //konczy sie po pokonaniu drugiej mrowki
         case 3:
+            ControllHud(1,1,1,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
-            if(TURRETSMANAGER._isPlayerInMovingMode) {
-                PAGEMANAGER.CloseAllPages();
+            if(TURRETSMANAGER._isPlayerInMovingMode && HUD._isTutorialNeededAtMoment) {
+                HUD._isTutorialNeededAtMoment = false;
             }
             else if(ENEMIESMANAGER._enemies[1] == nullptr){
                 DisplayAndChangeMessage();
@@ -95,6 +98,7 @@ void TutorialManager::Update() {
 
         //konczy sie po dojsciu do podziemii
         case 4:
+            ControllHud(1,1,1,0,0,0);
             if(_player->GetTransform()->GetPosition().y <= 288.5){
                 DisplayAndChangeMessage();
             }
@@ -102,6 +106,7 @@ void TutorialManager::Update() {
 
         //Konczy sie po rzuceniu flary
         case 5:
+            ControllHud(1,1,1,0,0,0);
             if(_player->GetTransform()->GetPosition().y <= 288.5 && INPUT.GetMouseButtonDown(1)){
                 DisplayAndChangeMessage();
             }
@@ -112,6 +117,7 @@ void TutorialManager::Update() {
 
         //Konczy sie po wykopaniu materialow
         case 6:
+            ControllHud(1,1,1,0,0,0);
             if(GAMEMANAGER._metal >= 1 && GAMEMANAGER._plastic >= 1){
                 DisplayAndChangeMessage();
                 HUD._shouldShowFuel = true;
@@ -123,8 +129,9 @@ void TutorialManager::Update() {
 
         //konczy sie po wyleceniu na powierzchnie
         case 7:
+            ControllHud(1,1,1,1,0,0);
             if(_player->GetComponent<PlayerController>()->_isUsingJetpack){
-                PAGEMANAGER.CloseAllPages();
+                HUD._isTutorialNeededAtMoment = false;
             }
             else if(_player->GetTransform()->GetPosition().y >= 299.5 && _player->GetComponent<PlayerController>()->_isGrounded){
                 DisplayAndChangeMessage();
@@ -138,6 +145,7 @@ void TutorialManager::Update() {
 
         //konczy sie jak wejdzie w interakcje ze stolem
         case 8:
+            ControllHud(1,1,1,1,0,0);
             if(PAGEMANAGER._domeUpgradeMenu->_shouldRender || PAGEMANAGER._playerUpgradeMenu->_shouldRender){
                 DisplayAndChangeMessage();
             }
@@ -150,6 +158,7 @@ void TutorialManager::Update() {
 
         //konczy sie jak wyjdzie ze stolu
         case 9:
+            ControllHud(1,1,1,1,0,0);
             if(PAGEMANAGER._isInPage == false){
                 DisplayAndChangeMessage();
                 HUD._shouldShowPhaseInfo = true;
@@ -163,10 +172,11 @@ void TutorialManager::Update() {
 
         //konczy sie jak wejdzie na poziom -30
         case 10:
+            ControllHud(1,1,1,1,1,0);
             if(_timer < 5){
                 _timer += TIME.GetDeltaTime();
             }else{
-                PAGEMANAGER.CloseAllPages();
+                HUD._isTutorialNeededAtMoment = false;
                 _timer = 0;
                 _isFreePlay = true;
                 if(_player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 30){
@@ -178,11 +188,12 @@ void TutorialManager::Update() {
 
         //konczy sie po 5 sekundach
         case 11:
+            ControllHud(1,1,1,1,1,1);
             if(_timer < 5){
                 _timer += TIME.GetDeltaTime();
             }else{
                 _timer = 0;
-                PAGEMANAGER.CloseAllPages();
+                HUD._isTutorialNeededAtMoment = false;
                 _isTutorialEnded = true;
             }
             break;
@@ -197,14 +208,17 @@ void TutorialManager::SkipTutorial() {
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
     _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
 
-    PAGEMANAGER.HideMessagePage();
+    HUD._isTutorialNeededAtMoment = false;
 
-    HUD._shouldShowCrosshair = true;
-    HUD._shouldShowHP = true;
-    HUD._shouldShowFuel = true;
-    HUD._shouldShowMaterials = true;
-    HUD._shouldShowDepth = true;
-    HUD._shouldShowPhaseInfo = true;
+    HUD._isAfterTutorialCrosshair = true;
+    HUD._isAfterTutorialHP = true;
+    HUD._isAfterTutorialFuel = true;
+    HUD._isAfterTutorialMaterials = true;
+    HUD._isAfterTutorialDepth = true;
+    HUD._isAfterTutorialPhaseInfo = true;
+
+
+    HUD.EnableHUD();
 }
 
 void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){
@@ -218,8 +232,9 @@ void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){
 }
 
 void TutorialManager::DisplayAndChangeMessage() {
-    _dialogPage->_actualText = _messages[_actualMessage];
-    PAGEMANAGER.DisplayMessagePage();
+    HUD._isTutorialNeededAtMoment = true;
+    HUD._shouldShowTutorial = true;
+    HUD._actualText = _messages[_actualMessage];
 
     //after all prepare next message
     if(_actualMessage < _messages.size() - 1){
@@ -228,13 +243,13 @@ void TutorialManager::DisplayAndChangeMessage() {
     else{
         _actualMessage = 11;
     }
-
     _isAfterWarning = false;
 }
 
 void TutorialManager::DisplaySpecialMessage(string message) {
-    _dialogPage->_actualText = message;
-    PAGEMANAGER.DisplayMessagePage();
+    HUD._actualText = message;
+    HUD._isTutorialNeededAtMoment = true;
+    HUD._shouldShowTutorial = true;
 }
 
 bool TutorialManager::WarningSystem(int messageNumber) {
@@ -251,4 +266,13 @@ bool TutorialManager::WarningSystem(int messageNumber) {
     }
 
     return false;
+}
+
+void TutorialManager::ControllHud(bool crosshair, bool materials, bool hp, bool fuel, bool phase, bool depth){
+    HUD._isAfterTutorialMaterials = materials;
+    HUD._isAfterTutorialCrosshair = crosshair;
+    HUD._isAfterTutorialHP = hp;
+    HUD._isAfterTutorialFuel = fuel;
+    HUD._isAfterTutorialDepth = depth;
+    HUD._isAfterTutorialPhaseInfo = phase;
 }

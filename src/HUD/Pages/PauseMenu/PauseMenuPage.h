@@ -1,6 +1,9 @@
 #pragma once
 
 #include "HUD/Pages/Page.h"
+#include "../../CoordsConverter.h"
+#include "HUD/Buttons/Button.h"
+#include "HUD/CoordsConverter.h"
 
 class PauseMenuPage : public Page {
 
@@ -8,10 +11,13 @@ public:
     const char* _backgroundImagePath = "res/Images/pauseBackground.png";
 
     ImageRenderer _logo;
-    const char* _logoImagePath = "res/Images/logo.png";
+
+    std::shared_ptr<Button> _resumeButton;
+    std::shared_ptr<Button> _settingsButton;
+    std::shared_ptr<Button> _quitButton;
 
     void Init() override;
-
+    void SetupButtons();
     void Update() override;
 };
 
