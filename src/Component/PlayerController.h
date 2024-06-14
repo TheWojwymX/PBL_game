@@ -13,9 +13,8 @@ public:
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    PlayerController(float speed = 8.0f, float gravity = 0.0f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 10.0f, int radius = 2, float width = 0.5f, float height = 1.8f, float digPower = 0.25f);
+    PlayerController(float speed = 8.0f, float gravity = 0.0f, float jumpHeight = 3.0f, float groundLevel = 0.5f, float reach = 7.5f, int radius = 2, float width = 0.5f, float height = 1.8f, float digPower = 0.25f);
     void Initiate() override;
-
 
     void Init() override;
     void Input() override;
@@ -39,6 +38,18 @@ public:
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
 
     void GetFuelForMaterials();
+
+    //Getters for upgrades
+    char GetJetpackCapacityLevel() { return _jetpackCapacityLevel; }
+    char GetMiningSpeedLevel() { return _miningSpeedLevel; }
+    char GetMiningReachLevel() { return _miningReachLevel; }
+    char GetMiningRadiusLevel() { return _miningRadiusLevel; }
+
+    //Upgrades
+    void UpgradeJetpackCapacity(float value) { _maxJetpackFuel += value; _jetpackCapacityLevel++; }
+    void UpgradeMiningSpeed(float value) {_digPower += value;_miningSpeedLevel++;}
+    void UpgradeMiningReach(float value) { _reach += value; _miningReachLevel++; }
+    void UpgradeMiningRadius(int value) { _radius += value; _miningRadiusLevel++; }
 
     float _jetpackFuel = 0.0f;
     float _maxJetpackFuel = 100.0f;
@@ -69,6 +80,10 @@ private:
     int _blockManagerRefID;
     float _interactionCooldown;
     float _timeSinceLastInteraction;
+    char _jetpackCapacityLevel;
+    char _miningSpeedLevel;
+    char _miningReachLevel;
+    char _miningRadiusLevel;
 
     void CheckGrounded(glm::vec3 separationVector);
     void HandleMovement();
@@ -84,7 +99,7 @@ private:
     int _reachUpgradeCost = 10;
     int _speedUpgradeCost = 10;
 
-    float _jetpackStrength = 35.0f;
+    float _jetpackStrength = 30.0f;
     float _jetpackFuelConsumption = 10.0f; // Fuel consumed per second when using the jetpack
     float _jetpackFuelRecovery = 0.0f;     // Fuel recovered per second when not using the jetpack
 

@@ -21,7 +21,8 @@ public:
     char GetDomeHPLevel() { return _domeHPLevel; }
     char GetDomeHPRegenLevel() { return _domeHPRegenLevel; }
     void UpgradeDomeHP(float value) { _maxHP += value; _hp += static_cast<int>(value); _domeHPLevel++; }
-    void UpgradeDomeHPRegen(float value) { _maxHP += value; _domeHPRegenLevel++; }
+    void UpgradeDomeHPRegen(float value) { _regenRate += value; _domeHPRegenLevel++; }
+    void RepairDomeHP(float value);
 
 private:
     char _domeHPLevel;

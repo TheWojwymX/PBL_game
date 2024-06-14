@@ -41,6 +41,11 @@ void GameManager::StartGame()
     _isInMainMenu = false;
 }
 
+void GameManager::Evacuate()
+{
+    std::cout << "Evacuation in GAMEMANAGER" << std::endl;
+}
+
 void GameManager::Update()
 {
     if(TUTORIALMANAGER._isFreePlay){
@@ -50,7 +55,7 @@ void GameManager::Update()
         if (currentTime >= phaseTime)
         {
             currentTime = 0.0f;
-            currentPhase = (currentPhase + 1) % 3;
+            currentPhase = (currentPhase + 1) % 2;
             InitPhase();
         }
     }
@@ -62,16 +67,9 @@ void GameManager::InitPhase()
     {
         roundNumber++;
         ENEMIESMANAGER.SetSymbolsForWave();
-        //std::cout << "kopiemy";
     }
-    else if (currentPhase == 1) // stawianie
+    else // obrona
     {
-        //std::cout << "stawiamy";
-    }
-    else if (currentPhase == 2) // obrona
-    {
-        //std::cout << "bronimy";
-
         ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
     }
 }

@@ -31,8 +31,16 @@ public:
     bool RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
         const glm::vec3& minBoundingBox, const glm::vec3& maxBoundingBox);
 
+    //Base upgrade station
     void UpgradeDomeHp();
     void UpgradeDomeHPRegen();
+    void DomeHPRepair();
+    void Evacuate();
+
+    //Player upgrade station Guziki do upgradu:   Jetpack Capacity, Mining reach, Mining Radius, Mining Speed
+    void UpgradeJetpackCapacity();
+
+
     void UpgradeTurretDamage();
     void UpgradeTurretFireRate();
 
@@ -49,7 +57,15 @@ public:
 
     int _turretFireRateUpgradeCost = 10;
     int _turretDamageUpgradeCost = 10;
+
 private:
     Upgrades _domeHPUpgrades;
     Upgrades _domeHPRegenUpgrades;
+    Upgrades _domeHPRepair;
+    Upgrades _evacuateCost;
+
+    Upgrades _jetpackCapacityUpgrades;
+
+
+    std::shared_ptr<PlayerController> _playerRef;
 };
