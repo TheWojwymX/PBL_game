@@ -58,7 +58,7 @@ public:
     bool _shouldShowMaterials = false;
     bool _shouldShowDepth = false;
     bool _shouldShowPhaseInfo = false;
-    bool _shouldShowPointer = false;
+    bool _shouldShowPointer = true;
 
     bool _isAfterTutorialCrosshair = false;
     bool _isAfterTutorialHP = false;

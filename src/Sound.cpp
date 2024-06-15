@@ -28,12 +28,12 @@ Sound::~Sound()
     std::cout << "Sound uninitialized: " << _name << std::endl;
 }
 
-void Sound::PlaySound(std::shared_ptr<Node> soundSourceNode) {
+void Sound::PlaySound(std::shared_ptr<Node> soundSourceNode, float adjVolume) {
     if(_playerNode == nullptr){
         _playerNode = NODESMANAGER.getNodeByName("player");
     }
 
-    float volume = CalculateVolumeToPlayerDistance(soundSourceNode);
+    float volume = CalculateVolumeToPlayerDistance(soundSourceNode) * adjVolume;
     ChangeVolume(volume);
 
     if (ma_sound_start(&_sound) != MA_SUCCESS) {
@@ -43,13 +43,19 @@ void Sound::PlaySound(std::shared_ptr<Node> soundSourceNode) {
     }
 }
 
-void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode) {
+void Sound::StopSound() {
+    if (ma_sound_is_playing(&_sound)) {
+        ma_sound_stop(&_sound);
+    }
+}
+
+void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume) {
 
     if(_playerNode == nullptr){
         _playerNode = NODESMANAGER.getNodeByName("player");
     }
 
-    float volume = CalculateVolumeToPlayerDistance(soundSourceNode);
+    float volume = CalculateVolumeToPlayerDistance(soundSourceNode) * adjVolume;
 
     ma_sound* sound = new ma_sound; // Dynamically allocate memory for the sound instance
 

@@ -167,7 +167,7 @@ void PlayerController::HandleJetpack()
     if (_isUsingJetpack) {
         if (_jetpackFuel > 0 && _ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
             // Playing jetpack sound
-            RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode);
+            RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode, 0.5f);
 
             // Applying upward force
             _velocity.y += _jetpackStrength * deltaTime;
@@ -180,6 +180,7 @@ void PlayerController::HandleJetpack()
                 _jetpackFuel = 0;
                 _isUsingJetpack = false;
                 StartJetpackRegenTimer();
+                RESOURCEMANAGER.GetSoundByID(16)->StopSound();
             }
 
             // Jetpack particle effects

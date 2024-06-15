@@ -34,13 +34,14 @@ public:
 
     nlohmann::json Serialize();
 
-    void PlaySound(std::shared_ptr<Node> soundSourceNode);
+    void PlaySound(std::shared_ptr<Node> soundSourceNode, float adjVolume = 1.0f);
+    void StopSound();
 
     void ChangeVolume(float volume);
 
     void SetLooping(bool looping);
 
-    void PlaySoundSim(std::shared_ptr<Node> soundSourceNode);
+    void PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume = 1.0f);
 
     std::shared_ptr<Node> _playerNode = nullptr;
 
