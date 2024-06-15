@@ -43,6 +43,7 @@ void BlockData::HandleParticles() {
         hitResourceParticles->object = NODESMANAGER.getNodeByName(nodeName);
         hitResourceParticles->Init();
         NODESMANAGER.getNodeByName(nodeName)->AddComponent(hitResourceParticles);
+        hitResourceParticles->SpawnParticles();
     }
     else if(GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::METAL)
     {

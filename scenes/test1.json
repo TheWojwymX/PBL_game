@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 194,
-  "nextNodeId": 174,
+  "nextComponentId": 196,
+  "nextNodeId": 175,
   "resources": {
     "Models": [
       {
@@ -358,11 +358,14 @@
       {
         "ModelName": "PDAAntennaModel",
         "Path": "../../res/Models/PDA/antena/krotkofalowka_v2-0.obj"
-      }
-    ,
+      },
       {
         "ModelName": "flareModel",
         "Path": "../../res/Models/Flare/flara_pomniejszona.obj"
+      },
+      {
+        "ModelName": "compassModel",
+        "Path": "../../res/Models/Compass/Compass.obj"
       }
     ],
     "Shaders": [
@@ -802,6 +805,40 @@
           {
             "componentId": 79,
             "componentType": 17
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            90.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 174,
+        "NodeName": "CompassNode",
+        "children": [],
+        "components": [
+          {
+            "componentId": 194,
+            "componentType": 13,
+            "model": "compassModel",
+            "shader": "shovelShader"
+          },
+          {
+            "componentId": 195,
+            "componentType": 19
           }
         ],
         "transform": {

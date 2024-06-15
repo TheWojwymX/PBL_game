@@ -227,6 +227,9 @@ int main(int, char**)
     auto uPDARenderer = NODESMANAGER.getNodeByName("PDA")->GetComponent<ShovelRenderer>();
     auto uPDAAntennaRenderer = NODESMANAGER.getNodeByName("PDAAntenna")->GetComponent<ShovelRenderer>();
 
+    auto compassController = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>();
+    auto compassRenderer = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<ShovelRenderer>();
+
     MainMenuPage mainMenuPage;
     mainMenuPage.Init();
 
@@ -412,6 +415,9 @@ int main(int, char**)
             uPDAAntennaRenderer->RenderShovel(Transform::Origin());
             uPDARenderer->RenderShovel(Transform::Origin());
             uPDAController->RealUpdate();
+
+            compassRenderer->RenderShovel(Transform::Origin());
+            compassController->RealUpdate();
 
             shovelShader->use();
             shovelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());

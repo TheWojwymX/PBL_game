@@ -27,6 +27,7 @@
 #include "Component/Disabler.h"
 #include "Component/GlowstickMovement.h"
 #include "Component/TopLayerSnap.h"
+#include "Component/CompassController.h"
 
 class Node : public std::enable_shared_from_this<Node> {
 public:

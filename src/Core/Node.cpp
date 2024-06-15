@@ -124,6 +124,9 @@ void Node::Deserialize(const nlohmann::json &nodeJson) {
                     case ComponentType::TOPLAYERSNAP:
                         ComponentsManager::getInstance().DeserializeComponent<TopLayerSnap>(componentJson);
                         break;
+                    case ComponentType::COMPASSCONTROLLER:
+                        ComponentsManager::getInstance().DeserializeComponent<CompassController>(componentJson);
+                        break;
                     default:
                         std::cerr << "Unknown component type: " << static_cast<int>(type) << std::endl;
                         break;

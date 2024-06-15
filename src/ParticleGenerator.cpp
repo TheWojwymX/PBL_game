@@ -405,7 +405,7 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "digPlastic"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 20;
+        amount = 30;
         newParticles = 3;
         spawnDelay = 0.0f;
         speedVariation = 1.0f;

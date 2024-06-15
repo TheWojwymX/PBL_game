@@ -82,7 +82,7 @@ void main()
     }
 
 
-    if(FragPos.y <= 295){
+    if(FragPos.y <= 300.5){
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
     {
         if(pointLights[i].isActive)
@@ -92,12 +92,12 @@ void main()
 
             if (distance < maxDistance)
             {
-                if(FragPos.y <= 290){
+                if(FragPos.y <= 295){
                 pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
                 totalPointlightIntensity += CalcPointLightIntensity(pointLights[i], FragPos);
                 }
                 else{
-                    float heightFactor = smoothstep(295.0, 290.0, FragPos.y);
+                    float heightFactor = smoothstep(300.5, 295.0, FragPos.y);
                     pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir) * heightFactor;
                     totalPointlightIntensity += CalcPointLightIntensity(pointLights[i], FragPos) * heightFactor;
                 }
