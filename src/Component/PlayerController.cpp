@@ -64,11 +64,6 @@ void PlayerController::Update() {
     if(!GAMEMANAGER._paused){
         HandleMovement();
         HandleGlowstick();
-        //cout << _jetpackFuel << endl;
-    }
-
-    if(INPUT.IsKeyPressed(GLFW_KEY_E)){
-        GetFuelForMaterials();
     }
 }
 
@@ -166,18 +161,87 @@ void PlayerController::HandleMovement() {
 
 void PlayerController::HandleJetpack()
 {
-    if (_isUsingJetpack && _jetpackFuel > 0 && _ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
-        RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode);
-        _velocity.y += _jetpackStrength * TIME.GetDeltaTime();
-        _jetpackFuel -= _jetpackFuelConsumption * TIME.GetDeltaTime();
-        _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f, _blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
-        _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
-        if (_jetpackFuel < 0) _jetpackFuel = 0;
+    // Get delta time
+    float deltaTime = TIME.GetDeltaTime();
+
+    if (_isUsingJetpack) {
+        if (_jetpackFuel > 0 && _ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
+            // Playing jetpack sound
+            RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode);
+
+            // Applying upward force
+            _velocity.y += _jetpackStrength * deltaTime;
+
+            // Consuming fuel
+            _jetpackFuel -= _jetpackFuelConsumption * deltaTime;
+
+            // Ensure fuel doesn't go below zero
+            if (_jetpackFuel <= 0) {
+                _jetpackFuel = 0;
+                _isUsingJetpack = false;
+                StartJetpackRegenTimer();
+            }
+
+            // Jetpack particle effects
+            _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f, _blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
+            _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
+        }
     }
-    else if (!_isUsingJetpack && _jetpackFuel < _maxJetpackFuel) {
-        _jetpackFuel += _jetpackFuelRecovery * TIME.GetDeltaTime();
-        if (_jetpackFuel > _maxJetpackFuel) _jetpackFuel = _maxJetpackFuel;
+    else {
+        // Check if delay is active
+        if (_fuelRegenerationDelayActive) {
+            // Update the delay timer
+            _fuelRegenerationDelayTimer += deltaTime;
+            if (_fuelRegenerationDelayTimer >= _fuelRegenerationDelay) {
+                _fuelRegenerationDelayActive = false;  // End delay
+            }
+        }
+        else {
+            // Recover fuel only if delay is not active
+            _jetpackFuel += _fuelRegeneration * _maxJetpackFuel * deltaTime;
+
+            // Ensure fuel doesn't exceed max capacity
+            if (_jetpackFuel > _maxJetpackFuel) _jetpackFuel = _maxJetpackFuel;
+        }
     }
+}
+
+void PlayerController::JetpackInput() {
+    // Get the current time
+    auto now = std::chrono::steady_clock::now();
+
+    // Check if the space key is currently held down
+    if (INPUT.GetKeyDown(GLFW_KEY_SPACE)) {
+        if (!_spaceKeyWasPressed) {
+            // If the space key was not pressed before, update the last press time
+            _lastSpacePressTime = now;
+            _spaceKeyWasPressed = true;
+        }
+
+        // Calculate the elapsed time since the space key was last pressed
+        auto elapsed = std::chrono::duration_cast<std::chrono::duration<float>>(now - _lastSpacePressTime).count();
+
+        if (elapsed >= _jetpackActivationDelay) {
+            if (_jetpackFuel > 0.0f) {
+                _isUsingJetpack = true;
+                StartJetpackRegenTimer();
+            }
+            else {
+                StartJetpackRegenTimer();
+            }
+        }
+    }
+    else {
+        // If the space key is not held down, reset the state
+        _spaceKeyWasPressed = false;
+        _isUsingJetpack = false;
+    }
+}
+
+void PlayerController::StartJetpackRegenTimer()
+{
+    _fuelRegenerationDelayActive = true;
+    _fuelRegenerationDelayTimer = 0.0f;
 }
 
 bool PlayerController::CheckIfPlayerIsAtEntranceToMine(){
@@ -308,44 +372,6 @@ void PlayerController::HandleGlowstick() {
     }
 }
 
-void PlayerController::JetpackInput() {
-    // Get the current time
-    auto now = std::chrono::steady_clock::now();
-
-    // Check if the space key is currently held down
-    if (INPUT.GetKeyDown(GLFW_KEY_SPACE)) {
-        if (!_spaceKeyWasPressed) {
-            // If the space key was not pressed before, update the last press time
-            _lastSpacePressTime = now;
-            _spaceKeyWasPressed = true;
-        }
-
-        // Calculate the elapsed time since the space key was last pressed
-        auto elapsed = std::chrono::duration_cast<std::chrono::duration<float>>(now - _lastSpacePressTime).count();
-
-        // Check if the elapsed time is greater than the activation delay and if there's enough fuel
-        if (elapsed >= _jetpackActivationDelay && _jetpackFuel > 0) {
-            _isUsingJetpack = true;
-        } else {
-            _isUsingJetpack = false;
-        }
-    } else {
-        // If the space key is not held down, reset the state
-        _spaceKeyWasPressed = false;
-        _isUsingJetpack = false;
-    }
-}
-
 void PlayerController::SetGravity(float gravity) {
     _gravity = gravity;
-}
-
-void PlayerController::GetFuelForMaterials() {
-    if(GAMEMANAGER._metal >= 1 && _jetpackFuel < _maxJetpackFuel){
-        GAMEMANAGER._metal--;
-        _jetpackFuel += 20;
-        if(_jetpackFuel > _maxJetpackFuel){
-            _jetpackFuel = _maxJetpackFuel;
-        }
-    }
 }

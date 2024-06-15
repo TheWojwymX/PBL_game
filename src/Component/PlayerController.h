@@ -23,7 +23,7 @@ public:
     void SetCamera(std::shared_ptr<Camera> cameraRef) { _cameraRef = cameraRef; }
     void SetBlockManager(std::shared_ptr<BlockManager> blockManagerRef) { _blockManagerRef = blockManagerRef; }
 
-    void addToInspector(ImguiMain *imguiMain) override;
+    void addToInspector(ImguiMain* imguiMain) override;
 
     void HandleGlowstick();
 
@@ -37,17 +37,15 @@ public:
 
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
 
-    void GetFuelForMaterials();
-
-    //Getters for upgrades
+    // Getters for upgrades
     char GetJetpackCapacityLevel() { return _jetpackCapacityLevel; }
     char GetMiningSpeedLevel() { return _miningSpeedLevel; }
     char GetMiningReachLevel() { return _miningReachLevel; }
     char GetMiningRadiusLevel() { return _miningRadiusLevel; }
 
-    //Upgrades
+    // Upgrades
     void UpgradeJetpackCapacity(float value) { _maxJetpackFuel += value; _jetpackCapacityLevel++; }
-    void UpgradeMiningSpeed(float value) {_digPower += value;_miningSpeedLevel++;}
+    void UpgradeMiningSpeed(float value) { _digPower += value; _miningSpeedLevel++; }
     void UpgradeMiningReach(float value) { _reach += value; _miningReachLevel++; }
     void UpgradeMiningRadius(int value) { _radius += value; _miningRadiusLevel++; }
 
@@ -91,17 +89,21 @@ private:
     void MovementInput();
     void InteractionInput();
 
-    void increaseRadiusLevel(){_radius = _radius + 1;}
-    void increaseReachLevel(){_reach = _reach + 1;}
-    void increaseSpeedLevel(){_speed = _speed + 1;}
+    void increaseRadiusLevel() { _radius = _radius + 1; }
+    void increaseReachLevel() { _reach = _reach + 1; }
+    void increaseSpeedLevel() { _speed = _speed + 1; }
 
     int _radiusUpgradeCost = 10;
     int _reachUpgradeCost = 10;
     int _speedUpgradeCost = 10;
 
     float _jetpackStrength = 30.0f;
-    float _jetpackFuelConsumption = 10.0f; // Fuel consumed per second when using the jetpack
-    float _jetpackFuelRecovery = 0.0f;     // Fuel recovered per second when not using the jetpack
+    float _jetpackFuelConsumption = 50.0f; 
+    float _fuelRegeneration = 0.2f;
+    float _fuelRegenerationDelay = 1.0f; 
+    float _fuelRegenerationDelayTimer = 0.0f;
+    bool _fuelRegenerationDelayActive = false;
+
 
     bool _spaceKeyWasPressed = false;
     std::chrono::steady_clock::time_point _lastSpacePressTime;
@@ -111,6 +113,7 @@ private:
     float _glowstickCooldown = 2.0f;
 
     void JetpackInput();
+    void StartJetpackRegenTimer();
 
     bool CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius);
 
