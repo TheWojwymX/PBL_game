@@ -517,6 +517,9 @@ void UpgradeManager::Update() {
 
     if (IsTurretInRaycast() && IsTurretInRange()) {
         HighlightSingleTurret(TURRETSMANAGER.RaycastTurrets());
+        if (Input::Instance().IsKeyPressed(GLFW_KEY_E)) {
+            UpgradeTurret();
+        }
     }
     else {
         for (int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {

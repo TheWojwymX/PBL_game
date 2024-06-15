@@ -124,10 +124,6 @@ void TurretsManager::PlayerActions(){
         PlaceMovingTurret();
         HideBlueprintTurret();
     }
-
-    if (Input::Instance().IsKeyPressed(GLFW_KEY_E) && !_isInBlueprintMode && !_isPlayerInMovingMode && !_isInTurretChoiceMenu && IsSelectedTurretInRange() && !_turrets[RaycastTurrets()]->_isFlying) {
-        UPGRADEMANAGER.UpgradeTurret();
-    }
 }
 
 void TurretsManager::Update() {

@@ -93,6 +93,4 @@ public:
     void HideBlueprintTurret();
 
     void ChangeToSpawningMode();
-
-    void ChangeToMovingMode();
 };
