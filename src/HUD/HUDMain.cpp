@@ -22,6 +22,7 @@ void HUDMain::Init() {
     _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     _pointer.Init("res/Images/HUD/pointer.png", glm::vec2(0.0f), 0, true, true); //CoordsConverter::ConvertCoords(glm::vec2(1790, 138.5))
+    _pointer2.Init("res/Images/HUD/pointer.png", CoordsConverter::ConvertCoords(glm::vec2(1790, 138.5)), 0, true, true);
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
     _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(343, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
@@ -182,7 +183,10 @@ void HUDMain::PointerGUIManager()
     if (GAMEMANAGER.IsUnderground())
     {
         SetPointerRotation();
-        _pointer.Render();
+        if(!_shouldShowPointer)
+            _pointer.Render();
+        else
+            _pointer2.Render();
     }
 }
 
@@ -265,11 +269,13 @@ void HUDMain::SetPointerRotation()
 
     // Set the rotation of the image or pointer
     _pointer.SetRotationAngle(angleDegrees); // Assuming _pointer.SetRotationAngle sets the rotation
+    _pointer2.SetRotationAngle(angleDegrees);
 
     // Determine if cameraXZ is within 5 blocks to domeXZ
     float distanceToDome = glm::distance(cameraPosXZ, domePosXZ);
     bool shouldRenderPointer = (distanceToDome > 2.0f);
 
     // Set the visibility of the pointer based on the distance condition
+    _pointer2._shouldRender = shouldRenderPointer;
     _pointer._shouldRender = shouldRenderPointer;
 }

@@ -46,6 +46,7 @@ public:
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
     std::vector<std::shared_ptr<ImageRenderer>> _baseInsideImages;
     ImageRenderer _pointer;
+    ImageRenderer _pointer2;
 
     glm::vec2 hpTopRight = glm::vec2(0.952f, 0.952f);
     glm::vec2 hpBottomRight = glm::vec2(0.952f, 0.5f);
@@ -58,6 +59,7 @@ public:
     bool _shouldShowMaterials = false;
     bool _shouldShowDepth = false;
     bool _shouldShowPhaseInfo = false;
+    bool _shouldShowPointer = false;
 
     bool _isAfterTutorialCrosshair = false;
     bool _isAfterTutorialHP = false;
