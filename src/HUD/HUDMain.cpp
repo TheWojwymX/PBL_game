@@ -15,8 +15,7 @@ void HUDMain::Init() {
     _materialsBackground.Init("res/Images/HUD/materials_background.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(314, 967)), true, false);
     _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(44, 1039)), CoordsConverter::ConvertCoords(glm::vec2(103, 979)), true, false);
     _metalImage.Init("res/Images/HUD/metal_icon.png", CoordsConverter::ConvertCoords(glm::vec2(179, 1039)), CoordsConverter::ConvertCoords(glm::vec2(241, 979)), true, false);
-    _jetpackEmpty.Init("res/Images/HUD/jetpack_paliwo.png", CoordsConverter::ConvertCoords(glm::vec2(1719, 949)), CoordsConverter::ConvertCoords(glm::vec2(1891, 316)), true, false);
-    _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
+   _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
     _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
     _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
@@ -25,6 +24,14 @@ void HUDMain::Init() {
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
     _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(343, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
+
+    for(int i = 0; i <= 20; i++){
+        shared_ptr<ImageRenderer> jetpack = make_shared<ImageRenderer>();
+        std::string path = "res/Images/HUD/Jetpack/fuel (" + std::to_string(i+1) + ").png";
+        //jetpack->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1845, 570)), 90, true, true);
+        jetpack->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1726, 946)), CoordsConverter::ConvertCoords(glm::vec2(1894, 319)), true, false);
+        _jetpackImages.push_back(jetpack);
+    }
 
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
@@ -110,16 +117,10 @@ void HUDMain::Update() {
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.7395833, -0.879, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
-    /*
     //jetpack
-    leftDownCorner = glm::vec3(0.8875, -0.7407407, 0.0);
-    rightTopCorner = glm::vec3(0.963, 0.3981481, 0.0);
-    float percentFuel = (_playerNode->GetComponent<PlayerController>()->_jetpackFuel/_playerNode->GetComponent<PlayerController>()->_maxJetpackFuel) * 100;
-    float y = (percentFuel - 0.0f) * (rightTopCorner.y - (leftDownCorner.y)) / (100.0f - 0.0f) + (leftDownCorner.y);
-    */
-
     if(_shouldShowFuel && _isAfterTutorialFuel){
-        _jetpackEmpty.Render();
+        int imageIndex = static_cast<int>((_playerNode->GetComponent<PlayerController>()->_jetpackFuel / 100.0f) * 20.0f);
+        _jetpackImages[imageIndex]->Render();
     }
 
 

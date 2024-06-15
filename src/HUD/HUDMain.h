@@ -33,15 +33,14 @@ public:
     ImageRenderer _metalImage;
     ImageRenderer _plasticImage;
 
-    ImageRenderer _jetpackEmpty;
-    ImageRenderer _jetpackBar;
-
     ImageRenderer _waveTimerGreen;
     ImageRenderer _waveTimerRed;
     ImageRenderer _waveArrowRed;
     ImageRenderer _waveArrowGreen;
 
     ImageRenderer _depthMeterBackground;
+
+    std::vector<std::shared_ptr<ImageRenderer>> _jetpackImages;
 
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
     std::vector<std::shared_ptr<ImageRenderer>> _baseInsideImages;

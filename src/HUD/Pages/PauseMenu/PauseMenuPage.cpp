@@ -27,9 +27,9 @@ void PauseMenuPage::SetupButtons(){
     _resumeButton = std::make_shared<Button>("res/Images/Button/resume.png",
                                             "res/Images/Button/resume_hover.png",
                                             "res/Images/Button/resume_clicked.png",
-                                             //CoordsConverter::ConvertCoords(glm::vec2(782, 469)),
-                                             //CoordsConverter::ConvertCoords(glm::vec2(1137, 370)),
-                                            glm::vec2(0, 10),
+                                             CoordsConverter::ConvertCoords(glm::vec2(782, 469)),
+                                             CoordsConverter::ConvertCoords(glm::vec2(1137, 370)),
+                                            //glm::vec2(0, 10),
                                             [this]() {
                                                 GAMEMANAGER.Unpause();
                                             });
@@ -37,7 +37,8 @@ void PauseMenuPage::SetupButtons(){
     _settingsButton = std::make_shared<Button>("res/Images/Button/settings.png",
                                                "res/Images/Button/settings_hover.png",
                                                "res/Images/Button/settings_clicked.png",
-                                               glm::vec2(0, 0),
+                                               CoordsConverter::ConvertCoords(glm::vec2(782, 589)),
+                                               CoordsConverter::ConvertCoords(glm::vec2(1137, 490)),
                                                [this]() {
 
                                                });
@@ -45,7 +46,8 @@ void PauseMenuPage::SetupButtons(){
     _quitButton = std::make_shared<Button>("res/Images/Button/quit.png",
                                            "res/Images/Button/quit_hover.png",
                                            "res/Images/Button/quit_clicked.png",
-                                           glm::vec2(0, -20),
+                                           CoordsConverter::ConvertCoords(glm::vec2(782, 709)),
+                                           CoordsConverter::ConvertCoords(glm::vec2(1137, 610)),
                                            [this]() {
                                                glfwSetWindowShouldClose(GAMEMANAGER._window, 1);
                                            });
