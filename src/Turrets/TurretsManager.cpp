@@ -254,13 +254,12 @@ void TurretsManager::SpawnTurret(TurretType type) {
 
     auto rangeNode = NODESMANAGER.getNodeByName(rangeIndicatorNode);
     auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal");
+    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorVisual");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->Initiate();
     rangeIndicator->SetEnabled(false);
     rangeNode->AddComponent(rangeIndicator);
-    rangeNode->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 30.0f));
     rangeNode->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->UpdateGlobalCTM();
@@ -276,7 +275,7 @@ void TurretsManager::CalculateRangePositions(std::shared_ptr<Turret> turret) {
     for (const auto& node : rangeNodes) {
         if (node != nullptr) {
             // Get the unique XZ vertices from the model
-            std::vector<glm::vec3> uniqueVerticesXZ = node->GetComponent<MeshRenderer>()->_model->GetUniqueVerticesXZ();
+            std::vector<glm::vec3> uniqueVerticesXZ = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal")->GetUniqueVerticesXZ();
 
             // Check if there are vertices to transform
             if (!uniqueVerticesXZ.empty()) {
@@ -322,14 +321,13 @@ void TurretsManager::PrepareBlueprintTurret() {
 
     NODESMANAGER.createNode(_blueprintTurret, blueprintRange);
     auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal");
+    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorVisual");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->SetEnabled(false);
     rangeIndicator->Initiate();
 
     NODESMANAGER.getNodeByName(blueprintRange)->AddComponent(rangeIndicator);
-    NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 30.0f));
     NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
 }
 
