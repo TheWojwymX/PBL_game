@@ -230,7 +230,7 @@ void HUDMain::SetPointerRotation()
     glm::vec3 cameraFront3D = _cameraRef->GetFrontVector();
     glm::vec2 cameraFrontXZ(cameraFront3D.x, cameraFront3D.z);
 
-    // Retrieve the camera's position in the XZ plane
+    // Retrieve the player's position in the XZ plane
     glm::vec3 cameraPos = _cameraRef->GetPosition();
     glm::vec2 cameraPosXZ(cameraPos.x, cameraPos.z);
 
@@ -265,4 +265,11 @@ void HUDMain::SetPointerRotation()
 
     // Set the rotation of the image or pointer
     _pointer.SetRotationAngle(angleDegrees); // Assuming _pointer.SetRotationAngle sets the rotation
+
+    // Determine if cameraXZ is within 5 blocks to domeXZ
+    float distanceToDome = glm::distance(cameraPosXZ, domePosXZ);
+    bool shouldRenderPointer = (distanceToDome > 2.0f);
+
+    // Set the visibility of the pointer based on the distance condition
+    _pointer._shouldRender = shouldRenderPointer;
 }

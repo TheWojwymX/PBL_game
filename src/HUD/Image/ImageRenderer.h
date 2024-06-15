@@ -22,6 +22,8 @@ public:
 
     void Render();
 
+    float GetRotation() { return _rotationAngle; }
+
     void AddRotation(float value);
     void SetRotationAngle(float rotationAngle);
 
