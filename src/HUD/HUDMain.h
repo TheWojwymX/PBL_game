@@ -45,13 +45,12 @@ public:
 
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
     std::vector<std::shared_ptr<ImageRenderer>> _baseInsideImages;
+    ImageRenderer _pointer;
 
     glm::vec2 hpTopRight = glm::vec2(0.952f, 0.952f);
     glm::vec2 hpBottomRight = glm::vec2(0.952f, 0.5f);
     glm::vec2 hpBottomLeft = glm::vec2(0.62f, 0.5f);
     glm::vec2 hpTopLeft = glm::vec2(0.62f, 0.952f);
-
-    shared_ptr<Node> _playerNode;
 
     bool _shouldShowCrosshair = false;
     bool _shouldShowHP = false;
@@ -84,5 +83,10 @@ public:
     void DisableHUD();
     void EnableHUD();
 
+private:
+    std::shared_ptr<Node> _playerNode;
+    std::shared_ptr<Camera> _cameraRef;
 
+    void PointerGUIManager();
+    void SetPointerRotation();
 };

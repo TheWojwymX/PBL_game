@@ -29,6 +29,7 @@ public:
     void RemoveMaterials(glm::ivec2 mat);
     void StartGame();
     void Evacuate();
+    bool IsUnderground();
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 100;
@@ -58,8 +59,8 @@ public:
     int _metal = 1;
     int _plastic = 0;
 
-
-
-
     bool _isInMainMenu = true;
+
+private:
+    std::shared_ptr<Node> _playerNode = nullptr;
 };

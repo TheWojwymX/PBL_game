@@ -4,7 +4,7 @@
 #include "../Enemies/EnemiesManager.h"
 #include "../HUD/PageManager.h"
 #include "../Managers/TutorialManager.h"
-
+#include "Managers/NodesManager.h"
 
 GameManager &GameManager::GetInstance() {
     static GameManager instance;
@@ -47,6 +47,15 @@ void GameManager::StartGame()
 void GameManager::Evacuate()
 {
     std::cout << "Evacuation in GAMEMANAGER" << std::endl;
+}
+
+bool GameManager::IsUnderground()
+{
+    if(_playerNode == nullptr) _playerNode = NODESMANAGER.getNodeByName("player");
+
+    float playerY = _playerNode->GetTransform()->GetPosition().y;
+
+    return playerY < _groundLevel;
 }
 
 void GameManager::Update()
@@ -104,9 +113,6 @@ void GameManager::Init() {
     // Update _screenWidth and _screenHeight with the actual dimensions
     _screenWidth = actualWidth;
     _screenHeight = actualHeight;
-
-    // For debugging purposes
-    std::cout << "Actual framebuffer size: " << actualWidth << "x" << actualHeight << std::endl;
 }
 
 void GameManager::EnableMouse() {
