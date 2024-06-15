@@ -84,10 +84,22 @@ public:
     void DisableHUD();
     void EnableHUD();
 
+    bool _isPlasticInAnim = false;
+    bool _isMetalInAnim = false;
+    float _plasticAnimTimer = 0.0f;
+    float _metalAnimTimer = 0.0f;
+    float _timeOfAnim = 0.2;
+    float _maxScale = 2.5f;
+    float _defaultScale = 2.0f;
+
 private:
     std::shared_ptr<Node> _playerNode;
     std::shared_ptr<Camera> _cameraRef;
 
     void PointerGUIManager();
     void SetPointerRotation();
+
+    void PlayMetalBump();
+
+    void PlayPlasticBump();
 };

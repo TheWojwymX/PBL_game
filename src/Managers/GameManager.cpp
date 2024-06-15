@@ -21,11 +21,13 @@ void GameManager::pressToSkipPhase()
 
 void GameManager::AddMetal(int amount)
 {
+    HUD._isMetalInAnim = true;
     _metal += amount;
 }
 
 void GameManager::AddPlastic(int amount)
 {
+    HUD._isPlasticInAnim = true;
     _plastic += amount;
 }
 

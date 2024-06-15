@@ -118,8 +118,8 @@ void ImageRenderer::UpdateModel()
     // Translate to initial position and scale
     _model = glm::translate(_model, glm::vec3((_pixelPosition.x*2.0f) / _screenWidth, (_pixelPosition.y*2.0f) / _screenHeight, 0.0f));
 
-    // Apply scaling to counteract squish
-    _model = glm::scale(_model, glm::vec3(1.0f, aspectRatio, 1.0f));
+    // Apply scaling to counteract squish, apply custom scale
+    _model = glm::scale(_model, glm::vec3(1.0f * _scale.x, aspectRatio * _scale.y, 1.0f));
 
     // Apply rotation around Z axis
     _model = glm::rotate(_model, glm::radians(_rotationAngle), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -209,3 +209,9 @@ void ImageRenderer::SetRotationAngle(float rotationAngle) {
     _rotationAngle = rotationAngle;
     UpdateModel();
 }
+
+void ImageRenderer::SetScale(const glm::vec2 &scale) {
+    _scale = scale;
+    UpdateModel();
+}
+

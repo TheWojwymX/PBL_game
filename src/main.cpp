@@ -249,8 +249,8 @@ int main(int, char**)
         else if(!GAMEMANAGER._isInMainMenu) {
             //debugging adding money
             if (INPUT.IsKeyPressed(77)) {
-                GAMEMANAGER._plastic += 10;
-                GAMEMANAGER._metal += 10;
+                GAMEMANAGER.AddMetal(10);
+                GAMEMANAGER.AddPlastic(10);
                 //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
             }
 

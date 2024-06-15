@@ -13,9 +13,9 @@ void HUDMain::Init() {
 
     _crosshairImage.Init("res/Images/crosshair041.png", glm::vec2(0, 0), 0, true, false);
     _materialsBackground.Init("res/Images/HUD/materials_background.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(314, 967)), true, false);
-    _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(44, 1039)), CoordsConverter::ConvertCoords(glm::vec2(103, 979)), true, false);
-    _metalImage.Init("res/Images/HUD/metal_icon.png", CoordsConverter::ConvertCoords(glm::vec2(179, 1039)), CoordsConverter::ConvertCoords(glm::vec2(241, 979)), true, false);
-   _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
+    _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(74, 1009)), 0, true, false);
+    _metalImage.Init("res/Images/HUD/metal_icon.png", CoordsConverter::ConvertCoords(glm::vec2(210, 1009)), 0, true, false);
+    _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
     _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
     _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
@@ -112,8 +112,15 @@ void HUDMain::Update() {
     //materials
     if(_shouldShowMaterials && _isAfterTutorialMaterials){
         _materialsBackground.Render();
+
+        _plasticImage.SetScale(glm::vec2(_defaultScale, _defaultScale));
+        PlayPlasticBump();
         _plasticImage.Render();
+
+        _metalImage.SetScale(glm::vec2(_defaultScale, _defaultScale));
+        PlayMetalBump();
         _metalImage.Render();
+
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._plastic), -0.8833333, -0.879, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
         TEXTRENDERER.RenderText(to_string(GAMEMANAGER._metal), -0.7395833, -0.879, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
@@ -280,3 +287,51 @@ void HUDMain::SetPointerRotation()
     _pointer2._shouldRender = shouldRenderPointer;
     _pointer._shouldRender = shouldRenderPointer;
 }
+
+void HUDMain::PlayPlasticBump() {
+    if (_isPlasticInAnim) {
+        if (_plasticAnimTimer < _timeOfAnim) {
+            _plasticAnimTimer += TIME.GetDeltaTime();
+
+            if (_plasticAnimTimer < _timeOfAnim / 2.0f) {
+                float t = _plasticAnimTimer / (_timeOfAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float scale = glm::mix(_defaultScale, _maxScale, t);
+                _plasticImage.SetScale(glm::vec2(scale, scale));
+            } else {
+                float t = (_plasticAnimTimer - _timeOfAnim / 2.0f) / (_timeOfAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float scale = glm::mix(_maxScale, _defaultScale, t);
+                _plasticImage.SetScale(glm::vec2(scale, scale));
+            }
+        } else {
+            _plasticAnimTimer = 0;
+            _isPlasticInAnim = false;
+        }
+    }
+}
+
+void HUDMain::PlayMetalBump() {
+    if (_isMetalInAnim) {
+        if (_metalAnimTimer < _timeOfAnim) {
+            _metalAnimTimer += TIME.GetDeltaTime();
+
+            if (_metalAnimTimer < _timeOfAnim / 2.0f) {
+                float t = _metalAnimTimer / (_timeOfAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float scale = glm::mix(_defaultScale, _maxScale, t);
+                _metalImage.SetScale(glm::vec2(scale, scale));
+            } else {
+                float t = (_metalAnimTimer - _timeOfAnim / 2.0f) / (_timeOfAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float scale = glm::mix(_maxScale, _defaultScale, t);
+                _metalImage.SetScale(glm::vec2(scale, scale));
+            }
+        } else {
+            _metalAnimTimer = 0;
+            _isMetalInAnim = false;
+        }
+    }
+}
+
+

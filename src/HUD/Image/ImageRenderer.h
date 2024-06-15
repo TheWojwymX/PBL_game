@@ -30,12 +30,14 @@ public:
     glm::vec2 CalculateCenter();
     std::pair<glm::vec2, glm::vec2> GetCorners();
 
+    void SetScale(const glm::vec2 &scale);
 
 private:
     glm::vec2 _pixelPosition;
     float _rotationAngle;
     glm::mat4 _model;
     std::array<float, 20> _vertices;
+    glm::vec2 _scale = glm::vec2(1.0f, 1.0f);
 
     float _screenWidth;
     float _screenHeight;
