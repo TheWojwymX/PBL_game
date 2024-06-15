@@ -15,7 +15,8 @@ public:
     std::shared_ptr<Button> _startButton;
     std::shared_ptr<Button> _settingsButton;
     std::shared_ptr<Button> _creditsButton;
-    std::shared_ptr<Button> _quitButton; 
+    std::shared_ptr<Button> _quitButton;
+    ImageRenderer _logo;
 
 private:
     void SetupButtons();
