@@ -42,6 +42,9 @@ uniform bool isFlare;
 uniform bool ambient;
 uniform bool isUnderground;
 uniform bool rain;
+uniform bool tooltip;
+uniform bool tooltipSpawn;
+uniform bool tooltipShrink;
 
 layout (local_size_x = 1) in;
 
@@ -99,15 +102,18 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     {
         initialVelocity = vec3(0.7f, speedMultiplier + initialUpwardBoost, 0);
     }
-    else
+    else if(!tooltip)
     {
     float randomX = (2.0f * random(changeSeed + 2.0f) - 1.0f) * XZvariation;
     float randomZ = (2.0f * random(changeSeed + 3.0f) - 1.0f) * XZvariation;
 
     initialVelocity = vec3(randomX, speedMultiplier + initialUpwardBoost, randomZ);
+    initialVelocity = (objectRotation * vec4(initialVelocity, 0.0f)).xyz;
+    }
+    else if(tooltip){
+        initialVelocity = vec3(0.0, 0.0, 0.0);
     }
 
-    initialVelocity = (objectRotation * vec4(initialVelocity, 0.0f)).xyz;
 
     initialVel = initialVelocity;
     particle.Velocity.xyz = initialVelocity;
@@ -124,6 +130,7 @@ void main() {
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
             // Update velocity with gravity
+            if(!tooltip){
             p.Velocity.xyz += (initGravity + ((windDirection * windStrength) * p.Weight)) * dt;
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
@@ -143,7 +150,19 @@ void main() {
                     p.Scale = mix(particleScale, 2.2, lifeRatio);
                 }
             }
-
+}
+if(tooltip){
+if(p.Scale < 1.5 && !tooltipShrink){
+p.Scale += dt * 10;
+}
+if(tooltipShrink && p.Scale > 0.05){
+p.Scale -= dt * 10;
+}
+}
+if(!tooltipSpawn)
+{
+p.Life = 0.0;
+}
             // Check for bounce when particle hits y = 105
             if (p.Position.y <= groundLevel && !isJetpack && !isFlare && !isUnderground) {
                 if(onlyForward)

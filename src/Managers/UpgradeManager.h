@@ -77,4 +77,6 @@ private:
     TurretUpgrades _rifleUpgrades;
 
     std::shared_ptr<PlayerController> _playerRef;
+
+    float timeLooking = 0.0f;
 };

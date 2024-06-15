@@ -93,6 +93,8 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setVec3("windDirection", WEATHERMANAGER.getWindDirection());
     computeShader->setFloat("windStrength", WEATHERMANAGER.getWindStrength());
     computeShader->setVec3("gravity", gravity);
+    computeShader->setBool("tooltipSpawn", tooltipSpawn);
+    computeShader->setBool("tooltipShrink", tooltipShrink);
 
     generatorPosition = object->GetTransform()->GetPosition() + rotatedOffset;
 
@@ -213,6 +215,7 @@ void ParticleGenerator::Init() {
     computeShader->setBool("ambient", ambient);
     computeShader->setBool("isUnderground", isUnderground);
     computeShader->setBool("rain", rain);
+    computeShader->setBool("tooltip", tooltip);
 
     unsigned int VBO;
     float particle_quad[] = {
@@ -266,7 +269,7 @@ void ParticleGenerator::Init() {
 
 void ParticleGenerator::initiateParticleType() {
     if (particleType == "turretCasing") {
-        texture = Texture2D::loadTextureFromFile("Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 50;
         newParticles = 1;
         spawnDelay = 0.0f;
@@ -283,7 +286,7 @@ void ParticleGenerator::initiateParticleType() {
 
     }
     else if (particleType == "turretShot"){
-        texture = Texture2D::loadTextureFromFile("Particle/particle.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 30;
         newParticles = 1;
         spawnDelay = 0.0f;
@@ -452,6 +455,20 @@ void ParticleGenerator::initiateParticleType() {
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         ambient = true;
         rain = true;
+    }
+    else if (particleType == "tooltipParticle"){
+        texture = Texture2D::loadTextureFromFile("../../res/Particle/particleTest.png", true);
+        amount = 1;
+        newParticles = 1;
+        spawnDelay = 0.0f;
+        speedVariation = 0.0f;
+        XZvariation = 0.0f;
+        particleLife = 10.0f;
+        particleColor = glm::vec4(1.0f,1.0f,1.0f,1.0f);
+        initialUpwardBoost = 0.04f;
+        particleScale = 0.1f;
+        gravity = glm::vec3(0.0f, 0.0f, 0.0f);
+        tooltip = true;
     }
 }
 

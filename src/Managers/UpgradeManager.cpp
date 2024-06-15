@@ -517,25 +517,59 @@ void UpgradeManager::Update() {
 
     if (IsTurretInRaycast() && IsTurretInRange()) {
         HighlightSingleTurret(TURRETSMANAGER.RaycastTurrets());
+
         if (Input::Instance().IsKeyPressed(GLFW_KEY_E)) {
             UpgradeTurret();
         }
+
+        timeLooking += TIME.GetDeltaTime();
     }
     else {
+        if(timeLooking > 0.0f) timeLooking -= TIME.GetDeltaTime() * 1.2f;
         for (int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
             TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
+            auto particleGenerators = TURRETSMANAGER._turrets[i]->_ownerNode->GetAllComponents<ParticleGenerator>();
+            for (const auto &generator: particleGenerators) {
+                if (generator->particleType == "tooltipParticle") {
+                    if(timeLooking < 0.5f) generator->tooltipShrink = true;
+                    if(timeLooking <= 0.0f) {
+                        generator->tooltipSpawn = false;
+                        timeLooking = 0.0f;
+                    }
+                }
+            }
         }
     }
 }
 
 void UpgradeManager::HighlightSingleTurret(int turretIndex)
 {
+    std::shared_ptr<ParticleGenerator> particle;
+    auto particleGenerators = TURRETSMANAGER._turrets[turretIndex]->_ownerNode->GetAllComponents<ParticleGenerator>();
+    for (const auto &generator: particleGenerators) {
+        if (generator->particleType == "tooltipParticle") {
+            particle = generator;
+        }
+    }
+
     for (int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
         TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
+        if(particle != nullptr) {
+            if(timeLooking < 0.5f) particle->tooltipShrink = true;
+            if(timeLooking <= 0.0f) {
+                particle->tooltipSpawn = false;
+                timeLooking = 0.0f;
+            }
+        }
     }
 
     // Highlight the specified turret
     if (turretIndex != -1) {
         TURRETSMANAGER._turrets[turretIndex]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
+        if(particle != nullptr && timeLooking > 0.5f) {
+            particle->tooltipSpawn = true;
+            particle->tooltipShrink = false;
+            particle->SpawnParticles();
+        }
     }
 }

@@ -229,6 +229,12 @@ void TurretsManager::SpawnTurret(TurretType type) {
     casingParticles->Init();
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(casingParticles);
 
+    auto tooltipParticle = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "tooltipParticle");
+    tooltipParticle->SetOffset(glm::vec3(1.2f, 1.0f, 0.0f));
+    tooltipParticle->object = NODESMANAGER.getNodeByName(nameOfTurret);
+    tooltipParticle->Init();
+    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(tooltipParticle);
+
     auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
     newTurret->Initiate();
     newTurret->_isFlying = true;

@@ -55,6 +55,8 @@ public:
     bool toDelete = false;
     glm::vec3 jumpOffPoint{0.0f};
     glm::vec3 gravity;
+    bool tooltipShrink = false;
+    bool tooltipSpawn = true;
 private:
 
     std::shared_ptr<ComputeShader> computeShader;
@@ -98,6 +100,7 @@ private:
     bool rain = false;
     bool isUnderground = false;
     bool isJetpack = false;
+    bool tooltip = false;
 
     void initiateParticleType();
 

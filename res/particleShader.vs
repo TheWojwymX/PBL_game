@@ -4,6 +4,8 @@ layout (location = 0) in vec4 vertex;  // <vec2 position, vec2 texCoords>
 layout (location = 2) in vec3 instancePosition;  // Particle position
 layout (location = 4) in float instanceScale;    // Particle scale
 
+out vec2 TexCoords;
+
 uniform mat4 projection;
 uniform mat4 view;
 
@@ -20,6 +22,9 @@ void main() {
 
     // Calculate the final position, using billboarding logic
     vec3 finalPosition = instancePosition + billboardOffset;
+
+    // Pass the texture coordinates to the fragment shader
+    TexCoords = vertex.zw;
 
     // Apply the transformation matrices
     gl_Position = projection * view * vec4(finalPosition, 1.0);
