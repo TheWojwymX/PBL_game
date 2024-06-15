@@ -5,6 +5,7 @@
 
 #include "TurretsManager.h"
 #include "HUD/PageManager.h"
+#include "Managers/UpgradeManager.h"
 
 TurretsManager &TurretsManager::getInstance() {
     static TurretsManager instance;
@@ -122,6 +123,10 @@ void TurretsManager::PlayerActions(){
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
         PlaceMovingTurret();
         HideBlueprintTurret();
+    }
+
+    if (Input::Instance().IsKeyPressed(GLFW_KEY_E) && !_isInBlueprintMode && !_isPlayerInMovingMode && !_isInTurretChoiceMenu && IsSelectedTurretInRange() && !_turrets[RaycastTurrets()]->_isFlying) {
+        UPGRADEMANAGER.UpgradeTurret();
     }
 }
 
@@ -249,7 +254,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
 
     auto rangeNode = NODESMANAGER.getNodeByName(rangeIndicatorNode);
     auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("sandModel");
+    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->Initiate();
@@ -266,20 +271,36 @@ void TurretsManager::SpawnTurret(TurretType type) {
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
 }
 
-void TurretsManager::CalculateRangePositions(shared_ptr<Turret> turret) {
-    std::vector<glm::vec3> corners;
+void TurretsManager::CalculateRangePositions(std::shared_ptr<Turret> turret) {
     auto rangeNodes = turret->_ownerNode->getChildren();
-    for (const auto &node: rangeNodes) {
+    for (const auto& node : rangeNodes) {
         if (node != nullptr) {
-            corners = FrustumCulling::GetRange(node->GetComponent<MeshRenderer>()->_model,
-                                               node->GetTransform()->GetGlobalCTM());
+            // Get the unique XZ vertices from the model
+            std::vector<glm::vec3> uniqueVerticesXZ = node->GetComponent<MeshRenderer>()->_model->GetUniqueVerticesXZ();
+
+            // Check if there are vertices to transform
+            if (!uniqueVerticesXZ.empty()) {
+                // Apply the GlobalCTM to the vertices
+                glm::mat4 globalCTM = node->GetTransform()->GetGlobalCTM();
+                std::vector<glm::vec3> transformedVertices = Transform::ApplyTransformation(uniqueVerticesXZ, globalCTM);
+
+                // Assign the transformed vertices to the turret's range positions
+                if (transformedVertices.size() >= 4) {
+                    turret->_turretRangePositions[0] = transformedVertices[0];
+                    turret->_turretRangePositions[1] = transformedVertices[1];
+                    turret->_turretRangePositions[2] = transformedVertices[2];
+                    turret->_turretRangePositions[3] = transformedVertices[3];
+
+                    // Print the positions
+                    std::cout << "Turret Range Positions: \n";
+                    for (const auto& pos : turret->_turretRangePositions) {
+                        std::cout << "(" << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
+                    }
+                } else {
+                    std::cerr << "Error: Not enough transformed vertices for turret range positions.\n";
+                }
+            }
         }
-    }
-    if (!corners.empty()) {
-        turret->_turretRangePositions[0] = corners[0];
-        turret->_turretRangePositions[1] = corners[1];
-        turret->_turretRangePositions[2] = corners[3];
-        turret->_turretRangePositions[3] = corners[5];
     }
 }
 
@@ -301,7 +322,7 @@ void TurretsManager::PrepareBlueprintTurret() {
 
     NODESMANAGER.createNode(_blueprintTurret, blueprintRange);
     auto rangeIndicator = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("sandModel");
+    rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->SetEnabled(false);
@@ -389,7 +410,7 @@ void TurretsManager::CheckEnemiesInRange() {
 
             glm::vec3 enemyPos = ENEMIESMANAGER._enemies[j]->GetOwnerPosition();
 
-            if (isPointInRectangle(enemyPos, _turrets[i]->_turretRangePositions)) {
+            if (IsPointInTrapezoid(enemyPos, _turrets[i]->_turretRangePositions)) {
                 enemiesInRange.push_back(ENEMIESMANAGER._enemies[j]);
             }
         }
@@ -446,6 +467,36 @@ void TurretsManager::CheckEnemiesInRange() {
             Reload(_turrets[i]);
         }
     }
+}
+
+bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints) {
+    // Ensure trapPoints has exactly 4 points
+    if (trapPoints.size() != 4) {
+        throw std::invalid_argument("Trapezoid must have exactly 4 points.");
+    }
+
+    // Extract vertices of the trapezoid in 2D (x, z)
+    glm::vec2 A(trapPoints[0].x, trapPoints[0].z);
+    glm::vec2 B(trapPoints[1].x, trapPoints[1].z);
+    glm::vec2 C(trapPoints[2].x, trapPoints[2].z);
+    glm::vec2 D(trapPoints[3].x, trapPoints[3].z);
+
+    // Point in 2D (x, z)
+    glm::vec2 P(point.x, point.z);
+
+    // Check if point P lies inside the trapezoid using cross product method
+    // AB x AP, BC x BP, CD x CP, DA x DP must have the same sign for P to be inside the trapezoid
+
+    auto cross2D = [](glm::vec2 v1, glm::vec2 v2) {
+        return v1.x * v2.y - v1.y * v2.x;
+    };
+
+    bool inside = (cross2D(B - A, P - A) >= 0) &&
+        (cross2D(C - B, P - B) >= 0) &&
+        (cross2D(D - C, P - C) >= 0) &&
+        (cross2D(A - D, P - D) >= 0);
+
+    return inside;
 }
 
 void TurretsManager::Reload(const shared_ptr<Turret> &turret) {
@@ -508,35 +559,10 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
                 static std::mt19937 gen(rd());
                 std::uniform_int_distribution<> dis(12, 13);
 
-                RESOURCEMANAGER.GetSoundByID(dis(gen))->PlaySoundSim(turret->_ownerNode);
+                RESOURCEMANAGER.GetSoundByID(dis(gen))->PlaySoundSim(turret->_ownerNode, 0.10f);
             }
         }
     }
-}
-
-bool TurretsManager::isPointInRectangle(const glm::vec3 &M, const std::vector<glm::vec3> &rect) {
-    if (rect.size() != 4) {
-        std::cerr << "Prostokat musi miec dokladnie 4 wierzcholki, a ten ma: " << rect.size() << std::endl;
-        return false;
-    }
-
-    glm::vec3 A = rect[0];
-    glm::vec3 B = rect[1];
-    glm::vec3 D = rect[3];
-
-    // Wektory
-    glm::vec3 AB = B - A;
-    glm::vec3 AD = D - A;
-    glm::vec3 AM = M - A;
-
-    // Iloczyny skalarne
-    float AB_AB = glm::dot(AB, AB);
-    float AM_AB = glm::dot(AM, AB);
-    float AD_AD = glm::dot(AD, AD);
-    float AM_AD = glm::dot(AM, AD);
-
-    // Warunki
-    return (0 < AM_AB && AM_AB < AB_AB) && (0 < AM_AD && AM_AD < AD_AD);
 }
 
 void TurretsManager::MoveTurret() {

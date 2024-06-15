@@ -54,15 +54,15 @@ void Turret::setUp()
     {
         case MINIGUN:
             _fireRate = 0.5;
-            _damage = 35;
+            _damage = 1;
             break;
         case SNIPER:
-            _fireRate = 0.5;
-            _damage = 35;
+            _fireRate = 2;
+            _damage = 10;
             break;
         case RIFLE:
-            _fireRate = 0.5;
-            _damage = 35;
+            _fireRate = 1;
+            _damage = 1;
             break;
     }
 }
@@ -72,6 +72,7 @@ void Turret::Upgrade(glm::vec2 values)
     _damage += values.x;
     _fireRate += values.y;
     _upgradeLevel++;
+    UpdateModel();
 }
 
 void Turret::HandleSpawn()

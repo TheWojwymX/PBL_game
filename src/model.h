@@ -72,6 +72,39 @@ public:
             meshes[i].InstanceDraw(shader, amount);
     }
 
+    std::vector<glm::vec3> GetUniqueVerticesXZ() const
+    {
+        std::vector<glm::vec3> uniqueVertices;
+
+        // Iterate through the meshes and collect unique vertices
+        for (const auto& mesh : meshes)
+        {
+            for (const auto& vertex : mesh.vertices)
+            {
+                glm::vec3 vertex3D(vertex.Position.x, 0.0f, vertex.Position.z);
+
+                // Check if the vertex is already in the uniqueVertices list
+                bool found = false;
+                for (const auto& uniqueVertex : uniqueVertices)
+                {
+                    if (uniqueVertex.x == vertex3D.x && uniqueVertex.z == vertex3D.z)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                // If the vertex is not found, add it to the uniqueVertices
+                if (!found)
+                {
+                    uniqueVertices.push_back(vertex3D);
+                }
+            }
+        }
+
+        return uniqueVertices;
+    }
+
     glm::vec3 GetMinBoundingBox() const {return min;}
     glm::vec3 GetMaxBoundingBox() const {return max;}
 

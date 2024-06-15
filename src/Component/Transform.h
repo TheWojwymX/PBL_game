@@ -47,6 +47,7 @@ public:
     glm::mat4 GetMatrix();
     glm::mat4 Combine(glm::mat4 parentCTM);
 
+    static std::vector<glm::vec3> ApplyTransformation(std::vector<glm::vec3>& vertices, glm::mat4& transform);
     static glm::mat4 CalculateTransformMatrix(glm::vec3 pos, glm::quat rotation, glm::vec3 scale);
     static glm::mat4 Origin();
 

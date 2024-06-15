@@ -233,6 +233,23 @@ glm::mat4 Transform::Combine(glm::mat4 parentCTM) {
     return _globalCTM;
 }
 
+std::vector<glm::vec3> Transform::ApplyTransformation(std::vector<glm::vec3>& vertices, glm::mat4& transform)
+{
+    std::vector<glm::vec3> transformedVertices;
+    transformedVertices.reserve(vertices.size());
+
+    for (const auto& vertex : vertices)
+    {
+        // Convert glm::vec3 to glm::vec4
+        glm::vec4 transformedVertex = transform * glm::vec4(vertex, 1.0f);
+
+        // Convert back to glm::vec3
+        transformedVertices.push_back(glm::vec3(transformedVertex));
+    }
+
+    return transformedVertices;
+}
+
 glm::mat4 Transform::CalculateTransformMatrix(glm::vec3 pos, glm::quat rotation, glm::vec3 scale) {
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), pos);
     glm::mat4 rotationMatrix = glm::mat4_cast(rotation);

@@ -149,8 +149,8 @@ UpgradeManager::UpgradeManager() {
     };
 
     _minigunUpgrades.upgradeValues = {
-        {10.0f, 1.0f},  // 1 (damage, fire rate)
-        {15.0f, 1.5f}   // 2 (damage, fire rate)
+        {1.0f, -0.15f},  // 1 (damage, fire rate)
+        {1.0f, -0.25f}   // 2 (damage, fire rate)
     };
 
     // Sniper Upgrades
@@ -160,8 +160,8 @@ UpgradeManager::UpgradeManager() {
     };
 
     _sniperUpgrades.upgradeValues = {
-        {20.0f, 2.0f},  // 1 (damage, fire rate)
-        {30.0f, 2.5f}   // 2 (damage, fire rate)
+        {5, -0.25f},  // 1 (damage, fire rate)
+        {5, -0.25f}   // 2 (damage, fire rate)
     };
 
     // Rifle Upgrades
@@ -171,8 +171,8 @@ UpgradeManager::UpgradeManager() {
     };
 
     _rifleUpgrades.upgradeValues = {
-        {8.0f, 1.2f},   // 1 (damage, fire rate)
-        {12.0f, 1.7f}   // 2 (damage, fire rate)
+        {1.0f, -0.20f},   // 1 (damage, fire rate)
+        {1.0f, -0.20f}   // 2 (damage, fire rate)
     };
 }
 

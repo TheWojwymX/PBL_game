@@ -1,9 +1,4 @@
-//
-// Created by Jacek on 13.05.2024.
-//
-
-#ifndef SANDBOX_TURRETSMANAGER_H
-#define SANDBOX_TURRETSMANAGER_H
+#pragma once
 
 #define TURRETSMANAGER TurretsManager::getInstance()
 
@@ -48,7 +43,7 @@ public:
 
     TurretType finaltype = MINIGUN;
 
-    float _sideRange = 30.0f;
+    float _sideRange = 50.0f;
     float _forwardRange = 50.0f;
     float _backRange = 2.0f;
     int selectedIndex = -1;
@@ -60,7 +55,7 @@ public:
 
     void CheckEnemiesInRange();
 
-    bool isPointInRectangle(const glm::vec3 &M, const vector<glm::vec3> &rect);
+    bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
 
     void AttackEnemy(const shared_ptr<Turret>& turret, const shared_ptr<Enemy>& enemy);
 
@@ -101,6 +96,3 @@ public:
 
     void ChangeToMovingMode();
 };
-
-
-#endif //SANDBOX_TURRETSMANAGER_H
