@@ -257,7 +257,7 @@
       },
       {
         "ModelName": "DomeStation",
-        "Path": "res/Models/UpgradeStations/base/base_upgrade_stationv4.obj"
+        "Path": "res/Models/UpgradeStations/base/base_upgrade_station.obj"
       },
       {
         "ModelName": "PlayerStation",
@@ -1099,130 +1099,6 @@
             1.0,
             1.0,
             1.0
-          ]
-        }
-      },
-      {
-        "NodeID": 20,
-        "NodeName": "waveSymbol1",
-        "children": [],
-        "components": [
-          {
-            "componentId": 32,
-            "componentType": 5,
-            "model": "waveNotificationModel",
-            "shader": "modelShader",
-            "outlineShader": "outlineShader"
-          }
-        ],
-        "transform": {
-          "position": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "rotation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "scale": [
-            2.5,
-            2.5,
-            2.5
-          ]
-        }
-      },
-      {
-        "NodeID": 21,
-        "NodeName": "waveSymbol2",
-        "children": [],
-        "components": [
-          {
-            "componentId": 33,
-            "componentType": 5,
-            "model": "waveNotificationModel",
-            "shader": "modelShader",
-            "outlineShader": "outlineShader"
-          }
-        ],
-        "transform": {
-          "position": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "rotation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "scale": [
-            2.5,
-            2.5,
-            2.5
-          ]
-        }
-      },
-      {
-        "NodeID": 22,
-        "NodeName": "waveSymbol3",
-        "children": [],
-        "components": [
-          {
-            "componentId": 34,
-            "componentType": 5,
-            "model": "waveNotificationModel",
-            "shader": "modelShader",
-            "outlineShader": "outlineShader"
-          }
-        ],
-        "transform": {
-          "position": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "rotation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "scale": [
-            2.5,
-            2.5,
-            2.5
-          ]
-        }
-      },
-      {
-        "NodeID": 23,
-        "NodeName": "waveSymbol4",
-        "children": [],
-        "components": [
-          {
-            "componentId": 35,
-            "componentType": 5,
-            "model": "waveNotificationModel",
-            "shader": "modelShader",
-            "outlineShader": "outlineShader"
-          }
-        ],
-        "transform": {
-          "position": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "rotation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "scale": [
-            2.5,
-            2.5,
-            2.5
           ]
         }
       },

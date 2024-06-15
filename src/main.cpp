@@ -252,10 +252,6 @@ int main(int, char**)
             }
 
             if (INPUT.IsKeyPressed(GLFW_KEY_RIGHT_BRACKET) && !TUTORIALMANAGER._isTutorialEnded) {
-                NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
-                        ENEMIESMANAGER._spawnersPositions[0][0], 0, ENEMIESMANAGER._spawnersPositions[0][1]));
-                NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
-                        ENEMIESMANAGER._spawnersPositions[1][1], 0, ENEMIESMANAGER._spawnersPositions[0][1]));
                 TUTORIALMANAGER.SkipTutorial();
                 NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
             }

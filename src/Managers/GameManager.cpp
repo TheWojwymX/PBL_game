@@ -42,6 +42,8 @@ void GameManager::RemoveMaterials(glm::ivec2 mat)
 void GameManager::StartGame()
 {
     _isInMainMenu = false;
+    GAMEMANAGER._editMode = false;
+    INPUT.SetCursorMode(false);
 }
 
 void GameManager::Evacuate()
@@ -78,7 +80,6 @@ void GameManager::InitPhase()
     if(currentPhase == 0) // kopanie
     {
         roundNumber++;
-        ENEMIESMANAGER.SetSymbolsForWave();
     }
     else // obrona
     {

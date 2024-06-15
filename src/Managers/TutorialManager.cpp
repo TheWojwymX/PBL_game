@@ -16,8 +16,6 @@ void TutorialManager::Init() {
     _player = NODESMANAGER.getNodeByName("player");
     _paratrooper = NODESMANAGER.getNodeByName("Paratrooper");
     _paratrooper->GetComponent<MeshRenderer>()->_disableModel = true;
-    NODESMANAGER.getNodeByName("waveSymbol1")->GetTransform()->SetPosition(glm::vec3(
-            ENEMIESMANAGER._spawnersPositions[0][0], 320, ENEMIESMANAGER._spawnersPositions[0][1]));
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
     HUD._actualText = _messages[_actualMessage];
 }

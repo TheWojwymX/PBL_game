@@ -60,8 +60,6 @@ public:
 
     void ChooseModelBasedOnDistance();
 
-    void SetSymbolsForWave();
-
     void ReturnToComingForNormalDestination(shared_ptr<Enemy> enemy);
 
     void CheckIfAtWalls(shared_ptr<Enemy> enemy);

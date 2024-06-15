@@ -45,13 +45,6 @@ void EnemiesManager::Init() {
         _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
     }
 
-    //Setup wave "!" symbols
-    for (int i = 0; i < 4; i++)
-    {
-        NODESMANAGER.getNodeByName("waveSymbol" + to_string(i + 1))->GetTransform()->SetPosition(
-                glm::vec3(_spawnersPositions[i][0], 0, _spawnersPositions[i][1]));
-    }
-
     _roundsInfo[0] = {{0, 3, ANT}, {0, 3, BEETLE}, {0, 3, WASP}}; // TEST
 
     _roundsInfo[1] = {{2, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
@@ -267,28 +260,6 @@ void EnemiesManager::ChooseModelBasedOnDistance() {
             if(_enemies[i]->_ownerNode->GetComponent<MeshRenderer>()->_model != normalModel){
                 _enemies[i]->_ownerNode->GetComponent<MeshRenderer>()->_model = normalModel;
             }
-        }
-    }
-}
-
-void EnemiesManager::SetSymbolsForWave()
-{
-    // First hide all the symbols
-    for (int i = 0; i < 4; i++) {
-        NODESMANAGER.getNodeByName("waveSymbol" + to_string(i + 1))->GetTransform()->SetPosition(
-                glm::vec3(_spawnersPositions[i][0], 0, _spawnersPositions[i][1]));
-    }
-
-    // Check if the current round number exists in the _roundsInfo
-    if (_roundsInfo.find(GAMEMANAGER.roundNumber) != _roundsInfo.end())
-    {
-        auto &roundInfo = _roundsInfo[GAMEMANAGER.roundNumber];
-        for (const auto &spawnerInfo : roundInfo) {
-            int spawnerIndex = std::get<0>(spawnerInfo);
-            // Show the symbol for this spawner
-            NODESMANAGER.getNodeByName(
-                    "waveSymbol" + std::to_string(spawnerIndex + 1))->GetTransform()->SetPosition(
-                    glm::vec3(_spawnersPositions[spawnerIndex][0], 320, _spawnersPositions[spawnerIndex][1]));
         }
     }
 }
