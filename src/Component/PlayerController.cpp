@@ -67,7 +67,7 @@ void PlayerController::Update() {
         //cout << _jetpackFuel << endl;
     }
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_R)){
+    if(INPUT.IsKeyPressed(GLFW_KEY_E)){
         GetFuelForMaterials();
     }
 }
