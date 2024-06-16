@@ -2,8 +2,8 @@
 #include "HUD/PageManager.h"
 
 void PDAPage::Init() {
-    SetBackgroundImagePath(_PDABackgroundPath);
-
+    SetBackgroundImagePath(_backgroundImagePath);
+    SetCorners(glm::vec2(-25, -25), glm::vec2(25, 25));
     Page::Init();
 }
 

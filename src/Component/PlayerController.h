@@ -119,4 +119,5 @@ private:
 
     glm::vec3 CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle);
 
+    void HandleGravity();
 };
