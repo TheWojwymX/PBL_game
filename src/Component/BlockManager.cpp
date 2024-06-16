@@ -97,6 +97,17 @@ void BlockManager::Init() {
     UpdateRenderedChunks();
 }
 
+void BlockManager::Reset()
+{
+    GenerateMap(0.5f, 7);
+    GenerateResources();
+    ApplyMasks();
+    GenerateTopLayer(glm::ivec2(50, 50), glm::ivec2(500, 500), glm::ivec2(50, 50));
+    UpdateBlocksVisibility();
+    RefreshVisibleBlocks();
+    UpdateRenderedChunks();
+}
+
 void BlockManager::UpdateInstanceRenderer() {
     std::vector<glm::vec3> instancedSandPosition;
     std::vector<glm::vec3> instancedPlasticPosition;
