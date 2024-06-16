@@ -64,7 +64,7 @@ void PlayerController::Input() {
 void PlayerController::Update() {
     if(GAMEMANAGER._paused || PAGEMANAGER._isInUpgradeMenu){
         _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
-        return;
+        HandleGravity();
     }else{
         HandleMovement();
         HandleGlowstick();
@@ -108,6 +108,15 @@ void PlayerController::CheckGrounded(glm::vec3 separationVector) {
     else {
         _isGrounded = false;
     }
+}
+
+void PlayerController::HandleGravity() {
+    _velocity.y += _gravity * TIME.GetDeltaTime();
+    glm::vec3 movementVector = _velocity * TIME.GetDeltaTime();
+    movementVector = glm::clamp(movementVector, -glm::vec3(0.999f), glm::vec3(0.999f));
+    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
+    _ownerTransform->AddPosition(collisionResult.first);
+    CheckGrounded(collisionResult.second);
 }
 
 void PlayerController::HandleMovement() {

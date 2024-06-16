@@ -13,7 +13,7 @@ public:
 
     void HidePDAPage();
 
-    const char* _PDABackgroundPath = "res/Images/PDA/placeholderPDAMenu.png";
+    const char* _backgroundImagePath = "res/Images/PDA/placeholderPDAMenu.png";
 
 };
 

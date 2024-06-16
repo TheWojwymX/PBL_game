@@ -50,8 +50,17 @@ void TurretsManager::ChangeToSpawningMode(){
 
 void TurretsManager::PlayerActions(){
 
-    if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim
-        && _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
+    auto playerPosY = _player->GetTransform()->GetPosition().y;
+
+    if(_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && _isInTurretChoiceMenu){
+        _PDAController->HideImmediately();
+        _isInTurretChoiceMenu = false;
+        PAGEMANAGER._PDAPage->HidePDAPage();
+    }
+
+    if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim &&
+        !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && playerPosY >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
+        std::cout << "wykona sie";
         _PDAController->_playShowAnim = true;
         HUD._shouldShowCrosshair = false;
         PAGEMANAGER._PDAPage->DisplayPDAPage();
@@ -59,7 +68,7 @@ void TurretsManager::PlayerActions(){
         HideBlueprintTurret();
     }
     else if (INPUT.IsKeyPressed(GLFW_KEY_4) && !_PDAController->_isHidden &&
-        _player->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
+            playerPosY >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
         _PDAController->HideImmediately();
         HUD._shouldShowCrosshair = true;
         PAGEMANAGER._PDAPage->HidePDAPage();
@@ -187,7 +196,10 @@ void TurretsManager::SpawnTurret(TurretType type) {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 360.0f);
 
-    flare->GetTransform()->SetPosition(_blueprintTurret->GetTransform()->GetPosition());
+    auto posX = _blueprintTurret->GetTransform()->GetPosition().x;
+    auto posY = _blueprintTurret->GetTransform()->GetPosition().y + 0.2;
+    auto posZ = _blueprintTurret->GetTransform()->GetPosition().z;
+    flare->GetTransform()->SetPosition(glm::vec3(posX, posY, posZ));
     flare->GetTransform()->SetScale(glm::vec3(0.1, 0.1, 0.1));
     flare->GetTransform()->SetRotation(glm::vec3(flare->GetTransform()->GetRotation().x + 90, flare->GetTransform()->GetRotation().y + dis(gen),
                                                  flare->GetTransform()->GetRotation().z));

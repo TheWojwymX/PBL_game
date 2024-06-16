@@ -46,9 +46,17 @@ bool GameManager::HasMaterials(glm::ivec2 mat) {
     return mat.x <= _plastic && mat.y <= _metal;
 }
 
-void GameManager::RemoveMaterials(glm::ivec2 mat) {
-    _plastic -= mat.x;
-    _metal -= mat.y;
+void GameManager::RemoveMaterials(glm::ivec2 mat)
+{
+    if(mat.x != 0){
+        _plastic -= mat.x;
+        HUD._isPlasticInAnim = true;
+    }
+
+    if(mat.y != 0){
+        _metal -= mat.y;
+        HUD._isMetalInAnim = true;
+    }
 }
 
 void GameManager::StartGame() {
