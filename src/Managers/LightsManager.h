@@ -16,6 +16,7 @@ public:
     LightsManager &operator=(const LightsManager &) = delete;
 
     void Update();
+    void Reset();
     void InitLights();
     void AddGlowstick();
     void UpdateGlowsticks();

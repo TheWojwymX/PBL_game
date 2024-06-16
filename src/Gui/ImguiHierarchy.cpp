@@ -52,7 +52,7 @@ void ImguiHierarchy::draw(std::shared_ptr<Node>& root, std::shared_ptr<Node> sel
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.7f, 0.1f, 0.1f, 1.0f });
     if (ImGui::Button("Remove Node") == true)
     {
-        root->removeChild(selectedObject);
+        root->RemoveChild(selectedObject);
         selectedObject = root;
     }
     ImGui::PopStyleColor();

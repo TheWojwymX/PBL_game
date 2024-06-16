@@ -14,6 +14,11 @@ void LightsManager::Update() {
     UpdateGlowsticks();
 }
 
+void LightsManager::Reset()
+{
+    glowstickCount = 0;
+}
+
 void LightsManager::InitLights() {
     instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
     instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
@@ -271,6 +276,8 @@ void LightsManager::UpdateGlowsticks() {
         instancedPlasticShader->setBool(name + ".isActive", true);
         instancedPlasticShader->setVec3(name + ".position", visibleGlowsticks[i]);
         instancedPlasticShader->setVec3(name + ".color", visibleGlowstickColors[i]);
+
+        std::cout << "Wtf" << std::endl;
 
         shovelShader->use();
         shovelShader->setBool(name + ".isActive", true);

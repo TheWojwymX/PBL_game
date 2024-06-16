@@ -1,5 +1,4 @@
-#ifndef OPENGLGP_NODESMANAGER_H
-#define OPENGLGP_NODESMANAGER_H
+#pragma once
 
 #define NODESMANAGER NodesManager::getInstance()
 
@@ -32,5 +31,3 @@ private:
 
     std::vector<std::shared_ptr<Node>> nodes;
 };
-
-#endif //OPENGLGP_NODESMANAGER_H

@@ -35,6 +35,8 @@ public:
 
     void Init() override;
 
+    void Reset();
+
     bool RayIntersectsBlock(float rayLength, int radius, float digPower);
     std::pair<glm::vec3, glm::vec3> CheckEntityCollision(glm::vec3 entityPos, glm::vec3 movementVector, float entityWidth, float entityHeight);
     std::tuple<bool, BlockData*, glm::vec3> CheckSimpleEntityCollision(glm::vec3 entityPos);

@@ -50,7 +50,7 @@ public:
     void RenderShadows(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
     void addToInspector(ImguiMain* imguiMain);
-    void removeChild(std::shared_ptr<Node> child);
+    void RemoveChild(std::shared_ptr<Node> child);
     std::shared_ptr<Node> GetParent() const { return _parent.lock(); }
 
     template <typename T>

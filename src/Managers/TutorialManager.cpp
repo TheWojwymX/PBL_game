@@ -32,7 +32,7 @@ void TutorialManager::Update() {
             if(_player->GetComponent<PlayerController>()->_isGrounded){
                DisplayAndChangeMessage();
                _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
-               NODESMANAGER.getNodeByName("root")->removeChild(_paratrooper);
+               NODESMANAGER.getNodeByName("root")->RemoveChild(_paratrooper);
                 HUD._shouldShowCrosshair = true;
                 HUD._shouldShowMaterials = true;
             }

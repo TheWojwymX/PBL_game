@@ -189,7 +189,7 @@ void ParticleGenerator::RenderParticles() {
     if (threadCount >= 3) {
         if (toDelete) {
             generateParticle = false;
-            GAMEMANAGER.root->removeChild(_ownerNode);
+            GAMEMANAGER.root->RemoveChild(_ownerNode);
         }
     }
 }

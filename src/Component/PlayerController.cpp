@@ -56,6 +56,10 @@ void PlayerController::Init() {
 }
 
 void PlayerController::Input() {
+    if (INPUT.IsKeyPressed(GLFW_KEY_8)) {
+        _blockManagerRef->Reset();
+        LIGHTSMANAGER.Reset();
+    }
     MovementInput();
     InteractionInput();
     JetpackInput();

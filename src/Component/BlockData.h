@@ -22,6 +22,7 @@ enum class BlockType {
 class BlockData {
 public:
     BlockData(BlockType blockType, glm::ivec3 posID, float startHP, bool invincible, float density, std::variant<std::weak_ptr<BlockManager>, std::weak_ptr<CloudManager>> blockManager);
+    ~BlockData();
 
     BlockType GetBlockType() const { return _blockType; }
     glm::ivec3 GetPosID() const { return _posID; }
