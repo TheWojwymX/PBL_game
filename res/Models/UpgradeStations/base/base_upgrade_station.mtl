@@ -1,25 +1,15 @@
 # Blender 4.1.1 MTL File: 'base_upgrade_station.blend'
 # www.blender.org
 
-newmtl Material.001
+newmtl metal
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.384474 0.384474 0.384474
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 1
-
-newmtl Material.002
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.190177 0.564962 0.800654
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 1
+map_Kd metal.png
 
 newmtl palette.001
 Ns 0.000000
@@ -30,6 +20,16 @@ Ni 1.500000
 d 1.000000
 illum 1
 map_Kd base_upgrade_station_v2.png
+
+newmtl plastic
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd plastik.png
 
 newmtl worki
 Ns 0.000000
