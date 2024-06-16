@@ -1,32 +1,43 @@
-#pragma once
-
 #include "GameManager.h"
 #include "../Enemies/EnemiesManager.h"
 #include "../HUD/PageManager.h"
 #include "../Managers/TutorialManager.h"
 #include "Managers/NodesManager.h"
 
-GameManager &GameManager::GetInstance() {
+GameManager::GameManager() {
+    // Starting time for digging phase
+    float digPhaseStartTime = 30.0f;
+    // Percentage separation
+    float digPercentage = 0.60f;
+    float fightPercentage = 0.40f;
+
+    // Initialize _phaseTimes with calculated values for 10 rounds
+    for (int i = 0; i < 10; ++i) {
+        float digPhaseTime = digPhaseStartTime + i * 10;  // Dig phase starts at 30 and increases by 10 each round
+        float fightPhaseTime = digPhaseTime * fightPercentage / digPercentage;  // Calculate fight phase time based on percentage
+        _phaseTimes.push_back({ digPhaseTime, fightPhaseTime });
+        //std::cout << "Round " << i + 1 << ": Digging Phase Time = " << digPhaseTime
+        //   << " seconds, Fighting Phase Time = " << fightPhaseTime << " seconds" << std::endl;
+    }
+}
+
+GameManager& GameManager::GetInstance() {
     static GameManager instance;
     return instance;
 }
 
-void GameManager::pressToSkipPhase()
-{
-    if(INPUT.IsKeyPressed(80))
-    {
-        currentTime = 31;
+void GameManager::pressToSkipPhase() {
+    if (INPUT.IsKeyPressed(80)) {
+        _currentTime = 31;
     }
 }
 
-void GameManager::AddMetal(int amount)
-{
+void GameManager::AddMetal(int amount) {
     HUD._isMetalInAnim = true;
     _metal += amount;
 }
 
-void GameManager::AddPlastic(int amount)
-{
+void GameManager::AddPlastic(int amount) {
     HUD._isPlasticInAnim = true;
     _plastic += amount;
 }
@@ -35,60 +46,63 @@ bool GameManager::HasMaterials(glm::ivec2 mat) {
     return mat.x <= _plastic && mat.y <= _metal;
 }
 
-void GameManager::RemoveMaterials(glm::ivec2 mat)
-{
+void GameManager::RemoveMaterials(glm::ivec2 mat) {
     _plastic -= mat.x;
     _metal -= mat.y;
 }
 
-void GameManager::StartGame()
-{
+void GameManager::StartGame() {
     _isInMainMenu = false;
     GAMEMANAGER._editMode = false;
     INPUT.SetCursorMode(false);
 }
 
-void GameManager::Evacuate()
-{
+void GameManager::Evacuate() {
     std::cout << "Evacuation in GAMEMANAGER" << std::endl;
 }
 
-bool GameManager::IsUnderground()
-{
-    if(_playerNode == nullptr) _playerNode = NODESMANAGER.getNodeByName("player");
+bool GameManager::IsUnderground() {
+    if (_playerNode == nullptr) _playerNode = NODESMANAGER.getNodeByName("player");
 
     float playerY = _playerNode->GetTransform()->GetPosition().y;
-
     return playerY < _groundLevel;
 }
 
-void GameManager::Update()
+float GameManager::GetPhaseTime()
 {
-    if(TUTORIALMANAGER._isFreePlay){
-        currentTime += TIME.GetDeltaTime();
+    // Ensure _currentRound is within valid range
+    int roundIndex = _roundNumber % _phaseTimes.size();
+
+    // Return the phase time based on current phase
+    if (_currentPhase == Phase::DIG) {
+        return _phaseTimes[roundIndex].first;
+    }
+    else { // Phase::DEFEND
+        return _phaseTimes[roundIndex].second;
+    }
+}
+
+void GameManager::Update() {
+    if (TUTORIALMANAGER._isFreePlay) {
+        _currentTime += TIME.GetDeltaTime();
         pressToSkipPhase();
 
-        if (currentTime >= phaseTime)
-        {
-            currentTime = 0.0f;
-            currentPhase = (currentPhase + 1) % 2;
+        if (_currentTime >= GetPhaseTime()) {
+            _currentTime = 0.0f;
+            _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
             InitPhase();
         }
     }
 }
 
-void GameManager::InitPhase()
-{
-    if(currentPhase == 0) // kopanie
-    {
-        roundNumber++;
+void GameManager::InitPhase() {
+    if (_currentPhase == Phase::DIG) {
+        _roundNumber++;
     }
-    else // obrona
-    {
-        ENEMIESMANAGER.SpawnEnemiesForRound(roundNumber);
+    else { // Phase::DEFEND
+        ENEMIESMANAGER.SpawnEnemiesForRound(_roundNumber);
     }
 }
-
 
 void GameManager::Init() {
     if (_isFullscreen) {

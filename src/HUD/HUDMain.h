@@ -44,8 +44,6 @@ public:
 
     std::vector<std::shared_ptr<ImageRenderer>> _baseHPImages;
     std::vector<std::shared_ptr<ImageRenderer>> _baseInsideImages;
-    ImageRenderer _pointer;
-    ImageRenderer _pointer2;
 
     glm::vec2 hpTopRight = glm::vec2(0.952f, 0.952f);
     glm::vec2 hpBottomRight = glm::vec2(0.952f, 0.5f);
@@ -94,10 +92,6 @@ public:
 
 private:
     std::shared_ptr<Node> _playerNode;
-    std::shared_ptr<Camera> _cameraRef;
-
-    void PointerGUIManager();
-    void SetPointerRotation();
 
     void PlayMetalBump();
 

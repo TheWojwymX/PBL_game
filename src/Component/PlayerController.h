@@ -27,12 +27,6 @@ public:
 
     void HandleGlowstick();
 
-    void UpgradeRadius();
-
-    void UpgradeReach();
-
-    void UpgradeSpeed();
-
     void SetGravity(float gravity);
 
     void RestoreFuel() { _jetpackFuel = _maxJetpackFuel; }
@@ -88,10 +82,6 @@ private:
     void HandleJetpack();
     void MovementInput();
     void InteractionInput();
-
-    void increaseRadiusLevel() { _radius = _radius + 1; }
-    void increaseReachLevel() { _reach = _reach + 1; }
-    void increaseSpeedLevel() { _speed = _speed + 1; }
 
     int _radiusUpgradeCost = 10;
     int _reachUpgradeCost = 10;

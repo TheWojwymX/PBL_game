@@ -116,7 +116,7 @@ void TutorialManager::Update() {
         //Konczy sie po wykopaniu materialow
         case 6:
             ControllHud(1,1,1,0,0,0);
-            if(GAMEMANAGER._metal >= 1 && GAMEMANAGER._plastic >= 1){
+            if(GAMEMANAGER.GetMetal() >= 1 && GAMEMANAGER.GetPlastic() >= 1) {
                 DisplayAndChangeMessage();
                 HUD._shouldShowFuel = true;
             }

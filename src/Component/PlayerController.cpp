@@ -308,59 +308,6 @@ void PlayerController::addToInspector(ImguiMain *imguiMain) {
     }
 }
 
-void PlayerController::UpgradeRadius(){
-    if (_radius < 10){
-
-        if(GAMEMANAGER._plastic < _radiusUpgradeCost){
-            std::cout << "Nie ma dosc pieniedzy na ulepsznie radiusa" << std::endl;
-            return;
-        }else{
-            GAMEMANAGER._plastic -= _radiusUpgradeCost;
-        }
-
-        increaseRadiusLevel();
-        cout << "Radius upgraded" << endl;
-    }
-    else cout << "MAX radius Level" << endl;
-}
-
-void PlayerController::UpgradeReach(){
-    if (_reach < 30) {
-
-        if(GAMEMANAGER._plastic < _reachUpgradeCost){
-            std::cout << "Nie ma dosc pieniedzy na ulepsznie reacha" << std::endl;
-            return;
-        }else{
-            GAMEMANAGER._plastic -= _reachUpgradeCost;
-        }
-
-        increaseReachLevel();
-        cout << "Reach upgraded" << endl;
-    }
-    else cout << "MAX reach Level" << endl;
-}
-
-void PlayerController::UpgradeSpeed(){
-    if (_speed < 15) {
-
-        if(_speed == 8.0){
-            increaseSpeedLevel();
-        }
-        else{
-            if(GAMEMANAGER._plastic < _speedUpgradeCost){
-                std::cout << "Nie ma dosc pieniedzy na ulepsznie speeda" << std::endl;
-                return;
-            }else{
-                GAMEMANAGER._plastic -= _speedUpgradeCost;
-            }
-        }
-
-        increaseSpeedLevel();
-        cout << "Speed upgraded" << endl;
-    }
-    else cout << "MAX speed Level" << endl;
-}
-
 void PlayerController::HandleGlowstick() {
     // Get delta time in seconds
     float deltaTime = TIME.GetDeltaTime();
