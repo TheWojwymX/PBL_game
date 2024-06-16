@@ -17,7 +17,7 @@ struct Upgrades {
 
 struct TurretUpgrades {
     std::vector<glm::ivec2> upgradeCosts;
-    std::vector<glm::vec2> upgradeValues;
+    std::vector<glm::vec4> upgradeValues;
 };
 
 class UpgradeManager {
@@ -77,6 +77,10 @@ private:
     TurretUpgrades _rifleUpgrades;
 
     std::shared_ptr<PlayerController> _playerRef;
+
+    void InitPlayerUpgrades();
+    void InitDomeUpgrades();
+    void InitTurretUpgrades();
 
     float timeLooking = 0.0f;
 };

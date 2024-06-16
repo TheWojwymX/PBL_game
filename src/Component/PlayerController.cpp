@@ -247,6 +247,7 @@ void PlayerController::JetpackInput() {
     }
     else {
         // If the space key is not held down, reset the state
+        RESOURCEMANAGER.GetSoundByID(16)->StopSound();
         _spaceKeyWasPressed = false;
         _isUsingJetpack = false;
     }

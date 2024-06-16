@@ -15,8 +15,9 @@ public:
 
     void Update() override;
 
-    void setUp();
-    void Upgrade(glm::vec2 values);
+    void SetUp(glm::vec4 stats);
+    void Upgrade(glm::vec4 values);
+    void CalculateRangePositions();
 
     void SetTurretType(TurretType type) { _turretType = type; }
     TurretType GetTurretType() { return _turretType; }
@@ -24,6 +25,8 @@ public:
     std::pair<int, float> GetSound();
     float GetDamage() { return _damage; }
     float GetFireRate() { return _fireRate; }
+    float GetSideRange() { return _sideRange; }
+    float GetForwardRange() { return _forwardRange; }
 
     bool _isFlying = false;
     float _flyingSpeed = 2;
@@ -48,6 +51,9 @@ private:
     std::vector<std::pair<int, float>> _sounds;
     float _fireRate;
     float _damage;
+    float _sideRange;
+    float _forwardRange;
+
 
     void HandleSpawn();
     void UpdateModel();

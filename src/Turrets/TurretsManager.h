@@ -41,9 +41,6 @@ public:
 
     float _distanceToAnotherTurret = 1.5f;
 
-    float _sideRange = 50.0f;
-    float _forwardRange = 50.0f;
-    float _backRange = 2.0f;
     int selectedIndex = -1;
 
     int RaycastTurrets();
@@ -64,8 +61,6 @@ public:
     int _indexOfMovingTurret;
 
     void PlaceMovingTurret();
-
-    void CalculateRangePositions(shared_ptr<Turret> turret);
 
     shared_ptr<Node> _player = NODESMANAGER.getNodeByName("player");
     shared_ptr<Node> _blueprintTurret = make_shared<Node>();
@@ -89,6 +84,9 @@ public:
 private:
     std::vector<glm::ivec2> _turretCosts;
     TurretType _turretType;
+    std::shared_ptr<Turret> _heldTurret = nullptr;
+    std::vector<glm::vec4> _turretStats;
 
     bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
+    void InitTurretStats();
 };

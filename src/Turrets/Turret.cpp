@@ -48,31 +48,23 @@ void Turret::Update() {
     HandleSpawn();
 }
 
-void Turret::setUp()
+void Turret::SetUp(glm::vec4 stats)
 {
-    switch(_turretType)
-    {
-        case MINIGUN:
-            _fireRate = 0.5;
-            _damage = 1;
-            break;
-        case SNIPER:
-            _fireRate = 2;
-            _damage = 10;
-            break;
-        case RIFLE:
-            _fireRate = 1;
-            _damage = 1;
-            break;
-    }
+    _fireRate = stats.x;
+    _damage = stats.y;
+    _sideRange = stats.z;
+    _forwardRange = stats.w;
 }
 
-void Turret::Upgrade(glm::vec2 values)
+void Turret::Upgrade(glm::vec4 values)
 {
     _damage += values.x;
     _fireRate += values.y;
+    _sideRange += values.z;
+    _forwardRange += values.w;
     _upgradeLevel++;
     UpdateModel();
+    CalculateRangePositions();
 }
 
 std::pair<int, float> Turret::GetSound() {
@@ -104,6 +96,7 @@ void Turret::HandleSpawn()
             _ownerTransform->SetPosition(_finalPosition);
 
             UpdateModel();
+            CalculateRangePositions();
             SetSound();
 
             _flare->GetComponent<MeshRenderer>()->_disableModel = true;
@@ -226,3 +219,31 @@ void Turret::SetSound() {
     }
 }
 
+void Turret::CalculateRangePositions() {
+    auto rangeNodes = _ownerNode->getChildren();
+    for (const auto& node : rangeNodes) {
+        if (node != nullptr) {
+            // Get the unique XZ vertices from the model
+            std::vector<glm::vec3> uniqueVerticesXZ = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal")->GetUniqueVerticesXZ();
+
+            // Check if there are vertices to transform
+            if (!uniqueVerticesXZ.empty()) {
+                // Apply the GlobalCTM to the vertices
+                glm::mat4 globalCTM = node->GetTransform()->GetGlobalCTM();
+                std::vector<glm::vec3> transformedVertices = Transform::ApplyTransformation(uniqueVerticesXZ, globalCTM);
+
+                // Assign the transformed vertices to the turret's range positions
+                if (transformedVertices.size() >= 4) {
+                    _turretRangePositions[0] = transformedVertices[0];
+                    _turretRangePositions[1] = transformedVertices[1];
+                    _turretRangePositions[2] = transformedVertices[2];
+                    _turretRangePositions[3] = transformedVertices[3];
+
+                }
+                else {
+                    std::cerr << "Error: Not enough transformed vertices for turret range positions.\n";
+                }
+            }
+        }
+    }
+}

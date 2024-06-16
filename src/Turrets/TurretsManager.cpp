@@ -13,7 +13,7 @@ void TurretsManager::Init() {
             glm::ivec2(2, 2), // Sniper
             glm::ivec2(3, 3)  // Rifle
     };
-
+    InitTurretStats();
 
     for (int i = 0; i < COMPONENTSMANAGER.GetComponents().size(); i++) {
         if (COMPONENTSMANAGER.GetComponents()[i] != nullptr && COMPONENTSMANAGER.GetComponents()[i]->_type == ComponentType::TURRET) {
@@ -28,7 +28,12 @@ void TurretsManager::Init() {
 void TurretsManager::ShowBlueprintTurret() {
     _shouldEnableBlueprintTurret = true;
     _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(true);
-    NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(true);
+    auto blueprintRange = NODESMANAGER.getNodeByName("BlueprintRange");
+    if(_heldTurret != nullptr)
+        blueprintRange->GetTransform()->SetScale(glm::vec3(_heldTurret->GetSideRange(), 0.2f, _heldTurret->GetForwardRange()));
+    else
+        blueprintRange->GetTransform()->SetScale(glm::vec3(_turretStats[_turretType].z, 0.2f, _turretStats[_turretType].w));
+    blueprintRange->GetComponent<MeshRenderer>()->SetEnabled(true);
     _isInBlueprintMode = true;
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
 }
@@ -39,6 +44,7 @@ void TurretsManager::HideBlueprintTurret() {
     NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(false);
     _isInBlueprintMode = false;
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
+    _heldTurret = nullptr;
 }
 
 void TurretsManager::ChangeToSpawningMode() {
@@ -118,7 +124,7 @@ void TurretsManager::PlayerActions() {
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
         _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd(_turrets[_indexOfMovingTurret]->_ownerNode);
-        _turretType = _turrets[_indexOfMovingTurret]->GetTurretType();
+        _heldTurret = _turrets[_indexOfMovingTurret];
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
         PlaceMovingTurret();
@@ -246,7 +252,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     newTurret->Initiate();
     newTurret->_isFlying = true;
     newTurret->SetTurretType(type);
-    newTurret->setUp();
+    newTurret->SetUp(_turretStats[_turretType]);
     newTurret->_finalRotation = _blueprintTurret->GetTransform()->GetRotation();
     newTurret->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
     newTurret->_flare = NODESMANAGER.getNodeByName(nameOfFlare);
@@ -269,42 +275,13 @@ void TurretsManager::SpawnTurret(TurretType type) {
     rangeIndicator->Initiate();
     rangeIndicator->SetEnabled(false);
     rangeNode->AddComponent(rangeIndicator);
-    rangeNode->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
+    rangeNode->GetTransform()->SetScale(glm::vec3(newTurret->GetSideRange(), 0.2f, newTurret->GetForwardRange()));
+    rangeNode->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->UpdateGlobalCTM();
     rangeNode->GetTransform()->UpdateGlobalCTM();
 
-    CalculateRangePositions(newTurret);
-
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
-}
-
-void TurretsManager::CalculateRangePositions(std::shared_ptr<Turret> turret) {
-    auto rangeNodes = turret->_ownerNode->getChildren();
-    for (const auto &node: rangeNodes) {
-        if (node != nullptr) {
-            // Get the unique XZ vertices from the model
-            std::vector<glm::vec3> uniqueVerticesXZ = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal")->GetUniqueVerticesXZ();
-
-            // Check if there are vertices to transform
-            if (!uniqueVerticesXZ.empty()) {
-                // Apply the GlobalCTM to the vertices
-                glm::mat4 globalCTM = node->GetTransform()->GetGlobalCTM();
-                std::vector<glm::vec3> transformedVertices = Transform::ApplyTransformation(uniqueVerticesXZ, globalCTM);
-
-                // Assign the transformed vertices to the turret's range positions
-                if (transformedVertices.size() >= 4) {
-                    turret->_turretRangePositions[0] = transformedVertices[0];
-                    turret->_turretRangePositions[1] = transformedVertices[1];
-                    turret->_turretRangePositions[2] = transformedVertices[2];
-                    turret->_turretRangePositions[3] = transformedVertices[3];
-
-                } else {
-                    std::cerr << "Error: Not enough transformed vertices for turret range positions.\n";
-                }
-            }
-        }
-    }
 }
 
 void TurretsManager::PrepareBlueprintTurret() {
@@ -332,7 +309,8 @@ void TurretsManager::PrepareBlueprintTurret() {
     rangeIndicator->Initiate();
 
     NODESMANAGER.getNodeByName(blueprintRange)->AddComponent(rangeIndicator);
-    NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
+    NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->SetScale(glm::vec3(50.0f, 0.2f, 50.0f));
+    NODESMANAGER.getNodeByName(blueprintRange)->GetTransform()->AddPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 }
 
 
@@ -341,20 +319,73 @@ void TurretsManager::UpdateBlueprintTurret() {
     if (!_shouldEnableBlueprintTurret) return;
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
+    std::string blueprintRange = "BlueprintRange";
+    char turretLevel = 1;
+    if (_heldTurret != nullptr)
+        turretLevel = _heldTurret->GetUpgradeLevel();
     switch (_turretType) {
-        case MINIGUN:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName(
-                    "Turret_Minigun_Level1");
+        case MINIGUN: {
+            switch (turretLevel) {
+            case 0:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
+                break;
+            case 1:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level2");
+                break;
+            case 2:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level3");
+                break;
+            default:
+                std::cerr << "Unknown level for Minigun turret: " << turretLevel << std::endl;
+                break;
+            }
             break;
-
-        case SNIPER:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName(
-                    "Turret_Sniper_Level1");
+        }
+        case SNIPER: {
+            switch (turretLevel) {
+            case 0:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level1");
+                break;
+            case 1:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level2");
+                break;
+            case 2:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level3");
+                break;
+            default:
+                std::cerr << "Unknown level for Sniper turret: " << turretLevel << std::endl;
+                break;
+            }
             break;
-
-        case RIFLE:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName(
-                    "Turret_Rifle_Level1");
+        }
+        case RIFLE: {
+            switch (turretLevel) {
+            case 0:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level1");
+                break;
+            case 1:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level2");
+                break;
+            case 2:
+                NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model =
+                    RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level3");
+                break;
+            default:
+                std::cerr << "Unknown level for Rifle turret: " << turretLevel << std::endl;
+                break;
+            }
+            break;
+        }
+        default:
+            std::cerr << "Unknown turret type: " << _heldTurret->GetTurretType() << std::endl;
             break;
     }
 
@@ -371,26 +402,12 @@ void TurretsManager::UpdateBlueprintTurret() {
         turretPosition.z = turretFlatPosition.y;
     }
     _blueprintTurret->GetTransform()->SetPosition(turretPosition);
-
     _blueprintTurret->GetTransform()->SetScale(0.3);
 
     glm::vec3 lookAtPoint = turretPosition + forwardVector;
     lookAtPoint.y = turretPosition.y;
     glm::vec3 lookDirection = glm::normalize(lookAtPoint - turretPosition);
     _blueprintTurret->GetTransform()->LookAt(lookDirection);
-
-    //positions counting
-    glm::vec3 BPPosition = _blueprintTurret->GetTransform()->GetPosition();
-    glm::vec3 upVec = glm::vec3(0, 1, 0);
-    glm::vec3 forwardVec = _blueprintTurret->GetTransform()->GetRotation() * glm::vec3(0, 0, 1);
-    glm::vec3 backwardVec = -forwardVec;
-    glm::vec3 leftVec = glm::normalize(glm::cross(upVec, forwardVec));
-    glm::vec3 rightVec = -leftVec;
-
-    glm::vec3 pos0 = BPPosition + leftVec * _sideRange + backwardVec * _backRange;
-    glm::vec3 pos1 = BPPosition + forwardVec * _forwardRange + leftVec * _sideRange;
-    glm::vec3 pos2 = BPPosition + forwardVec * _forwardRange + rightVec * _sideRange;
-    glm::vec3 pos3 = BPPosition + rightVec * _sideRange + backwardVec * _backRange;
 
     _blueprintTurret->GetParent()->MoveChildToEnd(_blueprintTurret);
 }
@@ -503,6 +520,13 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
     return inside;
 }
 
+void TurretsManager::InitTurretStats() {
+    // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
+    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 60.0f, 40.0f));  // MINIGUN
+    _turretStats.push_back(glm::vec4(2.0f, 10.0f, 50.0f, 100.0f)); // SNIPER
+    _turretStats.push_back(glm::vec4(1.0f, 1.0f, 70.0f, 70.0f));  // RIFLE
+}
+
 void TurretsManager::Reload(const shared_ptr<Turret> &turret) {
     if (turret->_timer < turret->GetFireRate()) {
         turret->_timer += TIME.GetDeltaTime();
@@ -568,7 +592,7 @@ void TurretsManager::PlaceMovingTurret() {
     _isPlayerInMovingMode = false;
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
     _turrets[_indexOfMovingTurret]->_isMoving = false;
-    CalculateRangePositions(_turrets[_indexOfMovingTurret]);
+    _heldTurret->CalculateRangePositions();
     _turrets[_indexOfMovingTurret]->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
 
     _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
