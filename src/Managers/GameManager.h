@@ -61,6 +61,12 @@ public:
 
     bool _isInMainMenu = true;
 
+    glm::vec2 _domeStationPosition = glm::vec2(43.3, 49.5);
+    float _domeStationRadius = 3;
+
+    glm::vec2 _playerStationPosition = glm::vec2(55.7, 49.5);
+    float _playerStationRadius = 3;
+
 private:
     int _roundNumber = 0;
     Phase _currentPhase = Phase::DIG; 

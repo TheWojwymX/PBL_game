@@ -8,10 +8,10 @@ TurretsManager &TurretsManager::getInstance() {
 }
 
 void TurretsManager::Init() {
-    _turretCosts = { 
-        glm::ivec2(1, 1), // Minigun 
-        glm::ivec2(2, 2), // Sniper
-        glm::ivec2(3, 3)  // Rifle
+    _turretCosts = {
+            glm::ivec2(1, 1), // Minigun
+            glm::ivec2(2, 2), // Sniper
+            glm::ivec2(3, 3)  // Rifle
     };
 
 
@@ -25,7 +25,7 @@ void TurretsManager::Init() {
     _PDAController = NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>();
 }
 
-void TurretsManager::ShowBlueprintTurret(){
+void TurretsManager::ShowBlueprintTurret() {
     _shouldEnableBlueprintTurret = true;
     _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(true);
     NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(true);
@@ -33,7 +33,7 @@ void TurretsManager::ShowBlueprintTurret(){
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
 }
 
-void TurretsManager::HideBlueprintTurret(){
+void TurretsManager::HideBlueprintTurret() {
     _shouldEnableBlueprintTurret = false;
     _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(false);
     NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(false);
@@ -41,76 +41,68 @@ void TurretsManager::HideBlueprintTurret(){
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
 }
 
-void TurretsManager::ChangeToSpawningMode(){
+void TurretsManager::ChangeToSpawningMode() {
     _PDAController->HideImmediately();
     HUD._shouldShowCrosshair = true;
     PAGEMANAGER._PDAPage->HidePDAPage();
     _isInTurretChoiceMenu = false;
 }
 
-void TurretsManager::PlayerActions(){
+void TurretsManager::PlayerActions() {
 
     auto playerPosY = _player->GetTransform()->GetPosition().y;
 
-    if(_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && _isInTurretChoiceMenu){
+    if (_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && _isInTurretChoiceMenu) {
         _PDAController->HideImmediately();
         _isInTurretChoiceMenu = false;
         PAGEMANAGER._PDAPage->HidePDAPage();
     }
 
     if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim &&
-        !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && playerPosY >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
+        !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && playerPosY >= GAMEMANAGER._groundLevel &&
+        !_isPlayerInMovingMode) {
         std::cout << "wykona sie";
         _PDAController->_playShowAnim = true;
         HUD._shouldShowCrosshair = false;
         PAGEMANAGER._PDAPage->DisplayPDAPage();
         _isInTurretChoiceMenu = true;
         HideBlueprintTurret();
-    }
-    else if (INPUT.IsKeyPressed(GLFW_KEY_4) && !_PDAController->_isHidden &&
-            playerPosY >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
+    } else if (INPUT.IsKeyPressed(GLFW_KEY_4) && !_PDAController->_isHidden &&
+               playerPosY >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
         _PDAController->HideImmediately();
         HUD._shouldShowCrosshair = true;
         PAGEMANAGER._PDAPage->HidePDAPage();
         _isInTurretChoiceMenu = false;
     }
 
-    if(Input::Instance().IsKeyPressed(GLFW_KEY_1) && _isInTurretChoiceMenu)
-    {
+    if (Input::Instance().IsKeyPressed(GLFW_KEY_1) && _isInTurretChoiceMenu) {
         if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::MINIGUN])) {
             return;
         }
         _turretType = MINIGUN;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
-    }
-    else if(Input::Instance().IsKeyPressed(GLFW_KEY_2) && _isInTurretChoiceMenu)
-    {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::SNIPER])){
+    } else if (Input::Instance().IsKeyPressed(GLFW_KEY_2) && _isInTurretChoiceMenu) {
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::SNIPER])) {
             return;
         }
         _turretType = SNIPER;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
-    }
-    else if(Input::Instance().IsKeyPressed(GLFW_KEY_3) && _isInTurretChoiceMenu)
-    {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::RIFLE])){
+    } else if (Input::Instance().IsKeyPressed(GLFW_KEY_3) && _isInTurretChoiceMenu) {
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::RIFLE])) {
             return;
         }
         _turretType = RIFLE;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
-    }
-    else if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu)
-    {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[_turretType])){
+    } else if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[_turretType])) {
             return;
         }
         SpawnTurret(_turretType);
         HideBlueprintTurret();
-    }
-    else if(INPUT.IsKeyPressed(GLFW_KEY_Q) && (_isInBlueprintMode || _isInTurretChoiceMenu) && !_isPlayerInMovingMode){
+    } else if (INPUT.IsKeyPressed(GLFW_KEY_Q) && (_isInBlueprintMode || _isInTurretChoiceMenu) && !_isPlayerInMovingMode) {
         HideBlueprintTurret();
         _PDAController->HideImmediately();
         HUD._shouldShowCrosshair = true;
@@ -125,7 +117,7 @@ void TurretsManager::PlayerActions(){
         _isPlayerInMovingMode = true;
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
-        _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd( _turrets[_indexOfMovingTurret]->_ownerNode);
+        _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd(_turrets[_indexOfMovingTurret]->_ownerNode);
         _turretType = _turrets[_indexOfMovingTurret]->GetTurretType();
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
@@ -138,10 +130,10 @@ void TurretsManager::Update() {
 
     PlayerActions();
 
-    if(IsInForbiddenArea()){
+    if (IsInForbiddenArea()) {
         _additionalColor = glm::vec3(1.0, 0.0, 0.0);
 
-    }else{
+    } else {
         _additionalColor = glm::vec3(0.3647, 0.8353, 0.3647);
     }
 
@@ -150,16 +142,25 @@ void TurretsManager::Update() {
     CheckEnemiesInRange();
 }
 
-bool TurretsManager::IsInForbiddenArea(){
-    if(glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
-                               _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) > GAMEMANAGER._domeRadius - 0.1
-       || glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
-                                  _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) < GAMEMANAGER._mineEntranceRadius
-       || IsTooCloseToTurret(_blueprintTurret->GetTransform()->GetPosition())){
+bool TurretsManager::IsInForbiddenArea() {
+    if (glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
+                                _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) > GAMEMANAGER._domeRadius - 0.1
+
+        || glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
+                                   _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._playerStationPosition) <
+           GAMEMANAGER._playerStationRadius
+
+        || glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
+                                   _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domeStationPosition) <
+           GAMEMANAGER._domeStationRadius
+
+        || glm::distance(glm::vec2(_blueprintTurret->GetTransform()->GetPosition().x,
+                                   _blueprintTurret->GetTransform()->GetPosition().z), GAMEMANAGER._domePosition) < GAMEMANAGER._mineEntranceRadius
+                                   
+        || IsTooCloseToTurret(_blueprintTurret->GetTransform()->GetPosition())) {
         return true;
 
-    }
-    else{
+    } else {
         return false;
     }
 }
@@ -280,7 +281,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
 
 void TurretsManager::CalculateRangePositions(std::shared_ptr<Turret> turret) {
     auto rangeNodes = turret->_ownerNode->getChildren();
-    for (const auto& node : rangeNodes) {
+    for (const auto &node: rangeNodes) {
         if (node != nullptr) {
             // Get the unique XZ vertices from the model
             std::vector<glm::vec3> uniqueVerticesXZ = RESOURCEMANAGER.GetModelByName("RangeIndicatorReal")->GetUniqueVerticesXZ();
@@ -337,21 +338,23 @@ void TurretsManager::PrepareBlueprintTurret() {
 
 void TurretsManager::UpdateBlueprintTurret() {
 
-    if(!_shouldEnableBlueprintTurret) return;
+    if (!_shouldEnableBlueprintTurret) return;
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
-    switch(_turretType)
-    {
+    switch (_turretType) {
         case MINIGUN:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName(
+                    "Turret_Minigun_Level1");
             break;
 
         case SNIPER:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Sniper_Level1");
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName(
+                    "Turret_Sniper_Level1");
             break;
 
         case RIFLE:
-            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Rifle_Level1");
+            NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName(
+                    "Turret_Rifle_Level1");
             break;
     }
 
@@ -419,7 +422,7 @@ void TurretsManager::CheckEnemiesInRange() {
         std::shared_ptr<Enemy> targetEnemy = nullptr;
         float closestDistance = std::numeric_limits<float>::max();
 
-        for (const auto& enemy : enemiesInRange) {
+        for (const auto &enemy: enemiesInRange) {
             float distance = glm::distance(_turrets[i]->GetOwnerPosition(), enemy->GetOwnerPosition());
 
             switch (_turrets[i]->GetTurretType()) {
@@ -493,9 +496,9 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
     };
 
     bool inside = (cross2D(B - A, P - A) >= 0) &&
-        (cross2D(C - B, P - B) >= 0) &&
-        (cross2D(D - C, P - C) >= 0) &&
-        (cross2D(A - D, P - D) >= 0);
+                  (cross2D(C - B, P - B) >= 0) &&
+                  (cross2D(D - C, P - C) >= 0) &&
+                  (cross2D(A - D, P - D) >= 0);
 
     return inside;
 }
@@ -507,27 +510,20 @@ void TurretsManager::Reload(const shared_ptr<Turret> &turret) {
 }
 
 void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_ptr<Enemy> &enemy) {
-    if (turret->_timer < turret->GetFireRate())
-    {
+    if (turret->_timer < turret->GetFireRate()) {
         turret->_timer += TIME.GetDeltaTime();
-    }
-    else
-    {
+    } else {
         turret->_timer = 0.0f;
 
         int finalDamage;
         TurretType _turretType = turret->GetTurretType();
         enemyType _enemyType = enemy->_enemyType;
 
-        switch(_turretType)
-        {
+        switch (_turretType) {
             case MINIGUN:
-                if (_enemyType == BEETLE)
-                {
+                if (_enemyType == BEETLE) {
                     finalDamage = 0.25 * turret->GetDamage();
-                }
-                else
-                {
+                } else {
                     finalDamage = turret->GetDamage();
                 }
                 break;
@@ -563,7 +559,8 @@ void TurretsManager::MoveTurret() {
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetPosition(_blueprintTurret->GetTransform()->GetPosition());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetRotation(_blueprintTurret->GetTransform()->GetRotation());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
-        _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
+        _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName(
+                "blueprintShader");
     }
 }
 
@@ -575,7 +572,8 @@ void TurretsManager::PlaceMovingTurret() {
     _turrets[_indexOfMovingTurret]->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
 
     _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
-    _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName(
+            "modelShader");
 }
 
 int TurretsManager::RaycastTurrets() {
