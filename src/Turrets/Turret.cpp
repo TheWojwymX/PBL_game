@@ -75,6 +75,23 @@ void Turret::Upgrade(glm::vec2 values)
     UpdateModel();
 }
 
+std::pair<int, float> Turret::GetSound() {
+    if (_sounds.empty()) {
+        throw std::runtime_error("No sounds available"); // Handle case where _sound is empty
+    }
+
+    // Create a random number generator
+    std::random_device rd;  // Non-deterministic seed
+    std::mt19937 gen(rd()); // Mersenne Twister generator
+    std::uniform_int_distribution<> dis(0, _sounds.size() - 1); // Uniform distribution
+
+    // Get a random index
+    int randomIndex = dis(gen);
+
+    // Return the randomly selected sound
+    return _sounds[randomIndex];
+}
+
 void Turret::HandleSpawn()
 {
     if (_isFlying) {
@@ -87,6 +104,7 @@ void Turret::HandleSpawn()
             _ownerTransform->SetPosition(_finalPosition);
 
             UpdateModel();
+            SetSound();
 
             _flare->GetComponent<MeshRenderer>()->_disableModel = true;
             particleGenerator->toDelete = true;
@@ -185,5 +203,26 @@ void Turret::UpdateModel() {
     }
 
     meshRenderer->_model = RESOURCEMANAGER.GetModelByName(modelName);
+}
+
+void Turret::SetSound() {
+
+    switch (_turretType) {
+    case MINIGUN:
+        _sounds = { {12, 0.1f}, {13, 0.1f} };
+        break;
+
+    case SNIPER:
+        _sounds = { {14, 0.1f}, {18, 0.1f} };
+        break;
+
+    case RIFLE:
+        _sounds = { {12, 0.1f}, {13, 0.1f} };
+        break;
+
+    default:
+        std::cerr << "Unknown turret type" << std::endl;
+        return;
+    }
 }
 

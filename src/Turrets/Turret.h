@@ -21,7 +21,9 @@ public:
     void SetTurretType(TurretType type) { _turretType = type; }
     TurretType GetTurretType() { return _turretType; }
     char GetUpgradeLevel() { return _upgradeLevel; }
-
+    std::pair<int, float> GetSound();
+    float GetDamage() { return _damage; }
+    float GetFireRate() { return _fireRate; }
 
     bool _isFlying = false;
     float _flyingSpeed = 2;
@@ -37,16 +39,17 @@ public:
 
     std::vector<glm::vec3> _turretRangePositions = {glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0)};
 
-    float _fireRate = 0.5;
-    float _damage = 35;
-
     float _timer = 0.0f;
 
     std::shared_ptr<Node> _flare;
 private:
     TurretType _turretType = MINIGUN;
     char _upgradeLevel = 0;
+    std::vector<std::pair<int, float>> _sounds;
+    float _fireRate;
+    float _damage;
 
     void HandleSpawn();
     void UpdateModel();
+    void SetSound();
 };

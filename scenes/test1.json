@@ -567,8 +567,8 @@
         "Type": 1
       },
       {
-        "Path": "res/Sounds/GunnerShot/stzal2.mp3",
-        "SoundName": "GunnerShot3",
+        "Path": "res/Sounds/GunnerShot/sniperShot2.mp3",
+        "SoundName": "SniperShot2",
         "SoundID": 14,
         "Type": 1
       },
@@ -588,6 +588,12 @@
         "Path": "res/Sounds/kopanie1.mp3",
         "SoundName": "kopanie1",
         "SoundID": 17,
+        "Type": 1
+      },
+      {
+        "Path": "res/Sounds/GunnerShot/sniperShot.wav",
+        "SoundName": "SniperShot",
+        "SoundID": 18,
         "Type": 1
       }
     ]

@@ -41,8 +41,6 @@ public:
 
     float _distanceToAnotherTurret = 1.5f;
 
-    TurretType finaltype = MINIGUN;
-
     float _sideRange = 50.0f;
     float _forwardRange = 50.0f;
     float _backRange = 2.0f;
@@ -55,16 +53,10 @@ public:
 
     void CheckEnemiesInRange();
 
-    bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
 
     void AttackEnemy(const shared_ptr<Turret>& turret, const shared_ptr<Enemy>& enemy);
 
     void Reload(const shared_ptr<Turret> &turret);
-
-    int _actualTurretCost = 1;
-    int _minigunCost = 1;
-    int _rifleCost = 2;
-    int _sniperCost = 3;
 
     void MoveTurret();
 
@@ -93,4 +85,10 @@ public:
     void HideBlueprintTurret();
 
     void ChangeToSpawningMode();
+
+private:
+    std::vector<glm::ivec2> _turretCosts;
+    TurretType _turretType;
+
+    bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
 };

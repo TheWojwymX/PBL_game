@@ -1,8 +1,3 @@
-
-//
-// Created by Jacek on 13.05.2024.
-//
-
 #include "TurretsManager.h"
 #include "HUD/PageManager.h"
 #include "Managers/UpgradeManager.h"
@@ -13,6 +8,13 @@ TurretsManager &TurretsManager::getInstance() {
 }
 
 void TurretsManager::Init() {
+    _turretCosts = { 
+        glm::ivec2(1, 1), // Minigun 
+        glm::ivec2(2, 2), // Sniper
+        glm::ivec2(3, 3)  // Rifle
+    };
+
+
     for (int i = 0; i < COMPONENTSMANAGER.GetComponents().size(); i++) {
         if (COMPONENTSMANAGER.GetComponents()[i] != nullptr && COMPONENTSMANAGER.GetComponents()[i]->_type == ComponentType::TURRET) {
             _turrets.push_back(std::dynamic_pointer_cast<Turret>(COMPONENTSMANAGER.GetComponents()[i]));
@@ -66,40 +68,37 @@ void TurretsManager::PlayerActions(){
 
     if(Input::Instance().IsKeyPressed(GLFW_KEY_1) && _isInTurretChoiceMenu)
     {
-        if (GAMEMANAGER._metal < _minigunCost){
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::MINIGUN])) {
             return;
         }
-        finaltype = MINIGUN;
-        _actualTurretCost = _minigunCost;
+        _turretType = MINIGUN;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
     }
     else if(Input::Instance().IsKeyPressed(GLFW_KEY_2) && _isInTurretChoiceMenu)
     {
-        if (GAMEMANAGER._metal < _rifleCost){
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::SNIPER])){
             return;
         }
-        finaltype = SNIPER;
-        _actualTurretCost = _rifleCost;
+        _turretType = SNIPER;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
     }
     else if(Input::Instance().IsKeyPressed(GLFW_KEY_3) && _isInTurretChoiceMenu)
     {
-        if (GAMEMANAGER._metal < _sniperCost){
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::RIFLE])){
             return;
         }
-        finaltype = RIFLE;
-        _actualTurretCost = _sniperCost;
+        _turretType = RIFLE;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
     }
     else if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu)
     {
-        if (GAMEMANAGER._metal < _actualTurretCost){
+        if (!GAMEMANAGER.HasMaterials(_turretCosts[_turretType])){
             return;
         }
-        SpawnTurret(finaltype);
+        SpawnTurret(_turretType);
         HideBlueprintTurret();
     }
     else if(INPUT.IsKeyPressed(GLFW_KEY_Q) && (_isInBlueprintMode || _isInTurretChoiceMenu) && !_isPlayerInMovingMode){
@@ -118,7 +117,7 @@ void TurretsManager::PlayerActions(){
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
         _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd( _turrets[_indexOfMovingTurret]->_ownerNode);
-        finaltype = _turrets[_indexOfMovingTurret]->GetTurretType();
+        _turretType = _turrets[_indexOfMovingTurret]->GetTurretType();
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
         PlaceMovingTurret();
@@ -170,12 +169,7 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
 
 void TurretsManager::SpawnTurret(TurretType type) {
 
-    if (GAMEMANAGER._metal < _actualTurretCost) {
-        std::cout << "Brak pieniedzy na dzialko" << std::endl;
-        return;
-    } else {
-        GAMEMANAGER._metal -= _actualTurretCost;
-    }
+    GAMEMANAGER.RemoveMaterials(_turretCosts[type]);
 
     //Flare spawning
     std::string nameOfFlare = "Flare" + to_string(_turrets.size() + 1);
@@ -292,11 +286,6 @@ void TurretsManager::CalculateRangePositions(std::shared_ptr<Turret> turret) {
                     turret->_turretRangePositions[2] = transformedVertices[2];
                     turret->_turretRangePositions[3] = transformedVertices[3];
 
-                    // Print the positions
-                    std::cout << "Turret Range Positions: \n";
-                    for (const auto& pos : turret->_turretRangePositions) {
-                        std::cout << "(" << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
-                    }
                 } else {
                     std::cerr << "Error: Not enough transformed vertices for turret range positions.\n";
                 }
@@ -339,7 +328,7 @@ void TurretsManager::UpdateBlueprintTurret() {
     if(!_shouldEnableBlueprintTurret) return;
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
-    switch(finaltype)
+    switch(_turretType)
     {
         case MINIGUN:
             NODESMANAGER.getNodeByName(nameOfBlueprintTurret)->GetComponent<MeshRenderer>()->_model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
@@ -500,13 +489,13 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
 }
 
 void TurretsManager::Reload(const shared_ptr<Turret> &turret) {
-    if (turret->_timer < turret->_fireRate) {
+    if (turret->_timer < turret->GetFireRate()) {
         turret->_timer += TIME.GetDeltaTime();
     }
 }
 
 void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_ptr<Enemy> &enemy) {
-    if (turret->_timer < turret->_fireRate)
+    if (turret->_timer < turret->GetFireRate())
     {
         turret->_timer += TIME.GetDeltaTime();
     }
@@ -523,27 +512,20 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
             case MINIGUN:
                 if (_enemyType == BEETLE)
                 {
-                    finalDamage = 0.5 * turret->_damage;
+                    finalDamage = 0.25 * turret->GetDamage();
                 }
                 else
                 {
-                    finalDamage = turret->_damage;
+                    finalDamage = turret->GetDamage();
                 }
                 break;
 
             case SNIPER:
-                if (_enemyType == ANT)
-                {
-                    finalDamage = 0.5 * turret->_damage;
-                }
-                else
-                {
-                    finalDamage = turret->_damage;
-                }
+                finalDamage = turret->GetDamage();
                 break;
 
             case RIFLE:
-                finalDamage = turret->_damage;
+                finalDamage = turret->GetDamage();
                 break;
         }
 
@@ -554,12 +536,8 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
             if (generator != nullptr) {
                 generator->enemyPosition = enemy->GetOwnerPosition();
                 generator->SpawnParticles();
-
-                static std::random_device rd;
-                static std::mt19937 gen(rd());
-                std::uniform_int_distribution<> dis(12, 13);
-
-                RESOURCEMANAGER.GetSoundByID(dis(gen))->PlaySoundSim(turret->_ownerNode, 0.10f);
+                std::pair<int, float> sound = turret->GetSound();
+                RESOURCEMANAGER.GetSoundByID(sound.first)->PlaySoundSim(turret->_ownerNode, sound.second);
             }
         }
     }
