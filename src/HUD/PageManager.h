@@ -47,6 +47,8 @@ public:
     void CloseAllOtherPages(const shared_ptr<Page>& pageException);
 
     void CloseAllPages();
+
+    bool _isInUpgradeMenu = false;
 };
 
 

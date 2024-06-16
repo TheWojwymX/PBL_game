@@ -51,26 +51,37 @@ void PageManager::CheckInputs() {
             GAMEMANAGER.Pause();
         } else {
             GAMEMANAGER.Unpause();
+            _isInUpgradeMenu = false;
         }
     } else if (INPUT.IsKeyPressed(GLFW_KEY_ESCAPE) && _isInPage) {
         _isInPage = false;
         CloseAllPages();
         GAMEMANAGER.Unpause();
+        _isInUpgradeMenu = false;
     }
 
     if (INPUT.IsKeyPressed(GLFW_KEY_E) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsPlayerStationInRange() && UPGRADEMANAGER.IsPlayerStationInRaycast()) {
         if (!_isInPage) {
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.EnableMouse();
+            HUD._shouldShowCrosshair = false;
+            _isInUpgradeMenu = true;
         }
         else if(TUTORIALMANAGER._actualMessage == 8){
             CloseAllPages();
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.EnableMouse();
+            HUD._shouldShowCrosshair = false;
+            _isInUpgradeMenu = true;
         }
         else {
             _isInPage = false;
             CloseAllPages();
+            GAMEMANAGER.DisableMouse();
+            HUD._shouldShowCrosshair = true;
+            _isInUpgradeMenu = false;
         }
         //it has to be this order because isTurretInRange won't work with index -1
     } else if (INPUT.IsKeyPressed(GLFW_KEY_E) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsTurretInRaycast() && UPGRADEMANAGER.IsTurretInRange()) {
@@ -90,15 +101,24 @@ void PageManager::CheckInputs() {
         if (!_isInPage) {
             _isInPage = true;
             _domeUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.EnableMouse();
+            HUD._shouldShowCrosshair = false;
+            _isInUpgradeMenu = true;
         }
         else if(TUTORIALMANAGER._actualMessage == 8){
             CloseAllPages();
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
+            GAMEMANAGER.EnableMouse();
+            HUD._shouldShowCrosshair = false;
+            _isInUpgradeMenu = true;
         }
         else {
             _isInPage = false;
             CloseAllPages();
+            GAMEMANAGER.DisableMouse();
+            HUD._shouldShowCrosshair = true;
+            _isInUpgradeMenu = false;
         }
     }
 
