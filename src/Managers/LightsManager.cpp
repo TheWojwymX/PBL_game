@@ -277,8 +277,6 @@ void LightsManager::UpdateGlowsticks() {
         instancedPlasticShader->setVec3(name + ".position", visibleGlowsticks[i]);
         instancedPlasticShader->setVec3(name + ".color", visibleGlowstickColors[i]);
 
-        std::cout << "Wtf" << std::endl;
-
         shovelShader->use();
         shovelShader->setBool(name + ".isActive", true);
         shovelShader->setVec3(name + ".position", visibleGlowsticks[i]);
