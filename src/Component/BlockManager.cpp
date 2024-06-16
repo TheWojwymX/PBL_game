@@ -86,6 +86,7 @@ void BlockManager::Initiate() {
 }
 
 void BlockManager::Init() {
+    InitLayerStats();
     GenerateSphereVectors(31);
     GenerateMap(0.5f,7);
     GenerateResources();
@@ -440,15 +441,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                 BlockType type = filled ? BlockType::DIRT : BlockType::EMPTY;
                 float hp = 0.0f;
                 if (type == BlockType::DIRT) {
-                    if (y < 100) {
-                        hp = 7.0f;
-                    }
-                    else if (y < 200) {
-                        hp = 3.0f;
-                    }
-                    else {
-                        hp = 1.0f;
-                    }
+                    hp = GetBlockHP(y);
                 }
 
                 BlockData block(type, glm::ivec3(x, y, z), hp, isEdgeBlock, 1.0f, shared_from_this());
@@ -457,6 +450,45 @@ void BlockManager::InitializeMap(float initialFillRatio) {
                 _blocksData.push_back(block);
             }
         }
+    }
+}
+
+int BlockManager::GetMaterialReward(BlockData& blockData)
+{
+    if (blockData.GetPosID().y < 100) {
+        return _layerStats[2].second;
+    }
+    else if (blockData.GetPosID().y < 200) {
+        return _layerStats[1].second;
+    }
+    else {
+        return _layerStats[0].second;
+    }
+}
+
+float BlockManager::GetBlockHP(BlockData& blockData)
+{
+    if (blockData.GetPosID().y < 100) {
+        return _layerStats[2].first;
+    }
+    else if (blockData.GetPosID().y < 200) {
+        return _layerStats[1].first;
+    }
+    else {
+        return _layerStats[0].first;
+    }
+}
+
+float BlockManager::GetBlockHP(float y)
+{
+    if (y < 100) {
+        return _layerStats[2].first;
+    }
+    else if (y < 200) {
+        return _layerStats[1].first;
+    }
+    else {
+        return _layerStats[0].first;
     }
 }
 
@@ -784,15 +816,7 @@ void BlockManager::ChangeType(BlockData& blockData, BlockType type)
         case BlockType::METAL:
         case BlockType::PLASTIC:
         case BlockType::DIRT:
-                if (blockData.GetPosID().y < 100) {
-                    blockData.SetHP(7.0f);
-                }
-                else if (blockData.GetPosID().y < 200) {
-                    blockData.SetHP(3.0f);
-                }
-                else {
-                    blockData.SetHP(1.0f);
-                }
+            blockData.SetHP(GetBlockHP(blockData));
             break;
         default:
             break;
@@ -941,12 +965,12 @@ int BlockManager::DestroyBlock(BlockData& blockData)
     switch (blockData.GetBlockType())
     {
         case BlockType::PLASTIC:
-            GAMEMANAGER.AddPlastic(1);
+            GAMEMANAGER.AddPlastic(GetMaterialReward(blockData));
             _posID = blockData.GetPosID();
             NODESMANAGER.getNodeByName(to_string(int(_posID.x)) + to_string(int(_posID.y)) + to_string(int(_posID.z)))->GetComponent<ParticleGenerator>()->toDelete = true;
             break;
         case BlockType::METAL:
-            GAMEMANAGER.AddMetal(1);
+            GAMEMANAGER.AddMetal(GetMaterialReward(blockData));
             _posID = blockData.GetPosID();
             NODESMANAGER.getNodeByName(to_string(int(_posID.x)) + to_string(int(_posID.y)) + to_string(int(_posID.z)))->GetComponent<ParticleGenerator>()->toDelete = true;
             break;
@@ -1051,6 +1075,16 @@ void BlockManager::GenerateTunnels() {
 
     // Generate the second tunnel
     GenerateTunnel(pointsTunnel2, 8);
+}
+
+void BlockManager::InitLayerStats() {
+    // Clear existing layer stats if any
+    _layerStats.clear();
+
+    // Define the pairs of (float, int) values
+    _layerStats.push_back({ 1.0f, 1 }); // HP, Mat reward
+    _layerStats.push_back({ 3.0f, 3 }); // HP, Mat reward
+    _layerStats.push_back({ 7.0f, 7 }); // HP, Mat reward
 }
 
 

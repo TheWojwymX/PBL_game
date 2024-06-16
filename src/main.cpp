@@ -445,7 +445,6 @@ int main(int, char**)
 
         // Quick Debug
         ImGui::Checkbox("Flashlight", &LIGHTSMANAGER.isSpotActive);
-        ImGui::Checkbox("Pointer", &HUD._shouldShowPointer);
 
         ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
         ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);

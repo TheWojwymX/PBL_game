@@ -21,16 +21,6 @@ struct CollisionInfo {
     glm::vec3 separationVector = glm::vec3(std::numeric_limits<float>::max());
 };
 
-struct LayerInfo {
-    int startY;
-    int endY;
-    int metalAmount;
-    int plasticAmount;
-    float initialFill;
-    int caveIterations;
-};
-
-
 class BlockManager : public Component, public std::enable_shared_from_this<BlockManager> {
 public:
     BlockManager(int width, int height, int depth);
@@ -62,6 +52,7 @@ private:
     int _height;
     int _chunkSize;
     int _renderDistance;
+    std::vector<std::pair<float, int>> _layerStats;
     glm::ivec3 _playerChunk;
     std::vector<BlockData> _blocksData;
     std::vector<std::vector<BlockData*>> _visibleBlocks;
@@ -106,11 +97,14 @@ private:
     void ApplyMasks();
     void GenerateTunnel(std::vector<glm::ivec3> points, int size);
     void GenerateTunnels();
+    void InitLayerStats();
     glm::ivec3 QuadraticBezier(const glm::ivec3& p0, const glm::ivec3& p1, const glm::ivec3& p2, float t);
     glm::ivec3 GetRandomSideBlock(glm::ivec2 yRange);
     glm::ivec3 GetRandomSideBlock(glm::ivec2 yRange, glm::ivec3 exclude);
 
-
+    int GetMaterialReward(BlockData& blockData);
+    float GetBlockHP(BlockData& blockData);
+    float GetBlockHP(float y);
     int GetIndex(glm::ivec3 point);
     int GetIndex(int x, int y, int z);
     int GetChunkIndex(glm::ivec3 point);

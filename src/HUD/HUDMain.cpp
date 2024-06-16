@@ -266,5 +266,3 @@ void HUDMain::PlayMetalBump() {
         }
     }
 }
-
-
