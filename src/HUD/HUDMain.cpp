@@ -127,7 +127,7 @@ void HUDMain::Update() {
 
     //jetpack
     if(_shouldShowFuel && _isAfterTutorialFuel){
-        int imageIndex = static_cast<int>((_playerNode->GetComponent<PlayerController>()->_jetpackFuel / 100.0f) * 20.0f);
+        int imageIndex = static_cast<int>((_playerNode->GetComponent<PlayerController>()->_jetpackFuel / _playerNode->GetComponent<PlayerController>()->_maxJetpackFuel) * 20.0f);
         _jetpackImages[imageIndex]->Render();
     }
 

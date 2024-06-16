@@ -4,6 +4,7 @@
 #include "Core/Node.h"
 #include "Managers/GameManager.h"
 #include "ShovelController.h"
+#include "HUD/PageManager.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height, float digPower)
     : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)), _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
@@ -61,7 +62,10 @@ void PlayerController::Input() {
 }
 
 void PlayerController::Update() {
-    if(!GAMEMANAGER._paused){
+    if(GAMEMANAGER._paused || PAGEMANAGER._isInUpgradeMenu){
+        _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
+        return;
+    }else{
         HandleMovement();
         HandleGlowstick();
     }
