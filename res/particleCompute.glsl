@@ -147,7 +147,7 @@ void main() {
             if (p.Life > particleLife / 3) {
                     p.Scale = mix(1.7f, particleScale, lifeRatio);
                 } else {
-                    p.Scale = mix(particleScale, 2.2, lifeRatio);
+                    p.Scale = mix(particleScale, 3.2, lifeRatio);
                 }
             }
 }
@@ -243,20 +243,20 @@ p.Life = 0.0;
                 }
             }
             else{
-                if(p.Position.x > 80){
-                p.Position.x = 20;
+                if(p.Position.x > 90){
+                p.Position.x = 10;
                 }
 
-                if(p.Position.z > 80){
-                p.Position.z = 20;
+                if(p.Position.z > 90){
+                p.Position.z = 10;
                 }
 
-                if(p.Position.x < 20){
-                p.Position.x = 80;
+                if(p.Position.x < 10){
+                p.Position.x = 90;
                 }
 
-                if(p.Position.z < 20){
-                p.Position.z = 80;
+                if(p.Position.z < 10){
+                p.Position.z = 90;
                 }
 
                 if(p.Position.y < 300){

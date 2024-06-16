@@ -32,7 +32,7 @@ void LightsManager::InitLights() {
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
 
     lightPos = glm::vec3(49.999f, 330.0f, 120.0f);
-    lightCenter = glm::vec3(50.0f, 250.0f,90.0f);
+    lightCenter = glm::vec3(45.0f, 300.0f,45.0f);
 }
 
 void LightsManager::UpdateShaders(){
@@ -138,6 +138,11 @@ void LightsManager::UpdateShaders(){
             instancedPlasticShader->setFloat(name + ".constant", glowstickConstant);
             instancedPlasticShader->setFloat(name + ".linear", glowstickLinear);
             instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadratic);
+
+            shovelShader->use();
+            shovelShader->setFloat(name + ".constant", glowstickConstant);
+            shovelShader->setFloat(name + ".linear", glowstickLinear);
+            shovelShader->setFloat(name + ".quadratic", glowstickQuadratic);
         }
         else{
             instancedSandShader->use();
@@ -154,6 +159,11 @@ void LightsManager::UpdateShaders(){
             instancedPlasticShader->setFloat(name + ".constant", glowstickConstantNoFlash);
             instancedPlasticShader->setFloat(name + ".linear", glowstickLinearNoFlash);
             instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
+
+            shovelShader->use();
+            shovelShader->setFloat(name + ".constant", glowstickConstant);
+            shovelShader->setFloat(name + ".linear", glowstickLinear);
+            shovelShader->setFloat(name + ".quadratic", glowstickQuadratic);
         }
     }
 
@@ -261,6 +271,11 @@ void LightsManager::UpdateGlowsticks() {
         instancedPlasticShader->setBool(name + ".isActive", true);
         instancedPlasticShader->setVec3(name + ".position", visibleGlowsticks[i]);
         instancedPlasticShader->setVec3(name + ".color", visibleGlowstickColors[i]);
+
+        shovelShader->use();
+        shovelShader->setBool(name + ".isActive", true);
+        shovelShader->setVec3(name + ".position", visibleGlowsticks[i]);
+        shovelShader->setVec3(name + ".color", visibleGlowstickColors[i]);
     }
 
     if (glowstickCount > visibleGlowsticks.size()) {
@@ -274,6 +289,9 @@ void LightsManager::UpdateGlowsticks() {
 
             instancedPlasticShader->use();
             instancedPlasticShader->setBool(name + ".isActive", false);
+
+            shovelShader->use();
+            shovelShader->setBool(name + ".isActive", false);
         }
     }
 

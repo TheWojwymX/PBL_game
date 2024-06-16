@@ -94,13 +94,14 @@ private:
     glm::vec3 camForward;
     glm::vec3 rotatedOffset;
 
-    bool onlyForward;
-    bool casing;
+    bool onlyForward = false;
+    bool casing = false;
     bool ambient = false;
     bool rain = false;
     bool isUnderground = false;
     bool isJetpack = false;
     bool tooltip = false;
+    bool showTexture = false;
 
     void initiateParticleType();
 

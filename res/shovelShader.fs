@@ -1,9 +1,10 @@
 #version 430 core
 out vec4 FragColor;
-#define AMBIENT_STRENGHT 0.1
+#define AMBIENT_STRENGHT 0.5
 #define SPECULAR_STRENGHT 0.5
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
+#define NR_POINT_LIGHTS 2
 
 struct DirLight {
     vec3 direction;
@@ -15,14 +16,14 @@ struct DirLight {
 
 struct PointLight {
     vec3 position;
-    
+
     float constant;
     float linear;
     float quadratic;
 
     vec3 color;
 
-    int isActive;
+    bool isActive;
 };
 
 struct SpotLight {
@@ -30,11 +31,11 @@ struct SpotLight {
     vec3 direction;
     float cutOff;
     float outerCutOff;
-  
+
     float constant;
     float linear;
     float quadratic;
-  
+
     vec3 color;
 
     bool isActive;
@@ -54,17 +55,21 @@ uniform vec3 lightPos;
 uniform DirLight dirLight;
 
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
+uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+float CalcPointLightIntensity(PointLight pointLight, vec3 fragPos);
 
 void main()
-{    
+{
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 spotLightColor = vec3(0.0);
-    
+    vec3 pointLightColor = vec3(0.0);
+    float totalPointlightIntensity = 0.0f;
+
     //directional light
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
 
@@ -76,8 +81,21 @@ void main()
             }
         }
 
+    for(int i = 0; i < NR_POINT_LIGHTS; i++)
+        {
+            if(pointLights[i].isActive)
+            {
+                float distance = length(pointLights[i].position - FragPos);
+                float maxDistance = 30.0;
 
-    vec3 finalColor = (dirLightColor + spotLightColor);
+                if (distance < maxDistance)
+                {
+                    pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+                }
+            }
+        }
+
+    vec3 finalColor = (dirLightColor + spotLightColor + (pointLightColor * 10));
 
     FragColor = vec4(finalColor, 1.0) * texture(texture_diffuse1, TexCoords);
 
@@ -86,13 +104,13 @@ void main()
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 {
-    if (light.isActive == 0) 
+    if (light.isActive == 0)
         return vec3(0.0);
     vec3 lightDir = normalize(-light.direction);
     // diffuse shading
-    float diff = max(dot(normal, lightDir), 0.0);
+    float diff = max(dot(normal, lightDir), 0.5);
     // specular shading
-    vec3 halfwayDir = normalize(lightDir + viewDir);  
+    vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(normal, halfwayDir), 0.0), SHININESS);
     // combine results
     vec3 ambient = light.color * AMBIENT_STRENGHT;
@@ -103,7 +121,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    if (light.isActive == 0) 
+    if (light.isActive == false)
         return vec3(0.0);
     vec3 lightDir = normalize(light.position - fragPos);
     // diffuse shading

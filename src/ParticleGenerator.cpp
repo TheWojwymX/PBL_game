@@ -124,7 +124,7 @@ void ParticleGenerator::RenderParticles() {
     float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
     bool visible = dotProduct > 0.1f;
 
-    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles") {
+    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles" || particleType =="rainParticlesFull") {
 
         Particle *particleData = this->particleData;
 
@@ -170,6 +170,7 @@ void ParticleGenerator::RenderParticles() {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         shader->use();
         shader->setVec4("pColor" ,particleColor);
+        shader->setBool("showTexture", showTexture);
         texture.Bind();
 
         glDrawArraysInstanced(GL_TRIANGLES, 0, 6, offsets.size());
@@ -377,7 +378,7 @@ void ParticleGenerator::initiateParticleType() {
         particleLife = 60.0f;
         particleColor = glm::vec4(0.882f,0.677f,0.351f,1.0f);
         initialUpwardBoost = 0.04f;
-        particleScale = 0.28f;
+        particleScale = 0.15f;
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         onlyForward = false;
         casing = false;
@@ -432,7 +433,7 @@ void ParticleGenerator::initiateParticleType() {
         newParticles = 1;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
-        XZvariation = 30.4f;
+        XZvariation = 100.4f;
         particleLife = 15.0f;
         particleColor = glm::vec4(0.682f,0.651f,0.882f,1.0f);
         initialUpwardBoost = 0.04f;
@@ -440,6 +441,11 @@ void ParticleGenerator::initiateParticleType() {
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         ambient = true;
         rain = true;
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = false;
+        isFlare = false;
     }
     else if (particleType == "rainParticlesFull"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
@@ -448,13 +454,18 @@ void ParticleGenerator::initiateParticleType() {
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
-        particleLife = 10.0f;
+        particleLife = 15.0f;
         particleColor = glm::vec4(0.682f,0.651f,0.898f,1.0f);
         initialUpwardBoost = 0.04f;
         particleScale = 0.24f;
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         ambient = true;
         rain = true;
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        counterXrotation = false;
+        isFlare = false;
     }
     else if (particleType == "tooltipParticle"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particleTest.png", true);
@@ -469,6 +480,7 @@ void ParticleGenerator::initiateParticleType() {
         particleScale = 0.1f;
         gravity = glm::vec3(0.0f, 0.0f, 0.0f);
         tooltip = true;
+        showTexture = true;
     }
 }
 
