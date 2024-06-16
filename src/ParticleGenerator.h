@@ -103,6 +103,8 @@ private:
     bool tooltip = false;
     bool showTexture = false;
 
+    int threadCount = 0;
+
     void initiateParticleType();
 
     void SetInitialUpwardBoost(const glm::vec3& scale, float bonus);

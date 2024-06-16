@@ -173,7 +173,12 @@ p.Life = 0.0;
                 // Reflect the y velocity for a bounce and dampen it to lose energy
 
                 if(!ambient){
+                if(!casing){
                 p.Velocity.y = -p.Velocity.y * 0.8; // Adjust 0.8 damping factor as needed
+                }
+                else{
+                p.Velocity.y = -p.Velocity.y * 0.1;
+                }
                 p.Velocity.x = p.Velocity.x * 0.8;
                 p.Velocity.z = p.Velocity.z * 0.8;
                 }
@@ -198,6 +203,16 @@ p.Life = 0.0;
                 p.Velocity.x = p.Velocity.x * 0.8;
                 p.Velocity.z = p.Velocity.z * 0.8;
             }
+
+            // Check for bounce when particle hits the circle boundary
+            vec3 toParticle = p.Position.xyz - vec3(49.5,300,49.5);
+            float distanceToCenter = length(toParticle);
+            if (distanceToCenter < 15.0 && !isJetpack && !isFlare && !isUnderground && !tooltip && !rain && !casing && !onlyForward) {
+                vec3 normal = normalize(toParticle);
+                p.Position.xyz = vec3(49.5,300,49.5) + normal * 15.0;
+                p.Velocity.xyz = reflect(p.Velocity.xyz, normal) * 0.8; // Adjust 0.8 damping factor as needed
+            }
+
             //}
             //else{
             //p.Life = 0.0;

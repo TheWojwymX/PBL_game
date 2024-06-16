@@ -196,7 +196,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
 
         auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
-        antShot->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
+        antShot->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
         antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
         antShot->enemyScale = scale;
         antShot->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
@@ -204,7 +204,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
 
         auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antDie");
-        antDie->SetOffset(glm::vec3(0.0f,0.0f,2.0f));
+        antDie->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
         antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
         antDie->enemyScale = scale;
         antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);

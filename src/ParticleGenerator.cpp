@@ -137,7 +137,7 @@ void ParticleGenerator::RenderParticles() {
                 offsets.push_back(particle.Position);
                 scales.push_back(particle.Scale);
             } else {
-                if (!firstPass) deadParticles++;
+                deadParticles++;
             }
         }
 
@@ -179,15 +179,19 @@ void ParticleGenerator::RenderParticles() {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         currentBuffer = (currentBuffer + 1) % 3;
     }
+    if(deadParticles == amount){
+        threadCount++;
+    }
+    else{
+        threadCount = 0;
+    }
 
-    if (deadParticles == amount) {
+    if (threadCount >= 3) {
         if (toDelete) {
             generateParticle = false;
             GAMEMANAGER.root->removeChild(_ownerNode);
         }
     }
-
-    firstPass = false;
 }
 
 void ParticleGenerator::Init() {
@@ -304,14 +308,14 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "antShot"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 21;
-        newParticles = 3;
+        amount = 500;
+        newParticles = 4;
         spawnDelay = 0.0f;
-        speedVariation = 0.2f;
-        XZvariation = 1.0f;
+        speedVariation = 1.2f;
+        XZvariation = 2.0f;
         particleLife = 4.0f;
         particleColor = glm::vec4(0.3f,0.0f,0.0f,1.0f);
-        SetInitialUpwardBoost(enemyScale, 0.0f);
+        SetInitialUpwardBoost(enemyScale, 3.0f);
         SetPartScale(enemyScale, 0.0f);
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
@@ -320,14 +324,14 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "antDie"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 5;
-        newParticles = 5;
+        amount = 10;
+        newParticles = 10;
         spawnDelay = 0.0f;
-        speedVariation = 1.0f;
-        XZvariation = 1.0f;
+        speedVariation = 3.0f;
+        XZvariation = 2.0f;
         particleLife = 4.0f;
-        particleColor = glm::vec4(0.545f,0.271f,0.075f,1.0f);
-        initialUpwardBoost = 1.0f;
+        particleColor = glm::vec4(0.0f,0.0f,0.0f,1.0f);
+        initialUpwardBoost = 5.0f;
         SetPartScale(enemyScale, 0.0f);
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
@@ -495,7 +499,7 @@ void ParticleGenerator::SetInitialUpwardBoost(const glm::vec3& scale, float bonu
     float minScale = 0.5f;
     float maxScale = 2.0f;
     float minBoost = 0.0f;
-    float maxBoost = 10.0f;
+    float maxBoost = 5.0f;
 
     // Calculate the ratio of the current scale value relative to the scale range
     float scaleRatio = (scale.x - minScale) / (maxScale - minScale);

@@ -522,7 +522,9 @@ void UpgradeManager::Update() {
             UpgradeTurret();
         }
 
-        timeLooking += TIME.GetDeltaTime();
+        if(timeLooking < 0.5f){
+            timeLooking += TIME.GetDeltaTime();
+        }
     }
     else {
         if(timeLooking > 0.0f) timeLooking -= TIME.GetDeltaTime() * 1.2f;
