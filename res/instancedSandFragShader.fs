@@ -185,11 +185,11 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
     //float bias =  0.001;
     vec3 normal = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
-    float bias = max(0.005 * dot(normal, lightDir), 0.003);
+    float bias = max(0.003 * dot(normal, lightDir), 0.001);
     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
     float shadow = 0.0;
-    vec2 texelSize = 0.3 / textureSize(shadowMap, 0);
+    vec2 texelSize = 0.1 / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)

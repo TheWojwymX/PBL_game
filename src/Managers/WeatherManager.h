@@ -21,6 +21,8 @@ public:
     void SetupAmbientParticles();
     void SetupRainParticles();
     void UpdateSunPosition();
+    glm::vec3 getSkyColor();
+    glm::vec3 getDirColor();
 
     glm::vec3 getWindDirection(){return windDirection;}
     float getWindStrength(){return windStrength;}
@@ -43,9 +45,23 @@ private:
     float timer = 0.0f;
     bool increasing = false;
 
-    float radius = 50.0f;
-    float angle = 45.0f;
-    float speed = 0.3f;
+    float radius = 30.0f;
+    float angle = 44.5f;
+    float speed = 0.02f;
     int direction = 1;
     int counter = 0;
+
+    glm::vec3 daySkyColor;
+    glm::vec3 sunsetSkyColor;
+    glm::vec3 nightSkyColor;
+
+    glm::vec3 dayColor;
+    glm::vec3 sunsetColor;
+    glm::vec3 nightColor;
+
+    float shadowStrength = 1.0f;
+    float dirAngle = 44.5f;
+
+    float stepInterval = 0.2f;
+    float timeAccumulator = 0.0f;
 };

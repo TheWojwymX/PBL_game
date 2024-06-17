@@ -312,7 +312,7 @@ int main(int, char**)
             skyboxShader->setMat4("view", skyboxView);
             skyboxShader->setMat4("projection", projection);
 
-            skyboxShader->setVec3("lightPos", LIGHTSMANAGER.lightPos);
+            skyboxShader->setVec3("lightPos", LIGHTSMANAGER.lightPosShader);
             skyboxShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
             skyboxShader->setVec3("lightColor", LIGHTSMANAGER.skyColor);
 
@@ -324,9 +324,9 @@ int main(int, char**)
             LIGHTSMANAGER.dirDirection[1] = shadowDir.y;
             LIGHTSMANAGER.dirDirection[2] = shadowDir.z;
 
-            float near_plane = 0.2f, far_plane = 250.0f;
+            float near_plane = 0.2f, far_plane = 350.0f;
             glm::mat4 lightProjection = glm::ortho(-300.0f, 300.0f, -100.0f, 100.0f, near_plane, far_plane);
-            glm::mat4 lightView = glm::lookAt(LIGHTSMANAGER.lightPos, LIGHTSMANAGER.lightCenter, glm::vec3(0.0, 1.0, 0.0));
+            glm::mat4 lightView = glm::lookAt(LIGHTSMANAGER.shadowLightPos, LIGHTSMANAGER.shadowLightCenter, glm::vec3(0.0, 1.0, 0.0));
             SHADOWMAP.SetLightProjection(lightProjection);
             SHADOWMAP.SetLightView(lightView);
             SHADOWMAP.AssignLightSpaceMatrixToShader();
@@ -474,8 +474,8 @@ int main(int, char**)
         ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
         ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
 
-        ImGui::ColorEdit3("Directional Light Color", LIGHTSMANAGER.dirColor);
-        ImGui::ColorEdit3("Sky Color", LIGHTSMANAGER.skyColor);
+        ImGui::ColorEdit3("Directional Light Color", glm::value_ptr(LIGHTSMANAGER.dirColor));
+        ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 

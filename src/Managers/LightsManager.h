@@ -41,13 +41,18 @@ public:
     float glowstickLinearNoFlash = 0.4f;     // Decreased for more gradual mid-range attenuation
     float glowstickQuadraticNoFlash = 0.05f; // Decreased to allow light to reach further
 
-    float dirColor[3] = { 0.999f, 0.999f, 1.00f };
-    float skyColor[3] = { 0.999f, 0.999f, 1.00f };
+    glm::vec3 dirColor{ 0.999f, 0.999f, 1.00f };
+    glm::vec3 skyColor{ 0.6235f, 0.6235f, 0.8039f };
     float dirDirection[3] = { -0.5f, -0.5f, -0.5f };
     bool dirActive = true;
 
     glm::vec3 lightPos;
     glm::vec3 lightCenter;
+
+    glm::vec3 lightPosShader;
+
+    glm::vec3 shadowLightPos;
+    glm::vec3 shadowLightCenter;
 private:
     void UpdateShaders();
 

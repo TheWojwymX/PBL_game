@@ -2,7 +2,7 @@
 out vec4 FragColor;
 
 // Define constants for lighting calculations
-#define AMBIENT_STRENGTH 1.0
+#define AMBIENT_STRENGTH 2.0
 
 // Define structures for different types of lights
 struct DirLight {

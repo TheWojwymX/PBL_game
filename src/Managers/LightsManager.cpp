@@ -10,6 +10,9 @@ void LightsManager::Update() {
     flashlightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpPosition(flashlightCurrentPosition);
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpDirection(flashlightCurrentDirection);
 
+    skyColor = WEATHERMANAGER.getSkyColor();
+    dirColor = WEATHERMANAGER.getDirColor();
+
     UpdateShaders();
     UpdateGlowsticks();
 }
@@ -43,6 +46,11 @@ void LightsManager::InitLights() {
 
     lightPos = glm::vec3(49.999f, 330.0f, 120.0f);
     lightCenter = glm::vec3(45.0f, 300.0f,45.0f);
+
+    lightPosShader = glm::vec3(49.999f, 330.0f, 120.0f);
+
+    shadowLightPos = glm::vec3(49.999f, 330.0f, 120.0f);
+    shadowLightCenter = glm::vec3(45.0f, 300.0f,45.0f);
 }
 
 void LightsManager::UpdateShaders(){
