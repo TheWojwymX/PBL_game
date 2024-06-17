@@ -483,7 +483,7 @@
     ],
     "Sounds": [
       {
-        "Path": "res/Sounds/ksu.mp3",
+        "Path": "res/Sounds/mainMenu.mp3",
         "SoundName": "BackgroundMusic",
         "SoundID": 0,
         "Type": 0

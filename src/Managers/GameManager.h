@@ -69,6 +69,10 @@ public:
 
     void Reset();
 
+    void PlayMenuMusic();
+
+    void StopMenuMusic();
+
 private:
     int _roundNumber = 0;
     Phase _currentPhase = Phase::DIG; 

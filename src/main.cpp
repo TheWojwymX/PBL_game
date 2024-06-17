@@ -188,10 +188,6 @@ int main(int, char**)
 
     HUD.Init();
 
-/*    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
-    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound();*/
-    //NODESMANAGER.getNodeByName("Enemy1")->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
-
     ENEMIESMANAGER.Init();
 
     //Prepare shader pointers
@@ -232,6 +228,8 @@ int main(int, char**)
 
     MainMenuPage mainMenuPage;
     mainMenuPage.Init();
+
+    GAMEMANAGER.PlayMenuMusic();
 
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))

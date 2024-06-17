@@ -63,6 +63,7 @@ void GameManager::StartGame() {
     _isInMainMenu = false;
     GAMEMANAGER._editMode = false;
     INPUT.SetCursorMode(false);
+    StopMenuMusic();
 }
 
 void GameManager::Evacuate() {
@@ -171,4 +172,13 @@ void GameManager::Reset() {
     _plastic = 5;
     _currentTime = 0.0f;
     DisableMouse();
+}
+
+void GameManager::PlayMenuMusic() {
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound(NODESMANAGER.getNodeByName("player"));
+}
+
+void GameManager::StopMenuMusic() {
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->StopSound();
 }
