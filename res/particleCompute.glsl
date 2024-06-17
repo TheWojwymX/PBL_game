@@ -96,7 +96,7 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
 
     if(onlyForward)
     {
-        initialVelocity = vec3(0.0, directionToEnemy.y * 40, XZvariation);
+        initialVelocity = vec3(directionToEnemy.x * 40, directionToEnemy.y * 40, directionToEnemy.z * 40);
     }
     else if(casing)
     {
@@ -161,6 +161,12 @@ p.Scale -= dt * 10;
 }
 if(!tooltipSpawn)
 {
+p.Life = 0.0;
+}
+
+if(p.Scale > 5.0){
+p.Scale = 0.0;
+p.Position.xyz = vec3(-300.0,-300.0,-300.0);
 p.Life = 0.0;
 }
             // Check for bounce when particle hits y = 105
