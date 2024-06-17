@@ -47,4 +47,5 @@ private:
     float angle = 45.0f;
     float speed = 0.3f;
     int direction = 1;
+    int counter = 0;
 };

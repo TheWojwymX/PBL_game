@@ -68,6 +68,10 @@ void WeatherManager::Update(){
         }
     }
 
+    if(counter < 2) {
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+        counter++;
+    }
 }
 
 void WeatherManager::SetupAmbientParticles() {
@@ -80,8 +84,6 @@ void WeatherManager::SetupAmbientParticles() {
     ambientParticles->object = node;
     ambientParticles->Init();
     node->AddComponent(ambientParticles);
-
-    ambientParticles->SpawnParticles();
 }
 
 void WeatherManager::SetupRainParticles() {
