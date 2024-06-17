@@ -29,9 +29,9 @@ public:
     float flashlightLinear = 0.233f;
     float flashlightQuadratic = 0.06f;
 
-    float glowstickConstant = 5.0f;
-    float glowstickLinear = 2.049f;
-    float glowstickQuadratic = 0.737f;
+    float glowstickConstant = 3.093f;
+    float glowstickLinear = 0.632f;
+    float glowstickQuadratic = 0.219f;
     /*
     float glowstickConstantNoFlash = 2.0f;   // Increased to reduce close-range intensity
     float glowstickLinearNoFlash = 0.7f;     // Increased to manage mid-range attenuation

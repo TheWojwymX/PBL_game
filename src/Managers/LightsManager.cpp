@@ -55,7 +55,7 @@ void LightsManager::InitLights() {
 
 void LightsManager::UpdateShaders(){
     modelShader->use();
-    modelShader->setBool("spotLights[0].isActive", isSpotActive);
+    //modelShader->setBool("spotLights[0].isActive", isSpotActive);
     modelShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
     modelShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
     modelShader->setFloat("spotLights[0].constant", flashlightConstant);
@@ -71,7 +71,7 @@ void LightsManager::UpdateShaders(){
     modelShader->setVec3("lightPos", lightPos);
 
     glowstickShader->use();
-    glowstickShader->setBool("spotLights[0].isActive", isSpotActive);
+    //glowstickShader->setBool("spotLights[0].isActive", isSpotActive);
     glowstickShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
     glowstickShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
     glowstickShader->setFloat("spotLights[0].constant", flashlightConstant);
@@ -92,7 +92,7 @@ void LightsManager::UpdateShaders(){
     outlineShader->setInt("dirLight.isActive", dirActive);
 
     instancedSandShader->use();
-    instancedSandShader->setBool("spotLights[0].isActive", isSpotActive);
+    //instancedSandShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedSandShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
     instancedSandShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
     instancedSandShader->setFloat("spotLights[0].constant", flashlightConstant);
@@ -108,7 +108,7 @@ void LightsManager::UpdateShaders(){
     instancedSandShader->setVec3("lightPos", lightPos);
 
     instancedMetalShader->use();
-    instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
+    //instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedMetalShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
     instancedMetalShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
     instancedMetalShader->setFloat("spotLights[0].constant", flashlightConstant);
@@ -124,7 +124,7 @@ void LightsManager::UpdateShaders(){
     instancedMetalShader->setVec3("lightPos", lightPos);
 
     instancedPlasticShader->use();
-    instancedPlasticShader->setBool("spotLights[0].isActive", isSpotActive);
+    //instancedPlasticShader->setBool("spotLights[0].isActive", isSpotActive);
     instancedPlasticShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
     instancedPlasticShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
     instancedPlasticShader->setFloat("spotLights[0].constant", flashlightConstant);
@@ -186,7 +186,7 @@ void LightsManager::UpdateShaders(){
     }
 
     shovelShader->use();
-    shovelShader->setBool("spotLights[0].isActive", isSpotActive);
+    //shovelShader->setBool("spotLights[0].isActive", isSpotActive);
     shovelShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
     shovelShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
     shovelShader->setFloat("spotLights[0].constant", flashlightConstant);

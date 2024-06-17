@@ -171,10 +171,10 @@ void WeatherManager::UpdateSunPosition() {
 glm::vec3 WeatherManager::getSkyColor() {
     glm::vec3 currentColor;
 
-    if (angle >= 44.0f && angle < 44.5f) {
+    if (angle >= 44.0f && angle < 45.5f) {
         // Sunrise to Day
-        currentColor = glm::mix(sunsetSkyColor, daySkyColor, (angle - 44.0f) / (44.5f - 44.0f));
-    } else if(angle >= 44.5f && angle < 46.5){
+        currentColor = glm::mix(sunsetSkyColor, daySkyColor, (angle - 44.0f) / (45.5f - 44.0f));
+    } else if(angle >= 45.5f && angle < 46.5){
         currentColor = daySkyColor;
     } else if (angle >= 46.5f && angle < 46.9f) {
         // Day to Sunset

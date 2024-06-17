@@ -45,7 +45,7 @@ private:
     float timer = 0.0f;
     bool increasing = false;
 
-    float radius = 30.0f;
+    float radius = 50.0f;
     float angle = 44.5f;
     float speed = 0.02f;
     int direction = 1;
