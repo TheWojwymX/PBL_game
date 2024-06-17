@@ -266,3 +266,7 @@ void HUDMain::PlayMetalBump() {
         }
     }
 }
+
+void HUDMain::Reset() {
+
+}

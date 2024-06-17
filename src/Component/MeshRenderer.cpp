@@ -20,6 +20,8 @@ void MeshRenderer::Render(glm::mat4 parentWorld) {
 
 void MeshRenderer::RenderShadows(glm::mat4 parentWorld) {
 
+    if(_disableShadows) return;
+
     shared_ptr<Shader> currentShader = _shader;
     SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
     glm::mat4 world = _ownerTransform->Combine(parentWorld);

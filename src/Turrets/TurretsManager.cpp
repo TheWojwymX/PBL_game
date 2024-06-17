@@ -67,7 +67,6 @@ void TurretsManager::PlayerActions() {
     if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim &&
         !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && playerPosY >= GAMEMANAGER._groundLevel &&
         !_isPlayerInMovingMode) {
-        std::cout << "wykona sie";
         _PDAController->_playShowAnim = true;
         HUD._shouldShowCrosshair = false;
         PAGEMANAGER._PDAPage->DisplayPDAPage();
@@ -188,7 +187,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     GAMEMANAGER.RemoveMaterials(_turretCosts[type]);
 
     //Flare spawning
-    std::string nameOfFlare = "Flare" + to_string(_turrets.size() + 1);
+    std::string nameOfFlare = "Flare" + to_string(_newTurretIndex);
     shared_ptr<Node> flare = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfFlare);
 
     auto newFlareMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
@@ -219,8 +218,8 @@ void TurretsManager::SpawnTurret(TurretType type) {
 
     //Turret spawning
     //std::cout << "zespawniono" << std::endl;
-    std::string nameOfTurret = "Turret" + to_string(_turrets.size() + 1);
-    std::string rangeIndicatorNode = "Range" + to_string(_turrets.size() + 1);
+    std::string nameOfTurret = "Turret" + to_string(_newTurretIndex);
+    std::string rangeIndicatorNode = "Range" + to_string(_newTurretIndex);
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfTurret);
 
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
@@ -282,6 +281,12 @@ void TurretsManager::SpawnTurret(TurretType type) {
     rangeNode->GetTransform()->UpdateGlobalCTM();
 
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
+
+    for (int i = 0; i < _turrets.size(); i++) {
+        std::cout << typeid(_turrets[i]).name() << std::endl;
+    }
+
+    _newTurretIndex++;
 }
 
 void TurretsManager::PrepareBlueprintTurret() {
@@ -670,4 +675,21 @@ bool TurretsManager::IsSelectedTurretInRange() {
         return distance + 0.01 <= 12;
     }
     return false;
+}
+
+void TurretsManager::Reset() {
+    for (int i = 0; i < _turrets.size(); i++) {
+        if (_turrets[i] == nullptr) continue;
+        if(_turrets[i]->_flare != nullptr){
+            NODESMANAGER.getNodeByName("root")->RemoveChild(_turrets[i]->_flare);
+        }
+        NODESMANAGER.getNodeByName("root")->RemoveChild(_turrets[i]->_ownerNode);
+    }
+    _turrets.clear();
+    _isPlayerInMovingMode = false;
+    PAGEMANAGER._PDAPage->HidePDAPage();
+    _isInTurretChoiceMenu = false;
+    _PDAController->HideImmediately();
+    HideBlueprintTurret();
+
 }

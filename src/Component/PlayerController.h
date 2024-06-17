@@ -53,6 +53,9 @@ public:
     bool _isGrounded;
     float _speed;
     bool _isUsingJetpack = false;
+    glm::vec3 _velocity;
+
+    void Reset();
 
 private:
     float _width;
@@ -64,7 +67,6 @@ private:
     float _reach;
     int _radius;
     float _digPower;
-    glm::vec3 _velocity;
     glm::vec2 _inputVector;
     std::shared_ptr<Camera> _cameraRef;
     int _cameraRefID;

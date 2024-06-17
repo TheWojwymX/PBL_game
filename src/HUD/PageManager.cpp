@@ -139,3 +139,8 @@ void PageManager::CloseAllOtherPages(const shared_ptr<Page> &pageException) {
         }
     }
 }
+
+void PageManager::Reset() {
+    CloseAllPages();
+    _isInUpgradeMenu = false;
+}

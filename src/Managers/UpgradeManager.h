@@ -61,6 +61,8 @@ public:
     bool IsPlayerStationInRange();
 
     void Update();
+
+    void Reset();
 private:
     Upgrades _domeHPUpgrades;
     Upgrades _domeHPRegenUpgrades;

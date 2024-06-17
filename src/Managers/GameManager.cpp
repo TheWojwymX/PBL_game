@@ -27,7 +27,7 @@ GameManager& GameManager::GetInstance() {
 }
 
 void GameManager::pressToSkipPhase() {
-    if (INPUT.IsKeyPressed(80)) {
+    if (INPUT.IsKeyPressed(GLFW_KEY_O)) {
         _currentTime = 31;
     }
 }
@@ -161,5 +161,14 @@ void GameManager::Unpause() {
     _paused = false;
     PAGEMANAGER._pauseMenuPage->_shouldRender = false;
     HUD.EnableHUD();
+    DisableMouse();
+}
+
+void GameManager::Reset() {
+    _roundNumber = 0;
+    _currentPhase = Phase::DIG;
+    _metal = 5;
+    _plastic = 5;
+    _currentTime = 0.0f;
     DisableMouse();
 }

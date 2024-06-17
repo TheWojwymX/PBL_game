@@ -56,8 +56,6 @@ public:
             "you know what you're doing. Good luck."
     };
 
-    float _tutorialTimer = 0;
-
     std::vector<glm::vec3> _messagesPositions{
         glm::vec3 (52,288.5,55),
         glm::vec3(49.15, 288.5, 49.8),
@@ -80,9 +78,6 @@ public:
 
     void SpawnTutorialEnemies(int spawnerIndex);
 
-    bool _firstWaveSpawned = false;
-    bool _secondWaveSpawned = false;
-
     float _timer = 0.0f;
     bool _isTimerOn = false;
 
@@ -93,6 +88,11 @@ public:
     void SkipTutorial();
 
     void ControllHud(bool crosshair, bool materials, bool hp, bool fuel, bool phase, bool depth);
+
+    void Reset();
+
+    shared_ptr<Node> _tutorialEnemy1;
+    shared_ptr<Node> _tutorialEnemy2;
 };
 
 

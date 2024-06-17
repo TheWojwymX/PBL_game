@@ -585,3 +585,9 @@ void UpgradeManager::HighlightSingleTurret(int turretIndex)
         }
     }
 }
+
+void UpgradeManager::Reset() {
+    InitDomeUpgrades();
+    InitPlayerUpgrades();
+    InitTurretUpgrades();
+}

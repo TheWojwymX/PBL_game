@@ -89,6 +89,8 @@ public:
     float _maxScale = 2.5f;
     float _defaultScale = 2.0f;
 
+    void Reset();
+
 private:
     std::shared_ptr<Node> _playerNode;
 

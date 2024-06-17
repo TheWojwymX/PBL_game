@@ -72,4 +72,7 @@ private:
     std::vector<glm::vec3> glowstickColors;
 
     int maxGlowsticks = 10;
+
+    std::vector<std::shared_ptr<Node>> _glowsticksNodes;
+    int _oldAmountOfGlovsticks = 0;
 };

@@ -236,6 +236,19 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
+        if (INPUT.IsKeyPressed(GLFW_KEY_KP_0)) {
+            NODESMANAGER.getNodeByName("blockManager")->GetComponent<BlockManager>()->Reset();
+            LIGHTSMANAGER.Reset();
+            TURRETSMANAGER.Reset();
+            ENEMIESMANAGER.Reset();
+            GAMEMANAGER.Reset();
+            TUTORIALMANAGER.Reset();
+            DOMEMANAGER.Reset();
+            UPGRADEMANAGER.Reset();
+            NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->Reset();
+            PAGEMANAGER.Reset();
+        }
+
         // Calculate deltaTime
         TIME.Update();
 

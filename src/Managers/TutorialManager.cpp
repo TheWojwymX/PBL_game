@@ -32,15 +32,17 @@ void TutorialManager::Update() {
             if(_player->GetComponent<PlayerController>()->_isGrounded){
                DisplayAndChangeMessage();
                _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
-               NODESMANAGER.getNodeByName("root")->RemoveChild(_paratrooper);
+               _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = true;
                 HUD._shouldShowCrosshair = true;
                 HUD._shouldShowMaterials = true;
             }
             else{
                 if(!GAMEMANAGER._paused) {
+                    std::cout << "winno sie wykonac " << std::endl;
                     _player->GetTransform()->SetPosition(glm::vec3(_player->GetTransform()->GetPosition().x,
                                                                    _player->GetTransform()->GetPosition().y - TIME.GetDeltaTime() * 2,
                                                                    _player->GetTransform()->GetPosition().z));
+                    std::cout << "i nicy sie wykonuje " << std::endl;
                     _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
                     if (_timer < 1 && !_firstEnemySpawned) {
                         _timer += TIME.GetDeltaTime();
@@ -215,8 +217,9 @@ void TutorialManager::SkipTutorial() {
     HUD._isAfterTutorialDepth = true;
     HUD._isAfterTutorialPhaseInfo = true;
 
-
     HUD.EnableHUD();
+
+    _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = true;
 }
 
 void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){
@@ -273,4 +276,27 @@ void TutorialManager::ControllHud(bool crosshair, bool materials, bool hp, bool 
     HUD._isAfterTutorialFuel = fuel;
     HUD._isAfterTutorialDepth = depth;
     HUD._isAfterTutorialPhaseInfo = phase;
+}
+
+void TutorialManager::Reset() {
+    _player->GetTransform()->SetPosition(glm::vec3(46.614, 305.5, 60.652));
+    _firstEnemySpawned = false;
+    _isFreePlay = false;
+    _isAfterWarning = false;
+    _isTutorialEnded = false;
+    HUD._isAfterTutorialMaterials = false;
+    HUD._isAfterTutorialCrosshair = false;
+    HUD._isAfterTutorialHP = false;
+    HUD._isAfterTutorialFuel = false;
+    HUD._isAfterTutorialDepth = false;
+    HUD._isAfterTutorialPhaseInfo = false;
+    HUD._isTutorialNeededAtMoment = false;
+    HUD._shouldShowTutorial = false;
+    _actualMessage = 0;
+    _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
+    HUD._actualText = _messages[_actualMessage];
+    _player->GetComponent<PlayerController>()->_isGrounded = false;
+    _player->GetComponent<PlayerController>()->SetGravity(0);
+    _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = false;
+    _player->GetComponent<PlayerController>()->_velocity.y = 0;
 }

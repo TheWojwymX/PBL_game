@@ -65,6 +65,12 @@ public:
     void CheckIfAtWalls(shared_ptr<Enemy> enemy);
 
     void AvoidEnemy(shared_ptr<Enemy> thisEnemy);
+
+    void Reset();
+
+    int _newEnemyIndex = 1;
+
+    std::vector<std::shared_ptr<Node>> _enemiesParticles;
 };
 
 

@@ -23,6 +23,7 @@ public:
     void UpgradeDomeHP(float value) { _maxHP += value; _hp += static_cast<int>(value); _domeHPLevel++; }
     void UpgradeDomeHPRegen(float value) { _regenRate += value; _domeHPRegenLevel++; }
     void RepairDomeHP(float value);
+    void Reset();
 
 private:
     char _domeHPLevel;

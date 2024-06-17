@@ -341,3 +341,18 @@ void PlayerController::HandleGlowstick() {
 void PlayerController::SetGravity(float gravity) {
     _gravity = gravity;
 }
+
+void PlayerController::Reset() {
+    _jetpackFuel = 0.0f;
+    _maxJetpackFuel = 100.0f;
+    _radiusUpgradeCost = 10;
+    _reachUpgradeCost = 10;
+    _speedUpgradeCost = 10;
+    _reach = 7.5f;
+    _radius = 2;
+    _digPower = 0.25f;
+    _jetpackCapacityLevel = 0;
+    _miningSpeedLevel = 0;
+    _miningReachLevel = 0;
+    _miningRadiusLevel = 0;
+}

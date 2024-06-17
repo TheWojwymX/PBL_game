@@ -16,8 +16,12 @@ void LightsManager::Update() {
 
 void LightsManager::Reset()
 {
+    _oldAmountOfGlovsticks = glowstickCount;
     TurnOffGlowsticks();
-    glowstickCount = 0;
+    for (int i = 0; i < _glowsticksNodes.size(); i++) {
+        if (_glowsticksNodes[i] == nullptr) continue;
+        NODESMANAGER.getNodeByName("root")->RemoveChild(_glowsticksNodes[i]);
+    }
 }
 
 void LightsManager::InitLights() {
@@ -205,6 +209,7 @@ void LightsManager::AddGlowstick() {
     glowstickCount++;
     std::string glowstickNodeName = "Glowstick" + to_string(glowstickCount);
     shared_ptr<Node> glowstickNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), glowstickNodeName);
+    _glowsticksNodes.push_back(glowstickNode);
     glowstickNode->GetTransform()->SetPosition(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
     glowstickNode->GetTransform()->SetScale(glm::vec3(1.4, 1.4, 1.4));
 
@@ -237,7 +242,8 @@ void LightsManager::UpdateGlowsticks() {
     std::vector<glm::vec3> visibleGlowsticks;
     std::vector<glm::vec3> visibleGlowstickColors;
 
-    for (int i = 0; i < glowstickCount; i++) {
+    for (int i = _oldAmountOfGlovsticks; i < glowstickCount; i++) {
+
         auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
         if(thisGlowstick != nullptr) {
             glm::vec3 glowstickPosition = thisGlowstick->GetTransform()->GetPosition();
@@ -320,8 +326,6 @@ void LightsManager::TurnOffGlowsticks() {
         shovelShader->use();
         shovelShader->setBool(name + ".isActive", false);
     }
-
-    glowstickColors.clear();
 
     for(int i = 0; i < glowstickCount; i++) {
         string name = "pointLights[" + to_string(i) + "]";

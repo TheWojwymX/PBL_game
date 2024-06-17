@@ -41,4 +41,5 @@ public:
     void RenderModel(shared_ptr<Model> model, glm::mat4 ctm);
 
     bool _disableModel = false;
+    bool _disableShadows = false;
 };

@@ -165,8 +165,8 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
 
     if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size())
     {
-        std::string nameOfEnemy = "Enemy" + std::to_string(_enemies.size() + 1);
-        std::string particleGeneratorNode = "Particle" +  to_string(_enemies.size() + 1);
+        std::string nameOfEnemy = "Enemy" + std::to_string(_newEnemyIndex);
+        std::string particleGeneratorNode = "Particle" +  to_string(_newEnemyIndex);
 
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
@@ -214,11 +214,14 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+        newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
         newEnemyComponent->_size = distanceToAvoid;
         newEnemyComponent->_enemyType = type;
         newEnemyComponent->setUp();
 
         _enemies.push_back(newEnemyComponent);
+        _enemiesParticles.push_back(NODESMANAGER.getNodeByName(particleGeneratorNode));
+        _newEnemyIndex++;
     }
 }
 
@@ -262,4 +265,18 @@ void EnemiesManager::ChooseModelBasedOnDistance() {
             }
         }
     }
+}
+
+void EnemiesManager::Reset() {
+    for (int i = 0; i < _enemies.size(); i++) {
+        if (_enemies[i] == nullptr) continue;
+        NODESMANAGER.getNodeByName("root")->RemoveChild(_enemies[i]->_ownerNode);
+    }
+    _enemies.clear();
+
+    for (int i = 0; i < _enemiesParticles.size(); i++) {
+        if (_enemiesParticles[i] == nullptr) continue;
+        NODESMANAGER.getNodeByName("root")->RemoveChild(_enemiesParticles[i]);
+    }
+    _enemiesParticles.clear();
 }

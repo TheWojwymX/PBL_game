@@ -37,3 +37,11 @@ void DomeManager::RepairDomeHP(float value) {
     }
     std::cout << "Dome HP after repair: " << _hp << "/" << _maxHP << std::endl;
 }
+
+void DomeManager::Reset() {
+    _domeHPLevel = 0;
+    _domeHPRegenLevel = 0;
+    _regenRate = 0;
+    _hp = 100.0f;
+    _maxHP = 100.0f;
+}

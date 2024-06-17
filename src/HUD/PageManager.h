@@ -49,6 +49,8 @@ public:
     void CloseAllPages();
 
     bool _isInUpgradeMenu = false;
+
+    void Reset();
 };
 
 
