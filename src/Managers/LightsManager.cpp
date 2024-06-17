@@ -16,6 +16,7 @@ void LightsManager::Update() {
 
 void LightsManager::Reset()
 {
+    TurnOffGlowsticks();
     glowstickCount = 0;
 }
 
@@ -238,11 +239,13 @@ void LightsManager::UpdateGlowsticks() {
 
     for (int i = 0; i < glowstickCount; i++) {
         auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
-        glm::vec3 glowstickPosition = thisGlowstick->GetTransform()->GetPosition();
+        if(thisGlowstick != nullptr) {
+            glm::vec3 glowstickPosition = thisGlowstick->GetTransform()->GetPosition();
 
-        if (glm::distance(glowstickPosition, camPosition) < 60.0f) {
-            visibleGlowsticks.push_back(glowstickPosition);
-            visibleGlowstickColors.push_back(glowstickColors[i]);
+            if (glm::distance(glowstickPosition, camPosition) < 60.0f) {
+                visibleGlowsticks.push_back(glowstickPosition);
+                visibleGlowstickColors.push_back(glowstickColors[i]);
+            }
         }
     }
 
@@ -300,4 +303,31 @@ void LightsManager::UpdateGlowsticks() {
         }
     }
 
+}
+
+void LightsManager::TurnOffGlowsticks() {
+    for(int i = 0; i < maxGlowsticks; i++) {
+        string name = "pointLights[" + to_string(i) + "]";
+        instancedSandShader->use();
+        instancedSandShader->setBool(name + ".isActive", false);
+
+        instancedMetalShader->use();
+        instancedMetalShader->setBool(name + ".isActive", false);
+
+        instancedPlasticShader->use();
+        instancedPlasticShader->setBool(name + ".isActive", false);
+
+        shovelShader->use();
+        shovelShader->setBool(name + ".isActive", false);
+    }
+
+    glowstickColors.clear();
+
+    for(int i = 0; i < glowstickCount; i++) {
+        string name = "pointLights[" + to_string(i) + "]";
+        auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
+        if(thisGlowstick != nullptr) {
+            GAMEMANAGER.root->RemoveChild(thisGlowstick);
+        }
+    }
 }

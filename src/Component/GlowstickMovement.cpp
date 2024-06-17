@@ -5,6 +5,13 @@ GlowstickMovement::GlowstickMovement() : _movementVector(glm::vec3(0.0f)), _velo
     _type = ComponentType::GLOWSTICKMOVEMENT;
 }
 
+GlowstickMovement::~GlowstickMovement() {
+    _velocity = glm::vec3(0.0f,0.0f,0.0f);
+    _frontVector = glm::vec3(0.0f,0.0f,0.0f);
+    _movementVector = glm::vec3(0.0f,0.0f,0.0f);
+    _blockManagerRef->Reset();
+}
+
 void GlowstickMovement::Init() {
     _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(1);
     _frontVector = COMPONENTSMANAGER.GetComponentByID<Camera>(2)->GetFrontVector();

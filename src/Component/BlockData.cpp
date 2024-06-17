@@ -6,14 +6,6 @@ BlockData::BlockData(BlockType blockType, glm::ivec3 posID, float startHP, bool 
 }
 
 BlockData::~BlockData() {
-    // Iterate through the vector of stuck glowsticks
-    for (auto& glowstick : _stuckGlowsticks) {
-        auto ownerNode = glowstick->GetOwnerNode(); 
-        if (ownerNode) {
-            GAMEMANAGER.root->RemoveChild(ownerNode);  
-        }
-    }
-
     // Clear the vector of stuck glowsticks
     _stuckGlowsticks.clear();
 }

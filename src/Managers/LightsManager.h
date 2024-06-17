@@ -20,6 +20,7 @@ public:
     void InitLights();
     void AddGlowstick();
     void UpdateGlowsticks();
+    void TurnOffGlowsticks();
 
     bool isSpotActive = false;
     int glowstickCount = 0;
