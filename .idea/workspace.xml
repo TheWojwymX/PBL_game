@@ -33,420 +33,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/Compass.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/Compass.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/Compass.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Component/CompassController.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Component/CompassController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RepoPBL.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RepoPBL.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Worm/30.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Worm/30.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Worm/Worm_Color.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Models/Worm/Worm_reflection.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake/CPM.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/CPM.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake/global_settings.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/global_settings.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/DirLight/DirLight.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/DirLight/DirLight.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/DirLight/DirLight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/DirLight/DirLight.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant-fixed.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant-fixed.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant-fixed.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant-fixed.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_attack_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_dead_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-4.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-4.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_spawn_v1-4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-4.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-4.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-5.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-5.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-5.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Ant/ant_walk_v1-5.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Base/Bucket/Bucket.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/Bucket.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Base/Bucket/Bucket.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Base/Bucket/Bucket.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Base/Sandbags/SandBags.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/SandBags.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Base/Sandbags/SandBags.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/SandBags.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbagi.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbagi.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbagi.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Base/Sandbags/sandbagi.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-4.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-4.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-5.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-5.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-5.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-5.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-4.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-4.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-5.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-5.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-5.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-5.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/BigShovel/BigShovel.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/BigShovel/BigShovel.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/BigShovel/BigShovel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/BigShovel/BigShovel.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Button/Cloud.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Button/Cloud.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Button/Cloud.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Button/Cloud.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Cap/cap.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Cap/cap.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Cap/cap.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Cap/cap.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Cloud/Cloud.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Cloud/Cloud.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Cloud/Cloud.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Cloud/Cloud.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Flare/flara_pomniejszona.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Flare/flara_pomniejszona.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Flare/flara_pomniejszona.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Flare/flara_pomniejszona.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Glowstick/palka.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Glowstick/palka.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Glowstick/palka.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Glowstick/palka.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Molds/1/1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Molds/1/1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Molds/1/1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Molds/1/1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Molds/3/3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Molds/3/3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Molds/3/3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Molds/3/3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Molds/7/7.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Molds/7/7.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Molds/7/7.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Molds/7/7.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Nut/NutModel.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Nut/NutModel.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Nut/NutModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Nut/NutModel.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/PDA/antena/krotkofalowka_v2-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/PDA/antena/krotkofalowka_v2-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/PDA/antena/krotkofalowka_v2-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/PDA/antena/krotkofalowka_v2-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/PDA/krotkofalowka_v2-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/PDA/krotkofalowka_v2-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/PDA/krotkofalowka_v2-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/PDA/krotkofalowka_v2-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Rake/Rake.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Rake/Rake.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Rake/Rake.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Rake/Rake.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/RangeIndicators/okragly.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/RangeIndicators/okragly.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/RangeIndicators/okragly.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/RangeIndicators/okragly.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/RangeIndicators/prosty.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/RangeIndicators/prosty.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/RangeIndicators/prosty.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/RangeIndicators/prosty.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Blue/shovel_1.3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Shovel/Shovel_Green/shovel_green.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Parachute/parachote_soldier_v2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/UpgradeStations/base/base_upgrade_stationv4.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/base/base_upgrade_stationv4.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/UpgradeStations/base/base_upgrade_stationv4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/base/base_upgrade_stationv4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/UpgradeStations/player/player_upgrade_station_v2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/player/player_upgrade_station_v2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/UpgradeStations/player/player_upgrade_station_v2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/UpgradeStations/player/player_upgrade_station_v2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Worm/robal.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Worm/robal.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Worm/robal.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Worm/robal.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/PointLight/PointLight.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/PointLight/PointLight.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/PointLight/PointLight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/PointLight/PointLight.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Sand/Sand.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/Sand.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Sand/Sand.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/Sand.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/SpotLight/SpotLight.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/SpotLight/SpotLight.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/SpotLight/SpotLight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/SpotLight/SpotLight.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/animatedTextureShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/animatedTextureShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/animatedTextureShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/animatedTextureShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/blueprintShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/blueprintShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/blueprintShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/blueprintShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/cloudFragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/cloudFragShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/cloudVecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/cloudVecShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/fonts/SIL Open Font License.txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/fonts/SIL Open Font License.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/fragLightObjectShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/fragLightObjectShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/fragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/fragShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/glowstickShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/glowstickShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/glowstickShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/glowstickShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/instancedMetalFragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/instancedMetalFragShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/instancedMetalVecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/instancedMetalVecShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/instancedPlasticFragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/instancedPlasticFragShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/instancedPlasticVecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/instancedPlasticVecShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/instancedSandFragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/instancedSandFragShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/instancedSandVecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/instancedSandVecShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/outlineShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/outlineShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/outlineShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/outlineShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/particleCompute.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/res/particleCompute.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/particleShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/particleShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/particleShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/particleShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shadowInstanceShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowInstanceShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shadowInstanceShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowInstanceShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shadowShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shadowShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shadowShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shovelShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shovelShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shovelShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/shovelShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/skyboxFragShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/skyboxFragShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/skyboxReflectionShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/skyboxReflectionShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/skyboxReflectionShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/skyboxReflectionShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/skyboxVecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/skyboxVecShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/textShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/textShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textureShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/textureShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textureShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/textureShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textureShaderColor.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/textureShaderColor.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textureShaderColor.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/textureShaderColor.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/toonShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/toonShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/toonShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/toonShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/turretRange.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/turretRange.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/turretRange.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/turretRange.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/vecLightObjectShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/vecLightObjectShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/vecShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/vecShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/wireframeShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/wireframeShader.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/wireframeShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/wireframeShader.vs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/bezStartowych.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/bezStartowych.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Worm/robal.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Worm/robal.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Worm/texture.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/test1.json.bak" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/test2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/ustawianie.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/ustawianie.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/ustawianie2.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/ustawianie2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/ustawianie3.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/ustawianie3.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AnimatedTexture.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/AnimatedTexture.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AudioContext.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/AudioContext.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animation.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animator.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Block.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Block.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Block.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Block.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/BlockData.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockData.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/BlockData.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/BlockManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/BlockManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Component/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Component/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/CloudManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/CloudManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/CloudManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/CloudManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Disabler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Disabler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Disabler.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Disabler.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/FrustumCulling.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/FrustumCulling.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/FrustumCulling.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/FrustumCulling.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/GlowstickMovement.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/GlowstickMovement.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/GlowstickMovement.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/GlowstickMovement.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/InstanceRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/InstanceRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/InstanceRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/InstanceRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PDAController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PDAController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PDAController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PDAController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerAudioController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerAudioController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerAudioController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerAudioController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/RefuelStation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/RefuelStation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/RefuelStation.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/RefuelStation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Rotate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Rotate.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Rotate.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Rotate.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShadowMap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShadowMap.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShadowMap.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShadowMap.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShovelController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShovelController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShovelRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShovelRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Skybox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Skybox.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Skybox.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Skybox.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/StaticBlockController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/StaticBlockController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/StaticBlockController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/StaticBlockController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/TopLayerSnap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/TopLayerSnap.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/TopLayerSnap.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/TopLayerSnap.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Transform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Transform.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Transform.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Transform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ComputeShader.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/ComputeShader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Component.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Component.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Component.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Component.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/ComponentTypeEnum.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/ComponentTypeEnum.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Input.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Input.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Input.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Input.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Time.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Time.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Time.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Time.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CylinderRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/CylinderRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Framebuffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Framebuffer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Framebuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Framebuffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiHierarchy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui/ImguiHierarchy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiHierarchy.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui/ImguiHierarchy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiInspector.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui/ImguiInspector.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiInspector.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui/ImguiInspector.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui/ImguiMain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui/ImguiMain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Button.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Button.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Buttons/Button.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Buttons/Button.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/CoordsConverter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/CoordsConverter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/CoordsConverter.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/CoordsConverter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Image/ImageRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/PageManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/PageManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/MainMenuPage/MainMenuPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/MainMenuPage/MainMenuPage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/MainMenuPage/MainMenuPage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/MainMenuPage/MainMenuPage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/MessagePage/MessagePage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/MessagePage/MessagePage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/MessagePage/MessagePage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/MessagePage/MessagePage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PDA/PDAPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PDA/PDAPage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PDA/PDAPage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PDA/PDAPage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/Page.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/Page.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/Page.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/Page.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PauseMenu/PauseMenuPage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/PlayerUpgradeMenu/PlayerUpgradeMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Pages/TurretUpgradeMenu/TurretUpgradeMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Text/TextRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Text/TextRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/Text/TextRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/Text/TextRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/InstanceObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/InstanceObject.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/AudioEngineManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/AudioEngineManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/AudioEngineManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/AudioEngineManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/ComponentsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/ComponentsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/ComponentsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/ComponentsManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/DomeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/DomeManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/DomeManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/DomeManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/GameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/GameManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/LightsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/LightsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/LightsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/LightsManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/NodesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/NodesManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/NodesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/NodesManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/ResourceManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/ResourceManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/ResourceManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/ResourceManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/SceneManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/SceneManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/SceneManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/SceneManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/TutorialManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/TutorialManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/UpgradeManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/WeatherManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/WeatherManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Managers/WeatherManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Managers/WeatherManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OrbitRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/OrbitRenderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParticleGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleGenerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParticleGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleGenerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sound.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sound.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WindSimulation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/WindSimulation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WindSimulation.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/WindSimulation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_glfw.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_glfw.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_glfw.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_glfw.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_opengl3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_opengl3.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_opengl3.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_opengl3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_opengl3_loader.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/imgui_impl/imgui_impl_opengl3_loader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/mesh.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/model.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shader_s.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/shader_s.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/texture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/texture.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/texture.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/glad/include/KHR/khrplatform.h" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/glad/include/KHR/khrplatform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/glad/include/glad/glad.h" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/glad/include/glad/glad.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/glad/src/glad.c" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/glad/src/glad.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/miniaudio.h" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/miniaudio.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/nlohmann/json.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/nlohmann/json.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/nlohmann/json_fwd.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/nlohmann/json_fwd.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/stb_image/stb_image.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/stb_image/stb_image.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thirdparty/stb_image/stb_image.h" beforeDir="false" afterPath="$PROJECT_DIR$/thirdparty/stb_image/stb_image.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -518,67 +115,67 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
+    <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+    <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="assimp" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="assimp" CONFIG_NAME="Debug">
+    <configuration name="assimp" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="assimp" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="freetype" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="freetype" CONFIG_NAME="Debug">
+    <configuration name="freetype" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="freetype" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="glad" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="glad" CONFIG_NAME="Debug">
+    <configuration name="glad" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="glad" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="glfw" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="glfw" CONFIG_NAME="Debug">
+    <configuration name="glfw" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="glfw" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="imgui" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="imgui" CONFIG_NAME="Debug">
+    <configuration name="imgui" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="imgui" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="spdlog" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="spdlog" CONFIG_NAME="Debug">
+    <configuration name="spdlog" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="spdlog" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="stb_image" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="stb_image" CONFIG_NAME="Debug">
+    <configuration name="stb_image" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="stb_image" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="uninstall" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="uninstall" CONFIG_NAME="Debug">
+    <configuration name="uninstall" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="uninstall" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="update_mappings" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="update_mappings" CONFIG_NAME="Debug">
+    <configuration name="update_mappings" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="update_mappings" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="zlibstatic" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="zlibstatic" CONFIG_NAME="Debug">
+    <configuration name="zlibstatic" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="zlibstatic" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -649,6 +246,7 @@
       <workItem from="1717742218137" duration="3755000" />
       <workItem from="1717749877725" duration="2227000" />
       <workItem from="1717767333985" duration="8454000" />
+      <workItem from="1718717042333" duration="490000" />
     </task>
     <servers />
   </component>
@@ -656,10 +254,9 @@
     <option name="version" value="3" />
   </component>
   <component name="VCPKGProject">
-    <isAutomaticEditVcpkgJson value="true" />
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
-    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

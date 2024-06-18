@@ -309,7 +309,7 @@
       },
       {
         "ModelName": "WormModel",
-        "Path": "res/Models/Worm/robal.obj"
+        "Path": "res/Models/Worm/30.obj"
       },
       {
         "ModelName": "RangeIndicatorReal",
@@ -1185,9 +1185,9 @@
             0
           ],
           "scale": [
-            1.0,
-            1.0,
-            1.0
+            10.0,
+            10.0,
+            10.0
           ]
         }
       },

@@ -37,7 +37,6 @@ public:
     float _shakeDuration = 0.0f;
     float _originalYaw;
     float _originalPitch;
-    int sign = -1;
     glm::vec3 _enemyPosition;
     bool _isShaking = false;
     void StartShake(float intensity, float duration, glm::vec3 enemyPosition);

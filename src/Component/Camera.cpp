@@ -141,9 +141,8 @@ void Camera::ApplyShakeEffect(glm::vec3 enemyPosition, float shakeFactor) {
     direction = glm::normalize(direction);
 
     // Calculate the shake offset based on the direction and shake factor
-    float shakeOffset = 2 * shakeFactor * glm::dot(direction, _right);
-    float shakeOffsetPitch = sign * shakeFactor * GetRandomFloat(2, 4.0);
-    sign *= -1;
+    float shakeOffset = 3 * shakeFactor * glm::dot(direction, _right);
+    float shakeOffsetPitch = shakeFactor * GetRandomFloat(-3.0, 3.0);
 
     // Apply the shake offset to the yaw
     _yaw += shakeOffset;

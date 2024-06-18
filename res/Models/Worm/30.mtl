@@ -1,0 +1,12 @@
+# Blender 4.1.1 MTL File: 'robale.blend'
+# www.blender.org
+
+newmtl Worm_mtl
+Ns 63.117920
+Ka 0.227414 0.227414 0.227414
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd Worm_Color.jpg
+map_Ks Worm_reflection.jpg
