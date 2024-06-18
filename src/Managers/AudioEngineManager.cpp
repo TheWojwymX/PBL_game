@@ -44,7 +44,7 @@ void AudioEngineManager::CleanupFinishedSounds()
             ma_sound_uninit(*it);
             delete *it;
             it = _activeSounds.erase(it);
-            std::cout << "Finished sound cleaned up." << std::endl;
+            //std::cout << "Finished sound cleaned up." << std::endl;
         } else {
             ++it;
         }

@@ -3,6 +3,8 @@
 #include "../HUD/PageManager.h"
 #include "../Managers/TutorialManager.h"
 #include "Managers/NodesManager.h"
+#include "UpgradeManager.h"
+#include "Turrets/TurretsManager.h"
 
 GameManager::GameManager() {
     // Starting time for digging phase
@@ -64,6 +66,7 @@ void GameManager::StartGame() {
     GAMEMANAGER._editMode = false;
     INPUT.SetCursorMode(false);
     StopMenuMusic();
+    PAGEMANAGER.CloseAllPages();
 }
 
 void GameManager::Evacuate() {
@@ -101,6 +104,10 @@ void GameManager::Update() {
             _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
             InitPhase();
         }
+    }
+
+    if(DOMEMANAGER.GetDomeHP() <= 0){
+        LoseGame();
     }
 }
 
@@ -181,4 +188,24 @@ void GameManager::PlayMenuMusic() {
 
 void GameManager::StopMenuMusic() {
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->StopSound();
+}
+
+void GameManager::RestartGame() {
+    NODESMANAGER.getNodeByName("blockManager")->GetComponent<BlockManager>()->Reset();
+    LIGHTSMANAGER.Reset();
+    TURRETSMANAGER.Reset();
+    ENEMIESMANAGER.Reset();
+    Reset();
+    TUTORIALMANAGER.Reset();
+    DOMEMANAGER.Reset();
+    UPGRADEMANAGER.Reset();
+    NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->Reset();
+    PAGEMANAGER.Reset();
+    DisableMouse();
+}
+
+void GameManager::LoseGame() {
+    HUD.DisableHUD();
+    PAGEMANAGER.CloseAllOtherPages(PAGEMANAGER._restartPage);
+    EnableMouse();
 }

@@ -16,6 +16,8 @@
 #include "HUD/Pages/DomeUpgradeMenu/DomeUpgradeMenu.h"
 #include "HUD/Pages/MessagePage/MessagePage.h"
 #include "HUD/Pages/PDA/PDAPage.h"
+#include "HUD/Pages/RestartPage/RestartPage.h"
+#include "HUD/Pages/MainMenuPage/MainMenuPage.h"
 
 class PageManager {
 public:
@@ -42,6 +44,10 @@ public:
 
     std::shared_ptr<PDAPage> _PDAPage = std::make_shared<PDAPage>();
 
+    std::shared_ptr<MainMenuPage> _mainMenuPage = std::make_shared<MainMenuPage>();
+
+    std::shared_ptr<RestartPage> _restartPage = std::make_shared<RestartPage>();
+
     void CheckInputs();
 
     void CloseAllOtherPages(const shared_ptr<Page>& pageException);
@@ -51,6 +57,8 @@ public:
     bool _isInUpgradeMenu = false;
 
     void Reset();
+
+
 };
 
 

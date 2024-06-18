@@ -6,14 +6,14 @@
 #include "ShovelController.h"
 #include "HUD/PageManager.h"
 
-PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width, float height, float digPower)
-    : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)), _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
-    _interactionCooldown(0.25f), _timeSinceLastInteraction(0.0f),
-    _jetpackCapacityLevel(0), _miningSpeedLevel(0), _miningReachLevel(0), _miningRadiusLevel(0) 
-{
+PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width,
+                                   float height, float digPower)
+        : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),
+          _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
+          _interactionCooldown(0.25f), _timeSinceLastInteraction(0.0f),
+          _jetpackCapacityLevel(0), _miningSpeedLevel(0), _miningReachLevel(0), _miningRadiusLevel(0) {
     _type = ComponentType::PLAYERCNTROLLER;
 }
-
 
 
 nlohmann::json PlayerController::Serialize() {
@@ -66,10 +66,12 @@ void PlayerController::Input() {
 }
 
 void PlayerController::Update() {
-    if(GAMEMANAGER._paused || PAGEMANAGER._isInUpgradeMenu){
+    if (PAGEMANAGER._isInUpgradeMenu) {
         _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
         HandleGravity();
-    }else{
+    } else if (GAMEMANAGER._paused) {
+        _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
+    } else {
         HandleMovement();
         HandleGlowstick();
     }
@@ -91,10 +93,10 @@ void PlayerController::InteractionInput() {
 
     if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)
         && !_shovelController->_isHidden && !_shovelController->_playHideAnim) {
-        if(_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
+        if (_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
             RESOURCEMANAGER.GetSoundByID(17)->PlaySoundSim(_ownerNode);
-            _shovelController->_playDigAnim = true;
-            _timeSinceLastInteraction = 0.0f;
+        _shovelController->_playDigAnim = true;
+        _timeSinceLastInteraction = 0.0f;
     }
 }
 
@@ -105,11 +107,9 @@ void PlayerController::CheckGrounded(glm::vec3 separationVector) {
         _ownerTransform->SetPosition(roundedY, 1);
         _isGrounded = true;
         _velocity.y = 0.0f;
-    }
-    else if (separationVector.y < 0) {
+    } else if (separationVector.y < 0) {
         _velocity.y = 0.0f;
-    }
-    else {
+    } else {
         _isGrounded = false;
     }
 }
@@ -118,7 +118,8 @@ void PlayerController::HandleGravity() {
     _velocity.y += _gravity * TIME.GetDeltaTime();
     glm::vec3 movementVector = _velocity * TIME.GetDeltaTime();
     movementVector = glm::clamp(movementVector, -glm::vec3(0.999f), glm::vec3(0.999f));
-    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
+    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width,
+                                                                                             _height);
     _ownerTransform->AddPosition(collisionResult.first);
     CheckGrounded(collisionResult.second);
 }
@@ -130,16 +131,15 @@ void PlayerController::HandleMovement() {
 
     // Only normalize if move vector is not zero
     if (glm::length(move) > 0.0f) {
-        if(!_ownerNode->GetComponent<PlayerAudioController>()->_isWalking && _isGrounded){ //are PlayerAudioController steps not working at the moment and walking and on ground
+        if (!_ownerNode->GetComponent<PlayerAudioController>()->_isWalking &&
+            _isGrounded) { //are PlayerAudioController steps not working at the moment and walking and on ground
             _ownerNode->GetComponent<PlayerAudioController>()->StartSteps();
-        }
-        else if(!_isGrounded){ //is walking and not grounded
+        } else if (!_isGrounded) { //is walking and not grounded
             _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
         }
         move = glm::normalize(move) * _speed;
-    }
-    else{
-        if(_ownerNode->GetComponent<PlayerAudioController>()->_isWalking){ //are PlayerAudioController steps working at the moment and there isn't any movement
+    } else {
+        if (_ownerNode->GetComponent<PlayerAudioController>()->_isWalking) { //are PlayerAudioController steps working at the moment and there isn't any movement
             _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
         }
     }
@@ -159,25 +159,26 @@ void PlayerController::HandleMovement() {
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
     movementVector = glm::clamp(movementVector, -glm::vec3(0.999f), glm::vec3(0.999f));
 
-    if(CheckIsOutsideBase(_ownerTransform->GetPosition(), GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius)){
+    if (CheckIsOutsideBase(_ownerTransform->GetPosition(), GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius)) {
         movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius, true);
     }
 
-    if(_activeMineEntranceCollision){
-        if(CheckIfPlayerIsAtEntranceToMine()){
-            movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._mineEntranceRadius, false);
+    if (_activeMineEntranceCollision) {
+        if (CheckIfPlayerIsAtEntranceToMine()) {
+            movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition,
+                                             GAMEMANAGER._mineEntranceRadius, false);
         }
     }
 
-    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width, _height);
+    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width,
+                                                                                             _height);
 
     _ownerTransform->AddPosition(collisionResult.first);
 
     CheckGrounded(collisionResult.second);
 }
 
-void PlayerController::HandleJetpack()
-{
+void PlayerController::HandleJetpack() {
     // Get delta time
     float deltaTime = TIME.GetDeltaTime();
 
@@ -201,11 +202,12 @@ void PlayerController::HandleJetpack()
             }
 
             // Jetpack particle effects
-            _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f, _blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(), 10.0f), 0.0f);
+            _ownerNode->GetComponent<ParticleGenerator>()->jumpOffPoint = glm::vec3(0.0f,
+                                                                                    _blockManagerRef->GetCaveFloor(_ownerTransform->GetPosition(),
+                                                                                                                   10.0f), 0.0f);
             _ownerNode->GetComponent<ParticleGenerator>()->SpawnParticles();
         }
-    }
-    else {
+    } else {
         // Check if delay is active
         if (_fuelRegenerationDelayActive) {
             // Update the delay timer
@@ -213,8 +215,7 @@ void PlayerController::HandleJetpack()
             if (_fuelRegenerationDelayTimer >= _fuelRegenerationDelay) {
                 _fuelRegenerationDelayActive = false;  // End delay
             }
-        }
-        else {
+        } else {
             // Recover fuel only if delay is not active
             _jetpackFuel += _fuelRegeneration * _maxJetpackFuel * deltaTime;
 
@@ -243,13 +244,11 @@ void PlayerController::JetpackInput() {
             if (_jetpackFuel > 0.0f) {
                 _isUsingJetpack = true;
                 StartJetpackRegenTimer();
-            }
-            else {
+            } else {
                 StartJetpackRegenTimer();
             }
         }
-    }
-    else {
+    } else {
         // If the space key is not held down, reset the state
         RESOURCEMANAGER.GetSoundByID(16)->StopSound();
         _spaceKeyWasPressed = false;
@@ -257,24 +256,25 @@ void PlayerController::JetpackInput() {
     }
 }
 
-void PlayerController::StartJetpackRegenTimer()
-{
+void PlayerController::StartJetpackRegenTimer() {
     _fuelRegenerationDelayActive = true;
     _fuelRegenerationDelayTimer = 0.0f;
 }
 
-bool PlayerController::CheckIfPlayerIsAtEntranceToMine(){
+bool PlayerController::CheckIfPlayerIsAtEntranceToMine() {
     auto playerPos = _ownerNode->GetTransform()->GetPosition();
     playerPos.y = GAMEMANAGER._groundLevel;
 
-    if(glm::distance(playerPos, glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel, GAMEMANAGER._domePosition.y)) <= GAMEMANAGER._mineEntranceRadius){
+    if (glm::distance(playerPos, glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel, GAMEMANAGER._domePosition.y)) <=
+        GAMEMANAGER._mineEntranceRadius) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-glm::vec3 PlayerController::CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle) {
+glm::vec3
+PlayerController::CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle) {
     glm::vec3 newPos = playerPos + movementVec;
     glm::vec2 newPos2D = glm::vec2(newPos.x, newPos.z);
     glm::vec2 playerPos2D = glm::vec2(playerPos.x, playerPos.z);
@@ -300,20 +300,19 @@ glm::vec3 PlayerController::CircleCollision(glm::vec3 playerPos, glm::vec3 movem
 }
 
 
-bool PlayerController::CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius){
+bool PlayerController::CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos, float domeRadius) {
 
     glm::vec2 playerPos2D = glm::vec2(playerPos.x, playerPos.z);
 
-    if(glm::distance(playerPos2D, domePos) + 4.5f > domeRadius && playerPos.y >= GAMEMANAGER._groundLevel){
+    if (glm::distance(playerPos2D, domePos) + 4.5f > domeRadius && playerPos.y >= GAMEMANAGER._groundLevel) {
         return true;
-    } else{
+    } else {
         return false;
     }
 }
 
 void PlayerController::addToInspector(ImguiMain *imguiMain) {
-    if (ImGui::TreeNode("Player Controller"))
-    {
+    if (ImGui::TreeNode("Player Controller")) {
         // Block Gui related things go there
         ImGui::Text("Test1:");
         ImGui::Text("Test2:");
@@ -331,9 +330,10 @@ void PlayerController::HandleGlowstick() {
 
     // Check if cooldown has elapsed
     if (_glowstickCooldownTimer >= _glowstickCooldown) {
-        if (Input::Instance().IsMousePressed(1) && NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 1.0) {
+        if (Input::Instance().IsMousePressed(1) &&
+            NODESMANAGER.getNodeByName("player")->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 1.0) {
             LIGHTSMANAGER.AddGlowstick();
-            _glowstickCooldownTimer = 0.0f; 
+            _glowstickCooldownTimer = 0.0f;
         }
     }
 }

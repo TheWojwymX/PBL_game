@@ -2,7 +2,7 @@
 
 void MainMenuPage::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
-    SetCorners(glm::vec2(-50, -50), glm::vec2(50, 50));
+    SetCorners(glm::vec2(-50, -60), glm::vec2(60, 50));
     SetupButtons();
     _shouldRender = true;
     _startButton->Init();

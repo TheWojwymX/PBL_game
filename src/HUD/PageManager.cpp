@@ -24,6 +24,12 @@ void PageManager::Init() {
     _pages.push_back(_domeUpgradeMenu);
     _PDAPage->Init();
     _pages.push_back(_PDAPage);
+    _mainMenuPage->Init();
+    _pages.push_back(_mainMenuPage);
+    _restartPage->Init();
+    _pages.push_back(_restartPage);
+
+    CloseAllOtherPages(_mainMenuPage);
 }
 
 void PageManager::Update() {
@@ -37,6 +43,8 @@ void PageManager::Update() {
     _turretUpgradeMenu->Update();
     _domeUpgradeMenu->Update();
     _PDAPage->Update();
+    _restartPage->Update();
+    _mainMenuPage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -133,6 +141,7 @@ void PageManager::CloseAllPages() {
 void PageManager::CloseAllOtherPages(const shared_ptr<Page> &pageException) {
     for (const std::shared_ptr<Page> &page: _pages) {
         if (pageException == page) {
+            page->_shouldRender = true;
             continue;
         } else {
             page->_shouldRender = false;
