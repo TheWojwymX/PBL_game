@@ -32,6 +32,20 @@ public:
     // constructor with vectors
     Camera(glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 
+    float _shakeTimer = 0.0f;
+    float _shakeIntensity = 0.0f;
+    float _shakeDuration = 0.0f;
+    float _originalYaw;
+    float _originalPitch;
+    int sign = -1;
+    glm::vec3 _enemyPosition;
+    bool _isShaking = false;
+    void StartShake(float intensity, float duration, glm::vec3 enemyPosition);
+    void ApplyShakeEffect(glm::vec3 enemyPosition, float shakeFactor);
+    float GetRandomFloat(float min, float max);
+    float Lerp(float a, float b, float f);
+
+
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 
