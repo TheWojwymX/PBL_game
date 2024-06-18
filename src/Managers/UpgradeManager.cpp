@@ -365,7 +365,11 @@ void UpgradeManager::Update() {
     }
     else {
         if(timeLooking > 0.0f) timeLooking -= TIME.GetDeltaTime() * 1.2f;
-        for (int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
+        for (int i = TURRETSMANAGER._turretIndexAtRestart; i < TURRETSMANAGER._newTurretIndex; i++) {
+
+            if(TURRETSMANAGER._turrets[i] == nullptr) return;
+
+            std::cout << "czy istnieje dzialko o nazwie " << TURRETSMANAGER._turrets[i]->_ownerNode->_name << std::endl;
             TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
             auto particleGenerators = TURRETSMANAGER._turrets[i]->_ownerNode->GetAllComponents<ParticleGenerator>();
             for (const auto &generator: particleGenerators) {
@@ -564,7 +568,7 @@ void UpgradeManager::HighlightSingleTurret(int turretIndex)
         }
     }
 
-    for (int i = 0; i < TURRETSMANAGER._turrets.size(); i++) {
+    for (int i = TURRETSMANAGER._turretIndexAtRestart; i < TURRETSMANAGER._newTurretIndex; i++) {
         TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
         if(particle != nullptr) {
             if(timeLooking < 0.5f) particle->tooltipShrink = true;

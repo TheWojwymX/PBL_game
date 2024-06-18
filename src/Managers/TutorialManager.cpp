@@ -38,11 +38,9 @@ void TutorialManager::Update() {
             }
             else{
                 if(!GAMEMANAGER._paused) {
-                    std::cout << "winno sie wykonac " << std::endl;
                     _player->GetTransform()->SetPosition(glm::vec3(_player->GetTransform()->GetPosition().x,
                                                                    _player->GetTransform()->GetPosition().y - TIME.GetDeltaTime() * 2,
                                                                    _player->GetTransform()->GetPosition().z));
-                    std::cout << "i nicy sie wykonuje " << std::endl;
                     _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
                     if (_timer < 1 && !_firstEnemySpawned) {
                         _timer += TIME.GetDeltaTime();

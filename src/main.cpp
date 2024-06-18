@@ -234,7 +234,7 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
-        if (INPUT.IsKeyPressed(GLFW_KEY_KP_0)) {
+        if (INPUT.IsKeyPressed(GLFW_KEY_0)) {
             NODESMANAGER.getNodeByName("blockManager")->GetComponent<BlockManager>()->Reset();
             LIGHTSMANAGER.Reset();
             TURRETSMANAGER.Reset();
@@ -273,11 +273,11 @@ int main(int, char**)
             if (!GAMEMANAGER._paused) {
                 ENEMIESMANAGER.Update();
                 TURRETSMANAGER.Update();
+                UPGRADEMANAGER.Update();
                 DOMEMANAGER.Update();
                 GAMEMANAGER.Update();
             }
             TUTORIALMANAGER.Update();
-            UPGRADEMANAGER.Update();
             LIGHTSMANAGER.Update();
             WEATHERMANAGER.Update();
 

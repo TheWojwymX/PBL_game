@@ -222,6 +222,16 @@ void TurretsManager::SpawnTurret(TurretType type) {
     std::string rangeIndicatorNode = "Range" + to_string(_newTurretIndex);
     NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfTurret);
 
+    auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
+    newTurret->Initiate();
+    newTurret->_isFlying = true;
+    newTurret->SetTurretType(type);
+    newTurret->SetUp(_turretStats[_turretType]);
+    newTurret->_finalRotation = _blueprintTurret->GetTransform()->GetRotation();
+    newTurret->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
+    newTurret->_flare = NODESMANAGER.getNodeByName(nameOfFlare);
+    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
+
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
     newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Parachute");
     newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
@@ -246,17 +256,6 @@ void TurretsManager::SpawnTurret(TurretType type) {
     tooltipParticle->object = NODESMANAGER.getNodeByName(nameOfTurret);
     tooltipParticle->Init();
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(tooltipParticle);
-
-    auto newTurret = COMPONENTSMANAGER.CreateComponent<Turret>();
-    newTurret->Initiate();
-    newTurret->_isFlying = true;
-    newTurret->SetTurretType(type);
-    newTurret->SetUp(_turretStats[_turretType]);
-    newTurret->_finalRotation = _blueprintTurret->GetTransform()->GetRotation();
-    newTurret->_finalPosition = _blueprintTurret->GetTransform()->GetPosition();
-    newTurret->_flare = NODESMANAGER.getNodeByName(nameOfFlare);
-
-    NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetPosition(glm::vec3(_blueprintTurret->GetTransform()->GetPosition().x,
                                                                                     _blueprintTurret->GetTransform()->GetPosition().y + 10,
@@ -285,7 +284,6 @@ void TurretsManager::SpawnTurret(TurretType type) {
     for (int i = 0; i < _turrets.size(); i++) {
         std::cout << typeid(_turrets[i]).name() << std::endl;
     }
-
     _newTurretIndex++;
 }
 
@@ -614,9 +612,8 @@ int TurretsManager::RaycastTurrets() {
     glm::vec3 cameraPosition = camera->GetPosition();
     glm::vec3 rayDirection = camera->GetDirection();
 
-    for (size_t i = 0; i < _turrets.size(); ++i) {
-        std::string nameOfTurret = "Turret" + std::to_string(i + 1);
-
+    for (int i = _turretIndexAtRestart; i < _newTurretIndex; i++) {
+        std::string nameOfTurret = "Turret" + std::to_string(i);
         auto meshRenderer = NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<MeshRenderer>();
         if (meshRenderer) {
             auto model = meshRenderer->_model;
@@ -661,8 +658,8 @@ bool TurretsManager::RayIntersectsBoundingBox(const glm::vec3 &rayOrigin, const 
 }
 
 bool TurretsManager::IsSelectedTurretInRange() {
-    if (selectedIndex != -1) {
-        std::string nameOfTurret = "Turret" + std::to_string(selectedIndex + 1);
+    if (selectedIndex != -1 && selectedIndex >= _turretIndexAtRestart) {
+        std::string nameOfTurret = "Turret" + std::to_string(selectedIndex);
 
         auto turretPosition = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetPosition();
         auto playerPosition = _player->GetTransform()->GetPosition();
@@ -684,12 +681,14 @@ void TurretsManager::Reset() {
             NODESMANAGER.getNodeByName("root")->RemoveChild(_turrets[i]->_flare);
         }
         NODESMANAGER.getNodeByName("root")->RemoveChild(_turrets[i]->_ownerNode);
+        _turrets[i] = nullptr;
     }
-    _turrets.clear();
+    //_turrets.clear();
     _isPlayerInMovingMode = false;
     PAGEMANAGER._PDAPage->HidePDAPage();
     _isInTurretChoiceMenu = false;
     _PDAController->HideImmediately();
     HideBlueprintTurret();
+    _turretIndexAtRestart = _newTurretIndex;
 
 }

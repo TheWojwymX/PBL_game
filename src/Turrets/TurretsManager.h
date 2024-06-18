@@ -82,16 +82,15 @@ public:
     void ChangeToSpawningMode();
 
     void Reset();
-
+    int _turretIndexAtRestart = 0;
+    int _newTurretIndex = 0;
 private:
     std::vector<glm::ivec2> _turretCosts;
     TurretType _turretType;
     std::shared_ptr<Turret> _heldTurret = nullptr;
     std::vector<glm::vec4> _turretStats;
-    int _newTurretIndex = 1;
 
     bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
     void InitTurretStats();
 
-    int _turretIndexAtStart = 0;
 };
