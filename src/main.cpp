@@ -174,9 +174,9 @@ int main(int, char**)
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(GAMEMANAGER._screenWidth);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(GAMEMANAGER._screenHeight);
 
-    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
+/*    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
-    imguiMain->SetSelectedObject(GAMEMANAGER.root);
+    imguiMain->SetSelectedObject(GAMEMANAGER.root);*/
 
     /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
     COMPONENTSMANAGER.CreateComponent<Camera>();
@@ -226,9 +226,6 @@ int main(int, char**)
     auto compassController = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>();
     auto compassRenderer = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<ShovelRenderer>();
 
-    MainMenuPage mainMenuPage;
-    mainMenuPage.Init();
-
     GAMEMANAGER.PlayMenuMusic();
 
     // Main loop
@@ -250,14 +247,7 @@ int main(int, char**)
         // Calculate deltaTime
         TIME.Update();
 
-        if(GAMEMANAGER._isInMainMenu){
-            glDisable(GL_DEPTH_TEST);
-            glDisable(GL_CULL_FACE);
-            mainMenuPage.Update();
-            glEnable(GL_DEPTH_TEST);
-            glEnable(GL_CULL_FACE);
-        }
-        else if(!GAMEMANAGER._isInMainMenu) {
+        if(!GAMEMANAGER._isInMainMenu) {
             //debugging adding money
             if (INPUT.IsKeyPressed(77)) {
                 GAMEMANAGER.AddMetal(10);
@@ -441,7 +431,7 @@ int main(int, char**)
         AUDIOENGINEMANAGER.Update();
 
 
-        // Start the Dear ImGui frame
+        /*// Start the Dear ImGui frame
         imguiMain->draw();
 
         ImGui::Begin("Depth Map");
@@ -481,7 +471,7 @@ int main(int, char**)
 
         imguiMain->endDraw();
         ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);
@@ -489,9 +479,9 @@ int main(int, char**)
     }
     // Cleanup
     AUDIOENGINEMANAGER.Cleanup();
-    ImGui_ImplOpenGL3_Shutdown();
+/*    ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    ImGui::DestroyContext();*/
 
     glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();

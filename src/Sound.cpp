@@ -121,7 +121,7 @@ float Sound::CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNo
             return maxVolume - maxVolume * logDistance;
         } else if (_soundType == SoundType::SFX) {
             float maxVolume = AUDIOENGINEMANAGER._sfxVolume;
-            std::cout << maxVolume - maxVolume * logDistance << std::endl;
+            //std::cout << maxVolume - maxVolume * logDistance << std::endl;
             return maxVolume - maxVolume * logDistance;
         }
     } else {

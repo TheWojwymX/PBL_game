@@ -369,7 +369,6 @@ void UpgradeManager::Update() {
 
             if(TURRETSMANAGER._turrets[i] == nullptr) return;
 
-            std::cout << "czy istnieje dzialko o nazwie " << TURRETSMANAGER._turrets[i]->_ownerNode->_name << std::endl;
             TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
             auto particleGenerators = TURRETSMANAGER._turrets[i]->_ownerNode->GetAllComponents<ParticleGenerator>();
             for (const auto &generator: particleGenerators) {
