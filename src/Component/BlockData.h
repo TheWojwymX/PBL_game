@@ -16,7 +16,7 @@ enum class BlockType {
     SAND,
     CLOUD,
     PLASTIC,
-    METAL
+    PLASTIC_BIG
 };
 
 class BlockData {
@@ -34,7 +34,7 @@ public:
     bool IsVisible() const { return _visible; }
     bool IsRendered() const { return _rendered; }
     bool IsSolid() const { return _blockType != BlockType::EMPTY; }
-    bool IsMaterial() const { return _blockType == BlockType::PLASTIC || _blockType == BlockType::METAL; }
+    bool IsMaterial() const { return _blockType == BlockType::PLASTIC || _blockType == BlockType::PLASTIC_BIG; }
     void AddGlowstick(std::shared_ptr<GlowstickMovement> glowstick) { _stuckGlowsticks.push_back(glowstick); }
     glm::ivec3 GetChunkID(int chunkSize) const { return glm::ivec3(_posID.x / chunkSize, _posID.y / chunkSize, _posID.z / chunkSize); }
     bool GetCollSide(int side) const { return _collSides[side]; }

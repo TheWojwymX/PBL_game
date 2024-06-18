@@ -35,7 +35,7 @@ bool BlockData::DamageBlock(float amount) {
 
 void BlockData::HandleParticles() {
     string nodeName = to_string(_posID.x) + to_string(_posID.y) + to_string(_posID.z);
-    if(NODESMANAGER.getNodeByName(nodeName) == nullptr && (GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::METAL)) {
+    if(NODESMANAGER.getNodeByName(nodeName) == nullptr && (GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::PLASTIC_BIG)) {
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("Sandbags"), nodeName);
         NODESMANAGER.getNodeByName(nodeName)->GetTransform()->SetPosition(_posID);
 
@@ -50,7 +50,7 @@ void BlockData::HandleParticles() {
         NODESMANAGER.getNodeByName(nodeName)->AddComponent(hitResourceParticles);
         hitResourceParticles->SpawnParticles();
     }
-    else if(GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::METAL)
+    else if(GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::PLASTIC_BIG)
     {
         NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
     }

@@ -10,7 +10,7 @@ enum Phase {DIG,DEFEND};
 class GameManager {
 public:
     // Public members
-    bool _isFullscreen = true;
+    bool _isFullscreen = false;
     int _screenWidth = 1920;
     int _screenHeight = 1080;
     GLFWwindow* _window;
@@ -25,10 +25,9 @@ public:
     void Update();
     void InitPhase();
     void pressToSkipPhase();
-    void AddMetal(int amount);
     void AddPlastic(int amount);
-    bool HasMaterials(glm::ivec2 mat);
-    void RemoveMaterials(glm::ivec2 mat);
+    bool HasPlastic(int amount);
+    void RemovePlastic(int amount);
     void StartGame();
     void Evacuate();
     bool IsUnderground();
@@ -37,7 +36,6 @@ public:
     Phase GetPhase() {return _currentPhase;}
     float GetCurrentTime() { return _currentTime; }
     int GetPlastic() { return _plastic; }
-    int GetMetal() { return _metal; }
     int GetRoundNumber() { return _roundNumber; }
 
     std::shared_ptr<Node> root;
@@ -80,7 +78,6 @@ public:
 private:
     int _roundNumber = 0;
     Phase _currentPhase = Phase::DIG; 
-    int _metal = 5;
     int _plastic = 5;
     float _currentTime = 0.0f;
 

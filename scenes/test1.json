@@ -25,11 +25,11 @@
       },
       {
         "ModelName": "plasticModel",
-        "Path": "res/Models/Cap/cap.obj"
+        "Path": "res/Models/Caps/Cap/cap.obj"
       },
       {
-        "ModelName": "metalModel",
-        "Path": "res/Models/Nut/NutModel.obj"
+        "ModelName": "plasticBigModel",
+        "Path": "res/Models/Caps/capBig/capBig.obj"
       },
       {
         "ModelName": "AntSpawn0",
@@ -700,14 +700,14 @@
       },
       {
         "NodeID": 73,
-        "NodeName": "metal",
+        "NodeName": "plasticBig",
         "children": [],
         "components": [
           {
             "componentId": 85,
             "componentType": 3,
             "maxSize": 100000,
-            "model": "metalModel",
+            "model": "plasticBigModel",
             "shader": "instancedMetalShader",
             "isDynamic": true
           }

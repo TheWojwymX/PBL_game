@@ -11,12 +11,12 @@
 #define UPGRADEMANAGER UpgradeManager::GetInstance()
 
 struct Upgrades {
-    std::vector<glm::ivec2> upgradeCosts;
+    std::vector<int> upgradeCosts;
     std::vector<float> upgradeValues;
 };
 
 struct TurretUpgrades {
-    std::vector<glm::ivec2> upgradeCosts;
+    std::vector<int> upgradeCosts;
     std::vector<glm::vec4> upgradeValues;
 };
 

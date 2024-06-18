@@ -85,7 +85,7 @@ public:
     int _turretIndexAtRestart = 0;
     int _newTurretIndex = 0;
 private:
-    std::vector<glm::ivec2> _turretCosts;
+    std::vector<int> _turretCosts;
     TurretType _turretType;
     std::shared_ptr<Turret> _heldTurret = nullptr;
     std::vector<glm::vec4> _turretStats;

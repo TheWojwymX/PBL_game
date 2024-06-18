@@ -65,16 +65,16 @@ void UpgradeManager::UpgradeTurret() {
         return;
     }
 
-    glm::ivec2 cost = turretUpgrades->upgradeCosts[upgradeLevel];
+    int cost = turretUpgrades->upgradeCosts[upgradeLevel];
 
     // Check if the player has enough resources
-    if (!GAMEMANAGER.HasMaterials(cost)) {
+    if (!GAMEMANAGER.HasPlastic(cost)) {
         std::cout << "Not enough resources to upgrade the turret" << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(cost);
+    GAMEMANAGER.RemovePlastic(cost);
 
     // Apply the upgrade
     glm::vec4 upgradeValues = turretUpgrades->upgradeValues[upgradeLevel];
@@ -177,14 +177,14 @@ void UpgradeManager::UpgradeDomeHp() {
     }
 
     // Check if enough resources for upgrade
-    glm::ivec2 upgradeCost = _domeHPUpgrades.upgradeCosts[domeHPLevel];
-    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+    int upgradeCost = _domeHPUpgrades.upgradeCosts[domeHPLevel];
+    if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Dome HP." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(upgradeCost);
+    GAMEMANAGER.RemovePlastic(upgradeCost);
 
     // Apply upgrade
     DOMEMANAGER.UpgradeDomeHP(_domeHPUpgrades.upgradeValues[domeHPLevel]);
@@ -201,14 +201,14 @@ void UpgradeManager::UpgradeDomeHPRegen() {
     }
 
     // Check if enough resources for upgrade
-    glm::ivec2 upgradeCost = _domeHPRegenUpgrades.upgradeCosts[domeHPRegenLevel];
-    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+    int upgradeCost = _domeHPRegenUpgrades.upgradeCosts[domeHPRegenLevel];
+    if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Dome HP Regeneration." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(upgradeCost);
+    GAMEMANAGER.RemovePlastic(upgradeCost);
 
     // Apply upgrade
     DOMEMANAGER.UpgradeDomeHPRegen(_domeHPRegenUpgrades.upgradeValues[domeHPRegenLevel]);
@@ -220,14 +220,14 @@ void UpgradeManager::UpgradeDomeHPRegen() {
 void UpgradeManager::DomeHPRepair()
 {
     // Check if enough resources for repair
-    glm::ivec2 repairCost = _domeHPRepair.upgradeCosts[0];
-    if (!GAMEMANAGER.HasMaterials(repairCost)) {
+    int repairCost = _domeHPRepair.upgradeCosts[0];
+    if (!GAMEMANAGER.HasPlastic(repairCost)) {
         std::cout << "Not enough materials to repair Dome HP." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(repairCost);
+    GAMEMANAGER.RemovePlastic(repairCost);
 
     // Apply repair
     DOMEMANAGER.RepairDomeHP(_domeHPRepair.upgradeValues[0]);
@@ -238,14 +238,14 @@ void UpgradeManager::DomeHPRepair()
 
 void UpgradeManager::Evacuate()
 {
-    glm::ivec2 evacuateCost = _evacuateCost.upgradeCosts[0];
-    if (!GAMEMANAGER.HasMaterials(evacuateCost)) {
+    int evacuateCost = _evacuateCost.upgradeCosts[0];
+    if (!GAMEMANAGER.HasPlastic(evacuateCost)) {
         std::cout << "Not enough materials to evacuate." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(evacuateCost);
+    GAMEMANAGER.RemovePlastic(evacuateCost);
 
     // Call evacuate
     GAMEMANAGER.Evacuate();
@@ -261,14 +261,14 @@ void UpgradeManager::UpgradeJetpackCapacity()
     }
 
     // Check if enough resources for upgrade
-    glm::ivec2 upgradeCost = _jetpackCapacityUpgrades.upgradeCosts[jetpackLevel];
-    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+    int upgradeCost = _jetpackCapacityUpgrades.upgradeCosts[jetpackLevel];
+    if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Jetpack Capacity." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(upgradeCost);
+    GAMEMANAGER.RemovePlastic(upgradeCost);
 
     // Apply upgrade
     _playerRef->UpgradeJetpackCapacity(_jetpackCapacityUpgrades.upgradeValues[jetpackLevel]);
@@ -282,14 +282,14 @@ void UpgradeManager::UpgradeMiningSpeed() {
     }
 
     // Check if enough resources for upgrade
-    glm::ivec2 upgradeCost = _miningSpeedUpgrades.upgradeCosts[miningSpeedLevel];
-    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+    int upgradeCost = _miningSpeedUpgrades.upgradeCosts[miningSpeedLevel];
+    if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Mining Speed." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(upgradeCost);
+    GAMEMANAGER.RemovePlastic(upgradeCost);
 
     // Apply upgrade
     _playerRef->UpgradeMiningSpeed(_miningSpeedUpgrades.upgradeValues[miningSpeedLevel]);
@@ -303,14 +303,14 @@ void UpgradeManager::UpgradeMiningReach() {
     }
 
     // Check if enough resources for upgrade
-    glm::ivec2 upgradeCost = _miningReachUpgrades.upgradeCosts[miningReachLevel];
-    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+    int upgradeCost = _miningReachUpgrades.upgradeCosts[miningReachLevel];
+    if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Mining Reach." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(upgradeCost);
+    GAMEMANAGER.RemovePlastic(upgradeCost);
 
     // Apply upgrade
     _playerRef->UpgradeMiningReach(_miningReachUpgrades.upgradeValues[miningReachLevel]);
@@ -324,14 +324,14 @@ void UpgradeManager::UpgradeMiningRadius() {
     }
 
     // Check if enough resources for upgrade
-    glm::ivec2 upgradeCost = _miningRadiusUpgrades.upgradeCosts[miningRadiusLevel];
-    if (!GAMEMANAGER.HasMaterials(upgradeCost)) {
+    int upgradeCost = _miningRadiusUpgrades.upgradeCosts[miningRadiusLevel];
+    if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Mining Radius." << std::endl;
         return;
     }
 
     // Deduct resources
-    GAMEMANAGER.RemoveMaterials(upgradeCost);
+    GAMEMANAGER.RemovePlastic(upgradeCost);
 
     // Apply upgrade
     _playerRef->UpgradeMiningRadius(_miningRadiusUpgrades.upgradeValues[miningRadiusLevel]);
@@ -388,11 +388,11 @@ void UpgradeManager::InitPlayerUpgrades()
 {
     // JetpackCapacity Upgrades
     _jetpackCapacityUpgrades.upgradeCosts = {
-        {10, 20},   // 1
-        {15, 25},   // 2
-        {20, 30},   // 3
-        {25, 35},   // 4
-        {30, 40}    // 5
+        10,   // 1
+        15,   // 2
+        20,   // 3
+        25,   // 4
+        30    // 5
     };
 
     _jetpackCapacityUpgrades.upgradeValues = {
@@ -407,11 +407,11 @@ void UpgradeManager::InitPlayerUpgrades()
 
     // Mining Speed Upgrades
     _miningSpeedUpgrades.upgradeCosts = {
-        {15, 25},   // 1
-        {20, 30},   // 2
-        {25, 35},   // 3
-        {30, 40},   // 4
-        {35, 45}    // 5
+        15,   // 1
+        20,   // 2
+        25,   // 3
+        30,   // 4
+        35    // 5
     };
 
     _miningSpeedUpgrades.upgradeValues = {
@@ -426,11 +426,11 @@ void UpgradeManager::InitPlayerUpgrades()
 
     // Mining Reach upgrades
     _miningReachUpgrades.upgradeCosts = {
-        {10, 20},   // 1
-        {15, 25},   // 2
-        {20, 30},   // 3
-        {25, 35},   // 4
-        {30, 40}    // 5
+        10,   // 1
+        15,   // 2
+        20,   // 3
+        25,   // 4
+        30    // 5
     };
 
     _miningReachUpgrades.upgradeValues = {
@@ -445,11 +445,11 @@ void UpgradeManager::InitPlayerUpgrades()
 
     // Mining Radius upgrades
     _miningRadiusUpgrades.upgradeCosts = {
-        {10, 20},   // 1
-        {15, 25},   // 2
-        {20, 30},   // 3
-        {25, 35},   // 4
-        {30, 40}    // 5
+        10,   // 1
+        15,   // 2
+        20,   // 3
+        25,   // 4
+        30    // 5
     };
 
     _miningRadiusUpgrades.upgradeValues = {
@@ -466,11 +466,11 @@ void UpgradeManager::InitDomeUpgrades()
 {
     // Dome HP upgrades
     _domeHPUpgrades.upgradeCosts = {
-        {10, 20},   //1
-        {15, 25},   //2
-        {20, 30},   //3
-        {25, 35},   //4
-        {30, 40}    //5
+        10,   //1
+        15,   //2
+        20,   //3
+        25,   //4
+        30    //5
     };
 
     _domeHPUpgrades.upgradeValues = {
@@ -485,11 +485,11 @@ void UpgradeManager::InitDomeUpgrades()
 
     // Dome HP Regen upgrades
     _domeHPRegenUpgrades.upgradeCosts = {
-        {8, 15},    //1
-        {12, 20},   //2
-        {16, 25},   //3
-        {20, 30},   //4
-        {24, 35}    //5
+        8,    //1
+        12,   //2
+        16,   //3
+        20,   //4
+        24    //5
     };
 
     _domeHPRegenUpgrades.upgradeValues = {
@@ -504,7 +504,7 @@ void UpgradeManager::InitDomeUpgrades()
 
     // Dome HP Repair upgrade
     _domeHPRepair.upgradeCosts = {
-        {5, 5}      // Single cost
+        5      // Single cost
     };
 
     _domeHPRepair.upgradeValues = {
@@ -515,7 +515,7 @@ void UpgradeManager::InitDomeUpgrades()
 
     // Evacuate cost
     _evacuateCost.upgradeCosts = {
-        {100, 100}  // Single cost
+        100  // Single cost
     };
     ///////////////////////
 }
@@ -525,8 +525,8 @@ void UpgradeManager::InitTurretUpgrades()
     // Initialize Turret Upgrades
     // Minigun Upgrades
     _minigunUpgrades.upgradeCosts = {
-        {20, 30},   // 1
-        {30, 40}    // 2
+        20,   // 1
+        30    // 2
     };
 
     _minigunUpgrades.upgradeValues = {
@@ -536,8 +536,8 @@ void UpgradeManager::InitTurretUpgrades()
 
     // Sniper Upgrades
     _sniperUpgrades.upgradeCosts = {
-        {25, 35},   // 1
-        {35, 45}    // 2
+        25,   // 1
+        35    // 2
     };
 
     _sniperUpgrades.upgradeValues = {
@@ -547,8 +547,8 @@ void UpgradeManager::InitTurretUpgrades()
 
     // Rifle Upgrades
     _rifleUpgrades.upgradeCosts = {
-        {15, 25},   // 1
-        {25, 35}    // 2
+        15,   // 1
+        25    // 2
     };
 
     _rifleUpgrades.upgradeValues = {

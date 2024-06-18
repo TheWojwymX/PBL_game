@@ -35,11 +35,11 @@ void main()
     // Calculate the height tint color based on height
     float height = aInstancePos.y;
     if (height < 100.0) {
-        HeightTint = vec3(0.043, 0.043, 0.043); // Black
+    HeightTint = vec3(0.282, 0.820, 0.800); // Turquoise
     } else if (height < 200.0) {
-        HeightTint = vec3(0.482, 0.372, 0.121); // Brown
+        HeightTint = vec3(0.000, 0.502, 0.502); // Teal
     } else {
-        HeightTint = vec3(0.671, 0.659, 0.678); // Silver Grey
+        HeightTint = vec3(0.000, 0.000, 0.502); // Navy Blue
     }
 
     // Calculate final position

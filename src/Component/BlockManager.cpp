@@ -130,7 +130,7 @@ void BlockManager::UpdateInstanceRenderer() {
                 case BlockType::PLASTIC:
                     instancedPlasticPosition.push_back(blockPtr->GetPosID());
                     break;
-                case BlockType::METAL:
+                case BlockType::PLASTIC_BIG:
                     instancedMetalPosition.push_back(blockPtr->GetPosID());
             }
         }
@@ -824,7 +824,7 @@ void BlockManager::ChangeType(BlockData& blockData, BlockType type)
     {
         case BlockType::EMPTY:
             break;
-        case BlockType::METAL:
+        case BlockType::PLASTIC_BIG:
         case BlockType::PLASTIC:
         case BlockType::DIRT:
             blockData.SetHP(GetBlockHP(blockData));
@@ -871,9 +871,9 @@ void BlockManager::GenerateResources()
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
-    // Define the probability of a block being changed to METAL or PLASTIC
-    const double metalProbability = .5;   // 50% chance of being METAL
-    const double plasticProbability = .5; // 50% chance of being PLASTIC
+    // Define the probability of a block being changed to PLASTIC_BIG or PLASTIC
+    const double plasticBigProbability = .25;   // 50% chance of being PLASTIC_BIG
+    const double plasticProbability = .75; // 50% chance of being PLASTIC
 
     // Generate Poisson disk distribution points
     std::vector<glm::vec3> poissonPoints = GeneratePoissonDiskPoints();
@@ -896,13 +896,13 @@ void BlockManager::GenerateResources()
                 double randomValue = dis(gen);
 
                 // Check if the block should be changed to METAL
-                if (randomValue < metalProbability)
+                if (randomValue < plasticBigProbability)
                 {
-                    ChangeType(_blocksData[index], BlockType::METAL);
+                    ChangeType(_blocksData[index], BlockType::PLASTIC_BIG);
                     break;
                 }
                 // Check if the block should be changed to PLASTIC
-                else if (randomValue < (metalProbability + plasticProbability))
+                else
                 {
                     ChangeType(_blocksData[index], BlockType::PLASTIC);
                     break;
@@ -980,8 +980,8 @@ int BlockManager::DestroyBlock(BlockData& blockData)
             _posID = blockData.GetPosID();
             NODESMANAGER.getNodeByName(to_string(int(_posID.x)) + to_string(int(_posID.y)) + to_string(int(_posID.z)))->GetComponent<ParticleGenerator>()->toDelete = true;
             break;
-        case BlockType::METAL:
-            GAMEMANAGER.AddMetal(GetMaterialReward(blockData));
+        case BlockType::PLASTIC_BIG:
+            GAMEMANAGER.AddPlastic(GetMaterialReward(blockData)*3);
             _posID = blockData.GetPosID();
             NODESMANAGER.getNodeByName(to_string(int(_posID.x)) + to_string(int(_posID.y)) + to_string(int(_posID.z)))->GetComponent<ParticleGenerator>()->toDelete = true;
             break;

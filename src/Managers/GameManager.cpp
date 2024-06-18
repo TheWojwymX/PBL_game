@@ -34,31 +34,19 @@ void GameManager::pressToSkipPhase() {
     }
 }
 
-void GameManager::AddMetal(int amount) {
-    HUD._isMetalInAnim = true;
-    _metal += amount;
-}
-
 void GameManager::AddPlastic(int amount) {
     HUD._isPlasticInAnim = true;
     _plastic += amount;
 }
 
-bool GameManager::HasMaterials(glm::ivec2 mat) {
-    return mat.x <= _plastic && mat.y <= _metal;
+bool GameManager::HasPlastic(int amount) {
+    return amount <= _plastic;
 }
 
-void GameManager::RemoveMaterials(glm::ivec2 mat)
+void GameManager::RemovePlastic(int amount)
 {
-    if(mat.x != 0){
-        _plastic -= mat.x;
-        HUD._isPlasticInAnim = true;
-    }
-
-    if(mat.y != 0){
-        _metal -= mat.y;
-        HUD._isMetalInAnim = true;
-    }
+    _plastic -= amount;
+    HUD._isPlasticInAnim = true;
 }
 
 void GameManager::StartGame() {
@@ -107,7 +95,7 @@ void GameManager::Update() {
     }
 
     if(DOMEMANAGER.GetDomeHP() <= 0){
-        LoseGame();
+    //    LoseGame();
     }
 }
 
@@ -175,7 +163,6 @@ void GameManager::Unpause() {
 void GameManager::Reset() {
     _roundNumber = 0;
     _currentPhase = Phase::DIG;
-    _metal = 5;
     _plastic = 5;
     _currentTime = 0.0f;
     DisableMouse();

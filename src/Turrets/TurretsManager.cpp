@@ -9,9 +9,9 @@ TurretsManager &TurretsManager::getInstance() {
 
 void TurretsManager::Init() {
     _turretCosts = {
-            glm::ivec2(1, 1), // Minigun
-            glm::ivec2(2, 2), // Sniper
-            glm::ivec2(3, 3)  // Rifle
+            1, // Minigun
+            2, // Sniper
+            3  // Rifle
     };
     InitTurretStats();
 
@@ -81,28 +81,28 @@ void TurretsManager::PlayerActions() {
     }
 
     if (Input::Instance().IsKeyPressed(GLFW_KEY_1) && _isInTurretChoiceMenu) {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::MINIGUN])) {
+        if (!GAMEMANAGER.HasPlastic(_turretCosts[TurretType::MINIGUN])) {
             return;
         }
         _turretType = MINIGUN;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
     } else if (Input::Instance().IsKeyPressed(GLFW_KEY_2) && _isInTurretChoiceMenu) {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::SNIPER])) {
+        if (!GAMEMANAGER.HasPlastic(_turretCosts[TurretType::SNIPER])) {
             return;
         }
         _turretType = SNIPER;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
     } else if (Input::Instance().IsKeyPressed(GLFW_KEY_3) && _isInTurretChoiceMenu) {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[TurretType::RIFLE])) {
+        if (!GAMEMANAGER.HasPlastic(_turretCosts[TurretType::RIFLE])) {
             return;
         }
         _turretType = RIFLE;
         ChangeToSpawningMode();
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isInBlueprintMode && !_isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
-        if (!GAMEMANAGER.HasMaterials(_turretCosts[_turretType])) {
+        if (!GAMEMANAGER.HasPlastic(_turretCosts[_turretType])) {
             return;
         }
         SpawnTurret(_turretType);
@@ -184,7 +184,7 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
 
 void TurretsManager::SpawnTurret(TurretType type) {
 
-    GAMEMANAGER.RemoveMaterials(_turretCosts[type]);
+    GAMEMANAGER.RemovePlastic(_turretCosts[type]);
 
     //Flare spawning
     std::string nameOfFlare = "Flare" + to_string(_newTurretIndex);
@@ -525,6 +525,7 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
 
 void TurretsManager::InitTurretStats() {
     // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
+    // fireRate, dmg, sideRange, forwardRange
     _turretStats.push_back(glm::vec4(0.5f, 1.0f, 60.0f, 40.0f));  // MINIGUN
     _turretStats.push_back(glm::vec4(2.0f, 10.0f, 50.0f, 100.0f)); // SNIPER
     _turretStats.push_back(glm::vec4(1.0f, 1.0f, 70.0f, 70.0f));  // RIFLE

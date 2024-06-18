@@ -30,7 +30,6 @@ public:
     ImageRenderer _crosshairImage;
 
     ImageRenderer _materialsBackground;
-    ImageRenderer _metalImage;
     ImageRenderer _plasticImage;
 
     ImageRenderer _waveTimerGreen;
@@ -82,9 +81,7 @@ public:
     void EnableHUD();
 
     bool _isPlasticInAnim = false;
-    bool _isMetalInAnim = false;
     float _plasticAnimTimer = 0.0f;
-    float _metalAnimTimer = 0.0f;
     float _timeOfAnim = 0.2;
     float _maxScale = 2.5f;
     float _defaultScale = 2.0f;
@@ -93,8 +90,6 @@ public:
 
 private:
     std::shared_ptr<Node> _playerNode;
-
-    void PlayMetalBump();
 
     void PlayPlasticBump();
 };
