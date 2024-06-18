@@ -172,7 +172,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
 
         glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[spawnerIndex]);
-        enemyPosition.y = 0.62 * scale.y + 299.49;
+        enemyPosition.y = GAMEMANAGER._groundLevel;
 
         if (type == WASP)
         {

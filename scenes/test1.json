@@ -33,151 +33,151 @@
       },
       {
         "ModelName": "AntSpawn0",
-        "Path": "res/Models/Ant/ant_spawn_v1-0.obj"
+        "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-0.obj"
       },
       {
         "ModelName": "AntSpawn1",
-        "Path": "res/Models/Ant/ant_spawn_v1-1.obj"
+        "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-1.obj"
       },
       {
         "ModelName": "AntSpawn2",
-        "Path": "res/Models/Ant/ant_spawn_v1-2.obj"
+        "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-2.obj"
       },
       {
         "ModelName": "AntSpawn3",
-        "Path": "res/Models/Ant/ant_spawn_v1-3.obj"
+        "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-3.obj"
       },
       {
         "ModelName": "AntSpawn4",
-        "Path": "res/Models/Ant/ant_spawn_v1-4.obj"
+        "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-4.obj"
       },
       {
         "ModelName": "AntWalk0",
-        "Path": "res/Models/Ant/ant_walk_v1-0.obj"
+        "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-0.obj"
       },
       {
         "ModelName": "AntWalk1",
-        "Path": "res/Models/Ant/ant_walk_v1-1.obj"
+        "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-1.obj"
       },
       {
         "ModelName": "AntWalk2",
-        "Path": "res/Models/Ant/ant_walk_v1-2.obj"
+        "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-2.obj"
       },
       {
         "ModelName": "AntWalk3",
-        "Path": "res/Models/Ant/ant_walk_v1-3.obj"
+        "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-3.obj"
       },
       {
         "ModelName": "AntWalk4",
-        "Path": "res/Models/Ant/ant_walk_v1-4.obj"
+        "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-4.obj"
       },
       {
         "ModelName": "AntWalk5",
-        "Path": "res/Models/Ant/ant_walk_v1-5.obj"
+        "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-5.obj"
       },
       {
         "ModelName": "AntAttack0",
-        "Path": "res/Models/Ant/ant_attack_v1-0.obj"
+        "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-0.obj"
       },
       {
         "ModelName": "AntAttack1",
-        "Path": "res/Models/Ant/ant_attack_v1-1.obj"
+        "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-1.obj"
       },
       {
         "ModelName": "AntAttack2",
-        "Path": "res/Models/Ant/ant_attack_v1-2.obj"
+        "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-2.obj"
       },
       {
         "ModelName": "AntAttack3",
-        "Path": "res/Models/Ant/ant_attack_v1-3.obj"
+        "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-3.obj"
       },
       {
         "ModelName": "AntDead0",
-        "Path": "res/Models/Ant/ant_dead_v1-0.obj"
+        "Path": "res/Models/Ant/ant_dead_v1/ant_dead_v1-0.obj"
       },
       {
         "ModelName": "AntDead1",
-        "Path": "res/Models/Ant/ant_dead_v1-1.obj"
+        "Path": "res/Models/Ant/ant_dead_v1/ant_dead_v1-1.obj"
       },
       {
         "ModelName": "AntDead2",
-        "Path": "res/Models/Ant/ant_dead_v1-2.obj"
+        "Path": "res/Models/Ant/ant_dead_v1/ant_dead_v1-2.obj"
       },
       {
         "ModelName": "BeetleSpawn0",
-        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-0.obj"
+        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-0.obj"
       },
       {
         "ModelName": "BeetleSpawn1",
-        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-1.obj"
+        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-1.obj"
       },
       {
         "ModelName": "BeetleSpawn2",
-        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-2.obj"
+        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-2.obj"
       },
       {
         "ModelName": "BeetleSpawn3",
-        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-3.obj"
+        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-3.obj"
       },
       {
         "ModelName": "BeetleSpawn4",
-        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-4.obj"
+        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-4.obj"
       },
       {
         "ModelName": "BeetleSpawn5",
-        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v1-5.obj"
+        "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-5.obj"
       },
       {
         "ModelName": "BeetleWalk0",
-        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-0.obj"
+        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-0.obj"
       },
       {
         "ModelName": "BeetleWalk1",
-        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-1.obj"
+        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-1.obj"
       },
       {
         "ModelName": "BeetleWalk2",
-        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-2.obj"
+        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-2.obj"
       },
       {
         "ModelName": "BeetleWalk3",
-        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-3.obj"
+        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-3.obj"
       },
       {
         "ModelName": "BeetleWalk4",
-        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-4.obj"
+        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-4.obj"
       },
       {
         "ModelName": "BeetleWalk5",
-        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v1-5.obj"
+        "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-5.obj"
       },
       {
         "ModelName": "BeetleAttack0",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-0.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-0.obj"
       },
       {
         "ModelName": "BeetleAttack1",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-1.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-1.obj"
       },
       {
         "ModelName": "BeetleAttack2",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-2.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-2.obj"
       },
       {
         "ModelName": "BeetleAttack3",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v1.0-3.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-3.obj"
       },
       {
         "ModelName": "BeetleDead0",
-        "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-0.obj"
+        "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v2-0.obj"
       },
       {
         "ModelName": "BeetleDead1",
-        "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-1.obj"
+        "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v2-1.obj"
       },
       {
         "ModelName": "BeetleDead2",
-        "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v1-2.obj"
+        "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v2-2.obj"
       },
       {
         "ModelName": "WaspSpawn0",
