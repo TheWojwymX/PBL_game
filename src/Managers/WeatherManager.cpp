@@ -131,8 +131,7 @@ void WeatherManager::SetupRainParticles() {
 void WeatherManager::UpdateSunPosition() {
     timeAccumulator += TIME.GetDeltaTime();
     angle += speed * TIME.GetDeltaTime();
-    cout << rainTimeLeft << endl;
-    if(thunder) cout << "yep" << endl;
+
     if (timeAccumulator >= stepInterval) {
         // Calculate the step increment
         float step = speed * stepInterval;

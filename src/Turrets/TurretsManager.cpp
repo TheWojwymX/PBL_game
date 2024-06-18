@@ -567,15 +567,18 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
 
         enemy->TakeDamage(finalDamage);
 
+        LIGHTSMANAGER.AddShot(turret->GetOwnerPosition(), enemy->GetOwnerPosition());
+
         auto particleGenerators = turret->GetOwnerNode()->GetAllComponents<ParticleGenerator>();
         for (const auto &generator: particleGenerators) {
             if (generator != nullptr) {
                 generator->enemyPosition = enemy->GetOwnerPosition();
                 generator->SpawnParticles();
-                std::pair<int, float> sound = turret->GetSound();
-                RESOURCEMANAGER.GetSoundByID(sound.first)->PlaySoundSim(turret->_ownerNode, sound.second);
             }
         }
+
+        std::pair<int, float> sound = turret->GetSound();
+        RESOURCEMANAGER.GetSoundByID(sound.first)->PlaySoundSim(turret->_ownerNode, sound.second);
     }
 }
 
@@ -665,12 +668,7 @@ bool TurretsManager::IsSelectedTurretInRange() {
         auto turretPosition = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetPosition();
         auto playerPosition = _player->GetTransform()->GetPosition();
 
-        float distanceX = (turretPosition.x - playerPosition.x) * (turretPosition.x - playerPosition.x);
-        float distanceY = (turretPosition.y - playerPosition.y) * (turretPosition.y - playerPosition.y);
-        float distanceZ = (turretPosition.z - playerPosition.z) * (turretPosition.z - playerPosition.z);
-        float distance = distanceX + distanceY + distanceZ;
-
-        return distance + 0.01 <= 12;
+        return glm::distance(turretPosition, playerPosition) + 0.01 <= 12;
     }
     return false;
 }

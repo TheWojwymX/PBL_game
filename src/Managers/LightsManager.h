@@ -7,6 +7,27 @@
 #include "ComponentsManager.h"
 #include "Component/Camera.h"
 
+struct ActiveShot {
+    glm::vec3 startPos;
+    glm::vec3 endPos;
+    glm::vec3 color;
+    float elapsedTime;
+
+    ActiveShot(const glm::vec3& start, const glm::vec3& end, const glm::vec3& col)
+        : startPos(start), endPos(end), color(col), elapsedTime(0.0f) {
+    }
+};
+
+struct VisibleLight {
+    glm::vec3 pos;
+    glm::vec3 color;
+    float distance;
+
+    VisibleLight(const glm::vec3& position, const glm::vec3& col, float dist)
+        : pos(position), color(col), distance(dist) {
+    }
+};
+
 class LightsManager{
 public:
     static LightsManager &getInstance();
@@ -19,7 +40,7 @@ public:
     void Reset();
     void InitLights();
     void AddGlowstick();
-    void UpdateGlowsticks();
+    void AddShot(const glm::vec3& startPos, const glm::vec3& endPos);
     void TurnOffGlowsticks();
 
     bool isSpotActive = true;
@@ -37,9 +58,9 @@ public:
     float glowstickLinearNoFlash = 0.7f;     // Increased to manage mid-range attenuation
     float glowstickQuadraticNoFlash = 0.1f;  // Slightly increased to smooth out the falloff
     */
-    float glowstickConstantNoFlash = 3.0f;   // Maintained to control close-range intensity
-    float glowstickLinearNoFlash = 0.4f;     // Decreased for more gradual mid-range attenuation
-    float glowstickQuadraticNoFlash = 0.05f; // Decreased to allow light to reach further
+    float glowstickConstantNoFlash = 3.093f;   // Maintained to control close-range intensity
+    float glowstickLinearNoFlash = 0.602f;     // Decreased for more gradual mid-range attenuation
+    float glowstickQuadraticNoFlash = 0.145f; // Decreased to allow light to reach further
 
     glm::vec3 dirColor{ 0.999f, 0.999f, 1.00f };
     glm::vec3 skyColor{ 0.6235f, 0.6235f, 0.8039f };
@@ -76,8 +97,24 @@ private:
     glm::vec3 glowstickColor = glm::vec3(1.0f);
     std::vector<glm::vec3> glowstickColors;
 
-    int maxGlowsticks = 50;
+    int maxLights = 50;
+    float maxDistance = 60;
 
     std::vector<std::shared_ptr<Node>> _glowsticksNodes;
-    int _oldAmountOfGlovsticks = 0;
+    std::vector<VisibleLight> _visibleGlowsticks;
+    int _oldAmountOfGlowsticks = 0;
+
+    std::vector<ActiveShot> _activeShots;
+    std::vector<VisibleLight> _visibleShots;
+    std::shared_ptr<Camera> _cameraRef;
+    float _bulletSpeed = 4.0f;
+
+    void UpdateActiveShots();
+    void UpdateGlowsticks();
+    void SortActiveShots();
+    void UpdateLights();
+    void SortVisibleLights(std::vector<VisibleLight>& lights);
+
+
+    glm::vec3 GenerateRandomColor();
 };

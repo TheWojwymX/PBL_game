@@ -15,11 +15,13 @@ void LightsManager::Update() {
 
     UpdateShaders();
     UpdateGlowsticks();
+    UpdateActiveShots();
+    UpdateLights();
 }
 
 void LightsManager::Reset()
 {
-    _oldAmountOfGlovsticks = glowstickCount;
+    _oldAmountOfGlowsticks = glowstickCount;
     TurnOffGlowsticks();
     for (int i = 0; i < _glowsticksNodes.size(); i++) {
         if (_glowsticksNodes[i] == nullptr) continue;
@@ -28,6 +30,8 @@ void LightsManager::Reset()
 }
 
 void LightsManager::InitLights() {
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
+
     instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
     instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
     instancedPlasticShader = RESOURCEMANAGER.GetShaderByName("instancedPlasticShader");
@@ -139,7 +143,7 @@ void LightsManager::UpdateShaders(){
     instancedPlasticShader->setInt("dirLight.isActive", dirActive);
     instancedPlasticShader->setVec3("lightPos", lightPos);
 
-    for (int i = 0; i < maxGlowsticks; i++) {
+    for (int i = 0; i < maxLights; i++) {
         string name = "pointLights[" + to_string(i) + "]";
         if(isSpotActive) {
             instancedSandShader->use();
@@ -232,95 +236,50 @@ void LightsManager::AddGlowstick() {
     glowstickNode->AddComponent(glowstickMovement);
     glowstickMovement->Init();
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(-1.0f, 1.0f);
-
-    do {
-        glowstickColor = glm::vec3(dis(gen), dis(gen), dis(gen));
-    } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.7f);
-    glowstickColors.push_back(glowstickColor);
+    glowstickColors.push_back(GenerateRandomColor());
 
     glowstickShader->use();
     glowstickShader->setVec3("glowstickColor", glowstickColor);
 }
 
+void LightsManager::AddShot(const glm::vec3& startPos, const glm::vec3& endPos) {
+    _activeShots.emplace_back(startPos, endPos, glm::vec3(0.9568f, 0.9450f, 0.5254f));//
+}
+
 void LightsManager::UpdateGlowsticks() {
-    glm::vec3 camPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
-    std::vector<glm::vec3> visibleGlowsticks;
-    std::vector<glm::vec3> visibleGlowstickColors;
+    glm::vec3 camPosition = _cameraRef->GetPosition();
+    _visibleGlowsticks.clear();
+    // Iterate over all glowstick nodes
+    for (const auto& glowstickNode : _glowsticksNodes) {
+        // Get the transform component of the node
+        auto transform = glowstickNode->GetTransform();
 
-    for (int i = _oldAmountOfGlovsticks; i < glowstickCount; i++) {
+        // Get the position of the glowstick
+        glm::vec3 glowstickPosition = transform->GetPosition();
 
-        auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
-        if(thisGlowstick != nullptr) {
-            glm::vec3 glowstickPosition = thisGlowstick->GetTransform()->GetPosition();
+        // Calculate distance to camera
+        float distToCamera = glm::distance(glowstickPosition, camPosition);
 
-            if (glm::distance(glowstickPosition, camPosition) < 60.0f) {
-                visibleGlowsticks.push_back(glowstickPosition);
-                visibleGlowstickColors.push_back(glowstickColors[i]);
+        // Check if within max distance
+        if (distToCamera < maxDistance) {
+            // Get the index of the glowstick node in _glowsticksNodes
+            int index = std::distance(_glowsticksNodes.begin(), std::find(_glowsticksNodes.begin(), _glowsticksNodes.end(), glowstickNode));
+
+            // Ensure index is valid for accessing glowstickColors
+            if (index >= 0 && index < glowstickColors.size()) {
+                // Add visible glowstick to _visibleGlowsticks
+                _visibleGlowsticks.emplace_back(glowstickPosition, glowstickColors[index], distToCamera);
             }
         }
     }
 
-    std::vector<std::pair<glm::vec3, glm::vec3>> combined;
-    for (size_t i = 0; i < visibleGlowsticks.size(); ++i) {
-        combined.emplace_back(visibleGlowsticks[i], visibleGlowstickColors[i]);
-    }
-
-    std::sort(combined.begin(), combined.end(), [&](const std::pair<glm::vec3, glm::vec3>& a, const std::pair<glm::vec3, glm::vec3>& b) {
-        return glm::distance(a.first, camPosition) < glm::distance(b.first, camPosition);
-    });
-
-    for (size_t i = 0; i < combined.size(); ++i) {
-        visibleGlowsticks[i] = combined[i].first;
-        visibleGlowstickColors[i] = combined[i].second;
-    }
-
-    for (int i = 0; i < visibleGlowsticks.size(); i++) {
-        string name = "pointLights[" + to_string(i) + "]";
-        instancedSandShader->use();
-        instancedSandShader->setBool(name + ".isActive", true);
-        instancedSandShader->setVec3(name + ".position", visibleGlowsticks[i]);
-        instancedSandShader->setVec3(name + ".color", visibleGlowstickColors[i]);
-
-        instancedMetalShader->use();
-        instancedMetalShader->setBool(name + ".isActive", true);
-        instancedMetalShader->setVec3(name + ".position", visibleGlowsticks[i]);
-        instancedMetalShader->setVec3(name + ".color", visibleGlowstickColors[i]);
-
-        instancedPlasticShader->use();
-        instancedPlasticShader->setBool(name + ".isActive", true);
-        instancedPlasticShader->setVec3(name + ".position", visibleGlowsticks[i]);
-        instancedPlasticShader->setVec3(name + ".color", visibleGlowstickColors[i]);
-
-        shovelShader->use();
-        shovelShader->setBool(name + ".isActive", true);
-        shovelShader->setVec3(name + ".position", visibleGlowsticks[i]);
-        shovelShader->setVec3(name + ".color", visibleGlowstickColors[i]);
-    }
-
-    if (glowstickCount > visibleGlowsticks.size()) {
-        for (int i = visibleGlowsticks.size(); i < glowstickCount; i++) {
-            string name = "pointLights[" + to_string(i) + "]";
-            instancedSandShader->use();
-            instancedSandShader->setBool(name + ".isActive", false);
-
-            instancedMetalShader->use();
-            instancedMetalShader->setBool(name + ".isActive", false);
-
-            instancedPlasticShader->use();
-            instancedPlasticShader->setBool(name + ".isActive", false);
-
-            shovelShader->use();
-            shovelShader->setBool(name + ".isActive", false);
-        }
-    }
-
+    // Sort visible glowsticks
+    SortVisibleLights(_visibleGlowsticks);
 }
 
+
 void LightsManager::TurnOffGlowsticks() {
-    for(int i = 0; i < maxGlowsticks; i++) {
+    for(int i = 0; i < maxLights; i++) {
         string name = "pointLights[" + to_string(i) + "]";
         instancedSandShader->use();
         instancedSandShader->setBool(name + ".isActive", false);
@@ -342,4 +301,141 @@ void LightsManager::TurnOffGlowsticks() {
             GAMEMANAGER.root->RemoveChild(thisGlowstick);
         }
     }
+}
+
+void LightsManager::UpdateActiveShots() {
+    // Iterate over all active shots
+    for (auto it = _activeShots.begin(); it != _activeShots.end();) {
+        ActiveShot& shot = *it;
+
+        // Accumulate elapsed time
+        shot.elapsedTime += TIME.GetDeltaTime();
+
+        // Calculate the direction towards the end position
+        glm::vec3 direction = glm::normalize(shot.endPos - shot.startPos);
+
+        // Calculate the distance to move this update
+        float distance = glm::length(shot.endPos - shot.startPos);
+        float step = _bulletSpeed * shot.elapsedTime; // Use accumulated time
+
+        // Check if we can reach the end position in this step
+        if (step >= distance) {
+            // Set the start position to the end position
+            shot.startPos = shot.endPos;
+            // Remove the shot from the list
+            it = _activeShots.erase(it);
+        }
+        else {
+            // Update the start position using LERP
+            float t = step / distance;
+            shot.startPos = glm::mix(shot.startPos, shot.endPos, t);
+            ++it;
+        }
+    }
+
+    SortActiveShots();
+}
+
+void LightsManager::SortActiveShots() {
+    glm::vec3 camPosition = _cameraRef->GetPosition();
+
+    // Clear _visibleShots and populate with shots within maxDistance
+    _visibleShots.clear();
+    for (const auto& shot : _activeShots) {
+        float distToCamera = glm::distance(shot.startPos, camPosition);
+        if (distToCamera <= maxDistance) {
+            _visibleShots.emplace_back(shot.startPos, shot.color, distToCamera);
+        }
+    }
+
+    SortVisibleLights(_visibleShots);
+}
+
+void LightsManager::UpdateLights() {
+
+    std::vector<VisibleLight> combinedLights;
+
+    combinedLights.reserve(_visibleGlowsticks.size() + _visibleShots.size());
+
+    // Insert elements from _visibleGlowsticks
+    combinedLights.insert(combinedLights.end(), _visibleGlowsticks.begin(), _visibleGlowsticks.end());
+
+    // Insert elements from _visibleShots
+    combinedLights.insert(combinedLights.end(), _visibleShots.begin(), _visibleShots.end());
+
+    SortVisibleLights(combinedLights);
+
+    // Ensure maxLights does not exceed the available positions
+    float lightsAmount = std::min(maxLights, static_cast<int>(combinedLights.size()));
+
+    // Set shader parameters for the first maxLights lights
+    for (int i = 0; i < lightsAmount; ++i) {
+        std::string name = "pointLights[" + std::to_string(i) + "]";
+        // Print glowstickPosition
+        // Set parameters for instancedSandShader
+        instancedSandShader->use();
+        instancedSandShader->setBool(name + ".isActive", true);
+        instancedSandShader->setVec3(name + ".position", combinedLights[i].pos);
+        instancedSandShader->setVec3(name + ".color", combinedLights[i].color);
+
+        // Set parameters for instancedMetalShader
+        instancedMetalShader->use();
+        instancedMetalShader->setBool(name + ".isActive", true);
+        instancedMetalShader->setVec3(name + ".position", combinedLights[i].pos);
+        instancedMetalShader->setVec3(name + ".color", combinedLights[i].color);
+
+        // Set parameters for instancedPlasticShader
+        instancedPlasticShader->use();
+        instancedPlasticShader->setBool(name + ".isActive", true);
+        instancedPlasticShader->setVec3(name + ".position", combinedLights[i].pos);
+        instancedPlasticShader->setVec3(name + ".color", combinedLights[i].color);
+
+        // Set parameters for shovelShader
+        shovelShader->use();
+        shovelShader->setBool(name + ".isActive", true);
+        shovelShader->setVec3(name + ".position", combinedLights[i].pos);
+        shovelShader->setVec3(name + ".color", combinedLights[i].color);
+    }
+
+    // Deactivate lights beyond maxLights
+    for (int i = lightsAmount; i < maxLights; ++i) {
+        std::string name = "pointLights[" + std::to_string(i) + "]";
+
+        // Set isActive to false for instancedSandShader
+        instancedSandShader->use();
+        instancedSandShader->setBool(name + ".isActive", false);
+
+        // Set isActive to false for instancedMetalShader
+        instancedMetalShader->use();
+        instancedMetalShader->setBool(name + ".isActive", false);
+
+        // Set isActive to false for instancedPlasticShader
+        instancedPlasticShader->use();
+        instancedPlasticShader->setBool(name + ".isActive", false);
+
+        // Set isActive to false for shovelShader
+        shovelShader->use();
+        shovelShader->setBool(name + ".isActive", false);
+    }
+}
+
+void LightsManager::SortVisibleLights(std::vector<VisibleLight>& lights) {
+    // Sort lights based on distance to the camera
+    std::sort(lights.begin(), lights.end(),
+        [](const VisibleLight& a, const VisibleLight& b) {
+            return a.distance < b.distance;
+        });
+}
+
+glm::vec3 LightsManager::GenerateRandomColor()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(-1.0f, 1.0f);
+
+    do {
+        glowstickColor = glm::vec3(dis(gen), dis(gen), dis(gen));
+    } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.7f);
+
+    return glowstickColor;
 }

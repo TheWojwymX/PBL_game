@@ -206,7 +206,7 @@ void Turret::SetSound() {
         break;
 
     case SNIPER:
-        _sounds = { {14, 0.1f}, {18, 0.1f} };
+        _sounds = { {14, 0.1f} };
         break;
 
     case RIFLE:
