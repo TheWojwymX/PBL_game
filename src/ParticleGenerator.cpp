@@ -171,6 +171,7 @@ void ParticleGenerator::RenderParticles() {
         shader->use();
         shader->setVec4("pColor" ,particleColor);
         shader->setBool("showTexture", showTexture);
+        shader->setBool("affectDirLight", affectDirLight);
         texture.Bind();
 
         glDrawArraysInstanced(GL_TRIANGLES, 0, 6, offsets.size());
@@ -305,6 +306,7 @@ void ParticleGenerator::initiateParticleType() {
         onlyForward = true;
         casing = false;
         isJetpack = false;
+        affectDirLight = false;
     }
     else if (particleType == "antShot"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
@@ -371,6 +373,7 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
         counterXrotation = true;
         isFlare = true;
+        affectDirLight = false;
     }
     else if (particleType == "ambientSandParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
@@ -434,14 +437,14 @@ void ParticleGenerator::initiateParticleType() {
     else if (particleType == "rainParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 1000;
-        newParticles = 1;
+        newParticles = 2;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
         particleLife = 15.0f;
-        particleColor = glm::vec4(0.682f,0.651f,0.882f,1.0f);
+        particleColor = glm::vec4(0.482f,0.451f,0.882f,1.0f);
         initialUpwardBoost = 0.04f;
-        particleScale = 0.20f;
+        particleScale = 0.13f;
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         ambient = true;
         rain = true;
@@ -450,18 +453,19 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
         counterXrotation = false;
         isFlare = false;
+        affectDirLight = false;
     }
     else if (particleType == "rainParticlesFull"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 5000;
-        newParticles = 1;
+        amount = 4000;
+        newParticles = 10;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
         particleLife = 15.0f;
-        particleColor = glm::vec4(0.682f,0.651f,0.898f,1.0f);
+        particleColor = glm::vec4(0.482f,0.451f,0.898f,1.0f);
         initialUpwardBoost = 0.04f;
-        particleScale = 0.24f;
+        particleScale = 0.17f;
         gravity = glm::vec3(0.0f, -0.0f, 0.0f);
         ambient = true;
         rain = true;
@@ -470,6 +474,7 @@ void ParticleGenerator::initiateParticleType() {
         isJetpack = false;
         counterXrotation = false;
         isFlare = false;
+        affectDirLight = false;
     }
     else if (particleType == "tooltipParticle"){
         texture = Texture2D::loadTextureFromFile("../../res/Particle/particleTest.png", true);

@@ -1,6 +1,6 @@
 #version 430 core
 out vec4 FragColor;
-#define AMBIENT_STRENGHT 0.2
+#define AMBIENT_STRENGHT 0.3
 #define SPECULAR_STRENGHT 0.5
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
@@ -81,7 +81,9 @@ void main()
             }
         }
 
-    vec3 finalColor = (dirLightColor + spotLightColor);
+    float shadow = ShadowCalculation(FragPosLightSpace);
+
+    vec3 finalColor = (dirLightColor + spotLightColor) * shadow;
 
     FragColor = vec4(finalColor, 1.0) * texColor;
 }

@@ -102,6 +102,7 @@ private:
     bool isJetpack = false;
     bool tooltip = false;
     bool showTexture = false;
+    bool affectDirLight = true;
 
     int threadCount = 0;
 

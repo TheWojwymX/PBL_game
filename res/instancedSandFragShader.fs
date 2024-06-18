@@ -3,10 +3,10 @@ out vec4 FragColor;
 
 // Define constants for lighting calculations
 #define AMBIENT_STRENGTH 0.25
-#define SPECULAR_STRENGTH 0.3
+#define SPECULAR_STRENGTH 0.2
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
-#define NR_POINT_LIGHTS 10
+#define NR_POINT_LIGHTS 50
 
 // Define structures for different types of lights
 struct DirLight {
@@ -39,9 +39,9 @@ struct SpotLight {
 // Input from vertex shader
 in vec3 Normal;
 in vec3 FragPos;
-in float VariationFactor; 
+in float VariationFactor;
 in vec4 FragPosLightSpace;
-in vec3 HeightTint; 
+in vec3 HeightTint;
 
 // Uniforms for view and lighting properties
 uniform sampler2D shadowMap;
@@ -88,7 +88,7 @@ void main()
         if(pointLights[i].isActive)
         {
             float distance = length(pointLights[i].position - FragPos);
-            float maxDistance = 30.0;
+            float maxDistance = 60.0;
 
             if (distance < maxDistance)
             {
@@ -189,7 +189,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
     float shadow = 0.0;
-    vec2 texelSize = 0.2 / textureSize(shadowMap, 0);
+    vec2 texelSize = 0.1 / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)

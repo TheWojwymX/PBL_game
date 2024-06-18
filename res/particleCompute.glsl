@@ -96,7 +96,7 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
 
     if(onlyForward)
     {
-        initialVelocity = vec3(directionToEnemy.x * 40, directionToEnemy.y * 40, directionToEnemy.z * 40);
+        initialVelocity = vec3(directionToEnemy.x * 40, (directionToEnemy.y + 0.09) * 40, directionToEnemy.z * 40);
     }
     else if(casing)
     {
@@ -280,7 +280,11 @@ p.Life = 0.0;
                 p.Position.z = 90;
                 }
 
-                if(p.Position.y < 300){
+
+                if (p.Position.y < 300 && p.Velocity.y < -1.0){
+                p.Velocity.y = -p.Velocity.y * 0.1;
+                }
+                if(p.Position.y < 300 && p.Velocity.y > -5.0){
                 p.Position.y = 330;
                 }
 

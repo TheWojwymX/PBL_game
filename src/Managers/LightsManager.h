@@ -31,7 +31,7 @@ public:
 
     float glowstickConstant = 3.093f;
     float glowstickLinear = 0.632f;
-    float glowstickQuadratic = 0.219f;
+    float glowstickQuadratic = 0.165f;
     /*
     float glowstickConstantNoFlash = 2.0f;   // Increased to reduce close-range intensity
     float glowstickLinearNoFlash = 0.7f;     // Increased to manage mid-range attenuation
@@ -76,7 +76,7 @@ private:
     glm::vec3 glowstickColor = glm::vec3(1.0f);
     std::vector<glm::vec3> glowstickColors;
 
-    int maxGlowsticks = 10;
+    int maxGlowsticks = 50;
 
     std::vector<std::shared_ptr<Node>> _glowsticksNodes;
     int _oldAmountOfGlovsticks = 0;
