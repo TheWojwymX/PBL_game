@@ -77,77 +77,80 @@ std::shared_ptr<Model> Animation::GetCurrentFrame()
 }
 
 void Animation::Update() {
-    float deltaTime = TIME.GetDeltaTime();
-    _currentTime += deltaTime;
+    if (!GAMEMANAGER._paused)
+    {
+        float deltaTime = TIME.GetDeltaTime();
+        _currentTime += deltaTime;
 
-    if (_enemyState == SPAWN && !IsAnimationFinished())
-    {
-        _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
-    }
-    else if (_enemyState == SPAWN && IsAnimationFinished())
-    {
-        _enemyState = WALK;
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<float> dis(0.0f, 0.5f);
-        _currentTime = generateRandomFloat(gen, dis);
-    }
-
-    if (_enemyState == DEAD && IsAnimationFinished())
-    {
-        if(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y > GAMEMANAGER._groundLevel - 2)
+        if (_enemyState == SPAWN && !IsAnimationFinished())
         {
-            _meshRenderer->GetOwnerNode()->GetTransform()->SetPosition(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y - TIME.GetDeltaTime(), 1);
+            _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
+        }
+        else if (_enemyState == SPAWN && IsAnimationFinished())
+        {
+            _enemyState = WALK;
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<float> dis(0.0f, 0.5f);
+            _currentTime = generateRandomFloat(gen, dis);
+        }
+
+        if (_enemyState == DEAD && IsAnimationFinished())
+        {
+            if(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y > GAMEMANAGER._groundLevel - 2)
+            {
+                _meshRenderer->GetOwnerNode()->GetTransform()->SetPosition(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y - TIME.GetDeltaTime(), 1);
+            }
+            else
+            {
+                _toDelete = true;
+            }
+        }
+
+        if (_loop)
+        {
+            switch (_enemyState)
+            {
+                case WALK:
+                {
+                    while (_currentTime >= _frameDuration * _walkFrames.size())
+                    {
+                        _currentTime -= _frameDuration * _walkFrames.size();
+                    }
+                    break;
+                }
+
+                case ATTACK:
+                {
+                    while (_currentTime >= _frameDuration * _attackFrames.size())
+                    {
+                        _currentTime -= _frameDuration * _attackFrames.size();
+                    }
+                    break;
+                }
+            }
         }
         else
         {
-            _toDelete = true;
-        }
-    }
-
-    if (_loop)
-    {
-        switch (_enemyState)
-        {
-            case WALK:
+            switch (_enemyState)
             {
-                while (_currentTime >= _frameDuration * _walkFrames.size())
+                case WALK:
                 {
-                    _currentTime -= _frameDuration * _walkFrames.size();
+                    _currentTime = std::min(_currentTime, _frameDuration * _walkFrames.size() - 0.01f);
+                    break;
                 }
-                break;
-            }
 
-            case ATTACK:
-            {
-                while (_currentTime >= _frameDuration * _attackFrames.size())
+                case ATTACK:
                 {
-                    _currentTime -= _frameDuration * _attackFrames.size();
+                    _currentTime = std::min(_currentTime, _frameDuration * _attackFrames.size() - 0.01f);
+                    break;
                 }
-                break;
             }
         }
-    }
-    else
-    {
-        switch (_enemyState)
-        {
-            case WALK:
-            {
-                _currentTime = std::min(_currentTime, _frameDuration * _walkFrames.size() - 0.01f);
-                break;
-            }
 
-            case ATTACK:
-            {
-                _currentTime = std::min(_currentTime, _frameDuration * _attackFrames.size() - 0.01f);
-                break;
-            }
-        }
+        _meshRenderer->_model = GetCurrentFrame();
+        _meshRenderer->Render(Transform::Origin());
     }
-
-    _meshRenderer->_model = GetCurrentFrame();
-    _meshRenderer->Render(Transform::Origin());
 }
 
 void Animation::Reset()
