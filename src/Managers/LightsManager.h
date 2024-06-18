@@ -22,7 +22,7 @@ public:
     void UpdateGlowsticks();
     void TurnOffGlowsticks();
 
-    bool isSpotActive = false;
+    bool isSpotActive = true;
     int glowstickCount = 0;
 
     float flashlightConstant = 10.0f;
