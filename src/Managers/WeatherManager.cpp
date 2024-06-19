@@ -151,14 +151,13 @@ void WeatherManager::UpdateSunPosition() {
         // Reset the accumulator
         timeAccumulator -= stepInterval;
     }
-
     float sunX = LIGHTSMANAGER.lightCenter.x;
     float sunZ = LIGHTSMANAGER.lightCenter.z + radius * cos(angle);
     float sunY = LIGHTSMANAGER.lightCenter.y + radius* sin(angle);
 
     float sunXShader = LIGHTSMANAGER.lightCenter.x;
-    float sunZShader = LIGHTSMANAGER.lightCenter.z + (radius + 40) * cos(angle);
-    float sunYShader = LIGHTSMANAGER.lightCenter.y + (radius + 40) * sin(angle);
+    float sunZShader = LIGHTSMANAGER.lightCenter.z + (radius + 80) * cos(angle);
+    float sunYShader = LIGHTSMANAGER.lightCenter.y + (radius + 80) * sin(angle);
 
     float shadowSunX = LIGHTSMANAGER.shadowLightCenter.x;
     float shadowSunZ = LIGHTSMANAGER.shadowLightCenter.z + radius * cos(dirAngle);
@@ -170,7 +169,7 @@ void WeatherManager::UpdateSunPosition() {
     }
     if(angle >= 48.5f){
         float randomChance = static_cast<float>(std::rand()) / (RAND_MAX + 1.0f);
-        rainTimeLeft = rainDuration * randomChance + 0.7;
+        rainTimeLeft = rainDuration * (randomChance + 0.7);
         angle -= 6.0f;
         if (randomChance < rainProbability){
             isRaining = true;

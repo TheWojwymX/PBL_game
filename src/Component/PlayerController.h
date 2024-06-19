@@ -102,7 +102,7 @@ private:
     float _jetpackActivationDelay = 0.25f;
 
     float _glowstickCooldownTimer = 0.0f;
-    float _glowstickCooldown = 2.0f;
+    float _glowstickCooldown = 1.3f;
 
     void JetpackInput();
     void StartJetpackRegenTimer();

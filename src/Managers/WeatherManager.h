@@ -6,6 +6,7 @@
 #include "NodesManager.h"
 #include "ComponentsManager.h"
 #include "WindSimulation.h"
+#include <random>
 
 class WeatherManager{
 public:
@@ -36,7 +37,7 @@ private:
     bool isRaining = false;
     float rainProbability = 0.2f; //100%
     float rainCheckInterval = 3.0f;
-    float rainDuration = 80.0f;
+    float rainDuration = 100.0f;
     float timeSinceLastCheck = 0.0f;
     float rainTimeLeft = 0.0f;
     int spawnedParticles = 0;
@@ -70,7 +71,7 @@ private:
     bool thunder = false;
     float thunderTimeLeft = 0.0f;
     float thunderDuration = 0.2f;
-    float thunderProbability = 0.6f;
+    float thunderProbability = 0.2f;
 
     float shadowStrength = 1.0f;
     float dirAngle = 44.5f;
