@@ -26,19 +26,33 @@ void CompassController::Update() {
     Component::Update();
 }
 
+bool CompassController::IsWithinHoleRange(){
+    if (glm::distance(glm::vec3(49.5, _playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) > _distanceToOpen){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+bool CompassController::IsDuringAnyAnim(){
+    if(_playShowAnim || _playHideAnim || _playOpenAnim || _playCloseAnim){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 void CompassController::RealUpdate() {
 
     float playerY = _playerNode->GetTransform()->GetPosition().y;
 
-    if (playerY >= _hideY && !_isHidden && !_playShowAnim) {
+    if (playerY >= _hideY && !_isHidden && !IsDuringAnyAnim()) {
         _playHideAnim = true;
-    }else if(glm::distance(glm::vec3(49.5,_playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) > _distanceToOpen && !_isHidden && !_isOpened){
-        _playOpenAnim = true;
-    }else if(glm::distance(glm::vec3(49.5,_playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) <= _distanceToOpen && !_isHidden && _isOpened){
-        _playCloseAnim = true;
     }
 
-    if(playerY <= _hideY) {
+    if (playerY <= _hideY) {
         if (!_isHidden && !_playShowAnim && INPUT.IsKeyPressed(69)) {
             _playHideAnim = true;
         } else if (_isHidden && !_playHideAnim && INPUT.IsKeyPressed(69)) {
@@ -46,25 +60,34 @@ void CompassController::RealUpdate() {
         }
     }
 
+    if(!IsWithinHoleRange() && !_isHidden && !IsDuringAnyAnim() && !_isOpened){
+        _playOpenAnim = true;
+        std::cout << "wykonuje sie" << std::endl;
+    }else if(IsWithinHoleRange() && !_isHidden && !IsDuringAnyAnim() && _isOpened){
+        _playCloseAnim = true;
+    }
+
     if (_playHideAnim) {
         PlayHideCompass();
-    }
-    if (_playShowAnim) {
+    }else if (_playShowAnim) {
         PlayShowCompass();
     }
 
-    if(_playOpenAnim){
+    if (_playOpenAnim) {
         PlayOpenCompass();
-    }
-    if(_playCloseAnim){
+    }else if (_playCloseAnim) {
         PlayCloseCompass();
     }
 
+    //std::cout << "_isOpened: " << _isOpened << " _playCloseAnim: " << _playCloseAnim << " _playOpenAnim: " << _playOpenAnim << " _isHidden: " << _isHidden << std::endl;
+    //std::cout << "is within hole: " << IsWithinHoleRange() << std::endl;
     SetPosAndRot();
 }
 
 void CompassController::PlayHideCompass() {
-    if (_visibilityAnimationTimer < _visibilityAnimationTime) {
+    if (_isOpened) {
+        _playCloseAnim = true;
+    } else if (_visibilityAnimationTimer < _visibilityAnimationTime) {
         _visibilityAnimationTimer += TIME.GetDeltaTime();
         if (_visibilityAnimationTimer < _visibilityAnimationTime) {
             float t = glm::clamp(_visibilityAnimationTimer / _visibilityAnimationTime, 0.0f, 1.0f);
@@ -74,10 +97,8 @@ void CompassController::PlayHideCompass() {
             _visibilityAnimationTimer = 0;
             _playHideAnim = false;
             _isHidden = true;
-
             _upActual = 0.0f;
             _openingAnimationTimer = 0;
-            _playCloseAnim = false;
             _isOpened = false;
         }
     }
@@ -89,14 +110,17 @@ void CompassController::PlayShowCompass() {
         if (_visibilityAnimationTimer < _visibilityAnimationTime) {
             float t = glm::clamp(_visibilityAnimationTimer / _visibilityAnimationTime, 0.0f, 1.0f);
             _actualVisibilityOffset = glm::mix(_actualVisibilityOffset, 0.0f, t);
+            if (_visibilityAnimationTimer >= _visibilityAnimationTime / 2) {
+                if (glm::distance(glm::vec3(49.5, _playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) >
+                    _distanceToOpen) {
+                    _playOpenAnim = true;
+                }
+            }
         } else {
             _actualVisibilityOffset = 0;
             _visibilityAnimationTimer = 0;
             _playShowAnim = false;
             _isHidden = false;
-            if(glm::distance(glm::vec3(49.5,_playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) > _distanceToOpen){
-                _playOpenAnim = true;
-            }
         }
     }
 }
@@ -167,7 +191,7 @@ void CompassController::SetPosAndRot() {
 }
 
 void CompassController::PlayOpenCompass() {
-    if (_openingAnimationTimer  < _openingAnimationTime ) {
+    if (_openingAnimationTimer < _openingAnimationTime) {
         _openingAnimationTimer += TIME.GetDeltaTime();
         if (_openingAnimationTimer < _openingAnimationTime) {
             float t = glm::clamp(_openingAnimationTimer / _openingAnimationTime, 0.0f, 1.0f);
@@ -175,8 +199,8 @@ void CompassController::PlayOpenCompass() {
         } else {
             _upActual = _upMax;
             _openingAnimationTimer = 0;
-            _playOpenAnim  = false;
-            _isOpened  = true;
+            _playOpenAnim = false;
+            _isOpened = true;
         }
     }
 }

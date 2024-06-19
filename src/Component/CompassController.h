@@ -49,7 +49,7 @@ public:
     bool _playCloseAnim = false;
     bool _playOpenAnim = false;
     float _openingAnimationTimer = 0;
-    float _openingAnimationTime = 0.5;
+    float _openingAnimationTime = 0.3;
     float _actualOpeningOffset = 0;
     float _openingOffset = 3;
     bool _isOpened = false;
@@ -59,5 +59,9 @@ public:
     float _upActual = 0;
 
     float _distanceToOpen = 3.2;
+
+    bool IsWithinHoleRange();
+
+    bool IsDuringAnyAnim();
 };
 
