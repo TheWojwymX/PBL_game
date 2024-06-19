@@ -22,6 +22,7 @@ struct PointLight {
     float quadratic;
     vec3 color;
     bool isActive;
+    bool isShot;
 };
 
 struct SpotLight {
@@ -82,21 +83,28 @@ void main()
     }
 
 
-    if(FragPos.y <= 300.5){
+    // Calculate point light contributions
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
     {
         if(pointLights[i].isActive)
         {
             float distance = length(pointLights[i].position - FragPos);
-            float maxDistance = 60.0;
+            float maxDistance = pointLights[i].isShot ? 6.0 : 60.0;
 
-            if (distance < maxDistance)
+            if (FragPos.y <= 295.0 && !pointLights[i].isShot)
             {
-                if(FragPos.y <= 295){
-                pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
-                totalPointlightIntensity += CalcPointLightIntensity(pointLights[i], FragPos);
+                // For regular point lights below or at y <= 295
+                if (distance < maxDistance)
+                {
+                    pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+                    totalPointlightIntensity += CalcPointLightIntensity(pointLights[i], FragPos);
                 }
-                else{
+            }
+            else if (FragPos.y > 295.0)
+            {
+                // For shot point lights above y > 295
+                if (distance < maxDistance)
+                {
                     float heightFactor = smoothstep(300.5, 295.0, FragPos.y);
                     pointLightColor += CalcPointLight(pointLights[i], norm, FragPos, viewDir) * heightFactor;
                     totalPointlightIntensity += CalcPointLightIntensity(pointLights[i], FragPos) * heightFactor;
@@ -104,7 +112,7 @@ void main()
             }
         }
     }
-    }
+
     float shadow = ShadowCalculation(FragPosLightSpace, totalSpotlightIntensity, totalPointlightIntensity);
 
     // Apply height-based tint directly

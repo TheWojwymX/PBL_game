@@ -4,7 +4,7 @@ out vec4 FragColor;
 #define SPECULAR_STRENGHT 0.5
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
-#define NR_POINT_LIGHTS 2
+#define NR_POINT_LIGHTS 50
 
 struct DirLight {
     vec3 direction;
@@ -24,6 +24,7 @@ struct PointLight {
     vec3 color;
 
     bool isActive;
+    bool isShot;
 };
 
 struct SpotLight {
@@ -86,7 +87,7 @@ void main()
             if(pointLights[i].isActive)
             {
                 float distance = length(pointLights[i].position - FragPos);
-                float maxDistance = 30.0;
+                float maxDistance = pointLights[i].isShot ? 6.0 : 60.0;
 
                 if (distance < maxDistance)
                 {

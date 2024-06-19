@@ -6,7 +6,7 @@ out vec4 FragColor;
 #define SPECULAR_STRENGTH 1.0 
 #define SHININESS 256 
 #define NR_SPOT_LIGHTS 1
-#define NR_POINT_LIGHTS 10
+#define NR_POINT_LIGHTS 50
 
 // Define structures for different types of lights
 struct DirLight {
@@ -22,6 +22,7 @@ struct PointLight {
     float quadratic;
     vec3 color;
     bool isActive;
+    bool isShot;
 };
 
 struct SpotLight {
@@ -39,9 +40,9 @@ struct SpotLight {
 // Input from vertex shader
 in vec3 FragPos;
 in vec3 Normal;
-in float VariationFactor; // Variation factor from the vertex shader
+in float VariationFactor;
 in vec4 FragPosLightSpace;
-in vec3 HeightTint; // Add height tint color input
+in vec3 HeightTint; 
 
 // Uniforms for view and lighting properties
 uniform sampler2D shadowMap;
@@ -69,9 +70,10 @@ void main()
     float totalSpotlightIntensity = 0.0f;
     float totalPointlightIntensity = 0.0f;
 
-    // Calculate the directional light contribution (as before)
+    // Calculate the directional light contribution
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
 
+    // Calculate spotlight contributions
     for(int i = 0; i < NR_SPOT_LIGHTS; i++)
     {
         if(spotLights[i].isActive)
@@ -81,12 +83,13 @@ void main()
         }
     }
 
+    // Calculate point light contributions
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
     {
-        if(pointLights[i].isActive)
+        if(pointLights[i].isActive && !pointLights[i].isShot)
         {
             float distance = length(pointLights[i].position - FragPos);
-            float maxDistance = 30.0;
+            float maxDistance = 60.0;
 
             if (distance < maxDistance)
             {

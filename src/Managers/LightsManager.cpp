@@ -406,11 +406,13 @@ void LightsManager::UpdateShaderPointLight(std::shared_ptr<Shader> shader, std::
             shader->setFloat(name + ".constant", glowstickConstant);
             shader->setFloat(name + ".linear", glowstickLinear);
             shader->setFloat(name + ".quadratic", glowstickQuadratic);
+            shader->setBool(name + ".isShot", false);
             break;
         case LightSource::SHOT:
             shader->setFloat(name + ".constant", shotConstant);
             shader->setFloat(name + ".linear", shotLinear);
             shader->setFloat(name + ".quadratic", shotQuadratic);
+            shader->setBool(name + ".isShot", true);
             break;
         default:
             break;

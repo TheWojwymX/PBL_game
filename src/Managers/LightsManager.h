@@ -56,9 +56,9 @@ public:
     float glowstickLinear = 0.632f;
     float glowstickQuadratic = 0.165f;
 
-    float shotConstant = 1.05f;
-    float shotLinear = 0.6f;
-    float shotQuadratic = 1.5f;
+    float shotConstant = 1.0f;
+    float shotLinear = 0.7f;
+    float shotQuadratic = 1.8f;
 
     glm::vec3 dirColor{ 0.999f, 0.999f, 1.00f };
     glm::vec3 skyColor{ 0.6235f, 0.6235f, 0.8039f };
@@ -95,7 +95,7 @@ private:
     glm::vec3 glowstickColor = glm::vec3(1.0f);
     std::vector<glm::vec3> glowstickColors;
 
-    int maxLights = 30;
+    int maxLights = 50;
     float maxDistance = 60;
 
     std::vector<std::shared_ptr<Node>> _glowsticksNodes;
