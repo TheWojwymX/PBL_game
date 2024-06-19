@@ -671,7 +671,7 @@ bool TurretsManager::IsSelectedTurretInRange() {
         auto turretPosition = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetPosition();
         auto playerPosition = _player->GetTransform()->GetPosition();
 
-        return glm::distance(turretPosition, playerPosition) + 0.01 <= 12;
+        return glm::distance(turretPosition, playerPosition) + 0.01 <= 3;
     }
     return false;
 }

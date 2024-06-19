@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 196,
-  "nextNodeId": 175,
+  "nextComponentId": 198,
+  "nextNodeId": 177,
   "resources": {
     "Models": [
       {
@@ -353,19 +353,27 @@
       },
       {
         "ModelName": "PDAModel",
-        "Path": "../../res/Models/PDA/krotkofalowka_v2-1.obj"
+        "Path": "res/Models/PDA/krotkofalowka_v2-1.obj"
       },
       {
         "ModelName": "PDAAntennaModel",
-        "Path": "../../res/Models/PDA/antena/krotkofalowka_v2-0.obj"
+        "Path": "res/Models/PDA/antena/krotkofalowka_v2-0.obj"
       },
       {
         "ModelName": "flareModel",
-        "Path": "../../res/Models/Flare/flara_pomniejszona.obj"
+        "Path": "res/Models/Flare/flara_pomniejszona.obj"
       },
       {
-        "ModelName": "compassModel",
-        "Path": "../../res/Models/Compass/Compass.obj"
+        "ModelName": "compassDialModel",
+        "Path": "res/Models/Compass/kompas-1.obj"
+      },
+      {
+        "ModelName": "compassUpModel",
+        "Path": "res/Models/Compass/kompas-0.obj"
+      },
+      {
+        "ModelName": "compassDownModel",
+        "Path": "res/Models/Compass/kompas-2.obj"
       }
     ],
     "Shaders": [
@@ -839,12 +847,72 @@
           {
             "componentId": 194,
             "componentType": 13,
-            "model": "compassModel",
+            "model": "compassDialModel",
             "shader": "shovelShader"
           },
           {
             "componentId": 195,
             "componentType": 19
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            90.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 175,
+        "NodeName": "CompassDown",
+        "children": [],
+        "components": [
+          {
+            "componentId": 196,
+            "componentType": 13,
+            "model": "compassDownModel",
+            "shader": "shovelShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            90.0,
+            0.0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ]
+        }
+      },
+      {
+        "NodeID": 176,
+        "NodeName": "CompassUp",
+        "children": [],
+        "components": [
+          {
+            "componentId": 197,
+            "componentType": 13,
+            "model": "compassUpModel",
+            "shader": "shovelShader"
           }
         ],
         "transform": {

@@ -14,8 +14,6 @@ ShovelRenderer::ShovelRenderer(){
 void ShovelRenderer::RenderShovel(glm::mat4 parentWorld) {
 
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
-
-    glClear(GL_DEPTH_BUFFER_BIT);
     _shader->use();
     _shader->setMat4("model", world);
     _model->Draw(*_shader);
