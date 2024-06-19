@@ -163,7 +163,7 @@ int main(int, char**)
     SHADOWMAP.Init();
     SHADOWMAP.AssignShadowMapToShader();
 
-    FRAMEBUFFER.Init();
+    //FRAMEBUFFER.Init();
 
     glm::vec3 initialCloudPosition(0.0f, 0.0f, 0.0f);
     float cloudSpeed = 5.0f;
@@ -417,8 +417,8 @@ int main(int, char**)
             blueprintShader->setVec3("additionalColor", TURRETSMANAGER._additionalColor);
 
             GAMEMANAGER.root->Render(Transform::Origin());
-            FRAMEBUFFER.BeginRender();
-            FRAMEBUFFER.EndRender();
+//            FRAMEBUFFER.BeginRender();
+//            FRAMEBUFFER.EndRender();
 
             // RealUpdate is after standard Update and has to be here if you want smooth rotation!
             // This order (shovelRender -> shovelController -> shovelShader) is working and the place
@@ -451,11 +451,6 @@ int main(int, char**)
         ImGui::Begin("Depth Map");
         ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
         ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
-        ImGui::End();
-
-        ImGui::Begin("Framebuffer");
-        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
-        ImGui::Image((void *) (intptr_t) FRAMEBUFFER.GetFramebufferTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
         ImGui::End();
 
         // Quick Debug

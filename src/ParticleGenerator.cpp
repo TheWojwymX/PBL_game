@@ -141,9 +141,9 @@ void ParticleGenerator::RenderParticles() {
             }
         }
 
-        if (deadParticles == amount && spawnDelay == 0.0f) {
-            generateParticle = false;
-        }
+//        if (spawnDelay == 0.0f && threadCount >= 3) {
+//            generateParticle = false;
+//        }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
 
@@ -413,6 +413,7 @@ void ParticleGenerator::initiateParticleType() {
         isFlare = false;
         ambient = false;
         isUnderground = true;
+        affectDirLight = false;
     }
     else if (particleType == "digPlastic"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
@@ -433,6 +434,7 @@ void ParticleGenerator::initiateParticleType() {
         isFlare = false;
         ambient = false;
         isUnderground = true;
+        affectDirLight = false;
     }
     else if (particleType == "rainParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);

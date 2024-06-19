@@ -96,7 +96,7 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
 
     if(onlyForward)
     {
-        initialVelocity = vec3(directionToEnemy.x * 40, (directionToEnemy.y + 0.09) * 40, directionToEnemy.z * 40);
+        initialVelocity = vec3(directionToEnemy.x * 40, (directionToEnemy.y + 0.06) * 40, directionToEnemy.z * 40);
     }
     else if(casing)
     {
@@ -163,7 +163,9 @@ if(!tooltipSpawn)
 {
 p.Life = 0.0;
 }
-
+if(onlyForward){
+if(abs(p.Position.x - enemyPosition.x) < 0.4 && abs(p.Position.z - enemyPosition.z) < 0.4) {p.Life = 0.0;}
+}
 if(p.Scale > 5.0){
 p.Scale = 0.0;
 p.Position.xyz = vec3(-300.0,-300.0,-300.0);
