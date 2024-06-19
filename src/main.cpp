@@ -175,9 +175,9 @@ int main(int, char**)
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(GAMEMANAGER._screenWidth);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(GAMEMANAGER._screenHeight);
 
-    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
-    imguiMain->SetRoot(GAMEMANAGER.root);
-    imguiMain->SetSelectedObject(GAMEMANAGER.root);
+//    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
+//    imguiMain->SetRoot(GAMEMANAGER.root);
+//    imguiMain->SetSelectedObject(GAMEMANAGER.root);
 
     /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
     COMPONENTSMANAGER.CreateComponent<Camera>();
@@ -452,35 +452,35 @@ int main(int, char**)
 
 
         // Start the Dear ImGui frame
-        imguiMain->draw();
-
-        ImGui::Begin("Depth Map");
-        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
-        ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
-        ImGui::End();
-
-        // Quick Debug
-        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
-        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
-        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
-
-        ImGui::InputFloat3("Light Position", &LIGHTSMANAGER.lightPos[0]);  // Change lightPos
-        ImGui::InputFloat3("Center", &LIGHTSMANAGER.lightCenter[0]);
-
-        ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
-        ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
-        ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
-
-        ImGui::ColorEdit3("Directional Light Color", glm::value_ptr(LIGHTSMANAGER.dirColor));
-        ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));
-
-        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
-
-        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
-
-        imguiMain->endDraw();
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+//        imguiMain->draw();
+//
+//        ImGui::Begin("Depth Map");
+//        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
+//        ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
+//        ImGui::End();
+//
+//        // Quick Debug
+//        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
+//        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
+//        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
+//
+//        ImGui::InputFloat3("Light Position", &LIGHTSMANAGER.lightPos[0]);  // Change lightPos
+//        ImGui::InputFloat3("Center", &LIGHTSMANAGER.lightCenter[0]);
+//
+//        ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
+//        ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
+//        ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
+//
+//        ImGui::ColorEdit3("Directional Light Color", glm::value_ptr(LIGHTSMANAGER.dirColor));
+//        ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));
+//
+//        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
+//
+//        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
+//
+//        imguiMain->endDraw();
+//        ImGui::Render();
+//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);
@@ -488,9 +488,9 @@ int main(int, char**)
     }
     // Cleanup
     AUDIOENGINEMANAGER.Cleanup();
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+//    ImGui_ImplOpenGL3_Shutdown();
+//    ImGui_ImplGlfw_Shutdown();
+//    ImGui::DestroyContext();
 
     glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();

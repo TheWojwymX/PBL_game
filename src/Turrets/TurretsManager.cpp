@@ -283,9 +283,9 @@ void TurretsManager::SpawnTurret(TurretType type) {
 
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
 
-    for (int i = 0; i < _turrets.size(); i++) {
-        std::cout << typeid(_turrets[i]).name() << std::endl;
-    }
+//    for (int i = 0; i < _turrets.size(); i++) {
+//        std::cout << typeid(_turrets[i]).name() << std::endl;
+//    }
     _newTurretIndex++;
 }
 

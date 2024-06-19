@@ -479,7 +479,7 @@ void ParticleGenerator::initiateParticleType() {
         affectDirLight = false;
     }
     else if (particleType == "tooltipParticle"){
-        texture = Texture2D::loadTextureFromFile("../../res/Particle/particleTest.png", true);
+        texture = Texture2D::loadTextureFromFile("res/Particle/particleTest.png", true);
         amount = 1;
         newParticles = 1;
         spawnDelay = 0.0f;

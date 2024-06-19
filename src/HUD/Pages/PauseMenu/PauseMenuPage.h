@@ -1,7 +1,6 @@
 #pragma once
 
 #include "HUD/Pages/Page.h"
-#include "../../CoordsConverter.h"
 #include "HUD/Buttons/Button.h"
 #include "HUD/CoordsConverter.h"
 

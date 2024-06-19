@@ -1,5 +1,5 @@
 #include "MessagePage.h"
-#include "../../CoordsConverter.h"
+#include "HUD/CoordsConverter.h"
 
 void MessagePage::Init() {
     _backgroundImage.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(343, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
