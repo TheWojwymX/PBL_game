@@ -327,7 +327,6 @@ void TurretsManager::UpdateBlueprintTurret() {
     std::string blueprintRange = "BlueprintRange";
     char turretLevel = 0;
 
-    std::cout << "tur type: " << _turretType << std::endl;
     if (_heldTurret != nullptr)
         turretLevel = _heldTurret->GetUpgradeLevel();
     switch (_turretType) {
