@@ -244,6 +244,7 @@ int main(int, char**)
             UPGRADEMANAGER.Reset();
             NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->Reset();
             PAGEMANAGER.Reset();
+            WEATHERMANAGER.Reset();
         }
 
         if (INPUT.IsKeyPressed(GLFW_KEY_9)) {

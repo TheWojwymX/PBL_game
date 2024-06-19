@@ -45,6 +45,7 @@ public:
     void AddGlowstick();
     void AddShot(const glm::vec3& startPos, const glm::vec3& endPos);
     void TurnOffGlowsticks();
+    void AssignNewGlowstickSettings(char level);
 
     int glowstickCount = 0;
 
@@ -55,6 +56,30 @@ public:
     float glowstickConstant = 3.093f;
     float glowstickLinear = 0.632f;
     float glowstickQuadratic = 0.165f;
+
+    float glowstickConstant0 = 3.093f;
+    float glowstickLinear0 = 0.632f;
+    float glowstickQuadratic0 = 0.165f;
+
+    float glowstickConstant1 = 3.093f;
+    float glowstickLinear1 = 0.632f;
+    float glowstickQuadratic1 = 0.155f;
+
+    float glowstickConstant2 = 3.093f;
+    float glowstickLinear2 = 0.632f;
+    float glowstickQuadratic2 = 0.135f;
+
+    float glowstickConstant3 = 3.093f;
+    float glowstickLinear3 = 0.632f;
+    float glowstickQuadratic3 = 0.105f;
+
+    float glowstickConstant4 = 3.093f;
+    float glowstickLinear4 = 0.632f;
+    float glowstickQuadratic4 = 0.075f;
+
+    float glowstickConstant5 = 3.093f;
+    float glowstickLinear5 = 0.632f;
+    float glowstickQuadratic5 = 0.045f;
 
     float shotConstant = 1.0f;
     float shotLinear = 0.7f;

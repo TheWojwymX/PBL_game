@@ -18,6 +18,7 @@ public:
 
     void Init();
     void Update();
+    void Reset();
 
     void SetupAmbientParticles();
     void SetupRainParticles();

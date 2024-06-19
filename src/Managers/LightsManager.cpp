@@ -22,6 +22,7 @@ void LightsManager::Update() {
 void LightsManager::Reset()
 {
     _oldAmountOfGlowsticks = glowstickCount;
+    AssignNewGlowstickSettings(0);
     TurnOffGlowsticks();
     for (int i = 0; i < _glowsticksNodes.size(); i++) {
         if (_glowsticksNodes[i] == nullptr) continue;
@@ -430,4 +431,39 @@ glm::vec3 LightsManager::GenerateRandomColor()
     } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.7f);
 
     return glowstickColor;
+}
+
+void LightsManager::AssignNewGlowstickSettings(char level){
+    switch(level){
+        case 0:
+            glowstickConstant = glowstickConstant0;
+            glowstickLinear = glowstickLinear0;
+            glowstickQuadratic = glowstickQuadratic0;
+            break;
+        case 1:
+            glowstickConstant = glowstickConstant1;
+            glowstickLinear = glowstickLinear1;
+            glowstickQuadratic = glowstickQuadratic1;
+            break;
+        case 2:
+            glowstickConstant = glowstickConstant2;
+            glowstickLinear = glowstickLinear2;
+            glowstickQuadratic = glowstickQuadratic2;
+            break;
+        case 3:
+            glowstickConstant = glowstickConstant3;
+            glowstickLinear = glowstickLinear3;
+            glowstickQuadratic = glowstickQuadratic3;
+            break;
+        case 4:
+            glowstickConstant = glowstickConstant4;
+            glowstickLinear = glowstickLinear4;
+            glowstickQuadratic = glowstickQuadratic4;
+            break;
+        case 5:
+            glowstickConstant = glowstickConstant5;
+            glowstickLinear = glowstickLinear5;
+            glowstickQuadratic = glowstickQuadratic5;
+            break;
+    }
 }

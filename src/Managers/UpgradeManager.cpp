@@ -335,6 +335,8 @@ void UpgradeManager::UpgradeMiningRadius() {
 
     // Apply upgrade
     _playerRef->UpgradeMiningRadius(_miningRadiusUpgrades.upgradeValues[miningRadiusLevel]);
+    cout <<miningRadiusLevel << endl;
+    LIGHTSMANAGER.AssignNewGlowstickSettings(miningRadiusLevel + 1);
 }
 
 void UpgradeManager::Update() {

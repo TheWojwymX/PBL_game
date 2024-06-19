@@ -29,6 +29,12 @@ void WeatherManager::Init() {
     rainNightColor = glm::vec3(0.1922f, 0.1922f, 0.3373f);
 }
 
+void WeatherManager::Reset(){
+    direction = 1;
+    angle = 44.5f;
+    dirAngle = 44.5f;
+}
+
 void WeatherManager::Update(){
     windDirection = windModel.getWind(15 * TIME.GetDeltaTime());
     windDirection.x /= 10;
