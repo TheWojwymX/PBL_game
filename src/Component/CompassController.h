@@ -18,7 +18,9 @@ public:
     void Update() override;
 
     std::shared_ptr<Node> _playerNode;
-    std::shared_ptr<Node> _shovelNode;
+    std::shared_ptr<Node> _dialNode;
+    std::shared_ptr<Node> _upNode;
+    std::shared_ptr<Node> _downNode;
 
     void SetPosAndRot();
 
@@ -27,13 +29,6 @@ public:
     float _forwardOffset = 2.0f;  // Dystans przed kamerą
     float _horizontalOffset = -1.0f;  // Dystans w prawo od kamery
     float _verticalOffset = -1.0f;  // Dystans w dół od kamery
-
-    bool _playDigAnim = false;
-    float _digAnimationTimer = 0;
-    float _digAnimationTime = 0.2;
-    float _actualDegree = 0;
-    float _maxDegree = 60;
-    float _minDegree = 0;
 
     bool _playHideAnim = false;
     bool _playShowAnim = false;
@@ -45,7 +40,24 @@ public:
 
     float _hideY = 0;
 
-    void PlayHideShovel();
-    void PlayShowShovel();
+    void PlayHideCompass();
+    void PlayShowCompass();
+
+    void PlayOpenCompass();
+    void PlayCloseCompass();
+
+    bool _playCloseAnim = false;
+    bool _playOpenAnim = false;
+    float _openingAnimationTimer = 0;
+    float _openingAnimationTime = 0.5;
+    float _actualOpeningOffset = 0;
+    float _openingOffset = 3;
+    bool _isOpened = false;
+
+    glm::vec3 _upPosOffset = glm::vec3(0.18, -0.09, -0.05);
+    float _upMax = -125;
+    float _upActual = 0;
+
+    float _distanceToOpen = 3.2;
 };
 

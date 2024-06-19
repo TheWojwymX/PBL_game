@@ -226,6 +226,8 @@ int main(int, char**)
 
     auto compassController = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>();
     auto compassRenderer = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<ShovelRenderer>();
+    auto compassUpRenderer = NODESMANAGER.getNodeByName("CompassUp")->GetComponent<ShovelRenderer>();
+    auto compassDownRenderer = NODESMANAGER.getNodeByName("CompassDown")->GetComponent<ShovelRenderer>();
 
     GAMEMANAGER.PlayMenuMusic();
 
@@ -424,6 +426,7 @@ int main(int, char**)
             // This order (shovelRender -> shovelController -> shovelShader) is working and the place
             // (at the end of loop) is also working, so it is recommended to not move it
             // moving may cause some problems like lack of smoothness or models bugging
+            glClear(GL_DEPTH_BUFFER_BIT); // Clear depth because you want items always "closest to screen"
             shovelRenderer->RenderShovel(Transform::Origin());
             shovelController->RealUpdate();
 
@@ -431,6 +434,8 @@ int main(int, char**)
             uPDARenderer->RenderShovel(Transform::Origin());
             uPDAController->RealUpdate();
 
+            compassDownRenderer->RenderShovel(Transform::Origin());
+            compassUpRenderer->RenderShovel(Transform::Origin());
             compassRenderer->RenderShovel(Transform::Origin());
             compassController->RealUpdate();
 

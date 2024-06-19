@@ -14,7 +14,10 @@ void CompassController::Deserialize(const nlohmann::json &jsonData) {
 
 void CompassController::Init() {
     _playerNode = NODESMANAGER.getNodeByName("player");
-    _shovelNode = NODESMANAGER.getNodeByName("CompassNode");
+    _dialNode = NODESMANAGER.getNodeByName("CompassNode");
+    _upNode = NODESMANAGER.getNodeByName("CompassUp");
+    _downNode = NODESMANAGER.getNodeByName("CompassDown");
+
     _hideY = GAMEMANAGER._groundLevel - 0.8f;
     Component::Init();
 }
@@ -29,6 +32,10 @@ void CompassController::RealUpdate() {
 
     if (playerY >= _hideY && !_isHidden && !_playShowAnim) {
         _playHideAnim = true;
+    }else if(glm::distance(glm::vec3(49.5,_playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) > _distanceToOpen && !_isHidden && !_isOpened){
+        _playOpenAnim = true;
+    }else if(glm::distance(glm::vec3(49.5,_playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) <= _distanceToOpen && !_isHidden && _isOpened){
+        _playCloseAnim = true;
     }
 
     if(playerY <= _hideY) {
@@ -40,16 +47,23 @@ void CompassController::RealUpdate() {
     }
 
     if (_playHideAnim) {
-        PlayHideShovel();
+        PlayHideCompass();
     }
     if (_playShowAnim) {
-        PlayShowShovel();
+        PlayShowCompass();
+    }
+
+    if(_playOpenAnim){
+        PlayOpenCompass();
+    }
+    if(_playCloseAnim){
+        PlayCloseCompass();
     }
 
     SetPosAndRot();
 }
 
-void CompassController::PlayHideShovel() {
+void CompassController::PlayHideCompass() {
     if (_visibilityAnimationTimer < _visibilityAnimationTime) {
         _visibilityAnimationTimer += TIME.GetDeltaTime();
         if (_visibilityAnimationTimer < _visibilityAnimationTime) {
@@ -60,11 +74,16 @@ void CompassController::PlayHideShovel() {
             _visibilityAnimationTimer = 0;
             _playHideAnim = false;
             _isHidden = true;
+
+            _upActual = 0.0f;
+            _openingAnimationTimer = 0;
+            _playCloseAnim = false;
+            _isOpened = false;
         }
     }
 }
 
-void CompassController::PlayShowShovel() {
+void CompassController::PlayShowCompass() {
     if (_visibilityAnimationTimer < _visibilityAnimationTime) {
         _visibilityAnimationTimer += TIME.GetDeltaTime();
         if (_visibilityAnimationTimer < _visibilityAnimationTime) {
@@ -75,6 +94,9 @@ void CompassController::PlayShowShovel() {
             _visibilityAnimationTimer = 0;
             _playShowAnim = false;
             _isHidden = false;
+            if(glm::distance(glm::vec3(49.5,_playerNode->GetTransform()->GetPosition().y, 49.5), _playerNode->GetTransform()->GetPosition()) > _distanceToOpen){
+                _playOpenAnim = true;
+            }
         }
     }
 }
@@ -86,38 +108,90 @@ void CompassController::SetPosAndRot() {
     glm::vec3 upVector = glm::normalize(_playerNode->GetComponent<Camera>()->GetUpVector());
     auto cameraPos = _playerNode->GetComponent<Camera>()->GetPosition();
 
-    // Set shovel position based on offsets
-    glm::vec3 shovelPosition = cameraPos + forwardVector * _forwardOffset + rightVector * _horizontalOffset + upVector * _verticalOffset;
+    // Set object position based on offsets
+    glm::vec3 objectPosition = cameraPos + forwardVector * _forwardOffset + rightVector * _horizontalOffset + upVector * _verticalOffset;
     glm::vec3 additionalOffset = upVector * -_actualVisibilityOffset;
-    shovelPosition += additionalOffset;
-    _shovelNode->GetTransform()->SetPosition(shovelPosition);
+    objectPosition += additionalOffset;
+    _dialNode->GetTransform()->SetPosition(objectPosition);
+    _downNode->GetTransform()->SetPosition(objectPosition);
 
-    // Set initial shovel rotation based on camera's orientation
+    // Set initial object rotation based on camera's orientation
     glm::mat4 rotationMatrix(1.0f);
     rotationMatrix[0] = glm::vec4(rightVector, 0.0f);  // x-axis
     rotationMatrix[1] = glm::vec4(upVector, 0.0f);     // y-axis
     rotationMatrix[2] = glm::vec4(-forwardVector, 0.0f); // z-axis (negative because camera looks towards -z)
     glm::quat initialRotation = glm::quat_cast(rotationMatrix);
-    _shovelNode->GetTransform()->SetRotation(initialRotation);
+    _dialNode->GetTransform()->SetRotation(initialRotation);
+    _upNode->GetTransform()->SetRotation(initialRotation);
+    _downNode->GetTransform()->SetRotation(initialRotation);
 
+    //UP
+    glm::quat currentRotation = _upNode->GetTransform()->GetRotation();
+    glm::quat rotationOffsetY = glm::angleAxis(glm::radians(105.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::quat rotationOffsetZ = glm::angleAxis(glm::radians(_upActual), glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::quat ownerRotation = currentRotation * rotationOffsetY * rotationOffsetZ;
+    _upNode->GetTransform()->SetRotation(ownerRotation);
+
+    glm::vec3 upOffset = forwardVector * _upPosOffset.x + rightVector * _upPosOffset.z + upVector * _upPosOffset.y;
+    glm::vec3 upPosition = objectPosition + upOffset;
+    _upNode->GetTransform()->SetPosition(upPosition);
+
+
+    //DOWN
+    currentRotation = _downNode->GetTransform()->GetRotation();
+    rotationOffsetY = glm::angleAxis(glm::radians(105.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    ownerRotation = currentRotation * rotationOffsetY;
+    _downNode->GetTransform()->SetRotation(ownerRotation);
+
+
+    //MID
     // Get the owner's euler rotation and apply the +90.0f to the X-axis
     glm::vec3 eulerRotation = glm::degrees(glm::eulerAngles(_ownerTransform->GetRotation()));
-    glm::quat ownerRotation = glm::quat(glm::vec3(glm::radians(eulerRotation.x + 90.0f), glm::radians(eulerRotation.y), glm::radians(eulerRotation.z)));
-    _shovelNode->GetTransform()->SetRotation(ownerRotation);
+    ownerRotation = glm::quat(glm::vec3(glm::radians(eulerRotation.x), glm::radians(eulerRotation.y), glm::radians(eulerRotation.z)));
+    _dialNode->GetTransform()->SetRotation(ownerRotation);
 
-    // Calculate the direction from shovel to the target point
-    glm::vec3 directionToTarget = glm::normalize(glm::vec3(49.0f,shovelPosition.y,49.0f) - shovelPosition);
+    // Calculate the direction from object to the target point
+    glm::vec3 directionToTarget = glm::normalize(glm::vec3(49.5f, objectPosition.y, 49.5f) - objectPosition);
 
-    // Transform the direction to the local coordinate system of the shovel
+    // Transform the direction to the local coordinate system of the object
     glm::vec3 localDirection = glm::normalize(glm::inverse(glm::mat3(rotationMatrix)) * directionToTarget);
 
     // Calculate the angle between the current forward vector and the target direction on the YZ plane
-    float angleY = glm::atan(localDirection.x, localDirection.z);
-
+    float angleY = glm::atan(localDirection.x, localDirection.z) + 90;
     // Create the rotation quaternion around the local Y-axis
     glm::quat rotationAroundY = glm::angleAxis(angleY, glm::vec3(0.0f, 1.0f, 0.0f));
 
     // Apply the additional rotation to the existing rotation
     glm::quat finalRotation = ownerRotation * rotationAroundY;
-    _shovelNode->GetTransform()->SetRotation(finalRotation);
+    _dialNode->GetTransform()->SetRotation(finalRotation);
+}
+
+void CompassController::PlayOpenCompass() {
+    if (_openingAnimationTimer  < _openingAnimationTime ) {
+        _openingAnimationTimer += TIME.GetDeltaTime();
+        if (_openingAnimationTimer < _openingAnimationTime) {
+            float t = glm::clamp(_openingAnimationTimer / _openingAnimationTime, 0.0f, 1.0f);
+            _upActual = glm::mix(0.0f, _upMax, t);
+        } else {
+            _upActual = _upMax;
+            _openingAnimationTimer = 0;
+            _playOpenAnim  = false;
+            _isOpened  = true;
+        }
+    }
+}
+
+void CompassController::PlayCloseCompass() {
+    if (_openingAnimationTimer < _openingAnimationTime) {
+        _openingAnimationTimer += TIME.GetDeltaTime();
+        if (_openingAnimationTimer < _openingAnimationTime) {
+            float t = glm::clamp(_openingAnimationTimer / _openingAnimationTime, 0.0f, 1.0f);
+            _upActual = glm::mix(_upMax, 0.0f, t);
+        } else {
+            _upActual = 0.0f;
+            _openingAnimationTimer = 0;
+            _playCloseAnim = false;
+            _isOpened = false;
+        }
+    }
 }
