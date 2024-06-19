@@ -39,7 +39,7 @@ void main()
     vec3 finalColor = dirLightColor;// Adjust the scale factor (0.1) as needed
 
     // Combine the final color with the texture color
-    FragColor = vec4(finalColor, 0.85);
+    FragColor = vec4(finalColor, 1.0);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
