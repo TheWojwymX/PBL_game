@@ -76,7 +76,7 @@ void Enemy::TakeDamage(int amount)
             auto particleGenerators = child->GetAllComponents<ParticleGenerator>();
             for (const auto& generator : particleGenerators) {
                 if (generator->particleType == "antShot" && generator->object == this->GetOwnerNode()) generator->SpawnParticles();
-                if (generator->particleType == "antDie" && generator->object == this->GetOwnerNode()) particleDead = generator;
+                if ((generator->particleType == "antDie" || generator->particleType == "waspDie" || generator->particleType == "beetleDie") && generator->object == this->GetOwnerNode()) particleDead = generator;
             }
         }
     }

@@ -315,9 +315,9 @@ void ParticleGenerator::initiateParticleType() {
         spawnDelay = 0.0f;
         speedVariation = 1.2f;
         XZvariation = 2.0f;
-        particleLife = 4.0f;
-        particleColor = glm::vec4(0.3f,0.0f,0.0f,1.0f);
-        SetInitialUpwardBoost(enemyScale, 3.0f);
+        particleLife = 3.0f;
+        particleColor = glm::vec4(0.4f,0.0f,0.0f,1.0f);
+        SetInitialUpwardBoost(enemyScale, 4.0f);
         SetPartScale(enemyScale, 0.0f);
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
@@ -326,15 +326,15 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "antDie"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 10;
-        newParticles = 10;
+        amount = 70;
+        newParticles = 70;
         spawnDelay = 0.0f;
-        speedVariation = 3.0f;
-        XZvariation = 2.0f;
-        particleLife = 4.0f;
-        particleColor = glm::vec4(0.0f,0.0f,0.0f,1.0f);
-        initialUpwardBoost = 5.0f;
-        SetPartScale(enemyScale, 0.0f);
+        speedVariation = 6.5f;
+        XZvariation = 4.0f;
+        particleLife = 3.5f;
+        particleColor = glm::vec4(0.762f,0.448f,0.143f,1.0f);
+        initialUpwardBoost = 2.5f;
+        SetPartScale(enemyScale, 0.1f);
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;
@@ -492,6 +492,38 @@ void ParticleGenerator::initiateParticleType() {
         gravity = glm::vec3(0.0f, 0.0f, 0.0f);
         tooltip = true;
         showTexture = true;
+    }
+    else if (particleType == "waspDie"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 70;
+        newParticles = 70;
+        spawnDelay = 0.0f;
+        speedVariation = 6.5f;
+        XZvariation = 4.0f;
+        particleLife = 3.5f;
+        particleColor = glm::vec4(1.0f,0.6941f,0.1059f,1.0f);
+        initialUpwardBoost = 2.5f;
+        SetPartScale(enemyScale, 0.1f);
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+    }
+    else if (particleType == "beetleDie"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 150;
+        newParticles = 150;
+        spawnDelay = 0.0f;
+        speedVariation = 7.5f;
+        XZvariation = 4.0f;
+        particleLife = 3.5f;
+        particleColor = glm::vec4(0.0510f,0.1608f,0.2941f,1.0f);
+        initialUpwardBoost = 2.5f;
+        SetPartScale(enemyScale, 0.2f);
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
     }
 }
 

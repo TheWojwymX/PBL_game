@@ -203,7 +203,12 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         antShot->Init();
         NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
 
-        auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antDie");
+        string particleType;
+        if(type == WASP) particleType = "waspDie";
+        if(type == ANT) particleType = "antDie";
+        if(type == BEETLE) particleType = "beetleDie";
+
+        auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),particleType);
         antDie->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
         antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
         antDie->enemyScale = scale;
