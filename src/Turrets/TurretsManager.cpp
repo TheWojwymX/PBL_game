@@ -23,10 +23,12 @@ void TurretsManager::Init() {
     PrepareBlueprintTurret();
 
     _PDAController = NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>();
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
 }
 
 void TurretsManager::ShowBlueprintTurret() {
     _shouldEnableBlueprintTurret = true;
+    _cameraRef->GoUp();
     auto blueprintRange = NODESMANAGER.getNodeByName("BlueprintRange");
     if (_heldTurret != nullptr) {
         blueprintRange->GetTransform()->SetScale(glm::vec3(_heldTurret->GetSideRange(), 0.2f, _heldTurret->GetForwardRange()));
@@ -42,6 +44,7 @@ void TurretsManager::ShowBlueprintTurret() {
 
 void TurretsManager::HideBlueprintTurret() {
     _shouldEnableBlueprintTurret = false;
+    _cameraRef->GoDown();
     _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(false);
     NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(false);
     _isInBlueprintMode = false;
@@ -124,7 +127,6 @@ void TurretsManager::PlayerActions() {
         _isPlayerInMovingMode = true;
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
-        _turrets[_indexOfMovingTurret]->_ownerNode->GetParent()->MoveChildToEnd(_turrets[_indexOfMovingTurret]->_ownerNode);
         _heldTurret = _turrets[_indexOfMovingTurret];
         ShowBlueprintTurret();
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
@@ -238,6 +240,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Parachute");
     newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newMeshRenderer->_transparent = true;
     newMeshRenderer->Initiate();
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newMeshRenderer);
 
@@ -273,6 +276,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     rangeIndicator->Initiate();
+    rangeIndicator->_transparent = true;
     rangeIndicator->SetEnabled(false);
     rangeNode->AddComponent(rangeIndicator);
     rangeNode->GetTransform()->SetScale(glm::vec3(newTurret->GetSideRange(), 0.2f, newTurret->GetForwardRange()));
@@ -299,6 +303,7 @@ void TurretsManager::PrepareBlueprintTurret() {
     newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Minigun_Level1");
     newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newMeshRenderer->_transparent = true;
     newMeshRenderer->Initiate();
 
     _blueprintTurret = NODESMANAGER.getNodeByName(nameOfBlueprintTurret);
@@ -310,6 +315,7 @@ void TurretsManager::PrepareBlueprintTurret() {
     rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorVisual");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    rangeIndicator->_transparent = true;
     rangeIndicator->SetEnabled(false);
     rangeIndicator->Initiate();
 
@@ -395,18 +401,16 @@ void TurretsManager::UpdateBlueprintTurret() {
             break;
     }
 
+
     glm::vec3 forwardVector = glm::normalize(_player->GetComponent<Camera>()->GetFrontVector());
-    float minDistance = 2.0f;
-    glm::vec3 turretPosition = _player->GetTransform()->GetPosition() + forwardVector * minDistance;
+    glm::vec3 playerPos = _player->GetTransform()->GetPosition();
+
+    float forwardDistance = 2.0f;
+
+    // Calculate turret position
+    glm::vec3 turretPosition = playerPos + forwardVector * forwardDistance;  // Move forwardDistance along the forward vector
     turretPosition.y = GAMEMANAGER._groundLevel;
-    glm::vec2 playerFlatPosition(_player->GetTransform()->GetPosition().x, _player->GetTransform()->GetPosition().z);
-    glm::vec2 turretFlatPosition(turretPosition.x, turretPosition.z);
-    if (glm::distance(playerFlatPosition, turretFlatPosition) < minDistance) {
-        glm::vec2 direction = glm::normalize(turretFlatPosition - playerFlatPosition);
-        turretFlatPosition = playerFlatPosition + direction * minDistance;
-        turretPosition.x = turretFlatPosition.x;
-        turretPosition.z = turretFlatPosition.y;
-    }
+
     _blueprintTurret->GetTransform()->SetPosition(turretPosition);
     _blueprintTurret->GetTransform()->SetScale(0.3);
 
@@ -414,8 +418,6 @@ void TurretsManager::UpdateBlueprintTurret() {
     lookAtPoint.y = turretPosition.y;
     glm::vec3 lookDirection = glm::normalize(lookAtPoint - turretPosition);
     _blueprintTurret->GetTransform()->LookAt(lookDirection);
-
-    _blueprintTurret->GetParent()->MoveChildToEnd(_blueprintTurret);
 }
 
 void TurretsManager::CheckEnemiesInRange() {
@@ -548,7 +550,7 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
 
         int finalDamage;
         TurretType _turretType = turret->GetTurretType();
-        enemyType _enemyType = enemy->_enemyType;
+        EnemyType _enemyType = enemy->_enemyType;
 
         switch (_turretType) {
             case MINIGUN:

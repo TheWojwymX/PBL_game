@@ -1,7 +1,3 @@
-//
-// Created by Jacek on 20.04.2024.
-//
-
 #include "EnemiesManager.h"
 
 EnemiesManager &EnemiesManager::getInstance() {
@@ -56,7 +52,8 @@ void EnemiesManager::Init() {
     _roundsInfo[5] = {{1, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
     _roundsInfo[6] = {{2, 2, ANT}, {1, 2, ANT}}; // Spawner 2 - spawn 2 ANT enemies, Spawner 1 - spawn 2 ANT enemies
     _roundsInfo[7] = {{3, 3, ANT}, {2, 2, ANT}}; // Spawner 3 - spawn 3 ANT enemies, Spawner 2 - spawn 2 ANT enemies
-
+    
+    InitEnemyStats();
 }
 
 void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
@@ -66,15 +63,15 @@ void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
         for (const auto &spawn : spawns) {
             int spawnerIndex = std::get<0>(spawn);
             int enemyCount = std::get<1>(spawn);
-            enemyType type = std::get<2>(spawn);
+            EnemyType type = std::get<2>(spawn);
 
             for (int i = 0; i < enemyCount; ++i) {
                 std::random_device rd;
                 std::mt19937 gen(rd());
-                std::uniform_real_distribution<float> dis(0.5f, 1.0f);
+                std::uniform_real_distribution<float> dis(0.8f, 1.2f);
                 float scale = dis(gen);
 
-                SpawnEnemy(2.5, glm::vec3(scale), spawnerIndex, type);
+                SpawnEnemy(_enemyStats[type].size * scale, glm::vec3(scale), spawnerIndex, type);
             }
         }
     }
@@ -158,11 +155,8 @@ void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
     }
 }
 
-void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, enemyType type)
+void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type)
 {
-
-//    std::cout << "Ilosc mrowek to: " << _enemies.size() << std::endl;
-
     if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size())
     {
         std::string nameOfEnemy = "Enemy" + std::to_string(_newEnemyIndex);
@@ -176,7 +170,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
 
         if (type == WASP)
         {
-            enemyPosition.y = enemyPosition.y + 1.5;
+            enemyPosition.y = enemyPosition.y + 5;
         }
 
         NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
@@ -220,9 +214,8 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
-        newEnemyComponent->_size = distanceToAvoid;
-        newEnemyComponent->_enemyType = type;
-        newEnemyComponent->setUp();
+        EnemyStats stats = _enemyStats[type];
+        newEnemyComponent->SetStats(stats.type, stats.speed, stats.hp,stats.damage,stats.attackFrequency,stats.size);
 
         _enemies.push_back(newEnemyComponent);
         _enemiesParticles.push_back(NODESMANAGER.getNodeByName(particleGeneratorNode));
@@ -284,4 +277,23 @@ void EnemiesManager::Reset() {
         NODESMANAGER.getNodeByName("root")->RemoveChild(_enemiesParticles[i]);
     }
     _enemiesParticles.clear();
+}
+
+void EnemiesManager::InitEnemyStats() {
+    // Clear the vector if it already contains elements (optional)
+    _enemyStats.clear();
+
+    // Create an EnemyStats object for ANT with specified initial values
+    EnemyStats ant(7.0f, 3, 1, 0.6f, 1.0f, ANT);
+
+    // Create an EnemyStats object for BEETLE with specified initial values
+    EnemyStats beetle(3.0f, 30, 5, 0.6f, 2.0f, BEETLE);
+
+    // Create an EnemyStats object for WASP with specified initial values
+    EnemyStats wasp(5.0f, 3, 1, 0.45f, 1.0f, WASP);
+
+    // Add all objects to the _enemyStats vector
+    _enemyStats.push_back(ant);
+    _enemyStats.push_back(beetle);
+    _enemyStats.push_back(wasp);
 }

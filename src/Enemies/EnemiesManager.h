@@ -1,11 +1,6 @@
-//
-// Created by Jacek on 20.04.2024.
-//
-
 #define ENEMIESMANAGER EnemiesManager::getInstance()
 
-#ifndef SANDBOX_ENEMIESAIMANAGER_H
-#define SANDBOX_ENEMIESAIMANAGER_H
+#pragma once
 
 #include "Managers/ComponentsManager.h"
 #include "Enemy.h"
@@ -13,6 +8,19 @@
 #include "Managers/NodesManager.h"
 
 #include "Managers/GameManager.h"
+
+struct EnemyStats {
+    float speed;
+    int hp;
+    int damage;
+    float attackFrequency;
+    float size;
+    EnemyType type;
+
+    // Constructor with default values
+    EnemyStats(float spd = 1.0f, int health = 1, int dmg = 1, float freq = 1.0f, float sz = 1.0f, EnemyType tp = ANT)
+        : speed(spd), hp(health), damage(dmg), attackFrequency(freq), size(sz), type(tp) {}
+};
 
 class EnemiesManager {
 
@@ -50,13 +58,13 @@ public:
         glm::vec2(2.0, 110.0)
     };
 
-    std::unordered_map<int, std::vector<std::tuple<int, int, enemyType>>> _roundsInfo;
+    std::unordered_map<int, std::vector<std::tuple<int, int, EnemyType>>> _roundsInfo;
 
     void SpawnEnemiesForRound(int roundNumber);
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
 
-    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, enemyType type);
+    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type);
 
     void ChooseModelBasedOnDistance();
 
@@ -71,7 +79,9 @@ public:
     int _newEnemyIndex = 1;
 
     std::vector<std::shared_ptr<Node>> _enemiesParticles;
+
+private:
+    std::vector<EnemyStats> _enemyStats;
+
+    void InitEnemyStats();
 };
-
-
-#endif //SANDBOX_ENEMIESAIMANAGER_H

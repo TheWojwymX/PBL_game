@@ -1,45 +1,44 @@
 #pragma once
 
+#include "Core/Component.h"
 #include "Managers/ResourceManager.h"
-#include "Managers/ComponentsManager.h"
 #include "Component/Camera.h"
 #include "Component/FrustumCulling.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 
-class MeshRenderer : public Component {
+class TransparentRenderer;  
+
+class MeshRenderer : public Component, public std::enable_shared_from_this<MeshRenderer> {
 public:
     MeshRenderer();
-
     MeshRenderer(Model* model, Shader* shader);
 
     void Render(glm::mat4 parentWorld) override;
-
     void RenderShadows(glm::mat4 parentWorld) override;
-
-    void addToInspector(ImguiMain *imguiMain) override;
-
+    void addToInspector(ImguiMain* imguiMain) override;
     nlohmann::json Serialize() override;
-
-    void Deserialize(const nlohmann::json &jsonData) override;
-
+    void Deserialize(const nlohmann::json& jsonData) override;
     void Initiate() override;
+    void Update() override;
 
-    void SetShader(shared_ptr<Shader> newShader) {
+    void SetShader(std::shared_ptr<Shader> newShader) {
         _shader = newShader;
     }
 
-    void Update() override;
-
     bool _shouldRenderOutline = false;
 
-    shared_ptr<Model> _model; // Raw pointer to the model
-    shared_ptr<Shader> _shader; // Raw pointer to the shader
-    shared_ptr<Shader> _outlineShader; // Raw pointer to the outline shader
+    std::shared_ptr<Model> _model;
+    std::shared_ptr<Shader> _shader;
+    std::shared_ptr<Shader> _outlineShader;
     std::shared_ptr<Camera> _cameraRef;
 
     bool isInFrustum = false;
 
-    void RenderModel(shared_ptr<Model> model, glm::mat4 ctm);
+    void RenderModel(glm::mat4 ctm);
 
     bool _disableModel = false;
     bool _disableShadows = false;
+    bool _transparent = false;
 };

@@ -1,7 +1,3 @@
-//
-// Created by Jacek on 20.04.2024.
-//
-
 #include "Enemy.h"
 #include "Core/Time.h"
 #include "EnemiesManager.h"
@@ -43,7 +39,7 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
         glm::vec3 sideVector = glm::normalize(glm::cross(_ownerTransform->GetRotation() * glm::vec3(0, 1, 0), _ownerTransform->GetRotation() * glm::vec3(0, 0, -1))) * sideMovement;
 
         glm::vec3 currentPos = _ownerTransform->GetPosition();
-        glm::vec3 forwardMovement = Transform::MoveTowards(currentPos, _destinationVector, 0.01f * _walkingSpeed) - currentPos;
+        glm::vec3 forwardMovement = Transform::MoveTowards(currentPos, _destinationVector, 0.01f * _speed) - currentPos;
 
         glm::vec3 effectiveMovement = forwardMovement + sideVector;
         glm::vec3 movementDirection = glm::normalize(effectiveMovement);
@@ -130,25 +126,12 @@ void Enemy::EnemyAI()
     }
 }
 
-void Enemy::setUp()
+void Enemy::SetStats(EnemyType type, int speed, int hp, int damage, float attackFrequency, float size)
 {
-    switch (_enemyType) {
-        case ANT:
-            _walkingSpeed = 8;
-            _hp = 100;
-            _damage = 5;
-            break;
-
-        case BEETLE:
-            _walkingSpeed = 4;
-            _hp = 200;
-            _damage = 10;
-            break;
-
-        case WASP:
-            _walkingSpeed = 5;
-            _hp = 150;
-            _damage = 7;
-            break;
-    }
+    _enemyType = type;
+    _speed = speed;
+    _hp = hp;
+    _damage = damage;
+    _attackFrequency = attackFrequency;
+    _size = size;
 }

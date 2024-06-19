@@ -88,6 +88,7 @@ private:
     std::vector<int> _turretCosts;
     TurretType _turretType;
     std::shared_ptr<Turret> _heldTurret = nullptr;
+    std::shared_ptr<Camera> _cameraRef = nullptr;
     std::vector<glm::vec4> _turretStats;
 
     bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);

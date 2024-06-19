@@ -50,6 +50,7 @@
 #include "Managers/NodesManager.h"
 #include "Managers/LightsManager.h"
 #include "Managers/WeatherManager.h"
+#include "Managers/TransparentRenderer.h"
 #include "Gui/ImguiMain.h"
 #include "ParticleGenerator.h"
 #include "WindSimulation.h"
@@ -420,6 +421,7 @@ int main(int, char**)
             blueprintShader->setVec3("additionalColor", TURRETSMANAGER._additionalColor);
 
             GAMEMANAGER.root->Render(Transform::Origin());
+            TRANSPARENT_RENDERER.Render();
 //            FRAMEBUFFER.BeginRender();
 //            FRAMEBUFFER.EndRender();
 
