@@ -114,7 +114,7 @@ int main(int, char**)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_SAMPLES, 2);
     // Create window with graphics context
     GAMEMANAGER.Init();
     if (GAMEMANAGER._window == NULL)
@@ -459,8 +459,6 @@ int main(int, char**)
         ImGui::End();
 
         // Quick Debug
-        ImGui::Checkbox("OtherGlowstickSetting", &LIGHTSMANAGER.isSpotActive);
-
         ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
         ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
         ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
@@ -471,10 +469,6 @@ int main(int, char**)
         ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
         ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
         ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
-
-        ImGui::SliderFloat("glowstickConstantNoLight", &LIGHTSMANAGER.glowstickConstantNoFlash, -10.0f, 10.0f);
-        ImGui::SliderFloat("glowstickLinearNoLight", &LIGHTSMANAGER.glowstickLinearNoFlash, -10.0f, 10.0f);
-        ImGui::SliderFloat("glowstickQuadraticNoLight", &LIGHTSMANAGER.glowstickQuadraticNoFlash, -10.0f, 10.0f);
 
         ImGui::ColorEdit3("Directional Light Color", glm::value_ptr(LIGHTSMANAGER.dirColor));
         ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));

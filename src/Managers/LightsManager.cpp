@@ -43,8 +43,9 @@ void LightsManager::InitLights() {
     cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
 
+    InitShadersForPointLights();
+
     //Flashlight Properties
-    isSpotActive = false;
     flashlightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
 
@@ -145,48 +146,30 @@ void LightsManager::UpdateShaders(){
 
     for (int i = 0; i < maxLights; i++) {
         string name = "pointLights[" + to_string(i) + "]";
-        if(isSpotActive) {
-            instancedSandShader->use();
-            instancedSandShader->setFloat(name + ".constant", glowstickConstant);
-            instancedSandShader->setFloat(name + ".linear", glowstickLinear);
-            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
+        instancedSandShader->use();
+        instancedSandShader->setFloat(name + ".constant", glowstickConstant);
+        instancedSandShader->setFloat(name + ".linear", glowstickLinear);
+        instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
 
-            instancedMetalShader->use();
-            instancedMetalShader->setFloat(name + ".constant", glowstickConstant);
-            instancedMetalShader->setFloat(name + ".linear", glowstickLinear);
-            instancedMetalShader->setFloat(name + ".quadratic", glowstickQuadratic);
+        instancedMetalShader->use();
+        instancedMetalShader->setFloat(name + ".constant", glowstickConstant);
+        instancedMetalShader->setFloat(name + ".linear", glowstickLinear);
+        instancedMetalShader->setFloat(name + ".quadratic", glowstickQuadratic);
 
-            instancedPlasticShader->use();
-            instancedPlasticShader->setFloat(name + ".constant", glowstickConstant);
-            instancedPlasticShader->setFloat(name + ".linear", glowstickLinear);
-            instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadratic);
+        instancedPlasticShader->use();
+        instancedPlasticShader->setFloat(name + ".constant", glowstickConstant);
+        instancedPlasticShader->setFloat(name + ".linear", glowstickLinear);
+        instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadratic);
 
-            shovelShader->use();
-            shovelShader->setFloat(name + ".constant", glowstickConstant);
-            shovelShader->setFloat(name + ".linear", glowstickLinear);
-            shovelShader->setFloat(name + ".quadratic", glowstickQuadratic);
-        }
-        else{
-            instancedSandShader->use();
-            instancedSandShader->setFloat(name + ".constant", glowstickConstantNoFlash);
-            instancedSandShader->setFloat(name + ".linear", glowstickLinearNoFlash);
-            instancedSandShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
+        shovelShader->use();
+        shovelShader->setFloat(name + ".constant", glowstickConstant);
+        shovelShader->setFloat(name + ".linear", glowstickLinear);
+        shovelShader->setFloat(name + ".quadratic", glowstickQuadratic);
 
-            instancedMetalShader->use();
-            instancedMetalShader->setFloat(name + ".constant", glowstickConstantNoFlash);
-            instancedMetalShader->setFloat(name + ".linear", glowstickLinearNoFlash);
-            instancedMetalShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
-
-            instancedPlasticShader->use();
-            instancedPlasticShader->setFloat(name + ".constant", glowstickConstantNoFlash);
-            instancedPlasticShader->setFloat(name + ".linear", glowstickLinearNoFlash);
-            instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadraticNoFlash);
-
-            shovelShader->use();
-            shovelShader->setFloat(name + ".constant", glowstickConstant);
-            shovelShader->setFloat(name + ".linear", glowstickLinear);
-            shovelShader->setFloat(name + ".quadratic", glowstickQuadratic);
-        }
+        modelShader->use();
+        modelShader->setFloat(name + ".constant", glowstickConstant);
+        modelShader->setFloat(name + ".linear", glowstickLinear);
+        modelShader->setFloat(name + ".quadratic", glowstickQuadratic);
     }
 
     shovelShader->use();
@@ -268,7 +251,7 @@ void LightsManager::UpdateGlowsticks() {
             // Ensure index is valid for accessing glowstickColors
             if (index >= 0 && index < glowstickColors.size()) {
                 // Add visible glowstick to _visibleGlowsticks
-                _visibleGlowsticks.emplace_back(glowstickPosition, glowstickColors[index], distToCamera);
+                _visibleGlowsticks.emplace_back(glowstickPosition, glowstickColors[index], distToCamera, LightSource::GLOWSTICK);
             }
         }
     }
@@ -344,7 +327,7 @@ void LightsManager::SortActiveShots() {
     for (const auto& shot : _activeShots) {
         float distToCamera = glm::distance(shot.startPos, camPosition);
         if (distToCamera <= maxDistance) {
-            _visibleShots.emplace_back(shot.startPos, shot.color, distToCamera);
+            _visibleShots.emplace_back(shot.startPos, shot.color, distToCamera, LightSource::SHOT);
         }
     }
 
@@ -365,58 +348,17 @@ void LightsManager::UpdateLights() {
 
     SortVisibleLights(combinedLights);
 
-    // Ensure maxLights does not exceed the available positions
-    float lightsAmount = std::min(maxLights, static_cast<int>(combinedLights.size()));
+    UpdateShadersPointLights(combinedLights);
+}
 
-    // Set shader parameters for the first maxLights lights
-    for (int i = 0; i < lightsAmount; ++i) {
-        std::string name = "pointLights[" + std::to_string(i) + "]";
-        // Print glowstickPosition
-        // Set parameters for instancedSandShader
-        instancedSandShader->use();
-        instancedSandShader->setBool(name + ".isActive", true);
-        instancedSandShader->setVec3(name + ".position", combinedLights[i].pos);
-        instancedSandShader->setVec3(name + ".color", combinedLights[i].color);
-
-        // Set parameters for instancedMetalShader
-        instancedMetalShader->use();
-        instancedMetalShader->setBool(name + ".isActive", true);
-        instancedMetalShader->setVec3(name + ".position", combinedLights[i].pos);
-        instancedMetalShader->setVec3(name + ".color", combinedLights[i].color);
-
-        // Set parameters for instancedPlasticShader
-        instancedPlasticShader->use();
-        instancedPlasticShader->setBool(name + ".isActive", true);
-        instancedPlasticShader->setVec3(name + ".position", combinedLights[i].pos);
-        instancedPlasticShader->setVec3(name + ".color", combinedLights[i].color);
-
-        // Set parameters for shovelShader
-        shovelShader->use();
-        shovelShader->setBool(name + ".isActive", true);
-        shovelShader->setVec3(name + ".position", combinedLights[i].pos);
-        shovelShader->setVec3(name + ".color", combinedLights[i].color);
-    }
-
-    // Deactivate lights beyond maxLights
-    for (int i = lightsAmount; i < maxLights; ++i) {
-        std::string name = "pointLights[" + std::to_string(i) + "]";
-
-        // Set isActive to false for instancedSandShader
-        instancedSandShader->use();
-        instancedSandShader->setBool(name + ".isActive", false);
-
-        // Set isActive to false for instancedMetalShader
-        instancedMetalShader->use();
-        instancedMetalShader->setBool(name + ".isActive", false);
-
-        // Set isActive to false for instancedPlasticShader
-        instancedPlasticShader->use();
-        instancedPlasticShader->setBool(name + ".isActive", false);
-
-        // Set isActive to false for shovelShader
-        shovelShader->use();
-        shovelShader->setBool(name + ".isActive", false);
-    }
+void LightsManager::InitShadersForPointLights()
+{
+    // Add shaders to the vector
+    _shadersForPointLights.push_back(instancedSandShader);
+    _shadersForPointLights.push_back(instancedMetalShader);
+    _shadersForPointLights.push_back(instancedPlasticShader);
+    _shadersForPointLights.push_back(modelShader);
+    _shadersForPointLights.push_back(shovelShader);
 }
 
 void LightsManager::SortVisibleLights(std::vector<VisibleLight>& lights) {
@@ -425,6 +367,54 @@ void LightsManager::SortVisibleLights(std::vector<VisibleLight>& lights) {
         [](const VisibleLight& a, const VisibleLight& b) {
             return a.distance < b.distance;
         });
+}
+
+void LightsManager::UpdateShadersPointLights(const std::vector<VisibleLight>& pointLights)
+{
+    // Ensure maxLights does not exceed the available lights
+    int lightsAmount = std::min(maxLights, static_cast<int>(pointLights.size()));
+
+    // Update shaders for the first maxLights lights
+    for (int i = 0; i < lightsAmount; ++i) {
+        std::string name = "pointLights[" + std::to_string(i) + "]";
+        const VisibleLight& light = pointLights[i];
+
+        for (const auto& shader : _shadersForPointLights) {
+            UpdateShaderPointLight(shader, name, light.pos,light.color,light.sourceType);
+        }
+    }
+
+    // Deactivate lights beyond maxLights
+    for (int i = lightsAmount; i < maxLights; ++i) {
+        std::string name = "pointLights[" + std::to_string(i) + "].isActive";
+        for (const auto& shader : _shadersForPointLights) {
+            shader->use();
+            shader->setBool(name, false);
+        }
+    }
+}
+
+void LightsManager::UpdateShaderPointLight(std::shared_ptr<Shader> shader, std::string name, glm::vec3 pos, glm::vec3 color, LightSource lightSource)
+{
+    shader->use();
+    shader->setBool(name + ".isActive", true);
+    shader->setVec3(name + ".position", pos);
+    shader->setVec3(name + ".color", color);
+
+    switch (lightSource) {
+        case LightSource::GLOWSTICK:
+            shader->setFloat(name + ".constant", glowstickConstant);
+            shader->setFloat(name + ".linear", glowstickLinear);
+            shader->setFloat(name + ".quadratic", glowstickQuadratic);
+            break;
+        case LightSource::SHOT:
+            shader->setFloat(name + ".constant", shotConstant);
+            shader->setFloat(name + ".linear", shotLinear);
+            shader->setFloat(name + ".quadratic", shotQuadratic);
+            break;
+        default:
+            break;
+    }
 }
 
 glm::vec3 LightsManager::GenerateRandomColor()
