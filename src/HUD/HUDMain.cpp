@@ -12,7 +12,7 @@ void HUDMain::Init() {
     TEXTRENDERER.Init();
 
     _crosshairImage.Init("res/Images/crosshair041.png", glm::vec2(0, 0), 0, true, false);
-    _materialsBackground.Init("res/Images/HUD/materials_background.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(314, 967)), true, false);
+    _materialsBackground.Init("res/Images/UpgradeMenus/update_background1.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(170, 967)), true, false);
     _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(74, 1009)), 0, true, false);
     _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);

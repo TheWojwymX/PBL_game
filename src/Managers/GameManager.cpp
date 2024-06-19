@@ -170,7 +170,7 @@ void GameManager::Reset() {
 
 void GameManager::PlayMenuMusic() {
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
-    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound(NODESMANAGER.getNodeByName("player"));
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound(NODESMANAGER.getNodeByName("player"), 0.5);
 }
 
 void GameManager::StopMenuMusic() {
