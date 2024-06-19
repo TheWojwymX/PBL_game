@@ -27,12 +27,14 @@ void TurretsManager::Init() {
 
 void TurretsManager::ShowBlueprintTurret() {
     _shouldEnableBlueprintTurret = true;
-    _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(true);
     auto blueprintRange = NODESMANAGER.getNodeByName("BlueprintRange");
-    if(_heldTurret != nullptr)
+    if (_heldTurret != nullptr) {
         blueprintRange->GetTransform()->SetScale(glm::vec3(_heldTurret->GetSideRange(), 0.2f, _heldTurret->GetForwardRange()));
-    else
+    }
+    else {
+        _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(true);
         blueprintRange->GetTransform()->SetScale(glm::vec3(_turretStats[_turretType].z, 0.2f, _turretStats[_turretType].w));
+    } 
     blueprintRange->GetComponent<MeshRenderer>()->SetEnabled(true);
     _isInBlueprintMode = true;
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
@@ -323,7 +325,9 @@ void TurretsManager::UpdateBlueprintTurret() {
 
     std::string nameOfBlueprintTurret = "BlueprintTurret";
     std::string blueprintRange = "BlueprintRange";
-    char turretLevel = 1;
+    char turretLevel = 0;
+
+    std::cout << "tur type: " << _turretType << std::endl;
     if (_heldTurret != nullptr)
         turretLevel = _heldTurret->GetUpgradeLevel();
     switch (_turretType) {
