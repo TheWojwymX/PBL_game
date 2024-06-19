@@ -114,6 +114,7 @@ int main(int, char**)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
+    glfwWindowHint(GLFW_SAMPLES, 4);
     // Create window with graphics context
     GAMEMANAGER.Init();
     if (GAMEMANAGER._window == NULL)
@@ -228,6 +229,7 @@ int main(int, char**)
 
     GAMEMANAGER.PlayMenuMusic();
 
+    bool antialiasing = true;
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
@@ -242,6 +244,19 @@ int main(int, char**)
             UPGRADEMANAGER.Reset();
             NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->Reset();
             PAGEMANAGER.Reset();
+        }
+
+        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
+            if(antialiasing){
+                glDisable(GL_MULTISAMPLE);
+                antialiasing = false;
+                std::cout << "wylaczono antialiasing" << std::endl;
+            }else{
+                glEnable(GL_MULTISAMPLE);
+                antialiasing = true;
+                std::cout << "wlaczono antialiasing" << std::endl;
+            }
+
         }
 
         // Calculate deltaTime
