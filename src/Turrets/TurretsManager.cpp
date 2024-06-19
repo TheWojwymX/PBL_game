@@ -287,9 +287,6 @@ void TurretsManager::SpawnTurret(TurretType type) {
 
     _turrets.push_back(NODESMANAGER.getNodeByName(nameOfTurret)->GetComponent<Turret>());
 
-//    for (int i = 0; i < _turrets.size(); i++) {
-//        std::cout << typeid(_turrets[i]).name() << std::endl;
-//    }
     _newTurretIndex++;
 }
 
@@ -532,7 +529,7 @@ void TurretsManager::InitTurretStats() {
     // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
     // fireRate, dmg, sideRange, forwardRange
     _turretStats.push_back(glm::vec4(0.5f, 1.0f, 60.0f, 40.0f));  // MINIGUN
-    _turretStats.push_back(glm::vec4(2.0f, 10.0f, 50.0f, 100.0f)); // SNIPER
+    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 50.0f, 100.0f)); // SNIPER
     _turretStats.push_back(glm::vec4(1.0f, 1.0f, 70.0f, 70.0f));  // RIFLE
 }
 

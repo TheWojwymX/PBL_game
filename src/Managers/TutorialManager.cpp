@@ -47,7 +47,6 @@ void TutorialManager::Update() {
                     } else if (!_firstEnemySpawned) {
                         _firstEnemySpawned = true;
                         SpawnTutorialEnemies(0);
-                        ENEMIESMANAGER._enemies[0]->_speed = ENEMIESMANAGER._enemies[0]->_speed * 0.5;
                         _timer = 0;
                     }
                 }
@@ -74,7 +73,6 @@ void TutorialManager::Update() {
 
             else if(ENEMIESMANAGER._enemies[0] == nullptr){
                 SpawnTutorialEnemies(2);
-                ENEMIESMANAGER._enemies[1]->_speed = ENEMIESMANAGER._enemies[1]->_speed * 0.6;
                 HUD._shouldShowHP = true;
                 DisplayAndChangeMessage();
             }

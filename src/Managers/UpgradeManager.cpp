@@ -532,8 +532,8 @@ void UpgradeManager::InitTurretUpgrades()
     };
 
     _minigunUpgrades.upgradeValues = {
-        {1.0f, -0.15f, 20, 10},  // 1 (damage, fire rate, sideRange, frowardRange)
-        {1.0f, -0.25f, 20, 10}   // 2 (damage, fire rate, sideRange, frowardRange)
+        {0.0f, -0.15f, 30, 5},  // 1 (damage, fire rate, sideRange, frowardRange)
+        {0.0f, -0.15f, 30, 5}   // 2 (damage, fire rate, sideRange, frowardRange)
     };
 
     // Sniper Upgrades
@@ -543,8 +543,8 @@ void UpgradeManager::InitTurretUpgrades()
     };
 
     _sniperUpgrades.upgradeValues = {
-        {5, -0.25f, 10, 20},  // 1 (damage, fire rate, sideRange, frowardRange)
-        {5, -0.25f, 10, 20}   // 2 (damage, fire rate, sideRange, frowardRange)
+        {5, 0.0f, 5, 30},  // 1 (damage, fire rate, sideRange, frowardRange)
+        {5, 0.0f, 5, 30}   // 2 (damage, fire rate, sideRange, frowardRange)
     };
 
     // Rifle Upgrades
@@ -554,8 +554,8 @@ void UpgradeManager::InitTurretUpgrades()
     };
 
     _rifleUpgrades.upgradeValues = {
-        {1.0f, -0.20f, 15, 15},   // 1 (damage, fire rate, sideRange, frowardRange)
-        {1.0f, -0.20f, 15, 15}   // 2 (damage, fire rate, sideRange, frowardRange)
+        {0.0f, -0.25f, 20, 20},   // 1 (damage, fire rate, sideRange, frowardRange)
+        {0.0f, -0.25f, 20, 20}   // 2 (damage, fire rate, sideRange, frowardRange)
     };
 }
 

@@ -54,6 +54,7 @@ void Turret::SetUp(glm::vec4 stats)
     _damage = stats.y;
     _sideRange = stats.z;
     _forwardRange = stats.w;
+    _timer = _fireRate;
 }
 
 void Turret::Upgrade(glm::vec4 values)
@@ -229,6 +230,7 @@ void Turret::CalculateRangePositions() {
             // Check if there are vertices to transform
             if (!uniqueVerticesXZ.empty()) {
                 // Apply the GlobalCTM to the vertices
+                node->GetTransform()->SetScale(glm::vec3(_sideRange, 0.2f, _forwardRange));
                 glm::mat4 globalCTM = node->GetTransform()->GetGlobalCTM();
                 std::vector<glm::vec3> transformedVertices = Transform::ApplyTransformation(uniqueVerticesXZ, globalCTM);
 
