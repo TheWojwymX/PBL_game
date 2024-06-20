@@ -7,7 +7,7 @@ EnemiesManager &EnemiesManager::getInstance() {
 }
 
 void EnemiesManager::Update() {
-    ChooseModelBasedOnDistance(); //LOD (safe to comment out)
+    //ChooseModelBasedOnDistance(); //LOD (safe to comment out)
     if(Input::Instance().IsKeyPressed(GLFW_KEY_P)) {
 
         std::random_device rd;
@@ -45,7 +45,7 @@ void EnemiesManager::Init() {
     // ant, beetle, wasp 
     _endlessSpawnRate = glm::vec3(0.7f,0.1f,0.2f);
 
-    _spawnerDistance = 100;
+    _spawnerDistance = 125;
 
     _spawnersPositions = {
     glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y + _spawnerDistance),
@@ -67,13 +67,13 @@ void EnemiesManager::Init() {
         glm::ivec3(5, 0, 0), // 8 
         glm::ivec3(5, 0, 0), // 9 
     };
-    
+    _spawnSpan = 0.5f;
+
     InitEnemyStats();
 }
 
 void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
 {
-    
     glm::ivec3 spawns = _roundsInfo[roundNumber];
 
     std::random_device rd;
@@ -82,7 +82,7 @@ void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
 
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < spawns[i]; ++j) {
-            std::uniform_real_distribution<float> dis(0.8f, 1.2f);
+            std::uniform_real_distribution<float> dis(0.7f, 1.3f);
             float scale = dis(gen);
 
             int spawnerIndex = spawnerDist(gen);  
@@ -171,7 +171,7 @@ void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
     }
 }
 
-void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type)
+void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type, float speedScale)
 {
     if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size())
     {
@@ -231,7 +231,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
         newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
         EnemyStats stats = _enemyStats[type];
-        newEnemyComponent->SetStats(stats.type, stats.speed, stats.hp,stats.damage,stats.attackFrequency,stats.size);
+        newEnemyComponent->SetStats(stats.type, stats.speed * speedScale, stats.hp,stats.damage,stats.attackFrequency,stats.size);
 
         if(type == WASP) newEnemyComponent->_size = 4 * scale.x;
         if(type == ANT) newEnemyComponent->_size = 4 * scale.x;

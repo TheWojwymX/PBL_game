@@ -43,7 +43,7 @@ void HUDMain::Init() {
     for(int i = 0; i <= 3; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/InsideImages/inside" + std::to_string(i) + ".png";
-        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1711, 217)), CoordsConverter::ConvertCoords(glm::vec2(1869, 59)), true, false);
+        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1706, 222)), CoordsConverter::ConvertCoords(glm::vec2(1874, 54)), true, false);
         _baseInsideImages.push_back(hp);
     }
 
@@ -159,11 +159,9 @@ void HUDMain::Update() {
 }
 
 void HUDMain::WaveTimerGUIManager() {
-    auto phaseTime = GAMEMANAGER.GetPhaseTime();
-    auto currentTime = GAMEMANAGER.GetCurrentTime();
     auto currentPhase = GAMEMANAGER.GetPhase();
+    float proportion = GAMEMANAGER.GetPhaseProgress();
 
-    float proportion = currentTime / phaseTime;
     float degrees = (proportion * 360.0f);
 
     float roundedDegrees = -((int(degrees/22.5f) * 22.5f) - 90.0f);

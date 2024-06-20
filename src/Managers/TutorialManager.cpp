@@ -225,7 +225,7 @@ void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){
     std::uniform_real_distribution<float> dis(0.5f, 1.0f);
     float scale = dis(gen);
 
-    ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(scale), spawnerIndex, ANT);
+    ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(scale), spawnerIndex, ANT, 1.25f);
 }
 
 void TutorialManager::DisplayAndChangeMessage() {
