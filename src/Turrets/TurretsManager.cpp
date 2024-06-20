@@ -28,7 +28,6 @@ void TurretsManager::Init() {
 
 void TurretsManager::ShowBlueprintTurret() {
     _shouldEnableBlueprintTurret = true;
-    _cameraRef->GoUp();
     auto blueprintRange = NODESMANAGER.getNodeByName("BlueprintRange");
     if (_heldTurret != nullptr) {
         blueprintRange->GetTransform()->SetScale(glm::vec3(_heldTurret->GetSideRange(), 0.2f, _heldTurret->GetForwardRange()));
@@ -44,7 +43,6 @@ void TurretsManager::ShowBlueprintTurret() {
 
 void TurretsManager::HideBlueprintTurret() {
     _shouldEnableBlueprintTurret = false;
-    _cameraRef->GoDown();
     _blueprintTurret->GetComponent<MeshRenderer>()->SetEnabled(false);
     NODESMANAGER.getNodeByName("BlueprintRange")->GetComponent<MeshRenderer>()->SetEnabled(false);
     _isInBlueprintMode = false;

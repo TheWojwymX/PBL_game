@@ -48,6 +48,8 @@ public:
     void UpgradeMiningReach();
     void UpgradeMiningRadius();
 
+    void UpgradeMax();
+
     //Turret Upgrade
     void UpgradeTurret();
 

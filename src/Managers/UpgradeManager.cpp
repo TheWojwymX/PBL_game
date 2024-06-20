@@ -340,8 +340,47 @@ void UpgradeManager::UpgradeMiningRadius() {
 
     // Apply upgrade
     _playerRef->UpgradeMiningRadius(_miningRadiusUpgrades.upgradeValues[miningRadiusLevel]);
-    cout <<miningRadiusLevel << endl;
+
     LIGHTSMANAGER.AssignNewGlowstickSettings(miningRadiusLevel + 1);
+}
+
+void UpgradeManager::UpgradeMax() {
+    // Dome HP to max
+    while (DOMEMANAGER.GetDomeHPLevel() < _domeHPUpgrades.upgradeCosts.size())
+    {
+        DOMEMANAGER.UpgradeDomeHP(_domeHPUpgrades.upgradeValues[DOMEMANAGER.GetDomeHPLevel()]);
+    } 
+
+    //Dome Regen to max
+    while (DOMEMANAGER.GetDomeHPRegenLevel() < _domeHPRegenUpgrades.upgradeCosts.size())
+    {
+        DOMEMANAGER.UpgradeDomeHPRegen(_domeHPRegenUpgrades.upgradeValues[DOMEMANAGER.GetDomeHPRegenLevel()]);
+    }
+
+    //Jetpack Capacity to max
+    while (_playerRef->GetJetpackCapacityLevel() < _jetpackCapacityUpgrades.upgradeCosts.size())
+    {
+        _playerRef->UpgradeJetpackCapacity(_jetpackCapacityUpgrades.upgradeValues[_playerRef->GetJetpackCapacityLevel()]);
+    }
+
+    //Mining Speed to max
+    while (_playerRef->GetMiningSpeedLevel() < _miningSpeedUpgrades.upgradeCosts.size())
+    {
+        _playerRef->UpgradeMiningSpeed(_miningSpeedUpgrades.upgradeValues[_playerRef->GetMiningSpeedLevel()]);
+    }
+
+    //Mining Reach to max
+    while (_playerRef->GetMiningReachLevel() < _miningReachUpgrades.upgradeCosts.size())
+    {
+        _playerRef->UpgradeMiningReach(_miningReachUpgrades.upgradeValues[_playerRef->GetMiningReachLevel()]);
+    }
+
+    //Mining Radius to max
+    while (_playerRef->GetMiningRadiusLevel() < _miningRadiusUpgrades.upgradeCosts.size())
+    {
+        _playerRef->UpgradeMiningRadius(_miningRadiusUpgrades.upgradeValues[_playerRef->GetMiningRadiusLevel()]);
+        LIGHTSMANAGER.AssignNewGlowstickSettings(_playerRef->GetMiningRadiusLevel());
+    }
 }
 
 void UpgradeManager::Update() {

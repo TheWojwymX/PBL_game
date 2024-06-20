@@ -40,10 +40,6 @@ public:
     void Input() override;
     void Update() override;
 
-    void GoUp();
-    void GoDown();
-    void ProcessOffset();
-
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 GetViewMatrix();
 
@@ -91,10 +87,6 @@ private:
     glm::vec3 _up;
     glm::vec3 _right;
     glm::vec3 _worldUp;
-
-    float _lerpSpeed = 4.0f;
-    float _lerpDir = 0.0f;
-    float _lerpOffset = 0.0f;
 
     // euler angles
     float _yaw;

@@ -10,6 +10,9 @@ uniform vec3 additionalColor;
 void main()
 {
     vec3 finalColor = additionalColor;
-
-    FragColor = vec4(finalColor, 0.5);
+    
+    // Set transparency based on the condition of FragPos.y
+    float transparency = (FragPos.y > 299.6) ? 0.15 : 0.5;
+    
+    FragColor = vec4(finalColor, transparency);
 }

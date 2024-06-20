@@ -48,31 +48,12 @@ void Camera::Input() {
 
 
 void Camera::Update() {
-    ProcessOffset();
-    _position = _ownerTransform->GetPosition() + _offset + glm::vec3(0.0f,_lerpOffset,0.0f);
+    _position = _ownerTransform->GetPosition() + _offset;
 
     _viewProjectionMatrix = GetProjectionMatrix(_screenWidth,_screenHeight) * GetViewMatrix();
     _frustumPlanes = FrustumCulling::extractFrustumPlanes(_viewProjectionMatrix);
-
 }
 
-void Camera::GoUp()
-{
-    _lerpDir = 1.0f;
-}
-
-void Camera::GoDown()
-{
-    _lerpDir = -1.0f;
-}
-
-void Camera::ProcessOffset()
-{
-    if (_lerpOffset == 1.0f && _lerpDir == 1.0f) return;
-    if (_lerpOffset == 0.0f && _lerpDir == -1.0f) return;
-    _lerpOffset += _lerpSpeed * TIME.GetDeltaTime() * _lerpDir;
-    _lerpOffset = glm::clamp(_lerpOffset, 0.0f, 1.0f);
-}
 
 glm::mat4 Camera::GetViewMatrix() {
     return glm::lookAt(_position, _position + _front, _up);

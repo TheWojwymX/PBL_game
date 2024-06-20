@@ -32,6 +32,7 @@ public:
     void Evacuate();
     bool IsUnderground();
     float GetPhaseTime();
+    void LateGame();
 
     Phase GetPhase() {return _currentPhase;}
     float GetCurrentTime() { return _currentTime; }
@@ -48,6 +49,7 @@ public:
 
     bool _editMode = true;
     bool _paused = false;
+    bool _lateGame = false;
     glm::vec3 _windDirection{0.0f};
     float _windStrength = 0.0f;
 

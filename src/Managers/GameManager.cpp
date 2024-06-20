@@ -21,6 +21,7 @@ GameManager::GameManager() {
         //std::cout << "Round " << i + 1 << ": Digging Phase Time = " << digPhaseTime
         //   << " seconds, Fighting Phase Time = " << fightPhaseTime << " seconds" << std::endl;
     }
+    _phaseTimes.push_back({ 60.0f, std::numeric_limits<float>::max() });
 }
 
 GameManager& GameManager::GetInstance() {
@@ -70,16 +71,23 @@ bool GameManager::IsUnderground() {
 
 float GameManager::GetPhaseTime()
 {
-    // Ensure _currentRound is within valid range
-    int roundIndex = _roundNumber % _phaseTimes.size();
-
     // Return the phase time based on current phase
     if (_currentPhase == Phase::DIG) {
-        return _phaseTimes[roundIndex].first;
+        return _phaseTimes[_roundNumber].first;
     }
     else { // Phase::DEFEND
-        return _phaseTimes[roundIndex].second;
+        return _phaseTimes[_roundNumber].second;
     }
+}
+
+void GameManager::LateGame()
+{
+    ENEMIESMANAGER.Reset();
+    _lateGame = true;
+    _roundNumber = _phaseTimes.size() - 1;
+    _currentPhase = Phase::DIG;
+    _currentTime = 0.0f;
+    UPGRADEMANAGER.UpgradeMax();
 }
 
 void GameManager::Update() {
@@ -92,6 +100,9 @@ void GameManager::Update() {
             _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
             InitPhase();
         }
+
+        if (INPUT.IsKeyPressed(GLFW_KEY_9))
+            LateGame();
     }
 
     if(DOMEMANAGER.GetDomeHP() <= 0){
@@ -101,7 +112,9 @@ void GameManager::Update() {
 
 void GameManager::InitPhase() {
     if (_currentPhase == Phase::DIG) {
-        _roundNumber++;
+        if (_roundNumber < _phaseTimes.size() - 1) {
+            _roundNumber++;
+        }
     }
     else { // Phase::DEFEND
         ENEMIESMANAGER.SpawnEnemiesForRound(_roundNumber);
