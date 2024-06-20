@@ -34,21 +34,10 @@
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/5margin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/Button/clicked.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/Button/hover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/Button/idle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/ButtonBlue.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/ButtonGreen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/ButtonRed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/HUD/pointer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/WaveTimer/strzalka_biala.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/container.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/crosshair.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/hp_empty.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/hp_full.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/jetpackEmptyBar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Images/placeholderGeneral.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/PointLight/PointLight.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/PointLight/PointLight.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/SpotLight/SpotLight.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/SpotLight/SpotLight.obj" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +72,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;CMake Application.SandBOX.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Application.SandBOX.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
@@ -126,11 +115,6 @@
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -186,18 +170,18 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.uninstall" />
+      <item itemvalue="CMake Application.SandBOX" />
       <item itemvalue="CMake Application.UpdateAssimpLibsDebugSymbolsAndDLLs" />
       <item itemvalue="CMake Application.assimp" />
-      <item itemvalue="CMake Application.zlibstatic" />
       <item itemvalue="CMake Application.freetype" />
-      <item itemvalue="CMake Application.glfw" />
-      <item itemvalue="CMake Application.update_mappings" />
-      <item itemvalue="CMake Application.spdlog" />
-      <item itemvalue="CMake Application.SandBOX" />
       <item itemvalue="CMake Application.glad" />
+      <item itemvalue="CMake Application.glfw" />
       <item itemvalue="CMake Application.imgui" />
+      <item itemvalue="CMake Application.spdlog" />
       <item itemvalue="CMake Application.stb_image" />
+      <item itemvalue="CMake Application.uninstall" />
+      <item itemvalue="CMake Application.update_mappings" />
+      <item itemvalue="CMake Application.zlibstatic" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -253,6 +237,7 @@
       <workItem from="1717767333985" duration="8454000" />
       <workItem from="1718717042333" duration="490000" />
       <workItem from="1718786017963" duration="26304000" />
+      <workItem from="1718906016142" duration="79000" />
     </task>
     <servers />
   </component>
