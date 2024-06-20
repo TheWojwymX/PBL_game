@@ -33,14 +33,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/5margin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/Button/clicked.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/Button/hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/Button/idle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/ButtonBlue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/ButtonGreen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/ButtonRed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/HUD/pointer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/WaveTimer/strzalka_biala.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/container.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/crosshair.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/hp_empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/hp_full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/jetpackEmptyBar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Images/placeholderGeneral.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +58,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
