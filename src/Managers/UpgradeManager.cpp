@@ -405,12 +405,12 @@ void UpgradeManager::Update() {
             UpgradeTurret();
         }
 
-        if(timeLooking < 0.5f){
+        if(timeLooking <= 0.8f){
             timeLooking += TIME.GetDeltaTime();
         }
     }
     else {
-        if(timeLooking > 0.0f) timeLooking -= TIME.GetDeltaTime() * 1.2f;
+        if(timeLooking >= 0.0f) timeLooking -= TIME.GetDeltaTime() * 1.2f;
         for (int i = TURRETSMANAGER._turretIndexAtRestart; i < TURRETSMANAGER._newTurretIndex; i++) {
 
             if(TURRETSMANAGER._turrets[i] == nullptr) return;
@@ -419,7 +419,7 @@ void UpgradeManager::Update() {
             auto particleGenerators = TURRETSMANAGER._turrets[i]->_ownerNode->GetAllComponents<ParticleGenerator>();
             for (const auto &generator: particleGenerators) {
                 if (generator->particleType == "tooltipParticle") {
-                    if(timeLooking < 0.5f) generator->tooltipShrink = true;
+                    if(timeLooking <= 0.8f) generator->tooltipShrink = true;
                     if(timeLooking <= 0.0f) {
                         generator->tooltipSpawn = false;
                         timeLooking = 0.0f;
@@ -616,7 +616,7 @@ void UpgradeManager::HighlightSingleTurret(int turretIndex)
     for (int i = TURRETSMANAGER._turretIndexAtRestart; i < TURRETSMANAGER._newTurretIndex; i++) {
         TURRETSMANAGER._turrets[i]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = false;
         if(particle != nullptr) {
-            if(timeLooking < 0.5f) particle->tooltipShrink = true;
+            if(timeLooking <= 0.8f) particle->tooltipShrink = true;
             if(timeLooking <= 0.0f) {
                 particle->tooltipSpawn = false;
                 timeLooking = 0.0f;
@@ -627,7 +627,7 @@ void UpgradeManager::HighlightSingleTurret(int turretIndex)
     // Highlight the specified turret
     if (turretIndex != -1) {
         TURRETSMANAGER._turrets[turretIndex]->_ownerNode->GetComponent<MeshRenderer>()->_shouldRenderOutline = true;
-        if(particle != nullptr && timeLooking > 0.5f) {
+        if(particle != nullptr && timeLooking >= 0.8f) {
             particle->tooltipSpawn = true;
             particle->tooltipShrink = false;
             particle->SpawnParticles();

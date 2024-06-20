@@ -64,7 +64,9 @@ void Turret::Upgrade(glm::vec4 values)
     _sideRange += values.z;
     _forwardRange += values.w;
     _upgradeLevel++;
+
     UpdateModel();
+    UpdateTooltip();
     CalculateRangePositions();
 }
 
@@ -147,9 +149,11 @@ void Turret::UpdateModel() {
             break;
         case 1:
             modelName = "Turret_Minigun_Level2";
+            texture = "res/Particle/Tooltips/minigun_lvl2.png";
             break;
         case 2:
             modelName = "Turret_Minigun_Level3";
+            texture = "res/Particle/Tooltips/minigun_lvl3.png";
             break;
         default:
             std::cerr << "Invalid upgrade level for Minigun" << std::endl;
@@ -164,9 +168,11 @@ void Turret::UpdateModel() {
             break;
         case 1:
             modelName = "Turret_Sniper_Level2";
+            texture = "res/Particle/Tooltips/sniper_lvl2.png";
             break;
         case 2:
             modelName = "Turret_Sniper_Level3";
+            texture = "res/Particle/Tooltips/sniper_lvl3.png";
             break;
         default:
             std::cerr << "Invalid upgrade level for Sniper" << std::endl;
@@ -181,9 +187,11 @@ void Turret::UpdateModel() {
             break;
         case 1:
             modelName = "Turret_Rifle_Level2";
+            texture = "res/Particle/Tooltips/rifle_lvl2.png";
             break;
         case 2:
             modelName = "Turret_Rifle_Level3";
+            texture = "res/Particle/Tooltips/rifle_lvl3.png";
             break;
         default:
             std::cerr << "Invalid upgrade level for Rifle" << std::endl;
@@ -247,5 +255,12 @@ void Turret::CalculateRangePositions() {
                 }
             }
         }
+    }
+}
+
+void Turret::UpdateTooltip() {
+    auto generators = _ownerNode->GetAllComponents<ParticleGenerator>();
+    for (const auto& generator : generators){
+        if(generator->particleType == "tooltipParticle") generator->texture = Texture2D::loadTextureFromFile(texture, true);
     }
 }

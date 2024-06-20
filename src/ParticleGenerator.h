@@ -57,11 +57,11 @@ public:
     glm::vec3 gravity;
     bool tooltipShrink = false;
     bool tooltipSpawn = true;
+
+    Texture2D texture;
 private:
 
     std::shared_ptr<ComputeShader> computeShader;
-
-    Texture2D texture;
 
     bool firstPass = true;
     unsigned int VAO, VBO, particleBuffer;
