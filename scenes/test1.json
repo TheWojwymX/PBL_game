@@ -1238,7 +1238,7 @@
           {
             "componentId": 180,
             "componentType": 15,
-            "delay": 20.0
+            "delay": 15.0
           }
         ],
         "transform": {

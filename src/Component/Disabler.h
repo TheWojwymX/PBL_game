@@ -14,6 +14,7 @@ public:
 
 private:
     float _delay;
+    float _timer = 0.0f;
 
     void DisableAfterDelay();
 };

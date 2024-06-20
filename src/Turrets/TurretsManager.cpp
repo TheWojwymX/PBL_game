@@ -10,8 +10,8 @@ TurretsManager &TurretsManager::getInstance() {
 void TurretsManager::Init() {
     _turretCosts = {
             1, // Minigun
-            2, // Sniper
-            3  // Rifle
+            1, // Sniper
+            1  // Rifle
     };
     InitTurretStats();
 
@@ -189,6 +189,7 @@ bool TurretsManager::IsTooCloseToTurret(glm::vec3 pos) {
 void TurretsManager::SpawnTurret(TurretType type) {
 
     GAMEMANAGER.RemovePlastic(_turretCosts[type]);
+    _turretCosts[type] += _turretCostIncrease;
 
     //Flare spawning
     std::string nameOfFlare = "Flare" + to_string(_newTurretIndex);

@@ -86,6 +86,7 @@ public:
     int _newTurretIndex = 0;
 private:
     std::vector<int> _turretCosts;
+    int _turretCostIncrease = 5;
     TurretType _turretType;
     std::shared_ptr<Turret> _heldTurret = nullptr;
     std::shared_ptr<Camera> _cameraRef = nullptr;

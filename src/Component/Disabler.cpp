@@ -30,7 +30,8 @@ void Disabler::Update()
 
 void Disabler::DisableAfterDelay()
 {
-    if (TIME.GetTime() >= _delay) {
+    _timer += TIME.GetDeltaTime();
+    if (_timer >= _delay) {
         _ownerNode->SetEnabled(false);
     }
 }
