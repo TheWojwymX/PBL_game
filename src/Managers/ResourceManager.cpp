@@ -58,7 +58,7 @@ std::shared_ptr<Model> ResourceManager::GetModelByName(const string &name) {
 }
 
 shared_ptr<Sound> ResourceManager::CreateSound(string name, string path, int id, int soundType) {
-    auto sound = std::make_shared<Sound>(name, path, id, static_cast<SoundType>(soundType));
+    auto sound = std::make_shared<Sound>(name, path, id, static_cast<SoundType>(soundType), 1.0f);
     Sounds.push_back(sound);
     return sound;
 }

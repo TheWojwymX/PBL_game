@@ -46,8 +46,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/GameManager.h
         Component/Animator.cpp
         Component/Animator.h
-        Managers/AudioEngineManager.cpp
-        Managers/AudioEngineManager.h
+        Managers/AudioManager.cpp
+        Managers/AudioManager.h
         Sound.cpp
         Sound.h
         AudioContext.cpp

@@ -174,7 +174,7 @@ void GameManager::PlayMenuMusic() {
 }
 
 void GameManager::StopMenuMusic() {
-    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->StopSound();
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->FadeAway(4);
 }
 
 void GameManager::RestartGame() {

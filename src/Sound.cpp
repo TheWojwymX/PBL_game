@@ -5,27 +5,58 @@
 #include <thread>
 #include "Sound.h"
 #include "Core/Node.h"
+#include "Managers/AudioManager.h"
 
-Sound::Sound(const std::string &name, const std::string &path, int id, SoundType soundType)
-        : _name(name), _path(path), _id(id), _soundType(soundType) {
+Sound::Sound(const std::string &name, const std::string &path, int id, SoundType soundType, float volumeMultiplier)
+        : _name(name), _path(path), _id(id), _soundType(soundType), _constStartingVolumeMultiplier(volumeMultiplier) {
 
-    _result = ma_sound_init_from_file(&AUDIOENGINEMANAGER._engine, _path.c_str(), 0, NULL, NULL, &_sound);
+    _result = ma_sound_init_from_file(&AUDIOMANAGER._engine, _path.c_str(), 0, NULL, NULL, &_sound);
     if (_result != MA_SUCCESS) {
         std::cout << "Can't load sound file: " << _name << " at path: " << _path << std::endl;
     }
     else{
+
         if(_soundType == SoundType::MUSIC){
-            ChangeVolume(AUDIOENGINEMANAGER._musicVolume);
+            _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._musicVolume);
         }
         else if(_soundType == SoundType::SFX){
-            ChangeVolume(AUDIOENGINEMANAGER._sfxVolume);
+            _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._sfxVolume);
         }
+        AUDIOMANAGER._sounds.push_back(static_cast<const shared_ptr<Sound>>(this));
     }
 }
 
 Sound::~Sound()
 {
     //std::cout << "Sound uninitialized: " << _name << std::endl;
+}
+
+void Sound::Update() {
+    if(_isFadingAway){
+        if(_timer < _timeToFadeAway){
+            _timer += TIME.GetDeltaTime();
+            float t = glm::clamp(_timer / _timeToFadeAway, 0.0f, 1.0f);
+            float volume = glm::mix(_volume, 0.0f, t);
+            ChangeVolume(volume);
+        }else{
+            _isFadingAway = false;
+            _timer = 0.0f;
+            StopSound();
+        }
+    }
+
+    else if(_isRisingUp){
+        if(_timer < _timeToRiseUp){
+            _timer += TIME.GetDeltaTime();
+            float t = glm::clamp(_timer / _timeToRiseUp, 0.0f, 1.0f);
+            float volume = glm::mix(_volume, 1.0f, t);
+            ChangeVolume(volume);
+        }else{
+            _isRisingUp = false;
+            _timer = 0.0f;
+        }
+    }
+
 }
 
 void Sound::PlaySound(std::shared_ptr<Node> soundSourceNode, float adjVolume) {
@@ -61,7 +92,7 @@ void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume)
 
     //std::cout << sound->pDataSource << std::endl;
 
-    auto result = ma_sound_init_from_file(&AUDIOENGINEMANAGER._engine, _path.c_str(), 0, nullptr, nullptr, sound);
+    auto result = ma_sound_init_from_file(&AUDIOMANAGER._engine, _path.c_str(), 0, nullptr, nullptr, sound);
     if (result != MA_SUCCESS) {
         std::cerr << "Can't load sound file: " << _name << " at path: " << _path << std::endl;
         delete sound; // Clean up the allocated memory
@@ -80,7 +111,7 @@ void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume)
         return;
     }
 
-    AUDIOENGINEMANAGER._activeSounds.push_back(sound);
+    AUDIOMANAGER._activeSounds.push_back(sound);
 
 }
 
@@ -96,7 +127,8 @@ nlohmann::json Sound::Serialize() {
 }
 
 void Sound::ChangeVolume(float volume) {
-    ma_sound_set_volume(&_sound, volume);
+    _volume = volume;
+    ma_sound_set_volume(&_sound, volume * _constStartingVolumeMultiplier * (*_typeMultiplier));
 }
 
 void Sound::SetLooping(bool looping) {
@@ -107,24 +139,23 @@ float Sound::CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNo
     float distance = glm::distance(_playerNode->GetTransform()->GetPosition(), soundSourceNode->GetTransform()->GetPosition());
 
     if (distance <= 0) {
-        if (_soundType == SoundType::MUSIC) {
-            return AUDIOENGINEMANAGER._musicVolume;
-        } else if (_soundType == SoundType::SFX) {
-            return AUDIOENGINEMANAGER._sfxVolume;
-        }
+        return _constStartingVolumeMultiplier;
     } else if (distance < _maxSoundDistance) {
         float normalizedDistance = distance / _maxSoundDistance;
-        float logDistance = log(normalizedDistance + 1); // log(1) = 0, log(x) where x -> 0 is negative, thus adding 1 to avoid negative values
-
-        if (_soundType == SoundType::MUSIC) {
-            float maxVolume = AUDIOENGINEMANAGER._musicVolume;
-            return maxVolume - maxVolume * logDistance;
-        } else if (_soundType == SoundType::SFX) {
-            float maxVolume = AUDIOENGINEMANAGER._sfxVolume;
-            //std::cout << maxVolume - maxVolume * logDistance << std::endl;
-            return maxVolume - maxVolume * logDistance;
-        }
+        float exponentialFade = exp(-normalizedDistance * 4);
+        return _constStartingVolumeMultiplier * exponentialFade;
     } else {
         return 0;
     }
+}
+
+
+void Sound::FadeAway(float time) {
+    _timeToFadeAway = time;
+    _isFadingAway = true;
+}
+
+void Sound::RiseUp(float time) {
+    _timeToRiseUp = time;
+    _isRisingUp = true;
 }

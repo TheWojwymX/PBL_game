@@ -7,7 +7,6 @@
 
 #include "../thirdparty/miniaudio.h"
 #include <string>
-#include "Managers/AudioEngineManager.h"
 #include <iostream>
 #include "../thirdparty/nlohmann/json.hpp"
 
@@ -29,7 +28,7 @@ public:
 
     SoundType _soundType;
 
-    Sound(const std::string &name, const std::string &path, int id, SoundType soundType);
+    Sound(const std::string &name, const std::string &path, int id, SoundType soundType, float volumeMultiplier);
     ~Sound();
 
     nlohmann::json Serialize();
@@ -47,7 +46,26 @@ public:
 
     float CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNode);
 
-    float _maxSoundDistance = 20;
+    float _maxSoundDistance = 30;
+
+    bool _isFadingAway = false;
+    bool _isRisingUp = false;
+
+    void Update();
+
+
+    void FadeAway(float time);
+    void RiseUp(float time);
+
+private:
+    float _timeToFadeAway;
+    float _timeToRiseUp;
+    float _timer = 0.0f;
+
+    float _constStartingVolumeMultiplier;
+    std::shared_ptr<float> _typeMultiplier;
+    float _volume = 1.0f;
+
 };
 
 

@@ -76,7 +76,7 @@
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
-#include "Managers/AudioEngineManager.h"
+#include "Managers/AudioManager.h"
 #include "HUD/PageManager.h"
 #include "Managers/DomeManager.h"
 #include "Managers/UpgradeManager.h"
@@ -144,7 +144,7 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
-    AUDIOENGINEMANAGER.Init();
+    AUDIOMANAGER.Init();
 
     // Deserialization of resources and nodes
     GAMEMANAGER.root = SCENEMANAGER.LoadFromJsonFile("scenes/test1.json");
@@ -450,7 +450,7 @@ int main(int, char**)
         }
         PAGEMANAGER.Update();
         HUD.Update();
-        AUDIOENGINEMANAGER.Update();
+        AUDIOMANAGER.Update();
 
 
         // Start the Dear ImGui frame
@@ -489,7 +489,7 @@ int main(int, char**)
         glfwPollEvents();
     }
     // Cleanup
-    AUDIOENGINEMANAGER.Cleanup();
+    AUDIOMANAGER.Cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

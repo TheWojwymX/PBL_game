@@ -2,27 +2,29 @@
 // Created by Jacek on 11.04.2024.
 //
 
-#define AUDIOENGINEMANAGER AudioEngineManager::getInstance()
+#define AUDIOMANAGER AudioManager::getInstance()
 
 #ifndef OPENGLGP_AUDIOMANAGER_H
 #define OPENGLGP_AUDIOMANAGER_H
 
 #include <vector>
+#include <memory>
 #include "../thirdparty/miniaudio.h"
+#include "Sound.h"
 
-class AudioEngineManager {
+class AudioManager {
 
 public:
 
-    static AudioEngineManager &getInstance();
+    static AudioManager &getInstance();
 
-    ~AudioEngineManager() = default;
+    ~AudioManager() = default;
 
-    AudioEngineManager() = default;
+    AudioManager() = default;
 
-    AudioEngineManager(const AudioEngineManager &) = delete;
+    AudioManager(const AudioManager &) = delete;
 
-    AudioEngineManager &operator=(const AudioEngineManager &) = delete;
+    AudioManager &operator=(const AudioManager &) = delete;
 
     void Init();
 
@@ -38,6 +40,8 @@ public:
 
     std::vector<ma_sound*> _activeSounds;
     void CleanupFinishedSounds();
+
+    std::vector<std::shared_ptr<Sound>> _sounds;
 
 };
 

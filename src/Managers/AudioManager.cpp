@@ -2,15 +2,15 @@
 // Created by Jacek on 11.04.2024.
 //
 
-#include "AudioEngineManager.h"
+#include "AudioManager.h"
 #include <iostream>
 
-AudioEngineManager &AudioEngineManager::getInstance() {
-    static AudioEngineManager instance;
+AudioManager &AudioManager::getInstance() {
+    static AudioManager instance;
     return instance;
 }
 
-void AudioEngineManager::Init() {
+void AudioManager::Init() {
 
     // Setup miniaudio
     _result = ma_engine_init(NULL, &_engine);
@@ -20,12 +20,17 @@ void AudioEngineManager::Init() {
 
 }
 
-void AudioEngineManager::Update()
+void AudioManager::Update()
 {
+
+    for(std::shared_ptr<Sound> sound : _sounds){
+        sound->Update();
+    }
+
     CleanupFinishedSounds();
 }
 
-void AudioEngineManager::Cleanup()
+void AudioManager::Cleanup()
 {
     for (auto sound : _activeSounds) {
         ma_sound_uninit(sound);
@@ -36,7 +41,7 @@ void AudioEngineManager::Cleanup()
     std::cout << "Audio engine cleaned up." << std::endl;
 }
 
-void AudioEngineManager::CleanupFinishedSounds()
+void AudioManager::CleanupFinishedSounds()
 {
     auto it = _activeSounds.begin();
     while (it != _activeSounds.end()) {
