@@ -218,6 +218,10 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawne
         EnemyStats stats = _enemyStats[type];
         newEnemyComponent->SetStats(stats.type, stats.speed, stats.hp,stats.damage,stats.attackFrequency,stats.size);
 
+        if(type == WASP) newEnemyComponent->_size = 4 * scale.x;
+        if(type == ANT) newEnemyComponent->_size = 4 * scale.x;
+        if(type == BEETLE) newEnemyComponent->_size = 8 * scale.x;
+
         _enemies.push_back(newEnemyComponent);
         _enemiesParticles.push_back(NODESMANAGER.getNodeByName(particleGeneratorNode));
         _newEnemyIndex++;
