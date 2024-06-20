@@ -39,7 +39,7 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
         glm::vec3 sideVector = glm::normalize(glm::cross(_ownerTransform->GetRotation() * glm::vec3(0, 1, 0), _ownerTransform->GetRotation() * glm::vec3(0, 0, -1))) * sideMovement;
 
         glm::vec3 currentPos = _ownerTransform->GetPosition();
-        glm::vec3 forwardMovement = Transform::MoveTowards(currentPos, _destinationVector, 0.01f * _speed) - currentPos;
+        glm::vec3 forwardMovement = Transform::MoveTowards(currentPos, _destinationVector, _speed * TIME.GetDeltaTime()) - currentPos;
 
         glm::vec3 effectiveMovement = forwardMovement + sideVector;
         glm::vec3 movementDirection = glm::normalize(effectiveMovement);

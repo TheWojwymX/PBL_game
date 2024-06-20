@@ -40,6 +40,11 @@ void UpgradeManager::UpgradeTurret() {
     }
 
     auto selectedTurret = TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex];
+
+    if(selectedTurret->_isFlying == true){
+        return;
+    }
+
     TurretType turretType = selectedTurret->GetTurretType();  // Assuming you have a method to get the type
     int upgradeLevel = selectedTurret->GetUpgradeLevel();    // Assuming you have a method to get the current upgrade level
 
