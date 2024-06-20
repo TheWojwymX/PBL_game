@@ -169,8 +169,9 @@ void GameManager::Reset() {
 }
 
 void GameManager::PlayMenuMusic() {
+    if (_playerNode == nullptr) _playerNode = NODESMANAGER.getNodeByName("player");
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
-    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->PlaySound(NODESMANAGER.getNodeByName("player"), 0.5);
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->RiseUp(3, _playerNode);
 }
 
 void GameManager::StopMenuMusic() {

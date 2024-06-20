@@ -15,13 +15,13 @@ Sound::Sound(const std::string &name, const std::string &path, int id, SoundType
         std::cout << "Can't load sound file: " << _name << " at path: " << _path << std::endl;
     }
     else{
-
         if(_soundType == SoundType::MUSIC){
             _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._musicVolume);
         }
         else if(_soundType == SoundType::SFX){
             _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._sfxVolume);
         }
+        _volume = 1.0f;
         AUDIOMANAGER._sounds.push_back(static_cast<const shared_ptr<Sound>>(this));
     }
 }
@@ -49,8 +49,9 @@ void Sound::Update() {
         if(_timer < _timeToRiseUp){
             _timer += TIME.GetDeltaTime();
             float t = glm::clamp(_timer / _timeToRiseUp, 0.0f, 1.0f);
-            float volume = glm::mix(_volume, 1.0f, t);
+            float volume = glm::mix(0.0f, 1.0f, t);
             ChangeVolume(volume);
+            std::cout << "volume: " << volume << " t: " << t << std::endl;
         }else{
             _isRisingUp = false;
             _timer = 0.0f;
@@ -155,7 +156,12 @@ void Sound::FadeAway(float time) {
     _isFadingAway = true;
 }
 
-void Sound::RiseUp(float time) {
+void Sound::RiseUp(float time, shared_ptr<Node> sourceNode) {
+    PlaySound(sourceNode, 0);
     _timeToRiseUp = time;
     _isRisingUp = true;
+}
+
+void Sound::SetVolume(float volume) {
+    _volume = volume;
 }

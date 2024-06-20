@@ -55,7 +55,9 @@ public:
 
 
     void FadeAway(float time);
-    void RiseUp(float time);
+    void RiseUp(float time, std::shared_ptr<Node> sourceNode);
+
+    void SetVolume(float volume);
 
 private:
     float _timeToFadeAway;

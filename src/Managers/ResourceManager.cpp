@@ -57,8 +57,8 @@ std::shared_ptr<Model> ResourceManager::GetModelByName(const string &name) {
     return nullptr;
 }
 
-shared_ptr<Sound> ResourceManager::CreateSound(string name, string path, int id, int soundType) {
-    auto sound = std::make_shared<Sound>(name, path, id, static_cast<SoundType>(soundType), 1.0f);
+shared_ptr<Sound> ResourceManager::CreateSound(string name, string path, int id, int soundType, float constVolume) {
+    auto sound = std::make_shared<Sound>(name, path, id, static_cast<SoundType>(soundType), constVolume);
     Sounds.push_back(sound);
     return sound;
 }
@@ -144,7 +144,8 @@ void ResourceManager::Deserialize(nlohmann::json data) {
             string path = sound["Path"].get<string>();
             int id = sound["SoundID"].get<int>();
             int soundType = sound["Type"].get<int>();
-            CreateSound(name, path, id, soundType);
+            float soundVolume = sound["Volume"].get<float>();
+            CreateSound(name, path, id, soundType, soundVolume);
         }
     }
 
