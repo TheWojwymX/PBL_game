@@ -85,6 +85,8 @@ void Enemy::TakeDamage(int amount)
             particleDead->toDelete = true;
         }
 
+        ENEMIESMANAGER.removeAttackFromGUI(shared_from_this());
+
         auto anim = _ownerNode->GetComponent<Animation>();
         if (anim != nullptr)
         {
@@ -115,7 +117,6 @@ void Enemy::EnemyAI()
     auto anim = _ownerNode->GetComponent<Animation>();
     if (anim->_enemyState == DEAD && anim->_toDelete)
     {
-        ENEMIESMANAGER.removeAttackFromGUI(shared_from_this());
         Die();
         return;
     }
