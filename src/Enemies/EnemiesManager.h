@@ -52,9 +52,7 @@ public:
 
     void SpawnEnemiesForRound();
 
-    glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
-
-    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type, float speedScale = 1.0f);
+    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, glm::vec2 spawnPos, EnemyType type);
 
     void ChooseModelBasedOnDistance();
 
@@ -68,6 +66,7 @@ public:
 
     void addAttackToGUI(shared_ptr<Enemy> enemy);
     void removeAttackFromGUI(std::shared_ptr<Enemy> enemy);
+    glm::vec2 GetSpawnerPos(int i) { return _spawnersPositions[i]; }
 
     int _newEnemyIndex = 1;
 
@@ -75,11 +74,16 @@ public:
 
 private:
     std::vector<EnemyStats> _enemyStats;
-    int _spawnerDistance;
+    int _spawnDistance;
     std::vector<glm::vec2> _spawnersPositions;
     std::vector<glm::vec3> _roundsInfo;
     glm::ivec3 _spawnedEnemies;
     float _spawnSpan;
+    float _endlessTimer = 0.0f;
+    float _endlessDelay;
+    float _endlessDelayMin;
+    float _endlessDelayStep;
 
     void InitEnemyStats();
+    glm::vec2 RandomSpawnPos();
 };

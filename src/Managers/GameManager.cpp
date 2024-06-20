@@ -95,6 +95,16 @@ float GameManager::GetPhaseProgress()
     return _currentTime / GetPhaseTime();
 }
 
+void GameManager::SkipPhase()
+{
+    _currentTime = GetPhaseTime();
+}
+
+bool GameManager::IsEndless()
+{
+    return _roundNumber == _phaseTimes.size() - 1;
+}
+
 void GameManager::Update() {
     if (TUTORIALMANAGER._isFreePlay) {
         _currentTime += TIME.GetDeltaTime();
@@ -108,6 +118,8 @@ void GameManager::Update() {
 
         if (INPUT.IsKeyPressed(GLFW_KEY_9))
             LateGame();
+        if (INPUT.IsKeyPressed(GLFW_KEY_8))
+            SkipPhase();
     }
 
     if(DOMEMANAGER.GetDomeHP() <= 0){

@@ -34,6 +34,8 @@ public:
     float GetPhaseTime();
     void LateGame();
     float GetPhaseProgress();
+    void SkipPhase();
+    bool IsEndless();
 
     Phase GetPhase() {return _currentPhase;}
     float GetCurrentTime() { return _currentTime; }

@@ -533,9 +533,9 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
 void TurretsManager::InitTurretStats() {
     // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
     // fireRate, dmg, sideRange, forwardRange
-    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 60.0f, 50.0f));  // MINIGUN
-    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 50.0f, 100.0f)); // SNIPER
-    _turretStats.push_back(glm::vec4(1.0f, 1.0f, 70.0f, 70.0f));  // RIFLE
+    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 100.0f, 80.0f));  // MINIGUN
+    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 60.0f, 120.0f)); // SNIPER
+    _turretStats.push_back(glm::vec4(1.0f, 1.0f, 90.0f, 90.0f));  // RIFLE
 
     _turretCostIncrease = 3;
 }
@@ -552,7 +552,7 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
     } else {
         turret->_timer = 0.0f;
 
-        int finalDamage;
+        float finalDamage = 0.0f;
         TurretType _turretType = turret->GetTurretType();
         EnemyType _enemyType = enemy->_enemyType;
 

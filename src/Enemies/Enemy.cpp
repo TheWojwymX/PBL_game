@@ -60,7 +60,7 @@ void Enemy::Die()
     }
 }
 
-void Enemy::TakeDamage(int amount)
+void Enemy::TakeDamage(float amount)
 {
     _hp -= amount;
 

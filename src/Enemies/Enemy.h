@@ -16,9 +16,9 @@ public:
 
     glm::vec3 _destinationVector;
     EnemyType _enemyType = ANT;
-    int _speed = 5;
-    int _hp = 100;
-    int _damage = 5;
+    float _speed = 5;
+    float _hp = 100;
+    float _damage = 5;
     float _attackFrequency = 3;
     float _size = 2;
 

@@ -15,7 +15,7 @@ void EnemiesManager::Update() {
         std::uniform_real_distribution<float> dis(0.5f, 1.0f);
         float scale = dis(gen);
 
-        SpawnEnemy(2.5, glm::vec3(scale), 0, ANT);
+        SpawnEnemy(2.5, glm::vec3(scale), RandomSpawnPos(), ANT);
     }
 
     SpawnEnemiesForRound();
@@ -44,31 +44,31 @@ void EnemiesManager::Init() {
         _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
     }
 
-    _spawnerDistance = 100;
-
     _spawnersPositions = {
-    glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y + _spawnerDistance),
-    glm::vec2(GAMEMANAGER._domePosition.x + _spawnerDistance,GAMEMANAGER._domePosition.y),
-    glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y - _spawnerDistance),
-    glm::vec2(GAMEMANAGER._domePosition.x - _spawnerDistance,GAMEMANAGER._domePosition.y),
+    glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y + 90),
+    glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y - 80)
     };
-
-    _spawnedEnemies = glm::ivec3(0);
 
     //ant , beetle, wasp
     _roundsInfo = {
-        glm::vec3(20, 2, 5), // 0 
-        glm::vec3(5, 0, 0), // 1 
-        glm::vec3(5, 0, 0), // 2 
-        glm::vec3(5, 0, 0), // 3 
-        glm::vec3(5, 0, 0), // 4 
-        glm::vec3(5, 0, 0), // 5 
-        glm::vec3(5, 0, 0), // 6 
-        glm::vec3(5, 0, 0), // 7 
-        glm::vec3(5, 0, 0), // 8 
-        glm::vec3(5, 0, 0), // 9 
-        glm::vec3(0.7f,0.1f,0.2f) // endless
+        glm::vec3(3, 0, 0), // 0 
+        glm::vec3(6, 1, 0), // 1 
+        glm::vec3(9, 2, 1), // 2 
+        glm::vec3(12, 3, 2), // 3 
+        glm::vec3(15, 4, 3), // 4 
+        glm::vec3(18, 5, 4), // 5 
+        glm::vec3(21, 6, 5), // 6 
+        glm::vec3(24, 7, 6), // 7 
+        glm::vec3(27, 8, 7), // 8 
+        glm::vec3(30, 9, 8), // 9 
+        glm::vec3(0.8f,0.05f,0.1f) // endless
     };
+
+    _spawnedEnemies = glm::ivec3(0);
+    _spawnDistance = 100;
+    _endlessDelay = 1.0f;
+    _endlessDelayMin = 0.1f;
+    _endlessDelayStep = 0.05f;
     _spawnSpan = 0.5f;
 
     InitEnemyStats();
@@ -77,32 +77,61 @@ void EnemiesManager::Init() {
 void EnemiesManager::SpawnEnemiesForRound()
 {
     if (GAMEMANAGER.GetPhase() != Phase::DEFEND) return;
-    float spawnPortion = GAMEMANAGER.GetPhaseProgress() / _spawnSpan;
 
-    glm::ivec3 spawns = _roundsInfo[GAMEMANAGER.GetRoundNumber()] * spawnPortion;
+    if (!GAMEMANAGER.IsEndless()) {
+        float spawnPortion = GAMEMANAGER.GetPhaseProgress() / _spawnSpan;
+        spawnPortion = glm::clamp(spawnPortion, 0.0f, 1.0f);
 
-    if (spawns == _spawnedEnemies) return;
+        glm::ivec3 spawns = _roundsInfo[GAMEMANAGER.GetRoundNumber()] * spawnPortion;
 
-    glm::ivec3 diff = spawns - _spawnedEnemies;
-    _spawnedEnemies = spawns;
-    std::cout << "diff " << diff.x << " " << diff.y << " " << diff.z << std::endl;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> spawnerDist(0, 3); 
-    std::uniform_real_distribution<float> scaleRand(0.7f, 1.3f);
+        if (spawns == _spawnedEnemies) return;
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < diff[i]; j++) {
+        glm::ivec3 diff = spawns - _spawnedEnemies;
+        _spawnedEnemies = spawns;
 
-            float scale = scaleRand(gen);
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> scaleRand(0.7f, 1.3f);
 
-            int spawnerIndex = spawnerDist(gen);  
-
-            SpawnEnemy(_enemyStats[i].size * scale, glm::vec3(scale), spawnerIndex, static_cast<EnemyType>(i));
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < diff[i]; j++) {
+                float scale = scaleRand(gen);
+                SpawnEnemy(_enemyStats[i].size * scale, glm::vec3(scale), RandomSpawnPos(), static_cast<EnemyType>(i));
+            }
         }
     }
+    else {
+        _endlessTimer += TIME.GetDeltaTime();
+        if (_endlessTimer < _endlessDelay) return;
 
+        if (_endlessDelay > _endlessDelayMin) _endlessDelayMin -= _endlessDelayStep;
+        _endlessTimer = 0.0f; 
 
+        const glm::vec3& weights = _roundsInfo[GAMEMANAGER.GetRoundNumber()];
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> scaleRand(0.7f, 1.3f);
+
+        float sumWeights = weights.x + weights.y + weights.z;
+        std::uniform_real_distribution<float> typeRand(0.0f, sumWeights);
+
+        float randomValue = typeRand(gen);
+
+        int chosenEnemyType = -1;
+        if (randomValue < weights.x) {
+            chosenEnemyType = 0;
+        }
+        else if (randomValue < weights.x + weights.y) {
+            chosenEnemyType = 1;
+        }
+        else {
+            chosenEnemyType = 2;
+        }
+
+        float scale = scaleRand(gen);
+        SpawnEnemy(_enemyStats[chosenEnemyType].size * scale, glm::vec3(scale), RandomSpawnPos(), static_cast<EnemyType>(chosenEnemyType));
+    }
 }
 
 void EnemiesManager::ReturnToComingForNormalDestination(shared_ptr<Enemy> enemy)
@@ -184,88 +213,68 @@ void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
     }
 }
 
-void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type, float speedScale)
+void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, glm::vec2 spawnPos, EnemyType type)
 {
-    if (spawnerIndex >= 0 && spawnerIndex < _spawnersPositions.size())
+    std::string nameOfEnemy = "Enemy" + std::to_string(_newEnemyIndex);
+    std::string particleGeneratorNode = "Particle" +  to_string(_newEnemyIndex);
+
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
+    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
+
+    glm::vec3 enemyPosition = glm::vec3(spawnPos.x, GAMEMANAGER._groundLevel, spawnPos.y);
+
+    if (type == WASP)
     {
-        std::string nameOfEnemy = "Enemy" + std::to_string(_newEnemyIndex);
-        std::string particleGeneratorNode = "Particle" +  to_string(_newEnemyIndex);
-
-        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), nameOfEnemy);
-        NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), particleGeneratorNode);
-
-        glm::vec3 enemyPosition = CalcRandomSpawnPosition(_spawnersPositions[spawnerIndex]);
-        enemyPosition.y = GAMEMANAGER._groundLevel;
-
-        if (type == WASP)
-        {
-            enemyPosition.y = enemyPosition.y + 5;
-        }
-
-        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
-        NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
-
-        auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-        newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
-        newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
-        newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
-        newMeshRenderer->Initiate();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
-
-        auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
-        newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
-        newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID-1);
-        newAnimation->InitComponent((int)(type + 1));
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
-
-        auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
-        antShot->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
-        antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
-        antShot->enemyScale = scale;
-        antShot->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
-        antShot->Init();
-        NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
-
-        string particleType;
-        if(type == WASP) particleType = "waspDie";
-        if(type == ANT) particleType = "antDie";
-        if(type == BEETLE) particleType = "beetleDie";
-
-        auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),particleType);
-        antDie->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
-        antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
-        antDie->enemyScale = scale;
-        antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
-        antDie->Init();
-        NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antDie);
-
-        auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
-        NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
-        newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
-        newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
-        EnemyStats stats = _enemyStats[type];
-        newEnemyComponent->SetStats(stats.type, stats.speed * speedScale, stats.hp,stats.damage,stats.attackFrequency,stats.size);
-
-        if(type == WASP) newEnemyComponent->_size = 4 * scale.x;
-        if(type == ANT) newEnemyComponent->_size = 4 * scale.x;
-        if(type == BEETLE) newEnemyComponent->_size = 8 * scale.x;
-
-        _enemies.push_back(newEnemyComponent);
-        _enemiesParticles.push_back(NODESMANAGER.getNodeByName(particleGeneratorNode));
-        _newEnemyIndex++;
+        enemyPosition.y = enemyPosition.y + 5;
     }
-}
 
+    NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetPosition(enemyPosition);
+    NODESMANAGER.getNodeByName(nameOfEnemy)->GetTransform()->SetScale(scale);
 
-glm::vec3 EnemiesManager::CalcRandomSpawnPosition(glm::vec2 spawnerPos){
-    float spawnerRadius = 15.0f;
-    float angle = static_cast<float>(std::rand()) / RAND_MAX * 2.0f * static_cast<float>(3.141592);
-    float randomRadius = static_cast<float>(std::rand()) / RAND_MAX;
-    randomRadius = std::sqrt(randomRadius);
-    randomRadius *= spawnerRadius;
-    float x = spawnerPos.x + randomRadius * std::cos(angle);
-    float z = spawnerPos.y + randomRadius * std::sin(angle);
-    return glm::vec3(x, 99.8f, z);
+    auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
+    newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("antModel");
+    newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
+    newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    newMeshRenderer->Initiate();
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newMeshRenderer);
+
+    auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
+    newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
+    newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID-1);
+    newAnimation->InitComponent((int)(type + 1));
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
+
+    auto antShot = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antShot");
+    antShot->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
+    antShot->object = NODESMANAGER.getNodeByName(nameOfEnemy);
+    antShot->enemyScale = scale;
+    antShot->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
+    antShot->Init();
+    NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antShot);
+
+    string particleType;
+    if(type == WASP) particleType = "waspDie";
+    if(type == ANT) particleType = "antDie";
+    if(type == BEETLE) particleType = "beetleDie";
+
+    auto antDie = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),particleType);
+    antDie->SetOffset(glm::vec3(0.0f,0.0f,1.0f));
+    antDie->object = NODESMANAGER.getNodeByName(nameOfEnemy);
+    antDie->enemyScale = scale;
+    antDie->_ownerNode = NODESMANAGER.getNodeByName(particleGeneratorNode);
+    antDie->Init();
+    NODESMANAGER.getNodeByName(particleGeneratorNode)->AddComponent(antDie);
+
+    auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
+    NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
+    newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+    newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+    EnemyStats stats = _enemyStats[type];
+    newEnemyComponent->SetStats(stats.type, stats.speed, stats.hp,stats.damage,stats.attackFrequency,stats.size * scale.x);
+
+    _enemies.push_back(newEnemyComponent);
+    _enemiesParticles.push_back(NODESMANAGER.getNodeByName(particleGeneratorNode));
+    _newEnemyIndex++;
 }
 
 glm::vec3 EnemiesManager::CalcClosestDomePosition(shared_ptr<Enemy> enemy){
@@ -317,15 +326,34 @@ void EnemiesManager::InitEnemyStats() {
     _enemyStats.clear();
 
     // speed, hp, damage, attackFrequency, size, type
-    EnemyStats ant(7.0f, 3, 1, 0.6f, 1.0f, ANT);
-    EnemyStats beetle(3.0f, 30, 5, 0.6f, 2.0f, BEETLE);
-    EnemyStats wasp(5.0f, 3, 1, 0.45f, 1.0f, WASP);
+    EnemyStats ant(7.0f, 3, 1, 0.6f, 2.0f, ANT);
+    EnemyStats beetle(3.0f, 30, 5, 0.6f, 4.0f, BEETLE);
+    EnemyStats wasp(10.0f, 2, 1, 0.45f, 2.0f, WASP);
 
     // Add all objects to the _enemyStats vector
     _enemyStats.push_back(ant);
     _enemyStats.push_back(beetle);
     _enemyStats.push_back(wasp);
 }
+
+glm::vec2 EnemiesManager::RandomSpawnPos() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> angleDist(0.0f, 2.0f * static_cast<float>(3.141592));
+
+    float angle = angleDist(gen);
+
+    // Calculate x and y based on the angle
+    float x = _spawnDistance * std::cos(angle);
+    float y = _spawnDistance * std::sin(angle);
+
+    // Get the center position of the circle (dome position)
+    glm::vec2 domePos = glm::vec2(GAMEMANAGER._domePosition);
+
+    // Return the position relative to the center
+    return domePos + glm::vec2(x, y);
+}
+
 
 void EnemiesManager::addAttackToGUI(shared_ptr<Enemy> enemy)
 {

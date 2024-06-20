@@ -576,8 +576,8 @@ void UpgradeManager::InitTurretUpgrades()
     };
 
     _minigunUpgrades.upgradeValues = {
-        {0.0f, -0.15f, 30, 5},  // 1 (damage, fire rate, sideRange, frowardRange)
-        {0.0f, -0.15f, 30, 5}   // 2 (damage, fire rate, sideRange, frowardRange)
+        {0.0f, -0.20f, 30, 5},  // 1 (damage, fire rate, sideRange, frowardRange)
+        {0.0f, -0.20f, 30, 5}   // 2 (damage, fire rate, sideRange, frowardRange)
     };
 
     // Sniper Upgrades
