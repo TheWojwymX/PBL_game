@@ -1,15 +1,15 @@
 {
-    "nextComponentId": 182,
-    "nextNodeId": 168,
+    "nextComponentId": 198,
+    "nextNodeId": 177,
     "resources": {
         "Models": [
             {
                 "ModelName": "sandModel",
-                "Path": "../../res/Sand/Sand.obj"
+                "Path": "res/Sand/Sand.obj"
             },
             {
                 "ModelName": "waveNotificationModel",
-                "Path": "../../res/Sand/Sand.obj"
+                "Path": "res/Sand/Sand.obj"
             },
             {
                 "ModelName": "antModel",
@@ -17,314 +17,370 @@
             },
             {
                 "ModelName": "cloudModel",
-                "Path": "../../res/Sand/Sand.obj"
+                "Path": "res/Sand/Sand.obj"
             },
             {
                 "ModelName": "topLayerModel",
-                "Path": "../../res/Sand/Sand.obj"
+                "Path": "res/Sand/Sand.obj"
             },
             {
                 "ModelName": "plasticModel",
-                "Path": "../../res/Models/Cap/cap.obj"
+                "Path": "res/Models/Caps/Cap/cap.obj"
             },
             {
-                "ModelName": "metalModel",
-                "Path": "../../res/Models/Nut/NutModel.obj"
+                "ModelName": "plasticBigModel",
+                "Path": "res/Models/Caps/capBig/capBig.obj"
             },
             {
                 "ModelName": "AntSpawn0",
-                "Path": "../../res/Models/Ant/ant_spawn_v1-0.obj"
+                "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-0.obj"
             },
             {
                 "ModelName": "AntSpawn1",
-                "Path": "../../res/Models/Ant/ant_spawn_v1-1.obj"
+                "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-1.obj"
             },
             {
                 "ModelName": "AntSpawn2",
-                "Path": "../../res/Models/Ant/ant_spawn_v1-2.obj"
+                "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-2.obj"
             },
             {
                 "ModelName": "AntSpawn3",
-                "Path": "../../res/Models/Ant/ant_spawn_v1-3.obj"
+                "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-3.obj"
             },
             {
                 "ModelName": "AntSpawn4",
-                "Path": "../../res/Models/Ant/ant_spawn_v1-4.obj"
+                "Path": "res/Models/Ant/ant_spawn_v1/ant_spawn_v2-4.obj"
             },
             {
                 "ModelName": "AntWalk0",
-                "Path": "../../res/Models/Ant/ant_walk_v1-0.obj"
+                "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-0.obj"
             },
             {
                 "ModelName": "AntWalk1",
-                "Path": "../../res/Models/Ant/ant_walk_v1-1.obj"
+                "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-1.obj"
             },
             {
                 "ModelName": "AntWalk2",
-                "Path": "../../res/Models/Ant/ant_walk_v1-2.obj"
+                "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-2.obj"
             },
             {
                 "ModelName": "AntWalk3",
-                "Path": "../../res/Models/Ant/ant_walk_v1-3.obj"
+                "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-3.obj"
             },
             {
                 "ModelName": "AntWalk4",
-                "Path": "../../res/Models/Ant/ant_walk_v1-4.obj"
+                "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-4.obj"
             },
             {
                 "ModelName": "AntWalk5",
-                "Path": "../../res/Models/Ant/ant_walk_v1-5.obj"
+                "Path": "res/Models/Ant/ant_walk_v1/ant_walk_v2.0-5.obj"
             },
             {
                 "ModelName": "AntAttack0",
-                "Path": "../../res/Models/Ant/ant_attack_v1-0.obj"
+                "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-0.obj"
             },
             {
                 "ModelName": "AntAttack1",
-                "Path": "../../res/Models/Ant/ant_attack_v1-1.obj"
+                "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-1.obj"
             },
             {
                 "ModelName": "AntAttack2",
-                "Path": "../../res/Models/Ant/ant_attack_v1-2.obj"
+                "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-2.obj"
             },
             {
                 "ModelName": "AntAttack3",
-                "Path": "../../res/Models/Ant/ant_attack_v1-3.obj"
+                "Path": "res/Models/Ant/ant_attack_v1/ant_attack_v2.0-3.obj"
             },
             {
                 "ModelName": "AntDead0",
-                "Path": "../../res/Models/Ant/ant_dead_v1-0.obj"
+                "Path": "res/Models/Ant/ant_dead_v1/ant_dead_v1-0.obj"
             },
             {
                 "ModelName": "AntDead1",
-                "Path": "../../res/Models/Ant/ant_dead_v1-1.obj"
+                "Path": "res/Models/Ant/ant_dead_v1/ant_dead_v1-1.obj"
             },
             {
                 "ModelName": "AntDead2",
-                "Path": "../../res/Models/Ant/ant_dead_v1-2.obj"
+                "Path": "res/Models/Ant/ant_dead_v1/ant_dead_v1-2.obj"
             },
             {
                 "ModelName": "BeetleSpawn0",
-                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-0.obj"
+                "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-0.obj"
             },
             {
                 "ModelName": "BeetleSpawn1",
-                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-1.obj"
+                "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-1.obj"
             },
             {
                 "ModelName": "BeetleSpawn2",
-                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-2.obj"
+                "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-2.obj"
             },
             {
                 "ModelName": "BeetleSpawn3",
-                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-3.obj"
+                "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-3.obj"
             },
             {
                 "ModelName": "BeetleSpawn4",
-                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-4.obj"
+                "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-4.obj"
             },
             {
                 "ModelName": "BeetleSpawn5",
-                "Path": "../../res/Models/Beetle/beetle_spawn_v1/beetle_spawn_v1-5.obj"
+                "Path": "res/Models/Beetle/beetle_spawn_v1/beetle_spawn_blue_v2-5.obj"
             },
             {
                 "ModelName": "BeetleWalk0",
-                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-0.obj"
+                "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-0.obj"
             },
             {
                 "ModelName": "BeetleWalk1",
-                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-1.obj"
+                "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-1.obj"
             },
             {
                 "ModelName": "BeetleWalk2",
-                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-2.obj"
+                "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-2.obj"
             },
             {
                 "ModelName": "BeetleWalk3",
-                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-3.obj"
+                "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-3.obj"
             },
             {
                 "ModelName": "BeetleWalk4",
-                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-4.obj"
+                "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-4.obj"
             },
             {
                 "ModelName": "BeetleWalk5",
-                "Path": "../../res/Models/Beetle/beetle_walk_v1/beetle_walk_v1-5.obj"
+                "Path": "res/Models/Beetle/beetle_walk_v1/beetle_walk_blue_v2-5.obj"
             },
             {
                 "ModelName": "BeetleAttack0",
-                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-0.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-0.obj"
             },
             {
                 "ModelName": "BeetleAttack1",
-                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-1.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-1.obj"
             },
             {
                 "ModelName": "BeetleAttack2",
-                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-2.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-2.obj"
             },
             {
                 "ModelName": "BeetleAttack3",
-                "Path": "../../res/Models/Beetle/beetle_attack_v1/beetle_attack_v1.0-3.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-3.obj"
             },
             {
                 "ModelName": "BeetleDead0",
-                "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-0.obj"
+                "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v2-0.obj"
             },
             {
                 "ModelName": "BeetleDead1",
-                "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-1.obj"
+                "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v2-1.obj"
             },
             {
                 "ModelName": "BeetleDead2",
-                "Path": "../../res/Models/Beetle/beetle_dead_v1/beetle_dead_v1-2.obj"
+                "Path": "res/Models/Beetle/beetle_dead_v1/beetle_dead_blue_v2-2.obj"
             },
             {
                 "ModelName": "WaspSpawn0",
-                "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.obj"
+                "Path": "res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-0.obj"
             },
             {
                 "ModelName": "WaspSpawn1",
-                "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.obj"
+                "Path": "res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-1.obj"
             },
             {
                 "ModelName": "WaspSpawn2",
-                "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.obj"
+                "Path": "res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-2.obj"
             },
             {
                 "ModelName": "WaspSpawn3",
-                "Path": "../../res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.obj"
+                "Path": "res/Models/Wasp/wasp_spawn_v1/wasp_spawn_v1-3.obj"
             },
             {
                 "ModelName": "WaspFly0",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-0.obj"
             },
             {
                 "ModelName": "WaspFly1",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-1.obj"
             },
             {
                 "ModelName": "WaspFly2",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-2.obj"
             },
             {
                 "ModelName": "WaspFly3",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-3.obj"
             },
             {
                 "ModelName": "WaspFly4",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-4.obj"
             },
             {
                 "ModelName": "WaspFly5",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-5.obj"
             },
             {
                 "ModelName": "WaspFly6",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-6.obj"
             },
             {
                 "ModelName": "WaspFly7",
-                "Path": "../../res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.obj"
+                "Path": "res/Models/Wasp/wasp_fly_v1/wasp_fly_v2.0-7.obj"
             },
             {
                 "ModelName": "WaspAttack0",
-                "Path": "../../res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.obj"
+                "Path": "res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-0.obj"
             },
             {
                 "ModelName": "WaspAttack1",
-                "Path": "../../res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.obj"
+                "Path": "res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-1.obj"
             },
             {
                 "ModelName": "WaspAttack2",
-                "Path": "../../res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj"
+                "Path": "res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj"
             },
             {
                 "ModelName": "WaspDead0",
-                "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj"
+                "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj"
             },
             {
                 "ModelName": "WaspDead1",
-                "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj"
+                "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj"
             },
             {
                 "ModelName": "WaspDead2",
-                "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj"
+                "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj"
             },
             {
                 "ModelName": "WaspDead3",
-                "Path": "../../res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj"
+                "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj"
             },
             {
                 "ModelName": "DomeStation",
-                "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
+                "Path": "res/Models/UpgradeStations/base/base_upgrade_station.obj"
             },
             {
                 "ModelName": "PlayerStation",
-                "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
+                "Path": "res/Models/UpgradeStations/player/player_upgrade_station_v2.obj"
             },
             {
-                "ModelName": "RefuelStation",
-                "Path": "../../res/Models/UpgradeStations/New/player_upgrade_station_v2.obj"
+                "ModelName": "Turret_Minigun_Level1",
+                "Path": "res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj"
             },
             {
-                "ModelName": "Turret_Standard_Level1",
-                "Path": "../../res/Models/Turrets/Standard/Level1/gun_soldier_LVL1_2.0.obj"
+                "ModelName": "Turret_Minigun_Level2",
+                "Path": "res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.obj"
             },
             {
-                "ModelName": "Turret_Gunner_Level1",
-                "Path": "../../res/Models/Turrets/Gunner/Level1/machinegun_soldier_LVL1_2.0.obj"
+                "ModelName": "Turret_Minigun_Level3",
+                "Path": "res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Sniper_Level1",
+                "Path": "res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Sniper_Level2",
+                "Path": "res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Sniper_Level3",
+                "Path": "res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Rifle_Level1",
+                "Path": "res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Rifle_Level2",
+                "Path": "res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_2.0.obj"
+            },
+            {
+                "ModelName": "Turret_Rifle_Level3",
+                "Path": "res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_2.0.obj"
             },
             {
                 "ModelName": "Turret_Parachute",
-                "Path": "../../res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
-            },
-            {
-                "ModelName": "SandbagsModelV1",
-                "Path": "../../res/Models/Base/Sandbags/SandbagsV1/sandboxes-1.obj"
-            },
-            {
-                "ModelName": "SandbagsModelV2",
-                "Path": "../../res/Models/Base/Sandbags/SandbagsV2/sandboxes-2.obj"
-            },
-            {
-                "ModelName": "SandbagsModelV3",
-                "Path": "../../res/Models/Base/Sandbags/SandbagsV3/sandboxes-3.obj"
-            },
-            {
-                "ModelName": "BucketModel",
-                "Path": "../../res/Models/Base/Bucket/Bucket.obj"
+                "Path": "res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
             },
             {
                 "ModelName": "ShovelModel",
-                "Path": "../../res/Models/Shovel/Shovel_Green/shovel_green.obj"
+                "Path": "res/Models/Shovel/Shovel_Green/shovel_green.obj"
             },
             {
                 "ModelName": "WormModel",
-                "Path": "../../res/Models/Worm/robal.obj"
-            },
-            {
-                "ModelName": "Sandbags",
-                "Path": "../../res/Models/Base/Sandbags/Sandbags/SandBags.obj"
+                "Path": "res/Models/Worm/worm.obj"
             },
             {
                 "ModelName": "RangeIndicatorReal",
-                "Path": "../../res/Models/RangeIndicators/prosty.obj"
+                "Path": "res/Models/RangeIndicators/prosty_v2.obj"
             },
             {
                 "ModelName": "RangeIndicatorVisual",
-                "Path": "../../res/Models/RangeIndicators/okragly.obj"
+                "Path": "res/Models/RangeIndicators/okragly_v2.obj"
             },
             {
                 "ModelName": "glowstickModel",
-                "Path": "../../res/Models/Glowstick/palka.obj"
+                "Path": "res/Models/Glowstick/palka.obj"
+            },
+            {
+                "ModelName": "BucketModel",
+                "Path": "res/Models/Base/Bucket/Bucket.obj"
+            },
+            {
+                "ModelName": "SandbagsModel",
+                "Path": "res/Models/Base/Sandbags/sandbagi.obj"
+            },
+            {
+                "ModelName": "RakeModel",
+                "Path": "res/Models/Rake/Rake.obj"
+            },
+            {
+                "ModelName": "BigShovelModel",
+                "Path": "res/Models/BigShovel/BigShovel.obj"
+            },
+            {
+                "ModelName": "Mold1Model",
+                "Path": "res/Models/Molds/1/1.obj"
+            },
+            {
+                "ModelName": "Mold3Model",
+                "Path": "res/Models/Molds/3/3.obj"
+            },
+            {
+                "ModelName": "Mold7Model",
+                "Path": "res/Models/Molds/7/7.obj"
+            },
+            {
+                "ModelName": "PDAModel",
+                "Path": "res/Models/PDA/krotkofalowka_v2-1.obj"
+            },
+            {
+                "ModelName": "PDAAntennaModel",
+                "Path": "res/Models/PDA/antena/krotkofalowka_v2-0.obj"
+            },
+            {
+                "ModelName": "flareModel",
+                "Path": "res/Models/Flare/flara_pomniejszona.obj"
+            },
+            {
+                "ModelName": "compassDialModel",
+                "Path": "res/Models/Compass/kompas-1.obj"
+            },
+            {
+                "ModelName": "compassUpModel",
+                "Path": "res/Models/Compass/kompas-0.obj"
+            },
+            {
+                "ModelName": "compassDownModel",
+                "Path": "res/Models/Compass/kompas-2.obj"
             }
         ],
         "Shaders": [
             {
                 "ShaderName": "modelShader",
-                "fragmentPath": "../../res/fragShader.fs",
-                "vertexPath": "../../res/vecShader.vs"
+                "fragmentPath": "res/fragShader.fs",
+                "vertexPath": "res/vecShader.vs"
             },
             {
                 "ShaderName": "lightObjectShader",
@@ -333,18 +389,18 @@
             },
             {
                 "ShaderName": "instancedSandShader",
-                "fragmentPath": "../../res/instancedSandFragShader.fs",
-                "vertexPath": "../../res/instancedSandVecShader.vs"
+                "fragmentPath": "res/instancedSandFragShader.fs",
+                "vertexPath": "res/instancedSandVecShader.vs"
             },
             {
                 "ShaderName": "instancedMetalShader",
-                "fragmentPath": "../../res/instancedMetalFragShader.fs",
-                "vertexPath": "../../res/instancedMetalVecShader.vs"
+                "fragmentPath": "res/instancedMetalFragShader.fs",
+                "vertexPath": "res/instancedMetalVecShader.vs"
             },
             {
                 "ShaderName": "instancedPlasticShader",
-                "fragmentPath": "../../res/instancedPlasticFragShader.fs",
-                "vertexPath": "../../res/instancedPlasticVecShader.vs"
+                "fragmentPath": "res/instancedPlasticFragShader.fs",
+                "vertexPath": "res/instancedPlasticVecShader.vs"
             },
             {
                 "ShaderName": "skyboxShader",
@@ -353,171 +409,200 @@
             },
             {
                 "ShaderName": "textShader",
-                "fragmentPath": "../../res/textShader.fs",
-                "vertexPath": "../../res/textShader.vs"
+                "fragmentPath": "res/textShader.fs",
+                "vertexPath": "res/textShader.vs"
             },
             {
                 "ShaderName": "textureShader",
-                "fragmentPath": "../../res/textureShader.fs",
-                "vertexPath": "../../res/textureShader.vs"
+                "fragmentPath": "res/textureShader.fs",
+                "vertexPath": "res/textureShader.vs"
+            },
+            {
+                "ShaderName": "textureShaderColor",
+                "fragmentPath": "res/textureShaderColor.fs",
+                "vertexPath": "res/textureShaderColor.vs"
             },
             {
                 "ShaderName": "cloudShader",
-                "fragmentPath": "../../res/cloudFragShader.fs",
-                "vertexPath": "../../res/cloudVecShader.vs"
+                "fragmentPath": "res/cloudFragShader.fs",
+                "vertexPath": "res/cloudVecShader.vs"
             },
             {
                 "ShaderName": "toonShader",
-                "fragmentPath": "../../res/toonShader.fs",
-                "vertexPath": "../../res/toonShader.vs"
+                "fragmentPath": "res/toonShader.fs",
+                "vertexPath": "res/toonShader.vs"
             },
             {
                 "ShaderName": "outlineShader",
-                "fragmentPath": "../../res/outlineShader.fs",
-                "vertexPath": "../../res/outlineShader.vs"
+                "fragmentPath": "res/outlineShader.fs",
+                "vertexPath": "res/outlineShader.vs"
             },
             {
                 "ShaderName": "skyboxReflectionShader",
-                "fragmentPath": "../../res/skyboxReflectionShader.fs",
-                "vertexPath": "../../res/skyboxReflectionShader.vs"
+                "fragmentPath": "res/skyboxReflectionShader.fs",
+                "vertexPath": "res/skyboxReflectionShader.vs"
             },
             {
                 "ShaderName": "shadowShader",
-                "fragmentPath": "../../res/shadowShader.fs",
-                "vertexPath": "../../res/shadowShader.vs"
+                "fragmentPath": "res/shadowShader.fs",
+                "vertexPath": "res/shadowShader.vs"
             },
             {
                 "ShaderName": "shadowInstanceShader",
-                "fragmentPath": "../../res/shadowInstanceShader.fs",
-                "vertexPath": "../../res/shadowInstanceShader.vs"
+                "fragmentPath": "res/shadowInstanceShader.fs",
+                "vertexPath": "res/shadowInstanceShader.vs"
             },
             {
                 "ShaderName": "wireframeShader",
-                "fragmentPath": "../../res/wireframeShader.fs",
-                "vertexPath": "../../res/wireframeShader.vs"
+                "fragmentPath": "res/wireframeShader.fs",
+                "vertexPath": "res/wireframeShader.vs"
             },
             {
                 "ShaderName": "turretRangeShader",
-                "fragmentPath": "../../res/turretRange.fs",
-                "vertexPath": "../../res/turretRange.vs"
+                "fragmentPath": "res/turretRange.fs",
+                "vertexPath": "res/turretRange.vs"
             },
             {
                 "ShaderName": "particleShader",
-                "fragmentPath": "../../res/particleShader.fs",
-                "vertexPath": "../../res/particleShader.vs"
+                "fragmentPath": "res/particleShader.fs",
+                "vertexPath": "res/particleShader.vs"
             },
             {
                 "ShaderName": "shovelShader",
-                "fragmentPath": "../../res/shovelShader.fs",
-                "vertexPath": "../../res/shovelShader.vs"
+                "fragmentPath": "res/shovelShader.fs",
+                "vertexPath": "res/shovelShader.vs"
             },
             {
                 "ShaderName": "blueprintShader",
-                "fragmentPath": "../../res/blueprintShader.fs",
-                "vertexPath": "../../res/blueprintShader.vs"
+                "fragmentPath": "res/blueprintShader.fs",
+                "vertexPath": "res/blueprintShader.vs"
             },
             {
                 "ShaderName": "glowstickShader",
-                "fragmentPath": "../../res/glowstickShader.fs",
-                "vertexPath": "../../res/glowstickShader.vs"
+                "fragmentPath": "res/glowstickShader.fs",
+                "vertexPath": "res/glowstickShader.vs"
             }
         ],
         "Sounds": [
             {
-                "Path": "../../res/Sounds/ksu.mp3",
+                "Path": "res/Sounds/mainMenu.mp3",
                 "SoundID": 0,
                 "SoundName": "BackgroundMusic",
                 "Type": 0
             },
             {
-                "Path": "../../res/Sounds/step1.mp3",
+                "Path": "res/Sounds/step1.mp3",
                 "SoundID": 1,
                 "SoundName": "ConcreteSound1",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step2.mp3",
+                "Path": "res/Sounds/step2.mp3",
                 "SoundID": 2,
                 "SoundName": "ConcreteSound2",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step3.mp3",
+                "Path": "res/Sounds/step3.mp3",
                 "SoundID": 3,
                 "SoundName": "ConcreteSound3",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/jump.mp3",
+                "Path": "res/Sounds/jump.mp3",
                 "SoundID": 4,
                 "SoundName": "JumpSound",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step4.mp3",
+                "Path": "res/Sounds/step4.mp3",
                 "SoundID": 5,
                 "SoundName": "ConcreteSound4",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step5.mp3",
+                "Path": "res/Sounds/step5.mp3",
                 "SoundID": 6,
                 "SoundName": "ConcreteSound5",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step6.mp3",
+                "Path": "res/Sounds/step6.mp3",
                 "SoundID": 7,
                 "SoundName": "ConcreteSound6",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step7.mp3",
+                "Path": "res/Sounds/step7.mp3",
                 "SoundID": 8,
                 "SoundName": "ConcreteSound7",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step8.mp3",
+                "Path": "res/Sounds/step8.mp3",
                 "SoundID": 9,
                 "SoundName": "ConcreteSound8",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step9.mp3",
+                "Path": "res/Sounds/step9.mp3",
                 "SoundID": 10,
                 "SoundName": "ConcreteSound9",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/step10.mp3",
+                "Path": "res/Sounds/step10.mp3",
                 "SoundID": 11,
                 "SoundName": "ConcreteSound10",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_01.wav",
+                "Path": "res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_01.wav",
                 "SoundID": 12,
                 "SoundName": "GunnerShot1",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_02.wav",
+                "Path": "res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_02.wav",
                 "SoundID": 13,
                 "SoundName": "GunnerShot2",
                 "Type": 1
             },
             {
-                "Path": "../../res/Sounds/GunnerShot/stzal2.mp3",
+                "Path": "res/Sounds/GunnerShot/sniperShot2.mp3",
                 "SoundID": 14,
-                "SoundName": "GunnerShot3",
+                "SoundName": "SniperShot2",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/atak1.mp3",
+                "SoundID": 15,
+                "SoundName": "atak1",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/jetpack1.mp3",
+                "SoundID": 16,
+                "SoundName": "jetpack1",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/kopanie1.mp3",
+                "SoundID": 17,
+                "SoundName": "kopanie1",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/GunnerShot/sniperShot.wav",
+                "SoundID": 18,
+                "SoundName": "SniperShot",
                 "Type": 1
             }
         ],
         "cShaders": [
             {
                 "ShaderName": "particleComputeShader",
-                "vertexPath": "../../res/particleCompute.glsl"
+                "vertexPath": "res/particleCompute.glsl"
             }
         ]
     },
@@ -598,7 +683,7 @@
                         "componentId": 84,
                         "componentType": 3,
                         "isDynamic": true,
-                        "maxSize": 10000,
+                        "maxSize": 100000,
                         "model": "plasticModel",
                         "shader": "instancedPlasticShader"
                     }
@@ -623,15 +708,15 @@
             },
             {
                 "NodeID": 73,
-                "NodeName": "metal",
+                "NodeName": "plasticBig",
                 "children": [],
                 "components": [
                     {
                         "componentId": 85,
                         "componentType": 3,
                         "isDynamic": true,
-                        "maxSize": 10000,
-                        "model": "metalModel",
+                        "maxSize": 100000,
+                        "model": "plasticBigModel",
                         "shader": "instancedMetalShader"
                     }
                 ],
@@ -686,6 +771,199 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 68,
+                "NodeName": "Paratrooper",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 77,
+                        "componentType": 5,
+                        "model": "Turret_Parachute",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        46.61399841308594,
+                        299.5,
+                        60.652000427246094
+                    ],
+                    "rotation": [
+                        0.0,
+                        -0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 69,
+                "NodeName": "PDAAntenna",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 78,
+                        "componentType": 13,
+                        "model": "PDAAntennaModel",
+                        "shader": "shovelShader"
+                    },
+                    {
+                        "componentId": 79,
+                        "componentType": 17
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.98021697998047,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 174,
+                "NodeName": "CompassNode",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 194,
+                        "componentType": 13,
+                        "model": "compassDialModel",
+                        "shader": "shovelShader"
+                    },
+                    {
+                        "componentId": 195,
+                        "componentType": 19
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.98021697998047,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 175,
+                "NodeName": "CompassDown",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 196,
+                        "componentType": 13,
+                        "model": "compassDownModel",
+                        "shader": "shovelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.98021697998047,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 176,
+                "NodeName": "CompassUp",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 197,
+                        "componentType": 13,
+                        "model": "compassUpModel",
+                        "shader": "shovelShader"
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.98021697998047,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
+                    ]
+                }
+            },
+            {
+                "NodeID": 70,
+                "NodeName": "PDA",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 80,
+                        "componentType": 13,
+                        "model": "PDAModel",
+                        "shader": "shovelShader"
+                    },
+                    {
+                        "componentId": 81,
+                        "componentType": 17
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        89.98021697998047,
+                        0.0
+                    ],
+                    "scale": [
+                        0.30000001192092896,
+                        0.30000001192092896,
+                        0.30000001192092896
                     ]
                 }
             },
@@ -762,7 +1040,7 @@
                 "transform": {
                     "position": [
                         46.61399841308594,
-                        299.5,
+                        305.5,
                         60.652000427246094
                     ],
                     "rotation": [
@@ -823,54 +1101,19 @@
                 ],
                 "transform": {
                     "position": [
-                        46.0,
+                        43.29999923706055,
                         299.5,
-                        46.0
+                        49.5
                     ],
                     "rotation": [
                         0.0,
-                        -0.0,
+                        89.98021697998047,
                         0.0
                     ],
                     "scale": [
-                        0.30000001192092896,
-                        0.30000001192092896,
-                        0.30000001192092896
-                    ]
-                }
-            },
-            {
-                "NodeID": 18,
-                "NodeName": "RefuelStation",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 29,
-                        "componentType": 5,
-                        "model": "DomeStation",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    },
-                    {
-                        "componentId": 30,
-                        "componentType": 11
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        54.5,
-                        299.5,
-                        46.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        -0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        0.30000001192092896,
-                        0.30000001192092896,
-                        0.30000001192092896
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             },
@@ -889,13 +1132,13 @@
                 ],
                 "transform": {
                     "position": [
-                        54.0,
+                        55.70000076293945,
                         299.5,
-                        56.0
+                        49.5
                     ],
                     "rotation": [
                         0.0,
-                        -0.0,
+                        -89.98021697998047,
                         0.0
                     ],
                     "scale": [
@@ -971,130 +1214,6 @@
                 }
             },
             {
-                "NodeID": 20,
-                "NodeName": "waveSymbol1",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 32,
-                        "componentType": 5,
-                        "model": "waveNotificationModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        -0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        2.5,
-                        2.5,
-                        2.5
-                    ]
-                }
-            },
-            {
-                "NodeID": 21,
-                "NodeName": "waveSymbol2",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 33,
-                        "componentType": 5,
-                        "model": "waveNotificationModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        -0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        2.5,
-                        2.5,
-                        2.5
-                    ]
-                }
-            },
-            {
-                "NodeID": 22,
-                "NodeName": "waveSymbol3",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 34,
-                        "componentType": 5,
-                        "model": "waveNotificationModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        -0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        2.5,
-                        2.5,
-                        2.5
-                    ]
-                }
-            },
-            {
-                "NodeID": 23,
-                "NodeName": "waveSymbol4",
-                "children": [],
-                "components": [
-                    {
-                        "componentId": 35,
-                        "componentType": 5,
-                        "model": "waveNotificationModel",
-                        "outlineShader": "outlineShader",
-                        "shader": "modelShader"
-                    }
-                ],
-                "transform": {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        -0.0,
-                        0.0
-                    ],
-                    "scale": [
-                        2.5,
-                        2.5,
-                        2.5
-                    ]
-                }
-            },
-            {
                 "NodeID": 166,
                 "NodeName": "Worm",
                 "children": [],
@@ -1108,25 +1227,25 @@
                     },
                     {
                         "axis": {
-                            "x": 0.0,
+                            "x": 1.0,
                             "y": 0.0,
-                            "z": 1.0
+                            "z": 0.0
                         },
-                        "speed": 20.0
+                        "speed": -25.0
                     },
                     {
-                        "delay": 30.0
+                        "delay": 20.0
                     }
                 ],
                 "transform": {
                     "position": [
-                        -150.0,
-                        299.79998779296875,
-                        500.0
+                        49.5,
+                        100.0,
+                        49.5
                     ],
                     "rotation": [
                         0.0,
-                        89.98021697998047,
+                        -89.98021697998047,
                         0.0
                     ],
                     "scale": [
@@ -1144,7 +1263,7 @@
                     {
                         "componentId": 181,
                         "componentType": 5,
-                        "model": "Sandbags",
+                        "model": "SandbagsModel",
                         "outlineShader": "outlineShader",
                         "shader": "modelShader"
                     }
@@ -1159,6 +1278,210 @@
                         0.0,
                         -0.0,
                         0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 168,
+                "NodeName": "Rake",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 182,
+                        "componentType": 5,
+                        "model": "RakeModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "yOffset": -3.0
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        -125.0,
+                        295.5,
+                        49.5
+                    ],
+                    "rotation": [
+                        -20.0000057220459,
+                        65.0,
+                        14.999999046325684
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 169,
+                "NodeName": "BigShovel",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 183,
+                        "componentType": 5,
+                        "model": "BigShovelModel",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "yOffset": -4.0
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        125.0,
+                        295.0,
+                        -150.0
+                    ],
+                    "rotation": [
+                        -25.000003814697266,
+                        29.999998092651367,
+                        -25.000003814697266
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 170,
+                "NodeName": "Mold1",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 184,
+                        "componentType": 5,
+                        "model": "Mold1Model",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "yOffset": -2.0
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        -50.0,
+                        296.0,
+                        -50.0
+                    ],
+                    "rotation": [
+                        -14.999999046325684,
+                        30.000003814697266,
+                        15.000001907348633
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 171,
+                "NodeName": "Mold3(1)",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 185,
+                        "componentType": 5,
+                        "model": "Mold3Model",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "yOffset": -2.0
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        160.0,
+                        296.0,
+                        -50.0
+                    ],
+                    "rotation": [
+                        -35.0,
+                        -30.000001907348633,
+                        10.000000953674316
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 172,
+                "NodeName": "Mold3(2)",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 186,
+                        "componentType": 5,
+                        "model": "Mold3Model",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "yOffset": -2.0
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        230.0,
+                        297.0,
+                        85.0
+                    ],
+                    "rotation": [
+                        -15.000001907348633,
+                        -69.99998474121094,
+                        -19.999996185302734
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "NodeID": 173,
+                "NodeName": "Mold7",
+                "children": [],
+                "components": [
+                    {
+                        "componentId": 187,
+                        "componentType": 5,
+                        "model": "Mold7Model",
+                        "outlineShader": "outlineShader",
+                        "shader": "modelShader"
+                    },
+                    {
+                        "yOffset": -2.0
+                    }
+                ],
+                "transform": {
+                    "position": [
+                        -40.0,
+                        299.0,
+                        160.0
+                    ],
+                    "rotation": [
+                        30.000001907348633,
+                        -29.999998092651367,
+                        20.000001907348633
                     ],
                     "scale": [
                         1.0,

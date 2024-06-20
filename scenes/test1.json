@@ -309,7 +309,7 @@
       },
       {
         "ModelName": "WormModel",
-        "Path": "res/Models/Worm/30.obj"
+        "Path": "res/Models/Worm/worm.obj"
       },
       {
         "ModelName": "RangeIndicatorReal",
@@ -1229,33 +1229,33 @@
             "componentId": 179,
             "componentType": 14,
             "axis": {
-              "x": 0.0,
+              "x": 1.0,
               "y": 0.0,
-              "z": 1.0
+              "z": 0.0
             },
-            "speed": 20.0
+            "speed": -25.0
           },
           {
             "componentId": 180,
             "componentType": 15,
-            "delay": 30.0
+            "delay": 20.0
           }
         ],
         "transform": {
           "position": [
-            -150,
-            299.8,
-            500
+            49.5,
+            100.0,
+            49.5
           ],
           "rotation": [
             0,
-            90,
+            -90,
             0
           ],
           "scale": [
-            10.0,
-            10.0,
-            10.0
+            1.0,
+            1.0,
+            1.0
           ]
         }
       },
@@ -1492,7 +1492,7 @@
           "position": [
             -40,
             299,
-            170
+            160
           ],
           "rotation": [
             30,

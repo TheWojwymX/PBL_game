@@ -283,13 +283,9 @@ void EnemiesManager::InitEnemyStats() {
     // Clear the vector if it already contains elements (optional)
     _enemyStats.clear();
 
-    // Create an EnemyStats object for ANT with specified initial values
+    // speed, hp, damage, attackFrequency, size, type
     EnemyStats ant(7.0f, 3, 1, 0.6f, 1.0f, ANT);
-
-    // Create an EnemyStats object for BEETLE with specified initial values
     EnemyStats beetle(3.0f, 30, 5, 0.6f, 2.0f, BEETLE);
-
-    // Create an EnemyStats object for WASP with specified initial values
     EnemyStats wasp(5.0f, 3, 1, 0.45f, 1.0f, WASP);
 
     // Add all objects to the _enemyStats vector

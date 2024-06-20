@@ -176,9 +176,9 @@ int main(int, char**)
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(GAMEMANAGER._screenWidth);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(GAMEMANAGER._screenHeight);
 
-//    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
-//    imguiMain->SetRoot(GAMEMANAGER.root);
-//    imguiMain->SetSelectedObject(GAMEMANAGER.root);
+    std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
+    imguiMain->SetRoot(GAMEMANAGER.root);
+    imguiMain->SetSelectedObject(GAMEMANAGER.root);
 
     /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
     COMPONENTSMANAGER.CreateComponent<Camera>();
@@ -454,7 +454,7 @@ int main(int, char**)
 
 
         // Start the Dear ImGui frame
-//        imguiMain->draw();
+        imguiMain->draw();
 //
 //        ImGui::Begin("Depth Map");
 //        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
@@ -480,9 +480,9 @@ int main(int, char**)
 //
 //        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 //
-//        imguiMain->endDraw();
-//        ImGui::Render();
-//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        imguiMain->endDraw();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);
@@ -490,9 +490,9 @@ int main(int, char**)
     }
     // Cleanup
     AUDIOENGINEMANAGER.Cleanup();
-//    ImGui_ImplOpenGL3_Shutdown();
-//    ImGui_ImplGlfw_Shutdown();
-//    ImGui::DestroyContext();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();
