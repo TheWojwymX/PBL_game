@@ -77,7 +77,7 @@ void TurretsManager::PlayerActions() {
         PAGEMANAGER._PDAPage->DisplayPDAPage();
         _isInTurretChoiceMenu = true;
         HideBlueprintTurret();
-    } else if (INPUT.IsKeyPressed(GLFW_KEY_4) && !_PDAController->_isHidden &&
+    } else if ((INPUT.IsKeyPressed(GLFW_KEY_4) || INPUT.IsMousePressed(1) || INPUT.IsKeyPressed(GLFW_KEY_Q)) && !_PDAController->_isHidden &&
                playerPosY >= GAMEMANAGER._groundLevel && !_isPlayerInMovingMode) {
         _PDAController->HideImmediately();
         HUD._shouldShowCrosshair = true;
@@ -112,12 +112,12 @@ void TurretsManager::PlayerActions() {
         }
         SpawnTurret(_turretType);
         HideBlueprintTurret();
-    } else if (INPUT.IsKeyPressed(GLFW_KEY_Q) && (_isInBlueprintMode || _isInTurretChoiceMenu) && !_isPlayerInMovingMode) {
+    } else if ((INPUT.IsKeyPressed(GLFW_KEY_Q) || INPUT.IsMousePressed(1)) && (_isInBlueprintMode || _isInTurretChoiceMenu) && !_isPlayerInMovingMode) {
         HideBlueprintTurret();
-        _PDAController->HideImmediately();
-        HUD._shouldShowCrosshair = true;
-        PAGEMANAGER._PDAPage->HidePDAPage();
-        _isInTurretChoiceMenu = false;
+        _PDAController->_playShowAnim = true;
+        HUD._shouldShowCrosshair = false;
+        PAGEMANAGER._PDAPage->DisplayPDAPage();
+        _isInTurretChoiceMenu = true;
     }
 
     if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying
