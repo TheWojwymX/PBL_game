@@ -1,5 +1,6 @@
 #include "EnemiesManager.h"
 
+
 EnemiesManager &EnemiesManager::getInstance() {
     static EnemiesManager instance;
     return instance;
@@ -41,38 +42,52 @@ void EnemiesManager::Init() {
         _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
     }
 
-    _roundsInfo[0] = {{0, 3, ANT}, {0, 3, BEETLE}, {0, 3, WASP}}; // TEST
+    // ant, beetle, wasp 
+    _endlessSpawnRate = glm::vec3(0.7f,0.1f,0.2f);
 
-    _roundsInfo[1] = {{2, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
-    _roundsInfo[2] = {{2, 2, ANT}, {1, 2, ANT}}; // Spawner 2 - spawn 2 ANT enemies, Spawner 1 - spawn 2 ANT enemies
-    _roundsInfo[3] = {{3, 3, ANT}, {2, 2, ANT}}; // Spawner 3 - spawn 3 ANT enemies, Spawner 2 - spawn 2 ANT enemies
+    _spawnerDistance = 100;
 
-    // TEMPORARY
-    _roundsInfo[4] = {{0, 3, ANT}}; // Spawner 0 - spawn 3 ANT enemies
-    _roundsInfo[5] = {{1, 3, ANT}}; // Spawner 1 - spawn 3 ANT enemies
-    _roundsInfo[6] = {{2, 2, ANT}, {1, 2, ANT}}; // Spawner 2 - spawn 2 ANT enemies, Spawner 1 - spawn 2 ANT enemies
-    _roundsInfo[7] = {{3, 3, ANT}, {2, 2, ANT}}; // Spawner 3 - spawn 3 ANT enemies, Spawner 2 - spawn 2 ANT enemies
+    _spawnersPositions = {
+    glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y + _spawnerDistance),
+    glm::vec2(GAMEMANAGER._domePosition.x + _spawnerDistance,GAMEMANAGER._domePosition.y),
+    glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y - _spawnerDistance),
+    glm::vec2(GAMEMANAGER._domePosition.x - _spawnerDistance,GAMEMANAGER._domePosition.y),
+    };
+
+    //ant , beetle, wasp
+    _roundsInfo = {
+        glm::ivec3(5, 0, 0), // 0 
+        glm::ivec3(5, 0, 0), // 1 
+        glm::ivec3(5, 0, 0), // 2 
+        glm::ivec3(5, 0, 0), // 3 
+        glm::ivec3(5, 0, 0), // 4 
+        glm::ivec3(5, 0, 0), // 5 
+        glm::ivec3(5, 0, 0), // 6 
+        glm::ivec3(5, 0, 0), // 7 
+        glm::ivec3(5, 0, 0), // 8 
+        glm::ivec3(5, 0, 0), // 9 
+    };
     
     InitEnemyStats();
 }
 
 void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
 {
-    if (_roundsInfo.find(roundNumber) != _roundsInfo.end()) {
-        const auto &spawns = _roundsInfo[roundNumber];
-        for (const auto &spawn : spawns) {
-            int spawnerIndex = std::get<0>(spawn);
-            int enemyCount = std::get<1>(spawn);
-            EnemyType type = std::get<2>(spawn);
+    
+    glm::ivec3 spawns = _roundsInfo[roundNumber];
 
-            for (int i = 0; i < enemyCount; ++i) {
-                std::random_device rd;
-                std::mt19937 gen(rd());
-                std::uniform_real_distribution<float> dis(0.8f, 1.2f);
-                float scale = dis(gen);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> spawnerDist(0, 3); 
 
-                SpawnEnemy(_enemyStats[type].size * scale, glm::vec3(scale), spawnerIndex, type);
-            }
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < spawns[i]; ++j) {
+            std::uniform_real_distribution<float> dis(0.8f, 1.2f);
+            float scale = dis(gen);
+
+            int spawnerIndex = spawnerDist(gen);  
+
+            SpawnEnemy(_enemyStats[i].size * scale, glm::vec3(scale), spawnerIndex, static_cast<EnemyType>(i));
         }
     }
 }

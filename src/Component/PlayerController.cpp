@@ -141,7 +141,10 @@ void PlayerController::HandleMovement() {
     }
 
     // Apply gravity
-    _velocity.y += _gravity * TIME.GetDeltaTime();
+    if(_ownerTransform->GetPosition().y > GAMEMANAGER._groundLevel && _velocity.y > 15.0f)
+        _velocity.y += (_gravity * 15) * TIME.GetDeltaTime();
+    else
+        _velocity.y += _gravity * TIME.GetDeltaTime();
 
     // Handle jump
     if (_isGrounded && INPUT.IsKeyPressed(GLFW_KEY_SPACE)) {

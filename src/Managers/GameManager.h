@@ -38,6 +38,7 @@ public:
     float GetCurrentTime() { return _currentTime; }
     int GetPlastic() { return _plastic; }
     int GetRoundNumber() { return _roundNumber; }
+    int GetMaxRound() { return _phaseTimes.size() - 1; }
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 100;
@@ -49,7 +50,6 @@ public:
 
     bool _editMode = true;
     bool _paused = false;
-    bool _lateGame = false;
     glm::vec3 _windDirection{0.0f};
     float _windStrength = 0.0f;
 

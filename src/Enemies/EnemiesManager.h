@@ -1,12 +1,11 @@
-#define ENEMIESMANAGER EnemiesManager::getInstance()
-
 #pragma once
+
+#define ENEMIESMANAGER EnemiesManager::getInstance()
 
 #include "Managers/ComponentsManager.h"
 #include "Enemy.h"
 #include "Core/Input.h"
 #include "Managers/NodesManager.h"
-
 #include "Managers/GameManager.h"
 
 struct EnemyStats {
@@ -51,15 +50,6 @@ public:
 
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
-    std::vector<glm::vec2> _spawnersPositions{
-        glm::vec2(50.0, 150.0),
-        glm::vec2(150.0, 50.0),
-        glm::vec2(110.0, 2.0),
-        glm::vec2(2.0, 110.0)
-    };
-
-    std::unordered_map<int, std::vector<std::tuple<int, int, EnemyType>>> _roundsInfo;
-
     void SpawnEnemiesForRound(int roundNumber);
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
@@ -85,6 +75,10 @@ public:
 
 private:
     std::vector<EnemyStats> _enemyStats;
+    glm::vec3 _endlessSpawnRate;
+    int _spawnerDistance;
+    std::vector<glm::vec2> _spawnersPositions;
+    std::vector<glm::ivec3> _roundsInfo;
 
     void InitEnemyStats();
 };

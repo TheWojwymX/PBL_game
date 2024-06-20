@@ -51,7 +51,6 @@ void Sound::Update() {
             float t = glm::clamp(_timer / _timeToRiseUp, 0.0f, 1.0f);
             float volume = glm::mix(0.0f, 1.0f, t);
             ChangeVolume(volume);
-            std::cout << "volume: " << volume << " t: " << t << std::endl;
         }else{
             _isRisingUp = false;
             _timer = 0.0f;

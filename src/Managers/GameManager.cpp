@@ -13,6 +13,7 @@ GameManager::GameManager() {
     float digPercentage = 0.60f;
     float fightPercentage = 0.40f;
 
+    float sum = 0;
     // Initialize _phaseTimes with calculated values for 10 rounds
     for (int i = 0; i < 10; ++i) {
         float digPhaseTime = digPhaseStartTime + i * 10;  // Dig phase starts at 30 and increases by 10 each round
@@ -83,7 +84,6 @@ float GameManager::GetPhaseTime()
 void GameManager::LateGame()
 {
     ENEMIESMANAGER.Reset();
-    _lateGame = true;
     _roundNumber = _phaseTimes.size() - 1;
     _currentPhase = Phase::DIG;
     _currentTime = 0.0f;
