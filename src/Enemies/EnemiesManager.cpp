@@ -302,7 +302,7 @@ void EnemiesManager::InitEnemyStats() {
 void EnemiesManager::addAttackToGUI(shared_ptr<Enemy> enemy)
 {
     shared_ptr<ImageRenderer> newArrow = make_shared<ImageRenderer>();
-    newArrow->Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(1789, 139)), 90, true, true);
+    newArrow->Init("res/Images/enemy_arrow.png", CoordsConverter::ConvertCoords(glm::vec2(1789, 139)), 90, true, true);
     HUD._attackSymbols.push_back(std::make_pair(newArrow, enemy));
 }
 
