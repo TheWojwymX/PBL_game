@@ -33,26 +33,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-0.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-0.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-1.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-1.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-2.mtl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-2.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Models/Compass/kompas-2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Compass/Compass.mtl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Compass/Compass.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Compass/Compass.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/test1.json" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/test1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/CompassController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/CompassController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/CompassController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/CompassController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/ShovelRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/ShovelRenderer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/Enemy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HUD/HUDMain.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/HUD/HUDMain.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,29 +72,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "CMake Application.SandBOX.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/RepoPBL/res",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CMakeSettings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;CMake Application.SandBOX.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/RepoPBL/res&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\RepoPBL\res" />

@@ -1,5 +1,4 @@
 #pragma once
-
 #define HUD HUDMain::getInstance()
 #include "Text/TextRenderer.h"
 #include "HUD/Image/ImageRenderer.h"
@@ -9,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include "CoordsConverter.h"
 
+class Enemy;
 class HUDMain {
 
 public:
@@ -38,6 +38,8 @@ public:
     ImageRenderer _waveArrowGreen;
 
     ImageRenderer _depthMeterBackground;
+
+    std::vector<std::pair<std::shared_ptr<ImageRenderer>, std::shared_ptr<Enemy>>> _attackSymbols;
 
     std::vector<std::shared_ptr<ImageRenderer>> _jetpackImages;
 

@@ -51,7 +51,8 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
     }
 }
 
-void Enemy::Die(){
+void Enemy::Die()
+{
     GAMEMANAGER.root->RemoveChild(_ownerNode);
     auto it = std::find(ENEMIESMANAGER._enemies.begin(), ENEMIESMANAGER._enemies.end(), shared_from_this());
     if (it != ENEMIESMANAGER._enemies.end()) {
@@ -114,6 +115,7 @@ void Enemy::EnemyAI()
     auto anim = _ownerNode->GetComponent<Animation>();
     if (anim->_enemyState == DEAD && anim->_toDelete)
     {
+        ENEMIESMANAGER.removeAttackFromGUI(shared_from_this());
         Die();
         return;
     }
