@@ -492,6 +492,7 @@ void ParticleGenerator::initiateParticleType() {
         gravity = glm::vec3(0.0f, 0.0f, 0.0f);
         tooltip = true;
         showTexture = true;
+        affectDirLight = false;
     }
     else if (particleType == "waspDie"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);

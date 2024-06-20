@@ -8,7 +8,7 @@
 
 GameManager::GameManager() {
     // Starting time for digging phase
-    float digPhaseStartTime = 30.0f;
+    float digPhaseStartTime = 60.0f;
     // Percentage separation
     float digPercentage = 0.60f;
     float fightPercentage = 0.40f;
@@ -88,6 +88,11 @@ void GameManager::LateGame()
     _currentPhase = Phase::DIG;
     _currentTime = 0.0f;
     UPGRADEMANAGER.UpgradeMax();
+}
+
+float GameManager::GetPhaseProgress()
+{
+    return _currentTime / GetPhaseTime();
 }
 
 void GameManager::Update() {

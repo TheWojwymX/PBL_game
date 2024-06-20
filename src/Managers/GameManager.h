@@ -33,6 +33,7 @@ public:
     bool IsUnderground();
     float GetPhaseTime();
     void LateGame();
+    float GetPhaseProgress();
 
     Phase GetPhase() {return _currentPhase;}
     float GetCurrentTime() { return _currentTime; }

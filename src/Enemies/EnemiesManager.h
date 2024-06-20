@@ -54,7 +54,7 @@ public:
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
 
-    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type);
+    void SpawnEnemy(int distanceToAvoid, glm::vec3 scale, int spawnerIndex, EnemyType type, float speedScale = 1.0f);
 
     void ChooseModelBasedOnDistance();
 
@@ -79,6 +79,7 @@ private:
     int _spawnerDistance;
     std::vector<glm::vec2> _spawnersPositions;
     std::vector<glm::ivec3> _roundsInfo;
+    float _spawnSpan;
 
     void InitEnemyStats();
 };

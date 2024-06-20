@@ -22,7 +22,7 @@ Sound::Sound(const std::string &name, const std::string &path, int id, SoundType
             _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._sfxVolume);
         }
         _volume = 1.0f;
-        AUDIOMANAGER._sounds.push_back(static_cast<const shared_ptr<Sound>>(this));
+        AUDIOMANAGER._sounds.push_back(this);
     }
 }
 

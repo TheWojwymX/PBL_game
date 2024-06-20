@@ -255,10 +255,16 @@ void TurretsManager::SpawnTurret(TurretType type) {
     casingParticles->Init();
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(casingParticles);
 
+    const char *texture;
+    if(_turretType == MINIGUN) texture = "res/Particle/Tooltips/minigun_lvl1.png";
+    else if(_turretType == SNIPER) texture = "res/Particle/Tooltips/sniper_lvl1.png";
+    else if(_turretType == RIFLE) texture = "res/Particle/Tooltips/rifle_lvl1.png";
+
     auto tooltipParticle = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "tooltipParticle");
-    tooltipParticle->SetOffset(glm::vec3(1.2f, 1.0f, 0.0f));
+    tooltipParticle->SetOffset(glm::vec3(1.0f, 1.0f, 0.0f));
     tooltipParticle->object = NODESMANAGER.getNodeByName(nameOfTurret);
     tooltipParticle->Init();
+    tooltipParticle->texture = Texture2D::loadTextureFromFile(texture, true);
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(tooltipParticle);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetPosition(glm::vec3(_blueprintTurret->GetTransform()->GetPosition().x,
@@ -527,9 +533,11 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
 void TurretsManager::InitTurretStats() {
     // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
     // fireRate, dmg, sideRange, forwardRange
-    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 60.0f, 40.0f));  // MINIGUN
+    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 60.0f, 50.0f));  // MINIGUN
     _turretStats.push_back(glm::vec4(2.0f, 5.0f, 50.0f, 100.0f)); // SNIPER
     _turretStats.push_back(glm::vec4(1.0f, 1.0f, 70.0f, 70.0f));  // RIFLE
+
+    _turretCostIncrease = 3;
 }
 
 void TurretsManager::Reload(const shared_ptr<Turret> &turret) {

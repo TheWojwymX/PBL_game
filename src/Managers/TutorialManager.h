@@ -34,7 +34,7 @@ public:
 
             "PRESS [RMB] TO THROW A FLARE.",
 
-            "DIG UP MATERIALS USING [LMB].",
+            "DIG UP MATERIALS [HOLD LMB].",
 
             "GO BACK FOR UPGRADES. HOLD [SPACE] TO USE JETPACK.",
 
