@@ -50,7 +50,7 @@ public:
 
     glm::vec3 CalcClosestDomePosition(shared_ptr<Enemy> enemy);
 
-    void SpawnEnemiesForRound(int roundNumber);
+    void SpawnEnemiesForRound();
 
     glm::vec3 CalcRandomSpawnPosition(glm::vec2 spawnerPos);
 
@@ -75,10 +75,10 @@ public:
 
 private:
     std::vector<EnemyStats> _enemyStats;
-    glm::vec3 _endlessSpawnRate;
     int _spawnerDistance;
     std::vector<glm::vec2> _spawnersPositions;
-    std::vector<glm::ivec3> _roundsInfo;
+    std::vector<glm::vec3> _roundsInfo;
+    glm::ivec3 _spawnedEnemies;
     float _spawnSpan;
 
     void InitEnemyStats();

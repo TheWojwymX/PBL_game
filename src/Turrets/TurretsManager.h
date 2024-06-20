@@ -81,6 +81,8 @@ public:
 
     void ChangeToSpawningMode();
 
+    int GetTurretCost(TurretType type) { return _turretCosts[type]; }
+
     void Reset();
     int _turretIndexAtRestart = 0;
     int _newTurretIndex = 0;

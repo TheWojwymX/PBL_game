@@ -121,9 +121,6 @@ void GameManager::InitPhase() {
             _roundNumber++;
         }
     }
-    else { // Phase::DEFEND
-        ENEMIESMANAGER.SpawnEnemiesForRound(_roundNumber);
-    }
 }
 
 void GameManager::Init() {

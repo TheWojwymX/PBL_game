@@ -18,6 +18,8 @@ void EnemiesManager::Update() {
         SpawnEnemy(2.5, glm::vec3(scale), 0, ANT);
     }
 
+    SpawnEnemiesForRound();
+
     for(int i = 0; i < _enemies.size(); i++)
     {
         if(_enemies[i] != nullptr)
@@ -42,10 +44,7 @@ void EnemiesManager::Init() {
         _enemies[i]->_destinationVector = CalcClosestDomePosition(_enemies[i]);
     }
 
-    // ant, beetle, wasp 
-    _endlessSpawnRate = glm::vec3(0.7f,0.1f,0.2f);
-
-    _spawnerDistance = 125;
+    _spawnerDistance = 100;
 
     _spawnersPositions = {
     glm::vec2(GAMEMANAGER._domePosition.x,GAMEMANAGER._domePosition.y + _spawnerDistance),
@@ -54,42 +53,56 @@ void EnemiesManager::Init() {
     glm::vec2(GAMEMANAGER._domePosition.x - _spawnerDistance,GAMEMANAGER._domePosition.y),
     };
 
+    _spawnedEnemies = glm::ivec3(0);
+
     //ant , beetle, wasp
     _roundsInfo = {
-        glm::ivec3(5, 0, 0), // 0 
-        glm::ivec3(5, 0, 0), // 1 
-        glm::ivec3(5, 0, 0), // 2 
-        glm::ivec3(5, 0, 0), // 3 
-        glm::ivec3(5, 0, 0), // 4 
-        glm::ivec3(5, 0, 0), // 5 
-        glm::ivec3(5, 0, 0), // 6 
-        glm::ivec3(5, 0, 0), // 7 
-        glm::ivec3(5, 0, 0), // 8 
-        glm::ivec3(5, 0, 0), // 9 
+        glm::vec3(20, 2, 5), // 0 
+        glm::vec3(5, 0, 0), // 1 
+        glm::vec3(5, 0, 0), // 2 
+        glm::vec3(5, 0, 0), // 3 
+        glm::vec3(5, 0, 0), // 4 
+        glm::vec3(5, 0, 0), // 5 
+        glm::vec3(5, 0, 0), // 6 
+        glm::vec3(5, 0, 0), // 7 
+        glm::vec3(5, 0, 0), // 8 
+        glm::vec3(5, 0, 0), // 9 
+        glm::vec3(0.7f,0.1f,0.2f) // endless
     };
     _spawnSpan = 0.5f;
 
     InitEnemyStats();
 }
 
-void EnemiesManager::SpawnEnemiesForRound(int roundNumber)
+void EnemiesManager::SpawnEnemiesForRound()
 {
-    glm::ivec3 spawns = _roundsInfo[roundNumber];
+    if (GAMEMANAGER.GetPhase() != Phase::DEFEND) return;
+    float spawnPortion = GAMEMANAGER.GetPhaseProgress() / _spawnSpan;
 
+    glm::ivec3 spawns = _roundsInfo[GAMEMANAGER.GetRoundNumber()] * spawnPortion;
+
+    if (spawns == _spawnedEnemies) return;
+
+    glm::ivec3 diff = spawns - _spawnedEnemies;
+    _spawnedEnemies = spawns;
+    std::cout << "diff " << diff.x << " " << diff.y << " " << diff.z << std::endl;
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> spawnerDist(0, 3); 
+    std::uniform_real_distribution<float> scaleRand(0.7f, 1.3f);
 
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < spawns[i]; ++j) {
-            std::uniform_real_distribution<float> dis(0.7f, 1.3f);
-            float scale = dis(gen);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < diff[i]; j++) {
+
+            float scale = scaleRand(gen);
 
             int spawnerIndex = spawnerDist(gen);  
 
             SpawnEnemy(_enemyStats[i].size * scale, glm::vec3(scale), spawnerIndex, static_cast<EnemyType>(i));
         }
     }
+
+
 }
 
 void EnemiesManager::ReturnToComingForNormalDestination(shared_ptr<Enemy> enemy)
