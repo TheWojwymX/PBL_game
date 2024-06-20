@@ -255,10 +255,16 @@ void TurretsManager::SpawnTurret(TurretType type) {
     casingParticles->Init();
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(casingParticles);
 
+    const char *texture;
+    if(_turretType == MINIGUN) texture = "res/Particle/Tooltips/minigun_lvl1.png";
+    else if(_turretType == SNIPER) texture = "res/Particle/Tooltips/sniper_lvl1.png";
+    else if(_turretType == RIFLE) texture = "res/Particle/Tooltips/rifle_lvl1.png";
+
     auto tooltipParticle = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "tooltipParticle");
-    tooltipParticle->SetOffset(glm::vec3(1.2f, 1.0f, 0.0f));
+    tooltipParticle->SetOffset(glm::vec3(1.0f, 1.0f, 0.0f));
     tooltipParticle->object = NODESMANAGER.getNodeByName(nameOfTurret);
     tooltipParticle->Init();
+    tooltipParticle->texture = Texture2D::loadTextureFromFile(texture, true);
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(tooltipParticle);
 
     NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->SetPosition(glm::vec3(_blueprintTurret->GetTransform()->GetPosition().x,

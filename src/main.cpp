@@ -331,7 +331,7 @@ int main(int, char**)
             LIGHTSMANAGER.dirDirection[2] = shadowDir.z;
 
             float near_plane = 0.2f, far_plane = 350.0f;
-            glm::mat4 lightProjection = glm::ortho(-250.0f, 250.0f, -350.0f, 100.0f, near_plane, far_plane);
+            glm::mat4 lightProjection = glm::ortho(-200.0f, 200.0f, -300.0f, 200.0f, near_plane, far_plane);
             glm::mat4 lightView = glm::lookAt(LIGHTSMANAGER.shadowLightPos, LIGHTSMANAGER.shadowLightCenter, glm::vec3(0.0, 1.0, 0.0));
             SHADOWMAP.SetLightProjection(lightProjection);
             SHADOWMAP.SetLightView(lightView);
@@ -455,7 +455,7 @@ int main(int, char**)
 
         // Start the Dear ImGui frame
         imguiMain->draw();
-//
+
 //        ImGui::Begin("Depth Map");
 //        ImGui::SetWindowSize(ImVec2(300, 300), ImGuiCond_Once);
 //        ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
@@ -479,7 +479,7 @@ int main(int, char**)
 //        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
 //
 //        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
-//
+
         imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

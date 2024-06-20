@@ -152,7 +152,7 @@ void main() {
             }
 }
 if(tooltip){
-if(p.Scale < 1.5 && !tooltipShrink){
+if(p.Scale < 0.7 && !tooltipShrink){
 p.Scale += dt * 10;
 }
 if(tooltipShrink && p.Scale > 0.05){

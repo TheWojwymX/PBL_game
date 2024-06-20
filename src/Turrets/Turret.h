@@ -54,8 +54,10 @@ private:
     float _sideRange;
     float _forwardRange;
 
+    const char *texture;
 
     void HandleSpawn();
     void UpdateModel();
     void SetSound();
+    void UpdateTooltip();
 };

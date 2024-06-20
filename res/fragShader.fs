@@ -69,13 +69,16 @@ float CalcPointLightIntensity(PointLight pointLight, vec3 fragPos);
 void main()
 {
     // Normalize normal and view direction vectors
-        vec3 norm = normalize(Normal);
-        vec3 viewDir = normalize(viewPos - FragPos);
-        vec3 spotLightColor = vec3(0.0);
-        vec3 pointLightColor = vec3(0.0);
-        float totalSpotlightIntensity = 0.0f;
-        float totalPointlightIntensity = 0.0f;
+    vec3 norm = normalize(Normal);
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 spotLightColor = vec3(0.0);
+    vec3 pointLightColor = vec3(0.0);
+    float totalSpotlightIntensity = 0.0f;
+    float totalPointlightIntensity = 0.0f;
     vec4 texColor = texture(texture_diffuse1, TexCoords);
+
+    // Determine if the pixel color is close to the specific color
+    bool isSpecificColor = distance(texColor.rgb, vec3(0.9098, 0.1882, 0.0824)) < 0.1;
 
     //directional light
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
@@ -115,7 +118,10 @@ void main()
 
     float shadow = ShadowCalculation(FragPosLightSpace, totalSpotlightIntensity, totalPointlightIntensity);
 
-    vec3 finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow;
+    vec3 finalColor = vec3(0.0);
+
+    if(isSpecificColor) finalColor = vec3(0.9098, 0.1882, 0.0824);
+    else if(!isSpecificColor) finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow;
 
     FragColor = vec4(finalColor, 1.0) * texColor;
 }
@@ -217,7 +223,6 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
     shadow /= 7.0;
 
     shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.16, 0.0, 1.0));
-
 
     return shadow;
 }
