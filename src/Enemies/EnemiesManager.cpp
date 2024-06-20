@@ -201,7 +201,7 @@ void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
     if(enemy == nullptr) return;
 
     if(!enemy->_isAtWalls){
-        if(glm::distance(enemy->GetOwnerPosition(), CalcClosestDomePosition(enemy)) < 0.1f){
+        if(glm::distance(enemy->GetOwnerPosition(), CalcClosestDomePosition(enemy)) < 0.5f){
             enemy->_isAtWalls = true;
             auto animation = enemy->GetOwnerNode()->GetComponent<Animation>();
             if(animation != nullptr && animation->_enemyState != DEAD)

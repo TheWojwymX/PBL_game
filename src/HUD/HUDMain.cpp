@@ -96,6 +96,24 @@ void HUDMain::Update() {
             int index = (percentHP - 1) / 5;
             _baseHPImages[index + 1]->Render();
         }
+
+        for(int i = 0; i < _attackSymbols.size(); i++)
+        {
+            auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
+            auto enemyPosition = _attackSymbols[i].second->GetOwnerPosition();
+
+            glm::vec3 directionToEnemy = glm::normalize(glm::vec3(enemyPosition.x - camera->GetPosition().x, 0.0f, enemyPosition.z - camera->GetPosition().z));
+            glm::vec3 forward = glm::normalize(glm::vec3(camera->GetFrontVector().x, 0.0f, camera->GetFrontVector().z));
+            float angle = glm::degrees(glm::acos(glm::dot(forward, directionToEnemy)));
+
+            if (glm::cross(forward, directionToEnemy).y < 0) {
+                angle = 360.0f - angle;
+            }
+
+            _attackSymbols[i].first->SetRotationAngle(angle + 90);
+            _attackSymbols[i].first->Render();
+        }
+
     }
     if(_shouldShowCrosshair && _isAfterTutorialCrosshair){
         _crosshairImage.Render();
@@ -135,23 +153,6 @@ void HUDMain::Update() {
         WaveTimerGUIManager();
 
         //TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    }
-
-    for(int i = 0; i < _attackSymbols.size(); i++)
-    {
-        auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
-        auto enemyPosition = _attackSymbols[i].second->GetOwnerPosition();
-
-        glm::vec3 directionToEnemy = glm::normalize(glm::vec3(enemyPosition.x - camera->GetPosition().x, 0.0f, enemyPosition.z - camera->GetPosition().z));
-        glm::vec3 forward = glm::normalize(glm::vec3(camera->GetFrontVector().x, 0.0f, camera->GetFrontVector().z));
-        float angle = glm::degrees(glm::acos(glm::dot(forward, directionToEnemy)));
-
-        if (glm::cross(forward, directionToEnemy).y < 0) {
-            angle = 360.0f - angle;
-        }
-
-        _attackSymbols[i].first->SetRotationAngle(angle + 90);
-        _attackSymbols[i].first->Render();
     }
 
     glEnable(GL_DEPTH_TEST);

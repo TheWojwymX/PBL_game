@@ -3,7 +3,7 @@
 
 void PDAPage::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
-    SetCorners(glm::vec2(-25, -25), glm::vec2(25, 25));
+    SetCorners(CoordsConverter::ConvertCoords(glm::vec2(462, 770)), CoordsConverter::ConvertCoords(glm::vec2(1457, 309)));
     Page::Init();
 }
 

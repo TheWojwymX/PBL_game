@@ -64,6 +64,9 @@ void PageManager::CheckInputs() {
     } else if (INPUT.IsKeyPressed(GLFW_KEY_ESCAPE) && _isInPage) {
         _isInPage = false;
         CloseAllPages();
+        if(TURRETSMANAGER._isInTurretChoiceMenu){
+            NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>()->HideImmediately();
+        }
         GAMEMANAGER.Unpause();
         _isInUpgradeMenu = false;
     }

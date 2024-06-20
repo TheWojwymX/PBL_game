@@ -26,7 +26,7 @@ public:
     float _distanceToStop = 0.1;
     float _slalomTime = 0.0f;
     float _attackTimer = _attackFrequency;
-    float _slalomAmplitude = 0.01;
+    float _slalomAmplitude = 1.0f;
     float _slalomFrequency = 1.0f;
 
     Enemy();

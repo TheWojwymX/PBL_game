@@ -26,13 +26,13 @@ void Enemy::Deserialize(const nlohmann::json &jsonData) {
 
 void Enemy::WalkToDestination(glm::vec3 *destination) {
 
-    if(_isAtWalls) return;
+    if (_isAtWalls) return;
 
-    if(destination != nullptr){
+    if (destination != nullptr) {
         _destinationVector = *destination;
     }
 
-    if(glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop && !_shouldStay){
+    if (glm::distance(_destinationVector, _ownerTransform->GetPosition()) > _distanceToStop && !_shouldStay) {
 
         _slalomTime += TIME.GetDeltaTime();
         float sideMovement = sin(_slalomTime * _slalomFrequency) * _slalomAmplitude;
@@ -40,14 +40,14 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
 
         glm::vec3 currentPos = _ownerTransform->GetPosition();
         glm::vec3 forwardMovement = Transform::MoveTowards(currentPos, _destinationVector, _speed * TIME.GetDeltaTime()) - currentPos;
+        glm::vec3 effectiveMovement;
 
-        glm::vec3 effectiveMovement = forwardMovement + sideVector;
-        glm::vec3 movementDirection = glm::normalize(effectiveMovement);
-        movementDirection.y = 0.0f;
+        effectiveMovement = forwardMovement + sideVector * TIME.GetDeltaTime();
 
-        _ownerTransform->LookAt(movementDirection);
+        effectiveMovement.y = 0.0f;
+
+        _ownerTransform->LookAt(glm::normalize(effectiveMovement));
         _ownerTransform->SetPosition(currentPos + effectiveMovement);
-
     }
 }
 

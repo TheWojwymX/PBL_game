@@ -232,7 +232,7 @@ int main(int, char**)
 
     GAMEMANAGER.PlayMenuMusic();
 
-    bool antialiasing = true;
+    //bool antialiasing = true;
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
@@ -250,7 +250,7 @@ int main(int, char**)
             WEATHERMANAGER.Reset();
         }
 
-        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
+/*        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
             if(antialiasing){
                 glDisable(GL_MULTISAMPLE);
                 antialiasing = false;
@@ -261,7 +261,7 @@ int main(int, char**)
                 std::cout << "wlaczono antialiasing" << std::endl;
             }
 
-        }
+        }*/
 
         // Calculate deltaTime
         TIME.Update();
