@@ -34,7 +34,7 @@ public:
     void Deserialize(const nlohmann::json &jsonData) override;
 
     void WalkToDestination(glm::vec3 *destination = nullptr);
-    void TakeDamage(int amount);
+    void TakeDamage(float amount);
     void Die();
     void AttackDome();
     void EnemyAI();
