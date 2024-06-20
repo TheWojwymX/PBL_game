@@ -23,7 +23,7 @@ void AudioManager::Init() {
 void AudioManager::Update()
 {
 
-    for(std::shared_ptr<Sound> sound : _sounds){
+    for(Sound* sound : _sounds){
         sound->Update();
     }
 

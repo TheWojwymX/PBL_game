@@ -41,7 +41,7 @@ public:
     std::vector<ma_sound*> _activeSounds;
     void CleanupFinishedSounds();
 
-    std::vector<std::shared_ptr<Sound>> _sounds;
+    std::vector<Sound*> _sounds;
 
 };
 
