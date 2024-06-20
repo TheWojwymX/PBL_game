@@ -117,7 +117,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
 		HUD/CoordsConverter.cpp
 		HUD/CoordsConverter.h Component/CompassController.h Component/CompassController.cpp
 		HUD/Pages/RestartPage/RestartPage.cpp
-		HUD/Pages/RestartPage/RestartPage.h)
+		HUD/Pages/RestartPage/RestartPage.h
+		Managers/TransparentRenderer.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

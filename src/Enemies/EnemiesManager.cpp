@@ -151,6 +151,7 @@ void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
             {
                 enemy->GetOwnerNode()->GetComponent<Animation>()->_enemyState=state::ATTACK;
             }
+            addAttackToGUI(enemy);
         }
     }
 }
@@ -292,4 +293,26 @@ void EnemiesManager::InitEnemyStats() {
     _enemyStats.push_back(ant);
     _enemyStats.push_back(beetle);
     _enemyStats.push_back(wasp);
+}
+
+void EnemiesManager::addAttackToGUI(shared_ptr<Enemy> enemy)
+{
+    shared_ptr<ImageRenderer> newArrow = make_shared<ImageRenderer>();
+    newArrow->Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(1789, 139)), 90, true, true);
+    auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
+    HUD._attackSymbols.push_back(std::make_pair(newArrow, enemy));
+}
+
+void EnemiesManager::removeAttackFromGUI(std::shared_ptr<Enemy> enemy)
+{
+    auto it = std::find_if(HUD._attackSymbols.begin(), HUD._attackSymbols.end(),
+                           [&enemy](const std::pair<std::shared_ptr<ImageRenderer>, std::shared_ptr<Enemy>>& pair)
+                           {
+                               return pair.second == enemy;
+                           });
+
+    if (it != HUD._attackSymbols.end())
+    {
+        HUD._attackSymbols.erase(it);
+    }
 }

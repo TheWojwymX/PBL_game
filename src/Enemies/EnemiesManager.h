@@ -76,6 +76,9 @@ public:
 
     void Reset();
 
+    void addAttackToGUI(shared_ptr<Enemy> enemy);
+    void removeAttackFromGUI(std::shared_ptr<Enemy> enemy);
+
     int _newEnemyIndex = 1;
 
     std::vector<std::shared_ptr<Node>> _enemiesParticles;

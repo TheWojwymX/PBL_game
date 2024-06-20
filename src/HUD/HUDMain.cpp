@@ -21,6 +21,7 @@ void HUDMain::Init() {
     _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
+
     _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(343, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
 
     for(int i = 0; i <= 20; i++){
@@ -30,6 +31,7 @@ void HUDMain::Init() {
         jetpack->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1726, 946)), CoordsConverter::ConvertCoords(glm::vec2(1894, 319)), true, false);
         _jetpackImages.push_back(jetpack);
     }
+
 
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
@@ -133,6 +135,23 @@ void HUDMain::Update() {
         WaveTimerGUIManager();
 
         //TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    }
+
+    for(int i = 0; i < _attackSymbols.size(); i++)
+    {
+        auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
+        auto enemyPosition = _attackSymbols[i].second->GetOwnerPosition();
+
+        glm::vec3 directionToEnemy = glm::normalize(glm::vec3(enemyPosition.x - camera->GetPosition().x, 0.0f, enemyPosition.z - camera->GetPosition().z));
+        glm::vec3 forward = glm::normalize(glm::vec3(camera->GetFrontVector().x, 0.0f, camera->GetFrontVector().z));
+        float angle = glm::degrees(glm::acos(glm::dot(forward, directionToEnemy)));
+
+        if (glm::cross(forward, directionToEnemy).y < 0) {
+            angle = 360.0f - angle;
+        }
+
+        _attackSymbols[i].first->SetRotationAngle(angle + 90);
+        _attackSymbols[i].first->Render();
     }
 
     glEnable(GL_DEPTH_TEST);
