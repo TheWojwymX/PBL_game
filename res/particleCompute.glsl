@@ -127,6 +127,10 @@ void main() {
         Particle p = particles[id];
 
         if (p.Life > 0.0f) {
+                if(tooltip){
+                p.Position.xyz = nodePosition - (cameraForward * 0.7);
+                }
+
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
             // Update velocity with gravity
@@ -155,8 +159,9 @@ if(tooltip){
 if(p.Scale < 0.7 && !tooltipShrink){
 p.Scale += dt * 10;
 }
-if(tooltipShrink && p.Scale > 0.05){
+if(tooltipShrink && p.Scale > 0.0){
 p.Scale -= dt * 10;
+if(p.Scale < 0.0) p.Life = 0.0;
 }
 }
 if(!tooltipSpawn)

@@ -261,7 +261,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     else if(_turretType == RIFLE) texture = "res/Particle/Tooltips/rifle_lvl1.png";
 
     auto tooltipParticle = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "tooltipParticle");
-    tooltipParticle->SetOffset(glm::vec3(1.0f, 1.0f, 0.0f));
+    tooltipParticle->SetOffset(glm::vec3(0.0f, 0.8f, 0.0f));
     tooltipParticle->object = NODESMANAGER.getNodeByName(nameOfTurret);
     tooltipParticle->Init();
     tooltipParticle->texture = Texture2D::loadTextureFromFile(texture, true);
