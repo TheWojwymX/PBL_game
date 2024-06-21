@@ -80,6 +80,8 @@ public:
 
     void LoseGame();
 
+    void GoToMainMenu();
+
 private:
     int _roundNumber = 0;
     Phase _currentPhase = Phase::DIG; 

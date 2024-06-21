@@ -32,6 +32,7 @@ Sound::~Sound()
 }
 
 void Sound::Update() {
+
     if(_isFadingAway){
         if(_timer < _timeToFadeAway){
             _timer += TIME.GetDeltaTime();
@@ -151,13 +152,16 @@ float Sound::CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNo
 
 
 void Sound::FadeAway(float time) {
+    _timer = 0;
     _timeToFadeAway = time;
     _isFadingAway = true;
 }
 
 void Sound::RiseUp(float time, shared_ptr<Node> sourceNode) {
-    PlaySound(sourceNode, 0);
+    _volume = 0.0f;
+    _timer = 0;
     _timeToRiseUp = time;
+    PlaySound(sourceNode, 0);
     _isRisingUp = true;
 }
 

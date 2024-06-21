@@ -236,20 +236,6 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
-        if (INPUT.IsKeyPressed(GLFW_KEY_0)) {
-            NODESMANAGER.getNodeByName("blockManager")->GetComponent<BlockManager>()->Reset();
-            LIGHTSMANAGER.Reset();
-            TURRETSMANAGER.Reset();
-            ENEMIESMANAGER.Reset();
-            GAMEMANAGER.Reset();
-            TUTORIALMANAGER.Reset();
-            DOMEMANAGER.Reset();
-            UPGRADEMANAGER.Reset();
-            NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->Reset();
-            PAGEMANAGER.Reset();
-            WEATHERMANAGER.Reset();
-        }
-
 /*        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
             if(antialiasing){
                 glDisable(GL_MULTISAMPLE);
@@ -267,6 +253,11 @@ int main(int, char**)
         TIME.Update();
 
         if(!GAMEMANAGER._isInMainMenu) {
+
+            if(INPUT.IsKeyPressed(GLFW_KEY_0)){
+                GAMEMANAGER.GoToMainMenu();
+            }
+
             //debugging adding money
             if (INPUT.IsKeyPressed(77)) {
                 GAMEMANAGER.AddPlastic(10);

@@ -197,6 +197,10 @@ void GameManager::Reset() {
 
 void GameManager::PlayMenuMusic() {
     if (_playerNode == nullptr) _playerNode = NODESMANAGER.getNodeByName("player");
+
+    if (ma_sound_seek_to_pcm_frame(&RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->_sound, 0) != MA_SUCCESS) {
+        std::cerr << "Failed to rewind sound: " << RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->_name << std::endl;
+    }
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->SetLooping(true);
     RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->RiseUp(3, _playerNode);
 }
@@ -223,4 +227,14 @@ void GameManager::LoseGame() {
     HUD.DisableHUD();
     PAGEMANAGER.CloseAllOtherPages(PAGEMANAGER._restartPage);
     EnableMouse();
+}
+
+void GameManager::GoToMainMenu() {
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->_isRisingUp = false;
+    RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->_isFadingAway = false;
+    RestartGame();
+    EnableMouse();
+    _isInMainMenu = true;
+    PAGEMANAGER.CloseAllOtherPages(PAGEMANAGER._mainMenuPage);
+    PlayMenuMusic();
 }

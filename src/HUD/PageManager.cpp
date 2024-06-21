@@ -52,6 +52,9 @@ void PageManager::Update() {
 }
 
 void PageManager::CheckInputs() {
+
+    if(GAMEMANAGER._isInMainMenu == true) return;
+
     if (INPUT.IsKeyPressed(GLFW_KEY_ESCAPE) && !_isInPage) {
         _pauseMenuPage->_shouldRender = !_pauseMenuPage->_shouldRender;
         if (_pauseMenuPage->_shouldRender) {
