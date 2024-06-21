@@ -12,7 +12,7 @@ void HUDMain::Init() {
     TEXTRENDERER.Init();
 
     _crosshairImage.Init("res/Images/crosshair041.png", glm::vec2(0, 0), 0, true, false);
-    _materialsBackground.Init("res/Images/UpgradeMenus/update_background1.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(170, 967)), true, false);
+    _materialsBackground.Init("res/Images/HUD/background_3.1.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(177, 967)), true, false);
     _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(74, 1009)), 0, true, false);
     _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
     _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
@@ -22,7 +22,7 @@ void HUDMain::Init() {
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
 
-    _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(343, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
+    _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(206, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
 
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> jetpack = make_shared<ImageRenderer>();

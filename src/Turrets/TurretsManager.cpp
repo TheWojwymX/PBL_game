@@ -69,7 +69,7 @@ void TurretsManager::PlayerActions() {
 
     if (INPUT.IsKeyPressed(GLFW_KEY_4) && _PDAController->_isHidden && !_PDAController->_playHideAnim &&
         !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && playerPosY >= GAMEMANAGER._groundLevel &&
-        !_isPlayerInMovingMode) {
+        !_isPlayerInMovingMode && HUD._isAfterTutorialCrosshair) {
         _PDAController->_playShowAnim = true;
         HUD._shouldShowCrosshair = false;
         PAGEMANAGER._PDAPage->DisplayPDAPage();

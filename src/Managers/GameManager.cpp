@@ -220,6 +220,7 @@ void GameManager::RestartGame() {
     UPGRADEMANAGER.Reset();
     NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->Reset();
     PAGEMANAGER.Reset();
+    WEATHERMANAGER.Reset();
     DisableMouse();
 }
 

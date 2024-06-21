@@ -102,11 +102,6 @@ void PageManager::CheckInputs() {
         if (!_isInPage) {
             _isInPage = true;
             _turretUpgradeMenu->_shouldRender = true;
-        }
-        else if(TUTORIALMANAGER._actualMessage == 8){
-            CloseAllPages();
-            _isInPage = true;
-            _playerUpgradeMenu->_shouldRender = true;
         }else {
             _isInPage = false;
             CloseAllPages();

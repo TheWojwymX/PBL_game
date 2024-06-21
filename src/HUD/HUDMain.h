@@ -85,8 +85,8 @@ public:
     bool _isPlasticInAnim = false;
     float _plasticAnimTimer = 0.0f;
     float _timeOfAnim = 0.2;
-    float _maxScale = 2.5f;
-    float _defaultScale = 2.0f;
+    float _maxScale = 2.3f;
+    float _defaultScale = 1.7f;
 
     void Reset();
 

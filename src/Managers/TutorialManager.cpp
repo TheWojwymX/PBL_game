@@ -166,7 +166,7 @@ void TutorialManager::Update() {
             }
             break;
 
-        //konczy sie jak wejdzie na poziom -30
+        //konczy sie jak oddali sie od dziury na odleglosc 30
         case 10:
             ControllHud(1,1,1,1,1,0);
             if(_timer < 5){
@@ -175,7 +175,8 @@ void TutorialManager::Update() {
                 HUD._isTutorialNeededAtMoment = false;
                 _timer = 0;
                 _isFreePlay = true;
-                if(_player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel - 30){
+                if(_player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && glm::distance(_player->GetTransform()->GetPosition(),
+                                  glm::vec3(GAMEMANAGER._domePosition.x, _player->GetTransform()->GetPosition().y, GAMEMANAGER._domePosition.y)) > 30){
                     DisplayAndChangeMessage();
                     HUD._shouldShowDepth = true;
                 }
@@ -185,6 +186,20 @@ void TutorialManager::Update() {
         //konczy sie po 5 sekundach
         case 11:
             ControllHud(1,1,1,1,1,1);
+            if(_timer < 5){
+                _timer += TIME.GetDeltaTime();
+            }else{
+                HUD._isTutorialNeededAtMoment = false;
+                std::cout << "bedzie sprawdzac warunek pojawiaenia sie wiadomosci o kompasie " << std::endl;
+                if(NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->IsWithinHoleRange()){
+                    _timer = 0;
+                    DisplayAndChangeMessage();
+                }
+            }
+            break;
+        //konczy sie po 5 sekundach
+        case 12:
+            std::cout << "zamknie sie za " << _timer << std::endl;
             if(_timer < 5){
                 _timer += TIME.GetDeltaTime();
             }else{
@@ -238,7 +253,7 @@ void TutorialManager::DisplayAndChangeMessage() {
         _actualMessage++;
     }
     else{
-        _actualMessage = 11;
+        _actualMessage = 12;
     }
     _isAfterWarning = false;
 }

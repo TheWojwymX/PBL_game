@@ -229,7 +229,7 @@ void PlayerController::JetpackInput() {
     auto now = std::chrono::steady_clock::now();
 
     // Check if the space key is currently held down
-    if (INPUT.GetKeyDown(GLFW_KEY_SPACE)) {
+    if (INPUT.GetKeyDown(GLFW_KEY_SPACE) && HUD._isAfterTutorialFuel) {
         if (!_spaceKeyWasPressed) {
             // If the space key was not pressed before, update the last press time
             _lastSpacePressTime = now;

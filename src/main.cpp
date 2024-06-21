@@ -275,10 +275,11 @@ int main(int, char**)
                 UPGRADEMANAGER.Update();
                 DOMEMANAGER.Update();
                 GAMEMANAGER.Update();
+                WEATHERMANAGER.Update();
             }
             TUTORIALMANAGER.Update();
             LIGHTSMANAGER.Update();
-            WEATHERMANAGER.Update();
+
 
             // Input
             GAMEMANAGER.root->Input();

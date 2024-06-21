@@ -62,7 +62,6 @@ void CompassController::RealUpdate() {
 
     if(!IsWithinHoleRange() && !_isHidden && !IsDuringAnyAnim() && !_isOpened){
         _playOpenAnim = true;
-        std::cout << "wykonuje sie" << std::endl;
     }else if(IsWithinHoleRange() && !_isHidden && !IsDuringAnyAnim() && _isOpened){
         _playCloseAnim = true;
     }
