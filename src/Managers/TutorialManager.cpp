@@ -275,7 +275,7 @@ void TutorialManager::ControllHud(bool crosshair, bool materials, bool hp, bool 
 }
 
 void TutorialManager::Reset() {
-    _player->GetTransform()->SetPosition(glm::vec3(46.614, 305.5, 60.652));
+    _player->GetTransform()->SetPosition(glm::vec3(49.5, 305.5, 60));
     _firstEnemySpawned = false;
     _isFreePlay = false;
     _isAfterWarning = false;
