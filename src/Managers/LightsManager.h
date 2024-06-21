@@ -47,7 +47,7 @@ public:
     void TurnOffGlowsticks();
     void AssignNewGlowstickSettings(char level);
 
-    int glowstickCount = 0;
+    int _glowstickCount = 0;
 
     float flashlightConstant = 10.0f;
     float flashlightLinear = 0.233f;
@@ -118,14 +118,13 @@ private:
     float flashlightOuterCutOff = 24.5f;
 
     glm::vec3 glowstickColor = glm::vec3(1.0f);
-    std::vector<glm::vec3> glowstickColors;
+    std::vector<glm::vec3> _glowstickColors;
 
     int maxLights = 50;
     float maxDistance = 60;
 
     std::vector<std::shared_ptr<Node>> _glowsticksNodes;
     std::vector<VisibleLight> _visibleGlowsticks;
-    int _oldAmountOfGlowsticks = 0;
 
     std::vector<ActiveShot> _activeShots;
     std::vector<VisibleLight> _visibleShots;
@@ -141,7 +140,6 @@ private:
     void SortVisibleLights(std::vector<VisibleLight>& lights);
     void UpdateShadersPointLights(const std::vector<VisibleLight>& pointLights);
     void UpdateShaderPointLight(std::shared_ptr<Shader> shader, string name, glm::vec3 pos, glm::vec3 color, LightSource lightSource);
-
 
     glm::vec3 GenerateRandomColor();
 };

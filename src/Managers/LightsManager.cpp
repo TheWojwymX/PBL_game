@@ -21,13 +21,9 @@ void LightsManager::Update() {
 
 void LightsManager::Reset()
 {
-    _oldAmountOfGlowsticks = glowstickCount;
-    AssignNewGlowstickSettings(0);
     TurnOffGlowsticks();
-    for (int i = 0; i < _glowsticksNodes.size(); i++) {
-        if (_glowsticksNodes[i] == nullptr) continue;
-        NODESMANAGER.getNodeByName("root")->RemoveChild(_glowsticksNodes[i]);
-    }
+    _glowstickCount = 0;
+    AssignNewGlowstickSettings(0);
 }
 
 void LightsManager::InitLights() {
@@ -202,8 +198,8 @@ void LightsManager::UpdateShaders(){
 }
 
 void LightsManager::AddGlowstick() {
-    glowstickCount++;
-    std::string glowstickNodeName = "Glowstick" + to_string(glowstickCount);
+    _glowstickCount++;
+    std::string glowstickNodeName = "Glowstick" + to_string(_glowstickCount);
     shared_ptr<Node> glowstickNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), glowstickNodeName);
     _glowsticksNodes.push_back(glowstickNode);
     glowstickNode->GetTransform()->SetPosition(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
@@ -220,7 +216,7 @@ void LightsManager::AddGlowstick() {
     glowstickNode->AddComponent(glowstickMovement);
     glowstickMovement->Init();
 
-    glowstickColors.push_back(GenerateRandomColor());
+    _glowstickColors.push_back(GenerateRandomColor());
 
     glowstickShader->use();
     glowstickShader->setVec3("glowstickColor", glowstickColor);
@@ -250,9 +246,9 @@ void LightsManager::UpdateGlowsticks() {
             int index = std::distance(_glowsticksNodes.begin(), std::find(_glowsticksNodes.begin(), _glowsticksNodes.end(), glowstickNode));
 
             // Ensure index is valid for accessing glowstickColors
-            if (index >= 0 && index < glowstickColors.size()) {
+            if (index >= 0 && index < _glowstickColors.size()) {
                 // Add visible glowstick to _visibleGlowsticks
-                _visibleGlowsticks.emplace_back(glowstickPosition, glowstickColors[index], distToCamera, LightSource::GLOWSTICK);
+                _visibleGlowsticks.emplace_back(glowstickPosition, _glowstickColors[index], distToCamera, LightSource::GLOWSTICK);
             }
         }
     }
@@ -263,6 +259,11 @@ void LightsManager::UpdateGlowsticks() {
 
 
 void LightsManager::TurnOffGlowsticks() {
+    _glowstickColors.clear();
+    _visibleGlowsticks.clear();
+    _activeShots.clear();
+    _visibleShots.clear();
+
     for(int i = 0; i < maxLights; i++) {
         string name = "pointLights[" + to_string(i) + "]";
         instancedSandShader->use();
@@ -278,13 +279,12 @@ void LightsManager::TurnOffGlowsticks() {
         shovelShader->setBool(name + ".isActive", false);
     }
 
-    for(int i = 0; i < glowstickCount; i++) {
-        string name = "pointLights[" + to_string(i) + "]";
-        auto thisGlowstick = NODESMANAGER.getNodeByName("Glowstick" + to_string(i + 1));
-        if(thisGlowstick != nullptr) {
+    for (const auto& thisGlowstick : _glowsticksNodes) {
+        if (thisGlowstick != nullptr) {
             GAMEMANAGER.root->RemoveChild(thisGlowstick);
         }
     }
+    _glowsticksNodes.clear();
 }
 
 void LightsManager::UpdateActiveShots() {

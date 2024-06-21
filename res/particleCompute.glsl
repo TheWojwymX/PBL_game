@@ -136,7 +136,7 @@ void main() {
             vec3 normalizedDirection = direction / magnitude;
     
             // Scale the normalized direction by 0.7
-            vec3 moveVector = normalizedDirection * 0.7;
+            vec3 moveVector = normalizedDirection * 0.9;
     
             // Compute the final position
             p.Position.xyz = nodePosition + moveVector;
