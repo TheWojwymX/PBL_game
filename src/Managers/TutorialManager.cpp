@@ -24,6 +24,22 @@ void TutorialManager::Update() {
     //std::cout << "tutorial skonczony: " << _isTutorialEnded << "   aktualna wiadomosc: " << _actualMessage << std::endl;
 
     if(_isTutorialEnded) return;
+
+    if(_isSpecialMessage){
+        if(_specialMessageTimer < 5){
+            _specialMessageTimer += TIME.GetDeltaTime();
+            std::cout << _specialMessageTimer << std::endl;
+        }else{
+            _specialMessageTimer = 0.0f;
+            _isSpecialMessage = false;
+            if(_actualMessage <= 9){
+                HUD._actualText = _messages[_actualMessage - 1];
+            }else{
+                SetFalseTutorialNeededAtMoment();
+            }
+        }
+    }
+
     switch (_actualMessage) {
         //konczy sie po wyladowaniu
         case 0:
@@ -73,7 +89,7 @@ void TutorialManager::Update() {
             ControllHud(1,1,0,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
             if(!TURRETSMANAGER._isInBlueprintMode && HUD._isTutorialNeededAtMoment == true){
-                HUD._isTutorialNeededAtMoment = false;
+                SetFalseTutorialNeededAtMoment();
             }
 
             else if(ENEMIESMANAGER._enemies[0] == nullptr){
@@ -89,7 +105,7 @@ void TutorialManager::Update() {
             ControllHud(1,1,1,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
             if(TURRETSMANAGER._isPlayerInMovingMode && HUD._isTutorialNeededAtMoment) {
-                HUD._isTutorialNeededAtMoment = false;
+                SetFalseTutorialNeededAtMoment();
             }
             else if(ENEMIESMANAGER._enemies[1] == nullptr){
                 DisplayAndChangeMessage();
@@ -132,7 +148,7 @@ void TutorialManager::Update() {
         case 7:
             ControllHud(1,1,1,1,0,0);
             if(_player->GetComponent<PlayerController>()->_isUsingJetpack){
-                HUD._isTutorialNeededAtMoment = false;
+                SetFalseTutorialNeededAtMoment();
             }
             else if(_player->GetTransform()->GetPosition().y >= 299.5 && _player->GetComponent<PlayerController>()->_isGrounded){
                 DisplayAndChangeMessage();
@@ -173,15 +189,16 @@ void TutorialManager::Update() {
 
         //konczy sie jak oddali sie od dziury na odleglosc 30
         case 10:
+            CheckEnemiesEncounter();
             ControllHud(1,1,1,1,1,0);
             if(_timer < 5){
                 _timer += TIME.GetDeltaTime();
             }else{
-                HUD._isTutorialNeededAtMoment = false;
+                SetFalseTutorialNeededAtMoment();
                 _timer = 0;
                 _isFreePlay = true;
                 if(_player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && glm::distance(_player->GetTransform()->GetPosition(),
-                                  glm::vec3(GAMEMANAGER._domePosition.x, _player->GetTransform()->GetPosition().y, GAMEMANAGER._domePosition.y)) > 30){
+                                  glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel, GAMEMANAGER._domePosition.y)) > 30){
                     DisplayAndChangeMessage();
                     HUD._shouldShowDepth = true;
                 }
@@ -190,12 +207,12 @@ void TutorialManager::Update() {
 
         //konczy sie po 5 sekundach
         case 11:
+            CheckEnemiesEncounter();
             ControllHud(1,1,1,1,1,1);
             if(_timer < 5){
                 _timer += TIME.GetDeltaTime();
             }else{
-                HUD._isTutorialNeededAtMoment = false;
-                std::cout << "bedzie sprawdzac warunek pojawiaenia sie wiadomosci o kompasie " << std::endl;
+                SetFalseTutorialNeededAtMoment();
                 if(NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->IsWithinHoleRange()){
                     _timer = 0;
                     DisplayAndChangeMessage();
@@ -204,19 +221,54 @@ void TutorialManager::Update() {
             break;
         //konczy sie po 5 sekundach
         case 12:
-            std::cout << "zamknie sie za " << _timer << std::endl;
+            CheckEnemiesEncounter();
             if(_timer < 5){
                 _timer += TIME.GetDeltaTime();
             }else{
                 _timer = 0;
-                HUD._isTutorialNeededAtMoment = false;
-                _isTutorialEnded = true;
+                SetFalseTutorialNeededAtMoment();
+                if(_metWasp && _metBeetle){
+                    _isTutorialEnded = true;
+                }
             }
             break;
         default:
             break;
     }
 }
+
+void TutorialManager::SetFalseTutorialNeededAtMoment(){
+    if(_specialMessageTimer <= 0){
+        HUD._isTutorialNeededAtMoment = false;
+    }
+}
+
+void TutorialManager::CheckEnemiesEncounter(){
+
+    //std::cout << "sprawdza warunek przeciwnikow" << std::endl;
+
+    if(!_metBeetle){
+        for(shared_ptr<Enemy> enemy : ENEMIESMANAGER._enemies){
+            if(enemy == nullptr) continue;
+            if(enemy->_enemyType == BEETLE){
+                _metBeetle = true;
+                DisplaySpecialMessage(_specialMessages[1]);
+                std::cout << "zuk spotkany, czas timer to: "<< _specialMessageTimer << std::endl;
+            }
+        }
+    }
+    if(!_metWasp){
+        for(shared_ptr<Enemy> enemy : ENEMIESMANAGER._enemies){
+            if(enemy == nullptr) continue;
+            if(enemy->_enemyType == WASP){
+                _metWasp = true;
+                DisplaySpecialMessage(_specialMessages[2]);
+                std::cout << "osa spotkana, czas timer to: "<< _specialMessageTimer << std::endl;
+            }
+        }
+    }
+}
+
 
 void TutorialManager::SkipTutorial() {
     _isTutorialEnded = true;
@@ -236,6 +288,9 @@ void TutorialManager::SkipTutorial() {
     HUD.EnableHUD();
 
     _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = true;
+
+    _metBeetle = true;
+    _metWasp = true;
 }
 
 void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){
@@ -264,9 +319,11 @@ void TutorialManager::DisplayAndChangeMessage() {
 }
 
 void TutorialManager::DisplaySpecialMessage(string message) {
+    _isSpecialMessage = true;
     HUD._actualText = message;
     HUD._isTutorialNeededAtMoment = true;
     HUD._shouldShowTutorial = true;
+    _specialMessageTimer = 0.0f;
 }
 
 bool TutorialManager::WarningSystem(int messageNumber) {
@@ -277,7 +334,6 @@ bool TutorialManager::WarningSystem(int messageNumber) {
         return true;
     }
     else if(glm::distance(_messagesPositions[messageNumber], _player->GetTransform()->GetPosition()) > 30){
-        //DisplaySpecialMessage(_specialMessages[1]);
         SkipTutorial();
         return true;
     }
@@ -315,4 +371,6 @@ void TutorialManager::Reset() {
     _player->GetComponent<PlayerController>()->SetGravity(0);
     _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = false;
     _player->GetComponent<PlayerController>()->_velocity.y = 0;
+    _metBeetle = false;
+    _metWasp = false;
 }

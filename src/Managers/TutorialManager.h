@@ -54,8 +54,9 @@ public:
 
             "TURN BACK OR TUTORIAL WILL BE CANCELED!",
 
-            "As you prefer. The training is interrupted. I hope \n"
-            "you know what you're doing. Good luck."
+            "WATCH OUT THAT BEETLE! YOU NEED SNIPER TO DEAL WITH IT!",
+
+            "LOOK AT THAT WASP! CALL RIFLEMAN TO KILL IT!"
     };
 
     std::vector<glm::vec3> _messagesPositions{
@@ -95,6 +96,16 @@ public:
 
     shared_ptr<Node> _tutorialEnemy1;
     shared_ptr<Node> _tutorialEnemy2;
+
+    bool _metBeetle = false;
+    bool _metWasp = false;
+
+    void CheckEnemiesEncounter();
+
+    bool _isSpecialMessage = false;
+    float _specialMessageTimer = 0.0f;
+
+    void SetFalseTutorialNeededAtMoment();
 };
 
 
