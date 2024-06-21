@@ -127,9 +127,20 @@ void main() {
         Particle p = particles[id];
 
         if (p.Life > 0.0f) {
-                if(tooltip){
-                p.Position.xyz = nodePosition - (cameraForward * 0.7);
-                }
+            if (tooltip) {
+            // Compute direction vector from nodePosition to cameraPosition
+            vec3 direction = cameraPosition - nodePosition;
+    
+            // Normalize the direction vector
+            float magnitude = length(direction);
+            vec3 normalizedDirection = direction / magnitude;
+    
+            // Scale the normalized direction by 0.7
+            vec3 moveVector = normalizedDirection * 0.7;
+    
+            // Compute the final position
+            p.Position.xyz = nodePosition + moveVector;
+            }
 
             //if(dot(cameraForward, normalize(nodePosition - cameraPosition)) > 0.6)
             //{
