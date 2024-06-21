@@ -266,7 +266,6 @@ int main(int, char**)
 
             if (INPUT.IsKeyPressed(GLFW_KEY_RIGHT_BRACKET) && !TUTORIALMANAGER._isTutorialEnded) {
                 TUTORIALMANAGER.SkipTutorial();
-                NODESMANAGER.getNodeByName("player")->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
             }
 
             if (!GAMEMANAGER._paused) {

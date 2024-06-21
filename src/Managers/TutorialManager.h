@@ -24,7 +24,7 @@ public:
     int _actualMessage = 0;
     std::vector<string> _messages{
 
-            "QUICK! TAKE RADIO [4] AND CALL SUPPORT [1]!",
+            "QUICK! TAKE RADIO [4] AND CALL SUPPORT [1]!    <<<PRESS [R] TO SKIP TUTORIAL>>>",
 
             "CHOOSE POSITION WITH [LMB].",
 

@@ -236,7 +236,10 @@ void TurretsManager::SpawnTurret(TurretType type) {
     NODESMANAGER.getNodeByName(nameOfTurret)->AddComponent(newTurret);
 
     auto newMeshRenderer = COMPONENTSMANAGER.CreateComponent<MeshRenderer>();
-    newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Turret_Parachute");
+    if(_turretType == MINIGUN) newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Minigun_Parachute");
+    else if(_turretType == SNIPER) newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Sniper_Parachute");
+    else if(_turretType == RIFLE) newMeshRenderer->_model = RESOURCEMANAGER.GetModelByName("Rifle_Parachute");
+
     newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     newMeshRenderer->_transparent = true;

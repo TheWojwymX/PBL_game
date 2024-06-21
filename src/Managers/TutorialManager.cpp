@@ -55,6 +55,11 @@ void TutorialManager::Update() {
 
         //konczy sie po przejsciu do wyboru pozycji
         case 1:
+            if(INPUT.IsKeyPressed(GLFW_KEY_R)){
+                SkipTutorial();
+                break;
+            }
+
             ControllHud(1,1,0,0,0,0);
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
 

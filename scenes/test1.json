@@ -265,43 +265,55 @@
       },
       {
         "ModelName": "Turret_Minigun_Level1",
-        "Path": "res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_2.0.obj"
+        "Path": "res/Models/Turrets/Minigun/machinegun_soldier1/machinegun_soldier_LVL1_4.0.obj"
       },
       {
         "ModelName": "Turret_Minigun_Level2",
-        "Path": "res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_2.0.obj"
+        "Path": "res/Models/Turrets/Minigun/machinegun_soldier2/machinegun_soldier_LVL2_4.0.obj"
       },
       {
         "ModelName": "Turret_Minigun_Level3",
-        "Path": "res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_2.0.obj"
+        "Path": "res/Models/Turrets/Minigun/machinegun_soldier3/machinegun_soldier_LVL3_4.0.obj"
       },
       {
         "ModelName": "Turret_Sniper_Level1",
-        "Path": "res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_2.0.obj"
+        "Path": "res/Models/Turrets/Sniper/snajper_soldier1/snajper_soldier_LVL1_4.0.obj"
       },
       {
         "ModelName": "Turret_Sniper_Level2",
-        "Path": "res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_2.0.obj"
+        "Path": "res/Models/Turrets/Sniper/snajper_soldier2/snajper_soldier_LVL2_4.0.obj"
       },
       {
         "ModelName": "Turret_Sniper_Level3",
-        "Path": "res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_2.0.obj"
+        "Path": "res/Models/Turrets/Sniper/snajper_soldier3/snajper_soldier_LVL3_4.0.obj"
       },
       {
         "ModelName": "Turret_Rifle_Level1",
-        "Path": "res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_2.0.obj"
+        "Path": "res/Models/Turrets/Gun-up/gun_up_soldier1/gun_up_soldier_LVL1_4.0.obj"
       },
       {
         "ModelName": "Turret_Rifle_Level2",
-        "Path": "res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_2.0.obj"
+        "Path": "res/Models/Turrets/Gun-up/gun_up_soldier2/gun_up_soldier_LVL2_4.0.obj"
       },
       {
         "ModelName": "Turret_Rifle_Level3",
-        "Path": "res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_2.0.obj"
+        "Path": "res/Models/Turrets/Gun-up/gun_up_soldier3/gun_up_soldier_LVL3_4.0.obj"
       },
       {
         "ModelName": "Turret_Parachute",
         "Path": "res/Models/Turrets/Parachute/parachote_soldier_v2.obj"
+      },
+      {
+        "ModelName": "Minigun_Parachute",
+        "Path": "res/Models/Turrets/Parachute/machinegun/parachote_soldier_v3_machinegun.obj"
+      },
+      {
+        "ModelName": "Sniper_Parachute",
+        "Path": "res/Models/Turrets/Parachute/sniper/parachote_soldier_v3_sniper.obj"
+      },
+      {
+        "ModelName": "Rifle_Parachute",
+        "Path": "res/Models/Turrets/Parachute/rifle/parachote_soldier_v3_rifle.obj"
       },
       {
         "ModelName": "ShovelModel",
