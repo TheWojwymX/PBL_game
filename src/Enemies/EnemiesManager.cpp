@@ -56,9 +56,9 @@ void EnemiesManager::Init() {
 
     //ant , beetle, wasp
     _roundsInfo = {
-        glm::vec3(3, 0, 0), // 0 
-        glm::vec3(6, 1, 0), // 1 
-        glm::vec3(9, 2, 1), // 2 
+        glm::vec3(10, 0, 0), // 0 
+        glm::vec3(20, 1, 0), // 1 
+        glm::vec3(30, 3, 1), // 2 
         glm::vec3(12, 3, 2), // 3 
         glm::vec3(15, 4, 3), // 4 
         glm::vec3(18, 5, 4), // 5 
@@ -81,7 +81,7 @@ void EnemiesManager::Init() {
 
 void EnemiesManager::SpawnEnemiesForRound()
 {
-    if (GAMEMANAGER.GetPhase() != Phase::DEFEND) return;
+    if (GAMEMANAGER.GetPhase() != Phase::DEFEND || _finishedSpawning) return;
 
     if (!GAMEMANAGER.IsEndless()) {
         float spawnPortion = GAMEMANAGER.GetPhaseProgress() / _spawnSpan;
@@ -104,6 +104,7 @@ void EnemiesManager::SpawnEnemiesForRound()
                 SpawnEnemy(_enemyStats[i].size * scale, glm::vec3(scale), RandomSpawnPos(), static_cast<EnemyType>(i));
             }
         }
+        if (spawnPortion == 1.0f) _finishedSpawning = true;
     }
     else {
         _endlessTimer += TIME.GetDeltaTime();
@@ -199,6 +200,16 @@ void EnemiesManager::AvoidEnemy(shared_ptr<Enemy> thisEnemy)
         thisEnemy->_isAvoiding = false;
         thisEnemy->_distanceToStop = 0.1;
     }
+}
+
+void EnemiesManager::RemoveFromEnemies(shared_ptr<Enemy> enemy)
+{
+    auto it = std::find(ENEMIESMANAGER._enemies.begin(), ENEMIESMANAGER._enemies.end(), enemy);
+    if (it != ENEMIESMANAGER._enemies.end()) {
+        *it = nullptr;
+    }
+
+    if (CountValidEnemies() == 0 && _finishedSpawning) GAMEMANAGER.RoundWon();
 }
 
 void EnemiesManager::CheckIfAtWalls(shared_ptr<Enemy> enemy)
@@ -340,8 +351,8 @@ void EnemiesManager::InitEnemyStats() {
     _enemyStats.clear();
 
     // speed, hp, damage, attackFrequency, size, type
-    EnemyStats ant(7.0f, 3, 1, 0.6f, 2.0f, ANT);
-    EnemyStats beetle(3.0f, 30, 5, 1.4f, 4.0f, BEETLE);
+    EnemyStats ant(7.0f, 3, 0.5f, 0.6f, 2.0f, ANT);
+    EnemyStats beetle(3.0f, 30, 5, 1.5f, 4.0f, BEETLE);
     EnemyStats wasp(10.0f, 2, 1, 0.45f, 2.0f, WASP);
 
     // Add all objects to the _enemyStats vector
@@ -366,6 +377,17 @@ glm::vec2 EnemiesManager::RandomSpawnPos() {
 
     // Return the position relative to the center
     return domePos + glm::vec2(x, y);
+}
+
+int EnemiesManager::CountValidEnemies()
+{
+    int count = 0;
+    for (const auto& enemy : _enemies) {
+        if (enemy != nullptr) {
+            count++;
+        }
+    }
+    return count;
 }
 
 

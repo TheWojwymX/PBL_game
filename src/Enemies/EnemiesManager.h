@@ -10,14 +10,14 @@
 
 struct EnemyStats {
     float speed;
-    int hp;
-    int damage;
+    float hp;
+    float damage;
     float attackFrequency;
     float size;
     EnemyType type;
 
     // Constructor with default values
-    EnemyStats(float spd = 1.0f, int health = 1, int dmg = 1, float freq = 1.0f, float sz = 1.0f, EnemyType tp = ANT)
+    EnemyStats(float spd = 1.0f, float health = 1, float dmg = 1, float freq = 1.0f, float sz = 1.0f, EnemyType tp = ANT)
         : speed(spd), hp(health), damage(dmg), attackFrequency(freq), size(sz), type(tp) {}
 };
 
@@ -61,6 +61,8 @@ public:
     void CheckIfAtWalls(shared_ptr<Enemy> enemy);
 
     void AvoidEnemy(shared_ptr<Enemy> thisEnemy);
+    void RemoveFromEnemies(shared_ptr<Enemy> enemy);
+    void StartSpawning() { _finishedSpawning = false; }
 
     void Reset();
 
@@ -83,7 +85,9 @@ private:
     float _endlessDelay;
     float _endlessDelayMin;
     float _endlessDelayStep;
+    bool _finishedSpawning = false;
 
     void InitEnemyStats();
     glm::vec2 RandomSpawnPos();
+    int CountValidEnemies();
 };

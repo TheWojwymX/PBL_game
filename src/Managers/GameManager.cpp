@@ -105,6 +105,12 @@ bool GameManager::IsEndless()
     return _roundNumber == _phaseTimes.size() - 1;
 }
 
+void GameManager::RoundWon()
+{
+    _roundWon = true;
+    std::cout << "Round WON!" << std::endl;
+}
+
 void GameManager::Update() {
     if (TUTORIALMANAGER._isFreePlay) {
         _currentTime += TIME.GetDeltaTime();
@@ -132,6 +138,10 @@ void GameManager::InitPhase() {
         if (_roundNumber < _phaseTimes.size() - 1) {
             _roundNumber++;
         }
+    }
+    else {
+        _roundWon = false;
+        ENEMIESMANAGER.StartSpawning();
     }
 }
 

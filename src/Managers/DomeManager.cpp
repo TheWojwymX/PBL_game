@@ -15,7 +15,7 @@ void DomeManager::TakeDamage(float value) {
     if (_hp < 0.0f) {
         _hp = 0.0f;
     }
-    std::cout << "Dome HP: " << _hp << "/" << _maxHP << std::endl;
+    std::cout << "Dome HP: " << _hp << "/" << _maxHP << " value: "<< value<< std::endl;
 }
 
 void DomeManager::RegenHP() {

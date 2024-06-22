@@ -36,6 +36,8 @@ public:
     float GetPhaseProgress();
     void SkipPhase();
     bool IsEndless();
+    void RoundWon();
+    bool IsRoundWon() { return _roundWon; }
 
     Phase GetPhase() {return _currentPhase;}
     float GetCurrentTime() { return _currentTime; }
@@ -87,6 +89,7 @@ private:
     Phase _currentPhase = Phase::DIG; 
     int _plastic = 5;
     float _currentTime = 0.0f;
+    bool _roundWon = false;
 
     std::vector<std::pair<float, float>> _phaseTimes;
     std::shared_ptr<Node> _playerNode = nullptr;

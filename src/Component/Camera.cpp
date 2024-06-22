@@ -5,7 +5,7 @@ Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
     : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),
     _front(glm::vec3(0.0f, 0.0f, -1.0f)),
     _mouseSensitivity(SENSITIVITY), _zoom(ZOOM),
-    _bobAmount(0.1f), _bobFrequency(6.0f), _bobTime(0.0f) {
+    _bobAmount(0.06f), _bobFrequency(6.0f), _bobTime(0.0f) {
 
     _type = ComponentType::CAMERA;
     UpdateCameraVectors();

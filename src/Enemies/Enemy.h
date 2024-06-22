@@ -38,5 +38,5 @@ public:
     void Die();
     void AttackDome();
     void EnemyAI();
-    void SetStats(EnemyType type, int speed, int hp, int damage, float attackFrequency, float size);
+    void SetStats(EnemyType type, float speed, float hp, float damage, float attackFrequency, float size);
 };

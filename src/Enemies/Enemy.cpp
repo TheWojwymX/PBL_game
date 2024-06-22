@@ -54,10 +54,7 @@ void Enemy::WalkToDestination(glm::vec3 *destination) {
 void Enemy::Die()
 {
     GAMEMANAGER.root->RemoveChild(_ownerNode);
-    auto it = std::find(ENEMIESMANAGER._enemies.begin(), ENEMIESMANAGER._enemies.end(), shared_from_this());
-    if (it != ENEMIESMANAGER._enemies.end()) {
-        *it = nullptr;
-    }
+    ENEMIESMANAGER.RemoveFromEnemies(shared_from_this());
 }
 
 void Enemy::TakeDamage(float amount)
@@ -111,7 +108,7 @@ void Enemy::AttackDome(){
 
         DOMEMANAGER.TakeDamage(_damage);
         //std::cout << "DOME HP: " << DOMEMANAGER.hp << std::endl;
-        std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
+        //std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
         _attackTimer = 0;
     }
     else{
@@ -137,7 +134,7 @@ void Enemy::EnemyAI()
     }
 }
 
-void Enemy::SetStats(EnemyType type, int speed, int hp, int damage, float attackFrequency, float size)
+void Enemy::SetStats(EnemyType type, float speed, float hp, float damage, float attackFrequency, float size)
 {
     _enemyType = type;
     _speed = speed;

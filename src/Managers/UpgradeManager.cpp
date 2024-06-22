@@ -571,8 +571,8 @@ void UpgradeManager::InitTurretUpgrades()
     // Initialize Turret Upgrades
     // Minigun Upgrades
     _minigunUpgrades.upgradeCosts = {
-        20,   // 1
-        30    // 2
+        10,   // 1
+        20    // 2
     };
 
     _minigunUpgrades.upgradeValues = {
@@ -582,8 +582,8 @@ void UpgradeManager::InitTurretUpgrades()
 
     // Sniper Upgrades
     _sniperUpgrades.upgradeCosts = {
-        25,   // 1
-        35    // 2
+        10,   // 1
+        20    // 2
     };
 
     _sniperUpgrades.upgradeValues = {
@@ -593,8 +593,8 @@ void UpgradeManager::InitTurretUpgrades()
 
     // Rifle Upgrades
     _rifleUpgrades.upgradeCosts = {
-        15,   // 1
-        25    // 2
+        10,   // 1
+        20    // 2
     };
 
     _rifleUpgrades.upgradeValues = {
