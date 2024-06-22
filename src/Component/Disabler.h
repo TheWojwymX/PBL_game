@@ -12,6 +12,8 @@ public:
 
     void Update() override;
 
+    void Reset();
+
 private:
     float _delay;
     float _timer = 0.0f;

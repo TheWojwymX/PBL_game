@@ -1,5 +1,6 @@
 #include "Rotate.h"
 #include "Core/Time.h"
+#include "Managers/GameManager.h"
 
 Rotate::Rotate() : _axis(glm::vec3(0.0f, 1.0f, 0.0f)), _speed(1.0f)
 {
@@ -36,7 +37,13 @@ nlohmann::json Rotate::Serialize()
 
 void Rotate::Update()
 {
-    ApplyRotation();
+    if(!GAMEMANAGER._paused)
+        ApplyRotation();
+}
+
+void Rotate::Reset()
+{
+    _ownerTransform->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 }
 
 void Rotate::ApplyRotation()

@@ -193,6 +193,7 @@ void GameManager::Reset() {
     _plastic = 5;
     _currentTime = 0.0f;
     DisableMouse();
+    ResetWorm();
 }
 
 void GameManager::PlayMenuMusic() {
@@ -238,4 +239,12 @@ void GameManager::GoToMainMenu() {
     _isInMainMenu = true;
     PAGEMANAGER.CloseAllOtherPages(PAGEMANAGER._mainMenuPage);
     PlayMenuMusic();
+}
+
+void GameManager::ResetWorm()
+{
+    std::shared_ptr<Node> worm = NODESMANAGER.getNodeByName("Worm");
+    worm->GetComponent<Rotate>()->Reset();
+    worm->GetComponent<Disabler>()->Reset();
+    worm->SetEnabled(true);
 }

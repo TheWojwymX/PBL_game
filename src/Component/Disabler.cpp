@@ -25,7 +25,13 @@ nlohmann::json Disabler::Serialize()
 
 void Disabler::Update()
 {
-    DisableAfterDelay();
+    if(!GAMEMANAGER._paused)
+        DisableAfterDelay();
+}
+
+void Disabler::Reset()
+{
+    _timer = 0.0f;
 }
 
 void Disabler::DisableAfterDelay()

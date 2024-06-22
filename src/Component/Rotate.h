@@ -13,6 +13,8 @@ public:
 
     void Update() override;
 
+    void Reset();
+
 private:
     glm::vec3 _axis;
     float _speed;

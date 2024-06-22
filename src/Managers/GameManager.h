@@ -90,4 +90,6 @@ private:
 
     std::vector<std::pair<float, float>> _phaseTimes;
     std::shared_ptr<Node> _playerNode = nullptr;
+
+    void ResetWorm();
 };
