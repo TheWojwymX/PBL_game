@@ -341,7 +341,7 @@ void EnemiesManager::InitEnemyStats() {
 
     // speed, hp, damage, attackFrequency, size, type
     EnemyStats ant(7.0f, 3, 1, 0.6f, 2.0f, ANT);
-    EnemyStats beetle(3.0f, 30, 5, 0.6f, 4.0f, BEETLE);
+    EnemyStats beetle(3.0f, 30, 5, 1.4f, 4.0f, BEETLE);
     EnemyStats wasp(10.0f, 2, 1, 0.45f, 2.0f, WASP);
 
     // Add all objects to the _enemyStats vector

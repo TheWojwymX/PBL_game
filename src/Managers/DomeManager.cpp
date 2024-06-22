@@ -6,7 +6,7 @@ DomeManager& DomeManager::getInstance() {
 }
 
 DomeManager::DomeManager()
-    : _domeHPLevel(0), _domeHPRegenLevel(0), _regenRate(0.0f), _hp(100.0f), _maxHP(100.0f)
+    : _domeHPLevel(0), _domeHPRegenLevel(0), _regenRate(0.1f), _hp(100.0f), _maxHP(100.0f)
 {
 }
 
@@ -41,7 +41,7 @@ void DomeManager::RepairDomeHP(float value) {
 void DomeManager::Reset() {
     _domeHPLevel = 0;
     _domeHPRegenLevel = 0;
-    _regenRate = 0;
+    _regenRate = 0.1f;
     _hp = 100.0f;
     _maxHP = 100.0f;
 }

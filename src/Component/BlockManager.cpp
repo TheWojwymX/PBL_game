@@ -1039,7 +1039,7 @@ void BlockManager::GenerateTunnels() {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
-    glm::ivec3 startLayer1 = GetRandomSideBlock(glm::ivec2(200, 250));
+    glm::ivec3 startLayer1 = GetRandomSideBlock(glm::ivec2(220, 270));
     //std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
 
     glm::ivec3 endLayer2 = GetRandomSideBlock(glm::ivec2(150, 250), startLayer1);
@@ -1060,7 +1060,7 @@ void BlockManager::GenerateTunnels() {
     pointsTunnel1.push_back(endLayer2);
 
     // Generate the first tunnel
-    GenerateTunnel(pointsTunnel1, 6);
+    GenerateTunnel(pointsTunnel1, 8);
 
 
 
@@ -1085,7 +1085,7 @@ void BlockManager::GenerateTunnels() {
     pointsTunnel2.push_back(endLayer3);
 
     // Generate the second tunnel
-    GenerateTunnel(pointsTunnel2, 8);
+    GenerateTunnel(pointsTunnel2, 10);
 }
 
 void BlockManager::InitLayerStats() {

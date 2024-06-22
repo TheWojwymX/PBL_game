@@ -6,9 +6,9 @@
 #include "ShovelController.h"
 #include "HUD/PageManager.h"
 
-PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float groundLevel, float reach, int radius, float width,
+PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float reach, int radius, float width,
                                    float height, float digPower)
-        : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _groundLevel(groundLevel), _isGrounded(false), _velocity(glm::vec3(0.0f)),
+        : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _isGrounded(false), _velocity(glm::vec3(0.0f)),
           _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
           _interactionCooldown(0.25f), _timeSinceLastInteraction(0.0f),
           _jetpackCapacityLevel(0), _miningSpeedLevel(0), _miningReachLevel(0), _miningRadiusLevel(0) {
@@ -272,8 +272,7 @@ bool PlayerController::CheckIfPlayerIsAtEntranceToMine() {
     }
 }
 
-glm::vec3
-PlayerController::CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle) {
+glm::vec3 PlayerController::CircleCollision(glm::vec3 playerPos, glm::vec3 movementVec, glm::vec2 circleCenterPos, float circleRadius, bool isInsideCircle) {
     glm::vec3 newPos = playerPos + movementVec;
     glm::vec2 newPos2D = glm::vec2(newPos.x, newPos.z);
     glm::vec2 playerPos2D = glm::vec2(playerPos.x, playerPos.z);
@@ -335,6 +334,11 @@ void PlayerController::HandleGlowstick() {
             _glowstickCooldownTimer = 0.0f;
         }
     }
+}
+
+bool PlayerController::IsWalking()
+{
+    return _inputVector != glm::vec2(0) && _isGrounded;
 }
 
 void PlayerController::SetGravity(float gravity) {

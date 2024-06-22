@@ -11,12 +11,13 @@
 #include <vector>
 
 class FrustumPlane;
+class PlayerController;
+
 // Default camera values
 const float YAW = 90.0f;
 const float PITCH = 0.0f;
-const float SPEED = 30.0f;
 const float SENSITIVITY = 0.1f;
-const float ZOOM = 75.0f;
+const float ZOOM = 85.0f;
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum CameraMovement {
@@ -88,11 +89,19 @@ private:
     glm::vec3 _right;
     glm::vec3 _worldUp;
 
+    // Camera attributes for figure-8 head bobbing
+    float _bobAmount = 0.01f; 
+    float _bobFrequency = 1.0f;
+    float _horizontalBobScale = 1.0f;
+    float _bobTime = 0.0f; 
+    float _currentHorizontalOffset = 0.0f;
+    float _currentVerticalOffset = 0.0f;
+    std::shared_ptr<PlayerController> _playerRef = nullptr;
+
     // euler angles
     float _yaw;
     float _pitch;
     // camera options
-    float _movementSpeed;
     float _mouseSensitivity;
     float _zoom;
 
