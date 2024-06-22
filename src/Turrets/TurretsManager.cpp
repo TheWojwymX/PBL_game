@@ -283,6 +283,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorVisual");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    rangeIndicator->_disableShadows = true;
     rangeIndicator->Initiate();
     rangeIndicator->_transparent = true;
     rangeIndicator->SetEnabled(false);
@@ -309,6 +310,7 @@ void TurretsManager::PrepareBlueprintTurret() {
     newMeshRenderer->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     newMeshRenderer->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     newMeshRenderer->_transparent = true;
+    newMeshRenderer->_disableShadows = true;
     newMeshRenderer->Initiate();
 
     _blueprintTurret = NODESMANAGER.getNodeByName(nameOfBlueprintTurret);
@@ -320,6 +322,7 @@ void TurretsManager::PrepareBlueprintTurret() {
     rangeIndicator->_model = RESOURCEMANAGER.GetModelByName("RangeIndicatorVisual");
     rangeIndicator->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     rangeIndicator->_outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
+    rangeIndicator->_disableShadows = true;
     rangeIndicator->_transparent = true;
     rangeIndicator->SetEnabled(false);
     rangeIndicator->Initiate();
