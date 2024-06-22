@@ -613,6 +613,20 @@
         "SoundID": 15,
         "Type": 1,
         "Volume": 0.5
+      },
+      {
+        "Path": "res/Sounds/Turrets/Placement/PickUp.mp3",
+        "SoundName": "PickUp",
+        "SoundID": 16,
+        "Type": 1,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Turrets/Placement/Place.mp3",
+        "SoundName": "Place",
+        "SoundID": 17,
+        "Type": 1,
+        "Volume": 1.0
       }
 
     ]

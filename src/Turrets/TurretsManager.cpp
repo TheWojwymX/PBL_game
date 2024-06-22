@@ -127,6 +127,7 @@ void TurretsManager::PlayerActions() {
         _turrets[_indexOfMovingTurret]->_isMoving = true;
         _heldTurret = _turrets[_indexOfMovingTurret];
         ShowBlueprintTurret();
+        RESOURCEMANAGER.GetSoundByName("PickUp")->PlaySound(_player);
     } else if (INPUT.IsMousePressed(0) && _isPlayerInMovingMode && !IsInForbiddenArea() && !_isInTurretChoiceMenu) {
         PlaceMovingTurret();
         HideBlueprintTurret();
@@ -620,6 +621,8 @@ void TurretsManager::PlaceMovingTurret() {
     _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("modelShader");
     _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName(
             "modelShader");
+
+    RESOURCEMANAGER.GetSoundByName("Place")->PlaySound(_player);
 }
 
 int TurretsManager::RaycastTurrets() {
