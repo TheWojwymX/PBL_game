@@ -45,9 +45,6 @@ public:
 
     int RaycastTurrets();
 
-    bool RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const glm::vec3& rayDirection,
-                                  const glm::vec3& minBoundingBox, const glm::vec3& maxBoundingBox);
-
     void CheckEnemiesInRange();
 
 

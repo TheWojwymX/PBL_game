@@ -452,24 +452,24 @@ int main(int, char**)
 //        ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
 //        ImGui::End();
 //
-//        // Quick Debug
-//        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
-//        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
-//        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
-//
-//        ImGui::InputFloat3("Light Position", &LIGHTSMANAGER.lightPos[0]);  // Change lightPos
-//        ImGui::InputFloat3("Center", &LIGHTSMANAGER.lightCenter[0]);
-//
-//        ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
-//        ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
-//        ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
-//
-//        ImGui::ColorEdit3("Directional Light Color", glm::value_ptr(LIGHTSMANAGER.dirColor));
-//        ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));
-//
-//        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
-//
-//        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
+        // Quick Debug
+        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
+        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
+        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
+
+        ImGui::InputFloat3("Light Position", &LIGHTSMANAGER.lightPos[0]);  // Change lightPos
+        ImGui::InputFloat3("Center", &LIGHTSMANAGER.lightCenter[0]);
+
+        ImGui::SliderFloat("glowstickConstant", &LIGHTSMANAGER.glowstickConstant, -5.0f, 5.0f);
+        ImGui::SliderFloat("glowstickLinear", &LIGHTSMANAGER.glowstickLinear, -5.0f, 5.0f);
+        ImGui::SliderFloat("glowstickQuadratic", &LIGHTSMANAGER.glowstickQuadratic, -5.0f, 5.0f);
+
+        ImGui::ColorEdit3("Directional Light Color", glm::value_ptr(LIGHTSMANAGER.dirColor));
+        ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));
+
+        ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
+
+        ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 
         imguiMain->endDraw();
         ImGui::Render();

@@ -97,8 +97,8 @@ void FrustumCulling::RenderBoundingBox(const glm::mat4& viewProjectionMatrix, st
 }
 
 bool FrustumCulling::isBoxInFrustum(const std::vector<FrustumPlane>& planes, std::vector<glm::vec3> worldCorners) {
-    glm::vec3 min = worldCorners[0];
-    glm::vec3 max = worldCorners[7];
+    glm::vec3 min(std::numeric_limits<float>::max());
+    glm::vec3 max(std::numeric_limits<float>::lowest());
 
     for (const glm::vec3 &point: worldCorners) {
         max.x = std::max(max.x, point.x);
@@ -125,6 +125,50 @@ bool FrustumCulling::isBoxInFrustum(const std::vector<FrustumPlane>& planes, std
     return true;
 }
 
+bool FrustumCulling::RayInBox(glm::vec3 cameraPos, glm::vec3 forwardVector, std::shared_ptr<Model>& model, glm::mat4 ctm) {
+    // Step 1: Transform the ray to object space
+    glm::mat4 inverseCTM = glm::inverse(ctm);
+    glm::vec3 localRayOrigin = glm::vec3(inverseCTM * glm::vec4(cameraPos, 1.0));
+    glm::vec3 localRayDirection = glm::normalize(glm::vec3(inverseCTM * glm::vec4(forwardVector, 0.0)));
+
+    // Step 2: Perform ray-AABB intersection in object space
+    // Get the bounding box corners in local coordinates (world coordinates not needed here)
+    glm::vec3 localMin = model->GetMinBoundingBox();
+    glm::vec3 localMax = model->GetMaxBoundingBox();
+
+    // Ray-AABB intersection test
+    float tMin = (localMin.x - localRayOrigin.x) / localRayDirection.x;
+    float tMax = (localMax.x - localRayOrigin.x) / localRayDirection.x;
+    if (tMin > tMax) std::swap(tMin, tMax);
+
+    float tyMin = (localMin.y - localRayOrigin.y) / localRayDirection.y;
+    float tyMax = (localMax.y - localRayOrigin.y) / localRayDirection.y;
+    if (tyMin > tyMax) std::swap(tyMin, tyMax);
+
+    if ((tMin > tyMax) || (tyMin > tMax))
+        return false;
+
+    if (tyMin > tMin)
+        tMin = tyMin;
+    if (tyMax < tMax)
+        tMax = tyMax;
+
+    float tzMin = (localMin.z - localRayOrigin.z) / localRayDirection.z;
+    float tzMax = (localMax.z - localRayOrigin.z) / localRayDirection.z;
+    if (tzMin > tzMax) std::swap(tzMin, tzMax);
+
+    if ((tMin > tzMax) || (tzMin > tMax))
+        return false;
+
+    if (tzMin > tMin)
+        tMin = tzMin;
+    if (tzMax < tMax)
+        tMax = tzMax;
+
+    return (tMax > 0);
+}
+
+// Provided GetRange function
 std::vector<glm::vec3> FrustumCulling::GetRange(const std::shared_ptr<Model>& model, const glm::mat4& ctm) {
     glm::vec3 localMin = model->GetMinBoundingBox();
     glm::vec3 localMax = model->GetMaxBoundingBox();

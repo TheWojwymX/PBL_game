@@ -85,10 +85,6 @@ private:
     void MovementInput();
     void InteractionInput();
 
-    int _radiusUpgradeCost = 10;
-    int _reachUpgradeCost = 10;
-    int _speedUpgradeCost = 10;
-
     float _jetpackStrength = 30.0f;
     float _jetpackFuelConsumption = 50.0f; 
     float _fuelRegeneration = 0.2f;
