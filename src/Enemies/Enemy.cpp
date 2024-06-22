@@ -80,6 +80,11 @@ void Enemy::TakeDamage(float amount)
 
     if(_hp <= 0)
     {
+        if (_enemyType == WASP)
+        {
+            Die();
+        }
+        
         if(particleDead != nullptr) {
             particleDead->SpawnParticles();
             particleDead->toDelete = true;

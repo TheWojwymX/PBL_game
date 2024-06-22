@@ -20,7 +20,7 @@ void EnemiesManager::Update() {
     
     if(Input::Instance().IsKeyPressed(GLFW_KEY_B))
     {
-        SpawnEnemy(5, glm::vec3(0.5,0.5,0.5), _spawnersPositions[0], BEETLE);
+        SpawnEnemy(5, glm::vec3(0.5,0.5,0.5), _spawnersPositions[0], WASP);
     }
 
     SpawnEnemiesForRound();

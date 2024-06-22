@@ -97,6 +97,12 @@ void Animation::Update() {
 
         if (_enemyState == DEAD && IsAnimationFinished())
         {
+            if (_entityType == 3) // WASP
+            {
+                _toDelete = true;
+                return;
+            }
+
             if(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y > GAMEMANAGER._groundLevel - 2)
             {
                 _meshRenderer->GetOwnerNode()->GetTransform()->SetPosition(_meshRenderer->GetOwnerNode()->GetTransform()->GetPosition().y - TIME.GetDeltaTime(), 1);
@@ -247,7 +253,9 @@ void Animation::InitFrames()
         _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack4"));
         _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack5"));
         _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack6"));
-
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack7"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack8"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack9"));
 
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead0"));
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead1"));
