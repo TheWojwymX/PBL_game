@@ -627,6 +627,27 @@
         "SoundID": 17,
         "Type": 1,
         "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Enemies/Beetle/BeetleAttack.mp3",
+        "SoundName": "BeetleAttack",
+        "SoundID": 18,
+        "Type": 1,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Enemies/Wasp/WaspAttack.mp3",
+        "SoundName": "WaspAttack",
+        "SoundID": 19,
+        "Type": 1,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/CaveMusic.mp3",
+        "SoundName": "CaveMusic",
+        "SoundID": 20,
+        "Type": 0,
+        "Volume": 0.5
       }
 
     ]

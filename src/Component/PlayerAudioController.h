@@ -40,6 +40,15 @@ public:
     void StopSteps();
 
     void PlayJumpSound();
+
+    float _caveTimer = 0.0f;
+    bool _isPlayingCave;
+    bool _isStoppingCaveMusic = false;
+
+    void PlayCaveMusic();
+    void StopCaveMusic();
+
+    void ResetCaveMusic();
 };
 
 

@@ -100,10 +100,13 @@ void Enemy::AttackDome(){
     if(!_isAtWalls) return;
 
     if(_attackTimer >= _attackFrequency){
-        RESOURCEMANAGER.GetSoundByName("atak1")->PlaySoundSim(_ownerNode);
+        if(_enemyType == ANT) RESOURCEMANAGER.GetSoundByName("atak1")->PlaySoundSim(_ownerNode);
+        if(_enemyType == BEETLE) RESOURCEMANAGER.GetSoundByName("BeetleAttack")->PlaySoundSim(_ownerNode);
+        if(_enemyType == WASP) RESOURCEMANAGER.GetSoundByName("WaspAttack")->PlaySoundSim(_ownerNode);
+
         DOMEMANAGER.TakeDamage(_damage);
         //std::cout << "DOME HP: " << DOMEMANAGER.hp << std::endl;
-        //std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
+        std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
         _attackTimer = 0;
     }
     else{
