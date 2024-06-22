@@ -172,6 +172,9 @@ void ParticleGenerator::RenderParticles() {
         shader->setVec4("pColor" ,particleColor);
         shader->setBool("showTexture", showTexture);
         shader->setBool("affectDirLight", affectDirLight);
+        shader->setBool("plastic1", plastic1);
+        shader->setBool("plastic2", plastic2);
+
         texture.Bind();
 
         glDrawArraysInstanced(GL_TRIANGLES, 0, 6, offsets.size());
@@ -414,6 +417,7 @@ void ParticleGenerator::initiateParticleType() {
         ambient = false;
         isUnderground = true;
         affectDirLight = false;
+        plastic1 = true;
     }
     else if (particleType == "digPlastic"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
@@ -435,6 +439,7 @@ void ParticleGenerator::initiateParticleType() {
         ambient = false;
         isUnderground = true;
         affectDirLight = false;
+        plastic2 = true;
     }
     else if (particleType == "rainParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);

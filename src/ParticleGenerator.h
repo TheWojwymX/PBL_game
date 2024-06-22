@@ -103,6 +103,8 @@ private:
     bool tooltip = false;
     bool showTexture = false;
     bool affectDirLight = true;
+    bool plastic1 = false;
+    bool plastic2 = false;
 
     int threadCount = 0;
 
