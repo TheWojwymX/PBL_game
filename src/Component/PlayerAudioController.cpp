@@ -31,6 +31,14 @@ void PlayerAudioController::Update() {
         }
         Component::Update();
     }
+
+    if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && !_isPlayingCave){
+        PlayCaveMusic();
+    } else if(_ownerNode->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && _isPlayingCave){
+        StopCaveMusic();
+    } else if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && _isPlayingCave && _isStoppingCaveMusic){
+        ResetCaveMusic();
+    }
 }
 
 void PlayerAudioController::StartSteps(){
@@ -60,4 +68,30 @@ void PlayerAudioController::PlayRandomStepSound() {
     std::uniform_int_distribution<> dis(0, _stepSoundIDs.size() - 1);
 
     RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[dis(gen)])->PlaySound(_ownerNode);
+}
+
+void PlayerAudioController::PlayCaveMusic() {
+    RESOURCEMANAGER.GetSoundByName("CaveMusic")->RiseUp(5, _ownerNode);
+    _isPlayingCave = true;
+}
+
+void PlayerAudioController::StopCaveMusic() {
+    int fadeTime = 100; //I guess that sound is very quiet and that's why we need give horribly long time
+    if(_caveTimer == 0.0f){
+        _isStoppingCaveMusic = true;
+        RESOURCEMANAGER.GetSoundByName("CaveMusic")->FadeAway(fadeTime);
+    }
+    if(_caveTimer < fadeTime){
+        _caveTimer += TIME.GetDeltaTime();
+    }else{
+        ResetCaveMusic();
+    }
+}
+
+void PlayerAudioController::ResetCaveMusic(){
+    RESOURCEMANAGER.GetSoundByName("CaveMusic")->StopFadingAway();
+    ma_sound_seek_to_pcm_frame(&RESOURCEMANAGER.GetSoundByName("CaveMusic")->_sound, 0);
+    _caveTimer = 0.0f;
+    _isPlayingCave = false;
+    _isStoppingCaveMusic = false;
 }
