@@ -537,16 +537,16 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "antSpawn"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 20;
-        newParticles = 20;
+        amount = 30;
+        newParticles = 30;
         spawnDelay = 0.0f;
-        speedVariation = 7.5f;
-        XZvariation = 4.0f;
-        particleLife = 3.5f;
-        particleColor = glm::vec4(0.682f,0.477f,0.151f,1.0f);
-        initialUpwardBoost = 3.5f;
-        SetPartScale(enemyScale, 0.6f);
-        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        speedVariation = 20.5f;
+        XZvariation = 4.5f;
+        particleLife = 5.5f;
+        particleColor = glm::vec4(0.782f,0.577f,0.251f,1.0f);
+        initialUpwardBoost = 6.0f;
+        SetPartScale(enemyScale, 0.8f);
+        gravity = glm::vec3(0.0f, -9.0f, 0.0f);
         onlyForward = false;
         casing = false;
         isJetpack = false;

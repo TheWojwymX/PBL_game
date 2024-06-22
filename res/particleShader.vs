@@ -15,6 +15,11 @@ uniform bool plastic2;
 
 void main() {
 
+    if (instanceScale > 2.0) {
+            gl_Position = vec4(2.0, 2.0, 2.0, 1.0); // Move vertex out of the clip space
+            return;
+        }
+
     if(plastic2){
         float height = instancePosition.y;
         if (height < 100.0) {
