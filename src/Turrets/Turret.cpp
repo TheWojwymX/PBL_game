@@ -211,15 +211,15 @@ void Turret::SetSound() {
 
     switch (_turretType) {
     case MINIGUN:
-        _sounds = { {12, 0.1f}, {13, 0.1f} };
+        _sounds = { {7, 0.1f}, {8, 0.1f} };
         break;
 
     case SNIPER:
-        _sounds = { {14, 0.1f} };
+        _sounds = { {9, 0.1f} };
         break;
 
     case RIFLE:
-        _sounds = { {12, 0.1f}, {13, 0.1f} };
+        _sounds = { {7, 0.1f}, {7, 0.1f} };
         break;
 
     default:

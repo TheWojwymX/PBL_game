@@ -69,7 +69,7 @@ std::shared_ptr<Sound> ResourceManager::GetSoundByName(const string &name) {
             return sound;
         }
     }
-    std::cout << "No such sound!" << std::endl;
+    std::cout << "No such sound: " << name << std::endl;
     return nullptr;
 }
 
@@ -79,7 +79,7 @@ std::shared_ptr<Sound> ResourceManager::GetSoundByID(int id) {
             return sound;
         }
     }
-    std::cout << "No such sound!" << std::endl;
+    std::cout << "No such sound of id: " << id << std::endl;
     return nullptr;
 }
 

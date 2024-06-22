@@ -78,6 +78,7 @@ void Sound::PlaySound(std::shared_ptr<Node> soundSourceNode, float adjVolume) {
 void Sound::StopSound() {
     if (ma_sound_is_playing(&_sound)) {
         ma_sound_stop(&_sound);
+        ma_sound_seek_to_pcm_frame(&_sound, 0);
     }
 }
 
@@ -134,6 +135,12 @@ void Sound::ChangeVolume(float volume) {
 
 void Sound::SetLooping(bool looping) {
     ma_sound_set_looping(&_sound, looping);
+}
+
+void Sound::StopFadingAway(){
+    _isFadingAway = false;
+    _timer = 0.0f;
+    StopSound();
 }
 
 float Sound::CalculateVolumeToPlayerDistance(std::shared_ptr<Node> soundSourceNode) {

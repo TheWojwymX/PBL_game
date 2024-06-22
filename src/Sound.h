@@ -59,6 +59,7 @@ public:
 
     void SetVolume(float volume);
 
+    void StopFadingAway();
 private:
     float _timeToFadeAway;
     float _timeToRiseUp;
@@ -67,7 +68,6 @@ private:
     float _constStartingVolumeMultiplier;
     std::shared_ptr<float> _typeMultiplier;
     float _volume = 1.0f;
-
 };
 
 

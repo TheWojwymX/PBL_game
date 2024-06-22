@@ -51,6 +51,14 @@ void PDAController::PlayShowAntenna(){
         _antennaActualYoffset -= 3 * TIME.GetDeltaTime();
     }
     else{
+        RESOURCEMANAGER.GetSoundByName("PDAAntenna2")->PlaySound(_ownerNode);
+
+        if (ma_sound_seek_to_pcm_frame(&RESOURCEMANAGER.GetSoundByName("PDANoise")->_sound, 0) != MA_SUCCESS) {
+            std::cerr << "Failed to rewind sound: " << RESOURCEMANAGER.GetSoundByName("BackgroundMusic")->_name << std::endl;
+        }
+        RESOURCEMANAGER.GetSoundByName("PDANoise")->StopFadingAway();
+        RESOURCEMANAGER.GetSoundByName("PDANoise")->PlaySound(_ownerNode);
+        RESOURCEMANAGER.GetSoundByName("PDANoise")->SetLooping(true);
         _playShowAntennaAnim = false;
     }
 }
@@ -63,6 +71,9 @@ void PDAController::HideImmediately(){
     _playHideAnim = false;
     _isHidden = true;
     _antennaActualYoffset = 0;
+    RESOURCEMANAGER.GetSoundByName("PDAAntenna2")->StopSound();
+    RESOURCEMANAGER.GetSoundByName("PDANoise")->FadeAway(3);
+    RESOURCEMANAGER.GetSoundByName("PDANoise")->SetLooping(false);
 }
 
 void PDAController::PlayHidePDA() {

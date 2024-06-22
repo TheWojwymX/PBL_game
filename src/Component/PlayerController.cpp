@@ -90,7 +90,7 @@ void PlayerController::InteractionInput() {
     if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)
         && !_shovelController->_isHidden && !_shovelController->_playHideAnim) {
         if (_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))
-            RESOURCEMANAGER.GetSoundByID(17)->PlaySoundSim(_ownerNode);
+            RESOURCEMANAGER.GetSoundByName("kopanie1")->PlaySoundSim(_ownerNode);
         _shovelController->_playDigAnim = true;
         _timeSinceLastInteraction = 0.0f;
     }
@@ -184,7 +184,7 @@ void PlayerController::HandleJetpack() {
     if (_isUsingJetpack) {
         if (_jetpackFuel > 0 && _ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
             // Playing jetpack sound
-            RESOURCEMANAGER.GetSoundByID(16)->PlaySound(_ownerNode, 0.5f);
+            RESOURCEMANAGER.GetSoundByName("jetpack1")->PlaySound(_ownerNode, 0.5f);
 
             // Applying upward force
             _velocity.y += _jetpackStrength * deltaTime;
@@ -197,7 +197,7 @@ void PlayerController::HandleJetpack() {
                 _jetpackFuel = 0;
                 _isUsingJetpack = false;
                 StartJetpackRegenTimer();
-                RESOURCEMANAGER.GetSoundByID(16)->StopSound();
+                RESOURCEMANAGER.GetSoundByName("jetpack1")->StopSound();
             }
 
             // Jetpack particle effects
@@ -249,7 +249,7 @@ void PlayerController::JetpackInput() {
         }
     } else {
         // If the space key is not held down, reset the state
-        RESOURCEMANAGER.GetSoundByID(16)->StopSound();
+        RESOURCEMANAGER.GetSoundByName("jetpack1")->StopSound();
         _spaceKeyWasPressed = false;
         _isUsingJetpack = false;
     }
