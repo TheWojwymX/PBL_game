@@ -92,4 +92,5 @@ private:
     std::shared_ptr<Node> _playerNode = nullptr;
 
     void ResetWorm();
+    void ResetTopSnap();
 };

@@ -194,6 +194,7 @@ void GameManager::Reset() {
     _currentTime = 0.0f;
     DisableMouse();
     ResetWorm();
+    ResetTopSnap();
 }
 
 void GameManager::PlayMenuMusic() {
@@ -247,4 +248,15 @@ void GameManager::ResetWorm()
     worm->GetComponent<Rotate>()->Reset();
     worm->GetComponent<Disabler>()->Reset();
     worm->SetEnabled(true);
+}
+
+void GameManager::ResetTopSnap()
+{
+    NODESMANAGER.getNodeByName("Rake")->GetComponent<TopLayerSnap>()->Reset();
+    NODESMANAGER.getNodeByName("BigShovel")->GetComponent<TopLayerSnap>()->Reset();
+    NODESMANAGER.getNodeByName("Mold1")->GetComponent<TopLayerSnap>()->Reset();
+    NODESMANAGER.getNodeByName("Mold3(1)")->GetComponent<TopLayerSnap>()->Reset();
+    NODESMANAGER.getNodeByName("Mold3(2)")->GetComponent<TopLayerSnap>()->Reset();
+    NODESMANAGER.getNodeByName("Mold7")->GetComponent<TopLayerSnap>()->Reset();
+    NODESMANAGER.getNodeByName("Bucket")->GetComponent<TopLayerSnap>()->Reset();
 }

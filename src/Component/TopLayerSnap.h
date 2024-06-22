@@ -14,6 +14,8 @@ public:
     void Init() override;
     void Update() override;
 
+    void Reset();
+
 private:
     std::shared_ptr<BlockManager> _blockManagerRef;
     float _yOffset;

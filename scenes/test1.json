@@ -1097,6 +1097,11 @@
             "model": "BucketModel",
             "outlineShader": "outlineShader",
             "shader": "modelShader"
+          },
+          {
+            "componentId": 190,
+            "componentType": 18,
+            "yOffset": -2
           }
         ],
         "transform": {

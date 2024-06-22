@@ -33,3 +33,8 @@ void TopLayerSnap::Update()
 	_isEnabled = false;
 }
 
+void TopLayerSnap::Reset()
+{
+    _ownerTransform->SetPosition(_blockManagerRef->GetTopLayerFloor(_ownerTransform->GetPosition()) + _yOffset, 1);
+}
+
