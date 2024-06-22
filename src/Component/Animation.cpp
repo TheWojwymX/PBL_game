@@ -244,6 +244,10 @@ void Animation::InitFrames()
         _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack1"));
         _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack2"));
         _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack3"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack4"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack5"));
+        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack6"));
+
 
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead0"));
         _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead1"));

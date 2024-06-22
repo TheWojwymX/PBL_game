@@ -153,19 +153,31 @@
       },
       {
         "ModelName": "BeetleAttack0",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-0.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-0.obj"
       },
       {
         "ModelName": "BeetleAttack1",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-1.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-1.obj"
       },
       {
         "ModelName": "BeetleAttack2",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-2.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-2.obj"
       },
       {
         "ModelName": "BeetleAttack3",
-        "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-3.obj"
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-3.obj"
+      },
+      {
+        "ModelName": "BeetleAttack4",
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-4.obj"
+      },
+      {
+        "ModelName": "BeetleAttack5",
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-5.obj"
+      },
+      {
+        "ModelName": "BeetleAttack6",
+        "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-6.obj"
       },
       {
         "ModelName": "BeetleDead0",

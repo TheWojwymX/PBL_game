@@ -17,6 +17,11 @@ void EnemiesManager::Update() {
 
         SpawnEnemy(2.5, glm::vec3(scale), RandomSpawnPos(), ANT);
     }
+    
+    if(Input::Instance().IsKeyPressed(GLFW_KEY_B))
+    {
+        SpawnEnemy(5, glm::vec3(0.5,0.5,0.5), _spawnersPositions[0], BEETLE);
+    }
 
     SpawnEnemiesForRound();
 
