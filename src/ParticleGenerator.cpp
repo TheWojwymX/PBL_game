@@ -195,6 +195,10 @@ void ParticleGenerator::RenderParticles() {
             generateParticle = false;
             GAMEMANAGER.root->RemoveChild(_ownerNode);
         }
+        else if(particleType != "jetpackUse" && particleType != "flareParticles1")
+        {
+            generateParticle = false;
+        }
     }
 }
 
@@ -526,6 +530,22 @@ void ParticleGenerator::initiateParticleType() {
         particleColor = glm::vec4(0.0510f,0.1608f,0.2941f,1.0f);
         initialUpwardBoost = 2.5f;
         SetPartScale(enemyScale, 0.2f);
+        gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+    }
+    else if (particleType == "antSpawn"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 20;
+        newParticles = 20;
+        spawnDelay = 0.0f;
+        speedVariation = 7.5f;
+        XZvariation = 4.0f;
+        particleLife = 3.5f;
+        particleColor = glm::vec4(0.682f,0.477f,0.151f,1.0f);
+        initialUpwardBoost = 3.5f;
+        SetPartScale(enemyScale, 0.6f);
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;
