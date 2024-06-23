@@ -44,6 +44,7 @@ public:
     int GetPlastic() { return _plastic; }
     int GetRoundNumber() { return _roundNumber; }
     int GetMaxRound() { return _phaseTimes.size() - 1; }
+    std::shared_ptr<Node> GetPlayer() { return _playerNode; }
 
     std::shared_ptr<Node> root;
     int _mapSizeX = 100;

@@ -34,12 +34,12 @@ bool UpgradeManager::RayIntersectsBoundingBox(const glm::vec3& rayOrigin, const 
 }
 
 void UpgradeManager::UpgradeTurret() {
-    if (TURRETSMANAGER.selectedIndex == -1) {
+    if (TURRETSMANAGER._selectedIndex == -1) {
         std::cout << "You are not looking at turret" << std::endl;
         return;
     }
 
-    auto selectedTurret = TURRETSMANAGER._turrets[TURRETSMANAGER.selectedIndex];
+    auto selectedTurret = TURRETSMANAGER._turrets[TURRETSMANAGER._selectedIndex];
 
     if(selectedTurret->_isFlying == true){
         return;
@@ -158,7 +158,7 @@ bool UpgradeManager::IsPlayerStationInRange()
 
 bool UpgradeManager::IsTurretInRaycast()
 {
-    if (TURRETSMANAGER.RaycastTurrets() != -1)
+    if (TURRETSMANAGER._selectedIndex != -1)
     {
         return true;
     }
@@ -399,7 +399,7 @@ void UpgradeManager::Update() {
     }
 
     if (IsTurretInRaycast() && IsTurretInRange()) {
-        HighlightSingleTurret(TURRETSMANAGER.RaycastTurrets());
+        HighlightSingleTurret(TURRETSMANAGER._selectedIndex);
 
         if (Input::Instance().IsKeyPressed(GLFW_KEY_E)) {
             UpgradeTurret();

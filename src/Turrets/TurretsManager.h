@@ -41,9 +41,9 @@ public:
 
     float _distanceToAnotherTurret = 1.5f;
 
-    int selectedIndex = -1;
+    int _selectedIndex = -1;
 
-    int RaycastTurrets();
+    void RaycastTurrets();
 
     void CheckEnemiesInRange();
 

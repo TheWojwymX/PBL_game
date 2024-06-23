@@ -118,10 +118,10 @@ void TurretsManager::PlayerActions() {
         _isInTurretChoiceMenu = true;
     }
 
-    if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && RaycastTurrets() >= 0 && !_turrets[RaycastTurrets()]->_isFlying
+    if (INPUT.IsMousePressed(1) && !_isInBlueprintMode && !_isPlayerInMovingMode && _selectedIndex >= 0 && !_turrets[_selectedIndex]->_isFlying
         && !_player->GetComponent<PlayerController>()->CheckIfPlayerIsAtEntranceToMine() && !_isInTurretChoiceMenu && IsSelectedTurretInRange()) {
 
-        _indexOfMovingTurret = RaycastTurrets();
+        _indexOfMovingTurret = _selectedIndex;
         _isPlayerInMovingMode = true;
         _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
         _turrets[_indexOfMovingTurret]->_isMoving = true;
@@ -135,7 +135,7 @@ void TurretsManager::PlayerActions() {
 }
 
 void TurretsManager::Update() {
-
+    RaycastTurrets();
     PlayerActions();
 
     if (IsInForbiddenArea()) {
@@ -625,33 +625,40 @@ void TurretsManager::PlaceMovingTurret() {
     RESOURCEMANAGER.GetSoundByName("Place")->PlaySound(_player);
 }
 
-int TurretsManager::RaycastTurrets() {
-    if (_isPlayerInMovingMode) return -1;
+void TurretsManager::RaycastTurrets() {
+    if (_isPlayerInMovingMode) _selectedIndex = -1;
+    else {
+        _selectedIndex = -1;
+        float minDistance = std::numeric_limits<float>::infinity(); // Initialize with a large value
 
-    selectedIndex = -1; // Initialize with invalid index
+        auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
+        glm::vec3 cameraPosition = camera->GetPosition();
+        glm::vec3 rayDirection = camera->GetFrontVector();
 
-    auto camera = ComponentsManager::getInstance().GetComponentByID<Camera>(2);
-    glm::vec3 cameraPosition = camera->GetPosition();
-    glm::vec3 rayDirection = camera->GetFrontVector();
+        for (int i = _turretIndexAtRestart; i < _newTurretIndex; i++) {
+            std::string nameOfTurret = "Turret" + std::to_string(i);
+            auto turret = NODESMANAGER.getNodeByName(nameOfTurret);
+            auto meshRenderer = turret->GetComponent<MeshRenderer>();
+            if (meshRenderer) {
+                // Calculate distance from camera to turret center
+                glm::vec3 turretCenter = turret->GetTransform()->GetGlobalPosition();
+                float distance = glm::length(turretCenter - cameraPosition);
 
-    for (int i = _turretIndexAtRestart; i < _newTurretIndex; i++) {
-        std::string nameOfTurret = "Turret" + std::to_string(i);
-        auto turret = NODESMANAGER.getNodeByName(nameOfTurret);
-        auto meshRenderer = turret->GetComponent<MeshRenderer>();
-        if (meshRenderer) {
-            if (FrustumCulling::RayInBox(cameraPosition, rayDirection, meshRenderer->_model,turret->GetTransform()->GetGlobalCTM())) {
-                selectedIndex = i;
-                break;
+                // Check if this turret is closer than the current closest turret
+                if (distance < minDistance) {
+                    if (FrustumCulling::RayInBox(cameraPosition, rayDirection, meshRenderer->_model, turret->GetTransform()->GetGlobalCTM())) {
+                        minDistance = distance;
+                        _selectedIndex = i;
+                    }
+                }
             }
         }
     }
-
-    return selectedIndex; // Return the index of the selected turret (-1 if none selected)
 }
 
 bool TurretsManager::IsSelectedTurretInRange() {
-    if (selectedIndex != -1 && selectedIndex >= _turretIndexAtRestart) {
-        std::string nameOfTurret = "Turret" + std::to_string(selectedIndex);
+    if (_selectedIndex != -1 && _selectedIndex >= _turretIndexAtRestart) {
+        std::string nameOfTurret = "Turret" + std::to_string(_selectedIndex);
 
         auto turretPosition = NODESMANAGER.getNodeByName(nameOfTurret)->GetTransform()->GetPosition();
         auto playerPosition = _player->GetTransform()->GetPosition();
