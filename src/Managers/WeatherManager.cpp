@@ -234,7 +234,7 @@ glm::vec3 WeatherManager::getSkyColor() {
         if(rainyDay) currentColor = glm::mix(rainSunsetSkyColor, rainNightSkyColor, (angle - 46.9f) / (47.6f - 46.9f));
     } else if (angle >= 47.6 && angle < 49.0f){
         currentColor = rainNightSkyColor;
-        speed = 0.4;
+        speed = 0.1;
     } else if (angle >= 42.5 && angle < 44.0) {
         speed = 0.03;
         if(!rainyDay) currentColor = glm::mix(rainNightSkyColor, sunsetSkyColor, (angle - 42.5f) / (44.0f - 42.5f));

@@ -453,9 +453,9 @@ int main(int, char**)
 //        ImGui::End();
 //
         // Quick Debug
-        ImGui::SliderFloat("lightConst", &LIGHTSMANAGER.flashlightConstant, -10.0f, 10.0f);
-        ImGui::SliderFloat("lightLinear", &LIGHTSMANAGER.flashlightLinear, -10.0f, 10.0f);
-        ImGui::SliderFloat("lightQuadratic", &LIGHTSMANAGER.flashlightQuadratic, -10.0f, 10.0f);
+        ImGui::SliderFloat("Shot Const", &LIGHTSMANAGER.shotConstant, -10.0f, 10.0f);
+        ImGui::SliderFloat("Shot Linear", &LIGHTSMANAGER.shotLinear, -10.0f, 10.0f);
+        ImGui::SliderFloat("Shot Quadratic", &LIGHTSMANAGER.shotQuadratic, -10.0f, 10.0f);
 
         ImGui::InputFloat3("Light Position", &LIGHTSMANAGER.lightPos[0]);  // Change lightPos
         ImGui::InputFloat3("Center", &LIGHTSMANAGER.lightCenter[0]);

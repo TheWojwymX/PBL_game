@@ -222,7 +222,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
     }
     shadow /= 9.0;
 
-    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.16, 0.0, 1.0));
+    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.33, 0.0, 1.0));
 
     return shadow;
 }
