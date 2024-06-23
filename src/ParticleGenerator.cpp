@@ -124,7 +124,7 @@ void ParticleGenerator::RenderParticles() {
     float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
     bool visible = dotProduct > 0.1f;
 
-    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles" || particleType =="rainParticlesFull" || particleType == "wormParticles") {
+    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles" || particleType =="rainParticlesFull" || particleType == "wormParticles" || particleType == "antSpawn") {
 
         Particle *particleData = this->particleData;
 
