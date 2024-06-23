@@ -544,7 +544,7 @@ void TurretsManager::InitTurretStats() {
     _turretStats.push_back(glm::vec4(2.0f, 5.0f, 50.0f, 100.0f)); // SNIPER
     _turretStats.push_back(glm::vec4(1.0f, 1.0f, 80.0f, 80.0f));  // RIFLE
 
-    _turretCostIncrease = 3;
+    _turretCostIncrease = 2;
 }
 
 void TurretsManager::Reload(const shared_ptr<Turret> &turret) {

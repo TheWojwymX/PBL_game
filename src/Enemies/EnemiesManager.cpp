@@ -56,17 +56,17 @@ void EnemiesManager::Init() {
 
     //ant , beetle, wasp
     _roundsInfo = {
-        glm::vec3(10, 0, 0), // 0 
-        glm::vec3(20, 1, 0), // 1 
-        glm::vec3(30, 3, 1), // 2 
-        glm::vec3(12, 3, 2), // 3 
-        glm::vec3(15, 4, 3), // 4 
-        glm::vec3(18, 5, 4), // 5 
-        glm::vec3(21, 6, 5), // 6 
-        glm::vec3(24, 7, 6), // 7 
-        glm::vec3(27, 8, 7), // 8 
-        glm::vec3(30, 9, 8), // 9 
-        glm::vec3(0.8f,0.05f,0.1f) // endless
+        glm::vec3(10, 0, 0), // 0
+        glm::vec3(25, 1, 0), // 1
+        glm::vec3(50, 3, 1), // 2
+        glm::vec3(80, 6, 3), // 3
+        glm::vec3(115, 10, 6), // 4
+        glm::vec3(155, 15, 10), // 5
+        glm::vec3(200, 21, 15), // 6
+        glm::vec3(250, 28, 21), // 7
+        glm::vec3(305, 36, 28), // 8
+        glm::vec3(365, 45, 36), // 9
+        glm::vec3(0.85f, 0.05f, 0.1f) // endless
     };
 
     _spawnedEnemies = glm::ivec3(0);

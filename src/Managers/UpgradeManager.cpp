@@ -434,30 +434,30 @@ void UpgradeManager::InitPlayerUpgrades()
 {
     // JetpackCapacity Upgrades
     _jetpackCapacityUpgrades.upgradeCosts = {
-        10,   // 1
-        15,   // 2
-        20,   // 3
-        25,   // 4
-        30    // 5
+        5,   // 1
+        10,   // 2
+        15,   // 3
+        20,   // 4
+        25    // 5
     };
 
     _jetpackCapacityUpgrades.upgradeValues = {
-        50.0f,      // 1
-        60.0f,      // 2
-        70.0f,      // 3
-        80.0f,      // 4
-        90.0f       // 5
+        25.0f,      // 1
+        50.0f,      // 2
+        75.0f,      // 3
+        100.0f,      // 4
+        125.0f       // 5
     };
     ///////////////////////
 
 
     // Mining Speed Upgrades
     _miningSpeedUpgrades.upgradeCosts = {
-        15,   // 1
-        20,   // 2
-        25,   // 3
-        30,   // 4
-        35    // 5
+         5,   // 1
+        10,   // 2
+        15,   // 3
+        20,   // 4
+        25    // 5
     };
 
     _miningSpeedUpgrades.upgradeValues = {
@@ -472,11 +472,11 @@ void UpgradeManager::InitPlayerUpgrades()
 
     // Mining Reach upgrades
     _miningReachUpgrades.upgradeCosts = {
-        10,   // 1
-        15,   // 2
-        20,   // 3
-        25,   // 4
-        30    // 5
+         5,   // 1
+        8,   // 2
+        12,   // 3
+        17,   // 4
+        23    // 5
     };
 
     _miningReachUpgrades.upgradeValues = {
@@ -512,38 +512,38 @@ void UpgradeManager::InitDomeUpgrades()
 {
     // Dome HP upgrades
     _domeHPUpgrades.upgradeCosts = {
-        10,   //1
-        15,   //2
-        20,   //3
-        25,   //4
-        30    //5
+        5,   // 1
+        10,   // 2
+        15,   // 3
+        20,   // 4
+        25    // 5
     };
 
     _domeHPUpgrades.upgradeValues = {
-        20.0f,      //1
-        30.0f,      //2
-        40.0f,      //3
-        50.0f,      //4
-        60.0f       //5
+        25.0f,      //1
+        50.0f,      //2
+        75.0f,      //3
+        100.0f,      //4
+        125.0f       //5
     };
     ///////////////////////
 
 
     // Dome HP Regen upgrades
     _domeHPRegenUpgrades.upgradeCosts = {
-        8,    //1
-        12,   //2
-        16,   //3
-        20,   //4
-        24    //5
+        5,   // 1
+        10,   // 2
+        15,   // 3
+        20,   // 4
+        25    // 5
     };
 
     _domeHPRegenUpgrades.upgradeValues = {
-        1.0f,       //1
-        2.0f,       //2
-        3.0f,       //3
-        4.0f,       //4
-        5.0f        //5
+        0.9f,       //1
+        1.0f,       //2
+        1.0f,       //3
+        1.0f,       //4
+        1.0f        //5
     };
     ///////////////////////
 
@@ -571,8 +571,8 @@ void UpgradeManager::InitTurretUpgrades()
     // Initialize Turret Upgrades
     // Minigun Upgrades
     _minigunUpgrades.upgradeCosts = {
-        10,   // 1
-        20    // 2
+        5,   // 1
+        15    // 2
     };
 
     _minigunUpgrades.upgradeValues = {
@@ -582,8 +582,8 @@ void UpgradeManager::InitTurretUpgrades()
 
     // Sniper Upgrades
     _sniperUpgrades.upgradeCosts = {
-        10,   // 1
-        20    // 2
+        5,   // 1
+        15    // 2
     };
 
     _sniperUpgrades.upgradeValues = {
@@ -593,8 +593,8 @@ void UpgradeManager::InitTurretUpgrades()
 
     // Rifle Upgrades
     _rifleUpgrades.upgradeCosts = {
-        10,   // 1
-        20    // 2
+        5,   // 1
+        15    // 2
     };
 
     _rifleUpgrades.upgradeValues = {
