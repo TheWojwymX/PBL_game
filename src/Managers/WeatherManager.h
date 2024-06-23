@@ -78,7 +78,7 @@ private:
     float shadowStrength = 1.0f;
     float dirAngle = 44.5f;
 
-    float stepInterval = 0.2f;
+    float stepInterval = 1.0f;
     float timeAccumulator = 0.0f;
 
     shared_ptr<Node> wormParticleNode;
