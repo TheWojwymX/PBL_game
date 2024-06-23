@@ -30,18 +30,14 @@ void WeatherManager::Init() {
 
     wormNode = NODESMANAGER.getNodeByID(166);
 
-    wormParticleNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "wormParticleNode");
-    auto wormParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "wormParticles");
-    wormParticles->SetOffset(glm::vec3(-233.1878f, -102.0f, 0.0f));
-    wormParticles->object = wormNode;
-    wormParticles->Init();
-    wormParticleNode->AddComponent(wormParticles);
+    SetupWormParticles();
 }
 
 void WeatherManager::Reset(){
     direction = 1;
     angle = 44.5f;
     dirAngle = 44.5f;
+    SetupWormParticles();
 }
 
 void WeatherManager::Update(){
@@ -276,4 +272,13 @@ glm::vec3 WeatherManager::getDirColor() {
 
     if(thunder) currentColor = glm::mix(currentColor, glm::vec3(0.7f,0.7f,0.5f), 0.1f);
     return currentColor;
+}
+
+void WeatherManager::SetupWormParticles() {
+    wormParticleNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "wormParticleNode");
+    auto wormParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "wormParticles");
+    wormParticles->SetOffset(glm::vec3(-233.1878f, -102.0f, 0.0f));
+    wormParticles->object = wormNode;
+    wormParticles->Init();
+    wormParticleNode->AddComponent(wormParticles);
 }
