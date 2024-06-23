@@ -23,6 +23,7 @@ public:
     void SetupAmbientParticles();
     void SetupRainParticles();
     void UpdateSunPosition();
+    void SetupWormParticles();
     glm::vec3 getSkyColor();
     glm::vec3 getDirColor();
 
