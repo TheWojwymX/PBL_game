@@ -74,7 +74,8 @@ void PageManager::CheckInputs() {
         _isInUpgradeMenu = false;
     }
 
-    if (INPUT.IsKeyPressed(GLFW_KEY_E) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsPlayerStationInRange() && UPGRADEMANAGER.IsPlayerStationInRaycast()) {
+    if (INPUT.IsKeyPressed(GLFW_KEY_E) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsPlayerStationInRange() &&
+        UPGRADEMANAGER.IsPlayerStationInRaycast() && NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>()->_isHidden) {
         if (!_isInPage) {
             _isInPage = true;
             _playerUpgradeMenu->_shouldRender = true;
@@ -106,7 +107,8 @@ void PageManager::CheckInputs() {
             _isInPage = false;
             CloseAllPages();
         }
-    } else if (INPUT.IsKeyPressed(69) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsDomeStationInRange() && UPGRADEMANAGER.IsDomeStationInRaycast()) {
+    } else if (INPUT.IsKeyPressed(69) && !_pauseMenuPage->_shouldRender && UPGRADEMANAGER.IsDomeStationInRange() &&
+        UPGRADEMANAGER.IsDomeStationInRaycast() && NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>()->_isHidden) {
         if (!_isInPage) {
             _isInPage = true;
             _domeUpgradeMenu->_shouldRender = true;

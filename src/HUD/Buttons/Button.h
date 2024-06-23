@@ -53,4 +53,12 @@ private:
     float _textSize = 1;
 
     std::function<void()> _onClickFunction;
+
+    bool _hoverSoundPlayed = false;
+
+    void PlayHoverSound();
+
+    void PlayClickSound();
+
+    shared_ptr<Node> _player;
 };

@@ -18,4 +18,6 @@ public:
 
 private:
     void SetupButtons();
+
+    void RenderText();
 };

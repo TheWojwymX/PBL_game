@@ -3,6 +3,7 @@
 #include "HUD/Pages/Page.h"
 #include "HUD/Buttons/Button.h"
 #include "HUD/CoordsConverter.h"
+#include "Component/PlayerController.h"
 
 class PlayerUpgradeMenu : public Page  {
 public:
@@ -19,4 +20,8 @@ public:
 
 private:
     void SetupButtons();
+
+    void RenderText();
+
+    shared_ptr<PlayerController> _playerController = make_shared<PlayerController>();
 };

@@ -1,5 +1,6 @@
 ﻿#include "Camera.h"
 #include "Managers/GameManager.h"
+#include "HUD/PageManager.h"
 
 Camera::Camera(glm::vec3 offset, glm::vec3 up, float yaw, float pitch)
     : _offset(offset), _position(glm::vec3(0.0f)), _worldUp(up), _yaw(yaw), _pitch(pitch),
@@ -48,7 +49,7 @@ void Camera::Update() {
     _position = _ownerTransform->GetPosition() + _offset;
 
     // Figure-8 head bob effect
-    if (_playerRef->IsWalking()) {
+    if (_playerRef->IsWalking() && !PAGEMANAGER._isInPage && !GAMEMANAGER._paused) {
         _bobTime += TIME.GetDeltaTime(); // Adjust multiplier to control speed of bob effect
         float horizontalBobOffset = _horizontalBobScale * _bobAmount * sin(_bobFrequency * _bobTime);
 

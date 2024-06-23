@@ -56,12 +56,12 @@ void HUDMain::Update() {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-/*    if(INPUT.IsKeyPressed(GLFW_KEY_KP_9)){
+    if(INPUT.IsKeyPressed(GLFW_KEY_KP_9)){
         czyWyswietlacTestowy = !czyWyswietlacTestowy;
     }
     if(czyWyswietlacTestowy){
         testowy.Render();
-    }*/
+    }
 
     glm::vec leftDownCorner = glm::vec3(0.7614583, 0.5564815, 0.0);
     glm::vec rightTopCorner = glm::vec3(0.9723958, 0.9314815, 0.0);

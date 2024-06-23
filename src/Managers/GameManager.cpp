@@ -87,6 +87,7 @@ void GameManager::LateGame()
     ENEMIESMANAGER.Reset();
     _roundNumber = _phaseTimes.size() - 1;
     _currentPhase = Phase::DIG;
+    _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
     _currentTime = 0.0f;
     UPGRADEMANAGER.UpgradeMax();
 }

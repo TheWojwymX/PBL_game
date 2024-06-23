@@ -35,7 +35,7 @@ public:
 
     float _forwardOffset = 2.0f;  // Dystans przed kamerą
     float _horizontalOffset = 0;  // Dystans w prawo od kamery
-    float _verticalOffset = -0.7f;  // Dystans w dół od kamery
+    float _verticalOffset = -1.15f;  // Dystans w dół od kamery
 
     bool _playHideAnim = false;
     bool _playShowAnim = false;

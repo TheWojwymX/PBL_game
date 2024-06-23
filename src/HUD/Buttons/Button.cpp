@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "Managers/NodesManager.h"
 
 Button::Button(const char* backgroundImagePath, const char* hoverBackgroundImagePath, const char* clickedBackgroundImagePath,
     glm::vec2 position, std::function<void()> onClickFunction)
@@ -34,6 +35,8 @@ void Button::Init() {
 
     _hoverBackgroundImage._shouldRender = false;
     _clickedBackgroundImage._shouldRender = false;
+
+    _player = NODESMANAGER.getNodeByName("player");
 }
 
 void Button::Update() {
@@ -80,12 +83,14 @@ void Button::AppareanceManager() {
         _backgroundImage._shouldRender = false;
         _clickedBackgroundImage._shouldRender = false;
         _hoverBackgroundImage._shouldRender = true;
+        PlayHoverSound();
         return;
     }
     else {
         _backgroundImage._shouldRender = true;
         _clickedBackgroundImage._shouldRender = false;
         _hoverBackgroundImage._shouldRender = false;
+        _hoverSoundPlayed = false;
         return;
     }
 }
@@ -101,6 +106,8 @@ void Button::TimerCount() {
 }
 
 void Button::Onclick() {
+    PlayClickSound();
+
     if (_onClickFunction) {
         _onClickFunction();
     }
@@ -131,4 +138,15 @@ void Button::SetButtonPosition(glm::vec2 position) {
 void Button::SetCorners(glm::vec2 downLeftCorner, glm::vec2 topRightCorner) {
     _corners = std::make_pair(downLeftCorner, topRightCorner);
     _usePosition = false; 
+}
+
+void Button::PlayHoverSound(){
+    if(!_hoverSoundPlayed){
+        RESOURCEMANAGER.GetSoundByName("Hover")->PlaySoundSim(_player);
+        _hoverSoundPlayed = true;
+    }
+}
+
+void Button::PlayClickSound(){
+    RESOURCEMANAGER.GetSoundByName("Click")->PlaySoundSim(_player);
 }

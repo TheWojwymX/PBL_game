@@ -604,7 +604,7 @@
         "Volume": 1.0
       },
       {
-        "Path": "res/Sounds/jetpack1.mp3",
+        "Path": "res/Sounds/jetpack-loop.mp3",
         "SoundName": "jetpack1",
         "SoundID": 11,
         "Type": 1,
@@ -693,6 +693,20 @@
         "SoundID": 23,
         "Type": 0,
         "Volume": 0.7
+      },
+      {
+        "Path": "res/Sounds/GUI/click.mp3",
+        "SoundName": "Click",
+        "SoundID": 24,
+        "Type": 0,
+        "Volume": 0.5
+      },
+      {
+        "Path": "res/Sounds/GUI/hover.wav",
+        "SoundName": "Hover",
+        "SoundID": 25,
+        "Type": 0,
+        "Volume": 0.5
       }
 
     ]

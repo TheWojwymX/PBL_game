@@ -9,6 +9,8 @@
 class CoordsConverter {
 public:
     static glm::vec2 ConvertCoords(const glm::vec2 &coords);
+
+    static glm::vec2 ConvertTextCoords(const glm::vec2 &coords);
 };
 
 

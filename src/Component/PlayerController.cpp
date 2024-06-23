@@ -230,6 +230,11 @@ void PlayerController::JetpackInput() {
 
     // Check if the space key is currently held down
     if (INPUT.GetKeyDown(GLFW_KEY_SPACE) && HUD._isAfterTutorialFuel) {
+
+        if(_ownerTransform->GetPosition().y >= GAMEMANAGER._groundLevel){
+            RESOURCEMANAGER.GetSoundByName("jetpack1")->StopSound();
+        }
+
         if (!_spaceKeyWasPressed) {
             // If the space key was not pressed before, update the last press time
             _lastSpacePressTime = now;
