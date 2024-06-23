@@ -81,9 +81,9 @@ public:
     float glowstickLinear5 = 0.632f;
     float glowstickQuadratic5 = 0.045f;
 
-    float shotConstant = 1.0f;
-    float shotLinear = 0.7f;
-    float shotQuadratic = 1.8f;
+    float shotConstant = 1.066f;
+    float shotLinear = 1.438f;
+    float shotQuadratic = 5.899f;
 
     glm::vec3 dirColor{ 0.999f, 0.999f, 1.00f };
     glm::vec3 skyColor{ 0.6235f, 0.6235f, 0.8039f };

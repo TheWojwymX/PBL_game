@@ -2,7 +2,7 @@
 out vec4 FragColor;
 
 // Define constants for lighting calculations
-#define AMBIENT_STRENGTH 0.25
+#define AMBIENT_STRENGTH 0.35
 #define SPECULAR_STRENGTH 0.2
 #define SHININESS 32
 #define NR_SPOT_LIGHTS 1
@@ -140,7 +140,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 ambient = light.color * AMBIENT_STRENGTH;
     vec3 diffuse = light.color * diff;
     vec3 specular = light.color * spec * SPECULAR_STRENGTH;
-    return (ambient + diffuse + specular);
+    return (ambient + diffuse);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -193,11 +193,11 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
     //float bias =  0.001;
     vec3 normal = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
-    float bias = max(0.003 * dot(normal, lightDir), 0.001);
+    float bias = max(0.001 * dot(normal, lightDir), 0.0007);
     //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
     float shadow = 0.0;
-    vec2 texelSize = 0.1 / textureSize(shadowMap, 0);
+    vec2 texelSize = 0.2 / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)
