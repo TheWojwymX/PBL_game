@@ -539,11 +539,11 @@ void UpgradeManager::InitDomeUpgrades()
     };
 
     _domeHPRegenUpgrades.upgradeValues = {
-        0.9f,       //1
-        1.0f,       //2
-        1.0f,       //3
-        1.0f,       //4
-        1.0f        //5
+        0.1f,       //1
+        0.2f,       //2
+        0.3f,       //3
+        0.4f,       //4
+        0.5f        //5
     };
     ///////////////////////
 
@@ -555,13 +555,6 @@ void UpgradeManager::InitDomeUpgrades()
 
     _domeHPRepair.upgradeValues = {
         10.0f       // Single value
-    };
-    ///////////////////////
-
-
-    // Evacuate cost
-    _evacuateCost.upgradeCosts = {
-        100  // Single cost
     };
     ///////////////////////
 }
@@ -598,8 +591,8 @@ void UpgradeManager::InitTurretUpgrades()
     };
 
     _rifleUpgrades.upgradeValues = {
-        {0.0f, -0.25f, 20, 20},   // 1 (damage, fire rate, sideRange, frowardRange)
-        {0.0f, -0.25f, 20, 20}   // 2 (damage, fire rate, sideRange, frowardRange)
+        {1.0f, -0.25f, 20, 20},   // 1 (damage, fire rate, sideRange, frowardRange)
+        {1.0f, -0.25f, 20, 20}   // 2 (damage, fire rate, sideRange, frowardRange)
     };
 }
 

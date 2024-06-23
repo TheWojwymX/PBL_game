@@ -71,9 +71,9 @@ void EnemiesManager::Init() {
 
     _spawnedEnemies = glm::ivec3(0);
     _spawnDistance = 100;
-    _endlessDelay = 1.0f;
+    _endlessDelay = 3.0f;
     _endlessDelayMin = 0.1f;
-    _endlessDelayStep = 0.05f;
+    _endlessDelayStep = 0.025f;
     _spawnSpan = 0.5f;
 
     InitEnemyStats();
@@ -108,9 +108,9 @@ void EnemiesManager::SpawnEnemiesForRound()
     }
     else {
         _endlessTimer += TIME.GetDeltaTime();
+        if (_endlessDelay > _endlessDelayMin) _endlessDelay -= _endlessDelayStep * TIME.GetDeltaTime();
         if (_endlessTimer < _endlessDelay) return;
 
-        if (_endlessDelay > _endlessDelayMin) _endlessDelayMin -= _endlessDelayStep;
         _endlessTimer = 0.0f; 
 
         const glm::vec3& weights = _roundsInfo[GAMEMANAGER.GetRoundNumber()];
@@ -344,6 +344,7 @@ void EnemiesManager::Reset() {
         NODESMANAGER.getNodeByName("root")->RemoveChild(_enemiesParticles[i]);
     }
     _enemiesParticles.clear();
+    _finishedSpawning = false;
 }
 
 void EnemiesManager::InitEnemyStats() {
@@ -353,7 +354,7 @@ void EnemiesManager::InitEnemyStats() {
     // speed, hp, damage, attackFrequency, size, type
     EnemyStats ant(7.0f, 3, 0.5f, 0.6f, 2.0f, ANT);
     EnemyStats beetle(3.0f, 30, 5, 1.5f, 4.0f, BEETLE);
-    EnemyStats wasp(10.0f, 2, 1, 0.45f, 2.0f, WASP);
+    EnemyStats wasp(10.0f, 3, 1, 0.45f, 2.0f, WASP);
 
     // Add all objects to the _enemyStats vector
     _enemyStats.push_back(ant);
