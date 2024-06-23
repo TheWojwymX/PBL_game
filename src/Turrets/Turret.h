@@ -43,16 +43,16 @@ public:
     std::vector<glm::vec3> _turretRangePositions = {glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0)};
 
     float _timer = 0.0f;
-
-    std::shared_ptr<Node> _flare;
-private:
     TurretType _turretType = MINIGUN;
-    char _upgradeLevel = 0;
-    std::vector<std::pair<int, float>> _sounds;
     float _fireRate;
     float _damage;
     float _sideRange;
     float _forwardRange;
+
+    std::shared_ptr<Node> _flare;
+private:
+    char _upgradeLevel = 0;
+    std::vector<std::pair<int, float>> _sounds;
 
     const char *texture;
 

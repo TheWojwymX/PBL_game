@@ -73,9 +73,9 @@ public:
     int _newEnemyIndex = 1;
 
     std::vector<std::shared_ptr<Node>> _enemiesParticles;
+    std::vector<EnemyStats> _enemyStats;
 
 private:
-    std::vector<EnemyStats> _enemyStats;
     int _spawnDistance;
     std::vector<glm::vec2> _spawnersPositions;
     std::vector<glm::vec3> _roundsInfo;

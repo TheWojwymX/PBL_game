@@ -83,13 +83,14 @@ public:
     void Reset();
     int _turretIndexAtRestart = 0;
     int _newTurretIndex = 0;
+    std::vector<glm::vec4> _turretStats;
+    TurretType _turretType;
+
 private:
     std::vector<int> _turretCosts;
     int _turretCostIncrease;
-    TurretType _turretType;
     std::shared_ptr<Turret> _heldTurret = nullptr;
     std::shared_ptr<Camera> _cameraRef = nullptr;
-    std::vector<glm::vec4> _turretStats;
 
     bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
     void InitTurretStats();

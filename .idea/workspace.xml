@@ -33,14 +33,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Balance/Balancer.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Balance/Balancer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-0.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-0.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-1.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-2.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-2.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-3.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-3.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-4.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-4.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-5.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-5.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-6.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-6.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,17 +112,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -247,6 +247,7 @@
       <workItem from="1718786017963" duration="26304000" />
       <workItem from="1718906016142" duration="79000" />
       <workItem from="1718909049478" duration="485000" />
+      <workItem from="1719138317255" duration="6701000" />
     </task>
     <servers />
   </component>
