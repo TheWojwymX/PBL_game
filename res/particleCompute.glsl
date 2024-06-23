@@ -45,6 +45,7 @@ uniform bool rain;
 uniform bool tooltip;
 uniform bool tooltipSpawn;
 uniform bool tooltipShrink;
+uniform bool worm;
 
 layout (local_size_x = 1) in;
 
@@ -130,14 +131,14 @@ void main() {
             if (tooltip) {
             // Compute direction vector from nodePosition to cameraPosition
             vec3 direction = cameraPosition - nodePosition;
-    
+
             // Normalize the direction vector
             float magnitude = length(direction);
             vec3 normalizedDirection = direction / magnitude;
-    
+
             // Scale the normalized direction by 0.7
             vec3 moveVector = normalizedDirection * 0.9;
-    
+
             // Compute the final position
             p.Position.xyz = nodePosition + moveVector;
             }
@@ -187,6 +188,10 @@ p.Scale = 0.0;
 p.Position.xyz = vec3(-300.0,-300.0,-300.0);
 p.Life = 0.0;
 }
+if(worm && p.Position.y < 299.0)
+{
+p.Life = 0.0;
+}
             // Check for bounce when particle hits y = 105
             if (p.Position.y <= groundLevel && !isJetpack && !isFlare && !isUnderground) {
                 if(onlyForward)
@@ -197,8 +202,11 @@ p.Life = 0.0;
                 // Reflect the y velocity for a bounce and dampen it to lose energy
 
                 if(!ambient){
-                if(!casing){
+                if(!casing && !worm){
                 p.Velocity.y = -p.Velocity.y * 0.8; // Adjust 0.8 damping factor as needed
+                }
+                else if(worm){
+                p.Velocity.y = -p.Velocity.y * 0.2;
                 }
                 else{
                 p.Velocity.y = -p.Velocity.y * 0.1;

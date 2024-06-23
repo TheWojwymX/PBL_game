@@ -27,6 +27,15 @@ void WeatherManager::Init() {
     rainDayColor = glm::vec3(0.4902f, 0.5098f, 0.7098f);
     rainSunsetColor = glm::vec3(0.4353f, 0.3686f, 0.3137f);
     rainNightColor = glm::vec3(0.1922f, 0.1922f, 0.3373f);
+
+    wormNode = NODESMANAGER.getNodeByID(166);
+
+    wormParticleNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "wormParticleNode");
+    auto wormParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "wormParticles");
+    wormParticles->SetOffset(glm::vec3(-233.1878f, -102.0f, 0.0f));
+    wormParticles->object = wormNode;
+    wormParticles->Init();
+    wormParticleNode->AddComponent(wormParticles);
 }
 
 void WeatherManager::Reset(){
@@ -36,6 +45,14 @@ void WeatherManager::Reset(){
 }
 
 void WeatherManager::Update(){
+
+    if(wormNode->GetEnabled()) {
+        wormParticleNode->GetComponent<ParticleGenerator>()->SpawnParticles();
+        if (wormNode->GetTransform()->GetRotation().y > 0.1) {
+            wormParticleNode->GetComponent<ParticleGenerator>()->toDelete = true;
+        }
+    }
+
     windDirection = windModel.getWind(15 * TIME.GetDeltaTime());
     windDirection.x /= 10;
     windDirection.y /= 10;

@@ -124,7 +124,7 @@ void ParticleGenerator::RenderParticles() {
     float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
     bool visible = dotProduct > 0.1f;
 
-    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles" || particleType =="rainParticlesFull") {
+    if((visible && particleType != "turretShot") || particleType == "turretShot" || particleType=="ambientSandParticles" || particleType=="rainParticles" || particleType =="rainParticlesFull" || particleType == "wormParticles") {
 
         Particle *particleData = this->particleData;
 
@@ -229,6 +229,7 @@ void ParticleGenerator::Init() {
     computeShader->setBool("isUnderground", isUnderground);
     computeShader->setBool("rain", rain);
     computeShader->setBool("tooltip", tooltip);
+    computeShader->setBool("worm", worm);
 
     unsigned int VBO;
     float particle_quad[] = {
@@ -550,6 +551,23 @@ void ParticleGenerator::initiateParticleType() {
         onlyForward = false;
         casing = false;
         isJetpack = false;
+    }
+    else if (particleType == "wormParticles"){
+        texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
+        amount = 700;
+        newParticles = 3;
+        spawnDelay = 0.0f;
+        speedVariation = 50.5f;
+        XZvariation = 40.5f;
+        particleLife = 10.5f;
+        particleColor = glm::vec4(0.832f,0.627f,0.301f,1.0f);
+        initialUpwardBoost = -95.0f;
+        particleScale = 1.6f;
+        gravity = glm::vec3(0.0f, -9.8f, 0.0f);
+        onlyForward = false;
+        casing = false;
+        isJetpack = false;
+        worm = true;
     }
 }
 

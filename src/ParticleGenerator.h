@@ -105,6 +105,7 @@ private:
     bool affectDirLight = true;
     bool plastic1 = false;
     bool plastic2 = false;
+    bool worm = false;
 
     int threadCount = 0;
 

@@ -79,4 +79,7 @@ private:
 
     float stepInterval = 0.2f;
     float timeAccumulator = 0.0f;
+
+    shared_ptr<Node> wormParticleNode;
+    shared_ptr<Node> wormNode;
 };

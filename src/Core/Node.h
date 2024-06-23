@@ -83,6 +83,7 @@ public:
     }
 
     void SetEnabled(bool enabled);
+    bool GetEnabled() {return _enabled;}
     void MoveChildToEnd(std::shared_ptr<Node> child);
 private:
     bool _enabled = true; 
