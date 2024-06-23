@@ -74,11 +74,12 @@ public:
 
     std::vector<std::shared_ptr<Node>> _enemiesParticles;
     std::vector<EnemyStats> _enemyStats;
+    std::vector<glm::vec3> _roundsInfo;
+
 
 private:
     int _spawnDistance;
     std::vector<glm::vec2> _spawnersPositions;
-    std::vector<glm::vec3> _roundsInfo;
     glm::ivec3 _spawnedEnemies;
     float _spawnSpan;
     float _endlessTimer = 0.0f;

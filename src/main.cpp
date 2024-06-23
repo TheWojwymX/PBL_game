@@ -472,7 +472,10 @@ int main(int, char**)
 
         ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 
-        BALANCER.addToImgui();
+        BALANCER.addEnemyStatsToImgui();
+        BALANCER.addTurretStatsToImgui();
+        BALANCER.addPhaseStatsToImgui();
+        BALANCER.addUpgradesStatsToImgui();
 
         imguiMain->endDraw();
         ImGui::Render();

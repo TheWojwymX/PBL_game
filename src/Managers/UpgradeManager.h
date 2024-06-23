@@ -65,7 +65,7 @@ public:
     void Update();
 
     void Reset();
-private:
+
     Upgrades _domeHPUpgrades;
     Upgrades _domeHPRegenUpgrades;
     Upgrades _domeHPRepair;
@@ -79,6 +79,8 @@ private:
     TurretUpgrades _minigunUpgrades;
     TurretUpgrades _sniperUpgrades;
     TurretUpgrades _rifleUpgrades;
+
+private:
 
     std::shared_ptr<PlayerController> _playerRef;
 
