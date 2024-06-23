@@ -11,8 +11,8 @@ class GameManager {
 public:
     // Public members
     bool _isFullscreen = false;
-    int _screenWidth = 1920;
-    int _screenHeight = 1080;
+    int _screenWidth = 1280;
+    int _screenHeight = 720;
     GLFWwindow* _window;
 
     void Init();
@@ -84,9 +84,9 @@ public:
 
     void GoToMainMenu();
 
+    Phase _currentPhase = Phase::DIG;
 private:
     int _roundNumber = 0;
-    Phase _currentPhase = Phase::DIG; 
     int _plastic = 5;
     float _currentTime = 0.0f;
     bool _roundWon = false;
@@ -96,4 +96,6 @@ private:
 
     void ResetWorm();
     void ResetTopSnap();
+
+    float _caveMusicVolumeAtStartBattle = 0.5;
 };

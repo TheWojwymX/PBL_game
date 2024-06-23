@@ -5,6 +5,7 @@
 #include "Managers/NodesManager.h"
 #include "UpgradeManager.h"
 #include "Turrets/TurretsManager.h"
+#include "AudioManager.h"
 
 GameManager::GameManager() {
     // Starting time for digging phase
@@ -109,9 +110,15 @@ void GameManager::RoundWon()
 {
     _roundWon = true;
     std::cout << "Round WON!" << std::endl;
+    RESOURCEMANAGER.GetSoundByName("VictoryMusic")->RiseUp(1, _playerNode);
+    _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
 }
 
 void GameManager::Update() {
+    if(INPUT.IsKeyPressed(GLFW_KEY_KP_5)){
+        ENEMIESMANAGER.Reset();
+    }
+
     if (TUTORIALMANAGER._isFreePlay) {
         _currentTime += TIME.GetDeltaTime();
         pressToSkipPhase();
@@ -135,6 +142,8 @@ void GameManager::Update() {
 
 void GameManager::InitPhase() {
     if (_currentPhase == Phase::DIG) {
+        _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
+        _playerNode->GetComponent<PlayerAudioController>()->_isInDigPhase = true;
         if (_roundNumber < _phaseTimes.size() - 1) {
             _roundNumber++;
         }
@@ -142,6 +151,8 @@ void GameManager::InitPhase() {
     else {
         _roundWon = false;
         ENEMIESMANAGER.StartSpawning();
+        _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToBattlePhase();
+        _playerNode->GetComponent<PlayerAudioController>()->_isInDigPhase = false;
     }
 }
 
@@ -234,6 +245,7 @@ void GameManager::RestartGame() {
     PAGEMANAGER.Reset();
     WEATHERMANAGER.Reset();
     DisableMouse();
+    AUDIOMANAGER.Reset();
 }
 
 void GameManager::LoseGame() {

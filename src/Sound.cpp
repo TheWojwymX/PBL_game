@@ -175,3 +175,21 @@ void Sound::RiseUp(float time, shared_ptr<Node> sourceNode) {
 void Sound::SetVolume(float volume) {
     _volume = volume;
 }
+
+float Sound::GetVolume() {
+    return _volume;
+}
+
+void Sound::Reset() {
+    StopSound();
+    ma_sound_seek_to_pcm_frame(&_sound, 0);
+}
+
+void Sound::ResetTimer() {
+    _timer = 0.0f;
+}
+
+void Sound::StopRisingUp() {
+    _isRisingUp = false;
+    _timer = 0.0f;
+}

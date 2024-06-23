@@ -49,6 +49,18 @@ public:
     void StopCaveMusic();
 
     void ResetCaveMusic();
+
+    void ChangeMusicToDigPhase();
+    void ChangeMusicToBattlePhase();
+
+    void PlayWindAmbient();
+
+    void StopWindAmbient();
+
+    bool _isPlayingWindAmbient = false;
+    bool _isPlayingBattleMusic = false;
+
+    bool _isInDigPhase = false;
 };
 
 

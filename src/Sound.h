@@ -60,6 +60,13 @@ public:
     void SetVolume(float volume);
 
     void StopFadingAway();
+    void StopRisingUp();
+
+    void Reset();
+
+    float GetVolume();
+
+    void ResetTimer();
 private:
     float _timeToFadeAway;
     float _timeToRiseUp;

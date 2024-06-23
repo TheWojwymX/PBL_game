@@ -22,13 +22,12 @@ void TutorialManager::Init() {
 
 void TutorialManager::Update() {
     //std::cout << "tutorial skonczony: " << _isTutorialEnded << "   aktualna wiadomosc: " << _actualMessage << std::endl;
-
     if(_isTutorialEnded) return;
 
     if(_isSpecialMessage){
         if(_specialMessageTimer < 5){
             _specialMessageTimer += TIME.GetDeltaTime();
-            std::cout << _specialMessageTimer << std::endl;
+            //std::cout << _specialMessageTimer << std::endl;
         }else{
             _specialMessageTimer = 0.0f;
             _isSpecialMessage = false;
@@ -64,6 +63,7 @@ void TutorialManager::Update() {
                         _firstEnemySpawned = true;
                         SpawnTutorialEnemies(0);
                         _timer = 0;
+                        _player->GetComponent<PlayerAudioController>()->ChangeMusicToBattlePhase();
                     }
                 }
             }
@@ -110,6 +110,8 @@ void TutorialManager::Update() {
             else if(ENEMIESMANAGER._enemies[1] == nullptr){
                 DisplayAndChangeMessage();
                 _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = false;
+                RESOURCEMANAGER.GetSoundByName("VictoryMusic")->RiseUp(2, NODESMANAGER.getNodeByName("player"));
+                _player->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
             }
             break;
 
@@ -213,7 +215,8 @@ void TutorialManager::Update() {
                 _timer += TIME.GetDeltaTime();
             }else{
                 SetFalseTutorialNeededAtMoment();
-                if(NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->IsWithinHoleRange()){
+                if(NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->IsWithinHoleRange() &&
+                   !NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->_isHidden){
                     _timer = 0;
                     DisplayAndChangeMessage();
                 }
@@ -253,7 +256,7 @@ void TutorialManager::CheckEnemiesEncounter(){
             if(enemy->_enemyType == BEETLE){
                 _metBeetle = true;
                 DisplaySpecialMessage(_specialMessages[1]);
-                std::cout << "zuk spotkany, czas timer to: "<< _specialMessageTimer << std::endl;
+                //std::cout << "zuk spotkany, czas timer to: "<< _specialMessageTimer << std::endl;
             }
         }
     }
@@ -263,7 +266,7 @@ void TutorialManager::CheckEnemiesEncounter(){
             if(enemy->_enemyType == WASP){
                 _metWasp = true;
                 DisplaySpecialMessage(_specialMessages[2]);
-                std::cout << "osa spotkana, czas timer to: "<< _specialMessageTimer << std::endl;
+                //std::cout << "osa spotkana, czas timer to: "<< _specialMessageTimer << std::endl;
             }
         }
     }
@@ -291,6 +294,10 @@ void TutorialManager::SkipTutorial() {
 
     _metBeetle = true;
     _metWasp = true;
+
+    ENEMIESMANAGER.Reset();
+
+    _player->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
 }
 
 void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){

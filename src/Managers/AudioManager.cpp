@@ -55,3 +55,9 @@ void AudioManager::CleanupFinishedSounds()
         }
     }
 }
+
+void AudioManager::Reset() {
+    for (auto sound : _sounds) {
+        sound->Reset();
+    }
+}

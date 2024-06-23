@@ -43,6 +43,8 @@ public:
 
     std::vector<Sound*> _sounds;
 
+    void Reset();
+
 };
 
 

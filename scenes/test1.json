@@ -531,7 +531,7 @@
         "SoundName": "BackgroundMusic",
         "SoundID": 0,
         "Type": 0,
-        "Volume": 0.5
+        "Volume": 0.3
       },
       {
         "Path": "res/Sounds/Walking/walk1.flac",
@@ -671,7 +671,28 @@
         "SoundName": "CaveMusic",
         "SoundID": 20,
         "Type": 0,
+        "Volume": 0.6
+      },
+      {
+        "Path": "res/Sounds/VictoryMusic.wav",
+        "SoundName": "VictoryMusic",
+        "SoundID": 21,
+        "Type": 0,
+        "Volume": 0.3
+      },
+      {
+        "Path": "res/Sounds/DesertAmbient.mp3",
+        "SoundName": "DesertAmbient",
+        "SoundID": 22,
+        "Type": 0,
         "Volume": 0.5
+      },
+      {
+        "Path": "res/Sounds/BattleMusic.mp3",
+        "SoundName": "BattleMusic",
+        "SoundID": 23,
+        "Type": 0,
+        "Volume": 0.7
       }
 
     ]

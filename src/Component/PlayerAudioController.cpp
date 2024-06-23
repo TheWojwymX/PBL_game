@@ -24,6 +24,8 @@ void PlayerAudioController::Initiate() {
 
 void PlayerAudioController::Update() {
 
+    if(GAMEMANAGER._isInMainMenu) return;
+
     if(_isWalking){
         _stepTimer += TIME.GetDeltaTime();
         if(_stepTimer >= _stepDelay){
@@ -32,11 +34,15 @@ void PlayerAudioController::Update() {
         Component::Update();
     }
 
-    if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && !_isPlayingCave){
+    if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && !_isPlayingCave && _isInDigPhase){
         PlayCaveMusic();
-    } else if(_ownerNode->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && _isPlayingCave){
+        StopWindAmbient();
+    } else if(_ownerNode->GetTransform()->GetPosition().y >= GAMEMANAGER._groundLevel && _isPlayingCave && _isInDigPhase){
         StopCaveMusic();
-    } else if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && _isPlayingCave && _isStoppingCaveMusic){
+        if(!_isPlayingWindAmbient){
+            PlayWindAmbient();
+        }
+    } else if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && _isPlayingCave && _isStoppingCaveMusic && _isInDigPhase){
         ResetCaveMusic();
     }
 }
@@ -71,6 +77,7 @@ void PlayerAudioController::PlayRandomStepSound() {
 }
 
 void PlayerAudioController::PlayCaveMusic() {
+    if(GAMEMANAGER._currentPhase == DEFEND) return;
     RESOURCEMANAGER.GetSoundByName("CaveMusic")->RiseUp(5, _ownerNode);
     _isPlayingCave = true;
 }
@@ -94,4 +101,42 @@ void PlayerAudioController::ResetCaveMusic(){
     _caveTimer = 0.0f;
     _isPlayingCave = false;
     _isStoppingCaveMusic = false;
+}
+
+void PlayerAudioController::ChangeMusicToDigPhase() {
+    _isInDigPhase = true;
+
+    if(!_isPlayingWindAmbient){
+        PlayWindAmbient();
+    }
+
+    if(_isPlayingBattleMusic){
+        RESOURCEMANAGER.GetSoundByName("BattleMusic")->SetLooping(false);
+        RESOURCEMANAGER.GetSoundByName("BattleMusic")->FadeAway(2);
+        _isPlayingBattleMusic = false;
+    }
+}
+
+void PlayerAudioController::ChangeMusicToBattlePhase() {
+    _isInDigPhase = false;
+
+    StopWindAmbient();
+    StopCaveMusic();
+    RESOURCEMANAGER.GetSoundByName("BattleMusic")->SetLooping(true);
+    RESOURCEMANAGER.GetSoundByName("BattleMusic")->RiseUp(5, _ownerNode);
+    _isPlayingBattleMusic = true;
+}
+
+void PlayerAudioController::PlayWindAmbient(){
+    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->SetLooping(true);
+    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->StopFadingAway();
+    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->RiseUp(5, _ownerNode);
+    _isPlayingWindAmbient = true;
+}
+
+void PlayerAudioController::StopWindAmbient(){
+    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->SetLooping(false);
+    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->StopRisingUp();
+    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->FadeAway(5);
+    _isPlayingWindAmbient = false;
 }
