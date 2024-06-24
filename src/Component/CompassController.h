@@ -15,8 +15,6 @@ public:
 
     void Init() override;
 
-    void Update() override;
-
     std::shared_ptr<Node> _playerNode;
     std::shared_ptr<Node> _dialNode;
     std::shared_ptr<Node> _upNode;

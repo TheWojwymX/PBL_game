@@ -19,11 +19,6 @@ void CompassController::Init() {
     _downNode = NODESMANAGER.getNodeByName("CompassDown");
 
     _hideY = GAMEMANAGER._groundLevel - 0.8f;
-    Component::Init();
-}
-
-void CompassController::Update() {
-    Component::Update();
 }
 
 bool CompassController::IsWithinHoleRange(){

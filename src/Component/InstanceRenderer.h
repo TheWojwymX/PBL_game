@@ -32,10 +32,12 @@ public:
 private:
     std::shared_ptr<Model> _model;
     std::shared_ptr<Shader> _shader;
+    std::shared_ptr<Shader> _shadowShader;
     unsigned int _instancePositionSize;
     unsigned int _maxSize;
     unsigned int _instanceBuffer;
     bool _isDynamic;
+    bool _castShadows;
 
     void SetupInstanceModel();
     void CreatePositionBuffer(int maxSize);

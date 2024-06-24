@@ -1,13 +1,16 @@
 #include "InstanceRenderer.h"
+#include "Core/Node.h"
 
 InstanceRenderer::InstanceRenderer(Model* model, int maxSize, Shader* shader, bool isDynamic)
-    : _model(model), _maxSize(maxSize), _shader(shader), _isDynamic(isDynamic) {
+    : _model(model), _maxSize(maxSize), _shader(shader), _isDynamic(isDynamic), _castShadows(false) {
     CreatePositionBuffer(maxSize);
     SetupInstanceModel();
+    _shadowShader = RESOURCEMANAGER.GetShaderByName("shadowInstanceShader");
 }
 
-InstanceRenderer::InstanceRenderer() {
+InstanceRenderer::InstanceRenderer(): _castShadows(false){
     _type = ComponentType::INSTANCERENDERER;
+    _shadowShader = RESOURCEMANAGER.GetShaderByName("shadowInstanceShader");
 }
 
 nlohmann::json InstanceRenderer::Serialize() {
@@ -17,6 +20,7 @@ nlohmann::json InstanceRenderer::Serialize() {
     data["maxSize"] = _maxSize;
     data["shader"] = _shader->_name;
     data["isDynamic"] = _isDynamic;
+    data["castShadows"] = _castShadows;
 
     return data;
 }
@@ -39,6 +43,10 @@ void InstanceRenderer::Deserialize(const nlohmann::json& jsonData) {
         _isDynamic = jsonData["isDynamic"].get<bool>();
     }
 
+    if (jsonData.contains("castShadows")) {
+        _castShadows = jsonData["castShadows"].get<bool>();
+    }
+
     CreatePositionBuffer(_maxSize);
     SetupInstanceModel();
 
@@ -55,11 +63,10 @@ void InstanceRenderer::Render(glm::mat4 parentWorld) {
 }
 
 void InstanceRenderer::RenderShadows(glm::mat4 parentWorld) {
-    std::shared_ptr<Shader> currentShader = _shader;
-    SetShader(RESOURCEMANAGER.GetShaderByName("shadowInstanceShader"));
-    _shader->use();
-    _model->InstanceDraw(*_shader, _instancePositionSize);
-    SetShader(currentShader);
+    if (!_castShadows) return;
+
+    _shadowShader->use();
+    _model->InstanceDraw(*_shadowShader, _instancePositionSize);
 }
 
 void InstanceRenderer::RefreshPositionBuffer(const std::vector<glm::vec3>& instancePositions) {

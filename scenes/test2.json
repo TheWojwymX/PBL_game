@@ -153,19 +153,43 @@
             },
             {
                 "ModelName": "BeetleAttack0",
-                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-0.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-0.obj"
             },
             {
                 "ModelName": "BeetleAttack1",
-                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-1.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-1.obj"
             },
             {
                 "ModelName": "BeetleAttack2",
-                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-2.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-2.obj"
             },
             {
                 "ModelName": "BeetleAttack3",
-                "Path": "res/Models/Beetle/beetle_attack_v1/beetle_attack_blue_v2-3.obj"
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-3.obj"
+            },
+            {
+                "ModelName": "BeetleAttack4",
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-4.obj"
+            },
+            {
+                "ModelName": "BeetleAttack5",
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-5.obj"
+            },
+            {
+                "ModelName": "BeetleAttack6",
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-6.obj"
+            },
+            {
+                "ModelName": "BeetleAttack7",
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-7.obj"
+            },
+            {
+                "ModelName": "BeetleAttack8",
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-8.obj"
+            },
+            {
+                "ModelName": "BeetleAttack9",
+                "Path": "res/Models/Beetle/beetle_attack_v2/beetle_attack_blue_v2.0-9.obj"
             },
             {
                 "ModelName": "BeetleDead0",
@@ -503,111 +527,153 @@
                 "Type": 0
             },
             {
-                "Path": "res/Sounds/step1.mp3",
+                "Path": "res/Sounds/Walking/walk1.flac",
                 "SoundID": 1,
-                "SoundName": "ConcreteSound1",
+                "SoundName": "WalkSound1",
                 "Type": 1
             },
             {
-                "Path": "res/Sounds/step2.mp3",
+                "Path": "res/Sounds/Walking/walk2.flac",
                 "SoundID": 2,
-                "SoundName": "ConcreteSound2",
+                "SoundName": "WalkSound2",
                 "Type": 1
             },
             {
-                "Path": "res/Sounds/step3.mp3",
+                "Path": "res/Sounds/Walking/walk3.flac",
                 "SoundID": 3,
-                "SoundName": "ConcreteSound3",
+                "SoundName": "WalkSound3",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/Walking/walk5.flac",
+                "SoundID": 4,
+                "SoundName": "WalkSound4",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/Walking/walk6.flac",
+                "SoundID": 5,
+                "SoundName": "WalkSound5",
                 "Type": 1
             },
             {
                 "Path": "res/Sounds/jump.mp3",
-                "SoundID": 4,
+                "SoundID": 6,
                 "SoundName": "JumpSound",
                 "Type": 1
             },
             {
-                "Path": "res/Sounds/step4.mp3",
-                "SoundID": 5,
-                "SoundName": "ConcreteSound4",
-                "Type": 1
-            },
-            {
-                "Path": "res/Sounds/step5.mp3",
-                "SoundID": 6,
-                "SoundName": "ConcreteSound5",
-                "Type": 1
-            },
-            {
-                "Path": "res/Sounds/step6.mp3",
-                "SoundID": 7,
-                "SoundName": "ConcreteSound6",
-                "Type": 1
-            },
-            {
-                "Path": "res/Sounds/step7.mp3",
-                "SoundID": 8,
-                "SoundName": "ConcreteSound7",
-                "Type": 1
-            },
-            {
-                "Path": "res/Sounds/step8.mp3",
-                "SoundID": 9,
-                "SoundName": "ConcreteSound8",
-                "Type": 1
-            },
-            {
-                "Path": "res/Sounds/step9.mp3",
-                "SoundID": 10,
-                "SoundName": "ConcreteSound9",
-                "Type": 1
-            },
-            {
-                "Path": "res/Sounds/step10.mp3",
-                "SoundID": 11,
-                "SoundName": "ConcreteSound10",
-                "Type": 1
-            },
-            {
                 "Path": "res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_01.wav",
-                "SoundID": 12,
+                "SoundID": 7,
                 "SoundName": "GunnerShot1",
                 "Type": 1
             },
             {
                 "Path": "res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_02.wav",
-                "SoundID": 13,
+                "SoundID": 8,
                 "SoundName": "GunnerShot2",
                 "Type": 1
             },
             {
                 "Path": "res/Sounds/GunnerShot/sniperShot2.mp3",
-                "SoundID": 14,
+                "SoundID": 9,
                 "SoundName": "SniperShot2",
                 "Type": 1
             },
             {
                 "Path": "res/Sounds/atak1.mp3",
-                "SoundID": 15,
+                "SoundID": 10,
                 "SoundName": "atak1",
                 "Type": 1
             },
             {
-                "Path": "res/Sounds/jetpack1.mp3",
-                "SoundID": 16,
+                "Path": "res/Sounds/jetpack-loop.mp3",
+                "SoundID": 11,
                 "SoundName": "jetpack1",
                 "Type": 1
             },
             {
                 "Path": "res/Sounds/kopanie1.mp3",
-                "SoundID": 17,
+                "SoundID": 12,
                 "SoundName": "kopanie1",
                 "Type": 1
             },
             {
                 "Path": "res/Sounds/GunnerShot/sniperShot.wav",
-                "SoundID": 18,
+                "SoundID": 13,
                 "SoundName": "SniperShot",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/PDA/PDAAntenna.mp3",
+                "SoundID": 14,
+                "SoundName": "PDAAntenna2",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/PDA/PDANoise.mp3",
+                "SoundID": 15,
+                "SoundName": "PDANoise",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/Turrets/Placement/PickUp.mp3",
+                "SoundID": 16,
+                "SoundName": "PickUp",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/Turrets/Placement/Place.mp3",
+                "SoundID": 17,
+                "SoundName": "Place",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/Enemies/Beetle/BeetleAttack.mp3",
+                "SoundID": 18,
+                "SoundName": "BeetleAttack",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/Enemies/Wasp/WaspAttack.mp3",
+                "SoundID": 19,
+                "SoundName": "WaspAttack",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/CaveMusic.mp3",
+                "SoundID": 20,
+                "SoundName": "CaveMusic",
+                "Type": 0
+            },
+            {
+                "Path": "res/Sounds/VictoryMusic.wav",
+                "SoundID": 21,
+                "SoundName": "VictoryMusic",
+                "Type": 0
+            },
+            {
+                "Path": "res/Sounds/DesertAmbient.mp3",
+                "SoundID": 22,
+                "SoundName": "DesertAmbient",
+                "Type": 0
+            },
+            {
+                "Path": "res/Sounds/BattleMusic.mp3",
+                "SoundID": 23,
+                "SoundName": "BattleMusic",
+                "Type": 0
+            },
+            {
+                "Path": "res/Sounds/GUI/click.mp3",
+                "SoundID": 24,
+                "SoundName": "Click",
+                "Type": 1
+            },
+            {
+                "Path": "res/Sounds/GUI/hover.wav",
+                "SoundID": 25,
+                "SoundName": "Hover",
                 "Type": 1
             }
         ],
@@ -1286,7 +1352,7 @@
                 "transform": {
                     "position": [
                         49.5,
-                        299.5,
+                        299.3999938964844,
                         49.5
                     ],
                     "rotation": [
