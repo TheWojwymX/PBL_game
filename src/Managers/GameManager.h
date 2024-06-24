@@ -10,7 +10,7 @@ enum Phase {DIG,DEFEND};
 class GameManager {
 public:
     // Public members
-    bool _isFullscreen = true;
+    bool _isFullscreen = false;
     int _screenWidth = 1920;
     int _screenHeight = 1080;
     GLFWwindow* _window;
