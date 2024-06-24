@@ -44,8 +44,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         HUD/Image/ImageRenderer.h
         Managers/GameManager.cpp
         Managers/GameManager.h
-        Component/Animator.cpp
-        Component/Animator.h
         Managers/AudioManager.cpp
         Managers/AudioManager.h
         Sound.cpp
