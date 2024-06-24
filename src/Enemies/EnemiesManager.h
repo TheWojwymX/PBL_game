@@ -68,6 +68,7 @@ public:
 
     void addAttackToGUI(shared_ptr<Enemy> enemy);
     void removeAttackFromGUI(std::shared_ptr<Enemy> enemy);
+    void resetAttackAtGUI();
     glm::vec2 GetSpawnerPos(int i) { return _spawnersPositions[i]; }
 
     int _newEnemyIndex = 1;

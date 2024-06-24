@@ -20,7 +20,7 @@ void EnemiesManager::Update() {
     
     if(Input::Instance().IsKeyPressed(GLFW_KEY_B))
     {
-        SpawnEnemy(5, glm::vec3(0.5,0.5,0.5), _spawnersPositions[0], WASP);
+        resetAttackAtGUI();
     }
 
     SpawnEnemiesForRound();
@@ -411,4 +411,14 @@ void EnemiesManager::removeAttackFromGUI(std::shared_ptr<Enemy> enemy)
     {
         HUD._attackSymbols.erase(it);
     }
+}
+
+void EnemiesManager::resetAttackAtGUI()
+{
+    for (int i = 0; i < HUD._attackSymbols.size(); i++)
+    {
+        HUD._attackSymbols[i].first == nullptr;
+        HUD._attackSymbols[i].second == nullptr;
+    }
+    HUD._attackSymbols.clear();
 }
