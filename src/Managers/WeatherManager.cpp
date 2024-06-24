@@ -17,16 +17,20 @@ void WeatherManager::Init() {
     daySkyColor = glm::vec3(0.502f, 0.620f, 0.867f);
     sunsetSkyColor = glm::vec3(1.0f, 0.7059f, 0.4471f);
     nightSkyColor = glm::vec3(0.055f, 0.055f, 0.141f);
+    //nightSkyColor = glm::vec3(0.0863f, 0.0863f, 0.1725f);
     rainDaySkyColor = glm::vec3(0.3686f, 0.4196f, 0.5255f);
     rainSunsetSkyColor = glm::vec3(0.6784f, 0.4824f, 0.3137f);
     rainNightSkyColor = glm::vec3(0.1294f, 0.1294f, 0.2196f);
+    //rainNightSkyColor = glm::vec3(0.1608f, 0.1608f, 0.2353f);
 
     dayColor = glm::vec3(0.863f, 0.855f, 0.737f);
     sunsetColor = glm::vec3(0.9451f, 0.8314f, 0.7412f);
-    nightColor = glm::vec3(0.1922f, 0.1922f, 0.3373f);
+    nightColor = glm::vec3(0.1722f, 0.1722f, 0.3173f);
+    //nightColor = glm::vec3(0.0667f, 0.0667f, 0.0980f);
     rainDayColor = glm::vec3(0.4902f, 0.5098f, 0.7098f);
     rainSunsetColor = glm::vec3(0.4353f, 0.3686f, 0.3137f);
-    rainNightColor = glm::vec3(0.1922f, 0.1922f, 0.3373f);
+    rainNightColor = glm::vec3(0.1722f, 0.1722f, 0.3173f);
+    //rainNightColor = glm::vec3(0.0667f, 0.0667f, 0.0980f);
 
     wormNode = NODESMANAGER.getNodeByID(166);
 

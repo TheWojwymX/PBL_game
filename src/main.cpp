@@ -307,6 +307,7 @@ int main(int, char**)
 
             RESOURCEMANAGER.GetShaderByName("skyboxShader")->use();
 
+            glm::vec3 viewPos = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
             glm::mat4 projection = glm::perspective(glm::radians(ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetZoom()),
                                                     (float) GAMEMANAGER._screenWidth / (float) GAMEMANAGER._screenHeight, 0.1f, 1000.0f);
             glm::mat4 view = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetViewMatrix();
@@ -316,7 +317,7 @@ int main(int, char**)
             skyboxShader->setMat4("projection", projection);
 
             skyboxShader->setVec3("lightPos", LIGHTSMANAGER.lightPosShader);
-            skyboxShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            skyboxShader->setVec3("viewPos", viewPos);
             skyboxShader->setVec3("lightColor", LIGHTSMANAGER.skyColor);
 
             skybox.draw();
@@ -343,31 +344,31 @@ int main(int, char**)
             glViewport(0, 0, GAMEMANAGER._screenWidth, GAMEMANAGER._screenHeight); //Reset Viewport After Rendering to Shadow Map
 
             modelShader->use();
-            modelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            modelShader->setVec3("viewPos", viewPos);
             modelShader->setMat4("projection", projection);
             modelShader->setMat4("view", view);
             modelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 
             glowstickShader->use();
-            glowstickShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            glowstickShader->setVec3("viewPos", viewPos);
             glowstickShader->setMat4("projection", projection);
             glowstickShader->setMat4("view", view);
             glowstickShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 
             outlineShader->use();
-            outlineShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            outlineShader->setVec3("viewPos", viewPos);
             outlineShader->setMat4("projection", projection);
             outlineShader->setMat4("view", view);
 
             skyboxReflectionShader->use();
             skyboxReflectionShader->setInt("skybox", 0);
-            skyboxReflectionShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            skyboxReflectionShader->setVec3("viewPos", viewPos);
             skyboxReflectionShader->setMat4("projection", projection);
             skyboxReflectionShader->setMat4("view", view);
 
 #pragma region InstancedSandShader setup
             instancedSandShader->use();
-            instancedSandShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            instancedSandShader->setVec3("viewPos", viewPos);
             instancedSandShader->setMat4("projection", projection);
             instancedSandShader->setMat4("view", view);
             instancedSandShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
@@ -375,7 +376,7 @@ int main(int, char**)
 
 #pragma region InstanceMetalShader setup
             instancedMetalShader->use();
-            instancedMetalShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            instancedMetalShader->setVec3("viewPos", viewPos);
             instancedMetalShader->setMat4("projection", projection);
             instancedMetalShader->setMat4("view", view);
             instancedMetalShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
@@ -383,7 +384,7 @@ int main(int, char**)
 
 #pragma region InstancePlasticShader setup
             instancedPlasticShader->use();
-            instancedPlasticShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            instancedPlasticShader->setVec3("viewPos", viewPos);
             instancedPlasticShader->setMat4("projection", projection);
             instancedPlasticShader->setMat4("view", view);
             instancedPlasticShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
@@ -394,7 +395,7 @@ int main(int, char**)
             lightObjectShader->setMat4("view", view);
 
             cloudShader->use();
-            cloudShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            cloudShader->setVec3("viewPos", viewPos);
             cloudShader->setVec3("initialCloudPosition", initialCloudPosition);
             cloudShader->setFloat("cloudSpeed", cloudSpeed);
             cloudShader->setFloat("time", TIME.GetTime());
@@ -412,7 +413,7 @@ int main(int, char**)
             ///
             blueprintShader->use();
 
-            blueprintShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            blueprintShader->setVec3("viewPos", viewPos);
             blueprintShader->setMat4("projection", projection);
             blueprintShader->setMat4("view", view);
             blueprintShader->setVec3("additionalColor", TURRETSMANAGER._additionalColor);
@@ -440,7 +441,7 @@ int main(int, char**)
             compassController->RealUpdate();
 
             shovelShader->use();
-            shovelShader->setVec3("viewPos", ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition());
+            shovelShader->setVec3("viewPos", viewPos);
             shovelShader->setMat4("projection", projection);
             shovelShader->setMat4("view", view);
             shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());

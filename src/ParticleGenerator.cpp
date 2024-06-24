@@ -190,7 +190,7 @@ void ParticleGenerator::RenderParticles() {
         threadCount = 0;
     }
 
-    if (threadCount >= 3) {
+    if (threadCount >= 4) {
         if (toDelete) {
             generateParticle = false;
             GAMEMANAGER.root->RemoveChild(_ownerNode);
@@ -470,7 +470,7 @@ void ParticleGenerator::initiateParticleType() {
     else if (particleType == "rainParticlesFull"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
         amount = 4000;
-        newParticles = 10;
+        newParticles = 5;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;
