@@ -70,8 +70,13 @@ void main()
     float totalSpotlightIntensity = 0.0f;
     float totalPointlightIntensity = 0.0f;
 
-    // Calculate the directional light contribution (as before)
+    // Calculate the directional light contribution with height and position-based attenuation
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
+
+    // Height-based attenuation
+    float heightAttenuation = clamp((FragPos.y - 290.0) / (299.5 - 290.0), 0.0, 1.0);
+
+    dirLightColor *= heightAttenuation;
 
     for(int i = 0; i < NR_SPOT_LIGHTS; i++)
     {
