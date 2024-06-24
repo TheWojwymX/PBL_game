@@ -48,13 +48,14 @@ public:
 
     void addToInspector(ImguiMain *imguiMain) override;
 
+    std::vector<std::pair<float, int>> _layerStats;
+
 private:
     int _width;
     int _depth;
     int _height;
     int _chunkSize;
     int _renderDistance;
-    std::vector<std::pair<float, int>> _layerStats;
     glm::ivec3 _playerChunk;
     std::vector<BlockData> _blocksData;
     std::vector<std::vector<BlockData*>> _visibleBlocks;

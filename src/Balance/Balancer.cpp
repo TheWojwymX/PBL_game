@@ -8,6 +8,7 @@
 #include "../Enemies/EnemiesManager.h"
 #include "../Turrets/TurretsManager.h"
 #include "../Managers/UpgradeManager.h"
+#include "../Component/BlockManager.h"
 
 
 Balancer::Balancer()
@@ -510,6 +511,49 @@ void Balancer::addPhaseStatsToImgui()
         ENEMIESMANAGER._roundsInfo[10].y = _endlessNumber[1];
         ENEMIESMANAGER._roundsInfo[10].z = _endlessNumber[2];
     }
+
+    ImGui::Dummy(ImVec2(0, 10));
+
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Layer Stats:");
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Layer Hp:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##LayerHp1", &_layerHp[0], 0, 0);
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##LayerHp2", &_layerHp[1], 0, 0);    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##LayerHp3", &_layerHp[2], 0, 0);
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    if (ImGui::Button("Update##x1"))
+    {
+        COMPONENTSMANAGER.GetComponentByID<BlockManager>(1)->_layerStats[0].first = _layerHp[0];
+        COMPONENTSMANAGER.GetComponentByID<BlockManager>(1)->_layerStats[1].first = _layerHp[1];
+        COMPONENTSMANAGER.GetComponentByID<BlockManager>(1)->_layerStats[2].first = _layerHp[2];
+    }
+
+    ImGui::Text("Layer Reward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##LayerReward1", &_layerReward[0], 0, 0);
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##LayerReward2", &_layerReward[1], 0, 0);
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##LayerReward3", &_layerReward[2], 0, 0);
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    if (ImGui::Button("Update##x2"))
+    {
+        COMPONENTSMANAGER.GetComponentByID<BlockManager>(1)->_layerStats[0].second = _layerReward[0];
+        COMPONENTSMANAGER.GetComponentByID<BlockManager>(1)->_layerStats[1].second = _layerReward[1];
+        COMPONENTSMANAGER.GetComponentByID<BlockManager>(1)->_layerStats[2].second = _layerReward[2];
+    }
+
 
 
     ImGui::End();
@@ -1332,4 +1376,12 @@ void Balancer::resetToDefault()
     _miningRadiusUpgradeValues[2] = 1.0f;
     _miningRadiusUpgradeValues[3] = 1.0f;
     _miningRadiusUpgradeValues[4] = 1.0f;
+
+    _layerHp[0] = 1.0f;
+    _layerHp[1] = 3.0f;
+    _layerHp[2] = 7.0f;
+
+    _layerReward[0] = 1;
+    _layerReward[1] = 3;
+    _layerReward[2] = 7;
 }

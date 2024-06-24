@@ -90,6 +90,8 @@ public:
     int _miningRadiusUpgradeCosts[5] = {10, 15, 20, 25, 30};
     float _miningRadiusUpgradeValues[5] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
 
+    float _layerHp[3] = {1.0f, 3.0f, 7.0f};
+    int _layerReward[3] = {1, 3, 7};
 
 };
 
