@@ -40,7 +40,7 @@ public:
 
     void SetLooping(bool looping);
 
-    void PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume = 1.0f);
+    void PlaySoundSim(std::shared_ptr<Node> soundSourceNode);
 
     std::shared_ptr<Node> _playerNode = nullptr;
 
@@ -67,14 +67,17 @@ public:
     float GetVolume();
 
     void ResetTimer();
+
+    void RefreshVolume();
 private:
     float _timeToFadeAway;
     float _timeToRiseUp;
     float _timer = 0.0f;
 
     float _constStartingVolumeMultiplier;
-    std::shared_ptr<float> _typeMultiplier;
+    float *_typeMultiplier;
     float _volume = 1.0f;
+
 };
 
 

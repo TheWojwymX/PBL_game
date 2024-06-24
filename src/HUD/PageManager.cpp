@@ -26,6 +26,10 @@ void PageManager::Init() {
     _pages.push_back(_PDAPage);
     _mainMenuPage->Init();
     _pages.push_back(_mainMenuPage);
+    _mainMenuSettingsPage->Init();
+    _pages.push_back(_mainMenuSettingsPage);
+    _mainMenuControlsPage->Init();
+    _pages.push_back(_mainMenuControlsPage);
     _restartPage->Init();
     _pages.push_back(_restartPage);
 
@@ -45,6 +49,8 @@ void PageManager::Update() {
     _PDAPage->Update();
     _restartPage->Update();
     _mainMenuPage->Update();
+    _mainMenuSettingsPage->Update();
+    _mainMenuControlsPage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -155,4 +161,16 @@ void PageManager::CloseAllOtherPages(const shared_ptr<Page> &pageException) {
 void PageManager::Reset() {
     CloseAllPages();
     _isInUpgradeMenu = false;
+}
+
+void PageManager::GoToSettingsMainMenu() {
+    CloseAllOtherPages(_mainMenuSettingsPage);
+}
+
+void PageManager::GoToMainMenu() {
+    CloseAllOtherPages(_mainMenuPage);
+}
+
+void PageManager::GoToKeyboardSettings() {
+    CloseAllOtherPages(_mainMenuControlsPage);
 }

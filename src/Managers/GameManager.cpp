@@ -247,6 +247,7 @@ void GameManager::RestartGame() {
     WEATHERMANAGER.Reset();
     DisableMouse();
     AUDIOMANAGER.Reset();
+    Unpause();
 }
 
 void GameManager::LoseGame() {

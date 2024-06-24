@@ -595,7 +595,7 @@ void TurretsManager::AttackEnemy(const shared_ptr<Turret> &turret, const shared_
         }
 
         std::pair<int, float> sound = turret->GetSound();
-        RESOURCEMANAGER.GetSoundByID(sound.first)->PlaySoundSim(turret->_ownerNode, sound.second);
+        RESOURCEMANAGER.GetSoundByID(sound.first)->PlaySoundSim(turret->_ownerNode);
     }
 }
 

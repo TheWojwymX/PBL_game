@@ -61,3 +61,34 @@ void AudioManager::Reset() {
         sound->Reset();
     }
 }
+
+void AudioManager::RefreshSoundsVolumes(){
+    for (auto sound : _sounds) {
+        sound->RefreshVolume();
+    }
+}
+
+void AudioManager::ChangeMusicVolume(int value) {
+    float currentVolumePercentage = _musicVolume * 100.0f;
+    float newVolumePercentage = currentVolumePercentage + value;
+    if (newVolumePercentage < 0) {
+        newVolumePercentage = 0;
+    } else if (newVolumePercentage > 100) {
+        newVolumePercentage = 100;
+    }
+    _musicVolume = newVolumePercentage / 100.0f;
+    RefreshSoundsVolumes();
+}
+
+
+void AudioManager::ChangeSFXVolume(int value){
+    float currentVolumePercentage = _sfxVolume * 100.0f;
+    float newVolumePercentage = currentVolumePercentage + value;
+    if (newVolumePercentage < 0) {
+        newVolumePercentage = 0;
+    } else if (newVolumePercentage > 100) {
+        newVolumePercentage = 100;
+    }
+    _sfxVolume = newVolumePercentage / 100.0f;
+    RefreshSoundsVolumes();
+}

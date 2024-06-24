@@ -698,15 +698,15 @@
         "Path": "res/Sounds/GUI/click.mp3",
         "SoundName": "Click",
         "SoundID": 24,
-        "Type": 0,
-        "Volume": 0.5
+        "Type": 1,
+        "Volume": 0.9
       },
       {
         "Path": "res/Sounds/GUI/hover.wav",
         "SoundName": "Hover",
         "SoundID": 25,
-        "Type": 0,
-        "Volume": 0.5
+        "Type": 1,
+        "Volume": 0.9
       }
 
     ]
