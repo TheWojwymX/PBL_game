@@ -12,6 +12,10 @@ TutorialManager &TutorialManager::getInstance() {
     return instance;
 }
 
+TutorialManager::TutorialManager(): _scaleRand(30, 0.7f, 1.3f)
+{
+}
+
 void TutorialManager::Init() {
     _player = NODESMANAGER.getNodeByName("player");
     _paratrooper = NODESMANAGER.getNodeByName("Paratrooper");
@@ -301,11 +305,7 @@ void TutorialManager::SkipTutorial() {
 }
 
 void TutorialManager::SpawnTutorialEnemies(int spawnerIndex){
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.5f, 1.0f);
-    float scale = dis(gen);
+    float scale = _scaleRand.GetRandomFloat();
 
     ENEMIESMANAGER.SpawnEnemy(2, glm::vec3(scale), ENEMIESMANAGER.GetSpawnerPos(spawnerIndex), ANT);
 }

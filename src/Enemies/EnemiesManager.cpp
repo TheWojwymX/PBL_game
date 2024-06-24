@@ -6,7 +6,7 @@ EnemiesManager &EnemiesManager::getInstance() {
     return instance;
 }
 
-EnemiesManager::EnemiesManager(): _scaleRand(100,0.7f,1.3f), _endlessRand(100,0.0f,1.0f), _randomAngle(100, 0.0f, 2.0f * static_cast<float>(3.141592))
+EnemiesManager::EnemiesManager(): _scaleRand(30,0.7f,1.3f), _endlessRand(100,0.0f,1.0f), _randomAngle(100, 0.0f, 2.0f * static_cast<float>(3.141592))
 {
 }
 

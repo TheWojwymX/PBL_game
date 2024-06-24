@@ -9,6 +9,7 @@
 #include "Managers/ResourceManager.h"
 #include <random>
 #include "Core/Time.h"
+#include "BatchRandomGenerator.h"
 
 class PlayerAudioController : public Component {
 public:
@@ -28,6 +29,7 @@ public:
     void ResetStepTime();
 
     float _stepTimer = 0;
+    BatchRandomGenerator _soundStepRand;
 
     std::vector<int> _stepSoundIDs = {1, 2, 3, 4, 5};
 

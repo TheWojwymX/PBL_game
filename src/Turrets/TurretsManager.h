@@ -6,6 +6,7 @@
 #include "Turret.h"
 #include "Managers/NodesManager.h"
 #include "Enemies/EnemiesManager.h"
+#include "BatchRandomGenerator.h"
 
 class TurretsManager {
 public:
@@ -13,7 +14,7 @@ public:
 
     ~TurretsManager() = default;
 
-    TurretsManager() = default;
+    TurretsManager();
 
     TurretsManager(const TurretsManager &) = delete;
 
@@ -91,6 +92,7 @@ private:
     int _turretCostIncrease;
     std::shared_ptr<Turret> _heldTurret = nullptr;
     std::shared_ptr<Camera> _cameraRef = nullptr;
+    BatchRandomGenerator _randFlareRot;
 
     bool IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> trapPoints);
     void InitTurretStats();

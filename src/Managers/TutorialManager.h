@@ -4,6 +4,7 @@
 
 #include "HUD/Pages/MessagePage/MessagePage.h"
 #include "Core/Node.h"
+#include "BatchRandomGenerator.h"
 
 #define TUTORIALMANAGER TutorialManager::getInstance()
 
@@ -14,7 +15,7 @@ class TutorialManager {
 public:
     static TutorialManager &getInstance();
     ~TutorialManager() = default;
-    TutorialManager() = default;
+    TutorialManager();
     TutorialManager(const TutorialManager &) = delete;
     TutorialManager &operator=(const TutorialManager &) = delete;
 
@@ -66,6 +67,8 @@ public:
     };
 
     void DisplayAndChangeMessage();
+
+    BatchRandomGenerator _scaleRand;
 
     shared_ptr<Node> _player;
 

@@ -3,7 +3,7 @@
 #include "Core/Input.h"
 #include "Managers/GameManager.h"
 
-Turret::Turret() {
+Turret::Turret(): _soundRand(10,0,1){
     _type = ComponentType::TURRET;
 }
 
@@ -75,16 +75,9 @@ std::pair<int, float> Turret::GetSound() {
         throw std::runtime_error("No sounds available"); // Handle case where _sound is empty
     }
 
-    // Create a random number generator
-    std::random_device rd;  // Non-deterministic seed
-    std::mt19937 gen(rd()); // Mersenne Twister generator
-    std::uniform_int_distribution<> dis(0, _sounds.size() - 1); // Uniform distribution
+    if (_sounds.size() == 1) return _sounds[0];
 
-    // Get a random index
-    int randomIndex = dis(gen);
-
-    // Return the randomly selected sound
-    return _sounds[randomIndex];
+    return _sounds[_soundRand.GetRandomInt()];
 }
 
 void Turret::HandleSpawn()

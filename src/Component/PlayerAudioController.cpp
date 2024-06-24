@@ -5,7 +5,7 @@
 #include "PlayerAudioController.h"
 #include "Managers/NodesManager.h"
 
-PlayerAudioController::PlayerAudioController() {
+PlayerAudioController::PlayerAudioController():_soundStepRand(30,0,4){
     _type = ComponentType::AUDIOSOURCE;
 }
 
@@ -69,11 +69,8 @@ void PlayerAudioController::PlayRandomStepSound() {
     if (_stepSoundIDs.empty()) {
         throw std::runtime_error("The sound ID list is empty");
     }
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, _stepSoundIDs.size() - 1);
 
-    RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[dis(gen)])->PlaySound(_ownerNode);
+    RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[_soundStepRand.GetRandomInt()])->PlaySound(_ownerNode);
 }
 
 void PlayerAudioController::PlayCaveMusic() {

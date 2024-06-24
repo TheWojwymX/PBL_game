@@ -7,6 +7,10 @@ TurretsManager &TurretsManager::getInstance() {
     return instance;
 }
 
+TurretsManager::TurretsManager() : _randFlareRot(30,0.0f,360.0f)
+{
+}
+
 void TurretsManager::Init() {
     _turretCosts = {
             1, // Minigun
@@ -201,9 +205,6 @@ void TurretsManager::SpawnTurret(TurretType type) {
     newFlareMeshRenderer->Initiate();
     flare->AddComponent(newFlareMeshRenderer);
 
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 360.0f);
 
     auto posX = _blueprintTurret->GetTransform()->GetPosition().x;
@@ -211,7 +212,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     auto posZ = _blueprintTurret->GetTransform()->GetPosition().z;
     flare->GetTransform()->SetPosition(glm::vec3(posX, posY, posZ));
     flare->GetTransform()->SetScale(glm::vec3(0.1, 0.1, 0.1));
-    flare->GetTransform()->SetRotation(glm::vec3(flare->GetTransform()->GetRotation().x + 90, flare->GetTransform()->GetRotation().y + dis(gen),
+    flare->GetTransform()->SetRotation(glm::vec3(flare->GetTransform()->GetRotation().x + 90, flare->GetTransform()->GetRotation().y + _randFlareRot.GetRandomFloat(),
                                                  flare->GetTransform()->GetRotation().z));
 
     auto flareParticles1 = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "flareParticles1");

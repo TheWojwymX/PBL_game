@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Component.h"
+#include "BatchRandomGenerator.h"
 
 enum TurretType { MINIGUN, SNIPER, RIFLE };
 
@@ -53,6 +54,7 @@ public:
 private:
     char _upgradeLevel = 0;
     std::vector<std::pair<int, float>> _sounds;
+    BatchRandomGenerator _soundRand;
 
     const char *texture;
 
