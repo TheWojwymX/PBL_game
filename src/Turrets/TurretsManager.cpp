@@ -207,7 +207,7 @@ void TurretsManager::SpawnTurret(TurretType type) {
     std::uniform_real_distribution<float> dis(0.0f, 360.0f);
 
     auto posX = _blueprintTurret->GetTransform()->GetPosition().x;
-    auto posY = _blueprintTurret->GetTransform()->GetPosition().y + 0.2;
+    auto posY = _blueprintTurret->GetTransform()->GetPosition().y + 0.1;
     auto posZ = _blueprintTurret->GetTransform()->GetPosition().z;
     flare->GetTransform()->SetPosition(glm::vec3(posX, posY, posZ));
     flare->GetTransform()->SetScale(glm::vec3(0.1, 0.1, 0.1));
