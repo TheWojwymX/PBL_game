@@ -7,6 +7,7 @@
 
 PlayerAudioController::PlayerAudioController():_soundStepRand(30,0,4){
     _type = ComponentType::AUDIOSOURCE;
+    InitSounds();
 }
 
 nlohmann::json PlayerAudioController::Serialize() {
@@ -31,7 +32,6 @@ void PlayerAudioController::Update() {
         if(_stepTimer >= _stepDelay){
             ResetStepTime();
         }
-        Component::Update();
     }
 
     if(_ownerNode->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && !_isPlayingCave && _isInDigPhase){
@@ -62,7 +62,7 @@ void PlayerAudioController::ResetStepTime(){
 }
 
 void PlayerAudioController::PlayJumpSound(){
-    RESOURCEMANAGER.GetSoundByName("JumpSound")->PlaySound(_ownerNode);
+    _jumpSound->PlaySound(_ownerNode);
 }
 
 void PlayerAudioController::PlayRandomStepSound() {
@@ -70,12 +70,12 @@ void PlayerAudioController::PlayRandomStepSound() {
         throw std::runtime_error("The sound ID list is empty");
     }
 
-    RESOURCEMANAGER.GetSoundByID(_stepSoundIDs[_soundStepRand.GetRandomInt()])->PlaySound(_ownerNode);
+    _stepSounds[_soundStepRand.GetRandomInt()]->PlaySound(_ownerNode);
 }
 
 void PlayerAudioController::PlayCaveMusic() {
     if(GAMEMANAGER._currentPhase == DEFEND) return;
-    RESOURCEMANAGER.GetSoundByName("CaveMusic")->RiseUp(5, _ownerNode);
+    _caveMusic->RiseUp(5, _ownerNode);
     _isPlayingCave = true;
 }
 
@@ -83,7 +83,7 @@ void PlayerAudioController::StopCaveMusic() {
     int fadeTime = 100; //I guess that sound is very quiet and that's why we need give horribly long time
     if(_caveTimer == 0.0f){
         _isStoppingCaveMusic = true;
-        RESOURCEMANAGER.GetSoundByName("CaveMusic")->FadeAway(fadeTime);
+        _caveMusic->FadeAway(fadeTime);
     }
     if(_caveTimer < fadeTime){
         _caveTimer += TIME.GetDeltaTime();
@@ -93,8 +93,8 @@ void PlayerAudioController::StopCaveMusic() {
 }
 
 void PlayerAudioController::ResetCaveMusic(){
-    RESOURCEMANAGER.GetSoundByName("CaveMusic")->StopFadingAway();
-    ma_sound_seek_to_pcm_frame(&RESOURCEMANAGER.GetSoundByName("CaveMusic")->_sound, 0);
+    _caveMusic->StopFadingAway();
+    ma_sound_seek_to_pcm_frame(&_caveMusic->_sound, 0);
     _caveTimer = 0.0f;
     _isPlayingCave = false;
     _isStoppingCaveMusic = false;
@@ -108,8 +108,8 @@ void PlayerAudioController::ChangeMusicToDigPhase() {
     }
 
     if(_isPlayingBattleMusic){
-        RESOURCEMANAGER.GetSoundByName("BattleMusic")->SetLooping(false);
-        RESOURCEMANAGER.GetSoundByName("BattleMusic")->FadeAway(2);
+        _battleMusic->SetLooping(false);
+        _battleMusic->FadeAway(2);
         _isPlayingBattleMusic = false;
     }
 }
@@ -119,21 +119,32 @@ void PlayerAudioController::ChangeMusicToBattlePhase() {
 
     StopWindAmbient();
     StopCaveMusic();
-    RESOURCEMANAGER.GetSoundByName("BattleMusic")->SetLooping(true);
-    RESOURCEMANAGER.GetSoundByName("BattleMusic")->RiseUp(5, _ownerNode);
+    _battleMusic->SetLooping(true);
+    _battleMusic->RiseUp(5, _ownerNode);
     _isPlayingBattleMusic = true;
 }
 
 void PlayerAudioController::PlayWindAmbient(){
-    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->SetLooping(true);
-    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->StopFadingAway();
-    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->RiseUp(5, _ownerNode);
+    _desertAmbient->SetLooping(true);
+    _desertAmbient->StopFadingAway();
+    _desertAmbient->RiseUp(5, _ownerNode);
     _isPlayingWindAmbient = true;
 }
 
 void PlayerAudioController::StopWindAmbient(){
-    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->SetLooping(false);
-    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->StopRisingUp();
-    RESOURCEMANAGER.GetSoundByName("DesertAmbient")->FadeAway(5);
+    _desertAmbient->SetLooping(false);
+    _desertAmbient->StopRisingUp();
+    _desertAmbient->FadeAway(5);
     _isPlayingWindAmbient = false;
+}
+
+void PlayerAudioController::InitSounds()
+{
+    _jumpSound = RESOURCEMANAGER.GetSoundByName("JumpSound");
+    for (int id : _stepSoundIDs) {
+        _stepSounds.push_back(RESOURCEMANAGER.GetSoundByID(id));
+    }
+    _caveMusic = RESOURCEMANAGER.GetSoundByName("CaveMusic");
+    _battleMusic = RESOURCEMANAGER.GetSoundByName("BattleMusic");
+    _desertAmbient = RESOURCEMANAGER.GetSoundByName("DesertAmbient");
 }

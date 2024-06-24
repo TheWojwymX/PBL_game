@@ -90,8 +90,7 @@ private:
 
     bool hasSpawned = false;
 
-    glm::vec3 camPosition;
-    glm::vec3 camForward;
+    std::shared_ptr<Camera> _cameraRef;
     glm::vec3 rotatedOffset;
 
     bool onlyForward = false;

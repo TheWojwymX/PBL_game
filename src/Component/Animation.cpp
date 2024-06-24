@@ -5,7 +5,6 @@
 #include "Core/Time.h"
 #include "Core/Node.h"
 
-
 Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop, state enemyState)
         : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop), _enemyState(enemyState), _randomGen(10,0.0f,0.5f){}
 
@@ -90,7 +89,7 @@ void Animation::Update() {
 
     if (_enemyState == DEAD && IsAnimationFinished())
     {
-        if (_entityType == 3)
+        if (_enemyType == 2)
         {
             _toDelete = true;
             return;
@@ -158,7 +157,7 @@ void Animation::Reset()
 
 nlohmann::json Animation::Serialize() {
     nlohmann::json data = Component::Serialize();
-    data["entityType"] = _entityType;
+    data["entityType"] = _enemyType;
     data["meshRendererRefID"] = _meshRenderer->_id;
     data["frameDuration"] = _frameDuration;
     data["isLoop"] = _loop;
@@ -171,7 +170,7 @@ void Animation::Deserialize(const nlohmann::json &jsonData) {
     _attackFrames.clear();
 
     if (jsonData.contains("entityType")) {
-        _entityType = jsonData["entityType"].get<int>();
+        _enemyType = jsonData["entityType"].get<int>();
     }
 
     if (jsonData.contains("meshRendererRefID")) {
@@ -186,8 +185,6 @@ void Animation::Deserialize(const nlohmann::json &jsonData) {
         _loop = jsonData["isLoop"].get<bool>();
     }
 
-    InitFrames();
-
     Component::Deserialize(jsonData);
 }
 
@@ -196,93 +193,12 @@ void Animation::Initiate() {
     Component::Initiate();
 }
 
-void Animation::InitFrames()
+void Animation::InitFrames(std::vector <std::vector<std::shared_ptr<Model>>> frames)
 {
-    if (_entityType == 1)
-    {
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn0"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn1"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn2"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn3"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn4"));
-
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk0"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk1"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk2"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk3"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk4"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk5"));
-
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack0"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack1"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack2"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack3"));
-
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead0"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead1"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead2"));
-    }
-    else if(_entityType == 2)
-    {
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn0"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn1"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn2"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn3"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn4"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn5"));
-
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk0"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk1"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk2"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk3"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk4"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk5"));
-
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack0"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack1"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack2"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack3"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack4"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack5"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack6"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack7"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack8"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack9"));
-
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead0"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead1"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead2"));
-    }
-    else if(_entityType == 3)
-    {
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn0"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn1"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn2"));
-        _spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn3"));
-
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly0"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly1"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly2"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly3"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly4"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly5"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly6"));
-        _walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly7"));
-
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack0"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack1"));
-        _attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack2"));
-
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead0"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead1"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead2"));
-        _deadFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspDead3"));
-    }
-}
-
-void Animation::setEntityType(int type)
-{
-    _entityType = type;
+    _spawnFrames = frames[0];
+    _walkFrames = frames[1];
+    _attackFrames = frames[2];
+    _deadFrames = frames[3];
 }
 
 void Animation::setCurrentTime(float time)
@@ -306,14 +222,14 @@ void Animation::setMeshRendererId(int meshRendererId) {
     _meshRendererID = meshRendererId;
 }
 
-void Animation::InitComponent(int type)
+void Animation::InitComponent(int type, std::vector<std::vector<std::shared_ptr<Model>>> frames)
 {
     _currentTime = 0.0f;
-    _entityType = type;
+    _enemyType = type;
     _enemyState = SPAWN;
     _loop = true;
     _frameDuration = 0.15;
-    InitFrames();
+    InitFrames(frames);
 }
 
 bool Animation::IsAnimationFinished()
@@ -330,4 +246,9 @@ bool Animation::IsAnimationFinished()
         default:
             return false;
     }
+}
+
+void Animation::setEntityType(int type)
+{
+    _enemyType = type;
 }

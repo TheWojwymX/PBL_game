@@ -21,6 +21,21 @@ struct EnemyStats {
         : speed(spd), hp(health), damage(dmg), attackFrequency(freq), size(sz), type(tp) {}
 };
 
+struct AnimationFrames {
+    std::vector<std::shared_ptr<Model>> spawnFrames;
+    std::vector<std::shared_ptr<Model>> walkFrames;
+    std::vector<std::shared_ptr<Model>> attackFrames;
+    std::vector<std::shared_ptr<Model>> deadFrames;
+
+    // Default constructor
+    AnimationFrames() = default;
+
+    // Method to get all frames as a vector of vectors
+    std::vector<std::vector<std::shared_ptr<Model>>> GetAllFrames() const {
+        return { spawnFrames, walkFrames, attackFrames, deadFrames };
+    }
+};
+
 class EnemiesManager {
 
 public:
@@ -81,6 +96,7 @@ public:
 private:
     int _spawnDistance;
     std::vector<glm::vec2> _spawnersPositions;
+    std::vector<AnimationFrames> _animationFrames;
     glm::ivec3 _spawnedEnemies;
     float _spawnSpan;
     float _endlessTimer = 0.0f;
@@ -93,6 +109,7 @@ private:
     BatchRandomGenerator _randomAngle;
 
     void InitEnemyStats();
+    void InitAnimationFrames();
     glm::vec2 RandomSpawnPos();
     int CountValidEnemies();
 };

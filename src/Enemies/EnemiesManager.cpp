@@ -73,6 +73,7 @@ void EnemiesManager::Init() {
     _spawnSpan = 0.5f;
 
     InitEnemyStats();
+    InitAnimationFrames();
 }
 
 void EnemiesManager::SpawnEnemiesForRound()
@@ -242,7 +243,7 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, glm::vec2 
     auto newAnimation = COMPONENTSMANAGER.CreateComponent<Animation>();
     newAnimation->setMeshRenderer(NODESMANAGER.getNodeByName(nameOfEnemy)->GetComponent<MeshRenderer>());
     newAnimation->setMeshRendererId(COMPONENTSMANAGER._nextComponentID-1);
-    newAnimation->InitComponent((int)(type + 1));
+    newAnimation->InitComponent(type,_animationFrames[type].GetAllFrames());
     NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newAnimation);
 
     auto antSpawn = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"),"antSpawn");
@@ -348,6 +349,94 @@ void EnemiesManager::InitEnemyStats() {
     _enemyStats.push_back(beetle);
     _enemyStats.push_back(wasp);
 }
+
+void EnemiesManager::InitAnimationFrames()
+{
+    // Initialize Ant Animation Frames
+    AnimationFrames antAnimationFrames;
+    antAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn0"));
+    antAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn1"));
+    antAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn2"));
+    antAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn3"));
+    antAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("AntSpawn4"));
+
+    antAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk0"));
+    antAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk1"));
+    antAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk2"));
+    antAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk3"));
+    antAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk4"));
+    antAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("AntWalk5"));
+
+    antAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack0"));
+    antAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack1"));
+    antAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack2"));
+    antAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("AntAttack3"));
+
+    antAnimationFrames.deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead0"));
+    antAnimationFrames.deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead1"));
+    antAnimationFrames.deadFrames.push_back(RESOURCEMANAGER.GetModelByName("AntDead2"));
+
+    _animationFrames.push_back(std::move(antAnimationFrames));
+
+    // Initialize Beetle Animation Frames
+    AnimationFrames beetleAnimationFrames;
+    beetleAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn0"));
+    beetleAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn1"));
+    beetleAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn2"));
+    beetleAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn3"));
+    beetleAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn4"));
+    beetleAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleSpawn5"));
+
+    beetleAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk0"));
+    beetleAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk1"));
+    beetleAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk2"));
+    beetleAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk3"));
+    beetleAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk4"));
+    beetleAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleWalk5"));
+
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack0"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack1"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack2"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack3"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack4"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack5"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack6"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack7"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack8"));
+    beetleAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleAttack9"));
+
+    beetleAnimationFrames.deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead0"));
+    beetleAnimationFrames.deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead1"));
+    beetleAnimationFrames.deadFrames.push_back(RESOURCEMANAGER.GetModelByName("BeetleDead2"));
+
+    _animationFrames.push_back(std::move(beetleAnimationFrames));
+
+    // Initialize Wasp Animation Frames
+    AnimationFrames waspAnimationFrames;
+    waspAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn0"));
+    waspAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn1"));
+    waspAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn2"));
+    waspAnimationFrames.spawnFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspSpawn3"));
+
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly0"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly1"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly2"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly3"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly4"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly5"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly6"));
+    waspAnimationFrames.walkFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspFly7"));
+
+    waspAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack0"));
+    waspAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack1"));
+    waspAnimationFrames.attackFrames.push_back(RESOURCEMANAGER.GetModelByName("WaspAttack2"));
+
+    waspAnimationFrames.deadFrames.push_back(nullptr);
+    // Add waspAnimationFrames to the _animationFrames vector
+    _animationFrames.push_back(std::move(waspAnimationFrames));
+}
+
+
 
 glm::vec2 EnemiesManager::RandomSpawnPos() {
     float angle = _randomAngle.GetRandomFloat();

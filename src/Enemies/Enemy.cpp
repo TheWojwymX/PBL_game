@@ -5,6 +5,7 @@
 
 Enemy::Enemy() {
     _type = ComponentType::ENEMYAI;
+    InitSounds();
 }
 
 nlohmann::json Enemy::Serialize() {
@@ -102,10 +103,8 @@ void Enemy::AttackDome(){
     if(!_isAtWalls) return;
 
     if(_attackTimer >= _attackFrequency){
-        if(_enemyType == ANT) RESOURCEMANAGER.GetSoundByName("atak1")->PlaySoundSim(_ownerNode);
-        if(_enemyType == BEETLE) RESOURCEMANAGER.GetSoundByName("BeetleAttack")->PlaySoundSim(_ownerNode);
-        if(_enemyType == WASP) RESOURCEMANAGER.GetSoundByName("WaspAttack")->PlaySoundSim(_ownerNode);
-
+        _attackSounds[_enemyType]->PlaySoundSim(_ownerNode);
+       
         DOMEMANAGER.TakeDamage(_damage);
         //std::cout << "DOME HP: " << DOMEMANAGER.hp << std::endl;
         //std::cout << "ATTACKED DOME FOR " << _damage << std::endl;
@@ -142,4 +141,11 @@ void Enemy::SetStats(EnemyType type, float speed, float hp, float damage, float 
     _damage = damage;
     _attackFrequency = attackFrequency;
     _size = size;
+}
+
+void Enemy::InitSounds()
+{
+    _attackSounds.push_back(RESOURCEMANAGER.GetSoundByName("atak1"));
+    _attackSounds.push_back(RESOURCEMANAGER.GetSoundByName("BeetleAttack"));
+    _attackSounds.push_back(RESOURCEMANAGER.GetSoundByName("WaspAttack"));
 }

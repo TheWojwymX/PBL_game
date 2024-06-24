@@ -4,10 +4,13 @@
 #include <algorithm>
 
 ParticleGenerator::ParticleGenerator(std::shared_ptr<Shader> shader, string particleType)
-        : shader(shader), particleType(particleType) {}
+        : shader(shader), particleType(particleType) {
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
+}
 
 ParticleGenerator::ParticleGenerator() : shader(nullptr), particleType("default") {
     _type = ComponentType::PARTICLEGENERATOR;
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
 }
 
 nlohmann::json ParticleGenerator::Serialize() {
@@ -62,9 +65,6 @@ void ParticleGenerator::UpdateParticles() {
         elapsedTime = 0.0f;
     }
 
-    camForward = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetFrontVector();
-    camPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->GetPosition();
-
     glm::quat rotationQuat = object->GetTransform()->GetRotation();
     glm::mat4 rotationMatrix = glm::toMat4(rotationQuat);
 
@@ -84,8 +84,8 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setVec3("nodePosition", object->GetTransform()->GetPosition() + rotatedOffset);
     computeShader->setFloat("elapsedTime", elapsedTime);
     computeShader->setBool("shouldSpawn", shouldSpawn);
-    computeShader->setVec3("cameraPosition", camPosition);
-    computeShader->setVec3("cameraForward", camForward);
+    computeShader->setVec3("cameraPosition", _cameraRef->GetPosition());
+    computeShader->setVec3("cameraForward", _cameraRef->GetFrontVector());
     computeShader->setBool("hasSpawned", hasSpawned);
     computeShader->setMat4("objectRotation", glm::toMat4(objectRotation));
     computeShader->setVec3("enemyPosition", enemyPosition);
@@ -118,8 +118,8 @@ void ParticleGenerator::RenderParticles() {
     int deadParticles = 0;
 
     glm::vec3 objectPositionWithOffset = object->GetTransform()->GetPosition() + rotatedOffset;
-    glm::vec3 vectorToObject = objectPositionWithOffset - camPosition;
-    glm::vec3 normalizedCamForward = glm::normalize(camForward);
+    glm::vec3 vectorToObject = objectPositionWithOffset - _cameraRef->GetPosition();
+    glm::vec3 normalizedCamForward = glm::normalize(_cameraRef->GetFrontVector());
     glm::vec3 normalizedVectorToObject = glm::normalize(vectorToObject);
     float dotProduct = glm::dot(normalizedCamForward, normalizedVectorToObject);
     bool visible = dotProduct > 0.1f;

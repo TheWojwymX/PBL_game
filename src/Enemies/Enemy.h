@@ -39,4 +39,8 @@ public:
     void AttackDome();
     void EnemyAI();
     void SetStats(EnemyType type, float speed, float hp, float damage, float attackFrequency, float size);
+private:
+    std::vector<std::shared_ptr<Sound>> _attackSounds;
+
+    void InitSounds();
 };

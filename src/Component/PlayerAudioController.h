@@ -58,11 +58,19 @@ public:
     void PlayWindAmbient();
 
     void StopWindAmbient();
+    void InitSounds();
 
     bool _isPlayingWindAmbient = false;
     bool _isPlayingBattleMusic = false;
 
     bool _isInDigPhase = false;
+
+private:
+    std::shared_ptr<Sound> _jumpSound;
+    std::shared_ptr<Sound> _caveMusic;
+    std::shared_ptr<Sound> _battleMusic;
+    std::shared_ptr<Sound> _desertAmbient;
+    std::vector<std::shared_ptr<Sound>> _stepSounds;
 };
 
 
