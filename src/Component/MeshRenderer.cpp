@@ -1,49 +1,56 @@
 #include "MeshRenderer.h"
 #include "Managers/TransparentRenderer.h"
+#include "Core/Node.h"
 
-MeshRenderer::MeshRenderer(Model* model, Shader* shader) : _model(model), _shader(shader) {}
+MeshRenderer::MeshRenderer(Model* model, Shader* shader) : _model(model), _shader(shader) {
+    _shadowShader = RESOURCEMANAGER.GetShaderByName("shadowShader");
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
+}
 
 MeshRenderer::MeshRenderer() {
     _type = ComponentType::MESHRENDERER;
+    _shadowShader = RESOURCEMANAGER.GetShaderByName("shadowShader");
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
 }
 
 void MeshRenderer::Render(glm::mat4 parentWorld) {
+    if (_disableModel) return;
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
 
     if (FrustumCulling::IsInFrustum(_cameraRef->getViewProjectionMatrix(), world, _cameraRef->getFrustumPlanes(), _model)) {
-        isInFrustum = true;
-        if (!_disableModel) {
-            if (!_transparent)
-                RenderModel(world);
-            else
-                TRANSPARENT_RENDERER.AddModel(shared_from_this(), world);
-        }
-    }
-    else {
-        isInFrustum = false;
+        if (!_transparent)
+            RenderModel(world);
+        else
+            TRANSPARENT_RENDERER.AddModel(shared_from_this(), world);
     }
 }
 
 void MeshRenderer::RenderShadows(glm::mat4 parentWorld) {
     if (_disableShadows) return;
-
-    std::shared_ptr<Shader> currentShader = _shader;
-    SetShader(RESOURCEMANAGER.GetShaderByName("shadowShader"));
     glm::mat4 world = _ownerTransform->Combine(parentWorld);
-    RenderModel(world);
-    SetShader(currentShader);
+
+    RenderModel(world,true);
 }
 
-void MeshRenderer::RenderModel(glm::mat4 ctm) {
+void MeshRenderer::RenderModel(glm::mat4 ctm, bool isShadow) {
     if (_shouldRenderOutline) {
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
         glStencilFunc(GL_ALWAYS, 1, 0xFF); // all fragments should pass the stencil test
         glStencilMask(0xFF); // enable writing to the stencil buffer
     }
 
-    _shader->use();
-    _shader->setMat4("model", ctm);
-    _model->Draw(*_shader);
+    if (isShadow)
+    {
+        _shadowShader->use();
+        _shadowShader->setMat4("model", ctm);
+        _model->Draw(*_shadowShader);
+    }
+    else {
+        _shader->use();
+        _shader->setMat4("model", ctm);
+        _model->Draw(*_shader);
+    }
+
 
     if (_shouldRenderOutline) {
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
@@ -89,16 +96,4 @@ void MeshRenderer::Deserialize(const nlohmann::json& jsonData) {
     }
 
     Component::Deserialize(jsonData);
-}
-
-void MeshRenderer::Initiate() {
-    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
-    Component::Initiate();
-}
-
-void MeshRenderer::Update() {
-    _ownerTransform->SetPosition(_ownerTransform->GetPosition());
-    _ownerTransform->SetScale(_ownerTransform->GetScale());
-    _ownerTransform->SetRotation(_ownerTransform->GetRotation());
-    Component::Update();
 }

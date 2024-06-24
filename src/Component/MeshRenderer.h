@@ -20,23 +20,16 @@ public:
     void addToInspector(ImguiMain* imguiMain) override;
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
-    void Initiate() override;
-    void Update() override;
-
-    void SetShader(std::shared_ptr<Shader> newShader) {
-        _shader = newShader;
-    }
 
     bool _shouldRenderOutline = false;
 
     std::shared_ptr<Model> _model;
     std::shared_ptr<Shader> _shader;
+    std::shared_ptr<Shader> _shadowShader;
     std::shared_ptr<Shader> _outlineShader;
     std::shared_ptr<Camera> _cameraRef;
 
-    bool isInFrustum = false;
-
-    void RenderModel(glm::mat4 ctm);
+    void RenderModel(glm::mat4 ctm, bool isShadow = false);
 
     bool _disableModel = false;
     bool _disableShadows = false;
