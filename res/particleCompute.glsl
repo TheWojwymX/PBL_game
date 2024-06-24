@@ -103,6 +103,15 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     {
         initialVelocity = vec3(0.7f, speedMultiplier + initialUpwardBoost, 0);
     }
+    else if(isUnderground && tooltipShrink){
+    float randomX = (2.0f * random(changeSeed + 2.0f) - 1.0f) * 0.5;
+    float randomZ = (2.0f * random(changeSeed + 3.0f) - 1.0f) * 0.5;
+
+    initialVelocity = vec3(randomX, speedMultiplier + initialUpwardBoost, randomZ);
+    initialVelocity = (objectRotation * vec4(initialVelocity, 0.0f)).xyz;
+
+    particle.Ground = 0.0f;
+    }
     else if(!tooltip)
     {
     float randomX = (2.0f * random(changeSeed + 2.0f) - 1.0f) * XZvariation;
@@ -110,11 +119,15 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
 
     initialVelocity = vec3(randomX, speedMultiplier + initialUpwardBoost, randomZ);
     initialVelocity = (objectRotation * vec4(initialVelocity, 0.0f)).xyz;
+
+    if(isUnderground){
+    particle.Ground = 69.0f;
+    }
+
     }
     else if(tooltip){
         initialVelocity = vec3(0.0, 0.0, 0.0);
     }
-
 
     initialVel = initialVelocity;
     particle.Velocity.xyz = initialVelocity;
@@ -147,11 +160,12 @@ void main() {
             //{
             // Update velocity with gravity
             if(!tooltip){
+            if(!isUnderground){
             p.Velocity.xyz += (initGravity + ((windDirection * windStrength) * p.Weight)) * dt;
             // Update position with velocity
             p.Position.xyz += p.Velocity.xyz * dt;
             // Decrease alpha to fade out particle
-
+            }
             // Reduce life time
             p.Life -= dt;
 
@@ -166,6 +180,20 @@ void main() {
                     p.Scale = mix(particleScale, 3.2, lifeRatio);
                 }
             }
+}
+
+if((isUnderground && p.Life >= particleLife - 0.3 && tooltipShrink) || (isUnderground && !tooltipShrink)){
+p.Velocity.xyz += (initGravity + ((windDirection * windStrength) * p.Weight)) * dt;
+p.Position.xyz += p.Velocity.xyz * dt;
+}
+else if(isUnderground && p.Life < particleLife - 0.3 && tooltipShrink){
+if(p.Ground == 69.0f) {
+p.Velocity.xyz = p.Velocity.xyz * 0.3;
+p.Ground = 0.0f;
+}
+vec3 undergroundDirection = vec3(cameraPosition.x, cameraPosition.y - 1.2, cameraPosition.z) - p.Position.xyz;
+p.Position.xyz += undergroundDirection * dt * 7;
+if(length(p.Position.xyz - vec3(cameraPosition.x, cameraPosition.y - 1.2, cameraPosition.z)) < 0.2) p.Life == 0.0;
 }
 if(tooltip){
 if(p.Scale < 0.4 && !tooltipShrink){

@@ -195,7 +195,7 @@ void ParticleGenerator::RenderParticles() {
             generateParticle = false;
             GAMEMANAGER.root->RemoveChild(_ownerNode);
         }
-        else if(particleType != "jetpackUse" && particleType != "flareParticles1")
+        else if(particleType != "jetpackUse" && particleType != "flareParticles1" && particleType != "digPlastic" && particleType != "digMetal")
         {
             generateParticle = false;
         }
@@ -404,15 +404,15 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "digMetal"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 20;
+        amount = 30;
         newParticles = 3;
         spawnDelay = 0.0f;
         speedVariation = 1.0f;
-        XZvariation = 2.0f;
-        particleLife = 0.7f;
+        XZvariation = 3.0f;
+        particleLife = 1.2f;
         particleColor = glm::vec4(0.6f,0.6f,0.6f,1.0f);
         initialUpwardBoost = 1.0f;
-        particleScale = 0.3f;
+        particleScale = 0.25f;
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;
@@ -430,11 +430,11 @@ void ParticleGenerator::initiateParticleType() {
         newParticles = 3;
         spawnDelay = 0.0f;
         speedVariation = 1.0f;
-        XZvariation = 2.0f;
-        particleLife = 0.7f;
+        XZvariation = 3.0f;
+        particleLife = 1.2f;
         particleColor = glm::vec4(0.8627f,0.0784f,0.2353f,1.0f);
         initialUpwardBoost = 1.0f;
-        particleScale = 0.3f;
+        particleScale = 0.25f;
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;
@@ -572,6 +572,7 @@ void ParticleGenerator::initiateParticleType() {
 }
 
 void ParticleGenerator::SpawnParticles() {
+    threadCount = 0;
     generateParticle = true;
     hasSpawned = false;
 }

@@ -27,9 +27,10 @@ bool BlockData::DamageBlock(float amount) {
         return false; // Block is invincible, no damage taken
     }
 
+    _HP -= amount;
+
     HandleParticles();
 
-    _HP -= amount;
     return _HP <= 0;
 }
 
@@ -46,12 +47,22 @@ void BlockData::HandleParticles() {
         auto hitResourceParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), particleType);
         hitResourceParticles->SetOffset(glm::vec3(0.0f, 0.0f, 0.0f));
         hitResourceParticles->object = NODESMANAGER.getNodeByName(nodeName);
+
         hitResourceParticles->Init();
         NODESMANAGER.getNodeByName(nodeName)->AddComponent(hitResourceParticles);
-        hitResourceParticles->SpawnParticles();
+
+        if(_HP > 0) hitResourceParticles->SpawnParticles();
+        else{
+            NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->tooltipShrink = true;
+            NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
+        }
     }
     else if(GetBlockType() == BlockType::PLASTIC || GetBlockType() == BlockType::PLASTIC_BIG)
     {
-        NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
+        if(_HP > 0) NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
+        else{
+            NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->tooltipShrink = true;
+            NODESMANAGER.getNodeByName(nodeName)->GetComponent<ParticleGenerator>()->SpawnParticles();
+        }
     }
 }
