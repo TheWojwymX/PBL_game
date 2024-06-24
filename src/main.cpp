@@ -56,6 +56,7 @@
 #include "ParticleGenerator.h"
 #include "WindSimulation.h"
 #include "Framebuffer.h"
+#include "BatchRandomGenerator.h"
 
 #include "Enemies/EnemiesManager.h"
 

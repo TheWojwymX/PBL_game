@@ -5,6 +5,7 @@
 #include "Managers/ComponentsManager.h"
 #include "Component/Camera.h"
 #include "BlockData.h"
+#include "BatchRandomGenerator.h"
 
 class CloudManager : public Component, public std::enable_shared_from_this<CloudManager> {
 public:
@@ -41,6 +42,7 @@ private:
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     int _sandRendererRefID;
     int _cameraRefID;
+    BatchRandomGenerator _rangeRand;
 
 
     void GenerateMap();
@@ -49,8 +51,6 @@ private:
     void UpdateBlocksVisibility();
     void SetVisibility(BlockData& blockData, bool state);
     float Perlin(float x, float y, float z);
-
-    float RandomInRange(float min, float max);
 };
 
 class PerlinNoise {

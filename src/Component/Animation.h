@@ -6,6 +6,7 @@
 #include "Core/Component.h"
 #include "Component/MeshRenderer.h"
 #include "Managers/ComponentsManager.h"
+#include "BatchRandomGenerator.h"
 
 enum state { SPAWN, WALK, ATTACK, DEAD };
 
@@ -15,6 +16,7 @@ private:
     std::vector<std::shared_ptr<Model>> _walkFrames;
     std::vector<std::shared_ptr<Model>> _attackFrames;
     std::vector<std::shared_ptr<Model>> _deadFrames;
+    BatchRandomGenerator _randomGen;
 
 
     float _frameDuration; // Duration of each frame in seconds

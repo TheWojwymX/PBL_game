@@ -6,14 +6,15 @@ EnemiesManager &EnemiesManager::getInstance() {
     return instance;
 }
 
+EnemiesManager::EnemiesManager(): _scaleRand(100,0.7f,1.3f), _endlessRand(100,0.0f,1.0f), _randomAngle(100, 0.0f, 2.0f * static_cast<float>(3.141592))
+{
+}
+
 void EnemiesManager::Update() {
     //ChooseModelBasedOnDistance(); //LOD (safe to comment out)
     if(Input::Instance().IsKeyPressed(GLFW_KEY_P)) {
 
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<float> dis(0.5f, 1.0f);
-        float scale = dis(gen);
+        float scale = _scaleRand.GetRandomFloat();
 
         SpawnEnemy(2.5, glm::vec3(scale), RandomSpawnPos(), ANT);
     }
@@ -89,13 +90,9 @@ void EnemiesManager::SpawnEnemiesForRound()
         glm::ivec3 diff = spawns - _spawnedEnemies;
         _spawnedEnemies = spawns;
 
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<float> scaleRand(0.7f, 1.3f);
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < diff[i]; j++) {
-                float scale = scaleRand(gen);
+                float scale = _scaleRand.GetRandomFloat();
                 SpawnEnemy(_enemyStats[i].size * scale, glm::vec3(scale), RandomSpawnPos(), static_cast<EnemyType>(i));
             }
         }
@@ -110,14 +107,7 @@ void EnemiesManager::SpawnEnemiesForRound()
 
         const glm::vec3& weights = _roundsInfo[GAMEMANAGER.GetRoundNumber()];
 
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<float> scaleRand(0.7f, 1.3f);
-
-        float sumWeights = weights.x + weights.y + weights.z;
-        std::uniform_real_distribution<float> typeRand(0.0f, sumWeights);
-
-        float randomValue = typeRand(gen);
+        float randomValue = _endlessRand.GetRandomFloat();
 
         int chosenEnemyType = -1;
         if (randomValue < weights.x) {
@@ -130,7 +120,7 @@ void EnemiesManager::SpawnEnemiesForRound()
             chosenEnemyType = 2;
         }
 
-        float scale = scaleRand(gen);
+        float scale = _scaleRand.GetRandomFloat();
         SpawnEnemy(_enemyStats[chosenEnemyType].size * scale, glm::vec3(scale), RandomSpawnPos(), static_cast<EnemyType>(chosenEnemyType));
     }
 }
@@ -358,11 +348,7 @@ void EnemiesManager::InitEnemyStats() {
 }
 
 glm::vec2 EnemiesManager::RandomSpawnPos() {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> angleDist(0.0f, 2.0f * static_cast<float>(3.141592));
-
-    float angle = angleDist(gen);
+    float angle = _randomAngle.GetRandomFloat();
 
     // Calculate x and y based on the angle
     float x = _spawnDistance * std::cos(angle);

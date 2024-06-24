@@ -29,7 +29,7 @@ public:
 
     ~EnemiesManager() = default;
 
-    EnemiesManager() = default;
+    EnemiesManager();
 
     EnemiesManager(const EnemiesManager &) = delete;
 
@@ -88,6 +88,9 @@ private:
     float _endlessDelayMin;
     float _endlessDelayStep;
     bool _finishedSpawning = false;
+    BatchRandomGenerator _scaleRand;
+    BatchRandomGenerator _endlessRand;
+    BatchRandomGenerator _randomAngle;
 
     void InitEnemyStats();
     glm::vec2 RandomSpawnPos();

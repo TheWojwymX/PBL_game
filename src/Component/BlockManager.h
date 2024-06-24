@@ -13,6 +13,7 @@
 #include "imgui.h"
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
+#include "BatchRandomGenerator.h"
 
 
 // Define a struct to hold collision information for each corner
@@ -72,6 +73,7 @@ private:
     int _cameraRefID;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     std::vector<glm::vec3> _topLayerPositions;
+    BatchRandomGenerator _randomGen;
 
     void UpdateInstanceRenderer();
     void RefreshVisibleBlocks();

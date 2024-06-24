@@ -1,10 +1,10 @@
 #include "BlockManager.h"
 
 BlockManager::BlockManager(int width, int height, int depth) :
-    _width(width), _depth(depth), _height(height), _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3) {
+    _width(width), _depth(depth), _height(height), _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3), _randomGen(1000, 0.0f, 1.0f) {
 }
 
-BlockManager::BlockManager() : _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3) {
+BlockManager::BlockManager() : _chunkSize(20), _playerChunk(glm::ivec3(0.0f)), _renderDistance(3), _randomGen(1000, 0.0f, 1.0f) {
     _type = ComponentType::BLOCKMANAGER;
 }
 
@@ -383,14 +383,9 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
     int maxDistanceX = dimensions.x / 2 - deadzone.x;
     int maxDistanceZ = dimensions.y / 2 - deadzone.y;
 
-    // Seed for randomness
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1000.0f);
-
     // Generate random offsets for the Perlin noise
-    float randomOffsetX = dis(gen);
-    float randomOffsetZ = dis(gen);
+    float randomOffsetX = _randomGen.GetRandomFloat() * 1000.0f;
+    float randomOffsetZ = _randomGen.GetRandomFloat() * 1000.0f;;
 
     // Iterate over the grid dimensions
     for (int x = startX; x < startX + dimensions.x; x++) {
@@ -429,11 +424,6 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
 
 
 void BlockManager::InitializeMap(float initialFillRatio) {
-    // Initialize the random number generator
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
-
     // Clear existing block data
     _blocksData.clear();
 
@@ -442,7 +432,7 @@ void BlockManager::InitializeMap(float initialFillRatio) {
         for (int z = 0; z < _depth; z++) {
             for (int x = 0; x < _width; x++) {
                 // Determine if the cell should initially be filled based on the fill ratio
-                bool filled = dis(gen) < initialFillRatio;
+                bool filled = _randomGen.GetRandomFloat() < initialFillRatio;
                 bool isEdgeBlock = IsEdgeBlock(x, y, z);
 
                 if (isEdgeBlock)
@@ -867,10 +857,6 @@ void BlockManager::ApplyMask(glm::ivec3 startPos, char* maskArray, glm::ivec3 ma
 
 void BlockManager::GenerateResources()
 {
-    std::random_device rd;  
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
-
     // Define the probability of a block being changed to PLASTIC_BIG or PLASTIC
     const double plasticBigProbability = .25;   // 50% chance of being PLASTIC_BIG
     const double plasticProbability = .75; // 50% chance of being PLASTIC
@@ -893,7 +879,7 @@ void BlockManager::GenerateResources()
             if (InBounds(belowPosition,1) && _blocksData[GetIndex(belowPosition)].IsSolid())
             {
                 // Generate a random number between 0 and 1
-                double randomValue = dis(gen);
+                double randomValue = _randomGen.GetRandomFloat();
 
                 // Check if the block should be changed to METAL
                 if (randomValue < plasticBigProbability)
@@ -927,22 +913,17 @@ std::vector<glm::vec3> BlockManager::GeneratePoissonDiskPoints()
     std::vector<glm::vec3> spawnPoints;
     spawnPoints.push_back(sampleRegionSize / 2.0f);
 
-    // Random number generator setup
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
-
     while (!spawnPoints.empty())
     {
-        int spawnIndex = static_cast<int>(dis(gen) * spawnPoints.size());
+        int spawnIndex = static_cast<int>(_randomGen.GetRandomFloat() * spawnPoints.size());
         glm::vec3 spawnCenter = spawnPoints[spawnIndex];
         bool candidateAccepted = false;
 
         for (int i = 0; i < k; ++i)
         {
-            float angle = dis(gen) * 2.0f * glm::pi<float>();
+            float angle = _randomGen.GetRandomFloat() * 2.0f * glm::pi<float>();
             glm::vec3 dir = glm::vec3(glm::cos(angle), glm::sin(angle), glm::tan(angle));
-            glm::vec3 candidate = spawnCenter + dir * minDist * (1.0f + dis(gen));
+            glm::vec3 candidate = spawnCenter + dir * minDist * (1.0f + _randomGen.GetRandomFloat());
 
             if (InBounds(glm::round(candidate), 1) && !IsPointTooClose(points, candidate, minDist))
             {
@@ -1034,11 +1015,6 @@ void BlockManager::GenerateTunnel(std::vector<glm::ivec3> points, int size)
 }
 
 void BlockManager::GenerateTunnels() {
-    // Random number generator setup
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
-
     glm::ivec3 startLayer1 = GetRandomSideBlock(glm::ivec2(220, 270));
     //std::cout << "StartPoint for tunnel 1: " << startLayer1.x << ", " << startLayer1.y << ", " << startLayer1.z << std::endl;
 
@@ -1048,11 +1024,11 @@ void BlockManager::GenerateTunnels() {
     // Generate intermediate points within the map for the first tunnel
     std::vector<glm::ivec3> pointsTunnel1;
     pointsTunnel1.push_back(startLayer1);
-    int numPointsTunnel1 = 1 + static_cast<int>(dis(gen) * 2); // Random number of intermediate points (1 to 2)
+    int numPointsTunnel1 = 1 + static_cast<int>(_randomGen.GetRandomFloat() * 2); // Random number of intermediate points (1 to 2)
     for (int i = 0; i < numPointsTunnel1; ++i) {
-        int interX = static_cast<int>(dis(gen) * _width);
-        int interZ = static_cast<int>(dis(gen) * (_depth - 1));
-        int interY = startLayer1.y + 20 + static_cast<int>(dis(gen) * (endLayer2.y - startLayer1.y - 40));
+        int interX = static_cast<int>(_randomGen.GetRandomFloat() * _width);
+        int interZ = static_cast<int>(_randomGen.GetRandomFloat() * (_depth - 1));
+        int interY = startLayer1.y + 20 + static_cast<int>(_randomGen.GetRandomFloat() * (endLayer2.y - startLayer1.y - 40));
         glm::ivec3 point = glm::ivec3(interX, interY, interZ);
         pointsTunnel1.push_back(point);
         //std::cout << "Point for tunnel 1: " << point.x << ", " << point.y << ", " << point.z << std::endl;
@@ -1073,11 +1049,11 @@ void BlockManager::GenerateTunnels() {
     // Generate intermediate points within the map for the second tunnel
     std::vector<glm::ivec3> pointsTunnel2;
     pointsTunnel2.push_back(startLayer2);
-    int numPointsTunnel2 = 1 + static_cast<int>(dis(gen) * 2); // Random number of intermediate points (1 to 3)
+    int numPointsTunnel2 = 1 + static_cast<int>(_randomGen.GetRandomFloat() * 2); // Random number of intermediate points (1 to 3)
     for (int i = 0; i < numPointsTunnel2; ++i) {
-        int interX = static_cast<int>(dis(gen) * _width);
-        int interZ = static_cast<int>(dis(gen) * (_depth - 1));
-        int interY = startLayer2.y + 20 + static_cast<int>(dis(gen) * (endLayer3.y - startLayer2.y - 40));
+        int interX = static_cast<int>(_randomGen.GetRandomFloat() * _width);
+        int interZ = static_cast<int>(_randomGen.GetRandomFloat() * (_depth - 1));
+        int interY = startLayer2.y + 20 + static_cast<int>(_randomGen.GetRandomFloat() * (endLayer3.y - startLayer2.y - 40));
         glm::ivec3 point = glm::ivec3(interX, interY, interZ);
         pointsTunnel2.push_back(point);
         //std::cout << "Point for tunnel 2: " << point.x << ", " << point.y << ", " << point.z << std::endl;
@@ -1113,46 +1089,36 @@ glm::ivec3 BlockManager::QuadraticBezier(const glm::ivec3& p0, const glm::ivec3&
 
 glm::ivec3 BlockManager::GetRandomSideBlock(glm::ivec2 yRange)
 {
-    // Random number generator setup
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
-
     int x = 0;
     int z = 0;
 
-    if (dis(gen) > 0.5f) {
-        x = (dis(gen) > 0.5f) ? (_width - 1) : 0;
-        z = static_cast<int>(dis(gen) * (_depth - 1));
+    if (_randomGen.GetRandomFloat() > 0.5f) {
+        x = (_randomGen.GetRandomFloat() > 0.5f) ? (_width - 1) : 0;
+        z = static_cast<int>(_randomGen.GetRandomFloat() * (_depth - 1));
     }
     else {
-        x = static_cast<int>(dis(gen) * (_width - 1));
-        z = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+        x = static_cast<int>(_randomGen.GetRandomFloat() * (_width - 1));
+        z = (_randomGen.GetRandomFloat() > 0.5f) ? (_depth - 1) : 0;
     }
 
-    return glm::ivec3(x, yRange.x + static_cast<int>(dis(gen) * (yRange.y - yRange.x)), z);
+    return glm::ivec3(x, yRange.x + static_cast<int>(_randomGen.GetRandomFloat() * (yRange.y - yRange.x)), z);
 }
 
 glm::ivec3 BlockManager::GetRandomSideBlock(glm::ivec2 yRange, glm::ivec3 exclude)
 {
-    // Random number generator setup
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
-
     int x = 0;
     int z = 0;
 
-    if (dis(gen) > 0.5f && (exclude.x != (_width - 1) || exclude.x != 0)) {
-        x = (dis(gen) > 0.5f) ? (_width - 1) : 0;
-        z = static_cast<int>(dis(gen) * (_depth - 1));
+    if (_randomGen.GetRandomFloat() > 0.5f && (exclude.x != (_width - 1) || exclude.x != 0)) {
+        x = (_randomGen.GetRandomFloat() > 0.5f) ? (_width - 1) : 0;
+        z = static_cast<int>(_randomGen.GetRandomFloat() * (_depth - 1));
     }
     else {
-        x = static_cast<int>(dis(gen) * (_width - 1));
-        z = (dis(gen) > 0.5f) ? (_depth - 1) : 0;
+        x = static_cast<int>(_randomGen.GetRandomFloat() * (_width - 1));
+        z = (_randomGen.GetRandomFloat() > 0.5f) ? (_depth - 1) : 0;
     }
 
-    return glm::ivec3(x, yRange.x + static_cast<int>(dis(gen) * (yRange.y - yRange.x)), z);
+    return glm::ivec3(x, yRange.x + static_cast<int>(_randomGen.GetRandomFloat() * (yRange.y - yRange.x)), z);
 }
 
 int BlockManager::GetIndex(glm::ivec3 point) {

@@ -45,39 +45,4 @@ void ImguiInspector::draw(std::shared_ptr<Node> selectedObject, ImguiMain* imgui
 
 void ImguiInspector::addComponent(std::shared_ptr<Node> selectedObject, component_type componentType)
 {
-    std::shared_ptr<Component> component;
-
-    switch (componentType)
-    {
-        case BLOCK:
-            component = std::make_shared<Block>(Block());
-            selectedObject->AddComponent(component);
-            break;
-        case BLOCK_MANAGER:
-            component = std::make_shared<BlockManager>(BlockManager());
-            selectedObject->AddComponent(component);
-            break;
-        case CAMERA:
-            component = std::make_shared<Camera>(Camera());
-            selectedObject->AddComponent(component);
-            break;
-        case INSTANCE_RENDERER:
-//            component = std::make_shared<InstanceRenderer>(InstanceRenderer());
-//            selectedObject->AddComponent(component);
-            break;
-        case MESH_RENDERER:
-//            component = std::make_shared<MeshRenderer>(MeshRenderer());
-//            selectedObject->AddComponent(component);
-            break;
-        case PLAYER_CONTROLLER:
-//            component = std::make_shared<PlayerController>(PlayerController());
-//            selectedObject->AddComponent(component);
-            break;
-        case STATIC_BLOCK_CONTROLLER:
-//            component = std::make_shared<StaticBlockController>(StaticBlockController());
-//            selectedObject->AddComponent(component);
-            break;
-        default:
-            break;
-    }
 }

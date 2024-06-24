@@ -7,15 +7,11 @@
 
 
 Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop, state enemyState)
-        : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop), _enemyState(enemyState) {}
+        : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop), _enemyState(enemyState), _randomGen(10,0.0f,0.5f){}
 
-Animation::Animation()
+Animation::Animation(): _randomGen(10, 0.0f, 0.5f)
 {
     _type = ComponentType::ANIMATION;
-}
-
-float generateRandomFloat(std::mt19937& gen, std::uniform_real_distribution<float>& dis) {
-    return dis(gen);
 }
 
 std::shared_ptr<Model> Animation::GetCurrentFrame()
@@ -82,18 +78,15 @@ void Animation::Update() {
     float deltaTime = TIME.GetDeltaTime();
     _currentTime += deltaTime;
 
-    if (_enemyState == SPAWN && !IsAnimationFinished())
-    {
-        _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
-    }
-    else if (_enemyState == SPAWN && IsAnimationFinished())
-    {
-        _enemyState = WALK;
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<float> dis(0.0f, 0.5f);
-        _currentTime = generateRandomFloat(gen, dis);
-    }
+        if (_enemyState == SPAWN && !IsAnimationFinished())
+        {
+            _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
+        }
+        else if (_enemyState == SPAWN && IsAnimationFinished())
+        {
+            _enemyState = WALK;
+            _currentTime = _randomGen.GetRandomFloat();
+        }
 
     if (_enemyState == DEAD && IsAnimationFinished())
     {

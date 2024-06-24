@@ -6,6 +6,7 @@
 #include "NodesManager.h"
 #include "ComponentsManager.h"
 #include "Component/Camera.h"
+#include "BatchRandomGenerator.h"
 
 enum LightSource {GLOWSTICK, SHOT};
 
@@ -35,7 +36,7 @@ class LightsManager{
 public:
     static LightsManager &getInstance();
     ~LightsManager() = default;
-    LightsManager() = default;
+    LightsManager();
     LightsManager(const LightsManager &) = delete;
     LightsManager &operator=(const LightsManager &) = delete;
 
@@ -100,6 +101,9 @@ public:
 private:
     void UpdateShaders();
 
+    BatchRandomGenerator _randomGen;
+    std::queue<glm::vec3> _randomColors;
+
     std::shared_ptr<Shader> instancedSandShader;
     std::shared_ptr<Shader> instancedMetalShader;
     std::shared_ptr<Shader> instancedPlasticShader;
@@ -141,5 +145,7 @@ private:
     void UpdateShadersPointLights(const std::vector<VisibleLight>& pointLights);
     void UpdateShaderPointLight(std::shared_ptr<Shader> shader, string name, glm::vec3 pos, glm::vec3 color, LightSource lightSource);
 
+    void GenerateRandomColors(int amount);
     glm::vec3 GenerateRandomColor();
+    glm::vec3 GetRandomColor();
 };

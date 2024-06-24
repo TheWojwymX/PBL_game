@@ -6,6 +6,12 @@ LightsManager &LightsManager::getInstance() {
     return instance;
 }
 
+LightsManager::LightsManager()
+    : _randomGen(100, -1.0f, 1.0f)
+{
+    GenerateRandomColors(100);
+}
+
 void LightsManager::Update() {
     flashlightCurrentPosition = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpPosition(flashlightCurrentPosition);
     flashlightCurrentDirection = ComponentsManager::getInstance().GetComponentByID<Camera>(2)->LerpDirection(flashlightCurrentDirection);
@@ -216,7 +222,7 @@ void LightsManager::AddGlowstick() {
     glowstickNode->AddComponent(glowstickMovement);
     glowstickMovement->Init();
 
-    _glowstickColors.push_back(GenerateRandomColor());
+    _glowstickColors.push_back(GetRandomColor());
 
     glowstickShader->use();
     glowstickShader->setVec3("glowstickColor", glowstickColor);
@@ -420,17 +426,43 @@ void LightsManager::UpdateShaderPointLight(std::shared_ptr<Shader> shader, std::
     }
 }
 
-glm::vec3 LightsManager::GenerateRandomColor()
+void LightsManager::GenerateRandomColors(int amount)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(-1.0f, 1.0f);
+    while (!_randomColors.empty()) {
+        _randomColors.pop();
+    }
 
+    for (int i = 0; i < amount; ++i) {
+        glm::vec3 color;
+        do {
+            color = glm::vec3(_randomGen.GetRandomFloat(), _randomGen.GetRandomFloat(), _randomGen.GetRandomFloat());
+        } while (color.x <= 0.5f && color.y <= 0.5f && color.z <= 0.7f);
+
+        // Enqueue the generated color
+        _randomColors.push(color);
+    }
+}
+
+glm::vec3 LightsManager::GenerateRandomColor() {
+    glm::vec3 color;
     do {
-        glowstickColor = glm::vec3(dis(gen), dis(gen), dis(gen));
-    } while (glowstickColor.x <= 0.5f && glowstickColor.y <= 0.5f && glowstickColor.z <= 0.7f);
+        color = glm::vec3(_randomGen.GetRandomFloat(), _randomGen.GetRandomFloat(), _randomGen.GetRandomFloat());
+    } while (color.x <= 0.5f && color.y <= 0.5f && color.z <= 0.7f);
+    return color;
+}
 
-    return glowstickColor;
+glm::vec3 LightsManager::GetRandomColor()
+{
+    if (!_randomColors.empty()) {
+        glm::vec3 color = _randomColors.front();
+        _randomColors.pop(); 
+
+        _randomColors.push(color);
+
+        return color; 
+    }
+
+    return glm::vec3(1.0f); 
 }
 
 void LightsManager::AssignNewGlowstickSettings(char level){

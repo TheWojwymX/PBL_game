@@ -1,9 +1,9 @@
 #include "CloudManager.h"
 
 CloudManager::CloudManager(int width, int height, int depth) :
-        _width(width), _depth(depth), _height(height) {}
+        _width(width), _depth(depth), _height(height), _rangeRand(300, 100, 999) {}
 
-CloudManager::CloudManager() {
+CloudManager::CloudManager(): _rangeRand(300,100,999){
     _type = ComponentType::CLOUDMANAGER;
 }
 
@@ -137,7 +137,7 @@ void CloudManager::addToInspector(ImguiMain *imguiMain)
 }
 
 float CloudManager::Perlin(float x, float y, float z) {
-    int seed = RandomInRange(100, 999);
+    int seed = _rangeRand.GetRandomInt();
     float scale = 20.0f; // Determines noise granularity
 
     float total = 0.0f;
@@ -163,12 +163,4 @@ float CloudManager::Perlin(float x, float y, float z) {
     total = (total + 1) / 2;
 
     return total; // Resulting value between [0, 1]
-}
-
-float CloudManager::RandomInRange(float min, float max) {
-    std::random_device rd; // Obtain a random number from hardware
-    std::mt19937 eng(rd()); // Seed the generator
-    std::uniform_real_distribution<float> distr(min, max); // Define the range
-
-    return distr(eng); // Generate and return a random number within the specified range
 }
