@@ -81,6 +81,7 @@ void BlockManager::Initiate() {
     _topLayerRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_topLayerRendererRefID);
     _plasticRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_plasticRendererRefID);
     _metalRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_metalRendererRefID);
+    _cageRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(198);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
     Component::Initiate();
 }
@@ -92,6 +93,7 @@ void BlockManager::Init() {
     GenerateResources();
     ApplyMasks();
     GenerateTopLayer(glm::ivec2(50, 50), glm::ivec2(500, 500), glm::ivec2(50, 50));
+    SetCageRenderer();
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateRenderedChunks();
@@ -103,6 +105,7 @@ void BlockManager::Reset()
     GenerateResources();
     ApplyMasks();
     GenerateTopLayer(glm::ivec2(50, 50), glm::ivec2(500, 500), glm::ivec2(50, 50));
+    SetCageRenderer();
     UpdateBlocksVisibility();
     RefreshVisibleBlocks();
     UpdateRenderedChunks();
@@ -411,13 +414,7 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
         }
     }
     _topLayerPositions = instancePositions;
-
-    // Iterate over _blocksData and add edge blocks to instanceMatrix
-    for (BlockData& blockData : _blocksData) {
-        if (IsEdgeBlock(blockData) && blockData.IsSolid()) {
-            instancePositions.push_back(blockData.GetPosID());
-        }
-    }
+    std::cout << "top size: " << _topLayerPositions.size() << std::endl;
 
     _topLayerRendererRef->RefreshPositionBuffer(instancePositions);
 }
@@ -1072,6 +1069,19 @@ void BlockManager::InitLayerStats() {
     _layerStats.push_back({ 1.0f, 1 }); // HP, Mat reward
     _layerStats.push_back({ 3.0f, 3 }); // HP, Mat reward
     _layerStats.push_back({ 7.0f, 7 }); // HP, Mat reward
+}
+
+void BlockManager::SetCageRenderer()
+{
+    std::vector<glm::vec3> instancePositions;
+
+    for (BlockData& blockData : _blocksData) {
+        if (IsEdgeBlock(blockData) && blockData.IsSolid()) {
+            instancePositions.push_back(blockData.GetPosID());
+        }
+    }
+
+    _cageRendererRef->RefreshPositionBuffer(instancePositions);
 }
 
 

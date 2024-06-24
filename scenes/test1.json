@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 198,
-  "nextNodeId": 177,
+  "nextComponentId": 199,
+  "nextNodeId": 178,
   "resources": {
     "Models": [
       {
@@ -21,6 +21,10 @@
       },
       {
         "ModelName": "topLayerModel",
+        "Path": "res/Sand/Sand.obj"
+      },
+      {
+        "ModelName": "cageModel",
         "Path": "res/Sand/Sand.obj"
       },
       {
@@ -262,22 +266,6 @@
       {
         "ModelName": "WaspAttack2",
         "Path": "res/Models/Wasp/wasp_attack_v1/wasp_attack_v1.0-2.obj"
-      },
-      {
-        "ModelName": "WaspDead0",
-        "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-0.obj"
-      },
-      {
-        "ModelName": "WaspDead1",
-        "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-1.obj"
-      },
-      {
-        "ModelName": "WaspDead2",
-        "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-2.obj"
-      },
-      {
-        "ModelName": "WaspDead3",
-        "Path": "res/Models/Wasp/wasp_dead_v1/wasp_dead_v1-3.obj"
       },
       {
         "ModelName": "DomeStation",
@@ -756,8 +744,41 @@
           {
             "componentId": 31,
             "componentType": 3,
-            "maxSize": 379000,
+            "maxSize": 241000,
             "model": "topLayerModel",
+            "shader": "instancedSandShader",
+            "isDynamic": false,
+            "castShadows": false
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 177,
+        "NodeName": "cage",
+        "children": [],
+        "components": [
+          {
+            "componentId": 198,
+            "componentType": 3,
+            "maxSize": 138000,
+            "model": "cageModel",
             "shader": "instancedSandShader",
             "isDynamic": false,
             "castShadows": true
