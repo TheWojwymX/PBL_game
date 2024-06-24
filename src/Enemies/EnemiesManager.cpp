@@ -340,6 +340,8 @@ void EnemiesManager::Reset() {
     }
     _enemiesParticles.clear();
     _finishedSpawning = false;
+
+    resetAttackAtGUI();
 }
 
 void EnemiesManager::InitEnemyStats() {

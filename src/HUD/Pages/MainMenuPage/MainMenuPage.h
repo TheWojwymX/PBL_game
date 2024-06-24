@@ -20,7 +20,7 @@ public:
 
 private:
     void SetupButtons();
-    void SettingsTest();
+    void SettingsButtonOnClick();
     void CreditsButtonOnClick();
     void QuitButtonOnClick();
 };

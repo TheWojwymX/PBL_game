@@ -1,4 +1,5 @@
 #include "MainMenuPage.h"
+#include "HUD/PageManager.h"
 
 void MainMenuPage::Init() {
     SetBackgroundImagePath(_backgroundImagePath);
@@ -40,7 +41,7 @@ void MainMenuPage::SetupButtons() {
         CoordsConverter::ConvertCoords(glm::vec2(1449, 372)),
         CoordsConverter::ConvertCoords(glm::vec2(1765, 282)),
         [this]() {
-            SettingsTest();
+            SettingsButtonOnClick();
         });
 
     _creditsButton = std::make_shared<Button>("res/Images/Button/credits.png",
@@ -62,8 +63,8 @@ void MainMenuPage::SetupButtons() {
         });
 }
 
-void MainMenuPage::SettingsTest() {
-    std::cout << "Settings Test" << std::endl;
+void MainMenuPage::SettingsButtonOnClick() {
+    PAGEMANAGER.GoToSettingsMainMenu();
 }
 
 void MainMenuPage::CreditsButtonOnClick() {

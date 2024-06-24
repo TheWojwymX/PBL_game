@@ -118,7 +118,11 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
 		HUD/Pages/RestartPage/RestartPage.h
 		Managers/TransparentRenderer.cpp
 		Balance/Balancer.cpp
-		Balance/Balancer.h)
+		Balance/Balancer.h
+		HUD/Pages/MainMenuSettings/MainMenuSettingsPage.cpp
+		HUD/Pages/MainMenuSettings/MainMenuSettingsPage.h
+		HUD/Pages/MainMenuControls/MainMenuControls.cpp
+		HUD/Pages/MainMenuControls/MainMenuControls.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

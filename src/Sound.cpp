@@ -16,10 +16,10 @@ Sound::Sound(const std::string &name, const std::string &path, int id, SoundType
     }
     else{
         if(_soundType == SoundType::MUSIC){
-            _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._musicVolume);
+            _typeMultiplier = &AUDIOMANAGER._musicVolume;
         }
         else if(_soundType == SoundType::SFX){
-            _typeMultiplier = std::make_shared<float>(AUDIOMANAGER._sfxVolume);
+            _typeMultiplier = &AUDIOMANAGER._sfxVolume;
         }
         _volume = 1.0f;
         AUDIOMANAGER._sounds.push_back(this);
@@ -82,13 +82,13 @@ void Sound::StopSound() {
     }
 }
 
-void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume) {
+void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode) {
 
     if(_playerNode == nullptr){
         _playerNode = NODESMANAGER.getNodeByName("player");
     }
 
-    float volume = CalculateVolumeToPlayerDistance(soundSourceNode) * adjVolume;
+    float volume = CalculateVolumeToPlayerDistance(soundSourceNode) * _volume;
 
     ma_sound* sound = new ma_sound; // Dynamically allocate memory for the sound instance
 
@@ -102,7 +102,7 @@ void Sound::PlaySoundSim(std::shared_ptr<Node> soundSourceNode, float adjVolume)
     }
 
     // Set the volume based on the sound type
-    ma_sound_set_volume(sound, volume);
+    ma_sound_set_volume(sound, volume * _constStartingVolumeMultiplier * (*_typeMultiplier));
 
     result = ma_sound_start(sound);
 
@@ -135,6 +135,10 @@ void Sound::ChangeVolume(float volume) {
 
 void Sound::SetLooping(bool looping) {
     ma_sound_set_looping(&_sound, looping);
+}
+
+void Sound::RefreshVolume(){
+    ma_sound_set_volume(&_sound, _volume * _constStartingVolumeMultiplier * (*_typeMultiplier));
 }
 
 void Sound::StopFadingAway(){
