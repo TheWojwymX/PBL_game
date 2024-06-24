@@ -668,9 +668,9 @@ void Balancer::addUpgradesStatsToImgui()
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 
-    ImGui::Text("Jetpack upgrades:");
+    ImGui::Text("Player upgrades:");
     ImGui::SetNextItemWidth(50);
-    ImGui::Text("Capacity Cost:");
+    ImGui::Text("Jetpack Capacity Cost:");
 
     ImGui::SameLine();
     ImGui::SetNextItemWidth(50);
@@ -704,7 +704,7 @@ void Balancer::addUpgradesStatsToImgui()
 
 
     ImGui::SetNextItemWidth(50);
-    ImGui::Text("Capacity value:");
+    ImGui::Text("Jetpack Capacity value:");
 
     ImGui::SameLine();
     ImGui::SetNextItemWidth(50);
@@ -735,19 +735,448 @@ void Balancer::addUpgradesStatsToImgui()
         }
     }
 
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Mining Speed Cost:");
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningSpeedCost1", &_miningSpeedUpgradeCosts[0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningSpeedCost2", &_miningSpeedUpgradeCosts[1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningSpeedCost3", &_miningSpeedUpgradeCosts[2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningSpeedCost4", &_miningSpeedUpgradeCosts[3], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningSpeedCost5", &_miningSpeedUpgradeCosts[4], 0, 0);
+
+    ImGui::SameLine();
+    if(ImGui::Button("Update##15"))
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            UPGRADEMANAGER._miningSpeedUpgrades.upgradeCosts[i] = _miningSpeedUpgradeCosts[i];
+        }
+    }
 
 
 
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Mining Speed Value:");
 
-    ImGui::End();
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningSpeedValue1", &_miningSpeedUpgradeValues[0], 0, 0);
 
-//    Upgrades _miningSpeedUpgrades;
-//    Upgrades _miningReachUpgrades;
-//    Upgrades _miningRadiusUpgrades;
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningSpeedValue2", &_miningSpeedUpgradeValues[1], 0, 0);
 
-    //    TurretUpgrades _minigunUpgrades;
-//    TurretUpgrades _sniperUpgrades;
-//    TurretUpgrades _rifleUpgrades;
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningSpeedValue3", &_miningSpeedUpgradeValues[2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningSpeedValue4", &_miningSpeedUpgradeValues[3], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningSpeedValue5", &_miningSpeedUpgradeValues[4], 0, 0);
+
+    ImGui::SameLine();
+    if(ImGui::Button("Update##16"))
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            UPGRADEMANAGER._miningSpeedUpgrades.upgradeValues[i] = _miningSpeedUpgradeValues[i];
+        }
+    }
+
+
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Mining Reach Cost:");
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningReachCost1", &_miningReachUpgradeCosts[0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningReachCost2", &_miningReachUpgradeCosts[1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningReachCost3", &_miningReachUpgradeCosts[2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningReachCost4", &_miningReachUpgradeCosts[3], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningReachCost5", &_miningReachUpgradeCosts[4], 0, 0);
+
+    ImGui::SameLine();
+    if(ImGui::Button("Update##17"))
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            UPGRADEMANAGER._miningReachUpgrades.upgradeCosts[i] = _miningReachUpgradeCosts[i];
+        }
+    }
+
+
+
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Mining Reach Value:");
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningReachValue1", &_miningReachUpgradeValues[0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningReachValue2", &_miningReachUpgradeValues[1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningReachValue3", &_miningReachUpgradeValues[2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningReachValue4", &_miningReachUpgradeValues[3], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningReachValue5", &_miningReachUpgradeValues[4], 0, 0);
+
+    ImGui::SameLine();
+    if(ImGui::Button("Update##18"))
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            UPGRADEMANAGER._miningReachUpgrades.upgradeValues[i] = _miningReachUpgradeValues[i];
+        }
+    }
+
+
+
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Mining Radius Cost:");
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningRadiusCost1", &_miningReachUpgradeCosts[0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningRadiusCost2", &_miningRadiusUpgradeCosts[1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningRadiusCost3", &_miningRadiusUpgradeCosts[2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningRadiusCost4", &_miningRadiusUpgradeCosts[3], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##MiningRadiusCost5", &_miningRadiusUpgradeCosts[4], 0, 0);
+
+    ImGui::SameLine();
+    if(ImGui::Button("Update##19"))
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            UPGRADEMANAGER._miningRadiusUpgrades.upgradeCosts[i] = _miningRadiusUpgradeCosts[i];
+        }
+    }
+
+
+
+    ImGui::SetNextItemWidth(50);
+    ImGui::Text("Mining Radius Value:");
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningRadiusValue1", &_miningRadiusUpgradeValues[0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningRadiusValue2", &_miningRadiusUpgradeValues[1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningRadiusValue3", &_miningRadiusUpgradeValues[2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningRadiusValue4", &_miningRadiusUpgradeValues[3], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##MiningRadiusValue5", &_miningRadiusUpgradeValues[4], 0, 0);
+
+    ImGui::SameLine();
+    if(ImGui::Button("Update##20"))
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            UPGRADEMANAGER._miningRadiusUpgrades.upgradeValues[i] = _miningRadiusUpgradeValues[i];
+        }
+    }
+
+
+
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+    ImGui::Text("Turret Upgrades:");
+    ImGui::SetNextItemWidth(50);
+
+    ImGui::Text("Minigun level 2 cost:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##Lvl2_minugunCost", &_minigunUpgradeCosts[0], 0, 0);
+    ImGui::Text("Dmg:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_minigunDamage", &_minigunUpgradeValues[0][0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Fire Rate:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_minigunFireRate", &_minigunUpgradeValues[0][1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Side:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_minigunSide", &_minigunUpgradeValues[0][2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Forward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_minigunForward", &_minigunUpgradeValues[0][3], 0, 0);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Update##21"))
+    {
+        UPGRADEMANAGER._minigunUpgrades.upgradeCosts[0] = _minigunUpgradeCosts[0];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].x = _minigunUpgradeValues[0][0];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].y = _minigunUpgradeValues[0][1];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].z = _minigunUpgradeValues[0][2];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].w = _minigunUpgradeValues[0][3];
+    }
+
+    ImGui::Dummy(ImVec2(0, 5.0f));
+
+    ImGui::Text("Minigun level 3 cost:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##Lvl3_minugunCost", &_minigunUpgradeCosts[1], 0, 0);
+    ImGui::Text("Dmg:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_minigunDamage", &_minigunUpgradeValues[1][0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Fire Rate:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_minigunFireRate", &_minigunUpgradeValues[1][1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Side:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_minigunSide", &_minigunUpgradeValues[1][2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Forward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_minigunForward", &_minigunUpgradeValues[1][3], 0, 0);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Update##22"))
+    {
+        UPGRADEMANAGER._minigunUpgrades.upgradeCosts[0] = _minigunUpgradeCosts[1];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].x = _minigunUpgradeValues[1][0];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].y = _minigunUpgradeValues[1][1];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].z = _minigunUpgradeValues[1][2];
+        UPGRADEMANAGER._minigunUpgrades.upgradeValues[0].w = _minigunUpgradeValues[1][3];
+    }
+
+    ImGui::Dummy(ImVec2(0, 5.0f));
+
+    ImGui::Text("Sniper level 2 cost:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##Lvl2_SniperCost", &_sniperUpgradeCosts[0], 0, 0);
+    ImGui::Text("Dmg:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_SniperDamage", &_sniperUpgradeValues[0][0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Fire Rate:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_SniperFireRate", &_sniperUpgradeValues[0][1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Side:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_SniperSide", &_sniperUpgradeValues[0][2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Forward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_SniperForward", &_sniperUpgradeValues[0][3], 0, 0);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Update##23"))
+    {
+        UPGRADEMANAGER._sniperUpgrades.upgradeCosts[0] = _sniperUpgradeCosts[0];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].x = _sniperUpgradeValues[0][0];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].y = _sniperUpgradeValues[0][1];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].z = _sniperUpgradeValues[0][2];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].w = _sniperUpgradeValues[0][3];
+    }
+
+    ImGui::Dummy(ImVec2(0, 5.0f));
+
+    ImGui::Text("Sniper level 3 cost:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##Lvl3_SniperCost", &_sniperUpgradeCosts[1], 0, 0);
+    ImGui::Text("Dmg:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_SniperDamage", &_sniperUpgradeValues[1][0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Fire Rate:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_SniperFireRate", &_sniperUpgradeValues[1][1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Side:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_SniperSide", &_sniperUpgradeValues[1][2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Forward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_SniperForward", &_sniperUpgradeValues[1][3], 0, 0);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Update##24"))
+    {
+        UPGRADEMANAGER._sniperUpgrades.upgradeCosts[0] = _sniperUpgradeCosts[1];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].x = _sniperUpgradeValues[1][0];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].y = _sniperUpgradeValues[1][1];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].z = _sniperUpgradeValues[1][2];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].w = _sniperUpgradeValues[1][3];
+    }
+
+
+    ImGui::Dummy(ImVec2(0, 5.0f));
+
+    ImGui::Text("Rifle level 2 cost:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##Lvl2_RifleCost", &_rifleUpgradeCosts[0], 0, 0);
+    ImGui::Text("Dmg:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_RifleDamage", &_rifleUpgradeValues[0][0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Fire Rate:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_RifleFireRate", &_rifleUpgradeValues[0][1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Side:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_RifleSide", &_rifleUpgradeValues[0][2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Forward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl2_RifleForward", &_rifleUpgradeValues[0][3], 0, 0);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Update##25"))
+    {
+        UPGRADEMANAGER._rifleUpgrades.upgradeCosts[0] = _rifleUpgradeCosts[0];
+        UPGRADEMANAGER._rifleUpgrades.upgradeValues[0].x = _rifleUpgradeValues[0][0];
+        UPGRADEMANAGER._rifleUpgrades.upgradeValues[0].y = _rifleUpgradeValues[0][1];
+        UPGRADEMANAGER._rifleUpgrades.upgradeValues[0].z = _rifleUpgradeValues[0][2];
+        UPGRADEMANAGER._rifleUpgrades.upgradeValues[0].w = _rifleUpgradeValues[0][3];
+    }
+
+    ImGui::Dummy(ImVec2(0, 5.0f));
+
+    ImGui::Text("Sniper level 3 cost:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputInt("##Lvl3_RifleCost", &_rifleUpgradeCosts[1], 0, 0);
+    ImGui::Text("Dmg:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_RifleDamage", &_rifleUpgradeValues[1][0], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Fire Rate:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_RifleFireRate", &_rifleUpgradeValues[1][1], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Side:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_RifleSide", &_rifleUpgradeValues[1][2], 0, 0);
+
+    ImGui::SameLine();
+    ImGui::Text("Forward:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(50);
+    ImGui::InputFloat("##Lvl3_RifleForward", &_rifleUpgradeValues[1][3], 0, 0);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Update##26"))
+    {
+        UPGRADEMANAGER._sniperUpgrades.upgradeCosts[0] = _rifleUpgradeCosts[1];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].x = _rifleUpgradeValues[1][0];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].y = _rifleUpgradeValues[1][1];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].z = _rifleUpgradeValues[1][2];
+        UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].w = _rifleUpgradeValues[1][3];
+    }
+
+        ImGui::End();
 
 
 
