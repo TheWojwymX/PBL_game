@@ -253,11 +253,16 @@ int main(int, char**)
         // Calculate deltaTime
         TIME.Update();
 
+        if(INPUT.IsKeyPressed(GLFW_KEY_B)){
+            BALANCER.resetToDefault();
+        }
+
         if(!GAMEMANAGER._isInMainMenu) {
 
             if(INPUT.IsKeyPressed(GLFW_KEY_0)){
                 GAMEMANAGER.GoToMainMenu();
             }
+
 
             //debugging adding money
             if (INPUT.IsKeyPressed(77)) {

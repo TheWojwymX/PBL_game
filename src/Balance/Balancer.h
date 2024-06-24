@@ -19,6 +19,7 @@ public:
     void addTurretStatsToImgui();
     void addPhaseStatsToImgui();
     void addUpgradesStatsToImgui();
+    void resetToDefault();
 
     float _antSpeed = 7.0f;
     float _antHp = 3.0f;

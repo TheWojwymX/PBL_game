@@ -1176,39 +1176,160 @@ void Balancer::addUpgradesStatsToImgui()
         UPGRADEMANAGER._sniperUpgrades.upgradeValues[0].w = _rifleUpgradeValues[1][3];
     }
 
-        ImGui::End();
+    ImGui::End();
+}
 
+void Balancer::resetToDefault()
+{
+    _antSpeed = 7.0f;
+    _antHp = 3.0f;
+    _antDamage = 0.5f;
+    _antAttackFrequency = 0.6f;
 
+    _beetleSpeed = 3.0f;
+    _beetleHp = 30.0f;
+    _beetleDamage = 5.0f;
+    _beetleAttackFrequency = 1.5f;
 
+    _waspSpeed = 10.0f;
+    _waspHp = 2.0f;
+    _waspDamage = 1.0f;
+    _waspAttackFrequency = 0.45f;
 
-//    int _hpUpgradeCosts[5] = {5, 10, 15, 20, 25};
-//    float _hpUpgradeValues[5] = {25.0f, 50.0f, 75.0f, 100.0f, 125.0f};
-//
-//    int _hpRegenUpgradeCosts[5] = {5, 10, 15, 20, 25};
-//    float _hpRegenUpgradeValues[5] = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f};
-//
-//    int _hpRepairCost = 5;
-//    float _hpRepairValue = 10.0f;
-//
-//    int _minigunUpgradeCosts[2] = {5, 15};
-//    int _sniperUpgradeCosts[2] = {5, 15};
-//    int _rifleUpgradeCosts[2] = {5, 15};
-//
-//    float _minigunUpgradeValues[2][4] = { {0.0f, -0.20f, 30, 5}, {0.0f, -0.20f, 30, 5} };
-//    float _sniperUpgradeValues[2][4] = { {5, 0.0f, 5, 30}, {5, 0.0f, 5, 30} };
-//    float _rifleUpgradeValues[2][4] = {  {1.0f, -0.25f, 20, 20},  {1.0f, -0.25f, 20, 20} };
-//
-//    int _jetpackCapacityUpgradeCosts[5] = {5, 10, 15, 20, 25};
-//    float _jetpackCapacityUpgradeValues[5] = {25.0f, 50.0f, 75.0f, 100.0f, 125.0f};
-//
-//    int _miningSpeedUpgradeCosts[5] = {5, 10, 15, 20, 25};
-//    float _miningSpeedUpgradeValues[5] = {0.25f, 0.25f, 0.25f, 0.25f, 0.25f};
-//
-//    int _miningReachUpgradeCosts[5] = {5, 8, 12, 17, 23};
-//    float _miningReachUpgradeValues[5] = {2.0f, 3.0f, 4.0f, 5.0f, 6.0f};
-//
-//    int _miningRadiusUpgradeCosts[5] = {10, 15, 20, 25, 30};
-//    float _miningRadiusUpgradeValues[5] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+    _minigunFireRate = 0.5f;
+    _minigunDamage = 1.0f;
+    _minigunSideRange = 80.0f;
+    _minigunForwardRange = 60.0f;
 
+    _sniperFireRate = 2.0f;
+    _sniperDamage = 5.0f;
+    _sniperSideRange = 50.0f;
+    _sniperForwardRange = 100.0f;
 
+    _rifleFireRate = 1.0f;
+    _rifleDamage = 1.0f;
+    _rifleSideRange = 80.0f;
+    _rifleForwardRange = 80.0f;
+
+    int _antsNumberCopy[10] = {10,25,50,80,115,155,200,250,305,365};
+    std::copy(std::begin(_antsNumberCopy), std::end(_antsNumberCopy), std::begin(_antsNumber));
+
+    int _beetlesNumberCopy[10] = {0,1,3,6,10,15,21,28,36,45};
+    std::copy(std::begin(_beetlesNumberCopy), std::end(_beetlesNumberCopy), std::begin(_beetlesNumber));
+
+    int _waspsNumberCopy[10] = {0,0,1,3,6,10,15,21,28,36};
+    std::copy(std::begin(_waspsNumberCopy), std::end(_waspsNumberCopy), std::begin(_waspsNumber));
+
+    _endlessNumber[0] = 0.85f;
+    _endlessNumber[1] = 0.05f;
+    _endlessNumber[2] = 0.1f;
+
+    _hpUpgradeCosts[0] = 5;
+    _hpUpgradeCosts[1] = 10;
+    _hpUpgradeCosts[2] = 15;
+    _hpUpgradeCosts[3] = 20;
+    _hpUpgradeCosts[4] = 25;
+
+    _hpUpgradeValues[0] = 25.0f;
+    _hpUpgradeValues[1] = 50.0f;
+    _hpUpgradeValues[2] = 75.0f;
+    _hpUpgradeValues[3] = 100.0f;
+    _hpUpgradeValues[4] = 125.0f;
+
+    _hpRegenUpgradeCosts[0] = 5;
+    _hpRegenUpgradeCosts[1] = 10;
+    _hpRegenUpgradeCosts[2] = 15;
+    _hpRegenUpgradeCosts[3] = 20;
+    _hpRegenUpgradeCosts[4] = 25;
+
+    _hpRegenUpgradeValues[0] = 0.1f;
+    _hpRegenUpgradeValues[1] = 0.2f;
+    _hpRegenUpgradeValues[2] = 0.3f;
+    _hpRegenUpgradeValues[3] = 0.4f;
+    _hpRegenUpgradeValues[4] = 0.5f;
+
+    _hpRepairCost = 5;
+    _hpRepairValue = 10.0f;
+
+    _minigunUpgradeCosts[0] = 5;
+    _minigunUpgradeCosts[1] = 15;
+    _sniperUpgradeCosts[0] = 5;
+    _sniperUpgradeCosts[1] = 15;
+    _rifleUpgradeCosts[0] = 5;
+    _rifleUpgradeCosts[1] = 15;
+
+    _minigunUpgradeValues[0][0] = 0.0f;
+    _minigunUpgradeValues[0][1] = -0.20f;
+    _minigunUpgradeValues[0][2] = 30.0f;
+    _minigunUpgradeValues[0][3] = 5.0f;
+    _minigunUpgradeValues[1][0] = 0.0f;
+    _minigunUpgradeValues[1][1] = -0.20f;
+    _minigunUpgradeValues[1][2] = 30.0f;
+    _minigunUpgradeValues[1][3] = 5.0f;
+
+    _sniperUpgradeValues[0][0] = 5.0f;
+    _sniperUpgradeValues[0][1] = 0.0f;
+    _sniperUpgradeValues[0][2] = 5.0f;
+    _sniperUpgradeValues[0][3] = 30.0f;
+    _sniperUpgradeValues[1][0] = 5.0f;
+    _sniperUpgradeValues[1][1] = 0.0f;
+    _sniperUpgradeValues[1][2] = 5.0f;
+    _sniperUpgradeValues[1][3] = 30.0f;
+
+    _rifleUpgradeValues[0][0] = 1.0f;
+    _rifleUpgradeValues[0][1] = -0.25f;
+    _rifleUpgradeValues[0][2] = 20.0f;
+    _rifleUpgradeValues[0][3] = 20.0f;
+    _rifleUpgradeValues[1][0] = 1.0f;
+    _rifleUpgradeValues[1][1] = -0.25f;
+    _rifleUpgradeValues[1][2] = 20.0f;
+    _rifleUpgradeValues[1][3] = 20.0f;
+
+    _jetpackCapacityUpgradeCosts[0] = 5;
+    _jetpackCapacityUpgradeCosts[1] = 10;
+    _jetpackCapacityUpgradeCosts[2] = 15;
+    _jetpackCapacityUpgradeCosts[3] = 20;
+    _jetpackCapacityUpgradeCosts[4] = 25;
+
+    _jetpackCapacityUpgradeValues[0] = 25.0f;
+    _jetpackCapacityUpgradeValues[1] = 50.0f;
+    _jetpackCapacityUpgradeValues[2] = 75.0f;
+    _jetpackCapacityUpgradeValues[3] = 100.0f;
+    _jetpackCapacityUpgradeValues[4] = 125.0f;
+
+    _miningSpeedUpgradeCosts[0] = 5;
+    _miningSpeedUpgradeCosts[1] = 10;
+    _miningSpeedUpgradeCosts[2] = 15;
+    _miningSpeedUpgradeCosts[3] = 20;
+    _miningSpeedUpgradeCosts[4] = 25;
+
+    _miningSpeedUpgradeValues[0] = 0.25f;
+    _miningSpeedUpgradeValues[1] = 0.25f;
+    _miningSpeedUpgradeValues[2] = 0.25f;
+    _miningSpeedUpgradeValues[3] = 0.25f;
+    _miningSpeedUpgradeValues[4] = 0.25f;
+
+    _miningReachUpgradeCosts[0] = 5;
+    _miningReachUpgradeCosts[1] = 8;
+    _miningReachUpgradeCosts[2] = 12;
+    _miningReachUpgradeCosts[3] = 17;
+    _miningReachUpgradeCosts[4] = 23;
+
+    _miningReachUpgradeValues[0] = 2.0f;
+    _miningReachUpgradeValues[1] = 3.0f;
+    _miningReachUpgradeValues[2] = 4.0f;
+    _miningReachUpgradeValues[3] = 5.0f;
+    _miningReachUpgradeValues[4] = 6.0f;
+
+    _miningRadiusUpgradeCosts[0] = 10;
+    _miningRadiusUpgradeCosts[1] = 15;
+    _miningRadiusUpgradeCosts[2] = 20;
+    _miningRadiusUpgradeCosts[3] = 25;
+    _miningRadiusUpgradeCosts[4] = 30;
+
+    _miningRadiusUpgradeValues[0] = 1.0f;
+    _miningRadiusUpgradeValues[1] = 1.0f;
+    _miningRadiusUpgradeValues[2] = 1.0f;
+    _miningRadiusUpgradeValues[3] = 1.0f;
+    _miningRadiusUpgradeValues[4] = 1.0f;
 }

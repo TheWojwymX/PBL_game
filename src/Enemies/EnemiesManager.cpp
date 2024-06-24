@@ -17,11 +17,6 @@ void EnemiesManager::Update() {
 
         SpawnEnemy(2.5, glm::vec3(scale), RandomSpawnPos(), ANT);
     }
-    
-    if(Input::Instance().IsKeyPressed(GLFW_KEY_B))
-    {
-        resetAttackAtGUI();
-    }
 
     SpawnEnemiesForRound();
 

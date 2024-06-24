@@ -35,6 +35,9 @@
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Balance/Balancer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Balance/Balancer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Balance/Balancer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Balance/Balancer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemies/EnemiesManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +244,7 @@
       <workItem from="1718786017963" duration="26304000" />
       <workItem from="1718906016142" duration="79000" />
       <workItem from="1718909049478" duration="485000" />
-      <workItem from="1719138317255" duration="20289000" />
+      <workItem from="1719138317255" duration="22132000" />
     </task>
     <servers />
   </component>
