@@ -86,7 +86,7 @@ void MainMenuSettingsPage::SetupButtons() {
                                               CoordsConverter::ConvertCoords(glm::vec2(1108, 559)),
                                               CoordsConverter::ConvertCoords(glm::vec2(1138, 529)),
                                               [this]() {
-
+                                                    LIGHTSMANAGER.ChangeDisco();
                                               });
 
     _controlsButton = std::make_shared<Button>("res/Images/Button/button_controls.png",

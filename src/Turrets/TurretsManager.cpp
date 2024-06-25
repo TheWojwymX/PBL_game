@@ -579,8 +579,8 @@ bool TurretsManager::IsPointInTrapezoid(glm::vec3 point, std::vector<glm::vec3> 
 void TurretsManager::InitTurretStats() {
     // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
     // fireRate, dmg, sideRange, forwardRange
-    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 80.0f, 60.0f));  // MINIGUN
-    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 50.0f, 100.0f)); // SNIPER
+    _turretStats.push_back(glm::vec4(0.5f, 1.0f, 80.0f, 40.0f));  // MINIGUN
+    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 40.0f, 100.0f)); // SNIPER
     _turretStats.push_back(glm::vec4(1.0f, 1.0f, 80.0f, 80.0f));  // RIFLE
 
     _turretCostIncrease = 2;

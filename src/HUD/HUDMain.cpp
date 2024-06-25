@@ -187,7 +187,7 @@ void HUDMain::WaveTimerGUIManager() {
 
     float roundedDegrees = -((int(degrees/22.5f) * 22.5f) - 90.0f);
     
-    if (_oldClockDegrees <= -180.0f && _oldClockDegrees != roundedDegrees){
+    if (_oldClockDegrees <= -157.5f && _oldClockDegrees != roundedDegrees){
         _isWaveTimerInAnim = true;
         RESOURCEMANAGER.GetSoundByName("Tick")->PlaySound(_playerNode);
     }

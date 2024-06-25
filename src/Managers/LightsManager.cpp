@@ -229,7 +229,10 @@ void LightsManager::AddGlowstick() {
 }
 
 void LightsManager::AddShot(const glm::vec3& startPos, const glm::vec3& endPos) {
-    _activeShots.emplace_back(startPos, endPos, glm::vec3(0.9568f, 0.9450f, 0.5254f));//
+    if(!_isDisco)
+        _activeShots.emplace_back(startPos, endPos, glm::vec3(0.9568f, 0.9450f, 0.5254f));
+    else
+        _activeShots.emplace_back(startPos, endPos, GetRandomColor());
 }
 
 void LightsManager::UpdateGlowsticks() {
@@ -447,7 +450,7 @@ glm::vec3 LightsManager::GenerateRandomColor() {
     glm::vec3 color;
     do {
         color = glm::vec3(_randomGen.GetRandomFloat(), _randomGen.GetRandomFloat(), _randomGen.GetRandomFloat());
-    } while (color.x <= 0.5f && color.y <= 0.5f && color.z <= 0.7f);
+    } while (color.x <= 0.25f && color.y <= 0.5f && color.z <= 0.7f);
     return color;
 }
 
@@ -498,4 +501,9 @@ void LightsManager::AssignNewGlowstickSettings(char level){
             glowstickQuadratic = glowstickQuadratic5;
             break;
     }
+}
+
+void LightsManager::ChangeDisco()
+{
+    _isDisco = !_isDisco;
 }

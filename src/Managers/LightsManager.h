@@ -47,6 +47,7 @@ public:
     void AddShot(const glm::vec3& startPos, const glm::vec3& endPos);
     void TurnOffGlowsticks();
     void AssignNewGlowstickSettings(char level);
+    void ChangeDisco();
 
     int _glowstickCount = 0;
 
@@ -130,6 +131,7 @@ private:
 
     int maxLights = 50;
     float maxDistance = 60;
+    bool _isDisco = false;
 
     std::vector<std::shared_ptr<Node>> _glowsticksNodes;
     std::vector<VisibleLight> _visibleGlowsticks;

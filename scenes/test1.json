@@ -572,14 +572,14 @@
         "SoundName": "GunnerShot1",
         "SoundID": 7,
         "Type": 1,
-        "Volume": 1.0
+        "Volume": 0.5
       },
       {
         "Path": "res/Sounds/GunnerShot/Futuristic_Assault_Rifle_Single_Shot_02.wav",
         "SoundName": "GunnerShot2",
         "SoundID": 8,
         "Type": 1,
-        "Volume": 1.0
+        "Volume": 0.5
       },
       {
         "Path": "res/Sounds/GunnerShot/sniperShot2.mp3",
