@@ -82,6 +82,12 @@ std::pair<int, float> Turret::GetSound() {
 
 void Turret::HandleSpawn()
 {
+    if(!getInitialRotation == true)
+    {
+        _initialRotation = _ownerTransform->GetRotation();
+        getInitialRotation = true;
+    }
+
     if (_isFlying) {
         auto particleGenerator = _flare->GetComponent<ParticleGenerator>();
 

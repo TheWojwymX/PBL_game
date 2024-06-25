@@ -32,11 +32,14 @@ public:
     bool _isFlying = false;
     float _flyingSpeed = 2;
     bool _isMoving = false;
+    bool getInitialRotation = false;
 
     float _swingTimer = 0.0f;
     int _swingDirection = 1;
     float _rightMax = 1;
     float _leftMax = -1;
+
+    glm::quat _initialRotation;
 
     glm::quat _finalRotation;
     glm::vec3 _finalPosition;

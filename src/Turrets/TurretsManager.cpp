@@ -498,14 +498,49 @@ void TurretsManager::CheckEnemiesInRange() {
         }
 
         if (targetEnemy) {
+            // Get turret and enemy positions
             glm::vec3 turretPosition = _turrets[i]->_ownerNode->GetTransform()->GetPosition();
             glm::vec3 enemyPosition = targetEnemy->GetOwnerPosition();
-            enemyPosition.y = turretPosition.y;
-            glm::vec3 lookDirection = glm::normalize(enemyPosition - turretPosition);
-            _turrets[i]->_ownerNode->GetTransform()->LookAt(lookDirection);
 
+            // Keep the y position of the enemy the same as the turret to only rotate on the horizontal plane
+            enemyPosition.y = turretPosition.y;
+
+            // Calculate the target look direction
+            glm::vec3 targetLookDirection = glm::normalize(enemyPosition - turretPosition);
+
+            // Get the current forward direction
+            glm::quat currentRotation = _turrets[i]->_ownerNode->GetTransform()->GetRotation();
+            glm::vec3 currentForward = currentRotation * glm::vec3(0.0f, 0.0f, 1.0f);
+
+            // Avoid interpolation if currentForward is zero (could happen on initial frame)
+            if (glm::length(currentForward) < 0.001f) {
+                currentForward = glm::vec3(0.0f, 0.0f, 1.0f); // Default forward direction
+            }
+
+            // Interpolate between the current and target look direction
+            float interpolationSpeed = 2.0f;  // Adjust this value to control the rotation speed
+            glm::vec3 interpolatedLookDirection = glm::normalize(glm::mix(currentForward, targetLookDirection, std::min(interpolationSpeed * 3 * TIME.GetDeltaTime(), 1.0f)));
+
+            // Use the LookAt function to set the rotation
+            _turrets[i]->_ownerNode->GetTransform()->LookAt(interpolatedLookDirection);
+
+            // Attack the enemy
             AttackEnemy(_turrets[i], targetEnemy);
         } else {
+            // No enemies in range, rotate back to initial orientation
+            glm::quat currentRotation = _turrets[i]->_ownerNode->GetTransform()->GetRotation();
+            glm::quat targetRotation = _turrets[i]->_initialRotation;
+
+            float interpolationSpeed = 2.0f; // Adjust this value to control rotation speed
+            glm::quat interpolatedRotation = glm::slerp(currentRotation, targetRotation, interpolationSpeed * TIME.GetDeltaTime());
+
+            // Set the rotation
+            _turrets[i]->_ownerNode->GetTransform()->SetRotation(interpolatedRotation);
+
+            // Reload the turret
+            Reload(_turrets[i]);
+
+            // Reload the turret
             Reload(_turrets[i]);
         }
     }
@@ -609,6 +644,7 @@ void TurretsManager::MoveTurret() {
         _turrets[_indexOfMovingTurret]->_finalPosition = glm::vec3(2137, 2137, 2137);
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetPosition(_blueprintTurret->GetTransform()->GetPosition());
         _turrets[_indexOfMovingTurret]->_ownerNode->GetTransform()->SetRotation(_blueprintTurret->GetTransform()->GetRotation());
+        _turrets[_indexOfMovingTurret]->_initialRotation = _blueprintTurret->GetTransform()->GetRotation();
         _turrets[_indexOfMovingTurret]->_ownerNode->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
         _turrets[_indexOfMovingTurret]->_ownerNode->getFirstChild()->GetComponent<MeshRenderer>()->_shader = RESOURCEMANAGER.GetShaderByName(
                 "blueprintShader");

@@ -33,10 +33,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animator.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/Animator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
