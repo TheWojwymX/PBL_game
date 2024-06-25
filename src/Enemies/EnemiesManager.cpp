@@ -6,7 +6,7 @@ EnemiesManager &EnemiesManager::getInstance() {
     return instance;
 }
 
-EnemiesManager::EnemiesManager(): _scaleRand(30,0.7f,1.3f), _endlessRand(100,0.0f,1.0f), _randomAngle(100, 0.0f, 2.0f * static_cast<float>(3.141592))
+EnemiesManager::EnemiesManager(): _scaleRand(30,0.7f,1.3f), _endlessRand(100,0.0f,1.0f), _gen(_rd())
 {
 }
 
@@ -436,14 +436,28 @@ void EnemiesManager::InitAnimationFrames()
     _animationFrames.push_back(std::move(waspAnimationFrames));
 }
 
-
-
 glm::vec2 EnemiesManager::RandomSpawnPos() {
-    float angle = _randomAngle.GetRandomFloat();
+    // Get the current round number
+    int currentRound = GAMEMANAGER.GetRoundNumber();
 
-    // Calculate x and y based on the angle
-    float x = _spawnDistance * std::cos(angle);
-    float y = _spawnDistance * std::sin(angle);
+    // Calculate the maximum angle based on the current round
+    float maxAngle = std::min(360.0f, 90.0f * (currentRound + 1));
+
+    // Create the random distribution between 0 and maxAngle
+    std::uniform_real_distribution<float> angleDis(0.0f, glm::radians(maxAngle));
+
+    // Generate a random angle
+    float angle = angleDis(_gen);
+
+    // Apply _roundRandom to offset the angle
+    float adjustedAngle = angle + _roundRandom * glm::radians(maxAngle);
+
+    // Ensure the angle wraps around correctly
+    adjustedAngle = std::fmod(adjustedAngle, 2.0f * glm::pi<float>());
+
+    // Calculate x and y based on the adjusted angle
+    float x = _spawnDistance * std::cos(adjustedAngle);
+    float y = _spawnDistance * std::sin(adjustedAngle);
 
     // Get the center position of the circle (dome position)
     glm::vec2 domePos = glm::vec2(GAMEMANAGER._domePosition);

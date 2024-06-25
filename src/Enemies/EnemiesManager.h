@@ -77,7 +77,7 @@ public:
 
     void AvoidEnemy(shared_ptr<Enemy> thisEnemy);
     void RemoveFromEnemies(shared_ptr<Enemy> enemy);
-    void StartSpawning() { _finishedSpawning = false; }
+    void StartSpawning() { _finishedSpawning = false; _roundRandom = _endlessRand.GetRandomFloat(); }
 
     void Reset();
 
@@ -104,9 +104,13 @@ private:
     float _endlessDelayMin;
     float _endlessDelayStep;
     bool _finishedSpawning = false;
+    float _angleStart = 90.0f;
+    float _angleIncrease = 90.0f;
+    float _roundRandom;
     BatchRandomGenerator _scaleRand;
     BatchRandomGenerator _endlessRand;
-    BatchRandomGenerator _randomAngle;
+    std::random_device _rd;
+    std::mt19937 _gen;
 
     void InitEnemyStats();
     void InitAnimationFrames();
