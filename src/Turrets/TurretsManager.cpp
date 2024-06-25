@@ -580,7 +580,7 @@ void TurretsManager::InitTurretStats() {
     // Initialize the _turretStats vector with values for MINIGUN, SNIPER, and RIFLE
     // fireRate, dmg, sideRange, forwardRange
     _turretStats.push_back(glm::vec4(0.5f, 1.0f, 80.0f, 40.0f));  // MINIGUN
-    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 40.0f, 100.0f)); // SNIPER
+    _turretStats.push_back(glm::vec4(2.0f, 5.0f, 40.0f, 80.0f)); // SNIPER
     _turretStats.push_back(glm::vec4(1.0f, 1.0f, 80.0f, 80.0f));  // RIFLE
 
     _turretCostIncrease = 2;
