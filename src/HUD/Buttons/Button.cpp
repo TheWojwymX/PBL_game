@@ -55,6 +55,7 @@ void Button::Update() {
 
 void Button::CheckClick() {
     if (CheckHover() && INPUT.IsMousePressed(0)) {
+        INPUT.UpdateOldStates();
         Onclick();
         _timerOn = true;
     }
