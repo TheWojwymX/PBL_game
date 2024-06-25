@@ -86,10 +86,10 @@ private:
     void InteractionInput();
     void CheckTopLayer();
 
-    float _jetpackStrength = 30.0f;
+    float _jetpackStrength = 35.0f;
     float _jetpackFuelConsumption = 50.0f; 
-    float _fuelRegeneration = 0.2f;
-    float _fuelRegenerationDelay = .5f; 
+    float _fuelRegeneration = 0.5f;
+    float _fuelRegenerationDelay = 0.5f; 
     float _fuelRegenerationDelayTimer = 0.0f;
     bool _fuelRegenerationDelayActive = false;
 
