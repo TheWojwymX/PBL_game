@@ -425,18 +425,19 @@ int main(int, char**)
             // (at the end of loop) is also working, so it is recommended to not move it
             // moving may cause some problems like lack of smoothness or models bugging
             glClear(GL_DEPTH_BUFFER_BIT); // Clear depth because you want items always "closest to screen"
-            shovelRenderer->RenderShovel(Transform::Origin());
+
+            if(GAMEMANAGER._sinceStartClickedTimer > 3){
+                shovelRenderer->RenderShovel(Transform::Origin());
+                uPDAAntennaRenderer->RenderShovel(Transform::Origin());
+                uPDARenderer->RenderShovel(Transform::Origin());
+                compassDownRenderer->RenderShovel(Transform::Origin());
+                compassUpRenderer->RenderShovel(Transform::Origin());
+                compassRenderer->RenderShovel(Transform::Origin());
+            }
+
             shovelController->RealUpdate();
-
-            uPDAAntennaRenderer->RenderShovel(Transform::Origin());
-            uPDARenderer->RenderShovel(Transform::Origin());
             uPDAController->RealUpdate();
-
-            compassDownRenderer->RenderShovel(Transform::Origin());
-            compassUpRenderer->RenderShovel(Transform::Origin());
-            compassRenderer->RenderShovel(Transform::Origin());
             compassController->RealUpdate();
-
             shovelShader->use();
             shovelShader->setVec3("viewPos", viewPos);
             shovelShader->setMat4("projection", projection);

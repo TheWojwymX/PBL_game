@@ -88,6 +88,9 @@ public:
 
     Phase _currentPhase = Phase::DIG;
 
+    float _sinceStartClickedTimer = 0;
+    bool _clickedStart = false;
+
 private:
     int _roundNumber = 0;
     int _plastic = 5;
