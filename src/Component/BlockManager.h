@@ -43,6 +43,8 @@ public:
     std::tuple<bool, BlockData*, glm::vec3> CheckSimpleEntityCollision(glm::vec3 entityPos);
     float GetCaveFloor(glm::vec3 entityPos, int maxDistance);
     float GetTopLayerFloor(glm::vec3 entityPos);
+    void DisabletopLayer();
+    void EnableTopLayer();
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
@@ -72,6 +74,7 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     int _cameraRefID;
     std::shared_ptr<InstanceRenderer> _cageRendererRef;
+    std::shared_ptr<InstanceRenderer> _shadowInstancedRef;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     std::vector<glm::vec3> _topLayerPositions;
     BatchRandomGenerator _randomGen;

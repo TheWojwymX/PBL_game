@@ -96,6 +96,14 @@ void PlayerController::InteractionInput() {
     }
 }
 
+void PlayerController::CheckTopLayer()
+{
+    if (_ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel - 2)
+        _blockManagerRef->DisabletopLayer();
+    else
+        _blockManagerRef->EnableTopLayer();
+}
+
 
 void PlayerController::CheckGrounded(glm::vec3 separationVector) {
     if (separationVector.y > 0) {

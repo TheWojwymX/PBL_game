@@ -54,33 +54,37 @@ public:
     float flashlightLinear = 0.233f;
     float flashlightQuadratic = 0.06f;
 
-    float glowstickConstant = 3.093f;
-    float glowstickLinear = 0.632f;
-    float glowstickQuadratic = 0.165f;
+    float scale = 2.0f;
 
-    float glowstickConstant0 = 3.093f;
-    float glowstickLinear0 = 0.632f;
-    float glowstickQuadratic0 = 0.165f;
+    float glowstickConstant = 3.093f * scale;
+    float glowstickLinear = 0.632f * scale;
+    float glowstickQuadratic = 0.165f * scale; // 0.20625f
 
-    float glowstickConstant1 = 3.093f;
-    float glowstickLinear1 = 0.632f;
-    float glowstickQuadratic1 = 0.155f;
+    float glowstickConstant0 = 3.093f * scale;
+    float glowstickLinear0 = 0.632f * scale;
+    float glowstickQuadratic0 = 0.165f * scale; // 0.20625f
 
-    float glowstickConstant2 = 3.093f;
-    float glowstickLinear2 = 0.632f;
-    float glowstickQuadratic2 = 0.135f;
+    float glowstickConstant1 = 3.093f * scale;
+    float glowstickLinear1 = 0.632f * scale;
+    float glowstickQuadratic1 = 0.155f * scale; // 0.19375f
 
-    float glowstickConstant3 = 3.093f;
-    float glowstickLinear3 = 0.632f;
-    float glowstickQuadratic3 = 0.105f;
+    float glowstickConstant2 = 3.093f * scale;
+    float glowstickLinear2 = 0.632f * scale;
+    float glowstickQuadratic2 = 0.135f * scale; // 0.16875f
 
-    float glowstickConstant4 = 3.093f;
-    float glowstickLinear4 = 0.632f;
-    float glowstickQuadratic4 = 0.075f;
+    float glowstickConstant3 = 3.093f * scale;
+    float glowstickLinear3 = 0.632f * scale;
+    float glowstickQuadratic3 = 0.105f * scale; // 0.13125f
 
-    float glowstickConstant5 = 3.093f;
-    float glowstickLinear5 = 0.632f;
-    float glowstickQuadratic5 = 0.045f;
+    float glowstickConstant4 = 3.093f * scale;
+    float glowstickLinear4 = 0.632f * scale;
+    float glowstickQuadratic4 = 0.075f * scale; // 0.09375f
+
+    float glowstickConstant5 = 3.093f * scale;
+    float glowstickLinear5 = 0.632f * scale;
+    float glowstickQuadratic5 = 0.045f * scale; // 0.05625f
+
+
 
     float shotConstant = 1.066f;
     float shotLinear = 1.438f;

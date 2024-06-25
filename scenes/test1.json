@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 199,
-  "nextNodeId": 178,
+  "nextComponentId": 200,
+  "nextNodeId": 179,
   "resources": {
     "Models": [
       {
@@ -21,6 +21,10 @@
       },
       {
         "ModelName": "topLayerModel",
+        "Path": "res/Sand/Sand.obj"
+      },
+      {
+        "ModelName": "shadowModel",
         "Path": "res/Sand/Sand.obj"
       },
       {
@@ -779,6 +783,39 @@
             "componentType": 3,
             "maxSize": 138000,
             "model": "cageModel",
+            "shader": "instancedSandShader",
+            "isDynamic": false,
+            "castShadows": false
+          }
+        ],
+        "transform": {
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 178,
+        "NodeName": "shadow",
+        "children": [],
+        "components": [
+          {
+            "componentId": 199,
+            "componentType": 3,
+            "maxSize": 500,
+            "model": "shadowModel",
             "shader": "instancedSandShader",
             "isDynamic": false,
             "castShadows": true

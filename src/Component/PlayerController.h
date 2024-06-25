@@ -84,6 +84,7 @@ private:
     void HandleJetpack();
     void MovementInput();
     void InteractionInput();
+    void CheckTopLayer();
 
     float _jetpackStrength = 30.0f;
     float _jetpackFuelConsumption = 50.0f; 

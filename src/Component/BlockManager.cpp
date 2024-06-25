@@ -82,6 +82,7 @@ void BlockManager::Initiate() {
     _plasticRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_plasticRendererRefID);
     _metalRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_metalRendererRefID);
     _cageRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(198);
+    _shadowInstancedRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(199);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
     Component::Initiate();
 }
@@ -790,6 +791,18 @@ float BlockManager::GetTopLayerFloor(glm::vec3 entityPos)
     }
 }
 
+void BlockManager::DisabletopLayer()
+{
+    if(_topLayerRendererRef->IsEnabled())
+        _topLayerRendererRef->SetEnabled(false);
+}
+
+void BlockManager::EnableTopLayer()
+{
+    if (!_topLayerRendererRef->IsEnabled())
+        _topLayerRendererRef->SetEnabled(true);
+}
+
 
 
 void BlockManager::CheckEntityChunk(glm::vec3 entityPos) {
@@ -1073,15 +1086,30 @@ void BlockManager::InitLayerStats() {
 
 void BlockManager::SetCageRenderer()
 {
-    std::vector<glm::vec3> instancePositions;
+    std::vector<glm::vec3> cageInstancePositions;
+    std::vector<glm::vec3> shadowInstancePositions;
 
-    for (BlockData& blockData : _blocksData) {
-        if (IsEdgeBlock(blockData) && blockData.IsSolid()) {
-            instancePositions.push_back(blockData.GetPosID());
+    for (BlockData& blockData : _blocksData)
+    {
+        if (IsEdgeBlock(blockData) && blockData.IsSolid())
+        {
+            glm::vec3 posID = blockData.GetPosID();
+            float distanceXZ = glm::length(glm::vec2(posID.x, posID.z) - GAMEMANAGER._domePosition);
+
+            if (posID.y == _height - 1 && distanceXZ <= 10.0f)
+            {
+                shadowInstancePositions.push_back(posID);
+            }
+            else
+            {
+                cageInstancePositions.push_back(posID);
+            }
         }
     }
-
-    _cageRendererRef->RefreshPositionBuffer(instancePositions);
+    std::cout << "shadow size: " << shadowInstancePositions.size() << std::endl;
+    // Update the renderers with their respective positions
+    _cageRendererRef->RefreshPositionBuffer(cageInstancePositions);
+    _shadowInstancedRef->RefreshPositionBuffer(shadowInstancePositions);
 }
 
 

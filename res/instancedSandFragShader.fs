@@ -70,13 +70,38 @@ void main()
     float totalSpotlightIntensity = 0.0f;
     float totalPointlightIntensity = 0.0f;
 
-    // Calculate the directional light contribution with height and position-based attenuation
+    // Calculate the directional light contribution
     vec3 dirLightColor = CalcDirLight(dirLight, norm, viewDir);
 
     // Height-based attenuation
     float heightAttenuation = clamp((FragPos.y - 290.0) / (299.5 - 290.0), 0.0, 1.0);
 
-    dirLightColor *= heightAttenuation;
+    // Position-based attenuation for directional light
+    float positionAttenuation = 1.0;
+    float distanceXZ = length(FragPos.xz - vec2(49.5));
+    if(FragPos.y < 299.49)
+    {
+        if(FragPos.x > 0 && FragPos.x < 100 && FragPos.z > 0 && FragPos.z < 100)
+        {
+            float maxDistance = 5.0;
+            float transitionStart = 0.60 * maxDistance;
+            if (distanceXZ > maxDistance)
+            {
+                positionAttenuation = 0.0;
+            }
+            else if (distanceXZ > transitionStart)
+            {
+                // Smooth transition in the last 25% of the distance
+                positionAttenuation = smoothstep(maxDistance, transitionStart, distanceXZ);
+            }
+            else
+            {
+                positionAttenuation = 1.0;
+            }
+        }
+    }
+
+    dirLightColor *= heightAttenuation * positionAttenuation;
 
     // Calculate spotlight contributions
     for(int i = 0; i < NR_SPOT_LIGHTS; i++)
@@ -125,7 +150,9 @@ void main()
 
     // Modify the final color with a smaller scaled variation factor for brightness adjustment
     float brightnessFactor = 1.0 + (VariationFactor - 0.5) * 0.05; // Reduce the effect of brightness variation
-    vec3 finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow * heightTint * brightnessFactor;
+    
+    vec3 finalColor;
+    finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow * heightTint * brightnessFactor;
 
     // Combine the final color with the texture color
     FragColor = vec4(finalColor, 1.0);
@@ -186,21 +213,31 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float pointLightIntensity)
 {
-    // perform perspective divide
+    if(FragPos.y < 299.49 && FragPos.x > 0 && FragPos.z < 100) {
+        float shadow = 1.0f;
+        shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.16, 0.0, 1.0));
+        return shadow - 0.2f;
+    }
+
+     // Perform perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    // transform to [0,1] range
+    // Transform to [0,1] range
     projCoords = projCoords * 0.5 + 0.5;
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+
+    // Determine closest depth value
     float closestDepth = texture(shadowMap, projCoords.xy).r;
-    // get depth of current fragment from light's perspective
+
+    // Get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
-    // check whether current frag pos is in shadow
-    //float bias =  0.001;
+
+    // Normal and light direction
     vec3 normal = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
-    float bias = max(0.0008 * dot(normal, lightDir), 0.0007);
-    //float shadow = (currentDepth - bias) > closestDepth  ? 0.4 : 1.0;
 
+    // Bias to prevent shadow acne
+    float bias = max(0.0008 * dot(normal, lightDir), 0.0007);
+
+    // Percentage-closer filtering (PCF)
     float shadow = 0.0;
     vec2 texelSize = 0.2 / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; ++x)
@@ -208,12 +245,12 @@ float ShadowCalculation(vec4 fragPosLightSpace, float spotlightIntensity, float 
         for(int y = -1; y <= 1; ++y)
         {
             float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-            shadow += currentDepth - bias > pcfDepth  ? 0.0 : 1.0;
+            shadow += currentDepth - bias > pcfDepth ? 0.0 : 1.0;
         }
     }
     shadow /= 9.0;
-
-    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.16, 0.0, 1.0)); // Shadow brightness 0.33
+    // Mix shadow value based on light intensities
+    shadow = mix(shadow, 1.0, clamp(spotlightIntensity + pointLightIntensity + 0.16, 0.0, 1.0));
 
     return shadow - 0.2;
 }
