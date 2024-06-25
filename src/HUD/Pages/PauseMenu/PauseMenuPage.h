@@ -14,6 +14,7 @@ public:
     std::shared_ptr<Button> _resumeButton;
     std::shared_ptr<Button> _settingsButton;
     std::shared_ptr<Button> _quitButton;
+    std::shared_ptr<Button> _mainMenuButton;
 
     void Init() override;
     void SetupButtons();

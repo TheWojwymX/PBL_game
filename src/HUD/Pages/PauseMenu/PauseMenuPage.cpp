@@ -9,6 +9,7 @@ void PauseMenuPage::Init() {
     _resumeButton->Init();
     _settingsButton->Init();
     _quitButton->Init();
+    _mainMenuButton->Init();
     Page::Init();
 }
 
@@ -20,6 +21,7 @@ void PauseMenuPage::Update() {
         _resumeButton->Update();
         _settingsButton->Update();
         _quitButton->Update();
+        _mainMenuButton->Update();
     }
 }
 
@@ -42,11 +44,20 @@ void PauseMenuPage::SetupButtons() {
                                                    PAGEMANAGER.GoToSettings(1);
                                                });
 
+    _mainMenuButton = std::make_shared<Button>("res/Images/Button/mainmenu.png",
+                                               "res/Images/Button/mainmenu_hover.png",
+                                               "res/Images/Button/mainmenu_clicked.png",
+                                               CoordsConverter::ConvertCoords(glm::vec2(782, 709)),
+                                               CoordsConverter::ConvertCoords(glm::vec2(1137, 610)),
+                                               [this]() {
+                                                   GAMEMANAGER.GoToMainMenu();
+                                               });
+
     _quitButton = std::make_shared<Button>("res/Images/Button/quit.png",
                                            "res/Images/Button/quit_hover.png",
                                            "res/Images/Button/quit_clicked.png",
-                                           CoordsConverter::ConvertCoords(glm::vec2(782, 709)),
-                                           CoordsConverter::ConvertCoords(glm::vec2(1137, 610)),
+                                           CoordsConverter::ConvertCoords(glm::vec2(782, 830)),
+                                           CoordsConverter::ConvertCoords(glm::vec2(1137, 730)),
                                            [this]() {
                                                glfwSetWindowShouldClose(GAMEMANAGER._window, 1);
                                            });

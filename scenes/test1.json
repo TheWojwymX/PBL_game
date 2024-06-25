@@ -582,7 +582,7 @@
         "Volume": 0.5
       },
       {
-        "Path": "res/Sounds/GunnerShot/sniperShot2.mp3",
+        "Path": "res/Sounds/GunnerShot/sniperShot2.wav",
         "SoundName": "SniperShot2",
         "SoundID": 9,
         "Type": 1,
@@ -610,7 +610,7 @@
         "Volume": 1.0
       },
       {
-        "Path": "res/Sounds/GunnerShot/sniperShot.wav",
+        "Path": "res/Sounds/GunnerShot/sniperShot2.wav",
         "SoundName": "SniperShot",
         "SoundID": 13,
         "Type": 1,
