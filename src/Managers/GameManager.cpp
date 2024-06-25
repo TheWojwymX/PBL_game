@@ -111,7 +111,6 @@ bool GameManager::IsEndless()
 void GameManager::RoundWon()
 {
     _roundWon = true;
-    std::cout << "Round WON!" << std::endl;
     RESOURCEMANAGER.GetSoundByName("VictoryMusic")->RiseUp(1, _playerNode);
     _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
 }
@@ -138,7 +137,7 @@ void GameManager::Update() {
     }
 
     if(DOMEMANAGER.GetDomeHP() <= 0){
-    //    LoseGame();
+       LoseGame();
     }
 }
 

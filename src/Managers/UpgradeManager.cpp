@@ -492,10 +492,10 @@ void UpgradeManager::InitPlayerUpgrades()
     // Mining Radius upgrades
     _miningRadiusUpgrades.upgradeCosts = {
         10,   // 1
-        15,   // 2
-        20,   // 3
-        25,   // 4
-        30    // 5
+        20,   // 2
+        30,   // 3
+        40,   // 4
+        50    // 5
     };
 
     _miningRadiusUpgrades.upgradeValues = {

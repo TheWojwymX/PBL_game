@@ -105,7 +105,7 @@ void HUDMain::Update() {
             _isHPInAnim = true;
         }
 
-        if (percentHP <= 0) {
+        if (percentHP <= 0.1) {
             _baseHPImages[0]->Render();
         } else if (percentHP == 100) {
             _baseHPImages[20]->Render();

@@ -13,7 +13,7 @@ public:
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 
-    PlayerController(float speed = 8.0f, float gravity = 0.0f, float jumpHeight = 3.0f, float reach = 7.5f, int radius = 3, float width = 0.5f, float height = 1.8f, float digPower = 0.25f);
+    PlayerController(float speed = 8.0f, float gravity = 0.0f, float jumpHeight = 3.0f, float reach = 7.5f, int radius = 2, float width = 0.5f, float height = 1.8f, float digPower = 0.25f);
     void Initiate() override;
 
     void Init() override;
