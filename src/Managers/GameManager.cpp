@@ -54,6 +54,7 @@ void GameManager::RemovePlastic(int amount)
 }
 
 void GameManager::StartGame() {
+    _clickedStart = true;
     _isInMainMenu = false;
     GAMEMANAGER._editMode = false;
     INPUT.SetCursorMode(false);
@@ -85,6 +86,7 @@ float GameManager::GetPhaseTime()
 
 void GameManager::LateGame()
 {
+    TUTORIALMANAGER._isAfterEndGameActivation = true;
     ENEMIESMANAGER.Reset();
     _roundNumber = _phaseTimes.size() - 1;
     _currentPhase = Phase::DIG;
@@ -116,6 +118,10 @@ void GameManager::RoundWon()
 }
 
 void GameManager::Update() {
+
+    if(_clickedStart){
+        _sinceStartClickedTimer += TIME.GetDeltaTime();
+    }
 
     if(INPUT.IsKeyPressed(GLFW_KEY_KP_5)){
         ENEMIESMANAGER.Reset();
@@ -249,6 +255,8 @@ void GameManager::RestartGame() {
     DisableMouse();
     AUDIOMANAGER.Reset();
     Unpause();
+    _sinceStartClickedTimer = 0;
+    _clickedStart = false;
 }
 
 void GameManager::LoseGame() {

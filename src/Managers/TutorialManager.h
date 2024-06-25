@@ -111,6 +111,12 @@ public:
     void SetFalseTutorialNeededAtMoment();
 
     bool _hasLanded = false;
+
+    bool _isAfterHalfTimeMessage = false;
+
+    bool _isAfterEndGameInfo = false;
+
+    bool _isAfterEndGameActivation = false;
 };
 
 

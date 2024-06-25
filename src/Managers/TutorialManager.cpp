@@ -26,7 +26,22 @@ void TutorialManager::Init() {
 
 void TutorialManager::Update() {
     //std::cout << "tutorial skonczony: " << _isTutorialEnded << "   aktualna wiadomosc: " << _actualMessage << std::endl;
-    if(_isTutorialEnded) return;
+
+    if(_isAfterEndGameActivation){
+        DisplaySpecialMessage("YOU HAVE MAXED UPGRADES AND 1 MIN TO GATHER MATERIALS BEFORE AN ENDLESS WAVE");
+    }
+
+    if(!_isAfterEndGameInfo && GAMEMANAGER.GetRoundNumber() == 3 && !_isAfterEndGameActivation){
+        _isAfterEndGameInfo = true;
+        DisplaySpecialMessage("THANKS FOR PLAYING THE DEMO. PRESS [9] TO SKIP TO END GAME MODE OR WAIT AND PLAY NORMALLY.");
+    }
+
+    if(!_isAfterHalfTimeMessage && HUD._isAfterTutorialPhaseInfo){
+        if(GAMEMANAGER.GetCurrentTime() > GAMEMANAGER.GetPhaseTime()/2){
+            _isAfterHalfTimeMessage = true;
+            DisplaySpecialMessage("REMEMBER TO COME BACK IN TIME!");
+        }
+    }
 
     if(_isSpecialMessage){
         if(_specialMessageTimer < 5){
@@ -35,13 +50,15 @@ void TutorialManager::Update() {
         }else{
             _specialMessageTimer = 0.0f;
             _isSpecialMessage = false;
-            if(_actualMessage <= 9){
+            if(_actualMessage <= 9 && !_isTutorialEnded){
                 HUD._actualText = _messages[_actualMessage - 1];
             }else{
                 SetFalseTutorialNeededAtMoment();
             }
         }
     }
+
+    if(_isTutorialEnded) return;
 
     switch (_actualMessage) {
         //konczy sie po wyladowaniu
@@ -385,4 +402,7 @@ void TutorialManager::Reset() {
     _metBeetle = false;
     _metWasp = false;
     _hasLanded = false;
+    _isAfterHalfTimeMessage = false;
+    _isAfterEndGameInfo = false;
+    _isAfterEndGameActivation = false;
 }
