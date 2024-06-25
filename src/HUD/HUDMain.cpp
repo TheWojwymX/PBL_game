@@ -15,8 +15,8 @@ void HUDMain::Init() {
     _materialsBackground.Init("res/Images/HUD/background_3.1.png", CoordsConverter::ConvertCoords(glm::vec2(28, 1051)), CoordsConverter::ConvertCoords(glm::vec2(177, 967)), true, false);
     _plasticImage.Init("res/Images/HUD/plastic_icon.png", CoordsConverter::ConvertCoords(glm::vec2(74, 1009)), 0, true, false);
     _depthMeterBackground.Init("res/Images/HUD/depth0.png", CoordsConverter::ConvertCoords(glm::vec2(1662, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1891, 967)), true, false);
-    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
-    _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", CoordsConverter::ConvertCoords(glm::vec2(28, 234)), CoordsConverter::ConvertCoords(glm::vec2(219, 43)), true, false);
+    _waveTimerGreen.Init("res/Images/WaveTimer/zegar_zielony.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 0, true, true);
+    _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 0, true, true);
     _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
@@ -36,14 +36,14 @@ void HUDMain::Init() {
     for(int i = 0; i <= 20; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/Border/bar_" + std::to_string(5*i) + ".png";
-        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1689, 240)), CoordsConverter::ConvertCoords(glm::vec2(1891, 37)), true, false);
+        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1790, 138)), 0, true, true);
         _baseHPImages.push_back(hp);
     }
 
     for(int i = 0; i <= 3; i++){
         shared_ptr<ImageRenderer> hp = make_shared<ImageRenderer>();
         std::string path = "res/Images/HUD/BaseHP/InsideImages/inside" + std::to_string(i) + ".png";
-        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1706, 222)), CoordsConverter::ConvertCoords(glm::vec2(1874, 54)), true, false);
+        hp->Init(path.c_str(), CoordsConverter::ConvertCoords(glm::vec2(1790, 138)), 0, true, true);
         _baseInsideImages.push_back(hp);
     }
 
@@ -51,6 +51,10 @@ void HUDMain::Init() {
 }
 
 void HUDMain::Update() {
+
+    if(INPUT.IsKeyPressed(GLFW_KEY_KP_6)){
+        _isHPInAnim = true;
+    }
 
     //images
     glDisable(GL_DEPTH_TEST);
@@ -75,6 +79,16 @@ void HUDMain::Update() {
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
     if(_shouldShowHP && _isAfterTutorialHP){
+
+        for(shared_ptr<ImageRenderer> hpBorderImage : _baseHPImages){
+            hpBorderImage->SetScale(glm::vec2(_defaultHPScale, _defaultHPScale));
+        }
+        for(shared_ptr<ImageRenderer> hpInsideImage : _baseInsideImages){
+            hpInsideImage->SetScale(glm::vec2(_defaultInnerHPScale, _defaultInnerHPScale));
+        }
+
+        PlayHPBump();
+
         if(percentHP <= 0){
             _baseInsideImages[3]->Render();
         }
@@ -88,12 +102,18 @@ void HUDMain::Update() {
             _baseInsideImages[0]->Render();
         }
 
+        int index = (percentHP - 1) / 5;
+
+        if(index != _previousIndex){
+            _previousIndex = index;
+            _isHPInAnim = true;
+        }
+
         if (percentHP <= 0) {
             _baseHPImages[0]->Render();
         } else if (percentHP == 100) {
             _baseHPImages[20]->Render();
         } else {
-            int index = (percentHP - 1) / 5;
             _baseHPImages[index + 1]->Render();
         }
 
@@ -128,7 +148,7 @@ void HUDMain::Update() {
     if(_shouldShowMaterials && _isAfterTutorialMaterials){
         _materialsBackground.Render();
 
-        _plasticImage.SetScale(glm::vec2(_defaultScale, _defaultScale));
+        _plasticImage.SetScale(glm::vec2(_defaultPlasticScale, _defaultPlasticScale));
         PlayPlasticBump();
         _plasticImage.Render();
 
@@ -150,6 +170,10 @@ void HUDMain::Update() {
 
     //timer
     if(_shouldShowPhaseInfo && _isAfterTutorialPhaseInfo){
+
+        _waveTimerGreen.SetScale(glm::vec2(_defaultWaveTimerScale, _defaultWaveTimerScale));
+        _waveTimerRed.SetScale(glm::vec2(_defaultWaveTimerScale, _defaultWaveTimerScale));
+        PlayWaveTimerBump();
         WaveTimerGUIManager();
 
         //TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -181,6 +205,7 @@ void HUDMain::WaveTimerGUIManager() {
         }
         else {
             _clockTimer = 0;
+            std::cout << "cos"<<std::endl;
         }
     }
     else if (currentPhase == Phase::DEFEND) {
@@ -238,18 +263,18 @@ void HUDMain::EnableHUD() {
 
 void HUDMain::PlayPlasticBump() {
     if (_isPlasticInAnim) {
-        if (_plasticAnimTimer < _timeOfAnim) {
+        if (_plasticAnimTimer < _timeOfPlasticAnim) {
             _plasticAnimTimer += TIME.GetDeltaTime();
 
-            if (_plasticAnimTimer < _timeOfAnim / 2.0f) {
-                float t = _plasticAnimTimer / (_timeOfAnim / 2.0f);
+            if (_plasticAnimTimer < _timeOfPlasticAnim / 2.0f) {
+                float t = _plasticAnimTimer / (_timeOfPlasticAnim / 2.0f);
                 t = glm::clamp(t, 0.0f, 1.0f);
-                float scale = glm::mix(_defaultScale, _maxScale, t);
+                float scale = glm::mix(_defaultPlasticScale, _maxPlasticScale, t);
                 _plasticImage.SetScale(glm::vec2(scale, scale));
             } else {
-                float t = (_plasticAnimTimer - _timeOfAnim / 2.0f) / (_timeOfAnim / 2.0f);
+                float t = (_plasticAnimTimer - _timeOfPlasticAnim / 2.0f) / (_timeOfPlasticAnim / 2.0f);
                 t = glm::clamp(t, 0.0f, 1.0f);
-                float scale = glm::mix(_maxScale, _defaultScale, t);
+                float scale = glm::mix(_maxPlasticScale, _defaultPlasticScale, t);
                 _plasticImage.SetScale(glm::vec2(scale, scale));
             }
         } else {
@@ -261,4 +286,70 @@ void HUDMain::PlayPlasticBump() {
 
 void HUDMain::Reset() {
 
+}
+
+void HUDMain::PlayWaveTimerBump() {
+    if (_isWaveTimerInAnim) {
+        if (_waveTimerAnimTimer < _timeOfWaveTimerAnim) {
+            _waveTimerAnimTimer += TIME.GetDeltaTime();
+
+            if (_waveTimerAnimTimer < _timeOfWaveTimerAnim / 2.0f) {
+                float t = _waveTimerAnimTimer / (_timeOfWaveTimerAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float backgroundScale = glm::mix(_defaultWaveTimerScale, _maxWaveTimerScale, t);
+                float arrowScale = glm::mix(_defaultTimerArrowScale, _maxTimerArrowScale, t);
+                _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
+                _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
+                _waveArrowRed.SetScale(glm::vec2(arrowScale, arrowScale));
+                _waveArrowGreen.SetScale(glm::vec2(arrowScale, arrowScale));
+            } else {
+                float t = (_waveTimerAnimTimer - _timeOfWaveTimerAnim / 2.0f) / (_timeOfWaveTimerAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float backgroundScale = glm::mix(_maxWaveTimerScale, _defaultWaveTimerScale, t);
+                float arrowScale = glm::mix(_maxTimerArrowScale, _defaultTimerArrowScale, t);
+                _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
+                _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
+                _waveArrowRed.SetScale(glm::vec2(arrowScale, arrowScale));
+                _waveArrowGreen.SetScale(glm::vec2(arrowScale, arrowScale));
+            }
+        } else {
+            _waveTimerAnimTimer = 0;
+            _isWaveTimerInAnim = false;
+        }
+    }
+}
+
+void HUDMain::PlayHPBump() {
+    if (_isHPInAnim) {
+        if (_HPAnimTimer < _timeOfHPAnim) {
+            _HPAnimTimer += TIME.GetDeltaTime();
+
+            if (_HPAnimTimer < _timeOfHPAnim / 2.0f) {
+                float t = _HPAnimTimer / (_timeOfHPAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float backgroundScale = glm::mix(_defaultHPScale, _maxHPScale, t);
+                float innerScale = glm::mix(_defaultInnerHPScale, _maxInnerHPScale, t);
+                for(shared_ptr<ImageRenderer> hpBorderImage : _baseHPImages){
+                    hpBorderImage->SetScale(glm::vec2(backgroundScale, backgroundScale));
+                }
+                for(shared_ptr<ImageRenderer> hpInsideImage : _baseInsideImages){
+                    hpInsideImage->SetScale(glm::vec2(innerScale, innerScale));
+                }
+            } else {
+                float t = (_HPAnimTimer - _timeOfHPAnim / 2.0f) / (_timeOfHPAnim / 2.0f);
+                t = glm::clamp(t, 0.0f, 1.0f);
+                float backgroundScale = glm::mix(_maxHPScale, _defaultHPScale, t);
+                float innerScale = glm::mix(_maxInnerHPScale, _defaultInnerHPScale, t);
+                for(shared_ptr<ImageRenderer> hpBorderImage : _baseHPImages){
+                    hpBorderImage->SetScale(glm::vec2(backgroundScale, backgroundScale));
+                }
+                for(shared_ptr<ImageRenderer> hpInsideImage : _baseInsideImages){
+                    hpInsideImage->SetScale(glm::vec2(innerScale, innerScale));
+                }
+            }
+        } else {
+            _HPAnimTimer = 0;
+            _isHPInAnim = false;
+        }
+    }
 }

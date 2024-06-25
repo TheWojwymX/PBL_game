@@ -83,16 +83,37 @@ public:
     void DisableHUD();
     void EnableHUD();
 
+    void PlayPlasticBump();
     bool _isPlasticInAnim = false;
     float _plasticAnimTimer = 0.0f;
-    float _timeOfAnim = 0.2;
-    float _maxScale = 2.3f;
-    float _defaultScale = 1.7f;
+    float _timeOfPlasticAnim = 0.2;
+    float _maxPlasticScale = 2.3f;
+    float _defaultPlasticScale = 1.7f;
+
+    void PlayWaveTimerBump();
+    bool _isWaveTimerInAnim = false;
+    float _waveTimerAnimTimer = 0.0f;
+    float _timeOfWaveTimerAnim = 0.2;
+    float _maxWaveTimerScale = 2.3f;
+    float _defaultWaveTimerScale = 2.0f;
+    float _maxTimerArrowScale = 1.1f;
+    float _defaultTimerArrowScale = 1.0f;
+
+    void PlayHPBump();
+    bool _isHPInAnim = false;
+    float _HPAnimTimer = 0.0f;
+    float _timeOfHPAnim = 0.2;
+    float _maxHPScale = 2.3f;
+    float _defaultHPScale = 2.0f;
+    float _maxInnerHPScale = 2.3f;
+    float _defaultInnerHPScale = 2.0f;
+
+    int _previousIndex = 20;
 
     void Reset();
 
 private:
     std::shared_ptr<Node> _playerNode;
 
-    void PlayPlasticBump();
+
 };

@@ -206,6 +206,9 @@ void TutorialManager::Update() {
                 if(_player->GetTransform()->GetPosition().y < GAMEMANAGER._groundLevel && glm::distance(_player->GetTransform()->GetPosition(),
                                   glm::vec3(GAMEMANAGER._domePosition.x, GAMEMANAGER._groundLevel, GAMEMANAGER._domePosition.y)) > 30){
                     DisplayAndChangeMessage();
+                    if(NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->_isHidden){
+                        NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>()->_playShowAnim = true;
+                    }
                     HUD._shouldShowDepth = true;
                 }
             }

@@ -89,6 +89,7 @@ void TurretsManager::PlayerActions() {
 
     if (Input::Instance().IsKeyPressed(GLFW_KEY_1) && _isInTurretChoiceMenu) {
         if (!GAMEMANAGER.HasPlastic(_turretCosts[TurretType::MINIGUN])) {
+            HUD._isPlasticInAnim = true;
             return;
         }
         _turretType = MINIGUN;
@@ -96,6 +97,7 @@ void TurretsManager::PlayerActions() {
         ShowBlueprintTurret();
     } else if (Input::Instance().IsKeyPressed(GLFW_KEY_2) && _isInTurretChoiceMenu) {
         if (!GAMEMANAGER.HasPlastic(_turretCosts[TurretType::SNIPER])) {
+            HUD._isPlasticInAnim = true;
             return;
         }
         _turretType = SNIPER;
@@ -103,6 +105,7 @@ void TurretsManager::PlayerActions() {
         ShowBlueprintTurret();
     } else if (Input::Instance().IsKeyPressed(GLFW_KEY_3) && _isInTurretChoiceMenu) {
         if (!GAMEMANAGER.HasPlastic(_turretCosts[TurretType::RIFLE])) {
+            HUD._isPlasticInAnim = true;
             return;
         }
         _turretType = RIFLE;
