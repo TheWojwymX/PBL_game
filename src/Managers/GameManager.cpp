@@ -11,20 +11,21 @@ GameManager::GameManager() {
     // Starting time for digging phase
     float digPhaseStartTime = 60.0f;
     // Percentage separation
-    float digPercentage = 0.60f;
-    float fightPercentage = 0.40f;
+    float digPercentage = 1.0f;
+    float fightPercentage = 0.5f;
 
     float sum = 0;
     // Initialize _phaseTimes with calculated values for 10 rounds
     for (int i = 0; i < 10; ++i) {
-        float digPhaseTime = digPhaseStartTime + i * 10;  // Dig phase starts at 30 and increases by 10 each round
-        float fightPhaseTime = digPhaseTime * fightPercentage / digPercentage;  // Calculate fight phase time based on percentage
+        float digPhaseTime = digPhaseStartTime + i * 10;  // Dig phase starts at 60 and increases by 10 each round
+        float fightPhaseTime = digPhaseTime * fightPercentage;  // Calculate fight phase time based on percentage
         _phaseTimes.push_back({ digPhaseTime, fightPhaseTime });
         //std::cout << "Round " << i + 1 << ": Digging Phase Time = " << digPhaseTime
         //   << " seconds, Fighting Phase Time = " << fightPhaseTime << " seconds" << std::endl;
     }
     _phaseTimes.push_back({ 60.0f, std::numeric_limits<float>::max() });
 }
+
 
 GameManager& GameManager::GetInstance() {
     static GameManager instance;
