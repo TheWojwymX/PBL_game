@@ -15,15 +15,15 @@ void PDAPage::Update() {
 
         //minigun
         glm::vec2 coords = CoordsConverter::ConvertTextCoords(glm::vec2(557, 745));
-        TEXTRENDERER.RenderText(to_string(TURRETSMANAGER.GetTurretCost(MINIGUN)), coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderText(to_string(TURRETSMANAGER.GetTurretCost(MINIGUN)), coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f,1.0f));
 
         //sniper
         coords = CoordsConverter::ConvertTextCoords(glm::vec2(864, 745));
-        TEXTRENDERER.RenderText(to_string(TURRETSMANAGER.GetTurretCost(SNIPER)), coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderText(to_string(TURRETSMANAGER.GetTurretCost(SNIPER)), coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
         //rifle
         coords = CoordsConverter::ConvertTextCoords(glm::vec2(1170, 745));
-        TEXTRENDERER.RenderText(to_string(TURRETSMANAGER.GetTurretCost(RIFLE)), coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderText(to_string(TURRETSMANAGER.GetTurretCost(RIFLE)), coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     }
 }
 

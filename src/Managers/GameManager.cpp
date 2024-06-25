@@ -40,6 +40,7 @@ void GameManager::pressToSkipPhase() {
 
 void GameManager::AddPlastic(int amount) {
     HUD._isPlasticInAnim = true;
+    HUD.AddMaterialText(amount);
     _plastic += amount;
 }
 
@@ -51,6 +52,7 @@ void GameManager::RemovePlastic(int amount)
 {
     _plastic -= amount;
     HUD._isPlasticInAnim = true;
+    HUD.AddMaterialText(-amount);
 }
 
 void GameManager::StartGame() {

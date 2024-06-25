@@ -2,6 +2,10 @@
 
 #include "HUDMain.h"
 
+HUDMain::HUDMain(): _yoffsetRand(20,-0.02f,0.02f)
+{
+}
+
 HUDMain& HUDMain::getInstance() {
     static HUDMain instance;
     return instance;
@@ -141,7 +145,7 @@ void HUDMain::Update() {
 
     if(_isTutorialNeededAtMoment && _shouldShowTutorial){
         _tutorialBackground.Render();
-        TEXTRENDERER.RenderTextCentered(_actualText, 0.0f, -0.865, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderTextCentered(_actualText, 0.0f, -0.865, 0.4f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     }
 
     //materials
@@ -152,7 +156,7 @@ void HUDMain::Update() {
         PlayPlasticBump();
         _plasticImage.Render();
 
-        TEXTRENDERER.RenderText(to_string(GAMEMANAGER.GetPlastic()), -0.8833333, -0.879, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(GAMEMANAGER.GetPlastic()), -0.8833333, -0.879, 0.5f, glm::vec4(1.0f));
     }
 
     //jetpack
@@ -165,7 +169,7 @@ void HUDMain::Update() {
     //depthMeter
     if(_shouldShowDepth && _isAfterTutorialDepth){
         _depthMeterBackground.Render();
-        TEXTRENDERER.RenderText(to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.82, -0.8833333, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+        TEXTRENDERER.RenderText(to_string(-(int)std::floor(GAMEMANAGER._groundLevel - _playerNode->GetTransform()->GetPosition().y)), 0.82, -0.8833333, 0.5f, glm::vec4(1.0f));
     }
 
     //timer
@@ -178,6 +182,9 @@ void HUDMain::Update() {
 
         //TEXTRENDERER.RenderText("TTN: " + to_string(GAMEMANAGER.phaseTime - GAMEMANAGER.currentTime), -0.97f, 0.88f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     }
+
+    UpdateMaterialTexts();
+    RenderMaterialTexts();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -288,6 +295,58 @@ void HUDMain::PlayPlasticBump() {
 
 void HUDMain::Reset() {
 
+}
+
+void HUDMain::AddMaterialText(int value) {
+    // Convert value to string with '+' prefix if positive
+    std::string textValue = (value > 0) ? "+" + std::to_string(value) : std::to_string(value);
+
+    // Set the color based on the value
+    glm::vec4 textColor = (value > 0) ? glm::vec4(1.0f, 1.0f, 1.0f, 1.0f) : glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+    // Create a new MaterialText object with randomized position
+    MaterialText newText = MaterialText(
+        glm::vec2(-0.9f + _yoffsetRand.GetRandomFloat(), -0.9f + _yoffsetRand.GetRandomFloat()),  // Randomized position
+        textColor,  
+        textValue   
+    );
+
+    // Add the new MaterialText object to the _materialTexts vector
+    _materialTexts.push_back(newText);
+}
+
+
+void HUDMain::UpdateMaterialTexts() {
+    float deltaTime = TIME.GetDeltaTime();
+
+    for (auto& materialText : _materialTexts) {
+        materialText.pos.y += _materialTextVelocity * deltaTime;
+        materialText.color.a -= _materialTextDisolve * deltaTime;
+    }
+
+    // Remove MaterialTexts with alpha below or equal to 0
+    _materialTexts.erase(
+        std::remove_if(
+            _materialTexts.begin(),
+            _materialTexts.end(),
+            [](const MaterialText& materialText) {
+                return materialText.color.a <= 0.0f;
+            }
+        ),
+        _materialTexts.end()
+    );
+}
+
+void HUDMain::RenderMaterialTexts() {
+    for (const auto& materialText : _materialTexts) {
+        TEXTRENDERER.RenderTextCentered(
+            materialText.text,    
+            materialText.pos.x,   
+            materialText.pos.y,  
+            1.0f,                 
+            materialText.color     
+        );
+    }
 }
 
 void HUDMain::PlayWaveTimerBump() {

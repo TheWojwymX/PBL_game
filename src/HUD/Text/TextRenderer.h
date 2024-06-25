@@ -42,9 +42,9 @@ public:
 
     void PrepareShader();
 
-    void RenderText(string text, float x, float y, float scale, glm::vec3 color);
+    void RenderText(string text, float x, float y, float scale, glm::vec4 color);
 
-    void RenderTextCentered(string text, float x, float y, float scale, glm::vec3 color);
+    void RenderTextCentered(string text, float x, float y, float scale, glm::vec4 color);
 };
 
 

@@ -101,14 +101,14 @@ void TextRenderer::Init() {
     }
 }
 
-void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 color) {
+void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec4 color) {
     Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
 
     PrepareShader();
 
     // activate corresponding render state
     shader.use();
-    glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
+    glUniform4f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z, color.w);
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
@@ -159,13 +159,13 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
 }
 
 
-void TextRenderer::RenderTextCentered(std::string text, float x, float y, float scale, glm::vec3 color) {
+void TextRenderer::RenderTextCentered(std::string text, float x, float y, float scale, glm::vec4 color) {
     Shader &shader = *RESOURCEMANAGER.GetShaderByName("textShader");
 
     PrepareShader();
 
     shader.use();
-    glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
+    glUniform4f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z, color.w);
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 

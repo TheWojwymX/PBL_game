@@ -10,6 +10,6 @@ void MessagePage::Update() {
     if(_shouldRender){
         Page::Update();
         _backgroundImage.Render();
-        TEXTRENDERER.RenderTextCentered(_actualText, 0.0f, -0.865, 0.4f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderTextCentered(_actualText, 0.0f, -0.865, 0.4f, glm::vec4(0.0f, 0.0f, 0.0f,1.0f));
     }
 }

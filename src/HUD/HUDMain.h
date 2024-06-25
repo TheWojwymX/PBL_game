@@ -7,15 +7,28 @@
 #include "Managers/GameManager.h"
 #include <GLFW/glfw3.h>
 #include "CoordsConverter.h"
+#include "BatchRandomGenerator.h"
 
 class Enemy;
+
+struct MaterialText {
+    glm::vec2 pos;     
+    glm::vec4 color;   
+    std::string text; 
+
+    MaterialText() : pos(0.0f), color(1.0f), text("") {}
+
+    MaterialText(const glm::vec2& position, const glm::vec4& textColor, const std::string& textContent)
+        : pos(position), color(textColor), text(textContent) {}
+};
+
 class HUDMain {
 
 public:
 
     ~HUDMain() = default;
 
-    HUDMain() = default;
+    HUDMain();
 
     static HUDMain &getInstance();
 
@@ -113,9 +126,14 @@ public:
     int _previousIndex = 20;
 
     void Reset();
-
+    void AddMaterialText(int value);
 private:
     std::shared_ptr<Node> _playerNode;
+    std::vector<MaterialText> _materialTexts;
+    float _materialTextVelocity = 1.0f;
+    float _materialTextDisolve = 1.0f;
+    BatchRandomGenerator _yoffsetRand;
 
-
+    void UpdateMaterialTexts();
+    void RenderMaterialTexts();
 };

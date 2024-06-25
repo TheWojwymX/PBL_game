@@ -69,19 +69,19 @@ void PlayerUpgradeMenu::RenderText(){
     //levels
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(788, 360));
     text = to_string(_playerController->GetJetpackCapacityLevel());
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(788, 479));
     text = to_string(_playerController->GetMiningReachLevel());
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(788, 598));
     text = to_string(_playerController->GetMiningRadiusLevel());
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(788, 718));
     text = to_string(_playerController->GetMiningSpeedLevel());
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     //costs
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 360));
@@ -90,7 +90,7 @@ void PlayerUpgradeMenu::RenderText(){
     }else{
         text = to_string(UPGRADEMANAGER._jetpackCapacityUpgrades.upgradeCosts[_playerController->GetJetpackCapacityLevel()]);
     }
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 479));
     if(UPGRADEMANAGER._miningReachUpgrades.upgradeCosts.size() == _playerController->GetMiningReachLevel()){
@@ -98,7 +98,7 @@ void PlayerUpgradeMenu::RenderText(){
     }else{
         text = to_string(UPGRADEMANAGER._miningReachUpgrades.upgradeCosts[_playerController->GetMiningReachLevel()]);
     }
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 598));
     if(UPGRADEMANAGER._miningRadiusUpgrades.upgradeCosts.size() == _playerController->GetMiningRadiusLevel()){
@@ -106,7 +106,7 @@ void PlayerUpgradeMenu::RenderText(){
     }else{
         text = to_string(UPGRADEMANAGER._miningRadiusUpgrades.upgradeCosts[_playerController->GetMiningRadiusLevel()]);
     }
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 718));
     if(UPGRADEMANAGER._miningSpeedUpgrades.upgradeCosts.size() == _playerController->GetMiningSpeedLevel()){
@@ -114,6 +114,6 @@ void PlayerUpgradeMenu::RenderText(){
     }else{
         text = to_string(UPGRADEMANAGER._miningSpeedUpgrades.upgradeCosts[_playerController->GetMiningSpeedLevel()]);
     }
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 }

@@ -51,10 +51,10 @@ void SettingsPage::Update() {
         }
 
         glm::vec2 coords = CoordsConverter::ConvertTextCoords(glm::vec2(1070, 369));
-        TEXTRENDERER.RenderTextCentered(to_string((int) (AUDIOMANAGER._musicVolume * 100)), coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderTextCentered(to_string((int) (AUDIOMANAGER._musicVolume * 100)), coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
         coords = CoordsConverter::ConvertTextCoords(glm::vec2(1070, 415));
-        TEXTRENDERER.RenderTextCentered(to_string((int) (AUDIOMANAGER._sfxVolume * 100)), coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        TEXTRENDERER.RenderTextCentered(to_string((int) (AUDIOMANAGER._sfxVolume * 100)), coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     }
 }
 

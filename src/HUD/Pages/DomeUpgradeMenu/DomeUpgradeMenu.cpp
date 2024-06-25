@@ -57,11 +57,11 @@ void DomeUpgradeMenu::RenderText(){
     //levels
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(788, 423));
     text = to_string(DOMEMANAGER.GetDomeHPLevel());
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(788, 541));
     text = to_string(DOMEMANAGER.GetDomeHPRegenLevel());
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     //costs
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 423));
@@ -70,7 +70,7 @@ void DomeUpgradeMenu::RenderText(){
     }else{
         text = to_string(UPGRADEMANAGER._domeHPUpgrades.upgradeCosts[DOMEMANAGER.GetDomeHPLevel()]);
     }
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 541));
     if(UPGRADEMANAGER._domeHPRegenUpgrades.upgradeCosts.size() == DOMEMANAGER.GetDomeHPRegenLevel()){
@@ -78,8 +78,8 @@ void DomeUpgradeMenu::RenderText(){
     }else{
         text = to_string(UPGRADEMANAGER._domeHPRegenUpgrades.upgradeCosts[DOMEMANAGER.GetDomeHPRegenLevel()]);
     }
-    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(text, coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     coords = CoordsConverter::ConvertTextCoords(glm::vec2(1144, 660));
-    TEXTRENDERER.RenderTextCentered(to_string(UPGRADEMANAGER._domeHPRepair.upgradeCosts[0]), coords.x, coords.y, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    TEXTRENDERER.RenderTextCentered(to_string(UPGRADEMANAGER._domeHPRepair.upgradeCosts[0]), coords.x, coords.y, 0.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 }
