@@ -1,9 +1,9 @@
 #include "PauseMenuPage.h"
 #include "Managers/GameManager.h"
+#include "HUD/PageManager.h"
 
 void PauseMenuPage::Init() {
-    SetBackgroundImagePath(_backgroundImagePath);
-    SetCorners(glm::vec2(-50, -50), glm::vec2(50, 50));
+    SetCorners(glm::vec2(0, 0), glm::vec2(0, 0));
     SetupButtons();
     _logo.Init("res/Images/logo.png", CoordsConverter::ConvertCoords(glm::vec2(696, 224)), CoordsConverter::ConvertCoords(glm::vec2(1235, 118)), true, false);
     _resumeButton->Init();
@@ -13,9 +13,9 @@ void PauseMenuPage::Init() {
 }
 
 void PauseMenuPage::Update() {
-    if(_shouldRender){
+    if (_shouldRender) {
         Page::Update();
-        _backgroundImage.Render();
+        //_backgroundImage.Render();
         _logo.Render();
         _resumeButton->Update();
         _settingsButton->Update();
@@ -23,16 +23,15 @@ void PauseMenuPage::Update() {
     }
 }
 
-void PauseMenuPage::SetupButtons(){
+void PauseMenuPage::SetupButtons() {
     _resumeButton = std::make_shared<Button>("res/Images/Button/resume.png",
-                                            "res/Images/Button/resume_hover.png",
-                                            "res/Images/Button/resume_clicked.png",
+                                             "res/Images/Button/resume_hover.png",
+                                             "res/Images/Button/resume_clicked.png",
                                              CoordsConverter::ConvertCoords(glm::vec2(782, 469)),
                                              CoordsConverter::ConvertCoords(glm::vec2(1137, 370)),
-                                            //glm::vec2(0, 10),
-                                            [this]() {
-                                                GAMEMANAGER.Unpause();
-                                            });
+                                             [this]() {
+                                                 GAMEMANAGER.Unpause();
+                                             });
 
     _settingsButton = std::make_shared<Button>("res/Images/Button/settings.png",
                                                "res/Images/Button/settings_hover.png",
@@ -40,7 +39,7 @@ void PauseMenuPage::SetupButtons(){
                                                CoordsConverter::ConvertCoords(glm::vec2(782, 589)),
                                                CoordsConverter::ConvertCoords(glm::vec2(1137, 490)),
                                                [this]() {
-
+                                                   PAGEMANAGER.GoToSettings(1);
                                                });
 
     _quitButton = std::make_shared<Button>("res/Images/Button/quit.png",

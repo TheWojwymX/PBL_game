@@ -50,6 +50,7 @@ void TutorialManager::Update() {
             _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
             if(_player->GetComponent<PlayerController>()->_isGrounded){
                DisplayAndChangeMessage();
+                _hasLanded = true;
                _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
                _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = true;
                 HUD._shouldShowCrosshair = true;
@@ -383,4 +384,5 @@ void TutorialManager::Reset() {
     _player->GetComponent<PlayerController>()->_velocity.y = 0;
     _metBeetle = false;
     _metWasp = false;
+    _hasLanded = false;
 }

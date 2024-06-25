@@ -109,6 +109,8 @@ public:
     float _specialMessageTimer = 0.0f;
 
     void SetFalseTutorialNeededAtMoment();
+
+    bool _hasLanded = false;
 };
 
 

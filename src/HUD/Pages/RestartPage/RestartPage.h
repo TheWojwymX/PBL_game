@@ -14,10 +14,12 @@ public:
     void Init() override;
     void Update() override;
 
-    const char* _backgroundImagePath = "res/Images/MainMenu/mainMenu.png";
+    const char* _backgroundImagePath = "res/Images/GameOverBackground.png";
 
     std::shared_ptr<Button> _restartButton;
+    std::shared_ptr<Button> _mainMenuButton;
     ImageRenderer _logo;
+    ImageRenderer _gameOver;
 
 private:
     void SetupButtons();

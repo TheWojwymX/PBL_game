@@ -5,6 +5,7 @@
 #include "Managers/GameManager.h"
 #include "ShovelController.h"
 #include "HUD/PageManager.h"
+#include "Managers/TutorialManager.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float reach, int radius, float width,
                                    float height, float digPower)
@@ -74,6 +75,8 @@ void PlayerController::Update() {
 }
 
 void PlayerController::MovementInput() {
+    if(!TUTORIALMANAGER._hasLanded) return;
+
     // Get input for movement along the X and Z axes
     float x = (INPUT.GetKeyDown(GLFW_KEY_D) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_A) ? 1.0f : 0.0f);
     float z = (INPUT.GetKeyDown(GLFW_KEY_W) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_S) ? 1.0f : 0.0f);

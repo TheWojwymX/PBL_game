@@ -26,17 +26,24 @@ void PageManager::Init() {
     _pages.push_back(_PDAPage);
     _mainMenuPage->Init();
     _pages.push_back(_mainMenuPage);
-    _mainMenuSettingsPage->Init();
-    _pages.push_back(_mainMenuSettingsPage);
-    _mainMenuControlsPage->Init();
-    _pages.push_back(_mainMenuControlsPage);
+    _settingsPage->Init();
+    _pages.push_back(_settingsPage);
+    _controlsPage->Init();
+    _pages.push_back(_controlsPage);
     _restartPage->Init();
     _pages.push_back(_restartPage);
 
     CloseAllOtherPages(_mainMenuPage);
+
+    _backgroundImage.Init("res/Images/pauseBackground.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 }
 
 void PageManager::Update() {
+
+    if(GAMEMANAGER._paused){
+        _backgroundImage.Render();
+    }
+
     CheckInputs();
 
     glDisable(GL_DEPTH_TEST);
@@ -49,8 +56,8 @@ void PageManager::Update() {
     _PDAPage->Update();
     _restartPage->Update();
     _mainMenuPage->Update();
-    _mainMenuSettingsPage->Update();
-    _mainMenuControlsPage->Update();
+    _settingsPage->Update();
+    _controlsPage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -61,7 +68,7 @@ void PageManager::CheckInputs() {
 
     if(GAMEMANAGER._isInMainMenu == true) return;
 
-    if (INPUT.IsKeyPressed(GLFW_KEY_ESCAPE) && !_isInPage) {
+    if (INPUT.IsKeyPressed(GLFW_KEY_ESCAPE) && !_isInPage && !_restartPage->_shouldRender) {
         _pauseMenuPage->_shouldRender = !_pauseMenuPage->_shouldRender;
         if (_pauseMenuPage->_shouldRender) {
             CloseAllOtherPages(_pauseMenuPage);
@@ -163,14 +170,20 @@ void PageManager::Reset() {
     _isInUpgradeMenu = false;
 }
 
-void PageManager::GoToSettingsMainMenu() {
-    CloseAllOtherPages(_mainMenuSettingsPage);
+void PageManager::GoToSettings(int mode) {
+    CloseAllOtherPages(_settingsPage);
+    _settingsPage->ChangeModeTo(mode);
 }
 
 void PageManager::GoToMainMenu() {
     CloseAllOtherPages(_mainMenuPage);
 }
 
-void PageManager::GoToKeyboardSettings() {
-    CloseAllOtherPages(_mainMenuControlsPage);
+void PageManager::GoToPauseMenu(){
+    CloseAllOtherPages(_pauseMenuPage);
+}
+
+void PageManager::GoToKeyboardSettings(int mode) {
+    CloseAllOtherPages(_controlsPage);
+    _controlsPage->_mode = mode;
 }

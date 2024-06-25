@@ -4,6 +4,7 @@
 
 #include "Core/Node.h"
 #include <vector>
+#include "HUD/Image/ImageRenderer.h"
 
 enum Phase {DIG,DEFEND};
 
@@ -86,6 +87,7 @@ public:
     void GoToMainMenu();
 
     Phase _currentPhase = Phase::DIG;
+
 private:
     int _roundNumber = 0;
     int _plastic = 5;

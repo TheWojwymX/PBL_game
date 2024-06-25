@@ -18,8 +18,8 @@
 #include "HUD/Pages/PDA/PDAPage.h"
 #include "HUD/Pages/RestartPage/RestartPage.h"
 #include "HUD/Pages/MainMenuPage/MainMenuPage.h"
-#include "HUD/Pages/MainMenuSettings/MainMenuSettingsPage.h"
-#include "HUD/Pages/MainMenuControls/MainMenuControls.h"
+#include "HUD/Pages/Settings/SettingsPage.h"
+#include "HUD/Pages/Controls/ControlsPage.h"
 
 class PageManager {
 public:
@@ -48,9 +48,9 @@ public:
 
     std::shared_ptr<MainMenuPage> _mainMenuPage = std::make_shared<MainMenuPage>();
 
-    std::shared_ptr<MainMenuSettingsPage> _mainMenuSettingsPage = std::make_shared<MainMenuSettingsPage>();
+    std::shared_ptr<SettingsPage> _settingsPage = std::make_shared<SettingsPage>();
 
-    std::shared_ptr<MainMenuControls> _mainMenuControlsPage = std::make_shared<MainMenuControls>();
+    std::shared_ptr<ControlsPage> _controlsPage = std::make_shared<ControlsPage>();
 
     std::shared_ptr<RestartPage> _restartPage = std::make_shared<RestartPage>();
 
@@ -65,12 +65,15 @@ public:
 
     void Reset();
 
-    void GoToSettingsMainMenu();
+    void GoToSettings(int mode);
 
     void GoToMainMenu();
 
-    void GoToKeyboardSettings();
+    void GoToKeyboardSettings(int mode);
 
+    void GoToPauseMenu();
+
+    ImageRenderer _backgroundImage;
 };
 
 

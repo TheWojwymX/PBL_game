@@ -64,7 +64,7 @@ void MainMenuPage::SetupButtons() {
 }
 
 void MainMenuPage::SettingsButtonOnClick() {
-    PAGEMANAGER.GoToSettingsMainMenu();
+    PAGEMANAGER.GoToSettings(0);
 }
 
 void MainMenuPage::CreditsButtonOnClick() {

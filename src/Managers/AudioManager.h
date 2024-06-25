@@ -35,8 +35,8 @@ public:
     ma_result _result;
     ma_engine _engine;
 
-    float _musicVolume = 1;
-    float _sfxVolume = .7;
+    float _musicVolume = 0.5f;
+    float _sfxVolume = 0.5f;
 
     std::vector<ma_sound*> _activeSounds;
     void CleanupFinishedSounds();

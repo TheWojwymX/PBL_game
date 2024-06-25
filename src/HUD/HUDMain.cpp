@@ -52,6 +52,10 @@ void HUDMain::Init() {
 
 void HUDMain::Update() {
 
+    if(INPUT.IsKeyPressed(GLFW_KEY_KP_6)){
+        _isHPInAnim = true;
+    }
+
     //images
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
@@ -327,22 +331,42 @@ void HUDMain::PlayHPBump() {
                 t = glm::clamp(t, 0.0f, 1.0f);
                 float backgroundScale = glm::mix(_defaultHPScale, _maxHPScale, t);
                 float innerScale = glm::mix(_defaultInnerHPScale, _maxInnerHPScale, t);
+                float arrowScale = glm::mix(_defaultHPArrowsScale, _maxHPArrowsScale, t);
+
                 for(shared_ptr<ImageRenderer> hpBorderImage : _baseHPImages){
                     hpBorderImage->SetScale(glm::vec2(backgroundScale, backgroundScale));
                 }
                 for(shared_ptr<ImageRenderer> hpInsideImage : _baseInsideImages){
                     hpInsideImage->SetScale(glm::vec2(innerScale, innerScale));
+                }
+
+                for (int i = 0; i < _attackSymbols.size(); i++)
+                {
+                    if (_attackSymbols[i].first != nullptr)
+                    {
+                        _attackSymbols[i].first->SetScale(glm::vec2(arrowScale, arrowScale));
+                    }
                 }
             } else {
                 float t = (_HPAnimTimer - _timeOfHPAnim / 2.0f) / (_timeOfHPAnim / 2.0f);
                 t = glm::clamp(t, 0.0f, 1.0f);
                 float backgroundScale = glm::mix(_maxHPScale, _defaultHPScale, t);
                 float innerScale = glm::mix(_maxInnerHPScale, _defaultInnerHPScale, t);
+                float arrowScale = glm::mix(_maxHPArrowsScale, _defaultHPArrowsScale, t);
+
+
                 for(shared_ptr<ImageRenderer> hpBorderImage : _baseHPImages){
                     hpBorderImage->SetScale(glm::vec2(backgroundScale, backgroundScale));
                 }
                 for(shared_ptr<ImageRenderer> hpInsideImage : _baseInsideImages){
                     hpInsideImage->SetScale(glm::vec2(innerScale, innerScale));
+                }
+                for (int i = 0; i < _attackSymbols.size(); i++)
+                {
+                    if (_attackSymbols[i].first != nullptr)
+                    {
+                        _attackSymbols[i].first->SetScale(glm::vec2(arrowScale, arrowScale));
+                    }
                 }
             }
         } else {

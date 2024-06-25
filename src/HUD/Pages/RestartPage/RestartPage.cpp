@@ -10,7 +10,9 @@ void RestartPage::Init() {
     SetupButtons();
     _shouldRender = true;
     _restartButton->Init();
-    _logo.Init("res/Images/logo.png", CoordsConverter::ConvertCoords(glm::vec2(1300, 140)), CoordsConverter::ConvertCoords(glm::vec2(1899, 22)), true, false);
+    _mainMenuButton->Init();
+    _logo.Init("res/Images/logo.png", CoordsConverter::ConvertCoords(glm::vec2(607, 149)), CoordsConverter::ConvertCoords(glm::vec2(1231, 36)), true, false);
+    _gameOver.Init("res/Images/gameOver.png", CoordsConverter::ConvertCoords(glm::vec2(369, 413)), CoordsConverter::ConvertCoords(glm::vec2(1541, 227)), true, false);
     Page::Init();
 }
 
@@ -18,18 +20,28 @@ void RestartPage::Update() {
     if (_shouldRender) {
         Page::Update();
         _restartButton->Update();
+        _mainMenuButton->Update();
+        _gameOver.Render();
         _logo.Render();
-        std::cout << "czy to sie wyswietla" << std::endl;
     }
 }
 
 void RestartPage::SetupButtons() {
-    _restartButton = std::make_shared<Button>("res/Images/Button/start.png",
-                                            "res/Images/Button/start_hover.png",
-                                            "res/Images/Button/start_clicked.png",
-                                            CoordsConverter::ConvertCoords(glm::vec2(1449, 258)),
-                                            CoordsConverter::ConvertCoords(glm::vec2(1765, 170)),
+    _restartButton = std::make_shared<Button>("res/Images/Button/restart.png",
+                                            "res/Images/Button/restart_hover.png",
+                                            "res/Images/Button/restart_clicked.png",
+                                            CoordsConverter::ConvertCoords(glm::vec2(785, 583)),
+                                            CoordsConverter::ConvertCoords(glm::vec2(1142, 482)),
                                             [this]() {
                                                 GAMEMANAGER.RestartGame();
                                             });
+
+    _mainMenuButton = std::make_shared<Button>("res/Images/Button/mainmenu.png",
+                                              "res/Images/Button/mainmenu_hover.png",
+                                              "res/Images/Button/mainmenu_clicked.png",
+                                              CoordsConverter::ConvertCoords(glm::vec2(785, 720)),
+                                              CoordsConverter::ConvertCoords(glm::vec2(1142, 619)),
+                                              [this]() {
+                                                  GAMEMANAGER.GoToMainMenu();
+                                              });
 }

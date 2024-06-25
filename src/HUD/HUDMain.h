@@ -107,6 +107,8 @@ public:
     float _defaultHPScale = 2.0f;
     float _maxInnerHPScale = 2.3f;
     float _defaultInnerHPScale = 2.0f;
+    float _maxHPArrowsScale = 1.3f;
+    float _defaultHPArrowsScale = 1.0f;
 
     int _previousIndex = 20;
 

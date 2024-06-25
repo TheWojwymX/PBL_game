@@ -116,6 +116,7 @@ void GameManager::RoundWon()
 }
 
 void GameManager::Update() {
+
     if(INPUT.IsKeyPressed(GLFW_KEY_KP_5)){
         ENEMIESMANAGER.Reset();
     }
@@ -253,6 +254,8 @@ void GameManager::RestartGame() {
 void GameManager::LoseGame() {
     HUD.DisableHUD();
     PAGEMANAGER.CloseAllOtherPages(PAGEMANAGER._restartPage);
+    EnableMouse();
+    _paused = true;
     EnableMouse();
 }
 
