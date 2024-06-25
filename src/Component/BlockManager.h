@@ -74,7 +74,6 @@ private:
     std::shared_ptr<Camera> _cameraRef;
     int _cameraRefID;
     std::shared_ptr<InstanceRenderer> _cageRendererRef;
-    std::shared_ptr<InstanceRenderer> _shadowInstancedRef;
     std::vector<std::vector<glm::ivec3>> _sphereVectors;
     std::vector<glm::vec3> _topLayerPositions;
     BatchRandomGenerator _randomGen;

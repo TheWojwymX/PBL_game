@@ -166,6 +166,9 @@ void HUDMain::WaveTimerGUIManager() {
     float degrees = (proportion * 360.0f);
 
     float roundedDegrees = -((int(degrees/22.5f) * 22.5f) - 90.0f);
+    
+    if (_oldClockDegrees <= -180.0f && _oldClockDegrees != roundedDegrees) std::cout << "clock tick" << std::endl;
+    _oldClockDegrees = roundedDegrees;
 
     if (currentPhase == Phase::DIG) {
         _waveTimerGreen.Render();

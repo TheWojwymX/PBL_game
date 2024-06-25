@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 200,
-  "nextNodeId": 179,
+  "nextComponentId": 199,
+  "nextNodeId": 178,
   "resources": {
     "Models": [
       {
@@ -807,39 +807,6 @@
         }
       },
       {
-        "NodeID": 178,
-        "NodeName": "shadow",
-        "children": [],
-        "components": [
-          {
-            "componentId": 199,
-            "componentType": 3,
-            "maxSize": 500,
-            "model": "shadowModel",
-            "shader": "instancedSandShader",
-            "isDynamic": false,
-            "castShadows": true
-          }
-        ],
-        "transform": {
-          "position": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "rotation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "scale": [
-            1.0,
-            1.0,
-            1.0
-          ]
-        }
-      },
-      {
         "NodeID": 72,
         "NodeName": "plastic",
         "children": [],
@@ -1415,7 +1382,7 @@
         ],
         "transform": {
           "position": [
-            49.5,
+            39.5,
             100.0,
             49.5
           ],

@@ -9,10 +9,10 @@
 
 GameManager::GameManager() {
     // Starting time for digging phase
-    float digPhaseStartTime = 60.0f;
+    float digPhaseStartTime = 90.0f;
     // Percentage separation
     float digPercentage = 1.0f;
-    float fightPercentage = 0.5f;
+    float fightPercentage = 0.25f;
 
     float sum = 0;
     // Initialize _phaseTimes with calculated values for 10 rounds

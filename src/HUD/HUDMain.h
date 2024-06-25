@@ -78,6 +78,7 @@ public:
 
     float _clockTimer = 0.0f;
     float _clockInterval = 0.5f;
+    float _oldClockDegrees = 0.0f;
 
     void DisableHUD();
     void EnableHUD();

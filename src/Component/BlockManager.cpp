@@ -82,7 +82,6 @@ void BlockManager::Initiate() {
     _plasticRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_plasticRendererRefID);
     _metalRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_metalRendererRefID);
     _cageRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(198);
-    _shadowInstancedRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(199);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
     Component::Initiate();
 }
@@ -1079,37 +1078,24 @@ void BlockManager::InitLayerStats() {
     _layerStats.clear();
 
     // Define the pairs of (float, int) values
-    _layerStats.push_back({ 1.0f, 1 }); // HP, Mat reward
-    _layerStats.push_back({ 3.0f, 3 }); // HP, Mat reward
-    _layerStats.push_back({ 7.0f, 7 }); // HP, Mat reward
+    _layerStats.push_back({ 1.0f, 2 }); // HP, Mat reward
+    _layerStats.push_back({ 3.0f, 4 }); // HP, Mat reward
+    _layerStats.push_back({ 7.0f, 8 }); // HP, Mat reward
 }
 
 void BlockManager::SetCageRenderer()
 {
     std::vector<glm::vec3> cageInstancePositions;
-    std::vector<glm::vec3> shadowInstancePositions;
 
     for (BlockData& blockData : _blocksData)
     {
         if (IsEdgeBlock(blockData) && blockData.IsSolid())
         {
-            glm::vec3 posID = blockData.GetPosID();
-            float distanceXZ = glm::length(glm::vec2(posID.x, posID.z) - GAMEMANAGER._domePosition);
-
-            if (posID.y == _height - 1 && distanceXZ <= 10.0f)
-            {
-                shadowInstancePositions.push_back(posID);
-            }
-            else
-            {
-                cageInstancePositions.push_back(posID);
-            }
+            cageInstancePositions.push_back(blockData.GetPosID());
         }
     }
-    std::cout << "shadow size: " << shadowInstancePositions.size() << std::endl;
-    // Update the renderers with their respective positions
+
     _cageRendererRef->RefreshPositionBuffer(cageInstancePositions);
-    _shadowInstancedRef->RefreshPositionBuffer(shadowInstancePositions);
 }
 
 
