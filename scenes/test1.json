@@ -699,6 +699,13 @@
         "SoundID": 25,
         "Type": 1,
         "Volume": 0.9
+      },
+      {
+        "Path": "res/Sounds/ticking.mp3",
+        "SoundName": "Tick",
+        "SoundID": 26,
+        "Type": 1,
+        "Volume": 1.0
       }
 
     ]

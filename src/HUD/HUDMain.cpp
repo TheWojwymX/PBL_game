@@ -52,10 +52,6 @@ void HUDMain::Init() {
 
 void HUDMain::Update() {
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_KP_6)){
-        _isHPInAnim = true;
-    }
-
     //images
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
@@ -191,7 +187,10 @@ void HUDMain::WaveTimerGUIManager() {
 
     float roundedDegrees = -((int(degrees/22.5f) * 22.5f) - 90.0f);
     
-    if (_oldClockDegrees <= -180.0f && _oldClockDegrees != roundedDegrees) std::cout << "clock tick" << std::endl;
+    if (_oldClockDegrees <= -180.0f && _oldClockDegrees != roundedDegrees){
+        _isWaveTimerInAnim = true;
+        RESOURCEMANAGER.GetSoundByName("Tick")->PlaySound(_playerNode);
+    }
     _oldClockDegrees = roundedDegrees;
 
     if (currentPhase == Phase::DIG) {
@@ -205,7 +204,6 @@ void HUDMain::WaveTimerGUIManager() {
         }
         else {
             _clockTimer = 0;
-            std::cout << "cos"<<std::endl;
         }
     }
     else if (currentPhase == Phase::DEFEND) {
