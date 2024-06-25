@@ -43,7 +43,7 @@ void Rotate::Update()
 
 void Rotate::Reset()
 {
-    _ownerTransform->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
+    _ownerTransform->SetRotation(glm::vec3(0.0f, -60.0f, 0.0f));
 }
 
 void Rotate::ApplyRotation()
@@ -51,9 +51,15 @@ void Rotate::ApplyRotation()
     // Calculate the rotation angle based on the speed and delta time
     float angle = _speed * TIME.GetDeltaTime();
 
-    // Calculate the rotation quaternion based on the axis and angle
-    glm::quat rotation = glm::angleAxis(glm::radians(angle), glm::normalize(_axis));
+    // Get the current rotation quaternion
+    glm::quat currentRotation = _ownerTransform->GetRotation();
+
+    // Transform the rotation axis by the current rotation
+    glm::vec3 transformedAxis = currentRotation * _axis;
+
+    // Calculate the rotation quaternion based on the transformed axis and angle
+    glm::quat rotation = glm::angleAxis(glm::radians(angle), glm::normalize(transformedAxis));
 
     // Combine the new rotation with the existing rotation
-    _ownerTransform->SetRotation(rotation * _ownerTransform->GetRotation());
+    _ownerTransform->SetRotation(rotation * currentRotation);
 }
