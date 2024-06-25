@@ -37,12 +37,14 @@ void Sound::Update() {
         if(_timer < _timeToFadeAway){
             _timer += TIME.GetDeltaTime();
             float t = glm::clamp(_timer / _timeToFadeAway, 0.0f, 1.0f);
-            float volume = glm::mix(_volume, 0.0f, t);
+            float volume = glm::mix(_volume, _fadeAwayTarget, t);
             ChangeVolume(volume);
         }else{
             _isFadingAway = false;
             _timer = 0.0f;
-            StopSound();
+            if(_fadeAwayTarget == 0.0) {
+                StopSound();
+            }
         }
     }
 
@@ -50,7 +52,7 @@ void Sound::Update() {
         if(_timer < _timeToRiseUp){
             _timer += TIME.GetDeltaTime();
             float t = glm::clamp(_timer / _timeToRiseUp, 0.0f, 1.0f);
-            float volume = glm::mix(0.0f, 1.0f, t);
+            float volume = glm::mix(_riseUpFrom, _riseUpTarget, t);
             ChangeVolume(volume);
         }else{
             _isRisingUp = false;

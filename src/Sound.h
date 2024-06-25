@@ -51,6 +51,12 @@ public:
     bool _isFadingAway = false;
     bool _isRisingUp = false;
 
+    float _fadeAwayTarget = 0.0;
+    float _fadaAwayFrom = 1.0;
+    float _riseUpTarget = 1.0;
+    float _riseUpFrom = 0.0;
+
+
     void Update();
 
 
@@ -77,7 +83,6 @@ private:
     float _constStartingVolumeMultiplier;
     float *_typeMultiplier;
     float _volume = 1.0f;
-
 };
 
 

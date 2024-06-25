@@ -89,4 +89,5 @@ private:
     void InitTurretUpgrades();
 
     float timeLooking = 0.0f;
+    float _tooltipDelay = 0.55f;
 };

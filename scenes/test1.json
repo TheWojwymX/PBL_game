@@ -706,8 +706,35 @@
         "SoundID": 26,
         "Type": 1,
         "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Weather/piorun1.mp3",
+        "SoundName": "piorun1",
+        "SoundID": 27,
+        "Type": 1,
+        "Volume": 0.9
+      },
+      {
+        "Path": "res/Sounds/Weather/piorun2.mp3",
+        "SoundName": "piorun2",
+        "SoundID": 28,
+        "Type": 1,
+        "Volume": 0.9
+      },
+      {
+        "Path": "res/Sounds/Weather/piorun3.mp3",
+        "SoundName": "piorun3",
+        "SoundID": 29,
+        "Type": 1,
+        "Volume": 0.9
+      },
+      {
+        "Path": "res/Sounds/Weather/deszcz.mp3",
+        "SoundName": "Rain",
+        "SoundID": 30,
+        "Type": 0,
+        "Volume": 1.0
       }
-
     ]
   },
   "root": {

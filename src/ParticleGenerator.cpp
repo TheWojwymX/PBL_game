@@ -412,7 +412,7 @@ void ParticleGenerator::initiateParticleType() {
         particleLife = 1.2f;
         particleColor = glm::vec4(0.6f,0.6f,0.6f,1.0f);
         initialUpwardBoost = 1.0f;
-        particleScale = 0.25f;
+        particleScale = 0.27f;
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;
@@ -434,7 +434,7 @@ void ParticleGenerator::initiateParticleType() {
         particleLife = 1.2f;
         particleColor = glm::vec4(0.8627f,0.0784f,0.2353f,1.0f);
         initialUpwardBoost = 1.0f;
-        particleScale = 0.25f;
+        particleScale = 0.22f;
         gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         onlyForward = false;
         casing = false;

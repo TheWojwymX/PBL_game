@@ -7,6 +7,12 @@ WeatherManager &WeatherManager::getInstance() {
 }
 
 void WeatherManager::Init() {
+    _playerNode = NODESMANAGER.getNodeByName("player");
+    _soundNode = RESOURCEMANAGER.GetSoundByName("Rain");
+    _thunderNode1 = RESOURCEMANAGER.GetSoundByName("piorun1");
+    _thunderNode2 = RESOURCEMANAGER.GetSoundByName("piorun2");
+    _thunderNode3 = RESOURCEMANAGER.GetSoundByName("piorun3");
+
     windDirection = glm::vec3(0.0f,0.0f,0.0f);
     windStrength = 0.7f;
     windModel.initialize(0.1, 1.0, 0.1, 1.0, 1.0, 1.0, 2.0);
@@ -74,6 +80,11 @@ void WeatherManager::Update(){
             if (chance < thunderProbability) {
                 thunder = true;
                 thunderTimeLeft = thunderDuration;
+                if(_playerNode->GetTransform()->GetPosition().y > 292) {
+                    if (chance < 0.33) _thunderNode1->PlaySound(_playerNode);
+                    else if (chance >= 0.33 && chance < 0.66) _thunderNode2->PlaySound(_playerNode);
+                    else if (chance >= 0.66) _thunderNode3->PlaySound(_playerNode);
+                }
             }
         }
     }
@@ -85,9 +96,25 @@ void WeatherManager::Update(){
         }
     }
 
+    if(isRaining && _playerNode->GetTransform()->GetPosition().y < 292 && !_soundNode->_isFadingAway && !_soundNode->_isRisingUp && _soundNode->GetVolume() != 0.0){
+        _soundNode->_fadeAwayTarget = 0.0;
+        _soundNode->FadeAway(1);
+        cout << "Fade Away" << endl;
+    }
+
+    if(isRaining && _playerNode->GetTransform()->GetPosition().y >= 292 && !_soundNode->_isFadingAway && !_soundNode->_isRisingUp && _soundNode->GetVolume() == 0.0){
+        if(_reachedTarget) _soundNode->_riseUpTarget = 0.4;
+        else _soundNode->_riseUpTarget = 1.0;
+
+        _soundNode->RiseUp(1, _playerNode);
+        cout << _soundNode->_riseUpTarget << endl;
+        cout << "Rise Up" << endl;
+    }
 
     // Update rain duration
     if (isRaining) {
+        cout << "TARGET: " << _soundNode->_riseUpTarget << endl;
+        cout << "VOLUME: " << _soundNode->GetVolume() << endl;
         rainTimeLeft -= TIME.GetDeltaTime();
         timeSinceLastParticleSpawn += TIME.GetDeltaTime();
         auto particleGenerator = NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>();
@@ -96,18 +123,41 @@ void WeatherManager::Update(){
                 particleGenerator->gravity = glm::vec3(0.0f, -20.0f, 0.0f);
                 particleGenerator->SpawnParticles();
                 timeSinceLastParticleSpawn = 0.0f;
-            } else if (rainTimeLeft < 2 * rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
+                if(_adjustOnce){
+                    _soundNode->_riseUpFrom = 0.0;
+                    _soundNode->_riseUpTarget = 0.4;
+                    if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->RiseUp(5, _playerNode);
+                    _adjustOnce = false;
+                }
+                if(_soundNode->GetVolume() >= 0.4) _reachedTarget = true;
+            } else if (rainTimeLeft < 2 * rainDuration / 3 && rainTimeLeft >= rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
                 NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->gravity = glm::vec3(0.0f, -30.0f, 0.0f);
                 NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->SpawnParticles();
                 timeSinceLastParticleSpawn = 0.0f;
+                if(!_adjustOnce){
+                    _soundNode->_riseUpFrom = 0.4;
+                    _soundNode->_riseUpTarget = 1.0;
+                    if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->RiseUp(5, _playerNode);
+                    _adjustOnce = true;
+                    _reachedTarget = false;
+                }
             } else if (rainTimeLeft < rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
                 particleGenerator->gravity = glm::vec3(0.0f, -20.0f, 0.0f);
                 particleGenerator->SpawnParticles();
                 timeSinceLastParticleSpawn = 0.0f;
+                if(_adjustOnce){
+                    _soundNode->_fadeAwayTarget = 0.4;
+                    if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->FadeAway(5);
+                    _adjustOnce = false;
+                }
+                if(_soundNode->GetVolume() <= 0.4) _reachedTarget = true;
             }
         }
         if (rainTimeLeft <= 0.0f) {
             isRaining = false;
+            _soundNode->_fadeAwayTarget = 0.0;
+            if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->FadeAway(5);
+            _adjustOnce = true;
         }
     }
 
@@ -192,10 +242,11 @@ void WeatherManager::UpdateSunPosition() {
     }
     if(angle >= 48.5f){
         float randomChance = static_cast<float>(std::rand()) / (RAND_MAX + 1.0f);
-        rainTimeLeft = rainDuration * (randomChance + 0.7);
+        rainTimeLeft = rainDuration * (randomChance + 0.5);
         angle -= 6.0f;
         if (randomChance < rainProbability){
             isRaining = true;
+            rainProbability = 0.1;
         }
         else
         {
@@ -203,7 +254,9 @@ void WeatherManager::UpdateSunPosition() {
         }
 
         if(isRaining) rainyDay = true;
-        if(!isRaining) rainyDay = false;
+        if(!isRaining) {
+            rainyDay = false;
+        }
     }
 
     if(dirAngle < 44.3){

@@ -54,6 +54,7 @@ public:
     float flashlightConstant = 10.0f;
     float flashlightLinear = 0.233f;
     float flashlightQuadratic = 0.06f;
+    glm::vec3 flashlightColor = glm::vec3(1.0f);
 
     float scale = 2.0f;
 
@@ -122,7 +123,7 @@ private:
 
     glm::vec3 flashlightCurrentPosition = glm::vec3(0.0f);
     glm::vec3 flashlightCurrentDirection = glm::vec3(0.0f);
-    glm::vec3 flashlightColor = glm::vec3(1.0f);
+
     float flashlightCutOff = 20.5f;
     float flashlightOuterCutOff = 24.5f;
 
@@ -141,6 +142,8 @@ private:
     std::vector<std::shared_ptr<Shader>> _shadersForPointLights;
     std::shared_ptr<Camera> _cameraRef;
     float _bulletSpeed = 4.0f;
+
+    bool isSpotActive = true;
 
     void UpdateActiveShots();
     void UpdateGlowsticks();

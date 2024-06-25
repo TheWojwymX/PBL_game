@@ -37,9 +37,9 @@ private:
     DrydenWind windModel;
 
     bool isRaining = false;
-    float rainProbability = 0.2f; //100%
+    float rainProbability = 1.0f; //100%
     float rainCheckInterval = 3.0f;
-    float rainDuration = 100.0f;
+    float rainDuration = 75.0f;
     float timeSinceLastCheck = 0.0f;
     float rainTimeLeft = 0.0f;
     int spawnedParticles = 0;
@@ -83,4 +83,14 @@ private:
 
     shared_ptr<Node> wormParticleNode;
     shared_ptr<Node> wormNode;
+
+    std::shared_ptr<Node> _playerNode = nullptr;
+    std::shared_ptr<Sound> _soundNode = nullptr;
+
+    std::shared_ptr<Sound> _thunderNode1 = nullptr;
+    std::shared_ptr<Sound> _thunderNode2 = nullptr;
+    std::shared_ptr<Sound> _thunderNode3 = nullptr;
+
+    bool _adjustOnce = true;
+    bool _reachedTarget = false;
 };
