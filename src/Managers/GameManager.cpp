@@ -262,6 +262,10 @@ void GameManager::LoseGame() {
     EnableMouse();
     _paused = true;
     EnableMouse();
+    for(Sound* sound : AUDIOMANAGER._sounds){
+        sound->StopSound();
+    }
+    RESOURCEMANAGER.GetSoundByName("LoseGame")->PlaySound(_playerNode);
 }
 
 void GameManager::GoToMainMenu() {

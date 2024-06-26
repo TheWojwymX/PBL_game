@@ -762,6 +762,13 @@
         "SoundID": 34,
         "Type": 1,
         "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/failure.mp3",
+        "SoundName": "LoseGame",
+        "SoundID": 35,
+        "Type": 1,
+        "Volume": 1.0
       }
     ]
   },
