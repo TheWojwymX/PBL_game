@@ -117,9 +117,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
 		HUD/Pages/RestartPage/RestartPage.cpp
 		HUD/Pages/RestartPage/RestartPage.h
 		Managers/TransparentRenderer.cpp
-		Balance/Balancer.cpp
-		Balance/Balancer.h
-        HUD/Pages/Settings/SettingsPage.cpp
+		HUD/Pages/Settings/SettingsPage.cpp
         HUD/Pages/Settings/SettingsPage.h
 		HUD/Pages/Controls/ControlsPage.cpp
 		HUD/Pages/Controls/ControlsPage.h)
@@ -130,14 +128,13 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                                   ${glad_SOURCE_DIR}
                                                   ${stb_image_SOURCE_DIR}
-                                                  ${imgui_SOURCE_DIR})
+                                                  )
 
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} glad)
 target_link_libraries(${PROJECT_NAME} stb_image)
 target_link_libraries(${PROJECT_NAME} assimp)
 target_link_libraries(${PROJECT_NAME} glfw)
-target_link_libraries(${PROJECT_NAME} imgui)
 target_link_libraries(${PROJECT_NAME} spdlog)
 target_link_libraries(${PROJECT_NAME} glm::glm)
 target_link_libraries(${PROJECT_NAME} freetype)

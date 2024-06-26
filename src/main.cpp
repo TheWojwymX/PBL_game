@@ -40,7 +40,6 @@
 #include "Component/TopLayerSnap.h"
 
 
-#include "Balance/Balancer.h"
 #include "Managers/ComponentsManager.h"
 #include "Managers/SceneManager.h"
 #include "Managers/ResourceManager.h"
@@ -59,17 +58,9 @@
 
 #include <iostream>
 
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD
 
-#if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
-#include <GL/gl3w.h>    // Initialize with gl3wInit()
-#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
-#include <GL/glew.h>    // Initialize with glewInit()
-#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
-#include <glad/glad.h>  // Initialize with gladLoadGL()
-#else
-#include IMGUI_IMPL_OPENGL_LOADER_CUSTOM
-#endif
+#include <glad/glad.h>
+
 
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
@@ -120,14 +111,7 @@ int main(int, char**)
     glfwMakeContextCurrent(GAMEMANAGER._window);
     glfwSwapInterval(1); // Enable VSync
 
-    // Initialize OpenGL loader
-#if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
-    bool err = gl3wInit() != 0;
-#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
-    bool err = glewInit() != GLEW_OK;
-#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
     bool err = !gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-#endif
     if (err)
     {
         spdlog::error("Failed to initialize OpenGL loader!");
@@ -243,10 +227,6 @@ int main(int, char**)
 
         // Calculate deltaTime
         TIME.Update();
-
-        if(INPUT.IsKeyPressed(GLFW_KEY_B)){
-            BALANCER.resetToDefault();
-        }
 
         if(!GAMEMANAGER._isInMainMenu) {
 
