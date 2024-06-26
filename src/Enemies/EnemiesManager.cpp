@@ -279,7 +279,20 @@ void EnemiesManager::SpawnEnemy(int distanceToAvoid, glm::vec3 scale, glm::vec2 
     auto newEnemyComponent = COMPONENTSMANAGER.CreateComponent<Enemy>();
     NODESMANAGER.getNodeByName(nameOfEnemy)->AddComponent(newEnemyComponent);
     newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
-    newEnemyComponent->_destinationVector = CalcClosestDomePosition(newEnemyComponent);
+
+    glm::vec3 targetLookDirection = newEnemyComponent->_destinationVector - newEnemyComponent->GetOwnerNode()->GetTransform()->GetPosition();
+    targetLookDirection.y = 0.0f;
+
+    if (glm::length(targetLookDirection) > 0.0f) {
+        targetLookDirection = glm::normalize(targetLookDirection);
+
+        // Calculate the yaw angle (in radians)
+        float targetYaw = atan2(targetLookDirection.x, targetLookDirection.z);
+        glm::quat targetRotation = glm::angleAxis(targetYaw, glm::vec3(0, 1, 0));
+        newEnemyComponent->_ownerNode->GetTransform()->SetRotation(targetRotation);
+    }
+
+
     EnemyStats stats = _enemyStats[type];
     newEnemyComponent->SetStats(stats.type, stats.speed, stats.hp,stats.damage,stats.attackFrequency,stats.size * scale.x);
 
