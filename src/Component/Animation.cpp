@@ -77,11 +77,8 @@ void Animation::Update() {
     float deltaTime = TIME.GetDeltaTime();
     _currentTime += deltaTime;
 
-    if (_enemyState == SPAWN && !IsAnimationFinished())
-    {
-        _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
-    }
-    else if (_enemyState == SPAWN && IsAnimationFinished())
+
+    if (_enemyState == SPAWN && IsAnimationFinished())
     {
         _enemyState = WALK;
         _currentTime = _randomGen.GetRandomFloat();
