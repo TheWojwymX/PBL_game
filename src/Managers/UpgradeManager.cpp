@@ -207,6 +207,7 @@ void UpgradeManager::UpgradeDomeHPRegen() {
 
     // Check if enough resources for upgrade
     int upgradeCost = _domeHPRegenUpgrades.upgradeCosts[domeHPRegenLevel];
+    if (upgradeCost == 0) _miningReachUpgrades.upgradeCosts[0] = 5;
     if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Dome HP Regeneration." << std::endl;
         return;
@@ -309,6 +310,7 @@ void UpgradeManager::UpgradeMiningReach() {
 
     // Check if enough resources for upgrade
     int upgradeCost = _miningReachUpgrades.upgradeCosts[miningReachLevel];
+    if (upgradeCost == 0) _domeHPRegenUpgrades.upgradeCosts[0] = 5;
     if (!GAMEMANAGER.HasPlastic(upgradeCost)) {
         std::cout << "Not enough materials to upgrade Mining Reach." << std::endl;
         return;
@@ -472,7 +474,7 @@ void UpgradeManager::InitPlayerUpgrades()
 
     // Mining Reach upgrades
     _miningReachUpgrades.upgradeCosts = {
-         5,   // 1
+         0,   // 1
         8,   // 2
         12,   // 3
         17,   // 4
@@ -531,7 +533,7 @@ void UpgradeManager::InitDomeUpgrades()
 
     // Dome HP Regen upgrades
     _domeHPRegenUpgrades.upgradeCosts = {
-        5,   // 1
+        0,   // 1
         10,   // 2
         15,   // 3
         20,   // 4
