@@ -12,12 +12,6 @@ EnemiesManager::EnemiesManager(): _scaleRand(30,0.7f,1.3f), _endlessRand(100,0.0
 
 void EnemiesManager::Update() {
     //ChooseModelBasedOnDistance(); //LOD (safe to comment out)
-    if(Input::Instance().IsKeyPressed(GLFW_KEY_P)) {
-
-        float scale = _scaleRand.GetRandomFloat();
-
-        SpawnEnemy(2.5, glm::vec3(scale), RandomSpawnPos(), ANT);
-    }
 
     SpawnEnemiesForRound();
 

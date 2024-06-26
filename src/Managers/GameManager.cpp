@@ -32,12 +32,6 @@ GameManager& GameManager::GetInstance() {
     return instance;
 }
 
-void GameManager::pressToSkipPhase() {
-    if (INPUT.IsKeyPressed(GLFW_KEY_O)) {
-        _currentTime = 31;
-    }
-}
-
 void GameManager::AddPlastic(int amount) {
     HUD._isPlasticInAnim = true;
     HUD.AddMaterialText(amount);
@@ -127,7 +121,6 @@ void GameManager::Update() {
 
     if (TUTORIALMANAGER._isFreePlay) {
         _currentTime += TIME.GetDeltaTime();
-        pressToSkipPhase();
 
         if (_currentTime >= GetPhaseTime()) {
             _currentTime = 0.0f;

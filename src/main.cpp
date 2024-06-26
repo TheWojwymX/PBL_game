@@ -230,11 +230,6 @@ int main(int, char**)
 
         if(!GAMEMANAGER._isInMainMenu) {
 
-            if(INPUT.IsKeyPressed(GLFW_KEY_0)){
-                GAMEMANAGER.GoToMainMenu();
-            }
-
-
             //debugging adding money
             if (INPUT.IsKeyPressed(77)) {
                 GAMEMANAGER.AddPlastic(10);
