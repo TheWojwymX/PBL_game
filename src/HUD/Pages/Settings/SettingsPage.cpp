@@ -95,9 +95,9 @@ void SettingsPage::SetupButtons() {
                                                   AUDIOMANAGER.ChangeSFXVolume(5);
                                               });
 
-    _discoButtonOff = std::make_shared<Button>("res/Images/Button/settings_off.png",
-                                               "res/Images/Button/settings_off_hover.png",
-                                               "res/Images/Button/settings_off_clicked.png",
+    _discoButtonOff = std::make_shared<Button>("res/Images/Button/settings_on.png",
+                                               "res/Images/Button/settings_on_hover.png",
+                                               "res/Images/Button/settings_on_clicked.png",
                                                CoordsConverter::ConvertCoords(glm::vec2(1050, 564)),
                                                CoordsConverter::ConvertCoords(glm::vec2(1138, 522)),
                                                [this]() {
@@ -106,9 +106,9 @@ void SettingsPage::SetupButtons() {
                                                    _isDisco = !_isDisco;
                                                });
 
-    _discoButtonOn = std::make_shared<Button>("res/Images/Button/settings_on.png",
-                                              "res/Images/Button/settings_on_hover.png",
-                                              "res/Images/Button/settings_on_clicked.png",
+    _discoButtonOn = std::make_shared<Button>("res/Images/Button/settings_off.png",
+                                              "res/Images/Button/settings_off_hover.png",
+                                              "res/Images/Button/settings_off_clicked.png",
                                               CoordsConverter::ConvertCoords(glm::vec2(1050, 564)),
                                               CoordsConverter::ConvertCoords(glm::vec2(1138, 522)),
                                               [this]() {
