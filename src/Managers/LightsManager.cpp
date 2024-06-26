@@ -439,7 +439,7 @@ void LightsManager::GenerateRandomColors(int amount)
         glm::vec3 color;
         do {
             color = glm::vec3(_randomGen.GetRandomFloat(), _randomGen.GetRandomFloat(), _randomGen.GetRandomFloat());
-        } while (color.x <= 0.5f && color.y <= 0.5f && color.z <= 0.7f);
+        } while ((color.x <= 0.5f && color.y <= 0.5f && color.z <= 0.7f) ||  (color.z >= color.x + 0.6f && color.z >= color.y + 0.6f));
 
         // Enqueue the generated color
         _randomColors.push(color);
