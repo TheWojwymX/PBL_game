@@ -79,12 +79,10 @@ void Animation::Update() {
 
     if (_enemyState == SPAWN && !IsAnimationFinished())
     {
-        std::cout << "am spawnin" << std::endl;
         _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
     }
     else if (_enemyState == SPAWN && IsAnimationFinished())
     {
-        std::cout << "am goin to walk" << std::endl;
         _enemyState = WALK;
         _currentTime = _randomGen.GetRandomFloat();
     }
@@ -113,10 +111,8 @@ void Animation::Update() {
         {
             case WALK:
             {
-                std::cout << "am walkin" << std::endl;
                 if (_currentTime >= _frameDuration * _walkFrames.size())
                 {
-                    std::cout << "jeeeeeeeeeee booooooi me slidin" << std::endl;
                     _currentTime = 0.0f;
                 }
                 break;
