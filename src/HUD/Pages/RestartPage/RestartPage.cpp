@@ -34,6 +34,7 @@ void RestartPage::SetupButtons() {
                                             CoordsConverter::ConvertCoords(glm::vec2(1142, 482)),
                                             [this]() {
                                                 GAMEMANAGER.RestartGame();
+                                                GAMEMANAGER._clickedStart = true;
                                             });
 
     _mainMenuButton = std::make_shared<Button>("res/Images/Button/mainmenu.png",
@@ -43,5 +44,6 @@ void RestartPage::SetupButtons() {
                                               CoordsConverter::ConvertCoords(glm::vec2(1142, 619)),
                                               [this]() {
                                                   GAMEMANAGER.GoToMainMenu();
+                                                  GAMEMANAGER._clickedStart = false;
                                               });
 }

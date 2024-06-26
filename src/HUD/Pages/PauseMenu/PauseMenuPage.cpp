@@ -51,6 +51,7 @@ void PauseMenuPage::SetupButtons() {
                                                CoordsConverter::ConvertCoords(glm::vec2(1137, 610)),
                                                [this]() {
                                                    GAMEMANAGER.GoToMainMenu();
+                                                   GAMEMANAGER._clickedStart = false;
                                                });
 
     _quitButton = std::make_shared<Button>("res/Images/Button/quit.png",

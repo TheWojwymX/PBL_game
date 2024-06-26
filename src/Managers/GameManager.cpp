@@ -258,7 +258,6 @@ void GameManager::RestartGame() {
     AUDIOMANAGER.Reset();
     Unpause();
     _sinceStartClickedTimer = 0;
-    _clickedStart = false;
 }
 
 void GameManager::LoseGame() {
