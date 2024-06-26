@@ -23,8 +23,9 @@ void HUDMain::Init() {
     _waveTimerRed.Init("res/Images/WaveTimer/zegar_czerwony.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 0, true, true);
     _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
-    testowy.Init("res/Images/HUD/testowy.png", glm::vec2(-50, -50), glm::vec2(50, 50), true, false);
 
+    _PDAInput.Init("res/Images/HUD/Inputs/RadioInput.png", CoordsConverter::ConvertCoords(glm::vec2(28, 300)), CoordsConverter::ConvertCoords(glm::vec2(144, 245)), true, false);
+    _compassInput.Init("res/Images/HUD/Inputs/CompassInput.png", CoordsConverter::ConvertCoords(glm::vec2(28, 300)), CoordsConverter::ConvertCoords(glm::vec2(144, 245)), true, false);
 
     _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(206, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
 
@@ -60,13 +61,6 @@ void HUDMain::Update() {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_KP_9)){
-        czyWyswietlacTestowy = !czyWyswietlacTestowy;
-    }
-    if(czyWyswietlacTestowy){
-        testowy.Render();
-    }
-
     glm::vec leftDownCorner = glm::vec3(0.7614583, 0.5564815, 0.0);
     glm::vec rightTopCorner = glm::vec3(0.9723958, 0.9314815, 0.0);
 
@@ -76,6 +70,12 @@ void HUDMain::Update() {
     float actualDomeHP = DOMEMANAGER.GetDomeHP();
     float maxHP = DOMEMANAGER.GetDomeMaxHP();
     float percentHP = actualDomeHP / maxHP * 100;
+
+    if(_playerNode->GetTransform()->GetPosition().y > GAMEMANAGER._groundLevel - 0.7f){
+        _isInputPDA = true;
+    }else{
+        _isInputPDA = false;
+    }
 
     //std::cout << actualDomeHP << "   " << maxHP << "   " << percentHP << "   " << (actualDomeHP/maxHP) * 100 << std::endl;
     if(_shouldShowHP && _isAfterTutorialHP){
@@ -137,6 +137,12 @@ void HUDMain::Update() {
     }
     if(_shouldShowCrosshair && _isAfterTutorialCrosshair){
         _crosshairImage.Render();
+
+        if(_isInputPDA){
+            _PDAInput.Render();
+        }else{
+            _compassInput.Render();
+        }
     }
 
     if(_isTutorialNeededAtMoment && _shouldShowTutorial){
@@ -360,7 +366,7 @@ void HUDMain::PlayWaveTimerBump() {
                 float backgroundScale = glm::mix(_defaultWaveTimerScale, _maxWaveTimerScale, t);
                 float arrowScale = glm::mix(_defaultTimerArrowScale, _maxTimerArrowScale, t);
                 _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
-                _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
+                _waveTimerRed.SetScale(glm::vec2(backgroundScale, backgroundScale));
                 _waveArrowRed.SetScale(glm::vec2(arrowScale, arrowScale));
                 _waveArrowGreen.SetScale(glm::vec2(arrowScale, arrowScale));
             } else {
@@ -369,7 +375,7 @@ void HUDMain::PlayWaveTimerBump() {
                 float backgroundScale = glm::mix(_maxWaveTimerScale, _defaultWaveTimerScale, t);
                 float arrowScale = glm::mix(_maxTimerArrowScale, _defaultTimerArrowScale, t);
                 _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
-                _waveTimerGreen.SetScale(glm::vec2(backgroundScale, backgroundScale));
+                _waveTimerRed.SetScale(glm::vec2(backgroundScale, backgroundScale));
                 _waveArrowRed.SetScale(glm::vec2(arrowScale, arrowScale));
                 _waveArrowGreen.SetScale(glm::vec2(arrowScale, arrowScale));
             }

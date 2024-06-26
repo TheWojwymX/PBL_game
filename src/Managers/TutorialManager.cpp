@@ -201,7 +201,7 @@ void TutorialManager::Update() {
         //konczy sie jak wyjdzie ze stolu
         case 9:
             ControllHud(1,1,1,1,0,0);
-            if(PAGEMANAGER._isInPage == false){
+            if(_player->GetComponent<PlayerController>()->GetMiningReachLevel() > 0 || DOMEMANAGER.GetDomeHPRegenLevel() > 0){
                 DisplayAndChangeMessage();
                 HUD._shouldShowPhaseInfo = true;
             }

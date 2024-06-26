@@ -52,6 +52,11 @@ public:
 
     ImageRenderer _depthMeterBackground;
 
+    ImageRenderer _PDAInput;
+    ImageRenderer _compassInput;
+
+    bool _isInputPDA = true;
+
     std::vector<std::pair<std::shared_ptr<ImageRenderer>, std::shared_ptr<Enemy>>> _attackSymbols;
 
     std::vector<std::shared_ptr<ImageRenderer>> _jetpackImages;
@@ -78,8 +83,6 @@ public:
     bool _isAfterTutorialDepth = false;
     bool _isAfterTutorialPhaseInfo = false;
 
-
-    ImageRenderer testowy;
     ImageRenderer _tutorialBackground;
     bool _isTutorialNeededAtMoment = false;
     bool _shouldShowTutorial = false;

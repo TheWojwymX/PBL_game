@@ -125,10 +125,6 @@ void GameManager::Update() {
         _sinceStartClickedTimer += TIME.GetDeltaTime();
     }
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_KP_5)){
-        ENEMIESMANAGER.Reset();
-    }
-
     if (TUTORIALMANAGER._isFreePlay) {
         _currentTime += TIME.GetDeltaTime();
         pressToSkipPhase();
