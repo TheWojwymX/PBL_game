@@ -1,6 +1,6 @@
 {
-  "nextComponentId": 199,
-  "nextNodeId": 178,
+  "nextComponentId": 200,
+  "nextNodeId": 179,
   "resources": {
     "Models": [
       {
@@ -402,6 +402,54 @@
       {
         "ModelName": "compassDownModel",
         "Path": "res/Models/Compass/kompas-2.obj"
+      },
+      {
+        "ModelName": "flagModel0",
+        "Path": "res/Models/Flag/flag_full0-0.obj"
+      },
+      {
+        "ModelName": "flagModel1",
+        "Path": "res/Models/Flag/flag_full1-0.obj"
+      },
+      {
+        "ModelName": "flagModel2",
+        "Path": "res/Models/Flag/flag_full2-0.obj"
+      },
+      {
+        "ModelName": "flagModel3",
+        "Path": "res/Models/Flag/flag_full3-0.obj"
+      },
+      {
+        "ModelName": "flagModel4",
+        "Path": "res/Models/Flag/flag_full4-0.obj"
+      },
+      {
+        "ModelName": "flagModel5",
+        "Path": "res/Models/Flag/flag_full5-0.obj"
+      },
+      {
+        "ModelName": "flagModel6",
+        "Path": "res/Models/Flag/flag_full6-0.obj"
+      },
+      {
+        "ModelName": "flagModel7",
+        "Path": "res/Models/Flag/flag_full7-0.obj"
+      },
+      {
+        "ModelName": "flagModel8",
+        "Path": "res/Models/Flag/flag_full8-0.obj"
+      },
+      {
+        "ModelName": "flagModel9",
+        "Path": "res/Models/Flag/flag_full9-0.obj"
+      },
+      {
+        "ModelName": "flagModel10",
+        "Path": "res/Models/Flag/flag_full10-0.obj"
+      },
+      {
+        "ModelName": "flagModel11",
+        "Path": "res/Models/Flag/flag_full11-0.obj"
       }
     ],
     "Shaders": [
@@ -1711,6 +1759,37 @@
             1.0,
             1.0,
             1.0
+          ]
+        }
+      },
+      {
+        "NodeID": 178,
+        "NodeName": "Flag",
+        "children": [],
+        "components": [
+          {
+            "componentId": 199,
+            "componentType": 5,
+            "model": "flagModel1",
+            "shader": "modelShader",
+            "outlineShader": "outlineShader"
+          }
+        ],
+        "transform": {
+          "position": [
+            200.0,
+            267.0,
+            195.0
+          ],
+          "rotation": [
+            0.0,
+            0.7071067690849304,
+            5
+          ],
+          "scale": [
+            1.8,
+            1.4,
+            1.8
           ]
         }
       }
