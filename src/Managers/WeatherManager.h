@@ -54,6 +54,7 @@ private:
     float radius = 50.0f;
     float angle = 44.5f;
     float speed = 0.03f;
+    float speed2 = 0.03f;
     int direction = 1;
     int counter = 0;
     int angleDirection = 1;
@@ -120,4 +121,6 @@ private:
 
     int flagAnimCount = 0;
     float flagTimer = 0.0f;
+
+    bool _fastSun = false;
 };

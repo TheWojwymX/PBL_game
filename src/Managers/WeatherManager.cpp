@@ -68,6 +68,19 @@ void WeatherManager::Reset(){
 
 void WeatherManager::Update(){
 
+    if(INPUT.IsKeyPressed(323)){
+        _fastSun = !_fastSun;
+    }
+
+    if(_fastSun){
+        speed = 0.5f;
+        speed2 = 0.5f;
+    }
+    else{
+        speed = 0.03f;
+        speed2 = 0.03f;
+    }
+
     if(wormNode->GetEnabled()) {
         wormParticleNode->GetComponent<ParticleGenerator>()->SpawnParticles();
         if (wormNode->GetTransform()->GetRotation().y > 0.1) {
@@ -166,7 +179,6 @@ void WeatherManager::Update(){
     if(isRaining && _playerNode->GetTransform()->GetPosition().y < 292 && !_soundNode->_isFadingAway && !_soundNode->_isRisingUp && _soundNode->GetVolume() != 0.0){
         _soundNode->_fadeAwayTarget = 0.0;
         _soundNode->FadeAway(1);
-        cout << "Fade Away" << endl;
     }
 
     if(isRaining && _playerNode->GetTransform()->GetPosition().y >= 292 && !_soundNode->_isFadingAway && !_soundNode->_isRisingUp && _soundNode->GetVolume() == 0.0){
@@ -174,14 +186,10 @@ void WeatherManager::Update(){
         else _soundNode->_riseUpTarget = 1.0;
 
         _soundNode->RiseUp(1, _playerNode);
-        cout << _soundNode->_riseUpTarget << endl;
-        cout << "Rise Up" << endl;
     }
 
     // Update rain duration
     if (isRaining) {
-        cout << "TARGET: " << _soundNode->_riseUpTarget << endl;
-        cout << "VOLUME: " << _soundNode->GetVolume() << endl;
         rainTimeLeft -= TIME.GetDeltaTime();
         timeSinceLastParticleSpawn += TIME.GetDeltaTime();
         auto particleGenerator = NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>();
@@ -374,7 +382,7 @@ glm::vec3 WeatherManager::getSkyColor() {
         currentColor = rainNightSkyColor;
         speed = 0.1;
     } else if (angle >= 42.5 && angle < 44.0) {
-        speed = 0.03;
+        speed = speed2;
         if(!rainyDay) currentColor = glm::mix(rainNightSkyColor, sunsetSkyColor, (angle - 42.5f) / (44.0f - 42.5f));
         if(rainyDay) currentColor = glm::mix(rainNightSkyColor, rainSunsetSkyColor, (angle - 42.5f) / (44.0f - 42.5f));
     }
