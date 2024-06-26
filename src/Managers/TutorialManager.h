@@ -25,7 +25,7 @@ public:
     int _actualMessage = 0;
     std::vector<string> _messages{
 
-            "QUICK! TAKE RADIO [4] AND CALL SUPPORT [1]!    <<<PRESS [R] TO SKIP TUTORIAL>>>",
+            "QUICK! TAKE RADIO [Q] AND CALL SUPPORT [1]!    <<<PRESS [R] TO SKIP TUTORIAL>>>",
 
             "CHOOSE POSITION WITH [LMB].",
 
@@ -117,6 +117,7 @@ public:
     bool _isAfterEndGameInfo = false;
 
     bool _isAfterEndGameActivation = false;
+    bool _isAfterEndGameDisplayed = false;
 };
 
 

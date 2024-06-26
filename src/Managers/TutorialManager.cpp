@@ -27,8 +27,9 @@ void TutorialManager::Init() {
 void TutorialManager::Update() {
     //std::cout << "tutorial skonczony: " << _isTutorialEnded << "   aktualna wiadomosc: " << _actualMessage << std::endl;
 
-    if(_isAfterEndGameActivation){
-        DisplaySpecialMessage("YOU HAVE MAXED UPGRADES AND 1 MIN TO GATHER MATERIALS BEFORE AN ENDLESS WAVE");
+    if(_isAfterEndGameActivation && !_isAfterEndGameDisplayed){
+        _isAfterEndGameDisplayed = true;
+        DisplaySpecialMessage("YOU HAVE MAXED UPGRADES AND HAVE 1 MINUTE TO GATHER MATERIALS BEFORE AN ENDLESS WAVE");
     }
 
     if(!_isAfterEndGameInfo && GAMEMANAGER.GetRoundNumber() == 3 && !_isAfterEndGameActivation){

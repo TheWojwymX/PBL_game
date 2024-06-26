@@ -90,6 +90,8 @@ void PlayerController::MovementInput() {
 void PlayerController::InteractionInput() {
     _timeSinceLastInteraction += TIME.GetDeltaTime();
 
+    if(GAMEMANAGER._paused) return;
+
     if (_timeSinceLastInteraction >= _interactionCooldown && INPUT.GetMouseButtonState(GLFW_MOUSE_BUTTON_1)
         && !_shovelController->_isHidden && !_shovelController->_playHideAnim) {
         if (_blockManagerRef->RayIntersectsBlock(_reach, _radius, _digPower))

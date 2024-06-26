@@ -56,10 +56,6 @@ void HUDMain::Init() {
 
 void HUDMain::Update() {
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_KP_6)){
-        _isHPInAnim = true;
-    }
-
     //images
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
@@ -200,7 +196,11 @@ void HUDMain::WaveTimerGUIManager() {
     
     if (_oldClockDegrees <= -157.5f && _oldClockDegrees != roundedDegrees){
         _isWaveTimerInAnim = true;
-        RESOURCEMANAGER.GetSoundByName("Tick")->PlaySound(_playerNode);
+        RESOURCEMANAGER.GetSoundByID(_tickSoundsIDs[_actualTickID])->PlaySound(_playerNode);
+        _actualTickID++;
+        if(_actualTickID >= _tickSoundsIDs.size()){
+            _actualTickID = 0;
+        }
     }
     _oldClockDegrees = roundedDegrees;
 

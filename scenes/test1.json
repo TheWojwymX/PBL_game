@@ -701,7 +701,7 @@
         "Volume": 0.9
       },
       {
-        "Path": "res/Sounds/ticking.mp3",
+        "Path": "res/Sounds/Ticking/ticking.mp3",
         "SoundName": "Tick",
         "SoundID": 26,
         "Type": 1,
@@ -733,6 +733,34 @@
         "SoundName": "Rain",
         "SoundID": 30,
         "Type": 0,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Ticking/ticking2.mp3",
+        "SoundName": "Tick2",
+        "SoundID": 31,
+        "Type": 1,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Ticking/ticking3.mp3",
+        "SoundName": "Tick3",
+        "SoundID": 32,
+        "Type": 1,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Ticking/ticking4.mp3",
+        "SoundName": "Tick4",
+        "SoundID": 33,
+        "Type": 1,
+        "Volume": 1.0
+      },
+      {
+        "Path": "res/Sounds/Ticking/ticking5.mp3",
+        "SoundName": "Tick5",
+        "SoundID": 34,
+        "Type": 1,
         "Volume": 1.0
       }
     ]

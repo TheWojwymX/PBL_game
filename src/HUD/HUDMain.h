@@ -134,6 +134,11 @@ private:
     float _materialTextDisolve = 1.0f;
     BatchRandomGenerator _yoffsetRand;
 
+    std::vector<int> _tickSoundsIDs = {26, 31, 32, 33, 34};
+    int _actualTickID = 0;
+
     void UpdateMaterialTexts();
     void RenderMaterialTexts();
+
+
 };
