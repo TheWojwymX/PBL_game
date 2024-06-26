@@ -24,8 +24,8 @@ void HUDMain::Init() {
     _waveArrowGreen.Init("res/Images/WaveTimer/strzalka_zielona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
     _waveArrowRed.Init("res/Images/WaveTimer/strzalka_czerwona.png", CoordsConverter::ConvertCoords(glm::vec2(124, 139)), 90, true, true);
 
-    _PDAInput.Init("res/Images/HUD/Inputs/RadioInput.png", CoordsConverter::ConvertCoords(glm::vec2(28, 300)), CoordsConverter::ConvertCoords(glm::vec2(144, 245)), true, false);
-    _compassInput.Init("res/Images/HUD/Inputs/CompassInput.png", CoordsConverter::ConvertCoords(glm::vec2(28, 300)), CoordsConverter::ConvertCoords(glm::vec2(144, 245)), true, false);
+    _PDAInput.Init("res/Images/HUD/Inputs/RadioInput2.png", CoordsConverter::ConvertCoords(glm::vec2(8, 320)), CoordsConverter::ConvertCoords(glm::vec2(194, 225)), true, false);
+    _compassInput.Init("res/Images/HUD/Inputs/CompassInput2.png", CoordsConverter::ConvertCoords(glm::vec2(8, 320)), CoordsConverter::ConvertCoords(glm::vec2(194, 225)), true, false);
 
     _tutorialBackground.Init("res/Images/HUD/tutorial_window.png", CoordsConverter::ConvertCoords(glm::vec2(206, 1051)), CoordsConverter::ConvertCoords(glm::vec2(1633, 967)), true, false);
 
