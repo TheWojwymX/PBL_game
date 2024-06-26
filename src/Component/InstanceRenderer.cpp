@@ -96,36 +96,3 @@ void InstanceRenderer::CreatePositionBuffer(int maxSize) {
     else
         glBufferData(GL_ARRAY_BUFFER, maxSize * sizeof(glm::vec3), nullptr, GL_STATIC_DRAW);
 }
-
-void InstanceRenderer::addToInspector(ImguiMain* imguiMain)
-{
-    if (ImGui::TreeNode("Instance Renderer"))
-    {
-        // Display and edit the model name
-        char modelName[128];
-        strcpy(modelName, _model ? _model->_name.c_str() : "");
-        if (ImGui::InputText("Model Name", modelName, sizeof(modelName)))
-        {
-            _model = RESOURCEMANAGER.GetModelByName(modelName);
-        }
-
-        // Display and edit the max size
-        int maxSize = static_cast<int>(_maxSize); // Use a temporary variable for ImGui
-        if (ImGui::InputInt("Max Size", &maxSize)) {
-            _maxSize = static_cast<unsigned int>(maxSize);
-        }
-
-        // Display and edit the shader name
-        char shaderName[128];
-        strcpy(shaderName, _shader ? _shader->_name.c_str() : "");
-        if (ImGui::InputText("Shader Name", shaderName, sizeof(shaderName)))
-        {
-            _shader = RESOURCEMANAGER.GetShaderByName(shaderName);
-        }
-
-        // Display and edit the dynamic flag
-        ImGui::Checkbox("Is Dynamic", &_isDynamic);
-
-        ImGui::TreePop();
-    }
-}

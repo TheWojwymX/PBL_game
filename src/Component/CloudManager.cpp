@@ -131,11 +131,6 @@ void CloudManager::SetVisibility(BlockData& blockData, bool state) {
     }
 }
 
-void CloudManager::addToInspector(ImguiMain *imguiMain)
-{
-    ImGui::Text(" Siema jestem blok manager ");
-}
-
 float CloudManager::Perlin(float x, float y, float z) {
     int seed = _rangeRand.GetRandomInt();
     float scale = 20.0f; // Determines noise granularity

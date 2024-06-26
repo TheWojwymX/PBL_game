@@ -65,15 +65,6 @@ void MeshRenderer::RenderModel(glm::mat4 ctm, bool isShadow) {
     }
 }
 
-void MeshRenderer::addToInspector(ImguiMain* imguiMain) {
-    if (ImGui::TreeNode("Mesh Renderer")) {
-        ImGui::Text("Test1:");
-        ImGui::Text("Test2:");
-
-        ImGui::TreePop();
-    }
-}
-
 nlohmann::json MeshRenderer::Serialize() {
     nlohmann::json data = Component::Serialize();
     data["model"] = _model->_name;

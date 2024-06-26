@@ -7,7 +7,6 @@
 #include <../thirdparty/nlohmann/json.hpp>
 #include <Core/ComponentTypeEnum.h>
 
-class ImguiMain;
 class Node;
 
 class Component {
@@ -23,7 +22,6 @@ public:
     virtual void Update();
     virtual void Render(glm::mat4 parentWorld);
     virtual void RenderShadows(glm::mat4 parentWorld);
-    virtual void addToInspector(ImguiMain* imguiMain);
     //virtual void SetUp();
     void addToHierarchy();
 

@@ -54,8 +54,6 @@ public:
 
 	void SetCursorMode(bool editMode);
 
-	static int ImGuiKeyCorrelation(int keyCode);
-
 	//Callback metoda dla glfw od zmiany wielkości okna
 	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{

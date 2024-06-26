@@ -36,7 +36,6 @@ public:
 
     void setMeshRendererId(int meshRendererId);
 
-    //void addToInspector(ImguiMain *imguiMain) override;
 private:
     std::vector<std::shared_ptr<Model>> _spawnFrames;
     std::vector<std::shared_ptr<Model>> _walkFrames;

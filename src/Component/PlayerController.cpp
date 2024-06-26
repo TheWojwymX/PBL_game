@@ -327,16 +327,6 @@ bool PlayerController::CheckIsOutsideBase(glm::vec3 playerPos, glm::vec2 domePos
     }
 }
 
-void PlayerController::addToInspector(ImguiMain *imguiMain) {
-    if (ImGui::TreeNode("Player Controller")) {
-        // Block Gui related things go there
-        ImGui::Text("Test1:");
-        ImGui::Text("Test2:");
-
-        ImGui::TreePop();
-    }
-}
-
 void PlayerController::HandleGlowstick() {
     // Get delta time in seconds
     float deltaTime = TIME.GetDeltaTime();

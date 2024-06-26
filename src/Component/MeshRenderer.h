@@ -17,7 +17,6 @@ public:
 
     void Render(glm::mat4 parentWorld) override;
     void RenderShadows(glm::mat4 parentWorld) override;
-    void addToInspector(ImguiMain* imguiMain) override;
     nlohmann::json Serialize() override;
     void Deserialize(const nlohmann::json& jsonData) override;
 

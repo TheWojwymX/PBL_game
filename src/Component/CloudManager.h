@@ -24,8 +24,6 @@ public:
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
 
-    void addToInspector(ImguiMain *imguiMain) override;
-
     static CloudManager& GetInstance() {
         static CloudManager instance; // Static instance of CloudManager
         return instance;

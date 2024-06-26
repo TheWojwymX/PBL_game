@@ -6,9 +6,6 @@
 #include <glm/gtc/quaternion.hpp>
 #include <spdlog/spdlog.h>
 #include <memory> // Include necessary header for std::shared_ptr
-#include "imgui.h"
-
-class ImguiMain;
 
 class Transform {
 public:
@@ -50,8 +47,6 @@ public:
     static std::vector<glm::vec3> ApplyTransformation(std::vector<glm::vec3>& vertices, glm::mat4& transform);
     static glm::mat4 CalculateTransformMatrix(glm::vec3 pos, glm::quat rotation, glm::vec3 scale);
     static glm::mat4 Origin();
-
-    void addToInspector(ImguiMain *imguiMain);
 
     static glm::vec3 MoveTowards(glm::vec3 current, glm::vec3 target, float maxDistanceDelta);
 

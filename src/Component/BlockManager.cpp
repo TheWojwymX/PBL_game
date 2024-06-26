@@ -1231,13 +1231,3 @@ BlockData* BlockManager::GetBlock(glm::ivec3 position) {
     }
 }
 
-
-void BlockManager::addToInspector(ImguiMain *imguiMain) {
-    if (ImGui::TreeNode("BlockManager")) {
-        // Gui related things go there
-        ImGui::Text("Test1:");
-        ImGui::Text("Test2:");
-
-        ImGui::TreePop();
-    }
-}

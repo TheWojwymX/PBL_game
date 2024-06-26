@@ -245,15 +245,6 @@ const vector<std::shared_ptr<Component>> &Node::getComponents() const {
     return _components;
 }
 
-void Node::addToInspector(ImguiMain *imguiMain) {
-    _local->addToInspector(imguiMain);
-
-    for (auto &component : _components)
-    {
-        component->addToInspector(imguiMain);
-    }
-}
-
 void Node::RemoveChild(std::shared_ptr<Node> child)
 {
     auto it = std::find(_children.begin(), _children.end(), child);

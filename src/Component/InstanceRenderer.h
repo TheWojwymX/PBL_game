@@ -27,8 +27,6 @@ public:
 
     void RefreshPositionBuffer(const std::vector<glm::vec3>& instancePositions);
 
-    void addToInspector(ImguiMain* imguiMain) override;
-
 private:
     std::shared_ptr<Model> _model;
     std::shared_ptr<Shader> _shader;

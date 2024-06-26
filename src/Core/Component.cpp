@@ -1,5 +1,4 @@
 #include "Component.h"
-#include "imgui.h"
 
 Component::Component() : _isEnabled(true), _ownerTransform(nullptr) {}
 
@@ -53,15 +52,6 @@ void Component::SetEnabled(bool isEnabled) {
 
 bool Component::IsEnabled() const {
     return _isEnabled;
-}
-
-void Component::addToInspector(ImguiMain *imguiMain)
-{
-
-}
-
-void Component::addToHierarchy() {
-    ImGui::Text("Komponent");
 }
 
 glm::vec3 Component::GetOwnerPosition() {

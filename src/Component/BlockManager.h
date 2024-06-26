@@ -10,7 +10,6 @@
 #include "Component/InstanceRenderer.h"
 #include "Component/Camera.h"
 #include "BlockData.h"
-#include "imgui.h"
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "BatchRandomGenerator.h"
@@ -48,8 +47,6 @@ public:
 
     void SetInstanceRenderer(std::shared_ptr<InstanceRenderer> renderer) { _sandRendererRef = renderer; }
     void SetCamera(std::shared_ptr<Camera> camera) { _cameraRef = camera; }
-
-    void addToInspector(ImguiMain *imguiMain) override;
 
     std::vector<std::pair<float, int>> _layerStats;
 

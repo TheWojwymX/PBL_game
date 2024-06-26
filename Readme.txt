@@ -1,5 +1,4 @@
 1. OpenGL 4.3
-2. Imgui
 3. Stdio
 4. Glm
 5. Glad

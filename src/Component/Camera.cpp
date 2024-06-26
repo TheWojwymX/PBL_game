@@ -107,19 +107,6 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     UpdateCameraVectors();
 }
 
-void Camera::addToInspector(ImguiMain* imguiMain) {
-    if (ImGui::TreeNode("Camera")) {
-        ImGui::Text("Head Bobbing Parameters:");
-
-        // Add slider controls for _bobAmount, _bobFrequency, and _horizontalBobScale
-        ImGui::SliderFloat("Bob Amount", &_bobAmount, 0.0f, 0.1f, "%.3f");
-        ImGui::SliderFloat("Bob Frequency", &_bobFrequency, 0.0f, 10.0f, "%.1f");
-        ImGui::SliderFloat("Horizontal Bob Scale", &_horizontalBobScale, 0.0f, 10.0f, "%.1f");
-
-        ImGui::TreePop();
-    }
-}
-
 glm::vec3 Camera::LerpPosition(glm::vec3 currentPosition) {
     float lerpValue = 0.25f;
     currentPosition = lerp(currentPosition, _position, lerpValue);

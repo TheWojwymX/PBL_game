@@ -135,46 +135,6 @@ void Input::SetCursorMode(bool editMode) {
 	glfwSetInputMode(_window, GLFW_CURSOR, cursorMode);
 }
 
-int Input::ImGuiKeyCorrelation(int keyCode)
-{
-	switch (keyCode)
-	{
-	case GLFW_KEY_W:
-		return 3;
-	case 3:
-		return GLFW_KEY_W;
-
-	case GLFW_KEY_A:
-		return 0;
-	case 0:
-		return GLFW_KEY_A;
-
-	case GLFW_KEY_D:
-		return 1;
-	case 1:
-		return GLFW_KEY_D;
-
-	case GLFW_KEY_S:
-		return 2;
-	case 2:
-		return GLFW_KEY_S;
-
-	case GLFW_KEY_E:
-		return 4;
-	case 4:
-		return GLFW_KEY_E;
-
-	case GLFW_KEY_SPACE:
-		return 5;
-	case 5:
-		return GLFW_KEY_SPACE;
-	default:
-		return 0;
-	}
-	
-}
-
-
 void Input::FramebufferSizeCallbackIMP(int width, int height)
 {
 	// TODO

@@ -72,8 +72,6 @@ public:
         return _viewProjectionMatrix;
     }
 
-    void addToInspector(ImguiMain *imguiMain) override;
-
     void setScreenWidth(unsigned int screenWidth) {_screenWidth = screenWidth;}
     void setScreenHeight(unsigned int screenHeight) {_screenHeight = screenHeight;}
     unsigned int getScreenWidth() {return _screenWidth;}

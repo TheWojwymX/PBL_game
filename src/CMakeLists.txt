@@ -38,7 +38,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
         Managers/ResourceManager.cpp
         Managers/ResourceManager.h
         Managers/NodesManager.cpp
-        Managers/NodesManager.h Gui/ImguiMain.cpp Gui/ImguiMain.h Gui/ImguiHierarchy.cpp Gui/ImguiHierarchy.h Gui/ImguiInspector.cpp Gui/ImguiInspector.h
+        Managers/NodesManager.h
         Core/ComponentTypeEnum.h
         HUD/Image/ImageRenderer.cpp
         HUD/Image/ImageRenderer.h

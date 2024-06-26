@@ -49,7 +49,6 @@ public:
     void Render(glm::mat4 parentWorld);
     void RenderShadows(glm::mat4 parentWorld);
     void UpdateTransforms(glm::mat4 parentWorld);
-    void addToInspector(ImguiMain* imguiMain);
     void RemoveChild(std::shared_ptr<Node> child);
     std::shared_ptr<Node> GetParent() const { return _parent.lock(); }
 

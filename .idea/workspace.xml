@@ -12,16 +12,16 @@
   <component name="CMakeRunConfigurationManager">
     <generated>
       <config projectName="SandBOX" targetName="glad" />
+      <config projectName="SandBOX" targetName="uninstall" />
       <config projectName="SandBOX" targetName="stb_image" />
       <config projectName="SandBOX" targetName="assimp" />
+      <config projectName="SandBOX" targetName="UpdateAssimpLibsDebugSymbolsAndDLLs" />
+      <config projectName="SandBOX" targetName="SandBOX" />
       <config projectName="SandBOX" targetName="zlibstatic" />
       <config projectName="SandBOX" targetName="glfw" />
       <config projectName="SandBOX" targetName="update_mappings" />
-      <config projectName="SandBOX" targetName="freetype" />
-      <config projectName="SandBOX" targetName="uninstall" />
-      <config projectName="SandBOX" targetName="UpdateAssimpLibsDebugSymbolsAndDLLs" />
-      <config projectName="SandBOX" targetName="SandBOX" />
       <config projectName="SandBOX" targetName="spdlog" />
+      <config projectName="SandBOX" targetName="freetype" />
       <config projectName="SandBOX" targetName="imgui" />
     </generated>
   </component>
@@ -34,9 +34,40 @@
   <component name="ChangeListManager">
     <list default="true" id="65ce1bec-7ae4-4c6c-939e-a503a67ab4a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/Turret.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Turrets/TurretsManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Animation.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Animation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Block.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Block.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Block.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Block.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/BlockManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/BlockManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/BlockManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Camera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/CloudManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/CloudManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/CloudManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/CloudManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/InstanceRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/InstanceRenderer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/InstanceRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/InstanceRenderer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/MeshRenderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/MeshRenderer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/PlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/PlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/StaticBlockController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/StaticBlockController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/StaticBlockController.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/StaticBlockController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Transform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Transform.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Component/Transform.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/Transform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Component.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Component.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Component.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Component.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Input.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Input.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Input.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Input.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiHierarchy.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiHierarchy.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiInspector.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiInspector.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiMain.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui/ImguiMain.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +139,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
