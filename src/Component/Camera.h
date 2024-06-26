@@ -80,6 +80,9 @@ public:
     unsigned int getScreenHeight() {return _screenHeight;}
 
     glm::vec2 GetRotation() const;
+
+    void setRotation(glm::vec2 rotation);
+    void setPosition(glm::vec3 position);
 private:
     // camera attributes
     glm::vec3 _offset;
