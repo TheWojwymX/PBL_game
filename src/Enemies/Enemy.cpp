@@ -125,7 +125,7 @@ void Enemy::EnemyAI()
         return;
     }
 
-    if(anim->_enemyState != DEAD)
+    if(anim->_enemyState != DEAD && anim->_enemyState != SPAWN)
     {
         AttackDome();
         WalkToDestination();

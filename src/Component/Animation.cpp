@@ -8,7 +8,7 @@
 Animation::Animation(std::shared_ptr<MeshRenderer> meshRenderer, float frameDuration, bool loop, state enemyState)
         : _meshRenderer(meshRenderer), _frameDuration(frameDuration), _currentTime(0.0f), _loop(loop), _enemyState(enemyState), _randomGen(10,0.0f,0.5f){}
 
-Animation::Animation(): _randomGen(10, 0.0f, 0.5f)
+Animation::Animation(): _randomGen(10, 0.0f, 0.25f)
 {
     _type = ComponentType::ANIMATION;
 }
@@ -77,15 +77,17 @@ void Animation::Update() {
     float deltaTime = TIME.GetDeltaTime();
     _currentTime += deltaTime;
 
-        if (_enemyState == SPAWN && !IsAnimationFinished())
-        {
-            _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
-        }
-        else if (_enemyState == SPAWN && IsAnimationFinished())
-        {
-            _enemyState = WALK;
-            _currentTime = _randomGen.GetRandomFloat();
-        }
+    if (_enemyState == SPAWN && !IsAnimationFinished())
+    {
+        std::cout << "am spawnin" << std::endl;
+        _currentTime = std::min(_currentTime, _frameDuration * _spawnFrames.size() - 0.01f);
+    }
+    else if (_enemyState == SPAWN && IsAnimationFinished())
+    {
+        std::cout << "am goin to walk" << std::endl;
+        _enemyState = WALK;
+        _currentTime = _randomGen.GetRandomFloat();
+    }
 
     if (_enemyState == DEAD && IsAnimationFinished())
     {
@@ -111,8 +113,10 @@ void Animation::Update() {
         {
             case WALK:
             {
+                std::cout << "am walkin" << std::endl;
                 if (_currentTime >= _frameDuration * _walkFrames.size())
                 {
+                    std::cout << "jeeeeeeeeeee booooooi me slidin" << std::endl;
                     _currentTime = 0.0f;
                 }
                 break;
