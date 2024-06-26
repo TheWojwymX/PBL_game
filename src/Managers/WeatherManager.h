@@ -26,6 +26,7 @@ public:
     void SetupWormParticles();
     glm::vec3 getSkyColor();
     glm::vec3 getDirColor();
+    void MakeDisco();
 
     glm::vec3 getWindDirection(){return windDirection;}
     float getWindStrength(){return windStrength;}
@@ -93,4 +94,5 @@ private:
 
     bool _adjustOnce = true;
     bool _reachedTarget = false;
+    bool _isDisco = false;
 };

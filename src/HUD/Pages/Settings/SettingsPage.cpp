@@ -102,6 +102,7 @@ void SettingsPage::SetupButtons() {
                                                CoordsConverter::ConvertCoords(glm::vec2(1138, 522)),
                                                [this]() {
                                                    LIGHTSMANAGER.ChangeDisco();
+                                                   WEATHERMANAGER.MakeDisco();
                                                    _isDisco = !_isDisco;
                                                });
 
@@ -112,6 +113,7 @@ void SettingsPage::SetupButtons() {
                                               CoordsConverter::ConvertCoords(glm::vec2(1138, 522)),
                                               [this]() {
                                                   LIGHTSMANAGER.ChangeDisco();
+                                                  WEATHERMANAGER.MakeDisco();
                                                   _isDisco = !_isDisco;
                                               });
 

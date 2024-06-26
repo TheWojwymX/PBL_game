@@ -257,6 +257,20 @@ void WeatherManager::UpdateSunPosition() {
         if(!isRaining) {
             rainyDay = false;
         }
+
+        if(_isDisco) {
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<> dis_real(0.0, 1.0);
+
+            daySkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+            sunsetSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+            nightSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+            rainDaySkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+            rainSunsetSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+            rainNightSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+        }
+
     }
 
     if(dirAngle < 44.3){
@@ -338,4 +352,29 @@ void WeatherManager::SetupWormParticles() {
     wormParticles->object = wormNode;
     wormParticles->Init();
     wormParticleNode->AddComponent(wormParticles);
+}
+
+void WeatherManager::MakeDisco(){
+    _isDisco = !_isDisco;
+
+    if(_isDisco) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<> dis_real(0.0, 1.0);
+
+        daySkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+        sunsetSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+        nightSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+        rainDaySkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+        rainSunsetSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+        rainNightSkyColor = glm::vec3(dis_real(gen), dis_real(gen), dis_real(gen));
+    }
+    else{
+        daySkyColor = glm::vec3(0.502f, 0.620f, 0.867f);
+        sunsetSkyColor = glm::vec3(1.0f, 0.7059f, 0.4471f);
+        nightSkyColor = glm::vec3(0.055f, 0.055f, 0.141f);
+        rainDaySkyColor = glm::vec3(0.3686f, 0.4196f, 0.5255f);
+        rainSunsetSkyColor = glm::vec3(0.6784f, 0.4824f, 0.3137f);
+        rainNightSkyColor = glm::vec3(0.1294f, 0.1294f, 0.2196f);
+    }
 }
