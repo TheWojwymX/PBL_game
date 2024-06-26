@@ -35,6 +35,9 @@ public:
     void SetLightProjection(const glm::mat4& projection);
     void SetLightView(const glm::mat4& view);
 
+    void SetCamera();
+    void ResetCamera();
+
 private:
     GLuint depthMapFBO;   // Framebuffer object for the shadow map
     GLuint depthMap;      // Depth texture for the shadow map
@@ -42,4 +45,9 @@ private:
     unsigned int shadowHeight;
     glm::mat4 lightProjection;
     glm::mat4 lightView;
+
+    std::shared_ptr<Camera> _cameraRef;
+
+    glm::vec3 cameraPreviousPosition;
+    glm::vec2 cameraPreviousRotation;
 };

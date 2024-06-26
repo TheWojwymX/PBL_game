@@ -325,8 +325,8 @@ int main(int, char**)
             LIGHTSMANAGER.dirDirection[1] = shadowDir.y;
             LIGHTSMANAGER.dirDirection[2] = shadowDir.z;
 
-            float near_plane = 0.2f, far_plane = 550.0f;
-            glm::mat4 lightProjection = glm::ortho(-200.0f, 200.0f, -300.0f, 200.0f, near_plane, far_plane);
+            float near_plane = 0.2f, far_plane = 300.0f;
+            glm::mat4 lightProjection = glm::ortho(-200.0f, 200.0f, -50.0f, 100.0f, near_plane, far_plane);
             glm::mat4 lightView = glm::lookAt(LIGHTSMANAGER.shadowLightPos, LIGHTSMANAGER.shadowLightCenter, glm::vec3(0.0, 1.0, 0.0));
             SHADOWMAP.SetLightProjection(lightProjection);
             SHADOWMAP.SetLightView(lightView);

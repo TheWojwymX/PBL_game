@@ -19,6 +19,8 @@ ShadowMap::~ShadowMap() {
 }
 
 void ShadowMap::Init() {
+    _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
+
     // Create framebuffer
     glGenFramebuffers(1, &depthMapFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
@@ -99,4 +101,15 @@ void ShadowMap::SetLightProjection(const glm::mat4& projection) {
 
 void ShadowMap::SetLightView(const glm::mat4& view) {
     lightView = view;
+}
+
+void ShadowMap::SetCamera(){
+    cameraPreviousPosition = _cameraRef->GetPosition();
+    cameraPreviousRotation = _cameraRef->GetRotation();
+
+    _cameraRef->setPosition(glm::vec3(0.0f));
+}
+
+void ShadowMap::ResetCamera() {
+    _cameraRef->setPosition(cameraPreviousPosition);
 }

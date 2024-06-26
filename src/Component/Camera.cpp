@@ -135,3 +135,12 @@ glm::vec3 Camera::LerpDirection(glm::vec3 currentDirection) {
 glm::vec2 Camera::GetRotation() const {
     return glm::vec2(_yaw, _pitch);
 }
+
+void Camera::setRotation(glm::vec2 rotation) {
+    _yaw = rotation.x;
+    _pitch = rotation.y;
+}
+
+void Camera::setPosition(glm::vec3 position) {
+    _position = position;
+}
