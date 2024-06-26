@@ -120,7 +120,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES} $
 		HUD/Pages/Settings/SettingsPage.cpp
         HUD/Pages/Settings/SettingsPage.h
 		HUD/Pages/Controls/ControlsPage.cpp
-		HUD/Pages/Controls/ControlsPage.h)
+		HUD/Pages/Controls/ControlsPage.h
+		HUD/Pages/CreditsPage/CreditsPage.cpp
+		HUD/Pages/CreditsPage/CreditsPage.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

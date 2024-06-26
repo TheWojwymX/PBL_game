@@ -20,6 +20,7 @@
 #include "HUD/Pages/MainMenuPage/MainMenuPage.h"
 #include "HUD/Pages/Settings/SettingsPage.h"
 #include "HUD/Pages/Controls/ControlsPage.h"
+#include "HUD/Pages/CreditsPage/CreditsPage.h"
 
 class PageManager {
 public:
@@ -54,6 +55,8 @@ public:
 
     std::shared_ptr<RestartPage> _restartPage = std::make_shared<RestartPage>();
 
+    std::shared_ptr<CreditsPage> _creditsPage = std::make_shared<CreditsPage>();
+
 
     void CheckInputs();
 
@@ -74,6 +77,8 @@ public:
     void GoToPauseMenu();
 
     ImageRenderer _backgroundImage;
+
+    void GoToCredits();
 };
 
 

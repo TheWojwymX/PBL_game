@@ -32,6 +32,8 @@ void PageManager::Init() {
     _pages.push_back(_controlsPage);
     _restartPage->Init();
     _pages.push_back(_restartPage);
+    _creditsPage->Init();
+    _pages.push_back(_creditsPage);
 
     CloseAllOtherPages(_mainMenuPage);
 
@@ -58,6 +60,7 @@ void PageManager::Update() {
     _mainMenuPage->Update();
     _settingsPage->Update();
     _controlsPage->Update();
+    _creditsPage->Update();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -186,4 +189,8 @@ void PageManager::GoToPauseMenu(){
 void PageManager::GoToKeyboardSettings(int mode) {
     CloseAllOtherPages(_controlsPage);
     _controlsPage->_mode = mode;
+}
+
+void PageManager::GoToCredits(){
+    CloseAllOtherPages(_creditsPage);
 }

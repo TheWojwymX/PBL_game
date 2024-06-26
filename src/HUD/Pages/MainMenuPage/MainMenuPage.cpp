@@ -68,7 +68,7 @@ void MainMenuPage::SettingsButtonOnClick() {
 }
 
 void MainMenuPage::CreditsButtonOnClick() {
-    std::cout << "Credits Button Clicked" << std::endl;
+    PAGEMANAGER.GoToCredits();
 }
 
 void MainMenuPage::QuitButtonOnClick() {
