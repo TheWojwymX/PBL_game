@@ -212,26 +212,13 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
-/*        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
-            if(antialiasing){
-                glDisable(GL_MULTISAMPLE);
-                antialiasing = false;
-                std::cout << "wylaczono antialiasing" << std::endl;
-            }else{
-                glEnable(GL_MULTISAMPLE);
-                antialiasing = true;
-                std::cout << "wlaczono antialiasing" << std::endl;
-            }
-
-        }*/
-
         // Calculate deltaTime
         TIME.Update();
 
         if(!GAMEMANAGER._isInMainMenu) {
 
             //debugging adding money
-            if (INPUT.IsKeyPressed(77)) {
+            if (INPUT.IsKeyPressed(GLFW_KEY_KP_5)) {
                 GAMEMANAGER.AddPlastic(10);
                 //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
             }

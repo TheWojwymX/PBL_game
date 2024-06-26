@@ -34,7 +34,7 @@ void TutorialManager::Update() {
 
     if(!_isAfterEndGameInfo && GAMEMANAGER.GetRoundNumber() == 3 && !_isAfterEndGameActivation){
         _isAfterEndGameInfo = true;
-        DisplaySpecialMessage("THANKS FOR PLAYING THE DEMO. PRESS [9] TO SKIP TO END GAME MODE OR WAIT AND PLAY NORMALLY.");
+        DisplaySpecialMessage("THANKS FOR PLAYING THE DEMO. PRESS [NUM 9] TO SKIP TO END GAME MODE OR WAIT AND PLAY NORMALLY.");
     }
 
     if(!_isAfterHalfTimeMessage && HUD._isAfterTutorialPhaseInfo){

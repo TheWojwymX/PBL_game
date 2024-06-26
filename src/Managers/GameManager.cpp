@@ -128,9 +128,9 @@ void GameManager::Update() {
             InitPhase();
         }
 
-        if (INPUT.IsKeyPressed(GLFW_KEY_9))
+        if (INPUT.IsKeyPressed(GLFW_KEY_KP_9))
             LateGame();
-        if (INPUT.IsKeyPressed(GLFW_KEY_8))
+        if (INPUT.IsKeyPressed(GLFW_KEY_KP_8))
             SkipPhase();
     }
 
