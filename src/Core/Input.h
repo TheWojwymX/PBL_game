@@ -53,6 +53,7 @@ public:
 	void UpdateOldStates();
 
 	void SetCursorMode(bool editMode);
+	void ToggleCursorMode();
 
 	//Callback metoda dla glfw od zmiany wielkości okna
 	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height)

@@ -135,6 +135,12 @@ void Input::SetCursorMode(bool editMode) {
 	glfwSetInputMode(_window, GLFW_CURSOR, cursorMode);
 }
 
+void Input::ToggleCursorMode() {
+	int currentMode = glfwGetInputMode(_window, GLFW_CURSOR);
+	int newMode = (currentMode == GLFW_CURSOR_NORMAL) ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL;
+	glfwSetInputMode(_window, GLFW_CURSOR, newMode);
+}
+
 void Input::FramebufferSizeCallbackIMP(int width, int height)
 {
 	// TODO

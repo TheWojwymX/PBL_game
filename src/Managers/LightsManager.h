@@ -111,8 +111,6 @@ private:
     std::queue<glm::vec3> _randomColors;
 
     std::shared_ptr<Shader> instancedSandShader;
-    std::shared_ptr<Shader> instancedMetalShader;
-    std::shared_ptr<Shader> instancedPlasticShader;
     std::shared_ptr<Shader> modelShader;
     std::shared_ptr<Shader> shovelShader;
     std::shared_ptr<Shader> glowstickShader;

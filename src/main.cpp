@@ -66,13 +66,10 @@
 #include "Managers/GameManager.h"
 #include "Managers/AudioManager.h"
 #include "HUD/PageManager.h"
-#include "Managers/DomeManager.h"
-#include "Managers/UpgradeManager.h"
 #include "Turrets/TurretsManager.h"
 #include "Managers/TutorialManager.h"
 #include "Component/ShovelController.h"
 #include "Component/PDAController.h"
-#include "HUD/Pages/MainMenuPage/MainMenuPage.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -165,8 +162,6 @@ int main(int, char**)
     //std::cout << jsonData;
     SCENEMANAGER.SaveToJsonFile(jsonData, "scenes/test2.json");
 
-    ENEMIESMANAGER.Init();
-
     //Prepare shader pointers
     auto skyboxShader = RESOURCEMANAGER.GetShaderByName("skyboxShader");
     auto modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
@@ -176,15 +171,11 @@ int main(int, char**)
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
 
-    PAGEMANAGER.Init();
-
-    TUTORIALMANAGER.Init();
-
     LIGHTSMANAGER.InitLights();
 
     WEATHERMANAGER.Init();
 
-    GAMEMANAGER.PlayMenuMusic();
+    GAMEMANAGER.StartGame();
 
     //bool antialiasing = true;
     // Main loop
@@ -301,7 +292,6 @@ int main(int, char**)
             // moving may cause some problems like lack of smoothness or models bugging
             glClear(GL_DEPTH_BUFFER_BIT); // Clear depth because you want items always "closest to screen"
         }
-        PAGEMANAGER.Update();
         AUDIOMANAGER.Update();
 
         INPUT.UpdateOldStates();

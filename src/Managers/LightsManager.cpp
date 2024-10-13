@@ -36,8 +36,6 @@ void LightsManager::InitLights() {
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(2);
 
     instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
-    instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
-    instancedPlasticShader = RESOURCEMANAGER.GetShaderByName("instancedPlasticShader");
     modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
     shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
     glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
@@ -115,54 +113,12 @@ void LightsManager::UpdateShaders(){
     instancedSandShader->setInt("dirLight.isActive", dirActive);
     instancedSandShader->setVec3("lightPos", lightPos);
 
-    instancedMetalShader->use();
-    //instancedMetalShader->setBool("spotLights[0].isActive", isSpotActive);
-    instancedMetalShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
-    instancedMetalShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
-    instancedMetalShader->setFloat("spotLights[0].constant", flashlightConstant);
-    instancedMetalShader->setFloat("spotLights[0].linear", flashlightLinear);
-    instancedMetalShader->setFloat("spotLights[0].quadratic", flashlightQuadratic);
-    instancedMetalShader->setVec3("spotLights[0].color", flashlightColor);
-    instancedMetalShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
-    instancedMetalShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
-
-    instancedMetalShader->setVec3("dirLight.direction", dirDirection);
-    instancedMetalShader->setVec3("dirLight.color", dirColor);
-    instancedMetalShader->setInt("dirLight.isActive", dirActive);
-    instancedMetalShader->setVec3("lightPos", lightPos);
-
-    instancedPlasticShader->use();
-    //instancedPlasticShader->setBool("spotLights[0].isActive", isSpotActive);
-    instancedPlasticShader->setVec3("spotLights[0].position", flashlightCurrentPosition);
-    instancedPlasticShader->setVec3("spotLights[0].direction", flashlightCurrentDirection);
-    instancedPlasticShader->setFloat("spotLights[0].constant", flashlightConstant);
-    instancedPlasticShader->setFloat("spotLights[0].linear", flashlightLinear);
-    instancedPlasticShader->setFloat("spotLights[0].quadratic", flashlightQuadratic);
-    instancedPlasticShader->setVec3("spotLights[0].color", flashlightColor);
-    instancedPlasticShader->setFloat("spotLights[0].cutOff", glm::cos(glm::radians(flashlightCutOff)));
-    instancedPlasticShader->setFloat("spotLights[0].outerCutOff", glm::cos(glm::radians(flashlightOuterCutOff)));
-
-    instancedPlasticShader->setVec3("dirLight.direction", dirDirection);
-    instancedPlasticShader->setVec3("dirLight.color", dirColor);
-    instancedPlasticShader->setInt("dirLight.isActive", dirActive);
-    instancedPlasticShader->setVec3("lightPos", lightPos);
-
     for (int i = 0; i < maxLights; i++) {
         string name = "pointLights[" + to_string(i) + "]";
         instancedSandShader->use();
         instancedSandShader->setFloat(name + ".constant", glowstickConstant);
         instancedSandShader->setFloat(name + ".linear", glowstickLinear);
         instancedSandShader->setFloat(name + ".quadratic", glowstickQuadratic);
-
-        instancedMetalShader->use();
-        instancedMetalShader->setFloat(name + ".constant", glowstickConstant);
-        instancedMetalShader->setFloat(name + ".linear", glowstickLinear);
-        instancedMetalShader->setFloat(name + ".quadratic", glowstickQuadratic);
-
-        instancedPlasticShader->use();
-        instancedPlasticShader->setFloat(name + ".constant", glowstickConstant);
-        instancedPlasticShader->setFloat(name + ".linear", glowstickLinear);
-        instancedPlasticShader->setFloat(name + ".quadratic", glowstickQuadratic);
 
         shovelShader->use();
         shovelShader->setFloat(name + ".constant", glowstickConstant);
@@ -278,12 +234,6 @@ void LightsManager::TurnOffGlowsticks() {
         instancedSandShader->use();
         instancedSandShader->setBool(name + ".isActive", false);
 
-        instancedMetalShader->use();
-        instancedMetalShader->setBool(name + ".isActive", false);
-
-        instancedPlasticShader->use();
-        instancedPlasticShader->setBool(name + ".isActive", false);
-
         shovelShader->use();
         shovelShader->setBool(name + ".isActive", false);
     }
@@ -365,8 +315,6 @@ void LightsManager::InitShadersForPointLights()
 {
     // Add shaders to the vector
     _shadersForPointLights.push_back(instancedSandShader);
-    _shadersForPointLights.push_back(instancedMetalShader);
-    _shadersForPointLights.push_back(instancedPlasticShader);
     _shadersForPointLights.push_back(modelShader);
     _shadersForPointLights.push_back(shovelShader);
 }

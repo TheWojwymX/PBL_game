@@ -34,7 +34,7 @@ void Camera::Initiate() {
 }
 
 void Camera::Input() {
-    if (INPUT.IsKeyPressed(GLFW_KEY_I)) {
+    if (INPUT.IsKeyPressed(GLFW_KEY_E)) {
         GAMEMANAGER._editMode = !GAMEMANAGER._editMode;
         INPUT.SetCursorMode(GAMEMANAGER._editMode);
     }

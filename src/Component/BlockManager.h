@@ -64,10 +64,6 @@ private:
     int _sandRendererRefID;
     std::shared_ptr<InstanceRenderer> _topLayerRendererRef;
     int _topLayerRendererRefID;
-    std::shared_ptr<InstanceRenderer> _plasticRendererRef;
-    int _plasticRendererRefID;
-    std::shared_ptr<InstanceRenderer> _metalRendererRef;
-    int _metalRendererRefID;
     std::shared_ptr<Camera> _cameraRef;
     int _cameraRefID;
     std::shared_ptr<InstanceRenderer> _cageRendererRef;

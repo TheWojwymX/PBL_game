@@ -24,13 +24,6 @@ nlohmann::json BlockManager::Serialize() {
         data["topLayerRendererRef"] = _topLayerRendererRef->_id;
     }
 
-    if (_plasticRendererRef) {
-        data["_plasticRendererRef"] = _plasticRendererRef->_id;
-    }
-
-    if (_metalRendererRef) {
-        data["_metalRendererRef"] = _metalRendererRef->_id;
-    }
 
     if(_cameraRef){
         data["cameraRefID"] = _cameraRef->_id;
@@ -61,13 +54,6 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
         _topLayerRendererRefID = jsonData["topLayerRendererRefID"].get<int>();
     }
 
-    if (jsonData.contains("plasticRendererRefID")) {
-        _plasticRendererRefID = jsonData["plasticRendererRefID"].get<int>();
-    }
-
-    if (jsonData.contains("metalRendererRefID")) {
-        _metalRendererRefID = jsonData["metalRendererRefID"].get<int>();
-    }
 
     if (jsonData.contains("cameraRefID")) {
         _cameraRefID = jsonData["cameraRefID"].get<int>();
@@ -79,8 +65,6 @@ void BlockManager::Deserialize(const nlohmann::json &jsonData) {
 void BlockManager::Initiate() {
     _sandRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_sandRendererRefID);
     _topLayerRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_topLayerRendererRefID);
-    _plasticRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_plasticRendererRefID);
-    _metalRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(_metalRendererRefID);
     _cageRendererRef = COMPONENTSMANAGER.GetComponentByID<InstanceRenderer>(198);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
     Component::Initiate();
@@ -90,8 +74,7 @@ void BlockManager::Init() {
     InitLayerStats();
     GenerateSphereVectors(31);
     GenerateMap(0.5f,7);
-    GenerateResources();
-    //ApplyMasks();
+    _blocksData.clear();
     GenerateTopLayer(glm::ivec2(50, 50), glm::ivec2(500, 500), glm::ivec2(50, 50));
     SetCageRenderer();
     UpdateBlocksVisibility();
@@ -142,12 +125,6 @@ void BlockManager::UpdateInstanceRenderer() {
     // Pass the instanceMatrix to _sandRendererRef
     if (_sandRendererRef) {
         _sandRendererRef->RefreshPositionBuffer(instancedSandPosition);
-    }
-    if (_plasticRendererRef) {
-        _plasticRendererRef->RefreshPositionBuffer(instancedPlasticPosition);
-    }
-    if (_metalRendererRef) {
-        _metalRendererRef->RefreshPositionBuffer(instancedMetalPosition);
     }
 }
 
