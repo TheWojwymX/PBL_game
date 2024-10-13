@@ -5,11 +5,10 @@
 #include "Managers/GameManager.h"
 #include "ShovelController.h"
 #include "HUD/PageManager.h"
-#include "Managers/TutorialManager.h"
 
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float reach, int radius, float width,
                                    float height, float digPower)
-        : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _isGrounded(false), _velocity(glm::vec3(0.0f)),
+        : _speed(speed), _gravity(-20.0f), _jumpHeight(jumpHeight), _isGrounded(false), _velocity(glm::vec3(0.0f)),
           _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
           _interactionCooldown(0.25f), _timeSinceLastInteraction(0.0f),
           _jetpackCapacityLevel(0), _miningSpeedLevel(0), _miningReachLevel(0), _miningRadiusLevel(0) {
@@ -48,7 +47,6 @@ void PlayerController::Deserialize(const nlohmann::json &jsonData) {
 void PlayerController::Initiate() {
     _blockManagerRef = COMPONENTSMANAGER.GetComponentByID<BlockManager>(_blockManagerRefID);
     _cameraRef = COMPONENTSMANAGER.GetComponentByID<Camera>(_cameraRefID);
-    _shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();
     Component::Initiate();
 }
 
@@ -58,25 +56,14 @@ void PlayerController::Init() {
 
 void PlayerController::Input() {
     MovementInput();
-    InteractionInput();
-    JetpackInput();
 }
 
 void PlayerController::Update() {
-    if (PAGEMANAGER._isInUpgradeMenu) {
-        _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
-        HandleGravity();
-    } else if (GAMEMANAGER._paused) {
-        _ownerNode->GetComponent<PlayerAudioController>()->StopSteps();
-    } else {
-        HandleMovement();
-        HandleGlowstick();
-    }
+    HandleMovement();
+    HandleGlowstick();
 }
 
 void PlayerController::MovementInput() {
-    if(!TUTORIALMANAGER._hasLanded) return;
-
     // Get input for movement along the X and Z axes
     float x = (INPUT.GetKeyDown(GLFW_KEY_D) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_A) ? 1.0f : 0.0f);
     float z = (INPUT.GetKeyDown(GLFW_KEY_W) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_S) ? 1.0f : 0.0f);
@@ -110,15 +97,12 @@ void PlayerController::CheckTopLayer()
 }
 
 
-void PlayerController::CheckGrounded(glm::vec3 separationVector) {
-    if (separationVector.y > 0) {
-        float roundedY = std::round(_ownerTransform->GetPosition().y + 0.5f) - 0.5f;
-        _ownerTransform->SetPosition(roundedY, 1);
+void PlayerController::CheckGrounded() {
+    if (_ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
+        _ownerTransform->SetPosition(GAMEMANAGER._groundLevel, 1);
         _isGrounded = true;
         _velocity.y = 0.0f;
-    } else if (separationVector.y < 0) {
-        _velocity.y = 0.0f;
-    } else {
+    }  else {
         _isGrounded = false;
     }
 }
@@ -130,11 +114,10 @@ void PlayerController::HandleGravity() {
     std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width,
                                                                                              _height);
     _ownerTransform->AddPosition(collisionResult.first);
-    CheckGrounded(collisionResult.second);
+    CheckGrounded();
 }
 
 void PlayerController::HandleMovement() {
-
     glm::vec3 move = _inputVector.x * _cameraRef->GetRightVector() + _inputVector.y * _cameraRef->GetFrontVector();
     move.y = 0.0f;
 
@@ -171,23 +154,9 @@ void PlayerController::HandleMovement() {
     glm::vec3 movementVector = (move + _velocity) * TIME.GetDeltaTime();
     movementVector = glm::clamp(movementVector, -glm::vec3(0.999f), glm::vec3(0.999f));
 
-    if (CheckIsOutsideBase(_ownerTransform->GetPosition(), GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius)) {
-        movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition, GAMEMANAGER._domeRadius, true);
-    }
+    _ownerTransform->AddPosition(movementVector);
 
-    if (_activeMineEntranceCollision) {
-        if (CheckIfPlayerIsAtEntranceToMine()) {
-            movementVector = CircleCollision(_ownerTransform->GetPosition(), movementVector, GAMEMANAGER._domePosition,
-                                             GAMEMANAGER._mineEntranceRadius, false);
-        }
-    }
-
-    std::pair<glm::vec3, glm::vec3> collisionResult = _blockManagerRef->CheckEntityCollision(_ownerTransform->GetPosition(), movementVector, _width,
-                                                                                             _height);
-
-    _ownerTransform->AddPosition(collisionResult.first);
-
-    CheckGrounded(collisionResult.second);
+    CheckGrounded();
 }
 
 void PlayerController::HandleJetpack() {
@@ -195,7 +164,7 @@ void PlayerController::HandleJetpack() {
     float deltaTime = TIME.GetDeltaTime();
 
     if (_isUsingJetpack) {
-        if (_jetpackFuel > 0 && _ownerTransform->GetPosition().y < GAMEMANAGER._groundLevel) {
+        if (_jetpackFuel > 0) {
             // Playing jetpack sound
             RESOURCEMANAGER.GetSoundByName("jetpack1")->PlaySound(_ownerNode, 0.5f);
 

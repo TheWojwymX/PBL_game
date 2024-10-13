@@ -11,7 +11,7 @@ enum Phase {DIG,DEFEND};
 class GameManager {
 public:
     // Public members
-    bool _isFullscreen = true;
+    bool _isFullscreen = false;
     int _screenWidth = 1920;
     int _screenHeight = 1080;
     GLFWwindow* _window;
@@ -66,7 +66,7 @@ public:
     void Pause();
     void Unpause();
 
-    bool _isInMainMenu = true;
+    bool _isInMainMenu = false;
 
     glm::vec2 _domeStationPosition = glm::vec2(43.3, 49.5);
     float _domeStationRadius = 3;
@@ -99,9 +99,6 @@ private:
 
     std::vector<std::pair<float, float>> _phaseTimes;
     std::shared_ptr<Node> _playerNode = nullptr;
-
-    void ResetWorm();
-    void ResetTopSnap();
 
     float _caveMusicVolumeAtStartBattle = 0.5;
 };

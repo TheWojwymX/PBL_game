@@ -18,8 +18,6 @@ TutorialManager::TutorialManager(): _scaleRand(30, 0.7f, 1.3f)
 
 void TutorialManager::Init() {
     _player = NODESMANAGER.getNodeByName("player");
-    _paratrooper = NODESMANAGER.getNodeByName("Paratrooper");
-    _paratrooper->GetComponent<MeshRenderer>()->_disableModel = true;
     _player->GetComponent<PlayerController>()->_activeMineEntranceCollision = true;
     HUD._actualText = _messages[_actualMessage];
 }
@@ -70,7 +68,6 @@ void TutorialManager::Update() {
                DisplayAndChangeMessage();
                 _hasLanded = true;
                _player->GetComponent<PlayerController>()->SetGravity(-20.0f);
-               _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = true;
                 HUD._shouldShowCrosshair = true;
                 HUD._shouldShowMaterials = true;
             }
@@ -79,7 +76,6 @@ void TutorialManager::Update() {
                     _player->GetTransform()->SetPosition(glm::vec3(_player->GetTransform()->GetPosition().x,
                                                                    _player->GetTransform()->GetPosition().y - TIME.GetDeltaTime() * 2,
                                                                    _player->GetTransform()->GetPosition().z));
-                    _paratrooper->GetTransform()->SetPosition(_player->GetTransform()->GetPosition());
                     if (_timer < 1 && !_firstEnemySpawned) {
                         _timer += TIME.GetDeltaTime();
                     } else if (!_firstEnemySpawned) {
@@ -316,8 +312,6 @@ void TutorialManager::SkipTutorial() {
 
     HUD.EnableHUD();
 
-    _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = true;
-
     _metBeetle = true;
     _metWasp = true;
 
@@ -398,7 +392,6 @@ void TutorialManager::Reset() {
     HUD._actualText = _messages[_actualMessage];
     _player->GetComponent<PlayerController>()->_isGrounded = false;
     _player->GetComponent<PlayerController>()->SetGravity(0);
-    _paratrooper->GetComponent<MeshRenderer>()->_disableShadows = false;
     _player->GetComponent<PlayerController>()->_velocity.y = 0;
     _metBeetle = false;
     _metWasp = false;

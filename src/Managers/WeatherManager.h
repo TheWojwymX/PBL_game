@@ -23,15 +23,12 @@ public:
     void SetupAmbientParticles();
     void SetupRainParticles();
     void UpdateSunPosition();
-    void SetupWormParticles();
     glm::vec3 getSkyColor();
     glm::vec3 getDirColor();
     void MakeDisco();
 
     glm::vec3 getWindDirection(){return windDirection;}
     float getWindStrength(){return windStrength;}
-
-    void UpdateFlagRotation(float lerpValue);
 
 private:
     glm::vec3 windDirection;
@@ -85,9 +82,6 @@ private:
     float stepInterval = 1.0f;
     float timeAccumulator = 0.0f;
 
-    shared_ptr<Node> wormParticleNode;
-    shared_ptr<Node> wormNode;
-
     std::shared_ptr<Node> _playerNode = nullptr;
     std::shared_ptr<Sound> _soundNode = nullptr;
 
@@ -95,32 +89,10 @@ private:
     std::shared_ptr<Sound> _thunderNode2 = nullptr;
     std::shared_ptr<Sound> _thunderNode3 = nullptr;
 
-    std::shared_ptr<Node> _flagNode = nullptr;
-
-    std::shared_ptr<Model> _flag0 = nullptr;
-    std::shared_ptr<Model> _flag1 = nullptr;
-    std::shared_ptr<Model> _flag2 = nullptr;
-    std::shared_ptr<Model> _flag3 = nullptr;
-    std::shared_ptr<Model> _flag4 = nullptr;
-    std::shared_ptr<Model> _flag5 = nullptr;
-    std::shared_ptr<Model> _flag6 = nullptr;
-    std::shared_ptr<Model> _flag7 = nullptr;
-    std::shared_ptr<Model> _flag8 = nullptr;
-    std::shared_ptr<Model> _flag9 = nullptr;
-    std::shared_ptr<Model> _flag10 = nullptr;
-    std::shared_ptr<Model> _flag11 = nullptr;
-
-    std::shared_ptr<Model> _actualFlag = nullptr;
-
-    std::shared_ptr<MeshRenderer> _flagRenderer = nullptr;
-
     bool _adjustOnce = true;
     bool _reachedTarget = false;
     bool _isDisco = false;
     glm::quat _originalRotation;
-
-    int flagAnimCount = 0;
-    float flagTimer = 0.0f;
 
     bool _fastSun = false;
 };

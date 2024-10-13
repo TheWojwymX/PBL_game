@@ -125,6 +125,7 @@ int main(int, char**)
     glCullFace(GL_BACK);
     glDepthMask(GL_TRUE);
 
+
     AUDIOMANAGER.Init();
 
     // Deserialization of resources and nodes
@@ -164,47 +165,24 @@ int main(int, char**)
     //std::cout << jsonData;
     SCENEMANAGER.SaveToJsonFile(jsonData, "scenes/test2.json");
 
-    HUD.Init();
-
     ENEMIESMANAGER.Init();
 
     //Prepare shader pointers
     auto skyboxShader = RESOURCEMANAGER.GetShaderByName("skyboxShader");
     auto modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
-    auto outlineShader = RESOURCEMANAGER.GetShaderByName("outlineShader");
     auto skyboxReflectionShader = RESOURCEMANAGER.GetShaderByName("skyboxReflectionShader");
     auto instancedSandShader = RESOURCEMANAGER.GetShaderByName("instancedSandShader");
-    auto instancedMetalShader = RESOURCEMANAGER.GetShaderByName("instancedMetalShader");
-    auto instancedPlasticShader = RESOURCEMANAGER.GetShaderByName("instancedPlasticShader");
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
-    auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
-    auto shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
-    auto blueprintShader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
-    auto glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
 
     PAGEMANAGER.Init();
-
-    TURRETSMANAGER.Init();
 
     TUTORIALMANAGER.Init();
 
     LIGHTSMANAGER.InitLights();
 
     WEATHERMANAGER.Init();
-
-    auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();
-    auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();
-
-    auto uPDAController = NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>();
-    auto uPDARenderer = NODESMANAGER.getNodeByName("PDA")->GetComponent<ShovelRenderer>();
-    auto uPDAAntennaRenderer = NODESMANAGER.getNodeByName("PDAAntenna")->GetComponent<ShovelRenderer>();
-
-    auto compassController = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>();
-    auto compassRenderer = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<ShovelRenderer>();
-    auto compassUpRenderer = NODESMANAGER.getNodeByName("CompassUp")->GetComponent<ShovelRenderer>();
-    auto compassDownRenderer = NODESMANAGER.getNodeByName("CompassDown")->GetComponent<ShovelRenderer>();
 
     GAMEMANAGER.PlayMenuMusic();
 
@@ -216,24 +194,10 @@ int main(int, char**)
         TIME.Update();
 
         if(!GAMEMANAGER._isInMainMenu) {
-
-            //debugging adding money
-            if (INPUT.IsKeyPressed(GLFW_KEY_KP_5)) {
-                GAMEMANAGER.AddPlastic(10);
-                //std::cout << "Aktualny stan portfela " << GAMEMANAGER._money << std::endl;
-            }
-
             if (!GAMEMANAGER._paused) {
-                ENEMIESMANAGER.Update();
-                TURRETSMANAGER.Update();
-                UPGRADEMANAGER.Update();
-                DOMEMANAGER.Update();
-                GAMEMANAGER.Update();
                 WEATHERMANAGER.Update();
             }
-            TUTORIALMANAGER.Update();
             LIGHTSMANAGER.Update();
-
 
             // Input
             GAMEMANAGER.root->Input();
@@ -241,10 +205,6 @@ int main(int, char**)
             // Update
             GAMEMANAGER.root->Update();
 
-/*        if(TIME.GetTime() > 10 && TIME.GetTime() < 11){
-            std::cout << "minal czas";
-            NODESMANAGER.getNodeByName("AntModel")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
-        }*/
 
             FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
@@ -298,17 +258,6 @@ int main(int, char**)
             modelShader->setMat4("view", view);
             modelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 
-            glowstickShader->use();
-            glowstickShader->setVec3("viewPos", viewPos);
-            glowstickShader->setMat4("projection", projection);
-            glowstickShader->setMat4("view", view);
-            glowstickShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
-
-            outlineShader->use();
-            outlineShader->setVec3("viewPos", viewPos);
-            outlineShader->setMat4("projection", projection);
-            outlineShader->setMat4("view", view);
-
             skyboxReflectionShader->use();
             skyboxReflectionShader->setInt("skybox", 0);
             skyboxReflectionShader->setVec3("viewPos", viewPos);
@@ -323,21 +272,6 @@ int main(int, char**)
             instancedSandShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
 #pragma endregion
 
-#pragma region InstanceMetalShader setup
-            instancedMetalShader->use();
-            instancedMetalShader->setVec3("viewPos", viewPos);
-            instancedMetalShader->setMat4("projection", projection);
-            instancedMetalShader->setMat4("view", view);
-            instancedMetalShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
-#pragma endregion
-
-#pragma region InstancePlasticShader setup
-            instancedPlasticShader->use();
-            instancedPlasticShader->setVec3("viewPos", viewPos);
-            instancedPlasticShader->setMat4("projection", projection);
-            instancedPlasticShader->setMat4("view", view);
-            instancedPlasticShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
-#pragma endregion
 
             lightObjectShader->use();
             lightObjectShader->setMat4("projection", projection);
@@ -355,17 +289,6 @@ int main(int, char**)
             particleShader->setMat4("projection", projection);
             particleShader->setMat4("view", view);
 
-            rangeShader->use();
-            rangeShader->setMat4("projection", projection);
-            rangeShader->setMat4("view", view);
-
-            ///
-            blueprintShader->use();
-
-            blueprintShader->setVec3("viewPos", viewPos);
-            blueprintShader->setMat4("projection", projection);
-            blueprintShader->setMat4("view", view);
-            blueprintShader->setVec3("additionalColor", TURRETSMANAGER._additionalColor);
 
             GAMEMANAGER.root->Render(Transform::Origin());
             TRANSPARENT_RENDERER.Render();
@@ -377,27 +300,8 @@ int main(int, char**)
             // (at the end of loop) is also working, so it is recommended to not move it
             // moving may cause some problems like lack of smoothness or models bugging
             glClear(GL_DEPTH_BUFFER_BIT); // Clear depth because you want items always "closest to screen"
-
-            if(GAMEMANAGER._sinceStartClickedTimer > 3){
-                shovelRenderer->RenderShovel(Transform::Origin());
-                uPDAAntennaRenderer->RenderShovel(Transform::Origin());
-                uPDARenderer->RenderShovel(Transform::Origin());
-                compassDownRenderer->RenderShovel(Transform::Origin());
-                compassUpRenderer->RenderShovel(Transform::Origin());
-                compassRenderer->RenderShovel(Transform::Origin());
-            }
-
-            shovelController->RealUpdate();
-            uPDAController->RealUpdate();
-            compassController->RealUpdate();
-            shovelShader->use();
-            shovelShader->setVec3("viewPos", viewPos);
-            shovelShader->setMat4("projection", projection);
-            shovelShader->setMat4("view", view);
-            shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
         }
         PAGEMANAGER.Update();
-        HUD.Update();
         AUDIOMANAGER.Update();
 
         INPUT.UpdateOldStates();

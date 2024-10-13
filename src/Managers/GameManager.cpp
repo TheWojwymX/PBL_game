@@ -119,23 +119,8 @@ void GameManager::Update() {
         _sinceStartClickedTimer += TIME.GetDeltaTime();
     }
 
-    if (TUTORIALMANAGER._isFreePlay) {
-        _currentTime += TIME.GetDeltaTime();
-
-        if (_currentTime >= GetPhaseTime()) {
-            _currentTime = 0.0f;
-            _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
-            InitPhase();
-        }
-
-        if (INPUT.IsKeyPressed(GLFW_KEY_KP_9))
-            LateGame();
-        if (INPUT.IsKeyPressed(GLFW_KEY_KP_8))
-            SkipPhase();
-    }
-
-    if(DOMEMANAGER.GetDomeHP() <= 0){
-       LoseGame();
+    if (_currentTime >= GetPhaseTime()) {
+        _currentTime = 0.0f;
     }
 }
 
@@ -213,8 +198,6 @@ void GameManager::Reset() {
     _plastic = 5;
     _currentTime = 0.0f;
     DisableMouse();
-    ResetWorm();
-    ResetTopSnap();
 }
 
 void GameManager::PlayMenuMusic() {
@@ -269,23 +252,4 @@ void GameManager::GoToMainMenu() {
     _isInMainMenu = true;
     PAGEMANAGER.CloseAllOtherPages(PAGEMANAGER._mainMenuPage);
     PlayMenuMusic();
-}
-
-void GameManager::ResetWorm()
-{
-    std::shared_ptr<Node> worm = NODESMANAGER.getNodeByName("Worm");
-    worm->GetComponent<Rotate>()->Reset();
-    worm->GetComponent<Disabler>()->Reset();
-    worm->SetEnabled(true);
-}
-
-void GameManager::ResetTopSnap()
-{
-    NODESMANAGER.getNodeByName("Rake")->GetComponent<TopLayerSnap>()->Reset();
-    NODESMANAGER.getNodeByName("BigShovel")->GetComponent<TopLayerSnap>()->Reset();
-    NODESMANAGER.getNodeByName("Mold1")->GetComponent<TopLayerSnap>()->Reset();
-    NODESMANAGER.getNodeByName("Mold3(1)")->GetComponent<TopLayerSnap>()->Reset();
-    NODESMANAGER.getNodeByName("Mold3(2)")->GetComponent<TopLayerSnap>()->Reset();
-    NODESMANAGER.getNodeByName("Mold7")->GetComponent<TopLayerSnap>()->Reset();
-    NODESMANAGER.getNodeByName("Bucket")->GetComponent<TopLayerSnap>()->Reset();
 }

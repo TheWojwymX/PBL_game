@@ -12,22 +12,6 @@ void WeatherManager::Init() {
     _thunderNode1 = RESOURCEMANAGER.GetSoundByName("piorun1");
     _thunderNode2 = RESOURCEMANAGER.GetSoundByName("piorun2");
     _thunderNode3 = RESOURCEMANAGER.GetSoundByName("piorun3");
-    _flagNode = NODESMANAGER.getNodeByID(178);
-    _flagRenderer = _flagNode->GetComponent<MeshRenderer>();
-    _originalRotation = _flagNode->GetTransform()->GetRotation();
-
-    _flag0 = RESOURCEMANAGER.GetModelByName("flagModel0");
-    _flag1 = RESOURCEMANAGER.GetModelByName("flagModel1");
-    _flag2 = RESOURCEMANAGER.GetModelByName("flagModel2");
-    _flag3 = RESOURCEMANAGER.GetModelByName("flagModel3");
-    _flag4 = RESOURCEMANAGER.GetModelByName("flagModel4");
-    _flag5 = RESOURCEMANAGER.GetModelByName("flagModel5");
-    _flag6 = RESOURCEMANAGER.GetModelByName("flagModel6");
-    _flag7 = RESOURCEMANAGER.GetModelByName("flagModel7");
-    _flag8 = RESOURCEMANAGER.GetModelByName("flagModel8");
-    _flag9 = RESOURCEMANAGER.GetModelByName("flagModel9");
-    _flag10 = RESOURCEMANAGER.GetModelByName("flagModel10");
-    _flag11 = RESOURCEMANAGER.GetModelByName("flagModel11");
 
     windDirection = glm::vec3(0.0f,0.0f,0.0f);
     windStrength = 0.7f;
@@ -53,17 +37,12 @@ void WeatherManager::Init() {
     rainSunsetColor = glm::vec3(0.4353f, 0.3686f, 0.3137f);
     rainNightColor = glm::vec3(0.1722f, 0.1722f, 0.3173f);
     //rainNightColor = glm::vec3(0.0667f, 0.0667f, 0.0980f);
-
-    wormNode = NODESMANAGER.getNodeByID(166);
-
-    SetupWormParticles();
 }
 
 void WeatherManager::Reset(){
     direction = 1;
     angle = 44.5f;
     dirAngle = 44.5f;
-    SetupWormParticles();
 }
 
 void WeatherManager::Update(){
@@ -81,13 +60,6 @@ void WeatherManager::Update(){
         speed2 = 0.03f;
     }
 
-    if(wormNode->GetEnabled()) {
-        wormParticleNode->GetComponent<ParticleGenerator>()->SpawnParticles();
-        if (wormNode->GetTransform()->GetRotation().y > 0.1) {
-            wormParticleNode->GetComponent<ParticleGenerator>()->toDelete = true;
-        }
-    }
-
     windDirection = windModel.getWind(15 * TIME.GetDeltaTime());
     windDirection.x /= 10;
     windDirection.y /= 10;
@@ -95,57 +67,6 @@ void WeatherManager::Update(){
     if(windDirection.y > 0.1) windDirection.y = 0.1;
     if(windDirection.y < -0.1) windDirection.y = -0.1;
     if(isRaining) windDirection.y = -2.0f;
-
-    UpdateFlagRotation(0.1f);
-
-    flagTimer += TIME.GetDeltaTime();
-
-    if(flagTimer > 0.15f) {
-        flagTimer = 0.0f;
-        switch (flagAnimCount) {
-            case 0:
-                _actualFlag = _flag0;
-                break;
-            case 1:
-                _actualFlag = _flag1;
-                break;
-            case 2:
-                _actualFlag = _flag2;
-                break;
-            case 3:
-                _actualFlag = _flag3;
-                break;
-            case 4:
-                _actualFlag = _flag4;
-                break;
-            case 5:
-                _actualFlag = _flag5;
-                break;
-            case 6:
-                _actualFlag = _flag6;
-                break;
-            case 7:
-                _actualFlag = _flag7;
-                break;
-            case 8:
-                _actualFlag = _flag8;
-                break;
-            case 9:
-                _actualFlag = _flag9;
-                break;
-            case 10:
-                _actualFlag = _flag10;
-                break;
-            case 11:
-                _actualFlag = _flag11;
-                flagAnimCount = 0;
-                break;
-        }
-
-        _flagRenderer->_model = _actualFlag;
-
-        flagAnimCount++;
-    }
 
     UpdateSunPosition();
 
@@ -420,15 +341,6 @@ glm::vec3 WeatherManager::getDirColor() {
     return currentColor;
 }
 
-void WeatherManager::SetupWormParticles() {
-    wormParticleNode = NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "wormParticleNode");
-    auto wormParticles = COMPONENTSMANAGER.CreateComponent<ParticleGenerator>(RESOURCEMANAGER.GetShaderByName("particleShader"), "wormParticles");
-    wormParticles->SetOffset(glm::vec3(-233.1878f, -102.0f, 0.0f));
-    wormParticles->object = wormNode;
-    wormParticles->Init();
-    wormParticleNode->AddComponent(wormParticles);
-}
-
 void WeatherManager::MakeDisco(){
     _isDisco = !_isDisco;
 
@@ -452,29 +364,4 @@ void WeatherManager::MakeDisco(){
         rainSunsetSkyColor = glm::vec3(0.6784f, 0.4824f, 0.3137f);
         rainNightSkyColor = glm::vec3(0.1294f, 0.1294f, 0.2196f);
     }
-}
-
-void WeatherManager::UpdateFlagRotation(float lerpValue){
-    // Calculate the direction in the XZ plane
-    glm::vec3 directionXZ = glm::vec3(windDirection.x, 0.0f, windDirection.z);
-    directionXZ = glm::normalize(directionXZ);
-
-    // Calculate the angle between the forward vector and the directionXZ
-    glm::vec3 forward = glm::vec3(-1.0f, 0.0f, 0.0f);
-    float cosTheta = glm::dot(forward, directionXZ);
-    float angle = glm::acos(glm::clamp(cosTheta, -1.0f, 1.0f));
-    if (directionXZ.x < 0.0f) {
-        angle = -angle;
-    }
-
-    // Calculate the target rotation quaternion
-    glm::quat targetRotation = glm::angleAxis(angle, glm::vec3(0.0f, 1.0f, 0.0f));
-    glm::quat newRotation = _originalRotation * targetRotation;
-
-    // Interpolate between the current rotation and the new rotation
-    glm::quat currentRotation = _flagNode->GetTransform()->GetRotation();
-    glm::quat smoothedRotation = glm::slerp(currentRotation, newRotation, lerpValue * TIME.GetDeltaTime());
-
-    // Update the flag's rotation
-    _flagNode->GetTransform()->SetRotation(smoothedRotation);
 }

@@ -91,7 +91,7 @@ void BlockManager::Init() {
     GenerateSphereVectors(31);
     GenerateMap(0.5f,7);
     GenerateResources();
-    ApplyMasks();
+    //ApplyMasks();
     GenerateTopLayer(glm::ivec2(50, 50), glm::ivec2(500, 500), glm::ivec2(50, 50));
     SetCageRenderer();
     UpdateBlocksVisibility();
@@ -397,11 +397,6 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
             int distX = abs(x - center.x) - deadzone.x;
             int distZ = abs(z - center.y) - deadzone.y;
 
-            // If inside the deadzone, skip the block
-            if (distX < 0 && distZ < 0) {
-                continue;
-            }
-
             // Generate a height value using Perlin noise with random offsets
             float height = glm::perlin(glm::vec2((x + randomOffsetX) * frequency, (z + randomOffsetZ) * frequency)) * amplitude;
 
@@ -410,7 +405,7 @@ void BlockManager::GenerateTopLayer(glm::ivec2 center, glm::ivec2 dimensions, gl
             height *= smoothingFactor;
 
             // Add the block to the vector
-            instancePositions.push_back(glm::vec3(x, (_height - 1) + height, z));
+            instancePositions.push_back(glm::vec3(x, GAMEMANAGER._groundLevel - 0.5f + height, z));
         }
     }
     _topLayerPositions = instancePositions;

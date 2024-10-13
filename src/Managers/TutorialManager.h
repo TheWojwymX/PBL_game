@@ -72,8 +72,6 @@ public:
 
     shared_ptr<Node> _player;
 
-    shared_ptr<Node> _paratrooper;
-
     void DisplaySpecialMessage(string message);
 
     bool WarningSystem(int messageNumber);

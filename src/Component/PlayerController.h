@@ -77,7 +77,7 @@ private:
     char _miningReachLevel;
     char _miningRadiusLevel;
 
-    void CheckGrounded(glm::vec3 separationVector);
+    void CheckGrounded();
     void HandleMovement();
     void HandleJetpack();
     void MovementInput();
