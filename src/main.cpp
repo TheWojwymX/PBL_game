@@ -77,13 +77,10 @@
 #include "Managers/ComponentsManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/AudioManager.h"
-#include "HUD/PageManager.h"
-#include "Managers/DomeManager.h"
 #include "Turrets/TurretsManager.h"
 #include "Managers/TutorialManager.h"
 #include "Component/ShovelController.h"
 #include "Component/PDAController.h"
-#include "HUD/Pages/MainMenuPage/MainMenuPage.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -178,16 +175,11 @@ int main(int, char**)
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
     imguiMain->SetSelectedObject(GAMEMANAGER.root);
-    
-    /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
-    COMPONENTSMANAGER.CreateComponent<Camera>();
-    NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
+
     // json save for testing
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(GAMEMANAGER.root);
     //std::cout << jsonData;
     SCENEMANAGER.SaveToJsonFile(jsonData, "scenes/test2.json");
-
-    ENEMIESMANAGER.Init();
 
     //Prepare shader pointers
     auto skyboxShader = RESOURCEMANAGER.GetShaderByName("skyboxShader");
@@ -200,64 +192,22 @@ int main(int, char**)
     auto lightObjectShader = RESOURCEMANAGER.GetShaderByName("lightObjectShader");
     auto cloudShader = RESOURCEMANAGER.GetShaderByName("cloudShader");
     auto particleShader = RESOURCEMANAGER.GetShaderByName("particleShader");
-    auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
-    auto shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
     auto blueprintShader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     auto glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
-
-    PAGEMANAGER.Init();
-
-    TUTORIALMANAGER.Init();
 
     LIGHTSMANAGER.InitLights();
 
     WEATHERMANAGER.Init();
 
-    auto shovelController = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelController>();
-    auto shovelRenderer = NODESMANAGER.getNodeByName("Shovel")->GetComponent<ShovelRenderer>();
-
-    auto uPDAController = NODESMANAGER.getNodeByName("PDA")->GetComponent<PDAController>();
-    auto uPDARenderer = NODESMANAGER.getNodeByName("PDA")->GetComponent<ShovelRenderer>();
-    auto uPDAAntennaRenderer = NODESMANAGER.getNodeByName("PDAAntenna")->GetComponent<ShovelRenderer>();
-
-    auto compassController = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<CompassController>();
-    auto compassRenderer = NODESMANAGER.getNodeByName("CompassNode")->GetComponent<ShovelRenderer>();
-    auto compassUpRenderer = NODESMANAGER.getNodeByName("CompassUp")->GetComponent<ShovelRenderer>();
-    auto compassDownRenderer = NODESMANAGER.getNodeByName("CompassDown")->GetComponent<ShovelRenderer>();
-
-    GAMEMANAGER.PlayMenuMusic();
-
+    GAMEMANAGER.StartGame();
     //bool antialiasing = true;
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
-/*        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
-            if(antialiasing){
-                glDisable(GL_MULTISAMPLE);
-                antialiasing = false;
-                std::cout << "wylaczono antialiasing" << std::endl;
-            }else{
-                glEnable(GL_MULTISAMPLE);
-                antialiasing = true;
-                std::cout << "wlaczono antialiasing" << std::endl;
-            }
-
-        }*/
-
         // Calculate deltaTime
         TIME.Update();
 
-        if(INPUT.IsKeyPressed(GLFW_KEY_B)){
-            BALANCER.resetToDefault();
-        }
-
         if(!GAMEMANAGER._isInMainMenu) {
-
-            if(INPUT.IsKeyPressed(GLFW_KEY_0)){
-                GAMEMANAGER.GoToMainMenu();
-            }
-
-
             //debugging adding money
             if (INPUT.IsKeyPressed(77)) {
                 GAMEMANAGER.AddPlastic(10);
@@ -265,25 +215,16 @@ int main(int, char**)
             }
 
             if (!GAMEMANAGER._paused) {
-                ENEMIESMANAGER.Update();
-                DOMEMANAGER.Update();
                 GAMEMANAGER.Update();
                 WEATHERMANAGER.Update();
             }
-            TUTORIALMANAGER.Update();
             LIGHTSMANAGER.Update();
-
 
             // Input
             GAMEMANAGER.root->Input();
 
             // Update
             GAMEMANAGER.root->Update();
-
-/*        if(TIME.GetTime() > 10 && TIME.GetTime() < 11){
-            std::cout << "minal czas";
-            NODESMANAGER.getNodeByName("AntModel")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
-        }*/
 
             FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
@@ -394,10 +335,6 @@ int main(int, char**)
             particleShader->setMat4("projection", projection);
             particleShader->setMat4("view", view);
 
-            rangeShader->use();
-            rangeShader->setMat4("projection", projection);
-            rangeShader->setMat4("view", view);
-
             GAMEMANAGER.root->Render(Transform::Origin());
             TRANSPARENT_RENDERER.Render();
 //            FRAMEBUFFER.BeginRender();
@@ -408,26 +345,7 @@ int main(int, char**)
             // (at the end of loop) is also working, so it is recommended to not move it
             // moving may cause some problems like lack of smoothness or models bugging
             glClear(GL_DEPTH_BUFFER_BIT); // Clear depth because you want items always "closest to screen"
-
-            if(GAMEMANAGER._sinceStartClickedTimer > 3){
-                shovelRenderer->RenderShovel(Transform::Origin());
-                uPDAAntennaRenderer->RenderShovel(Transform::Origin());
-                uPDARenderer->RenderShovel(Transform::Origin());
-                compassDownRenderer->RenderShovel(Transform::Origin());
-                compassUpRenderer->RenderShovel(Transform::Origin());
-                compassRenderer->RenderShovel(Transform::Origin());
-            }
-
-            shovelController->RealUpdate();
-            uPDAController->RealUpdate();
-            compassController->RealUpdate();
-            shovelShader->use();
-            shovelShader->setVec3("viewPos", viewPos);
-            shovelShader->setMat4("projection", projection);
-            shovelShader->setMat4("view", view);
-            shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
         }
-        PAGEMANAGER.Update();
         AUDIOMANAGER.Update();
 
         

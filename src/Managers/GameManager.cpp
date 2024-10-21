@@ -39,8 +39,6 @@ void GameManager::pressToSkipPhase() {
 }
 
 void GameManager::AddPlastic(int amount) {
-    HUD._isPlasticInAnim = true;
-    HUD.AddMaterialText(amount);
     _plastic += amount;
 }
 
@@ -88,13 +86,10 @@ float GameManager::GetPhaseTime()
 
 void GameManager::LateGame()
 {
-    TUTORIALMANAGER._isAfterEndGameActivation = true;
-    ENEMIESMANAGER.Reset();
     _roundNumber = _phaseTimes.size() - 1;
     _currentPhase = Phase::DIG;
     _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToDigPhase();
     _currentTime = 0.0f;
-    UPGRADEMANAGER.UpgradeMax();
 }
 
 float GameManager::GetPhaseProgress()
@@ -120,34 +115,19 @@ void GameManager::RoundWon()
 }
 
 void GameManager::Update() {
+    _currentTime += TIME.GetDeltaTime();
+    pressToSkipPhase();
 
-    if(_clickedStart){
-        _sinceStartClickedTimer += TIME.GetDeltaTime();
+    if (_currentTime >= GetPhaseTime()) {
+        _currentTime = 0.0f;
+        _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
+        InitPhase();
     }
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_KP_5)){
-        ENEMIESMANAGER.Reset();
-    }
-
-    if (TUTORIALMANAGER._isFreePlay) {
-        _currentTime += TIME.GetDeltaTime();
-        pressToSkipPhase();
-
-        if (_currentTime >= GetPhaseTime()) {
-            _currentTime = 0.0f;
-            _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
-            InitPhase();
-        }
-
-        if (INPUT.IsKeyPressed(GLFW_KEY_9))
-            LateGame();
-        if (INPUT.IsKeyPressed(GLFW_KEY_8))
-            SkipPhase();
-    }
-
-    if(DOMEMANAGER.GetDomeHP() <= 0){
-       LoseGame();
-    }
+    if (INPUT.IsKeyPressed(GLFW_KEY_9))
+        LateGame();
+    if (INPUT.IsKeyPressed(GLFW_KEY_8))
+        SkipPhase();
 }
 
 void GameManager::InitPhase() {
@@ -160,7 +140,6 @@ void GameManager::InitPhase() {
     }
     else {
         _roundWon = false;
-        ENEMIESMANAGER.StartSpawning();
         _playerNode->GetComponent<PlayerAudioController>()->ChangeMusicToBattlePhase();
         _playerNode->GetComponent<PlayerAudioController>()->_isInDigPhase = false;
     }
@@ -206,15 +185,11 @@ void GameManager::DisableMouse() {
 
 void GameManager::Pause() {
     _paused = true;
-    PAGEMANAGER._pauseMenuPage->_shouldRender = true;
-    HUD.DisableHUD();
     EnableMouse();
 }
 
 void GameManager::Unpause() {
     _paused = false;
-    PAGEMANAGER._pauseMenuPage->_shouldRender = false;
-    HUD.EnableHUD();
     DisableMouse();
 }
 
