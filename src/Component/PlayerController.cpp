@@ -10,7 +10,7 @@
 PlayerController::PlayerController(float speed, float gravity, float jumpHeight, float reach, int radius, float width,
                                    float height, float digPower)
         : _speed(speed), _gravity(gravity), _jumpHeight(jumpHeight), _isGrounded(false), _velocity(glm::vec3(0.0f)),
-          _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(GAMEMANAGER._groundLevel), _digPower(digPower),
+          _inputVector(glm::vec2(0.0f)), _reach(reach), _radius(radius), _width(width), _height(height), _digPower(digPower),
           _interactionCooldown(0.25f), _timeSinceLastInteraction(0.0f),
           _jetpackCapacityLevel(0), _miningSpeedLevel(0), _miningReachLevel(0), _miningRadiusLevel(0) {
     _type = ComponentType::PLAYERCNTROLLER;
@@ -75,6 +75,8 @@ void PlayerController::Update() {
 }
 
 void PlayerController::MovementInput() {
+    if(!TUTORIALMANAGER._hasLanded) return;
+
     // Get input for movement along the X and Z axes
     float x = (INPUT.GetKeyDown(GLFW_KEY_D) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_A) ? 1.0f : 0.0f);
     float z = (INPUT.GetKeyDown(GLFW_KEY_W) ? 1.0f : 0.0f) - (INPUT.GetKeyDown(GLFW_KEY_S) ? 1.0f : 0.0f);
