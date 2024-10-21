@@ -60,8 +60,6 @@
 
 #include "Enemies/EnemiesManager.h"
 
-#include "HUD/HUDMain.h"
-
 #include <iostream>
 
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
@@ -81,7 +79,6 @@
 #include "Managers/AudioManager.h"
 #include "HUD/PageManager.h"
 #include "Managers/DomeManager.h"
-#include "Managers/UpgradeManager.h"
 #include "Turrets/TurretsManager.h"
 #include "Managers/TutorialManager.h"
 #include "Component/ShovelController.h"
@@ -177,11 +174,11 @@ int main(int, char**)
 
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(GAMEMANAGER._screenWidth);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(GAMEMANAGER._screenHeight);
-    /*
+    
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
     imguiMain->SetSelectedObject(GAMEMANAGER.root);
-    */
+    
     /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
     COMPONENTSMANAGER.CreateComponent<Camera>();
     NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
@@ -189,8 +186,6 @@ int main(int, char**)
     nlohmann::json jsonData = SCENEMANAGER.SerializeRoot(GAMEMANAGER.root);
     //std::cout << jsonData;
     SCENEMANAGER.SaveToJsonFile(jsonData, "scenes/test2.json");
-
-    HUD.Init();
 
     ENEMIESMANAGER.Init();
 
@@ -211,8 +206,6 @@ int main(int, char**)
     auto glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
 
     PAGEMANAGER.Init();
-
-    TURRETSMANAGER.Init();
 
     TUTORIALMANAGER.Init();
 
@@ -273,8 +266,6 @@ int main(int, char**)
 
             if (!GAMEMANAGER._paused) {
                 ENEMIESMANAGER.Update();
-                TURRETSMANAGER.Update();
-                UPGRADEMANAGER.Update();
                 DOMEMANAGER.Update();
                 GAMEMANAGER.Update();
                 WEATHERMANAGER.Update();
@@ -407,14 +398,6 @@ int main(int, char**)
             rangeShader->setMat4("projection", projection);
             rangeShader->setMat4("view", view);
 
-            ///
-            blueprintShader->use();
-
-            blueprintShader->setVec3("viewPos", viewPos);
-            blueprintShader->setMat4("projection", projection);
-            blueprintShader->setMat4("view", view);
-            blueprintShader->setVec3("additionalColor", TURRETSMANAGER._additionalColor);
-
             GAMEMANAGER.root->Render(Transform::Origin());
             TRANSPARENT_RENDERER.Render();
 //            FRAMEBUFFER.BeginRender();
@@ -445,10 +428,9 @@ int main(int, char**)
             shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
         }
         PAGEMANAGER.Update();
-        HUD.Update();
         AUDIOMANAGER.Update();
 
-        /*
+        
         // Start the Dear ImGui frame
         imguiMain->draw();
 
@@ -476,26 +458,21 @@ int main(int, char**)
 
         ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 
-        BALANCER.addEnemyStatsToImgui();
-        BALANCER.addTurretStatsToImgui();
-        BALANCER.addPhaseStatsToImgui();
-        BALANCER.addUpgradesStatsToImgui();
-
         imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        */
+        
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);
         glfwPollEvents();
     }
     // Cleanup
     AUDIOMANAGER.Cleanup();
-    /*
+    
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-    */
+    
 
     glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();

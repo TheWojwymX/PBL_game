@@ -27,13 +27,10 @@ void ImguiMain::draw()
 
     ImGui::Begin("Info:");
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    ImGui::Text("Other stuff 1");
-    ImGui::Text("Other stuff 2");
-    ImGui::Text("Other stuff 3");
     ImGui::End();
 
-    _hierarchy->draw(_rootObject, _selectedObject, this);
-    _component->draw(_selectedObject, this);
+    //_hierarchy->draw(_rootObject, _selectedObject, this);
+    //_component->draw(_selectedObject, this);
 
 }
 
