@@ -177,11 +177,11 @@ int main(int, char**)
 
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenWidth(GAMEMANAGER._screenWidth);
     ComponentsManager::getInstance().GetComponentByID<Camera>(2)->setScreenHeight(GAMEMANAGER._screenHeight);
-    /*
+    
     std::shared_ptr<ImguiMain> imguiMain = std::make_shared<ImguiMain>(GAMEMANAGER._window, glsl_version);
     imguiMain->SetRoot(GAMEMANAGER.root);
     imguiMain->SetSelectedObject(GAMEMANAGER.root);
-    */
+    
     /*    NODESMANAGER.createNode(NODESMANAGER.getNodeByName("root"), "testowy");
     COMPONENTSMANAGER.CreateComponent<Camera>();
     NODESMANAGER.getNodeByName("testowy")->AddComponent(COMPONENTSMANAGER.GetComponentByID<Camera>(4));*/
@@ -238,25 +238,8 @@ int main(int, char**)
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
     {
-/*        if (INPUT.IsKeyPressed(GLFW_KEY_9)) {
-            if(antialiasing){
-                glDisable(GL_MULTISAMPLE);
-                antialiasing = false;
-                std::cout << "wylaczono antialiasing" << std::endl;
-            }else{
-                glEnable(GL_MULTISAMPLE);
-                antialiasing = true;
-                std::cout << "wlaczono antialiasing" << std::endl;
-            }
-
-        }*/
-
         // Calculate deltaTime
         TIME.Update();
-
-        if(INPUT.IsKeyPressed(GLFW_KEY_B)){
-            BALANCER.resetToDefault();
-        }
 
         if(!GAMEMANAGER._isInMainMenu) {
 
@@ -288,11 +271,6 @@ int main(int, char**)
 
             // Update
             GAMEMANAGER.root->Update();
-
-/*        if(TIME.GetTime() > 10 && TIME.GetTime() < 11){
-            std::cout << "minal czas";
-            NODESMANAGER.getNodeByName("AntModel")->GetTransform()->SetPosition(glm::vec3(0.0f, 115.0f, 0.0f));
-        }*/
 
             FrustumCulling::_renderWireframeBB = _renderWireframeBB;
 
@@ -448,7 +426,7 @@ int main(int, char**)
         HUD.Update();
         AUDIOMANAGER.Update();
 
-        /*
+        
         // Start the Dear ImGui frame
         imguiMain->draw();
 
@@ -476,26 +454,21 @@ int main(int, char**)
 
         ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 
-        BALANCER.addEnemyStatsToImgui();
-        BALANCER.addTurretStatsToImgui();
-        BALANCER.addPhaseStatsToImgui();
-        BALANCER.addUpgradesStatsToImgui();
-
         imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        */
+        
         INPUT.UpdateOldStates();
         glfwSwapBuffers(GAMEMANAGER._window);
         glfwPollEvents();
     }
     // Cleanup
     AUDIOMANAGER.Cleanup();
-    /*
+    
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-    */
+    
 
     glfwDestroyWindow(GAMEMANAGER._window);
     glfwTerminate();

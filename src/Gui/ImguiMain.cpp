@@ -31,10 +31,6 @@ void ImguiMain::draw()
     ImGui::Text("Other stuff 2");
     ImGui::Text("Other stuff 3");
     ImGui::End();
-
-    _hierarchy->draw(_rootObject, _selectedObject, this);
-    _component->draw(_selectedObject, this);
-
 }
 
 void ImguiMain::destroy()
