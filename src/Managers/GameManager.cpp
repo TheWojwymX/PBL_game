@@ -120,34 +120,19 @@ void GameManager::RoundWon()
 }
 
 void GameManager::Update() {
+    _currentTime += TIME.GetDeltaTime();
+    pressToSkipPhase();
 
-    if(_clickedStart){
-        _sinceStartClickedTimer += TIME.GetDeltaTime();
+    if (_currentTime >= GetPhaseTime()) {
+        _currentTime = 0.0f;
+        _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
+        InitPhase();
     }
 
-    if(INPUT.IsKeyPressed(GLFW_KEY_KP_5)){
-        ENEMIESMANAGER.Reset();
-    }
-
-    if (TUTORIALMANAGER._isFreePlay) {
-        _currentTime += TIME.GetDeltaTime();
-        pressToSkipPhase();
-
-        if (_currentTime >= GetPhaseTime()) {
-            _currentTime = 0.0f;
-            _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
-            InitPhase();
-        }
-
-        if (INPUT.IsKeyPressed(GLFW_KEY_9))
-            LateGame();
-        if (INPUT.IsKeyPressed(GLFW_KEY_8))
-            SkipPhase();
-    }
-
-    if(DOMEMANAGER.GetDomeHP() <= 0){
-       LoseGame();
-    }
+    if (INPUT.IsKeyPressed(GLFW_KEY_9))
+        LateGame();
+    if (INPUT.IsKeyPressed(GLFW_KEY_8))
+        SkipPhase();
 }
 
 void GameManager::InitPhase() {

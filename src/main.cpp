@@ -210,7 +210,6 @@ int main(int, char**)
     auto blueprintShader = RESOURCEMANAGER.GetShaderByName("blueprintShader");
     auto glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
 
-    PAGEMANAGER.Init();
 
     TURRETSMANAGER.Init();
 
@@ -232,8 +231,7 @@ int main(int, char**)
     auto compassUpRenderer = NODESMANAGER.getNodeByName("CompassUp")->GetComponent<ShovelRenderer>();
     auto compassDownRenderer = NODESMANAGER.getNodeByName("CompassDown")->GetComponent<ShovelRenderer>();
 
-    GAMEMANAGER.PlayMenuMusic();
-
+    GAMEMANAGER.StartGame();
     //bool antialiasing = true;
     // Main loop
     while (!glfwWindowShouldClose(GAMEMANAGER._window))
@@ -422,7 +420,6 @@ int main(int, char**)
             shovelShader->setMat4("view", view);
             shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
         }
-        PAGEMANAGER.Update();
         HUD.Update();
         AUDIOMANAGER.Update();
 
