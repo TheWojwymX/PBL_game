@@ -61,7 +61,6 @@ void GameManager::StartGame() {
     GAMEMANAGER._editMode = false;
     INPUT.SetCursorMode(false);
     StopMenuMusic();
-    PAGEMANAGER.CloseAllPages();
 }
 
 void GameManager::Evacuate() {
@@ -121,18 +120,6 @@ void GameManager::RoundWon()
 
 void GameManager::Update() {
     _currentTime += TIME.GetDeltaTime();
-    pressToSkipPhase();
-
-    if (_currentTime >= GetPhaseTime()) {
-        _currentTime = 0.0f;
-        _currentPhase = (_currentPhase == Phase::DIG) ? Phase::DEFEND : Phase::DIG;
-        InitPhase();
-    }
-
-    if (INPUT.IsKeyPressed(GLFW_KEY_9))
-        LateGame();
-    if (INPUT.IsKeyPressed(GLFW_KEY_8))
-        SkipPhase();
 }
 
 void GameManager::InitPhase() {

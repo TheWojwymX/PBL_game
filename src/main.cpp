@@ -190,10 +190,6 @@ int main(int, char**)
     //std::cout << jsonData;
     SCENEMANAGER.SaveToJsonFile(jsonData, "scenes/test2.json");
 
-    HUD.Init();
-
-    ENEMIESMANAGER.Init();
-
     //Prepare shader pointers
     auto skyboxShader = RESOURCEMANAGER.GetShaderByName("skyboxShader");
     auto modelShader = RESOURCEMANAGER.GetShaderByName("modelShader");
@@ -208,8 +204,6 @@ int main(int, char**)
     auto rangeShader = RESOURCEMANAGER.GetShaderByName("turretRangeShader");
     auto shovelShader = RESOURCEMANAGER.GetShaderByName("shovelShader");
     auto glowstickShader = RESOURCEMANAGER.GetShaderByName("glowstickShader");
-
-    TUTORIALMANAGER.Init();
 
     LIGHTSMANAGER.InitLights();
 
@@ -249,13 +243,9 @@ int main(int, char**)
             }
 
             if (!GAMEMANAGER._paused) {
-                ENEMIESMANAGER.Update();
-                UPGRADEMANAGER.Update();
-                DOMEMANAGER.Update();
                 GAMEMANAGER.Update();
                 WEATHERMANAGER.Update();
             }
-            TUTORIALMANAGER.Update();
             LIGHTSMANAGER.Update();
 
 
@@ -407,7 +397,6 @@ int main(int, char**)
             shovelShader->setMat4("view", view);
             shovelShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
         }
-        HUD.Update();
         AUDIOMANAGER.Update();
 
         
