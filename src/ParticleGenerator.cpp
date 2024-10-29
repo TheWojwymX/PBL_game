@@ -399,7 +399,7 @@ void ParticleGenerator::initiateParticleType() {
         speedVariation = 30.2f;
         XZvariation = 100.4f;
         particleLife = 60.0f;
-        particleColor = glm::vec4(1.0f,1.0f,1.0f,1.0f);
+        particleColor = glm::vec4(2.0f,2.0f,2.0f,1.0f);
         initialUpwardBoost = 0.04f;
         particleScale = 0.2f;
         gravity = glm::vec3(0.0f, -9.0f, 0.0f);

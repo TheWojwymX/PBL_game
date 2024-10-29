@@ -51,6 +51,7 @@ uniform vec3 lightPos;
 uniform DirLight dirLight;
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 uniform PointLight pointLights[NR_POINT_LIGHTS];
+uniform bool isSnowing;
 
 // Function prototypes for lighting calculations
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
@@ -150,9 +151,16 @@ void main()
 
     // Modify the final color with a smaller scaled variation factor for brightness adjustment
     float brightnessFactor = 1.0 + (VariationFactor - 0.5) * 0.05; // Reduce the effect of brightness variation
-    
+
     vec3 finalColor;
     finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow * heightTint * brightnessFactor;
+
+    if(isSnowing){
+    finalColor = vec3(0.9,0.9,0.9) * brightnessFactor;
+    }
+    else{
+    finalColor = (dirLightColor + spotLightColor + pointLightColor) * shadow * heightTint * brightnessFactor;
+    }
 
     // Combine the final color with the texture color
     FragColor = vec4(finalColor, 1.0);

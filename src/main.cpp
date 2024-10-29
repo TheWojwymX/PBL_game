@@ -224,6 +224,8 @@ int main(int, char**)
     int currentOption = 0; // 0 for A, 1 for B
     int previousOption = -1; // Previous option to detect changes
 
+    bool isSnowing = true;
+
     GAMEMANAGER.StartGame();
     //bool antialiasing = true;
     // Main loop
@@ -333,6 +335,7 @@ int main(int, char**)
             instancedSandShader->setMat4("projection", projection);
             instancedSandShader->setMat4("view", view);
             instancedSandShader->setMat4("lightSpaceMatrix", SHADOWMAP.GetLightSpaceMatrix());
+            instancedSandShader->setBool("isSnowing", isSnowing);
 #pragma endregion
 
 #pragma region InstanceMetalShader setup
@@ -434,6 +437,13 @@ int main(int, char**)
         float float_sigma_z = static_cast<float>(WEATHERMANAGER.wz_sigma_ptr);
 
         float alt_wind = static_cast<float>(WEATHERMANAGER.alt_ptr);
+
+        if(currentOption == 0){
+            isSnowing = true;
+        }
+        else {
+            isSnowing = false;
+        }
 
         ImGui::Begin("Simulation Settings");
 
