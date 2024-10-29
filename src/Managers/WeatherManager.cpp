@@ -38,9 +38,7 @@ void WeatherManager::Init() {
     rainNightColor = glm::vec3(0.1722f, 0.1722f, 0.3173f);
     //rainNightColor = glm::vec3(0.0667f, 0.0667f, 0.0980f);
 
-    wormNode = NODESMANAGER.getNodeByID(166);
-
-    SetupWormParticles();
+    //SetupWormParticles();
 }
 
 void WeatherManager::Reset(){
@@ -51,15 +49,6 @@ void WeatherManager::Reset(){
 }
 
 void WeatherManager::Update(){
-
-
-    if(wormNode->GetEnabled()) {
-        wormParticleNode->GetComponent<ParticleGenerator>()->SpawnParticles();
-        if (wormNode->GetTransform()->GetRotation().y > 0.1) {
-            wormParticleNode->GetComponent<ParticleGenerator>()->toDelete = true;
-        }
-    }
-
     windModel.wx_nominal_= wx_nominal_ptr;
     windModel.wy_nominal_= wy_nominal_ptr;
     windModel.wz_nominal_ = wz_nominal_ptr;
