@@ -52,6 +52,7 @@ void WeatherManager::Reset(){
 
 void WeatherManager::Update(){
 
+
     if(wormNode->GetEnabled()) {
         wormParticleNode->GetComponent<ParticleGenerator>()->SpawnParticles();
         if (wormNode->GetTransform()->GetRotation().y > 0.1) {
@@ -59,12 +60,19 @@ void WeatherManager::Update(){
         }
     }
 
-    windDirection = windModel.getWind(15 * TIME.GetDeltaTime());
-    windDirection.x /= 10;
-    windDirection.y /= 10;
-    windDirection.z /= 10;
-    if(windDirection.y > 0.1) windDirection.y = 0.1;
-    if(windDirection.y < -0.1) windDirection.y = -0.1;
+    windModel.wx_nominal_= wx_nominal_ptr;
+    windModel.wy_nominal_= wy_nominal_ptr;
+    windModel.wz_nominal_ = wz_nominal_ptr;
+
+    //cout << wx_sigma_ptr << endl;
+
+    windDirection = windModel.getWind(2 * TIME.GetDeltaTime());
+//    windDirection = windModel.getWind(15 * TIME.GetDeltaTime());
+//    windDirection.x /= 10;
+//    windDirection.y /= 10;
+//    windDirection.z /= 10;
+//    if(windDirection.y > 0.1) windDirection.y = 0.1;
+//    if(windDirection.y < -0.1) windDirection.y = -0.1;
     if(isRaining) windDirection.y = -2.0f;
 
     UpdateSunPosition();
@@ -99,7 +107,7 @@ void WeatherManager::Update(){
     if(isRaining && _playerNode->GetTransform()->GetPosition().y < 292 && !_soundNode->_isFadingAway && !_soundNode->_isRisingUp && _soundNode->GetVolume() != 0.0){
         _soundNode->_fadeAwayTarget = 0.0;
         _soundNode->FadeAway(1);
-        cout << "Fade Away" << endl;
+        //cout << "Fade Away" << endl;
     }
 
     if(isRaining && _playerNode->GetTransform()->GetPosition().y >= 292 && !_soundNode->_isFadingAway && !_soundNode->_isRisingUp && _soundNode->GetVolume() == 0.0){
@@ -107,30 +115,17 @@ void WeatherManager::Update(){
         else _soundNode->_riseUpTarget = 1.0;
 
         _soundNode->RiseUp(1, _playerNode);
-        cout << _soundNode->_riseUpTarget << endl;
-        cout << "Rise Up" << endl;
+        //cout << _soundNode->_riseUpTarget << endl;
+        //cout << "Rise Up" << endl;
     }
 
     // Update rain duration
     if (isRaining) {
-        cout << "TARGET: " << _soundNode->_riseUpTarget << endl;
-        cout << "VOLUME: " << _soundNode->GetVolume() << endl;
+        //cout << "TARGET: " << _soundNode->_riseUpTarget << endl;
+        //cout << "VOLUME: " << _soundNode->GetVolume() << endl;
         rainTimeLeft -= TIME.GetDeltaTime();
         timeSinceLastParticleSpawn += TIME.GetDeltaTime();
         auto particleGenerator = NODESMANAGER.getNodeByName("RainParticles")->GetComponent<ParticleGenerator>();
-        if (spawnedParticles < particleGenerator->amount) {
-            if (rainTimeLeft >= (2 * rainDuration / 3) && timeSinceLastParticleSpawn >= particleSpawnInterval) {
-                particleGenerator->gravity = glm::vec3(0.0f, -20.0f, 0.0f);
-                particleGenerator->SpawnParticles();
-                timeSinceLastParticleSpawn = 0.0f;
-                if(_adjustOnce){
-                    _soundNode->_riseUpFrom = 0.0;
-                    _soundNode->_riseUpTarget = 0.4;
-                    if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->RiseUp(5, _playerNode);
-                    _adjustOnce = false;
-                }
-                if(_soundNode->GetVolume() >= 0.4) _reachedTarget = true;
-            } else if (rainTimeLeft < 2 * rainDuration / 3 && rainTimeLeft >= rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
                 NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->gravity = glm::vec3(0.0f, -30.0f, 0.0f);
                 NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->SpawnParticles();
                 timeSinceLastParticleSpawn = 0.0f;
@@ -141,28 +136,17 @@ void WeatherManager::Update(){
                     _adjustOnce = true;
                     _reachedTarget = false;
                 }
-            } else if (rainTimeLeft < rainDuration / 3 && timeSinceLastParticleSpawn >= particleSpawnInterval) {
-                particleGenerator->gravity = glm::vec3(0.0f, -20.0f, 0.0f);
-                particleGenerator->SpawnParticles();
-                timeSinceLastParticleSpawn = 0.0f;
-                if(_adjustOnce){
-                    _soundNode->_fadeAwayTarget = 0.4;
-                    if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->FadeAway(5);
-                    _adjustOnce = false;
-                }
-                if(_soundNode->GetVolume() <= 0.4) _reachedTarget = true;
-            }
-        }
         if (rainTimeLeft <= 0.0f) {
-            isRaining = false;
+            //isRaining = false;
             _soundNode->_fadeAwayTarget = 0.0;
             if(_playerNode->GetTransform()->GetPosition().y > 292) _soundNode->FadeAway(5);
             _adjustOnce = true;
         }
     }
 
-    if(counter < 2) {
+    if(counter < 4) {
         NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+        cout << counter << endl;
         counter++;
     }
 }
@@ -240,23 +224,16 @@ void WeatherManager::UpdateSunPosition() {
         angle = 45.66;
         dirAngle = 45.66;
     }
-    if(angle >= 48.5f){
+
+    if(angle >= 48.5f) {
         float randomChance = static_cast<float>(std::rand()) / (RAND_MAX + 1.0f);
         rainTimeLeft = rainDuration * (randomChance + 0.5);
         angle -= 6.0f;
-        if (randomChance < rainProbability){
-            isRaining = true;
-            rainProbability = 0.1;
-        }
-        else
-        {
-            isRaining = false;
-        }
+    }
 
-        if(isRaining) rainyDay = true;
-        if(!isRaining) {
-            rainyDay = false;
-        }
+    if (isRaining) rainyDay = true;
+    if (!isRaining) {
+        rainyDay = false;
     }
 
     if(dirAngle < 44.3){
@@ -338,4 +315,32 @@ void WeatherManager::SetupWormParticles() {
     wormParticles->object = wormNode;
     wormParticles->Init();
     wormParticleNode->AddComponent(wormParticles);
+}
+
+void WeatherManager::set_wx_nominal(float x) {
+    windModel.set_wx_nominal(x);
+}
+
+void WeatherManager::set_wy_nominal(float x) {
+    windModel.set_wy_nominal(x);
+}
+
+void WeatherManager::set_wz_nominal(float x) {
+    windModel.set_wz_nominal(x);
+}
+
+void WeatherManager::onOptionChanged(int option) {
+    if (option == 0) {
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->killParticles = true;
+        NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->killParticles = true;
+        isRaining = false;
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+    } else if (option == 1) {
+        NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->killParticles = true;
+        NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->killParticles = true;
+        isRaining = true;
+    }
 }

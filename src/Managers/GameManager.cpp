@@ -120,6 +120,15 @@ void GameManager::RoundWon()
 
 void GameManager::Update() {
     _currentTime += TIME.GetDeltaTime();
+
+    if(INPUT.IsKeyPressed(GLFW_KEY_E)){
+        if(_editMode){
+            DisableMouse();
+        }
+         else{
+            EnableMouse();
+         }
+    }
 }
 
 void GameManager::InitPhase() {

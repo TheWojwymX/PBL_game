@@ -30,9 +30,37 @@ public:
     glm::vec3 getWindDirection(){return windDirection;}
     float getWindStrength(){return windStrength;}
 
+    DrydenWind GetWindModel() {return windModel;}
+
+    void set_wx_nominal(float x);
+    void set_wy_nominal(float x);
+    void set_wz_nominal(float x);
+
+    float wx_nominal_ptr = 0.1f;
+    float wy_nominal_ptr = 0.1f;
+    float wz_nominal_ptr = 0.1f;
+
+    double wx_sigma_ptr = 0.1;
+    double wy_sigma_ptr = 0.1;
+    double wz_sigma_ptr = 0.1;
+
+    double alt_ptr = 1.0;
+
+    int visibleParticles = 20000;
+
+    bool killParticles = true;
+
+    void initializeWindModel(){
+        windModel.initialize(wx_nominal_ptr, wy_nominal_ptr, wz_nominal_ptr, wx_sigma_ptr, wy_sigma_ptr, wz_sigma_ptr, alt_ptr);
+    }
+
+    void onOptionChanged(int option);
+
+    float windStrength;
+
 private:
     glm::vec3 windDirection;
-    float windStrength;
+
 
     DrydenWind windModel;
 

@@ -59,6 +59,9 @@ public:
     bool tooltipSpawn = true;
 
     Texture2D texture;
+
+    bool killParticles = false;
+
 private:
 
     std::shared_ptr<ComputeShader> computeShader;

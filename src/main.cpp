@@ -221,6 +221,9 @@ int main(int, char**)
     auto compassUpRenderer = NODESMANAGER.getNodeByName("CompassUp")->GetComponent<ShovelRenderer>();
     auto compassDownRenderer = NODESMANAGER.getNodeByName("CompassDown")->GetComponent<ShovelRenderer>();
 
+    int currentOption = 0; // 0 for A, 1 for B
+    int previousOption = -1; // Previous option to detect changes
+
     GAMEMANAGER.StartGame();
     //bool antialiasing = true;
     // Main loop
@@ -408,7 +411,7 @@ int main(int, char**)
 //        ImGui::Image((void *) (intptr_t) SHADOWMAP.GetDepthMapTexture(), ImVec2(256, 256), ImVec2(0, 1), ImVec2(1, 0));
 //        ImGui::End();
 //
-        // Quick Debug
+        ImGui::Begin("Debug");
         ImGui::SliderFloat("Shot Const", &LIGHTSMANAGER.shotConstant, -10.0f, 10.0f);
         ImGui::SliderFloat("Shot Linear", &LIGHTSMANAGER.shotLinear, -10.0f, 10.0f);
         ImGui::SliderFloat("Shot Quadratic", &LIGHTSMANAGER.shotQuadratic, -10.0f, 10.0f);
@@ -424,9 +427,78 @@ int main(int, char**)
         ImGui::ColorEdit3("Sky Color", glm::value_ptr(LIGHTSMANAGER.skyColor));
 
         ImGui::Checkbox("Wireframe Frustum Boxes", &_renderWireframeBB);
+        ImGui::End();
+
+        float float_sigma_x = static_cast<float>(WEATHERMANAGER.wx_sigma_ptr);
+        float float_sigma_y = static_cast<float>(WEATHERMANAGER.wy_sigma_ptr);
+        float float_sigma_z = static_cast<float>(WEATHERMANAGER.wz_sigma_ptr);
+
+        float alt_wind = static_cast<float>(WEATHERMANAGER.alt_ptr);
+
+        ImGui::Begin("Simulation Settings");
+
+        const char* options[] = { "Snow", "Rain" };
+
+        if (ImGui::Combo("Select Preset", &currentOption, options, IM_ARRAYSIZE(options))) {
+            // If the selection changed, call the function
+            if (currentOption != previousOption) {
+                WEATHERMANAGER.onOptionChanged(currentOption);
+                previousOption = currentOption; // Update previous option
+            }
+        }
+
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+
+        // Quick Debug
 
         ImGui::SliderFloat3("Wind Direction", &WEATHERMANAGER.getWindDirection()[0], -1.0f, 1.0f);
 
+
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+
+//        ImGui::SliderFloat("X", &WEATHERMANAGER.wx_nominal_ptr, -100.0f, 100.0f);
+//        ImGui::SliderFloat("Y", &WEATHERMANAGER.wy_nominal_ptr, -100.0f, 100.0f);
+//        ImGui::SliderFloat("Z", &WEATHERMANAGER.wz_nominal_ptr, -100.0f, 100.0f);
+
+        if(ImGui::SliderFloat("Sigma X", &float_sigma_x, 0.1f, 5.0f)){
+            WEATHERMANAGER.wx_sigma_ptr = static_cast<double>(float_sigma_x);
+            WEATHERMANAGER.initializeWindModel();
+        }
+        if(ImGui::SliderFloat("Sigma Y", &float_sigma_y, 0.1f, 5.0f)){
+            WEATHERMANAGER.wy_sigma_ptr = static_cast<double>(float_sigma_y);
+            WEATHERMANAGER.initializeWindModel();
+        }
+        if(ImGui::SliderFloat("Sigma z", &float_sigma_z,0.1f, 5.0f)){
+            WEATHERMANAGER.wz_sigma_ptr = static_cast<double>(float_sigma_z);
+            WEATHERMANAGER.initializeWindModel();
+        }
+        if(ImGui::SliderFloat("Altitude", &alt_wind,1.0f, 1000.0f)){
+            WEATHERMANAGER.alt_ptr = static_cast<double>(alt_wind);
+            WEATHERMANAGER.initializeWindModel();
+        }
+
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+
+        ImGui::SliderInt("Particles", &WEATHERMANAGER.visibleParticles,1.0f, 20000.0f);
+
+        ImGui::SliderFloat("Wind Strength", &WEATHERMANAGER.windStrength, 0.1f, 2.0f);
+
+
+
+
+        ImGui::End();
         imguiMain->endDraw();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

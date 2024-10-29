@@ -1,3 +1,4 @@
+#include <iostream>
 #include "WindSimulation.h"
 
 
@@ -64,7 +65,7 @@ double GustModelBase::integrate(const double &dt) {
 
 DrydenWind::DrydenWind() : initialized_(false) {}
 
-void DrydenWind::initialize(const double &wx_nominal, const double &wy_nominal, const double &wz_nominal,
+void DrydenWind::initialize(const float &wx_nominal, const float &wy_nominal, const float &wz_nominal,
                             const double &wx_sigma, const double &wy_sigma, const double &wz_sigma,
                             const double &altitude) {
     wx_nominal_ = wx_nominal;
@@ -77,7 +78,7 @@ void DrydenWind::initialize(const double &wx_nominal, const double &wy_nominal, 
     wx_gust_.initializeParameters(1.0, Lx_ft / 3.281, wx_sigma);
     wy_gust_.initializeParameters(1.0, Ly_ft / 3.281, wy_sigma);
     wz_gust_.initializeParameters(1.0, Lz_ft / 3.281, wz_sigma);
-
+    //std::cout << "init" << std::endl;
     initialized_ = true;
 }
 

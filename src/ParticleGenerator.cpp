@@ -95,6 +95,14 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setVec3("gravity", gravity);
     computeShader->setBool("tooltipSpawn", tooltipSpawn);
     computeShader->setBool("tooltipShrink", tooltipShrink);
+    computeShader->setInt("visibleParticles", WEATHERMANAGER.visibleParticles);
+    computeShader->setBool("killParticles", killParticles);
+
+    if(killParticles){
+        cout << "yeah" << endl;
+    }
+
+    killParticles = false;
 
     generatorPosition = object->GetTransform()->GetPosition() + rotatedOffset;
 
@@ -385,22 +393,23 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "ambientSandParticles"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 200;
-        newParticles = 200;
+        amount = 25000;
+        newParticles = 5000;
         spawnDelay = 0.0f;
-        speedVariation = 0.2f;
+        speedVariation = 30.2f;
         XZvariation = 100.4f;
         particleLife = 60.0f;
-        particleColor = glm::vec4(0.882f,0.677f,0.351f,1.0f);
+        particleColor = glm::vec4(1.0f,1.0f,1.0f,1.0f);
         initialUpwardBoost = 0.04f;
-        particleScale = 0.15f;
-        gravity = glm::vec3(0.0f, -0.0f, 0.0f);
+        particleScale = 0.2f;
+        gravity = glm::vec3(0.0f, -9.0f, 0.0f);
         onlyForward = false;
         casing = false;
         isJetpack = false;
         counterXrotation = false;
         isFlare = false;
         ambient = true;
+        affectDirLight = false;
     }
     else if (particleType == "digMetal"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
@@ -469,8 +478,8 @@ void ParticleGenerator::initiateParticleType() {
     }
     else if (particleType == "rainParticlesFull"){
         texture = Texture2D::loadTextureFromFile("res/Particle/particle.png", true);
-        amount = 4000;
-        newParticles = 5;
+        amount = 20000;
+        newParticles = 20;
         spawnDelay = 0.0f;
         speedVariation = 0.2f;
         XZvariation = 100.4f;

@@ -35,19 +35,33 @@ public:
 class DrydenWind {
 public:
     DrydenWind();
-    void initialize(const double &wx_nominal, const double &wy_nominal, const double &wz_nominal,
+    void initialize(const float &wx_nominal, const float &wy_nominal, const float &wz_nominal,
                     const double &wx_sigma, const double &wy_sigma, const double &wz_sigma,
                     const double &altitude = 2.0);
     glm::vec3 getWind(const double &dt);
 
+    float get_wx_nominal() {
+        return wx_nominal_;
+    }
+    void set_wx_nominal(float x){
+        wx_nominal_ = x;
+    }
+
+    void set_wy_nominal(float x){
+        wy_nominal_ = x;
+    }
+
+    void set_wz_nominal(float x){
+        wz_nominal_ = x;
+    }
+
+    float wx_nominal_;
+    float wy_nominal_;
+    float wz_nominal_;
 private:
     GustModelBase wx_gust_;
     GustModelBase wy_gust_;
     GustModelBase wz_gust_;
-
-    double wx_nominal_;
-    double wy_nominal_;
-    double wz_nominal_;
 
     bool initialized_;
 };

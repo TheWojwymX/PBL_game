@@ -46,6 +46,8 @@ uniform bool tooltip;
 uniform bool tooltipSpawn;
 uniform bool tooltipShrink;
 uniform bool worm;
+uniform int visibleParticles;
+uniform bool killParticles;
 
 layout (local_size_x = 1) in;
 
@@ -83,7 +85,7 @@ void respawnParticle(inout Particle particle, uint index, float seed) {
     particle.Scale = particleScale;
     particle.Ground = jumpOff.y;
     if(ambient){
-    particle.Weight = (random(changeSeed) * 3) + 0.1 ;
+    particle.Weight = (random(changeSeed) * 4) + 0.1 ;
     }
     else{
     particle.Weight = 1.0;
@@ -242,9 +244,7 @@ p.Life = 0.0;
                 p.Velocity.x = p.Velocity.x * 0.8;
                 p.Velocity.z = p.Velocity.z * 0.8;
                 }
-                if(ambient){
-                p.Velocity.y = -p.Velocity.y * 0.2;
-                }
+
                 if(rain){
                 p.Velocity.y = -p.Velocity.y * 0.1;
                 }
@@ -264,25 +264,32 @@ p.Life = 0.0;
                 p.Velocity.z = p.Velocity.z * 0.8;
             }
 
-            // Check for bounce when particle hits the circle boundary
-            vec3 toParticle = p.Position.xyz - vec3(49.5,300,49.5);
-            float distanceToCenter = length(toParticle);
-            if (distanceToCenter < 15.0 && !isJetpack && !isFlare && !isUnderground && !tooltip && !rain && !casing && !onlyForward) {
-                vec3 normal = normalize(toParticle);
-                p.Position.xyz = vec3(49.5,300,49.5) + normal * 15.0;
-                p.Velocity.xyz = reflect(p.Velocity.xyz, normal) * 0.8; // Adjust 0.8 damping factor as needed
-            }
+                // Check for bounce when particle hits the circle boundary
+              //  vec3 toParticle = p.Position.xyz - vec3(49.5,300,49.5);
+              //  float distanceToCenter = length(toParticle);
+              //  if (distanceToCenter < 15.0 && !isJetpack && !isFlare && !isUnderground && !tooltip && !rain && !casing && !onlyForward) {
+              //      vec3 normal = normalize(toParticle);
+              //      p.Position.xyz = vec3(49.5,300,49.5) + normal * 15.0;
+              //      p.Velocity.xyz = reflect(p.Velocity.xyz, normal) * 0.8; // Adjust 0.8 damping factor as needed
+             //  }
 
             //}
             //else{
             //p.Life = 0.0;
             //}
             if(ambient){
+            if(killParticles){
+            p.Life = 0.0;
+            }
+            else{
             if(p.Life < particleLife - 2.05){
+                if(id >= uint(visibleParticles)){
+                    p.Scale = 0.0;
+                 }
                 if(!rain){
                 p.Life = particleLife - 2.3;
                 }
-                p.Velocity.xyz = p.Velocity.xyz * 0.999;
+                p.Velocity.xyz = p.Velocity.xyz * 0.96;
             }
             else if(p.Life < particleLife - 2.0){
             p.Velocity = vec4(0.0, 0.0, 0.0, 0.0);
@@ -309,11 +316,11 @@ p.Life = 0.0;
                 p.Position.z = 120;
                 }
 
-                if(p.Position.y < 299){
-                p.Position.y = 400;
+                if(p.Position.y < 300){
+                p.Position.y = 328;
                 }
 
-                if(p.Position.y > 310){
+                if(p.Position.y > 330){
                 p.Position.y = 300;
                 }
             }
@@ -345,9 +352,11 @@ p.Life = 0.0;
                 if(p.Position.y > 330){
                 p.Position.y = 300;
                 }
+                if(killParticles){
+                p.Position.y = 302;
+                }
             }
-
-
+}
             }
         }
 
