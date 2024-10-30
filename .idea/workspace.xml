@@ -252,11 +252,6 @@
       <change beforePath="$PROJECT_DIR$/res/Models/Worm/worm.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Models/Worm/worm.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/Sand/Sand.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/Sand.mtl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/Sand/Sand.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/Sand/Sand.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Skybox/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Skybox/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Skybox/bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Skybox/bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Skybox/front.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Skybox/front.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Skybox/left.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Skybox/left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/Skybox/right.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/Skybox/right.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/animatedTextureShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/animatedTextureShader.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/animatedTextureShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/res/animatedTextureShader.vs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/blueprintShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/res/blueprintShader.fs" afterDir="false" />
@@ -550,17 +545,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.SandBOX">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SandBOX" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="SandBOX" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SandBOX" RUN_TARGET_NAME="SandBOX">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="UpdateAssimpLibsDebugSymbolsAndDLLs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SandBOX" TARGET_NAME="UpdateAssimpLibsDebugSymbolsAndDLLs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -691,7 +686,8 @@
       <workItem from="1729674001651" duration="3597000" />
       <workItem from="1730148782220" duration="7183000" />
       <workItem from="1730194328224" duration="8857000" />
-      <workItem from="1730232148398" duration="1839000" />
+      <workItem from="1730232148398" duration="2690000" />
+      <workItem from="1730282437747" duration="3192000" />
     </task>
     <servers />
   </component>

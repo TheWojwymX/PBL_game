@@ -97,6 +97,9 @@ void ParticleGenerator::UpdateParticles() {
     computeShader->setBool("tooltipShrink", tooltipShrink);
     computeShader->setInt("visibleParticles", WEATHERMANAGER.visibleParticles);
     computeShader->setBool("killParticles", killParticles);
+    computeShader->setBool("floorCollision", WEATHERMANAGER.floorCollision);
+    computeShader->setBool("baseCollision", WEATHERMANAGER.baseCollision);
+
 
     if(killParticles){
         cout << "yeah" << endl;

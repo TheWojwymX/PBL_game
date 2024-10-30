@@ -50,6 +50,9 @@ public:
 
     bool killParticles = true;
 
+    bool floorCollision = false;
+    bool baseCollision = false;
+
     void initializeWindModel(){
         windModel.initialize(wx_nominal_ptr, wy_nominal_ptr, wz_nominal_ptr, wx_sigma_ptr, wy_sigma_ptr, wz_sigma_ptr, alt_ptr);
     }

@@ -20,7 +20,7 @@ void WeatherManager::Init() {
     SetupAmbientParticles();
     SetupRainParticles();
 
-    daySkyColor = glm::vec3(0.502f, 0.620f, 0.867f);
+    daySkyColor = glm::vec3(0.3686f, 0.4196f, 0.5255f);
     sunsetSkyColor = glm::vec3(1.0f, 0.7059f, 0.4471f);
     nightSkyColor = glm::vec3(0.055f, 0.055f, 0.141f);
     //nightSkyColor = glm::vec3(0.0863f, 0.0863f, 0.1725f);
@@ -29,7 +29,7 @@ void WeatherManager::Init() {
     rainNightSkyColor = glm::vec3(0.1294f, 0.1294f, 0.2196f);
     //rainNightSkyColor = glm::vec3(0.1608f, 0.1608f, 0.2353f);
 
-    dayColor = glm::vec3(0.863f, 0.855f, 0.737f);
+    dayColor = glm::vec3(0.4902f, 0.5098f, 0.7098f);
     sunsetColor = glm::vec3(0.9451f, 0.8314f, 0.7412f);
     nightColor = glm::vec3(0.1722f, 0.1722f, 0.3173f);
     //nightColor = glm::vec3(0.0667f, 0.0667f, 0.0980f);
@@ -55,7 +55,7 @@ void WeatherManager::Update(){
 
     //cout << wx_sigma_ptr << endl;
 
-    windDirection = windModel.getWind(2 * TIME.GetDeltaTime());
+    windDirection = windModel.getWind(5 * TIME.GetDeltaTime());
 //    windDirection = windModel.getWind(15 * TIME.GetDeltaTime());
 //    windDirection.x /= 10;
 //    windDirection.y /= 10;
@@ -327,9 +327,11 @@ void WeatherManager::onOptionChanged(int option) {
         NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
         NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
         NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->SpawnParticles();
+        initializeWindModel();
     } else if (option == 1) {
         NODESMANAGER.getNodeByName("AmbientParticles")->GetComponent<ParticleGenerator>()->killParticles = true;
         NODESMANAGER.getNodeByName("RainParticles2")->GetComponent<ParticleGenerator>()->killParticles = true;
         isRaining = true;
+        initializeWindModel();
     }
 }

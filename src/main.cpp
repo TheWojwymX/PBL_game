@@ -474,19 +474,15 @@ int main(int, char**)
         ImGui::Spacing();
         ImGui::Spacing();
 
-//        ImGui::SliderFloat("X", &WEATHERMANAGER.wx_nominal_ptr, -100.0f, 100.0f);
-//        ImGui::SliderFloat("Y", &WEATHERMANAGER.wy_nominal_ptr, -100.0f, 100.0f);
-//        ImGui::SliderFloat("Z", &WEATHERMANAGER.wz_nominal_ptr, -100.0f, 100.0f);
-
-        if(ImGui::SliderFloat("Sigma X", &float_sigma_x, 0.1f, 5.0f)){
+        if(ImGui::SliderFloat("Sigma X", &float_sigma_x, 0.1f, 20.0f)){
             WEATHERMANAGER.wx_sigma_ptr = static_cast<double>(float_sigma_x);
             WEATHERMANAGER.initializeWindModel();
         }
-        if(ImGui::SliderFloat("Sigma Y", &float_sigma_y, 0.1f, 5.0f)){
+        if(ImGui::SliderFloat("Sigma Y", &float_sigma_y, 0.1f, 20.0f)){
             WEATHERMANAGER.wy_sigma_ptr = static_cast<double>(float_sigma_y);
             WEATHERMANAGER.initializeWindModel();
         }
-        if(ImGui::SliderFloat("Sigma z", &float_sigma_z,0.1f, 5.0f)){
+        if(ImGui::SliderFloat("Sigma z", &float_sigma_z,0.1f, 20.0f)){
             WEATHERMANAGER.wz_sigma_ptr = static_cast<double>(float_sigma_z);
             WEATHERMANAGER.initializeWindModel();
         }
@@ -503,9 +499,20 @@ int main(int, char**)
 
         ImGui::SliderInt("Particles", &WEATHERMANAGER.visibleParticles,1.0f, 20000.0f);
 
-        ImGui::SliderFloat("Wind Strength", &WEATHERMANAGER.windStrength, 0.1f, 2.0f);
+        ImGui::SliderFloat("Wind Strength", &WEATHERMANAGER.windStrength, 0.1f, 3.0f);
 
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::Spacing();
 
+        ImGui::Checkbox("Floor collision", &WEATHERMANAGER.floorCollision);
+        ImGui::Checkbox("Base collision", &WEATHERMANAGER.baseCollision);
+
+        ImGui::SliderFloat("Starting X", &WEATHERMANAGER.wx_nominal_ptr, -100.0f, 100.0f);
+        ImGui::SliderFloat("Starting Y", &WEATHERMANAGER.wy_nominal_ptr, -100.0f, 100.0f);
+        ImGui::SliderFloat("Starting Z", &WEATHERMANAGER.wz_nominal_ptr, -100.0f, 100.0f);
 
 
         ImGui::End();
